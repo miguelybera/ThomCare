@@ -25,7 +25,7 @@ const announcementSchema = new mongoose.Schema({
         }
 })
 
-announcementSchema.post("save", function(announcement, next ){
+/*announcementSchema.post("save", function(announcement, next ){
     cron.schedule('* * * * *', 
     async function() { 
         const dateToday = Date.now();
@@ -41,4 +41,5 @@ announcementSchema.post("save", function(announcement, next ){
 );
     next ();
 });
+*/
 module.exports = mongoose.model('Announcement', announcementSchema);
