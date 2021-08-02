@@ -1,7 +1,11 @@
 const Announcement = require('../models/announcement');
+const ErrorHandler = require('../utils/errorHandler');
+const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
+const APIFeatures = require('../utils/apiFeatures');
 
 // Create new announcement => /api/v1/announcement/new
-exports.newAnnouncement = async (req,res,next)=>{
+exports.newAnnouncement = catchAsyncErrors (async (req,res,next)=>{
+   
     const announcement = await Announcement.create(req.body);
 
     res.status(201).json({
@@ -9,29 +13,32 @@ exports.newAnnouncement = async (req,res,next)=>{
         announcement
     })
 
-}
+})
 
 // Get all announcements /api/v1/allAnnouncements
-exports.getAnnouncements = async (req,res,next) => {
-
-    const announcements = await Announcement.find();
+exports.getAnnouncements = catchAsyncErrors (async (req,res,next) => {
+    const resPerPage = 2;
+    const announcementCount = await Announcement.countDocuments()
+    const apiFeatures = new APIFeatures(Announcement.find(), req.query)
+                        .search()
+                        .filter()
+                        .pagination(resPerPage);
+    const announcements = await apiFeatures.query;
     res.status(200).json({
         success: true,
         count: announcements.length,
+        announcementCount,
         announcements
     })
-}
+})
 
 // Get single announcement /api/v1/announcement/:id
 
-exports.getSingleAnnouncement = async (req, res, next) =>{
+exports.getSingleAnnouncement = catchAsyncErrors (async (req, res, next) =>{
     const announcement = await Announcement.findById(req.params.id);
     
     if(!announcement){
-        return res.status(404).json({
-            success: false,
-            message: 'Announcement not found'
-        })
+       return next(new ErrorHandler('Announcement Not Found', 404))
     }
 
     res.status(200).json({
@@ -39,16 +46,13 @@ exports.getSingleAnnouncement = async (req, res, next) =>{
         announcement
     })
 
-}
+})
 
 // Update announcement /api/v1/admin/announcement/:id
-exports.updateAnnouncement = async(req,res,next) =>{
+exports.updateAnnouncement = catchAsyncErrors (async(req,res,next) =>{
     let announcement = await Announcement.findById(req.params.id);
     if(!announcement){
-        return res.status(404).json({
-            success: false,
-            message: 'Announcement not found'
-        })
+        return next(new ErrorHandler('Announcement Not Found', 404))
     }
     announcement = await Announcement.findByIdAndUpdate(req.params.id, req.body, {
         new: true,
@@ -60,4 +64,18 @@ exports.updateAnnouncement = async(req,res,next) =>{
         announcement
     })
 
-}
+})
+
+// delete announcement /api/v1/admin/announcement/:id
+exports.deleteAnnouncement = catchAsyncErrors (async(req,res,next) =>{
+    const announcement = await Announcement.findById(req.params.id);
+    if(!announcement){
+        return next(new ErrorHandler('Announcement Not Found', 404))
+    }
+    await announcement.remove()
+    res.status(200).json({
+        success: true,
+        message: "Announcement deleted"
+    })
+
+})
