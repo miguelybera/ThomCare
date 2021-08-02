@@ -3,6 +3,9 @@ const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const APIFeatures = require('../utils/apiFeatures');
 
+
+
+
 // Create new announcement => /api/v1/announcement/new
 exports.newAnnouncement = catchAsyncErrors (async (req,res,next)=>{
    
@@ -15,15 +18,35 @@ exports.newAnnouncement = catchAsyncErrors (async (req,res,next)=>{
 
 })
 
-// Get all announcements /api/v1/allAnnouncements
-exports.getAnnouncements = catchAsyncErrors (async (req,res,next) => {
-    const resPerPage = 2;
+// Get all announcements /api/v1/admin/allAnnouncements
+exports.getAllAnnouncements = catchAsyncErrors (async (req,res,next) => {
+    const resPerPage = 10;
     const announcementCount = await Announcement.countDocuments()
     const apiFeatures = new APIFeatures(Announcement.find(), req.query)
                         .search()
                         .filter()
                         .pagination(resPerPage);
     const announcements = await apiFeatures.query;
+   
+    res.status(200).json({
+        success: true,
+        count: announcements.length,
+        announcementCount,
+        announcements
+    })
+})
+
+// Get all unarchived announcements /api/v1/announcements
+exports.getAnnouncements = catchAsyncErrors (async (req,res,next) => {
+    const resPerPage = 1;
+    const announcementCount = await Announcement.countDocuments()
+    const apiFeatures = new APIFeatures(Announcement.find({archiveDate: {$gte: Date.now()}}), req.query)
+                        .search()
+                        .filter()
+                        .pagination(resPerPage);
+    const announcements = await apiFeatures.query;
+    
+    
     res.status(200).json({
         success: true,
         count: announcements.length,

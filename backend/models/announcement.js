@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-
 const announcementSchema = new mongoose.Schema({
     
         title: {
@@ -12,14 +11,12 @@ const announcementSchema = new mongoose.Schema({
             required: [true, 'Please enter announcement description'],
             trim: true, //deletes spaces in start and end
         },
-        isArchived:{
-            type: Boolean,
-            required: true,
-            default: false
-        },
         createdAt: { //date created of data
             type: Date,
             default: Date.now(),
+        },
+        archiveDate:{
+            type: Date
         }
 })
 
