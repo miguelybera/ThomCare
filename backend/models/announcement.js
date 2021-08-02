@@ -12,12 +12,25 @@ const announcementSchema = new mongoose.Schema({
             required: [true, 'Please enter announcement description'],
             trim: true, //deletes spaces in start and end
         },
+        course:{
+            type: String,
+            required: [true, 'Please enter course'],
+            enum:{
+                values:[
+                    'Information Technology',
+                    'Information Systems',
+                    'Computer Science',
+                    'All'
+                ]
+            }
+        },
         createdAt: { //date created of data
             type: Date,
             default: Date.now(),
         },
         archiveDate:{
-            type: Date
+            type: Date,
+            default: "3000-08-04T08:30:21.492Z"
         },
         isArchive:{
             type: Boolean,

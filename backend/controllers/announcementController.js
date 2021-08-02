@@ -20,7 +20,7 @@ exports.newAnnouncement = catchAsyncErrors (async (req,res,next)=>{
 
 // Get all announcements /api/v1/admin/allAnnouncements
 exports.getAllAnnouncements = catchAsyncErrors (async (req,res,next) => {
-    const resPerPage = 10;
+    const resPerPage = 15;
     const announcementCount = await Announcement.countDocuments()
     const apiFeatures = new APIFeatures(Announcement.find(), req.query)
                         .search()
@@ -38,7 +38,7 @@ exports.getAllAnnouncements = catchAsyncErrors (async (req,res,next) => {
 
 // Get all unarchived announcements /api/v1/announcements
 exports.getAnnouncements = catchAsyncErrors (async (req,res,next) => {
-    const resPerPage = 1;
+    const resPerPage = 5;
     const announcementCount = await Announcement.countDocuments()
     const apiFeatures = new APIFeatures(Announcement.find({archiveDate: {$gte: Date.now()}}), req.query)
                         .search()
