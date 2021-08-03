@@ -9,6 +9,7 @@ const APIFeatures = require('../utils/apiFeatures');
 // Create new announcement => /api/v1/announcement/new
 exports.newAnnouncement = catchAsyncErrors (async (req,res,next)=>{
    
+    req.body.createdBy = req.user.id;
     const announcement = await Announcement.create(req.body);
 
     res.status(201).json({

@@ -32,9 +32,10 @@ const announcementSchema = new mongoose.Schema({
             type: Date,
             default: "3000-08-04T08:30:21.492Z"
         },
-        isArchive:{
-            type: Boolean,
-            default: false
+        createdBy:{
+            type: mongoose.Schema.ObjectId,
+            ref: 'User',
+            required: true
         }
 })
 
