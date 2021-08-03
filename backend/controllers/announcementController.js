@@ -27,12 +27,18 @@ exports.getAllAnnouncements = catchAsyncErrors (async (req,res,next) => {
                         .filter()
                         .pagination(resPerPage);
     const announcements = await apiFeatures.query;
+    const allIT = await Announcement.find({course: "Information Technology"});
+    const allIS = await Announcement.find({course: "Information Systems"});
+    const allCS = await Announcement.find({course: "Computer Science"});
    
     res.status(200).json({
         success: true,
         count: announcements.length,
         announcementCount,
-        announcements
+        announcements,
+        allIT,
+        allIS,
+        allCS
     })
 })
 
@@ -45,13 +51,19 @@ exports.getAnnouncements = catchAsyncErrors (async (req,res,next) => {
                         .filter()
                         .pagination(resPerPage);
     const announcements = await apiFeatures.query;
+    const allIT = await Announcement.find({course: "Information Technology",archiveDate: {$gte: Date.now()}});
+    const allIS = await Announcement.find({course: "Information Systems",archiveDate: {$gte: Date.now()}});
+    const allCS = await Announcement.find({course: "Computer Science",archiveDate: {$gte: Date.now()}});
     
     
     res.status(200).json({
         success: true,
         count: announcements.length,
         announcementCount,
-        announcements
+        announcements,
+        allIT,
+        allIS,
+        allCS
     })
 })
 
