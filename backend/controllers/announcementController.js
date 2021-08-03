@@ -56,7 +56,6 @@ exports.getAnnouncements = catchAsyncErrors (async (req,res,next) => {
     const allIS = await Announcement.find({course: "Information Systems",archiveDate: {$gte: Date.now()}});
     const allCS = await Announcement.find({course: "Computer Science",archiveDate: {$gte: Date.now()}});
     
-    
     res.status(200).json({
         success: true,
         count: announcements.length,
