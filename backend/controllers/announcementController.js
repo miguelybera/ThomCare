@@ -10,6 +10,19 @@ const APIFeatures = require('../utils/apiFeatures');
 exports.newAnnouncement = catchAsyncErrors (async (req,res,next)=>{
    
     req.body.createdBy = req.user.id;
+    if (req.body.setExpiry == true){
+        const { expiryYear, expiryMonth, expiryDay }= req.body;
+        if(expiryYear=='' ||expiryMonth==''||expiryDay=='' ){
+            return next(new ErrorHandler('Please input expiry date'))
+        }
+        if(expiryYear == null ||expiryMonth==null||expiryDay==null ){
+            return next(new ErrorHandler('Please input expiry date'))
+        }
+        req.body.archiveDate = `${expiryYear}-${expiryMonth}-${expiryDay}T08:30:21.492Z`
+        
+    }else{
+        req.body.archiveDate = "3000-08-05T08:30:21.492Z"
+    }
     const announcement = await Announcement.create(req.body);
 
     res.status(201).json({
