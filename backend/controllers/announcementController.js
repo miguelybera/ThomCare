@@ -3,9 +3,6 @@ const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const APIFeatures = require('../utils/apiFeatures');
 
-
-
-
 // Create new announcement => /api/v1/announcement/new
 exports.newAnnouncement = catchAsyncErrors (async (req,res,next)=>{
    
