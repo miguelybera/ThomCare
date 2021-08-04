@@ -23,6 +23,32 @@ exports.newAnnouncement = catchAsyncErrors (async (req,res,next)=>{
     }else{
         req.body.archiveDate = "3000-08-05T08:30:21.492Z"
     }
+    if(req.body.course === "Computer Science"){
+        if(req.body.yearLevel === '3rd Year' || req.body.yearLevel =='4th Year'){
+            if(req.body.track !== "Core Computer Science"&&req.body.track !== "Game Development"&&req.body.track !== "Data Science"&&req.body.track !== "All"){
+                return next(new ErrorHandler('Course does not match this track', 400))
+            }
+        }
+    }
+    if(req.body.course === "Information Technology"){
+        if(req.body.yearLevel === '3rd Year' || req.body.yearLevel =='4th Year'){
+            if(req.body.track !== "Network and Security"&&req.body.track !== "Web and Mobile App Development"&&req.body.track !== "IT Automation"&&req.body.track !== "All"){
+                return next(new ErrorHandler('Course does not match this track', 400))
+            }
+        }
+    }
+    if(req.body.course === "Information Systems"){
+        if(req.body.yearLevel === '3rd Year' || req.body.yearLevel =='4th Year'){
+            if(req.body.track !== "Business Analytics"&&req.body.track !== "Service Management"&&req.body.track !== "All"){
+                return next(new ErrorHandler('Course does not match this track', 400))
+            }
+        }
+    }
+        if(req.body.yearLevel === '1st Year' || req.body.yearLevel =='2nd Year'){
+            req.body.track = 'N/A'
+        }
+    
+    
     const announcement = await Announcement.create(req.body);
 
     res.status(201).json({

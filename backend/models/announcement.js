@@ -22,7 +22,42 @@ const announcementSchema = new mongoose.Schema({
                     'Computer Science',
                     'All'
                 ]
-            }
+            },
+            default: 'All'
+        },
+        yearLevel:{
+            type: String,
+            required: [true, 'Please enter Year Level'],
+            enum:{
+                values:[
+                    '1st Year',
+                    '2nd Year',
+                    '3rd Year',
+                    '4th Year',
+                    'All'
+                ]
+            },
+            default: 'All'
+
+        },
+        track:{
+            type: String,
+            required: [true, 'Please enter Track'],
+            enum:{
+                values:[
+                    'Core Computer Science',
+                    'Game Development',
+                    'Data Science',
+                    'Network and Security',
+                    'Web and Mobile App Development',
+                    'IT Automation',
+                    'Business Analytics',
+                    'Service Management',
+                    'All',
+                    'N/A'
+                ]
+            },
+            default: 'All'
         },
         createdAt: { //date created of data
             type: Date,
