@@ -85,6 +85,10 @@ const requestSchema = new mongoose.Schema({
                 'Information Systems'
             ]
         }
+    },
+    createdAt:{
+        type: Date,
+        default: Date.now()
     }
 
 })
