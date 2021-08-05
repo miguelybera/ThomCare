@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from  'react-redux'
@@ -8,6 +8,12 @@ import Message from '../message/Message'
 import ChatOnline from '../online/ChatOnline'
 import { sendMessage, getConversations, getMessages } from '../../../actions/chatActions'
 import axios from 'axios'
+import {
+    GET_MESSAGES_REQUEST,
+    GET_MESSAGES_SUCCESS,
+    GET_MESSAGES_FAIL,
+    CLEAR_ERRORS
+} from '../../../constants/chatConstants'
 
 const Messenger = () => {
     const dispatch = useDispatch()
@@ -19,6 +25,8 @@ const Messenger = () => {
     const [currentChat, setCurrentChat] = useState(null)
     const [messageList, setMessageList] = useState([])
     const [newMessage, setNewMessage] = useState('')
+
+    const scrollRef = useRef()
 
     let userId = ''
     let currentChatId = ''
@@ -36,16 +44,32 @@ const Messenger = () => {
         
         const getMessages = async (id) => {
             try {        
+                dispatch({
+                    type: GET_MESSAGES_REQUEST
+                })
                 const { data } = await axios.get(`/api/v1/getMsg/${id}`)
                 
                 setMessageList(data.messages)
+                dispatch({
+                    type: GET_MESSAGES_SUCCESS,
+                    payload: data
+                    }
+                )
             }
             catch (error) {
-                console.log(error)
+                dispatch({
+                    type: GET_MESSAGES_FAIL,
+                    payload: error.response.data.message
+                    }
+                )
             }
         }
         getMessages(currentChatId)
     }, [dispatch, user, currentChat])
+
+    useEffect(() => {
+        scrollRef.current?.scrollIntoView({behavior: 'smooth'})
+    }, [messageList])
 
     const handleSubmit = async (e) => {
         e.preventDefault()
@@ -84,7 +108,11 @@ const Messenger = () => {
                             currentChat ? (<>
                             <div className='chatBoxTop'>
                                 {messageList && messageList.map(m => (
-                                    <Message message={m} own={m.sender === userId ? true : false}/>
+                                    <>
+                                        <div ref={scrollRef}>
+                                            <Message message={m} own={m.sender === userId ? true : false}/>
+                                        </div>
+                                    </> 
                                 ))}
                             </div>
                             <div className='chatBoxBottom'>
