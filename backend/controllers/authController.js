@@ -10,9 +10,13 @@ const jwt = require('jsonwebtoken');
 
 // Register a user => /api/v1/admin/register
 exports.registerUser = catchAsyncErrors(async (req, res,next) =>{
-    const { email, password}= req.body;
+    const { firstName, lastName, email, password}= req.body;
+    req.body.studentNumber = '0000000000',
+    req.body.course = 'N/A'
     req.body.role = 'CICS Staff'
     const role = req.body.role 
+    const studentNumber = req.body.studentNumber
+    const course = req.body.course
     if(req.body.password !== req.body.confirmPassword){
         return next(new ErrorHandler('Password does not match'))
     }
@@ -20,6 +24,10 @@ exports.registerUser = catchAsyncErrors(async (req, res,next) =>{
         return next(new ErrorHandler('UST GSuite accounts are only allowed'))
     }
     const user = await User.create({
+        firstName,
+        lastName,
+        studentNumber,
+        course,
         email,
         password,
         role
@@ -149,7 +157,28 @@ exports.resetPassword = catchAsyncErrors(async(req,res,next)=>{
 
 // Register a student => /api/v1/registerStudent
 exports.registerStudent = catchAsyncErrors(async (req, res,next) =>{
-    const { email, password }= req.body;
+    const { firstName, lastName, studentNumber, course, email, password }= req.body;
+    if((firstName == null)||(firstName == '')){
+        return next(new ErrorHandler('Please enter first name'))
+    }
+    if((lastName == null)||(lastName == '')){
+        return next(new ErrorHandler('Please enter last name'))
+    }
+    if((studentNumber == null)||(studentNumber == '')){
+        return next(new ErrorHandler('Please enter student number'))
+    }
+    if((course == null)||(course == '')){
+        return next(new ErrorHandler('Please enter course'))
+    }
+    if((course !== 'Computer Science')&&(course !== 'Information Technology')&&(course !== 'Information Systems')){
+        return next(new ErrorHandler('Please enter the correct course'))
+    }
+    if((email == null)||(email == '')){
+        return next(new ErrorHandler('Please enter email'))
+    }
+    if((password == null)||(password == '')){
+        return next(new ErrorHandler('Please enter password'))
+    }
     if(req.body.email.substr(-15) !== "iics@ust.edu.ph"){
         return next(new ErrorHandler('UST GSuite accounts are only allowed'))
     }
@@ -161,7 +190,7 @@ exports.registerStudent = catchAsyncErrors(async (req, res,next) =>{
     if(req.body.password !== req.body.confirmPassword){
         return next(new ErrorHandler('Password does not match'))
     }
-    const registerToken = jwt.sign({email, password}, process.env.ACCOUNT_TOKEN, {expiresIn: process.env.REGISTER_EXPIRES});
+    const registerToken = jwt.sign({firstName, lastName, studentNumber, course, email, password}, process.env.ACCOUNT_TOKEN, {expiresIn: process.env.REGISTER_EXPIRES});
 
     // create reset password url
     const resetUrl = `${req.protocol}://${req.get('host')}/api/v1/verify/account/${registerToken}`
@@ -193,8 +222,12 @@ exports.verifyStudent = catchAsyncErrors(async (req, res,next) =>{
             if(err){
                 return next(new ErrorHandler('Token is invalid or expired'))
             }
-            const {email, password} = decodedToken;
+            const {firstName, lastName, studentNumber, course, email, password} = decodedToken;
             const user = User.create({
+                firstName,
+                lastName,
+                studentNumber,
+                course,
                 email,
                 password
             })

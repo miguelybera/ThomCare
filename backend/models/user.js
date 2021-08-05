@@ -5,7 +5,30 @@ const jwt = require('jsonwebtoken');
 const crypto = require('crypto');
 
 const userSchema = new mongoose.Schema({
-
+    firstName:{
+        type: String,
+        required: [true, 'Please enter your first name']
+    },
+    lastName:{
+        type: String,
+        required: [true, 'Please enter your last name']
+    },
+    studentNumber:{
+        type: String,
+        required: [true, 'Please enter your student number']
+    },
+    course:{
+        type: String,
+        required: [true, 'Please enter request course'],
+        enum:{
+            values:[
+                'Computer Science',
+                'Information Technology',
+                'Information Systems',
+                'N/A'
+            ]
+        }
+    },
     email:{
         type: String,
         required: [true, 'Please enter your email'],
