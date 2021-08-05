@@ -45,7 +45,6 @@ exports.loginUser = catchAsyncErrors(async(req,res,next)=>{
     const { email, password }= req.body;
    
     //Checks if email and password is entered by user
-
     if(!email||!password){
         return next(new ErrorHandler('Please enter email & password', 400))
     }
@@ -74,6 +73,7 @@ exports.logout = catchAsyncErrors( async(req,res,next)=>{
         expires: new Date(Date.now()),
         httpOnly: true
     })
+    
     res.status(200).json({
         success: true,
         message: "Logged out"
@@ -302,13 +302,14 @@ exports.getAllUsers = catchAsyncErrors(async(req,res,next)=>{
 
 // Get a user => /api/v1/admin/user/:id
 exports.getUser = catchAsyncErrors(async(req,res,next)=>{
-    const user = await User.findById(req.params.id);
-    if(!user){
+    const singleUser = await User.findById(req.params.id);
+    
+    if(!singleUser){
         return next(new ErrorHandler(`User not found with this id:(${req.params.id})`));
     }
     res.status(200).json({
         success: true,
-        user
+        singleUser
     })
 })
 

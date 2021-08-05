@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-
-import logo from './logo.svg';
+import { useSelector } from 'react-redux'
+import store from './store'
+import { useEffect } from 'react'
 
 import Header from './components/Header'
 import Login from './components/Login'
@@ -9,7 +10,16 @@ import ForgotPassword from './components/ForgotPassword'
 import UpdatePassword from './components/UpdatePassword'
 import Messenger from './components/chat/chatbox/Messenger'
 
+import { loadUser } from './actions/userActions'
+
 function App() {
+
+    const { loading } = useSelector(state => state.auth)
+    
+    useEffect(() => {
+        store.dispatch(loadUser())
+    }, [])
+
   return (
         <Router>
             <div className="App">

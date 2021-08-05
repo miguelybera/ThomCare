@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const messageSchema = new mongoose.Schema({
     conversationId:{
         type: String
@@ -7,7 +8,7 @@ const messageSchema = new mongoose.Schema({
         type: String
     },
     text:{
-        type:String
+        type: String
     }
 
 },{

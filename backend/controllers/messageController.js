@@ -6,7 +6,6 @@ const Conversation = require('../models/conversation');
 const User = require('../models/user');
 
 // add a message
-
 exports.createMessage = catchAsyncErrors (async (req,res,next)=>{
     const conversation = await Conversation.findById(req.params.conversationId);
     if(!conversation){
@@ -18,6 +17,8 @@ exports.createMessage = catchAsyncErrors (async (req,res,next)=>{
     }
     req.body.sender = req.user.id
     req.body.conversationId = req.params.conversationId;
+    
+    //github
     const newMessage = new Message(req.body)
     
     try{
@@ -32,8 +33,7 @@ exports.createMessage = catchAsyncErrors (async (req,res,next)=>{
 
 })
 
-// get messages of a conversation
-
+// get messages inside a conversation
 exports.getMessages = catchAsyncErrors (async (req,res,next)=>{
     const conversation = await Conversation.findById(req.params.conversationId);
     if(!conversation){
@@ -43,7 +43,8 @@ exports.getMessages = catchAsyncErrors (async (req,res,next)=>{
     if (checkConversation == false){
         return next(new ErrorHandler('User does not have access to the messages', 404))
     }
-    
+   
+    //github
     try{
         const messages = await Message.find({
             conversationId: req.params.conversationId
@@ -56,3 +57,31 @@ exports.getMessages = catchAsyncErrors (async (req,res,next)=>{
         return next(new ErrorHandler(err))
     }
 })
+
+//from github
+//add or send message 
+exports.addMessage = catchAsyncErrors (async (req,res,next)=>{
+    const newMessage = new Message(req.body);
+  
+    try {
+      const savedMessage = await newMessage.save();
+      res.status(200).json(savedMessage);
+    } catch (err) {
+        return next(new ErrorHandler(err))
+    }
+})
+  
+  //get messages in the conversation id
+  exports.getMessage = catchAsyncErrors (async (req,res,next)=>{
+    try {
+        const messages = await Message.find({
+          conversationId: req.params.conversationId,
+        });
+        res.status(200).json({
+            success: true,
+            messages
+        });
+      } catch (err) {
+        return next(new ErrorHandler(err))
+      }
+  })
