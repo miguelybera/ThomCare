@@ -8,6 +8,7 @@ import Message from '../message/Message'
 import ChatOnline from '../online/ChatOnline'
 import { sendMessage, getConversations, getMessages } from '../../../actions/chatActions'
 import axios from 'axios'
+import {io} from 'socket.io-client'
 import {
     GET_MESSAGES_REQUEST,
     GET_MESSAGES_SUCCESS,
@@ -25,7 +26,9 @@ const Messenger = () => {
     const [currentChat, setCurrentChat] = useState(null)
     const [messageList, setMessageList] = useState([])
     const [newMessage, setNewMessage] = useState('')
-
+    const [arrivalMessage, setArrivalMessage] = useState('')
+    const [onlineUsers, setOnlineUsers] = useState([])
+ 
     const scrollRef = useRef()
 
     let userId = ''
@@ -38,7 +41,37 @@ const Messenger = () => {
     if (currentChat && currentChat._id) {
         currentChatId = currentChat._id
     }
- 
+
+    //sockets start
+    const socket = useRef()
+
+    useEffect(() => {
+        socket.current = io('ws://localhost:8900')
+
+        //arrival message
+        socket.current.on("getMessage", (data) => {
+            setArrivalMessage({
+              sender: data.senderId,
+              text: data.text,
+              createdAt: Date.now(),
+            })
+        })
+    }, [])
+
+    useEffect(() => {
+        arrivalMessage &&
+            currentChat?.members.includes(arrivalMessage.sender) &&
+            setMessageList((prev) => [...prev, arrivalMessage]);
+      }, [arrivalMessage, currentChat]);
+
+    useEffect(() => {
+        //send something to socket server
+        socket.current.emit('addUser', userId)
+        socket.current.on('getUsers', users => {
+            setOnlineUsers(users)
+        })
+    }, [user])
+    //sockets end
     useEffect(() => {
         dispatch(getConversations(userId))
         
@@ -79,6 +112,14 @@ const Messenger = () => {
             text: newMessage,
             conversationId: currentChatId
         }
+
+        const receiverId = currentChat.members.find(m => m !== userId)
+
+        socket.current.emit('sendMessage', {
+            senderId: userId, 
+            receiverId, 
+            text: newMessage
+        })
 
         dispatch(sendMessage(message))
         setMessageList([...messageList, message])
@@ -134,9 +175,7 @@ const Messenger = () => {
                 </div>
                 <div className='chatOnline'>
                     <div className='chatOnlineWrapper'>
-                        <ChatOnline/>
-                        <ChatOnline/>
-                        <ChatOnline/>
+                        <ChatOnline onlineUsers={onlineUsers} currentUser={userId} setCurrentChat={setCurrentChat}/>
                     </div>
                 </div>
             </div>

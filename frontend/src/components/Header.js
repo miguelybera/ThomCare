@@ -9,6 +9,14 @@ const Header = () => {
     const dispatch = useDispatch()
     const alert = useAlert()
 
+    const { user } = useSelector(state => state.auth)
+    
+    let userName = ''
+
+    if(user && user.firstName) {
+        userName = user.firstName
+    }
+
     const logoutHandler = () => {
         dispatch(logout())
         alert.success('Logged out successfully')
@@ -27,7 +35,7 @@ const Header = () => {
                         <Nav.Link><Link to='/updatepassword'>Update Password</Link></Nav.Link>
                         <Nav.Link><Link to='/newpassword'>New Password</Link></Nav.Link>
                         <Nav.Link><Link to='/messenger'>Messenger</Link></Nav.Link>
-                        <NavDropdown title="User Name" id="basic-nav-dropdown">
+                        <NavDropdown title={userName ? userName : 'None'} id="basic-nav-dropdown">
                         <NavDropdown.Item href="#action/3.1">Dashboard</NavDropdown.Item>
                         <NavDropdown.Item href="#action/3.2">My Profile</NavDropdown.Item>
                         <NavDropdown.Divider />
