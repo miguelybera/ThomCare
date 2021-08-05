@@ -31,9 +31,7 @@ const Header = () => {
                     <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link><Link to='/login'>Login</Link></Nav.Link>
-                        <Nav.Link><Link to='/register'>Register</Link></Nav.Link>
                         <Nav.Link><Link to='/updatepassword'>Update Password</Link></Nav.Link>
-                        <Nav.Link><Link to='/newpassword'>New Password</Link></Nav.Link>
                         <Nav.Link><Link to='/messenger'>Messenger</Link></Nav.Link>
                         <NavDropdown title={userName ? userName : 'None'} id="basic-nav-dropdown">
                         <NavDropdown.Item href="#action/3.1">Dashboard</NavDropdown.Item>

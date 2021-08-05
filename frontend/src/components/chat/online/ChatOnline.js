@@ -13,6 +13,7 @@ const ChatOnline = ({onlineUsers, currentUser, setCurrentChat}) => {
 
     const [friends, setFriends] = useState([])
     const [onlineFriends, setOnlineFriends] = useState([])
+    const [offlineFriends, setOfflineFriends] = useState([])
 
     const dispatch = useDispatch()
 
@@ -26,7 +27,7 @@ const ChatOnline = ({onlineUsers, currentUser, setCurrentChat}) => {
                 const { data } = await axios.get('/api/v1/admin/allUsers')
                 
                 setFriends(data.users)
-                console.log(friends)
+
                 dispatch({
                     type: ALL_USERS_SUCCESS,
                     payload: data
@@ -42,37 +43,57 @@ const ChatOnline = ({onlineUsers, currentUser, setCurrentChat}) => {
         getFriends()
     }, [currentUser])
 
-    const getUser = (userId) => {
+    const getOnlineUsers = (userId) => {
         return onlineUsers.find((user) => user.userId === userId && user.userId !== currentUser);
     };
+
+    // const getOfflineUsers = (userId) => {
+    //     return friends.find((user) => user._id !== userId && user.userId !== currentUser);
+    // };
 
     useEffect(() => {
         setOnlineFriends(
             friends.filter(f => 
-                getUser(f._id)
+                getOnlineUsers(f._id)
             )
         )
-        //f._id is the id per json in friends(users)
 
-        console.log(onlineFriends)
+        // setOfflineFriends(
+        //     friends.filter(f => 
+        //         getOfflineUsers(f._id)
+        //     )
+        // ) //showing all users though
+
+        //f._id is the id per json in friends(users)
     },[onlineUsers, friends])
+
+    const openConversation = async (user) => {
+        const firstUserId = user._id
+        try{
+            const { data } = await axios.get(`/api/v1/find/${firstUserId}/${currentUser}`)
+            
+            setCurrentChat(data.conversation)
+            
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <>
             <div className='chatOnline'>
                 {onlineFriends.map(o => (
                     <>
-                        <div className='chatOnlineFriend'>
+                        <div className='chatOnlineFriend' onClick={() => openConversation(o)}>
                             <div className='chatOnlineImgContainer'>
                                 <img className='chatOnlineImg' src='https://res.cloudinary.com/exstrial/image/upload/v1627805763/ShopIT/sanake_ibs7sb.jpg' alt=''/>
-                                <div className='chatOnlineBadge'>
-
-                                </div>
+                                <div className='chatOnlineBadge'></div>
                             </div>
                             <span className='chatOnlineName'>{o?.firstName}</span>
                         </div>
                     </>
                 ))}
+                
             </div>   
         </>
     )

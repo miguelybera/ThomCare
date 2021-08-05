@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from  'react-redux'
 import { login, clearErrors } from './../actions/userActions'
 import { FloatingLabel, Form, Button, Card, Container, Row } from 'react-bootstrap'
 
-const Login = () => {
+const Login = ({history}) => {
     const alert = useAlert()
     const dispatch = useDispatch()
 
@@ -23,6 +23,7 @@ const Login = () => {
     useEffect(() => {
         if(isAuthenticated) {
             alert.success('Logged in successfully.')
+            history.push('/')
         }
 
         if(error){
@@ -67,6 +68,8 @@ const Login = () => {
                                     style={{marginTop: '10px', borderRadius: '50px', width: '10rem'}}
                                 >Submit</Button>
                             </Form>
+                            <Link to='/forgotpassword'>Forgot password?</Link>
+                            <Link to='/register'>Register</Link>
                         </Card.Body>
                     </Card>
                 </Row>

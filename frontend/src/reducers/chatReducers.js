@@ -6,6 +6,9 @@ import {
     GET_CONVERSATIONS_REQUEST,
     GET_CONVERSATIONS_SUCCESS,
     GET_CONVERSATIONS_FAIL,
+    GET_BOTH_CONVERSATIONS_REQUEST,
+    GET_BOTH_CONVERSATIONS_SUCCESS,
+    GET_BOTH_CONVERSATIONS_FAIL,
     GET_MESSAGES_REQUEST,
     GET_MESSAGES_SUCCESS,
     GET_MESSAGES_FAIL,
@@ -28,6 +31,39 @@ export const conversationReducer = (state = { conversations: [] }, action ) => {
             }
 
         case GET_CONVERSATIONS_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+//get conversations
+export const bothConversationReducer = (state = { conversation: {} }, action ) => {
+    switch(action.type) {
+        case GET_BOTH_CONVERSATIONS_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+
+        case GET_BOTH_CONVERSATIONS_SUCCESS:
+            return {
+                loading: false,
+                conversation: action.payload
+            }
+
+        case GET_BOTH_CONVERSATIONS_FAIL:
             return {
                 ...state,
                 loading: false,
