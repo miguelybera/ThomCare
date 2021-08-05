@@ -1,5 +1,10 @@
 const mongoose = require('mongoose');
 const requestSchema = new mongoose.Schema({
+    trackingNumber:{
+        type: String,
+        required: true,
+        unique: true
+    },
     requestType:{
         type: String,
         required: [true, 'Please enter request type'],
@@ -69,6 +74,17 @@ const requestSchema = new mongoose.Schema({
     requestorSection:{
         type: String,
         required: [true, 'Requestor Section required']
+    },
+    requestorCourse:{
+        type: String,
+        required: [true, 'Please enter request course'],
+        enum:{
+            values:[
+                'Computer Science',
+                'Information Technology',
+                'Information Systems'
+            ]
+        }
     }
 
 })

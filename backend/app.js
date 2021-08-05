@@ -12,6 +12,7 @@ const announcements = require('./routes/announcement');
 const auth = require('./routes/auth');
 const conversation = require('./routes/conversation');
 const message = require('./routes/message');
+const request = require('./routes/request');
 
 
 
@@ -19,6 +20,7 @@ app.use('/api/v1', announcements)
 app.use('/api/v1', auth)
 app.use('/api/v1', conversation)
 app.use('/api/v1', message)
+app.use('/api/v1', request)
 // Middleware to handle errors
 app.use(errorMiddleware);
 

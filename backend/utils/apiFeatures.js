@@ -15,6 +15,17 @@ class APIFeatures{
         this.query = this.query.find({...keyword});
         return this;
     }
+    searchRequests(){
+        const keyword = this.queryStr.keyword ? {
+            trackingNumber: {
+                $regex: this.queryStr.keyword,
+                $options: 'i' // i means case insensitive
+            }
+        }: {}
+        //console.log(keyword)
+        this.query = this.query.find({...keyword});
+        return this;
+    }
 
     filter() {
 
