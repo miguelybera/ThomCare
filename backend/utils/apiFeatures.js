@@ -26,6 +26,17 @@ class APIFeatures{
         this.query = this.query.find({...keyword});
         return this;
     }
+    searchAudit(){
+        const keyword = this.queryStr.keyword ? {
+            userAudit: {
+                $regex: this.queryStr.keyword,
+                $options: 'i' // i means case insensitive
+            }
+        }: {}
+        //console.log(keyword)
+        this.query = this.query.find({...keyword});
+        return this;
+    }
 
     filter() {
 

@@ -9,6 +9,7 @@ const mm = String(today.getMonth() + 1).padStart(2, '0')
 const yyyy = today.getFullYear()
 const hrs = String(today.getHours()).padStart(2, '0')
 const minutes = String(today.getMinutes()).padStart(2, '0')
+const Audit = require('../models/audit');
 
 // Submit new request => /api/v1/submitRequest
 
@@ -168,8 +169,13 @@ exports.updateRequest = catchAsyncErrors (async (req,res,next)=>{
         {_id: req.params.requestId},
         {$push: {remarks: remarksData}},
         {useFindAndModify: false}
-    ).exec()
-
+    ).exec();
+    const auditLog = await Audit.create({
+            userAudit: req.user.email,
+            requestAudit: req.params.requestId,
+            actionAudit: `User account: (${req.user.email}) has updated the status
+            of request with the tracking number: (${request.trackingNumber}) \n Current Status: ${req.body.requestStatus}`
+    })
 
 
     const message = `Request with tracking number: ${rqst.trackingNumber} \n \n
