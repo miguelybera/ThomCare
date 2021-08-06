@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 
 const{registerUser, loginUser, logout, forgotPassword, resetPassword, registerStudent,verifyStudent, getUserProfile,updatePassword,
-updateProfile, getAllUsers, getUser, updateUserProfile, deleteUser, getUserChat} = require('../controllers/authController');
+updateProfile, getAllUsers, getUser, updateUserProfile, deleteUser, getUserChat, getAllUserChat} = require('../controllers/authController');
 const { isAuthenticatedUser, authorizeRoles} = require('../middlewares/auth');
 
 router.route('/login').post(loginUser); //was get before
@@ -25,5 +25,5 @@ router.route('/admin/user/:id').get(isAuthenticatedUser,authorizeRoles('CICS Sta
 router.route('/admin/user/:id').put(isAuthenticatedUser,authorizeRoles('CICS Staff'),updateUserProfile);
 router.route('/admin/user/:id').delete(isAuthenticatedUser,authorizeRoles('CICS Staff'),deleteUser);
 router.route('/chat/user/:id').get(isAuthenticatedUser,getUserChat);
-
+router.route('/chat/allUsers').get(isAuthenticatedUser,getAllUserChat);
 module.exports = router;

@@ -354,3 +354,15 @@ exports.getUserChat = catchAsyncErrors(async(req,res,next)=>{
         singleUser
     })
 })
+
+
+// Get all users for chat => /api/v1/chat/allUsers
+exports.getAllUserChat = catchAsyncErrors(async(req,res,next)=>{
+    const users = await User.find();
+
+    res.status(200).json({
+        success: true,
+        count:users.length,
+        users
+    })
+})
