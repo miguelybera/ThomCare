@@ -155,10 +155,14 @@ exports.updateRequest = catchAsyncErrors (async (req,res,next)=>{
         runValidators: true,
         useFindAndModify: false
     })
+    if (req.body.remarksMessage == null){
+        req.body.remarksMessage = ''
+    }
     let remarksData = {
         dateOfRemark: new Date(Date.now()),
         updatedStatus: req.body.requestStatus,
-        userUpdated: req.user.id
+        userUpdated: req.user.id,
+        remarksMessage: req.body.remarksMessage
     }
     Request.findOneAndUpdate(
         {_id: req.params.requestId},

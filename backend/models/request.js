@@ -104,6 +104,9 @@ const requestSchema = new mongoose.Schema({
             type: mongoose.Schema.ObjectId,
             ref: 'User',
             required: true
+        },
+        remarksMessage:{
+            type: String
         }
 
     }]
