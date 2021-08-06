@@ -149,11 +149,25 @@ exports.updateRequest = catchAsyncErrors (async (req,res,next)=>{
         requestStatus: req.body.requestStatus,
         managedBy: req.user.id
     }
+    
     const request = await Request.findByIdAndUpdate(req.params.requestId, newRequestData,{
         new: true,
         runValidators: true,
         useFindAndModify: false
     })
+    let remarksData = {
+        dateOfRemark: new Date(Date.now()),
+        updatedStatus: req.body.requestStatus,
+        userUpdated: req.user.id
+    }
+    Request.findOneAndUpdate(
+        {_id: req.params.requestId},
+        {$push: {remarks: remarksData}},
+        {useFindAndModify: false}
+    ).exec()
+
+
+
     const message = `Request with tracking number: ${rqst.trackingNumber} \n \n
     Current Status: ${request.requestStatus}`
     try{

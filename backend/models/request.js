@@ -89,7 +89,24 @@ const requestSchema = new mongoose.Schema({
     createdAt:{
         type: Date,
         default: Date.now()
-    }
+    },
+    remarks:[{
+        dateOfRemark:{
+            type: Date,
+            required: true,
+            default: Date.now()
+        },
+        updatedStatus:{
+            type: String,
+            required: true
+        },
+        userUpdated:{
+            type: mongoose.Schema.ObjectId,
+            ref: 'User',
+            required: true
+        }
+
+    }]
 
 })
 
