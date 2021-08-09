@@ -156,47 +156,59 @@ exports.resetPassword = catchAsyncErrors(async(req,res,next)=>{
 })
 
 // Register a student => /api/v1/registerStudent
-exports.registerStudent = catchAsyncErrors(async (req, res,next) =>{
-    const { firstName, lastName, studentNumber, course, email, password }= req.body;
+exports.registerStudent = catchAsyncErrors(async (req, res,next) => {
+    console.log(req.body)
+    const { firstName, lastName, studentNumber, course, email, password } = req.body;
+
     if((firstName == null)||(firstName == '')){
         return next(new ErrorHandler('Please enter first name'))
     }
+
     if((lastName == null)||(lastName == '')){
         return next(new ErrorHandler('Please enter last name'))
     }
+    
     if((studentNumber == null)||(studentNumber == '')){
         return next(new ErrorHandler('Please enter student number'))
     }
+
     if((course == null)||(course == '')){
         return next(new ErrorHandler('Please enter course'))
     }
+
     if((course !== 'Computer Science')&&(course !== 'Information Technology')&&(course !== 'Information Systems')){
         return next(new ErrorHandler('Please enter the correct course'))
     }
+
     if((email == null)||(email == '')){
         return next(new ErrorHandler('Please enter email'))
     }
+
     if((password == null)||(password == '')){
         return next(new ErrorHandler('Please enter password'))
     }
+
     if(req.body.email.substr(-15) !== "iics@ust.edu.ph"){
-        return next(new ErrorHandler('UST GSuite accounts are only allowed'))
+        return next(new ErrorHandler('UST G Suite accounts are only allowed'))
     }
+
     const user = await User.findOne({email});
 
     if(user){
-        return next(new ErrorHandler('Email Account already exists', 404));
+        return next(new ErrorHandler('Email account already exists', 404));
     }
+
     if(req.body.password !== req.body.confirmPassword){
         return next(new ErrorHandler('Password does not match'))
     }
+
     const registerToken = jwt.sign({firstName, lastName, studentNumber, course, email, password}, process.env.ACCOUNT_TOKEN, {expiresIn: process.env.REGISTER_EXPIRES});
 
     // create reset password url
     const resetUrl = `${req.protocol}://${req.get('host')}/api/v1/verify/account/${registerToken}`
 
-    const message = `Your Account Verification link is as follows:\n${resetUrl}\n\n
-    If you have not requested this email, then ignore it`
+    const message = `Your account verification link is as follows:\n${resetUrl}\n\n
+    If you have not requested this email, please ignore it.`
 
     try{
         await sendRegisterVerification({
@@ -204,9 +216,10 @@ exports.registerStudent = catchAsyncErrors(async (req, res,next) =>{
             subject: 'ThomCare Account Verification',
             message
         })
+
         res.status(200).json({
-            success:true,
-            message: `Account Verification Email is now sent to ${email} please check your inbox or spam`
+            success: true,
+            message: `Account verification link is now sent to ${email} please check your inbox or spam`
         })
 
     } catch(error){

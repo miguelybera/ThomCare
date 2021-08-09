@@ -13,6 +13,10 @@ import {
     GET_USER_REQUEST,
     GET_USER_SUCCESS,
     GET_USER_FAIL,
+    REGISTER_USER_REQUEST,
+    REGISTER_USER_SUCCESS,
+    REGISTER_USER_FAIL,
+    REGISTER_USER_RESET,
     CLEAR_ERRORS
 } from '../constants/userConstants'
 
@@ -129,6 +133,50 @@ export const userDetailsReducer = (state = { singleUser: {} }, action ) => {
             return {
                 ...state,
                 error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+//create user
+export const registerReducer = ( state = { }, action ) => {
+    switch(action.type){
+        case REGISTER_USER_REQUEST:
+            return {
+                ...state,
+                error: null,
+                loading: true,
+                isCreated: false
+            }
+
+        case REGISTER_USER_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                isCreated: true,
+                message: action.payload
+            }
+
+        case REGISTER_USER_FAIL:
+            return {
+                ...state,
+                loading: false,
+                isCreated: false,
+                error: action.payload
+            }
+
+        case REGISTER_USER_RESET:
+            return {
+                ...state,
+                isCreated: false
             }
 
         case CLEAR_ERRORS:

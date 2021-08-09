@@ -5,7 +5,8 @@ import { composeWithDevTools } from 'redux-devtools-extension'
 import {
     authReducer,
     getUsersReducer,
-    userDetailsReducer
+    userDetailsReducer,
+    registerReducer
 } from './reducers/userReducers'
 
 import {
@@ -19,7 +20,8 @@ const reducer = combineReducers({
     users: getUsersReducer,
     singleUser: userDetailsReducer,
     conversations: conversationReducer,
-    messages: messageReducer
+    messages: messageReducer,
+    register: registerReducer
 })
 
 let initialState = {} //contains all the data we want to put in this state just before loading the application

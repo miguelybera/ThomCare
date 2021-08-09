@@ -14,6 +14,9 @@ import {
     GET_USER_REQUEST,
     GET_USER_SUCCESS,
     GET_USER_FAIL,
+    REGISTER_USER_REQUEST,
+    REGISTER_USER_SUCCESS,
+    REGISTER_USER_FAIL,
     CLEAR_ERRORS
 } from '../constants/userConstants'
 
@@ -124,6 +127,34 @@ export const logout = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: LOGOUT_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+// Register STUDENT
+export const register = ( userData ) => async (dispatch) => {
+    try {
+        dispatch ({
+            type: REGISTER_USER_REQUEST
+        })
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const { data } = await axios.post(`/api/v1/registerStudent`, userData, config)
+        
+        dispatch({
+            type: REGISTER_USER_SUCCESS,
+            payload: data.message
+        })
+
+    } catch (error) {
+        dispatch({
+            type: REGISTER_USER_FAIL,
             payload: error.response.data.message
         })
     }

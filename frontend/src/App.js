@@ -41,6 +41,8 @@ function App() {
                     <Route path='/forgotpassword' component={ForgotPassword} exact/>
                     <Route path='/updatepassword' component={UpdatePassword} exact/>
                     <Route path='/register' component={Register} exact/>
+
+                    {/**needs to be logged in */}
                     <ProtectedRoute path='/messenger' loggedIn={true} component={Messenger} exact/>
                     <ProtectedRoute path='/profile' loggedIn={true} component={StudentProfile} exact/>
                 </div>
