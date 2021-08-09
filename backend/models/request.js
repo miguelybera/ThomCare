@@ -116,6 +116,9 @@ const requestSchema = new mongoose.Schema({
     },
     returningFiles:{
         type: Array
+    },
+    requestorNotes:{
+        type: String
     }
 
 })
