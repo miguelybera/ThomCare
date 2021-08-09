@@ -7,6 +7,7 @@ import Header from './components/Header'
 import Login from './components/Login'
 import Register from './components/Register'
 import ForgotPassword from './components/ForgotPassword'
+import StudentProfile from './components/StudentProfile'
 import UpdatePassword from './components/UpdatePassword'
 import Messenger from './components/chat/chatbox/Messenger'
 
@@ -41,6 +42,7 @@ function App() {
                     <Route path='/updatepassword' component={UpdatePassword} exact/>
                     <Route path='/register' component={Register} exact/>
                     <ProtectedRoute path='/messenger' loggedIn={true} component={Messenger} exact/>
+                    <ProtectedRoute path='/profile' loggedIn={true} component={StudentProfile} exact/>
                 </div>
             </div>
         </Router>

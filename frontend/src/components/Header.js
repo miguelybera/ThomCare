@@ -26,19 +26,24 @@ const Header = () => {
         <>
             <Navbar bg="light" expand="lg">
                 <Container>
-                    <Navbar.Brand href="#home">ThomCare</Navbar.Brand>
+                    <Navbar.Brand><Link to='/' style={{textDecoration: 'none', color: 'black'}}>ThomCare</Link></Navbar.Brand>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
-                        <Nav.Link><Link to='/login'>Login</Link></Nav.Link>
-                        <Nav.Link><Link to='/updatepassword'>Update Password</Link></Nav.Link>
-                        <Nav.Link><Link to='/messenger'>Messenger</Link></Nav.Link>
-                        <NavDropdown title={userName ? userName : 'None'} id="basic-nav-dropdown">
-                        <NavDropdown.Item href="#action/3.1">Dashboard</NavDropdown.Item>
-                        <NavDropdown.Item href="#action/3.2">My Profile</NavDropdown.Item>
-                        <NavDropdown.Divider />
-                        <NavDropdown.Item href="#action/3.4" style={{color: 'red'}}><span onClick={() => logoutHandler()}>Log out</span></NavDropdown.Item>
-                        </NavDropdown>
+                        {user ? (<></>) : (<Nav.Link><Link to='/login'>Login</Link></Nav.Link>)}
+                        {user ? (
+                        <>
+                            <NavDropdown title={userName} id="basic-nav-dropdown">
+                                <NavDropdown.Item>Dashboard</NavDropdown.Item>
+                                <NavDropdown.Item><Link to='/profile'>My Profile</Link></NavDropdown.Item>
+                                <NavDropdown.Item><Link to='/messenger'>Messenger</Link></NavDropdown.Item>
+                                <NavDropdown.Divider />
+                                <NavDropdown.Item style={{color: 'red'}}><span onClick={() => logoutHandler()}>Log out</span></NavDropdown.Item>
+                            </NavDropdown>
+                        </>
+                        ) : (
+                        <></>
+                        )}
                     </Nav>
                     </Navbar.Collapse>
                 </Container>

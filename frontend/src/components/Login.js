@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from  'react-redux'
 import { login, clearErrors } from './../actions/userActions'
-import { FloatingLabel, Form, Button, Card, Container, Row } from 'react-bootstrap'
+import { FloatingLabel, Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
 
 const Login = ({history}) => {
     const alert = useAlert()
@@ -68,8 +68,10 @@ const Login = ({history}) => {
                                     style={{marginTop: '10px', borderRadius: '50px', width: '10rem'}}
                                 >Submit</Button>
                             </Form>
-                            <Link to='/forgotpassword'>Forgot password?</Link>
-                            <Link to='/register'>Register</Link>
+                            <Row>
+                                <Col><Link to='/register'>Register</Link> </Col>
+                                <Col><Link to='/forgotpassword'>Forgot your Password?</Link> </Col>
+                            </Row>
                         </Card.Body>
                     </Card>
                 </Row>
