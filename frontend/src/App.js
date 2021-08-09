@@ -7,7 +7,7 @@ import Header from './components/Header'
 import Login from './components/Login'
 import Register from './components/Register'
 import ForgotPassword from './components/ForgotPassword'
-import StudentProfile from './components/StudentProfile'
+import Profile from './components/Profile'
 import UpdatePassword from './components/UpdatePassword'
 import Messenger from './components/chat/chatbox/Messenger'
 
@@ -44,7 +44,7 @@ function App() {
 
                     {/**needs to be logged in */}
                     <ProtectedRoute path='/messenger' loggedIn={true} component={Messenger} exact/>
-                    <ProtectedRoute path='/profile' loggedIn={true} component={StudentProfile} exact/>
+                    <ProtectedRoute path='/profile' loggedIn={true} component={Profile} exact/>
                 </div>
             </div>
         </Router>

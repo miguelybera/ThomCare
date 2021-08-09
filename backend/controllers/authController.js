@@ -157,7 +157,7 @@ exports.resetPassword = catchAsyncErrors(async(req,res,next)=>{
 
 // Register a student => /api/v1/registerStudent
 exports.registerStudent = catchAsyncErrors(async (req, res,next) => {
-    console.log(req.body)
+    
     const { firstName, lastName, studentNumber, course, email, password } = req.body;
 
     if((firstName == null)||(firstName == '')){
@@ -188,7 +188,9 @@ exports.registerStudent = catchAsyncErrors(async (req, res,next) => {
         return next(new ErrorHandler('Please enter password'))
     }
 
-    if(req.body.email.substr(-15) !== "iics@ust.edu.ph"){
+    if(req.body.email.substr(-15) == "iics@ust.edu.ph" || req.body.email.substr(-15) == "cics@ust.edu.ph" ){
+        console.log('tama')
+    } else {
         return next(new ErrorHandler('UST G Suite accounts are only allowed'))
     }
 

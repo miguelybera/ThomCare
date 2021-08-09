@@ -4,7 +4,7 @@ import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from  'react-redux'
 import { FloatingLabel, Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
 
-const StudentProfile = () => {
+const Profile = () => {
 
     const dispatch = useDispatch()
 
@@ -15,6 +15,7 @@ const StudentProfile = () => {
     const [studentNumber, setStudentNumber] = useState('')
     const [email, setEmail] = useState('')
     const [course, setCourse] = useState('')
+    const [role, setRole] = useState('')
 
 
     useEffect(() => {
@@ -23,6 +24,7 @@ const StudentProfile = () => {
         setStudentNumber(user.studentNumber)
         setEmail(user.email)
         setCourse(user.course)
+        setRole(user.role)
 
     }, [user])
 
@@ -41,7 +43,7 @@ const StudentProfile = () => {
                         <Card.Body>
                             <Card.Title style={{margin: '50px 0 20px 0'}}>My Profile</Card.Title>
                             <Form>
-                                <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+                                <Form.Group as={Row} className="mb-3" controlId="formHorizontalName">
                                     <Form.Label column sm={2}>
                                         Name
                                     </Form.Label>
@@ -50,25 +52,39 @@ const StudentProfile = () => {
                                     </Col>
                                 </Form.Group>
 
-                                <Form.Group as={Row} className="mb-3" controlId="formHorizontalPassword">
-                                    <Form.Label column sm={3}>
-                                        Student number
-                                    </Form.Label>
-                                    <Col sm={9}>
-                                        <Form.Control type="text" placeholder="Student number" value={studentNumber} disabled/>
-                                    </Col>
-                                </Form.Group>
+                                {role == 'Student' ? (
+                                    <>
+                                        <Form.Group as={Row} className="mb-3" controlId="formHorizontalStudentNumber">
+                                            <Form.Label column sm={3}>
+                                                Student number
+                                            </Form.Label>
+                                            <Col sm={9}>
+                                                <Form.Control type="text" placeholder="Student number" value={studentNumber} disabled/>
+                                            </Col>
+                                        </Form.Group>
 
-                                <Form.Group as={Row} className="mb-3" controlId="formHorizontalPassword">
-                                    <Form.Label column sm={2}>
-                                        Course
-                                    </Form.Label>
-                                    <Col sm={10}>
-                                        <Form.Control type="text" placeholder="Course" value={course} disabled/>
-                                    </Col>
-                                </Form.Group>
+                                        <Form.Group as={Row} className="mb-3" controlId="formHorizontalCourse">
+                                            <Form.Label column sm={2}>
+                                                Course
+                                            </Form.Label>
+                                            <Col sm={10}>
+                                                <Form.Control type="text" placeholder="Course" value={course} disabled/>
+                                            </Col>
+                                        </Form.Group>
+                                    </>
+                                ) : (
+                                <>
+                                    <Form.Group as={Row} className="mb-3" controlId="formHorizontalRole">
+                                            <Form.Label column sm={3}>
+                                                Role
+                                            </Form.Label>
+                                            <Col sm={9}>
+                                                <Form.Control type="text" placeholder="Role" value={role} disabled/>
+                                            </Col>
+                                        </Form.Group>
+                                </>)}
                                 
-                                <Form.Group as={Row} className="mb-3" controlId="formHorizontalPassword">
+                                <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
                                     <Form.Label column sm={3}>
                                         Email address
                                     </Form.Label>
@@ -86,4 +102,4 @@ const StudentProfile = () => {
     )
 }
 
-export default StudentProfile
+export default Profile

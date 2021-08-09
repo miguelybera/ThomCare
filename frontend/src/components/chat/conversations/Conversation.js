@@ -31,7 +31,7 @@ const Conversations = ({conversation, currentUser}) => {
         <>
             <div className='conversation'>
                 <img className='conversationImg' src={imglink} alt=''/>
-                <span className='conversationName'>{friend && friend.singleUser.firstName + ' ' +friend.singleUser.lastName}</span> {/** nagdodoble id */}
+                <span className='conversationName'>{friend ? friend.singleUser.firstName + ' ' + friend.singleUser.lastName : 'No name'}</span>
             </div>   
         </>
     )

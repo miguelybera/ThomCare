@@ -11,7 +11,7 @@ const Register = ({history}) => {
     const alert = useAlert()
     const dispatch = useDispatch()
 
-    const { error, loading, message } = useSelector(state => state.register)
+    const { error, loading, message, isCreated } = useSelector(state => state.register)
 
     const [user, setUser] = useState({
         firstName: '',
@@ -44,8 +44,8 @@ const Register = ({history}) => {
             dispatch(clearErrors())
         }
         
-        if(message){
-            alert.success('Registration link sent')
+        if(isCreated){
+            alert.success(message)
             history.push('/')
 
             dispatch({
@@ -53,7 +53,7 @@ const Register = ({history}) => {
             })
         }
 
-    }, [dispatch, alert, error, message, history])
+    }, [dispatch, alert, error, message, history, isCreated])
 
     return (
         <>
@@ -65,23 +65,23 @@ const Register = ({history}) => {
                             <Row className="mb-3">
                                 <Form.Group as={Col} controlId="formGridFirstName">
                                 <Form.Label>First Name</Form.Label>
-                                <Form.Control type="text" placeholder="Student first name" name="firstName" value={firstName} onChange={onChange} />
+                                <Form.Control type="text" placeholder="Student first name" name="firstName" value={firstName} onChange={onChange} required/>
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridLastName">
                                 <Form.Label>Last Name</Form.Label>
-                                <Form.Control type="text" placeholder="Student last name" name="lastName" value={lastName} onChange={onChange} />
+                                <Form.Control type="text" placeholder="Student last name" name="lastName" value={lastName} onChange={onChange} required/>
                                 </Form.Group>
                             </Row>
 
                             <Form.Group className="mb-3" controlId="formGridStudentNumber">
                                 <Form.Label>Student Number</Form.Label>
-                                <Form.Control placeholder="20xxxxxxxx" name="studentNumber" value={studentNumber} onChange={onChange} />
+                                <Form.Control placeholder="20xxxxxxxx" name="studentNumber" pattern="20[0-9]{8}" value={studentNumber} onChange={onChange} required/>
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formGridCourse">
                                 <Form.Label>Course/Program</Form.Label>
-                                <Form.Select aria-label="Default select example" name="course" value={course} onChange={onChange} >
+                                <Form.Select aria-label="Default select example" name="course" value={course} onChange={onChange} required>
                                     <option>-</option>
                                     <option value="Computer Science">Computer Science</option>
                                     <option value="Information Systems">Information Systems</option>
@@ -91,18 +91,18 @@ const Register = ({history}) => {
 
                             <Form.Group className="mb-3" controlId="formGridEmail">
                                 <Form.Label>Email address</Form.Label>
-                                <Form.Control type='email' placeholder="juan.delacruz.iics@ust.edu.ph" name="email" value={email} onChange={onChange} />
+                                <Form.Control type='email' placeholder="juan.delacruz.iics@ust.edu.ph" pattern="[a-z]{1,}\.[a-z]{1,}\.(iics|cics)@ust\.edu\.ph" name="email" value={email} onChange={onChange} required/>
                             </Form.Group>
 
                             <Row className="mb-3">
                                 <Form.Group as={Col} controlId="formGridPassword">
                                     <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" placeholder="Password" name="password" value={password} onChange={onChange} />
+                                    <Form.Control type="password" placeholder="Password" name="password" value={password} onChange={onChange} required/>
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridConfirmPassword">
                                     <Form.Label>Confirm Password</Form.Label>
-                                    <Form.Control type="password" placeholder="Confirm password" name="confirmPassword" value={confirmPassword} onChange={onChange} />
+                                    <Form.Control type="password" placeholder="Confirm password" name="confirmPassword" value={confirmPassword} onChange={onChange} required/>
                                 </Form.Group>
                             </Row>
 
