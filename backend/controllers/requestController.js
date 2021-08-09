@@ -15,7 +15,7 @@ const fileMimeTypes = ['image/jpeg', 'image/png', 'images/jpg', 'application/vnd
 // Submit new request => /api/v1/submitRequest
 
 exports.submitRequest = catchAsyncErrors (async (req,res,next)=>{
-    const { requestType, requestorYearLevel, requestorSection}= req.body;
+    const { requestType, requestorYearLevel, requestorSection, requestorNotes}= req.body;
     const fileRequirements = req.files
     if (fileRequirements == null ||fileRequirements == '' ){
        return next(new ErrorHandler('Please Attach required file/s'))
@@ -58,7 +58,8 @@ exports.submitRequest = catchAsyncErrors (async (req,res,next)=>{
         requestorEmail,
         trackingNumber,
         requestorCourse,
-        fileRequirements
+        fileRequirements,
+        requestorNotes
     })
     res.status(201).json({
         success: true,
