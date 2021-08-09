@@ -3,18 +3,23 @@ const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const APIFeatures = require('../utils/apiFeatures');
 const sendUpdateRequest = require('../utils/sendUpdateRequest');
-const today = new Date()
-const dd = String(today.getDate()).padStart(2, '0')
-const mm = String(today.getMonth() + 1).padStart(2, '0')
-const yyyy = today.getFullYear()
-const hrs = String(today.getHours()).padStart(2, '0')
-const minutes = String(today.getMinutes()).padStart(2, '0')
 const Audit = require('../models/audit');
+const path = require('path')
+const multer = require('multer');
+const fileMimeTypes = ['image/jpeg', 'image/png', 'images/jpg', 'application/vnd.ms-excel',
+'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+
+
 
 // Submit new request => /api/v1/submitRequest
 
 exports.submitRequest = catchAsyncErrors (async (req,res,next)=>{
     const { requestType, requestorYearLevel, requestorSection}= req.body;
+    const fileRequirements = req.files
+    if (fileRequirements == null ||fileRequirements == '' ){
+       return next(new ErrorHandler('Please Attach required file/s'))
+    }
     let trackStart
     if(requestType == "Adding/Dropping of Course"){
          trackStart = '1'
@@ -34,20 +39,13 @@ exports.submitRequest = catchAsyncErrors (async (req,res,next)=>{
     if(requestType == "Others"){
          trackStart = '6'
     }
-    req.body.trackingNumber = trackStart + req.user.studentNumber + mm + dd + yyyy+ hrs+ minutes
-    req.body.requestedById = req.user.id
-    req.body.requestorFirstName = req.user.firstName
-    req.body.requestorLastName = req.user.lastName
-    req.body.requestorStudentNumber = req.user.studentNumber
-    req.body.requestorEmail = req.user.email
-    req.body.requestorCourse = req.user.course
-    const requestedById = req.body.requestedById
-    const requestorFirstName = req.body.requestorFirstName
-    const requestorLastName = req.body.requestorLastName
-    const requestorStudentNumber = req.body.requestorStudentNumber
-    const requestorEmail = req.body.requestorEmail
-    const trackingNumber = req.body.trackingNumber
-    const requestorCourse = req.body.requestorCourse
+    const trackingNumber  = trackStart + req.user.studentNumber + Date.now()
+    const requestedById = req.user.id
+    const requestorFirstName = req.user.firstName
+    const requestorLastName = req.user.lastName
+    const requestorStudentNumber = req.user.studentNumber
+    const requestorEmail = req.user.email
+    const requestorCourse  = req.user.course
 
     const request = await Request.create({
         requestType,
@@ -59,7 +57,8 @@ exports.submitRequest = catchAsyncErrors (async (req,res,next)=>{
         requestorStudentNumber,
         requestorEmail,
         trackingNumber,
-        requestorCourse
+        requestorCourse,
+        fileRequirements
     })
     res.status(201).json({
         success: true,
@@ -130,6 +129,7 @@ exports.getSingleRequest = catchAsyncErrors (async (req,res,next)=>{
 
 // Update request   => /api/v1/admin/updateRequest/:requestId
 exports.updateRequest = catchAsyncErrors (async (req,res,next)=>{
+    
     let deptCourse
     if(req.user.role == 'IT Dept Chair'){
         deptCourse = 'Information Technology'
@@ -146,9 +146,11 @@ exports.updateRequest = catchAsyncErrors (async (req,res,next)=>{
     if(rqst.requestorCourse !== deptCourse){
         return next(new ErrorHandler('Role does not have access to this resource'))
     }
+    
     const newRequestData = {
         requestStatus: req.body.requestStatus,
-        managedBy: req.user.id
+        managedBy: req.user.id,
+        returningFiles: req.files
     }
     
     const request = await Request.findByIdAndUpdate(req.params.requestId, newRequestData,{
@@ -156,6 +158,9 @@ exports.updateRequest = catchAsyncErrors (async (req,res,next)=>{
         runValidators: true,
         useFindAndModify: false
     })
+    
+
+    
     if (req.body.remarksMessage == null){
         req.body.remarksMessage = ''
     }
