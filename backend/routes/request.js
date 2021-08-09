@@ -4,7 +4,7 @@ const path = require('path')
 const multer = require('multer');
 const fileMimeTypes = ['image/jpeg', 'image/png', 'images/jpg', 'application/vnd.ms-excel',
 'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/pdf'];
 const fileStorageStudent = multer.diskStorage({
     destination:(req,file,cb) =>{
         const ext = path.extname(file.originalname);
@@ -61,7 +61,7 @@ router.route('/submitRequest').post(isAuthenticatedUser, thomcareStudentUpload.a
 router.route('/myRequests').get(isAuthenticatedUser, myRequests);
 router.route('/admin/requests').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getSubmittedRequests);
 router.route('/request/:requestId').get(getSingleRequest); // no isAuthenticatedUser because a student can open request details while not signed in because of the tracker
-router.route('/admin/updateRequest/:requestId').put(isAuthenticatedUser, thomcareAdminUpload.array('returningFiles',5),authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), updateRequest );
+router.route('/admin/updateRequest/:requestId').put(isAuthenticatedUser, thomcareAdminUpload.array('returningFiles',5),authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), updateRequest );
 router.route('/deleteRequest/:requestId').delete(isAuthenticatedUser, deleteRequest);
 router.route('/requestTracker').get(requestTracker);
 
