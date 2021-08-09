@@ -20,7 +20,7 @@ exports.registerUser = catchAsyncErrors(async (req, res,next) =>{
     if(req.body.password !== req.body.confirmPassword){
         return next(new ErrorHandler('Password does not match'))
     }
-    if(req.body.email.substr(-15) !== "iics@ust.edu.ph"){
+    if((req.body.email.substr(-15) !== "iics@ust.edu.ph")||req.body.email.substr(-15) !== "cics@ust.edu.ph"){
         return next(new ErrorHandler('UST GSuite accounts are only allowed'))
     }
     const user = await User.create({
@@ -188,7 +188,7 @@ exports.registerStudent = catchAsyncErrors(async (req, res,next) => {
         return next(new ErrorHandler('Please enter password'))
     }
 
-    if(req.body.email.substr(-15) !== "iics@ust.edu.ph"){
+    if((req.body.email.substr(-15) !== "iics@ust.edu.ph")||(req.body.email.substr(-15) !== "cics@ust.edu.ph")){
         return next(new ErrorHandler('UST G Suite accounts are only allowed'))
     }
 
