@@ -20,7 +20,7 @@ exports.registerUser = catchAsyncErrors(async (req, res,next) =>{
     if(req.body.password !== req.body.confirmPassword){
         return next(new ErrorHandler('Password does not match'))
     }
-    if((req.body.email.substr(-15) !== "iics@ust.edu.ph")||req.body.email.substr(-15) !== "cics@ust.edu.ph"){
+    if((req.body.email.substr(-15) !== "iics@ust.edu.ph")||req.body.email.substr(-15) !== "cics@ust.edu.ph"){ // will change to ust.edu.ph only after development
         return next(new ErrorHandler('UST GSuite accounts are only allowed'))
     }
     const user = await User.create({
