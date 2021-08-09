@@ -47,17 +47,19 @@ const Login = ({history}) => {
                                     className="mb-3"
                                 >
                                     <Form.Control
-                                        type="email" 
-                                        placeholder="name@example.com" 
-                                        value={email}
-                                        onChange={e => setEmail(e.target.value)}
-                                        required
+                                        type='email' 
+                                        placeholder="juan.delacruz.iics@ust.edu.ph" 
+                                        pattern="[a-z]{1,}\.[a-z]{1,}\.(iics|cics)@ust\.edu\.ph" 
+                                        name="email" 
+                                        value={email} 
+                                        onChange={e => setEmail(e.target.value)} required
                                     />
                                 </FloatingLabel>
                                 <FloatingLabel controlId="floatingPassword" label="Password">
                                     <Form.Control
                                         type="password" 
                                         placeholder="Password" 
+                                        name="password"
                                         value={password} 
                                         onChange={e => setPassword(e.target.value)}
                                         required

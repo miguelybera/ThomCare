@@ -17,6 +17,10 @@ import {
     REGISTER_USER_SUCCESS,
     REGISTER_USER_FAIL,
     REGISTER_USER_RESET,
+    FORGOT_PASSWORD_REQUEST,
+    FORGOT_PASSWORD_SUCCESS,
+    FORGOT_PASSWORD_FAIL,
+    FORGOT_PASSWORD_RESET,
     CLEAR_ERRORS
 } from '../constants/userConstants'
 
@@ -188,4 +192,48 @@ export const registerReducer = ( state = { }, action ) => {
         default:
             return state
     }
+}
+
+//forgot password
+export const forgotPasswordReducer = (state = {}, action) => {
+    switch (action.type) {
+
+        case FORGOT_PASSWORD_REQUEST:
+            return {
+                loading: true,
+                ...state,
+                error: null
+            }
+
+        case FORGOT_PASSWORD_SUCCESS:
+            return {
+                loading: false,
+                ...state,
+                message: action.payload
+            }
+
+        case FORGOT_PASSWORD_FAIL:
+            return {
+                loading: false,
+                ...state,
+                error: action.payload
+            }
+
+        case FORGOT_PASSWORD_RESET:
+            return {
+                ...state,
+                loading: false,
+                message: null
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state
+    }
+
 }

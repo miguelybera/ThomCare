@@ -6,7 +6,8 @@ import {
     authReducer,
     getUsersReducer,
     userDetailsReducer,
-    registerReducer
+    registerReducer,
+    forgotPasswordReducer
 } from './reducers/userReducers'
 
 import {
@@ -21,7 +22,8 @@ const reducer = combineReducers({
     singleUser: userDetailsReducer,
     conversations: conversationReducer,
     messages: messageReducer,
-    register: registerReducer
+    register: registerReducer,
+    forgotPassword: forgotPasswordReducer
 })
 
 let initialState = {} //contains all the data we want to put in this state just before loading the application
