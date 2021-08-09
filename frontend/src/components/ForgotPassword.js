@@ -13,7 +13,7 @@ const ForgotPassword = ({history}) => {
 
     const [email, setEmail] = useState('')
 
-    const { error, message } = useSelector(state => state.forgotPassword)
+    const { error, message, loading } = useSelector(state => state.forgotPassword)
 
     useEffect(() => {
         if(error){
@@ -65,7 +65,7 @@ const ForgotPassword = ({history}) => {
                                 <Button
                                     type='submit' 
                                     style={{marginTop: '10px', borderRadius: '50px', width: '10rem'}}
-                                >Submit</Button>
+                                    disabled={loading ? true : false}>Submit</Button>
                             </Form>
                         </Card.Body>
                     </Card>
