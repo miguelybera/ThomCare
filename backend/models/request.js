@@ -113,6 +113,9 @@ const requestSchema = new mongoose.Schema({
     fileRequirements:{
         type:Array,
         required: [true, 'Please attach required documents']
+    },
+    returningFiles:{
+        type: Array
     }
 
 })

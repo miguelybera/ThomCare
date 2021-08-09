@@ -4,6 +4,12 @@ const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const APIFeatures = require('../utils/apiFeatures');
 const sendUpdateRequest = require('../utils/sendUpdateRequest');
 const Audit = require('../models/audit');
+const path = require('path')
+const multer = require('multer');
+const fileMimeTypes = ['image/jpeg', 'image/png', 'images/jpg', 'application/vnd.ms-excel',
+'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
+'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+
 
 
 // Submit new request => /api/v1/submitRequest
@@ -11,9 +17,9 @@ const Audit = require('../models/audit');
 exports.submitRequest = catchAsyncErrors (async (req,res,next)=>{
     const { requestType, requestorYearLevel, requestorSection}= req.body;
     const fileRequirements = req.files
-    //if (fileRequirements == null ||fileRequirements == '' ){
-      //  return next(new ErrorHandler('Please Attach required file/s'))
-    //}
+    if (fileRequirements == null ||fileRequirements == '' ){
+       return next(new ErrorHandler('Please Attach required file/s'))
+    }
     let trackStart
     if(requestType == "Adding/Dropping of Course"){
          trackStart = '1'
@@ -123,6 +129,7 @@ exports.getSingleRequest = catchAsyncErrors (async (req,res,next)=>{
 
 // Update request   => /api/v1/admin/updateRequest/:requestId
 exports.updateRequest = catchAsyncErrors (async (req,res,next)=>{
+    
     let deptCourse
     if(req.user.role == 'IT Dept Chair'){
         deptCourse = 'Information Technology'
@@ -139,9 +146,11 @@ exports.updateRequest = catchAsyncErrors (async (req,res,next)=>{
     if(rqst.requestorCourse !== deptCourse){
         return next(new ErrorHandler('Role does not have access to this resource'))
     }
+    
     const newRequestData = {
         requestStatus: req.body.requestStatus,
-        managedBy: req.user.id
+        managedBy: req.user.id,
+        returningFiles: req.files
     }
     
     const request = await Request.findByIdAndUpdate(req.params.requestId, newRequestData,{
@@ -149,6 +158,9 @@ exports.updateRequest = catchAsyncErrors (async (req,res,next)=>{
         runValidators: true,
         useFindAndModify: false
     })
+    
+
+    
     if (req.body.remarksMessage == null){
         req.body.remarksMessage = ''
     }
