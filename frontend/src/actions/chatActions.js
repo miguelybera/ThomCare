@@ -89,9 +89,10 @@ export const createConversation = (convo) => async(dispatch) => {
         })
     }
     catch (error) {
+        console.log(error.response.data.errMessage)
         dispatch({
             type: CREATE_CONVERSATION_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
             }
         )
     }

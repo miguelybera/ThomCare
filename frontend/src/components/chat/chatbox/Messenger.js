@@ -13,7 +13,7 @@ import {io} from 'socket.io-client'
 import {
     GET_MESSAGES_REQUEST,
     GET_MESSAGES_SUCCESS,
-    GET_MESSAGES_FAIL,
+    GET_MESSAGES_FAIL, 
     CLEAR_ERRORS
 } from '../../../constants/chatConstants'
 import {
@@ -26,11 +26,12 @@ import MetaData from '../../layout/MetaData'
 
 const Messenger = () => {
     const dispatch = useDispatch()
+    const alert = useAlert();
 
     const { user } = useSelector(state => state.auth)
     const { conversations } = useSelector(state => state.conversations)
     const { messages } = useSelector(state => state.messages)
-    const { success } = useSelector(state => state.createConvo)
+    const { success, error } = useSelector(state => state.createConvo)
     
     const [currentChat, setCurrentChat] = useState(null)
     const [convo, setConvo] = useState(null)
@@ -186,8 +187,12 @@ const Messenger = () => {
     useEffect(() => {
         if(success) {
             setCurrentChat(convo)
+            alert.success(success)
         }
-    }, [dispatch, success, convo])
+        if(error){
+            alert.error(error)
+        }
+    }, [dispatch, success, convo, error])
 
     const displayUsers = o => {
         if(o._id == userId) {
