@@ -3,6 +3,7 @@ import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { FloatingLabel, Form, Button, Card, Container, Row } from 'react-bootstrap'
 import axios from 'axios'
+import MetaData from './layout/MetaData'
 
 const VerifyRegistration = ({history, match}) => {
     const alert = useAlert()
@@ -38,6 +39,7 @@ const VerifyRegistration = ({history, match}) => {
 
     return (
         <>
+            <MetaData title={'Registration successful'}/>
             <Container fluid>
                 <Row className='justify-content-md-center' style={{marginTop: '50px'}}>
                     <Card style={{ width: '30rem', align: 'center' }}>

@@ -22,6 +22,7 @@ import {
     ALL_USERS_FAIL
 } from '../../../constants/userConstants'
 import { Modal, Button } from 'react-bootstrap'
+import MetaData from '../../layout/MetaData'
 
 const Messenger = () => {
     const dispatch = useDispatch()
@@ -207,6 +208,7 @@ const Messenger = () => {
 
     return (
         <>
+            <MetaData title={'Messages'}/>
             <Modal
                 show={show}
                 onHide={handleClose}

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from  'react-redux'
 import { FloatingLabel, Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
+import MetaData from './layout/MetaData'
 
 const Profile = () => {
 
@@ -36,6 +37,7 @@ const Profile = () => {
 
     return (
         <>
+            <MetaData title={'My Profile'}/>
             <Container fluid>
                 {/** add here if user.role = 'something' display , else display student profile*/}
                 <Row className='justify-content-md-center' style={{marginTop: '50px'}}>

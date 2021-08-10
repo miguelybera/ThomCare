@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from  'react-redux'
 import { forgotPassword, clearErrors } from './../actions/userActions'
 import { FORGOT_PASSWORD_RESET } from './../constants/userConstants'
 import { FloatingLabel, Form, Button, Card, Container, Row } from 'react-bootstrap'
-
+import MetaData from './layout/MetaData'
 
 const ForgotPassword = ({history}) => {
     const alert = useAlert();
@@ -40,6 +40,7 @@ const ForgotPassword = ({history}) => {
     
     return (
         <>
+            <MetaData title={'Forgot your password?'}/>
             <Container fluid>
                 <Row className='justify-content-md-center' style={{marginTop: '50px'}}>
                     <Card style={{ width: '30rem', align: 'center' }}>

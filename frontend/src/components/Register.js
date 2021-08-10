@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from  'react-redux'
 import { register, clearErrors } from './../actions/userActions'
 import { REGISTER_USER_RESET } from './../constants/userConstants'
 import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
+import MetaData from './layout/MetaData'
 
 const Register = ({history}) => {
 
@@ -57,6 +58,7 @@ const Register = ({history}) => {
 
     return (
         <>
+            <MetaData title={'Register'}/>
             <Container fluid>
                 <Card>
                     <Card.Body>

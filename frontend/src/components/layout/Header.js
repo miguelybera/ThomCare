@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from  'react-redux'
 import { useAlert } from 'react-alert'
 import { Link } from 'react-router-dom'
 import { Nav, NavDropdown, Navbar, Container } from 'react-bootstrap'
-import { logout } from '../actions/userActions'
+import { logout } from '../../actions/userActions'
 
 const Header = () => {
     const dispatch = useDispatch()

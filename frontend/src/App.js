@@ -3,8 +3,11 @@ import { useSelector } from 'react-redux'
 import store from './store'
 import { useEffect } from 'react'
 
-import Header from './components/Header'
+import Header from './components/layout/Header'
+import ScrollToTop from './components/layout/ScrollToTop'
+
 import Login from './components/Login'
+import Announcements from './components/Announcements'
 import Register from './components/Register'
 import ForgotPassword from './components/ForgotPassword'
 import Profile from './components/Profile'
@@ -35,19 +38,21 @@ function App() {
   return (
         <Router>
             <div className="App">
-                <Header/>
-                <div className='container container-fluid'>
-                    <Route path='/' component={Home} exact/>      
-                    <Route path='/login' component={Login} exact/>
-                    <Route path='/forgotpassword' component={ForgotPassword} exact/>
-                    <Route path='/password/reset/:token' component={NewPassword} exact/>
-                    <Route path='/verify/account/:token' component={VerifyRegistration} exact/>
-                    <Route path='/register' component={Register} exact/>
+                <ScrollToTop>
+                    <Header/>
+                    <div className='container container-fluid'>
+                        <Route path='/' component={Announcements} exact/>      
+                        <Route path='/login' component={Login} exact/>
+                        <Route path='/forgotpassword' component={ForgotPassword} exact/>
+                        <Route path='/password/reset/:token' component={NewPassword} exact/>
+                        <Route path='/verify/account/:token' component={VerifyRegistration} exact/>
+                        <Route path='/register' component={Register} exact/>
 
-                    {/**needs to be logged in */}
-                    <ProtectedRoute path='/messenger' loggedIn={true} component={Messenger} exact/>
-                    <ProtectedRoute path='/profile' loggedIn={true} component={Profile} exact/>
-                </div>
+                        {/**needs to be logged in */}
+                        <ProtectedRoute path='/messenger' loggedIn={true} component={Messenger} exact/>
+                        <ProtectedRoute path='/profile' loggedIn={true} component={Profile} exact/>
+                    </div>
+                </ScrollToTop>
             </div>
         </Router>
   );
