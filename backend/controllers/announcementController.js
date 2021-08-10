@@ -47,6 +47,24 @@ exports.newAnnouncement = catchAsyncErrors (async (req,res,next)=>{
             } 
         }
     }
+    if(course == "Computer Science"){
+        if(track == "Core Computer Science" || track == "Game Development" || track == "Data Science" || track == "All"){
+        }else{
+            return next(new ErrorHandler('Course does not match this track', 400))
+        } 
+    }
+    if(course == "Information Technology"){
+        if(track == "Network and Security" || track == "Web and Mobile App Development" || track == "IT Automation" || track == "All"){
+        }else{
+            return next(new ErrorHandler('Course does not match this track', 400))
+        } 
+    }
+    if(course === "Information Systems"){
+        if(track == "Business Analytics" || track == "Service Management" || track == "All"){
+        }else{
+            return next(new ErrorHandler('Course does not match this track', 400))
+        } 
+    }
         
     
     const announcement = await Announcement.create({
