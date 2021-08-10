@@ -24,7 +24,7 @@ const ChatOnline = ({onlineUsers, currentUser, setCurrentChat}) => {
                     type: ALL_USERS_REQUEST
                 })
         
-                const { data } = await axios.get('/api/v1/admin/allUsers')
+                const { data } = await axios.get('/api/v1/chat/users')
                 
                 setFriends(data.users)
 

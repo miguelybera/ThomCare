@@ -12,7 +12,9 @@ import {
 
 import {
     conversationReducer,
-    messageReducer
+    messageReducer,
+    sendMessageReducer,
+    createConversationReducer
 } from './reducers/chatReducers'
 
 
@@ -23,7 +25,9 @@ const reducer = combineReducers({
     conversations: conversationReducer,
     messages: messageReducer,
     register: registerReducer,
-    forgotPassword: forgotPasswordReducer
+    forgotPassword: forgotPasswordReducer,
+    sendMessage: sendMessageReducer,
+    createConvo: createConversationReducer
 })
 
 let initialState = {} //contains all the data we want to put in this state just before loading the application

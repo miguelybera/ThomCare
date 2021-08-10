@@ -18,7 +18,7 @@ const Conversations = ({conversation, currentUser}) => {
 
         const getUser = async () => {
             try {
-                const { data } = await axios.get(`/api/v1/admin/user/${receiver}`)
+                const { data } = await axios.get(`/api/v1/chat/user/${receiver}`)
                 setFriend(data)
             } catch (err) {
                 console.log(err)

@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from  'react-redux'
 import './messenger.css'
+import '../online/chatonline.css'
 import Conversation from '../conversations/Conversation'
 import Message from '../message/Message'
 import ChatOnline from '../online/ChatOnline'
-import { sendMessage, getConversations, getMessages } from '../../../actions/chatActions'
+import { sendMessage, getConversations, createConversation } from '../../../actions/chatActions'
 import axios from 'axios'
 import {io} from 'socket.io-client'
 import {
@@ -15,6 +16,12 @@ import {
     GET_MESSAGES_FAIL,
     CLEAR_ERRORS
 } from '../../../constants/chatConstants'
+import {
+    ALL_USERS_REQUEST,
+    ALL_USERS_SUCCESS,
+    ALL_USERS_FAIL
+} from '../../../constants/userConstants'
+import { Modal, Button } from 'react-bootstrap'
 
 const Messenger = () => {
     const dispatch = useDispatch()
@@ -22,8 +29,10 @@ const Messenger = () => {
     const { user } = useSelector(state => state.auth)
     const { conversations } = useSelector(state => state.conversations)
     const { messages } = useSelector(state => state.messages)
+    const { success } = useSelector(state => state.createConvo)
     
     const [currentChat, setCurrentChat] = useState(null)
+    const [convo, setConvo] = useState(null)
     const [messageList, setMessageList] = useState([])
     const [newMessage, setNewMessage] = useState('')
     const [arrivalMessage, setArrivalMessage] = useState('')
@@ -41,6 +50,35 @@ const Messenger = () => {
     if (currentChat && currentChat._id) {
         currentChatId = currentChat._id
     }
+
+
+    const [users, setUsers] = useState([])
+
+    useEffect(() => {
+        const getUsers = async() => {
+            try{
+                dispatch({
+                    type: ALL_USERS_REQUEST
+                })
+        
+                const { data } = await axios.get('/api/v1/chat/users')
+                
+                setUsers(data.users)
+
+                dispatch({
+                    type: ALL_USERS_SUCCESS,
+                    payload: data
+                })
+            }
+            catch(error){
+                dispatch({
+                    type: ALL_USERS_FAIL,
+                    payload: error.response.data.message
+                })
+            }
+        }
+        getUsers()
+    }, [user])
 
     //sockets start
     const socket = useRef()
@@ -72,6 +110,7 @@ const Messenger = () => {
         })
     }, [user])
     //sockets end
+
     useEffect(() => {
         dispatch(getConversations(userId))
         
@@ -126,12 +165,81 @@ const Messenger = () => {
         setNewMessage('')
     }
 
+    //modal
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+    
+    const createConvo = (receiverId) => {
+        const conversationDetails = {
+            receiverId,
+            senderId: userId
+        }
+
+        setConvo(conversationDetails)
+        dispatch(createConversation(convo))
+        handleClose()
+    }
+
+    useEffect(() => {
+        if(success) {
+            setCurrentChat(convo)
+        }
+    }, [dispatch, success, convo])
+
+    const displayUsers = o => {
+        if(o._id == userId) {
+            
+        } else {
+            return (
+                <>
+                    <div className='chatOnlineFriend' onClick={() => createConvo(o._id)}>
+                        <div className='chatOnlineImgContainer'>
+                            <img className='chatOnlineImg' src='https://res.cloudinary.com/exstrial/image/upload/v1627805763/ShopIT/sanake_ibs7sb.jpg' alt=''/>
+                        </div>
+                        <span className='chatOnlineName'>{o?.firstName}</span>
+                    </div>
+                </>
+            )
+        }
+    }
+
     return (
         <>
+            <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>New message</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <>
+                        <div className='chatOnline'>
+                            {users && users.map(o => (
+                                displayUsers(o)
+                            ))}
+                            
+                        </div>  
+                    </>
+                </Modal.Body>
+                <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                    Close
+                </Button>
+                </Modal.Footer>
+            </Modal>
+            
             <div className='messenger'>
                 <div className='chatMenu'>
                     <div className='chatMenuWrapper'>
                         <input placeholder='Search for friends' className='chatMenuInput'/>
+                        <Button variant="primary" onClick={handleShow}>
+                            + New message
+                        </Button>
                         {conversations.map((c) => (
                             <Fragment>
                                 <div onClick={() => {

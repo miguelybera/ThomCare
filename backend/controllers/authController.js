@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken');
  
 
 // Register a user => /api/v1/admin/register
-exports.registerUser = catchAsyncErrors(async (req, res,next) =>{
+exports.registerAdmin = catchAsyncErrors(async (req, res,next) =>{
     const { firstName, lastName, email, password}= req.body;
     req.body.studentNumber = '0000000000',
     req.body.course = 'N/A'
@@ -41,7 +41,7 @@ exports.registerUser = catchAsyncErrors(async (req, res,next) =>{
 })
 
 // Login User => /api/v1/login
-exports.loginUser = catchAsyncErrors(async(req,res,next)=>{
+exports.login = catchAsyncErrors(async(req,res,next)=>{
     const { email, password }= req.body;
    
     //Checks if email and password is entered by user
@@ -304,8 +304,8 @@ exports.updateProfile = catchAsyncErrors(async(req,res,next)=>{
     })
 })
 
-// Get all users admin => /api/v1/admin/allUsers
-exports.getAllUsers = catchAsyncErrors(async(req,res,next)=>{
+// Get all users admin => /api/v1/admin/users
+exports.getUsers = catchAsyncErrors(async(req,res,next)=>{
     const users = await User.find();
 
     res.status(200).json({
@@ -329,7 +329,7 @@ exports.getUser = catchAsyncErrors(async(req,res,next)=>{
 })
 
 // Update other user profile => /api/v1/admin/user/:id
-exports.updateUserProfile = catchAsyncErrors(async(req,res,next)=>{
+exports.updateUser = catchAsyncErrors(async(req,res,next)=>{
     const newUserData = {
         role : req.body.role
     }
@@ -358,7 +358,7 @@ exports.deleteUser = catchAsyncErrors(async(req,res,next)=>{
 })
 
 // Get a user => /api/v1/chat/user/:id
-exports.getUserChat = catchAsyncErrors(async(req,res,next)=>{
+exports.getChatUser = catchAsyncErrors(async(req,res,next)=>{
     const singleUser = await User.findById(req.params.id);
     
     if(!singleUser){
@@ -371,8 +371,8 @@ exports.getUserChat = catchAsyncErrors(async(req,res,next)=>{
 })
 
 
-// Get all users for chat => /api/v1/chat/allUsers
-exports.getAllUserChat = catchAsyncErrors(async(req,res,next)=>{
+// Get all users for chat => /api/v1/chat/users
+exports.getChatUsers = catchAsyncErrors(async(req,res,next)=>{
     const users = await User.find();
 
     res.status(200).json({

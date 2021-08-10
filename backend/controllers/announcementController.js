@@ -3,7 +3,7 @@ const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const APIFeatures = require('../utils/apiFeatures');
 
-// Create new announcement => /api/v1/announcement/new
+// Create new announcement => /api/v1/new/announcement
 exports.newAnnouncement = catchAsyncErrors (async (req,res,next)=>{
     const { title, description, course, yearLevel, track}= req.body;
    const createdBy = req.user.id;
@@ -55,11 +55,10 @@ exports.newAnnouncement = catchAsyncErrors (async (req,res,next)=>{
         success: true,
         announcement
     })
-
 })
 
 // Get all announcements /api/v1/admin/allAnnouncements
-exports.getAllAnnouncements = catchAsyncErrors (async (req,res,next) => {
+exports.getAdminAnnouncements = catchAsyncErrors (async (req,res,next) => {
     const resPerPage = 15;
     const announcementCount = await Announcement.countDocuments()
     const apiFeatures = new APIFeatures(Announcement.find(), req.query)
@@ -106,7 +105,6 @@ exports.getAnnouncements = catchAsyncErrors (async (req,res,next) => {
 })
 
 // Get single announcement /api/v1/announcement/:id
-
 exports.getSingleAnnouncement = catchAsyncErrors (async (req, res, next) =>{
     const announcement = await Announcement.findById(req.params.id);
     

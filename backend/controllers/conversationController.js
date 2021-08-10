@@ -7,10 +7,19 @@ const User = require('../models/user');
 // Create conversation => /createConversation
 exports.createConversation = catchAsyncErrors (async (req,res,next)=>{
     const receiverUser = await User.findById(req.body.receiverId);
+
     if(!receiverUser){
         return next(new ErrorHandler(`User not found with this id:(${req.body.receiverId})`));
+    } 
+
+    const exisitingConversation = await Conversation.findOne({
+        members: { $all: [req.params.firstUserId, req.params.secondUserId] },
+    });
+
+    if(!existingConversation) {
+        return next(new ErrorHandler(`Conversation exists`))
     }
-    
+
     const newConversation = new Conversation({
         members: [req.user.id, req.body.receiverId]
     });
@@ -69,12 +78,30 @@ exports.getSingleConversation = catchAsyncErrors (async (req,res,next)=>{
 //from github
 //new conv
 exports.createConvo = catchAsyncErrors (async (req,res,next)=>{
+    //check if user is same
+    const receiverUser = await User.findById(req.body.receiverId);
+
+    if(req.body.receiverId === req.body.senderId){
+        return next(new ErrorHandler(`Cannot create conversation with self`));
+    } 
+    
+    //check if existing
+    const existingConversation = await Conversation.findOne({
+        members: { $all: [req.body.receiverId, req.body.senderId] },
+    });
+
+    if(existingConversation) {
+        return next(new ErrorHandler(`Conversation exists`))
+    }
+    
+
     const newConversation = new Conversation({
         members: [req.body.senderId, req.body.receiverId],
     }); 
     
     try {
         const savedConversation = await newConversation.save();
+        
         res.status(200).json(savedConversation);
     } catch (err) {
         res.status(500).json(err);
@@ -105,6 +132,7 @@ exports.getBothConvo = catchAsyncErrors (async (req,res,next)=>{
             members: { $all: [req.params.firstUserId, req.params.secondUserId] },
         });
 
+        console.log(conversation)
         res.status(200).json({
             success: true,
             conversation

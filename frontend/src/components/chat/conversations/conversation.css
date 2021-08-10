@@ -20,3 +20,7 @@
 .conversationName {
     font-weight: 500;
 }
+
+.currentChat {
+    background-color: red
+}

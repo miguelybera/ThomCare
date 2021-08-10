@@ -3,6 +3,9 @@ import {
     SEND_MESSAGE_REQUEST,
     SEND_MESSAGE_SUCCESS,
     SEND_MESSAGE_FAIL,
+    CREATE_CONVERSATION_REQUEST,
+    CREATE_CONVERSATION_SUCCESS,
+    CREATE_CONVERSATION_FAIL,
     GET_CONVERSATIONS_REQUEST,
     GET_CONVERSATIONS_SUCCESS,
     GET_CONVERSATIONS_FAIL,
@@ -63,23 +66,31 @@ export const sendMessage = ( message ) => async (dispatch, getState) => {
     }
 }
 
-export const getMessages = (id) => async(dispatch) => {
+export const createConversation = (convo) => async(dispatch) => {
 
     try {
         dispatch({
-            type: GET_MESSAGES_REQUEST
+            type: CREATE_CONVERSATION_REQUEST
         })
 
-        const { data } = await axios.get(`/api/v1/getMsg/${id}`)
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        console.log(convo)
+
+        const { data } = await axios.post(`/api/v1/createConvo`, convo, config)
 
         dispatch({
-            type: GET_MESSAGES_SUCCESS,
+            type: CREATE_CONVERSATION_SUCCESS,
             payload: data
         })
     }
     catch (error) {
         dispatch({
-            type: GET_MESSAGES_FAIL,
+            type: CREATE_CONVERSATION_FAIL,
             payload: error.response.data.message
             }
         )

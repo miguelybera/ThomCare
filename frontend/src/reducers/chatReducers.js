@@ -3,6 +3,10 @@ import {
     SEND_MESSAGE_SUCCESS,
     SEND_MESSAGE_FAIL,
     SEND_MESSAGE_RESET,
+    CREATE_CONVERSATION_REQUEST,
+    CREATE_CONVERSATION_SUCCESS,
+    CREATE_CONVERSATION_FAIL,
+    CREATE_CONVERSATION_RESET,
     GET_CONVERSATIONS_REQUEST,
     GET_CONVERSATIONS_SUCCESS,
     GET_CONVERSATIONS_FAIL,
@@ -14,6 +18,47 @@ import {
     GET_MESSAGES_FAIL,
     CLEAR_ERRORS
 } from '../constants/chatConstants'
+
+//create conversation
+export const createConversationReducer = (state = {}, action) => {
+    switch(action.type){
+        
+        case CREATE_CONVERSATION_REQUEST:
+            return {
+                loading: true
+            }
+
+        case CREATE_CONVERSATION_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                success: action.payload
+            }
+
+        case CREATE_CONVERSATION_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: true,
+                success: false
+            }
+
+        case CREATE_CONVERSATION_RESET:
+            return {
+                ...state,
+                success: false
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+        
+        default:
+            return state
+    }
+}
 
 //get conversations
 export const conversationReducer = (state = { conversations: [] }, action ) => {
@@ -82,7 +127,7 @@ export const bothConversationReducer = (state = { conversation: {} }, action ) =
 }
 
 //send message
-export const sendMessage = (state = {}, action) => {
+export const sendMessageReducer = (state = {}, action) => {
     switch(action.type){
         
         case SEND_MESSAGE_REQUEST:
