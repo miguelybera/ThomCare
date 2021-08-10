@@ -252,10 +252,7 @@ exports.verifyStudent = catchAsyncErrors(async (req, res,next) =>{
                 success: true,
                 message: "User has been registered"
             })
-            
         })
-        
-
     }else{
         return next(new ErrorHandler('Token is invalid or expired'))
     }

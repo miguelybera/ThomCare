@@ -17,6 +17,9 @@ import {
     REGISTER_USER_SUCCESS,
     REGISTER_USER_FAIL,
     REGISTER_USER_RESET,
+    VERIFY_STUDENT_REQUEST,
+    VERIFY_STUDENT_SUCCESS,
+    VERIFY_STUDENT_FAIL,
     FORGOT_PASSWORD_REQUEST,
     FORGOT_PASSWORD_SUCCESS,
     FORGOT_PASSWORD_FAIL,
@@ -158,6 +161,7 @@ export const userDetailsReducer = (state = { singleUser: {} }, action ) => {
 export const registerReducer = ( state = { }, action ) => {
     switch(action.type){
         case REGISTER_USER_REQUEST:
+        case VERIFY_STUDENT_REQUEST:
             return {
                 ...state,
                 error: null,
@@ -166,6 +170,7 @@ export const registerReducer = ( state = { }, action ) => {
             }
 
         case REGISTER_USER_SUCCESS:
+        case VERIFY_STUDENT_SUCCESS:
             return {
                 ...state,
                 loading: false,
@@ -174,6 +179,7 @@ export const registerReducer = ( state = { }, action ) => {
             }
 
         case REGISTER_USER_FAIL:
+        case VERIFY_STUDENT_FAIL:
             return {
                 ...state,
                 loading: false,

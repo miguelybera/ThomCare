@@ -30,7 +30,7 @@ const Login = ({history}) => {
         if(error){
             alert.error(error)
             dispatch(clearErrors())
-        } //loadError in load_user_fail
+        }
 
     }, [dispatch, alert, isAuthenticated, error])
 

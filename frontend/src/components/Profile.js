@@ -2,6 +2,7 @@ import React, { Fragment, useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from  'react-redux'
+import { clearErrors } from './../actions/userActions'
 import { FloatingLabel, Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
 import MetaData from './layout/MetaData'
 
@@ -9,7 +10,7 @@ const Profile = () => {
 
     const dispatch = useDispatch()
 
-    const { user } = useSelector(state => state.auth)
+    const { user, error, loading } = useSelector(state => state.auth)
 
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
@@ -17,7 +18,6 @@ const Profile = () => {
     const [email, setEmail] = useState('')
     const [course, setCourse] = useState('')
     const [role, setRole] = useState('')
-
 
     useEffect(() => {
         setFirstName(user.firstName)
@@ -28,6 +28,13 @@ const Profile = () => {
         setRole(user.role)
 
     }, [user])
+
+    useEffect(() => {
+        if(error){
+            alert.error(error)
+            dispatch(clearErrors())
+        }
+    }, [dispatch, error])
 
     const [edit, setEdit] = useState(false)
 

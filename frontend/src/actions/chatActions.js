@@ -32,7 +32,7 @@ export const getConversations = (id) => async(dispatch) => {
     catch (error) {
         dispatch({
             type: GET_CONVERSATIONS_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
             }
         )
     }
@@ -61,7 +61,7 @@ export const sendMessage = ( message ) => async (dispatch, getState) => {
     catch (error) {
         dispatch({
             type: SEND_MESSAGE_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
         })
     }
 }
@@ -79,8 +79,6 @@ export const createConversation = (convo) => async(dispatch) => {
             }
         }
 
-        console.log(convo)
-
         const { data } = await axios.post(`/api/v1/createConvo`, convo, config)
 
         dispatch({
@@ -89,7 +87,6 @@ export const createConversation = (convo) => async(dispatch) => {
         })
     }
     catch (error) {
-        console.log(error.response.data.errMessage)
         dispatch({
             type: CREATE_CONVERSATION_FAIL,
             payload: error.response.data.errMessage
