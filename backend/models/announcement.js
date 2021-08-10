@@ -71,6 +71,9 @@ const announcementSchema = new mongoose.Schema({
             type: mongoose.Schema.ObjectId,
             ref: 'User',
             required: true
+        },
+        fileAttachments:{
+            type: Array
         }
 })
 

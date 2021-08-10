@@ -193,10 +193,16 @@ exports.updateRequest = catchAsyncErrors (async (req,res,next)=>{
         return next(new ErrorHandler('Role does not have access to this resource'))
     }
     
-    const newRequestData = {
+    let newRequestData = {
         requestStatus: req.body.requestStatus,
         managedBy: req.user.id,
         returningFiles: req.files
+    }
+    if(req.files == null || req.files==''){
+        newRequestData = {
+            requestStatus: req.body.requestStatus,
+            managedBy: req.user.id
+        }
     }
     
     const request = await Request.findByIdAndUpdate(req.params.requestId, newRequestData,{

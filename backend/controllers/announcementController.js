@@ -5,8 +5,10 @@ const APIFeatures = require('../utils/apiFeatures');
 
 // Create new announcement => /api/v1/announcement/new
 exports.newAnnouncement = catchAsyncErrors (async (req,res,next)=>{
-   
-    req.body.createdBy = req.user.id;
+    const { title, description, course, yearLevel, track}= req.body;
+   const createdBy = req.user.id;
+    const fileAttachments = req.files
+    let archiveDate
     if (req.body.setExpiry == true){
         const { expiryYear, expiryMonth, expiryDay }= req.body;
         if(expiryYear=='' ||expiryMonth==''||expiryDay=='' ){
@@ -15,38 +17,47 @@ exports.newAnnouncement = catchAsyncErrors (async (req,res,next)=>{
         if(expiryYear == null ||expiryMonth==null||expiryDay==null ){
             return next(new ErrorHandler('Please input expiry date'))
         }
-        req.body.archiveDate = `${expiryYear}-${expiryMonth}-${expiryDay}T08:30:21.492Z`
+        archiveDate = `${expiryYear}-${expiryMonth}-${expiryDay}T08:30:21.492Z`
         
     }else{
-        req.body.archiveDate = "3000-08-05T08:30:21.492Z"
+        archiveDate = "3000-08-05T08:30:21.492Z"
     }
-    if(req.body.course === "Computer Science"){
-        if(req.body.yearLevel === '3rd Year' || req.body.yearLevel =='4th Year'){
-            if(req.body.track !== "Core Computer Science"&&req.body.track !== "Game Development"&&req.body.track !== "Data Science"&&req.body.track !== "All"){
+    if(course === "Computer Science"){
+        if(yearLevel === '3rd Year' || yearLevel =='4th Year'){
+            if(track !== "Core Computer Science"&&track !== "Game Development"&&track !== "Data Science"&&track !== "All"){
                 return next(new ErrorHandler('Course does not match this track', 400))
             }
         }
     }
-    if(req.body.course === "Information Technology"){
-        if(req.body.yearLevel === '3rd Year' || req.body.yearLevel =='4th Year'){
-            if(req.body.track !== "Network and Security"&&req.body.track !== "Web and Mobile App Development"&&req.body.track !== "IT Automation"&&req.body.track !== "All"){
+    if(course === "Information Technology"){
+        if(yearLevel === '3rd Year' || yearLevel =='4th Year'){
+            if(track !== "Network and Security"&&track !== "Web and Mobile App Development"&&track !== "IT Automation"&&track !== "All"){
                 return next(new ErrorHandler('Course does not match this track', 400))
             }
         }
     }
-    if(req.body.course === "Information Systems"){
-        if(req.body.yearLevel === '3rd Year' || req.body.yearLevel =='4th Year'){
-            if(req.body.track !== "Business Analytics"&&req.body.track !== "Service Management"&&req.body.track !== "All"){
+    if(course === "Information Systems"){
+        if(yearLevel === '3rd Year' || yearLevel =='4th Year'){
+            if(track !== "Business Analytics"&&track !== "Service Management"&&track !== "All"){
                 return next(new ErrorHandler('Course does not match this track', 400))
             }
         }
     }
-        if(req.body.yearLevel === '1st Year' || req.body.yearLevel =='2nd Year'){
-            req.body.track = 'N/A'
+        if(yearLevel === '1st Year' || yearLevel =='2nd Year'){
+           track = 'N/A'
         }
     
-    
-    const announcement = await Announcement.create(req.body);
+    const announcement = await Announcement.create({
+        title, 
+        description, 
+        course, 
+        yearLevel, 
+        track,
+        archiveDate,
+        createdBy,
+        fileAttachments
+
+    });
 
     res.status(201).json({
         success: true,
@@ -71,7 +82,6 @@ exports.getAllAnnouncements = catchAsyncErrors (async (req,res,next) => {
     res.status(200).json({
         success: true,
         count: announcements.length,
-        announcementCount,
         announcements,
         allIT,
         allIS,
@@ -125,7 +135,51 @@ exports.updateAnnouncement = catchAsyncErrors (async(req,res,next) =>{
     if(!announcement){
         return next(new ErrorHandler('Announcement Not Found', 404))
     }
-    announcement = await Announcement.findByIdAndUpdate(req.params.id, req.body, {
+    let newTitle,newDescription, newCourse, newYearLevel, newTrack
+    if(req.body.title == null || req.body.title == ''){
+        newTitle = announcement.title
+    }else{
+        newTitle = req.body.title
+    }
+    if(req.body.description == null || req.body.description == ''){
+        newDescription = announcement.description
+    }else{
+        newDescription = req.body.description
+    }
+    if(req.body.course == null || req.body.course == ''){
+        newCourse = announcement.course
+    }else{
+        newCourse = req.body.course
+    }
+    if(req.body.yearLevel == null || req.body.yearLevel == ''){
+        newYearLevel = announcement.yearLevel
+    }else{
+        newYearLevel = req.body.yearLevel
+    }
+    if(req.body.track == null || req.body.track == ''){
+        newTrack = announcement.track
+    }else{
+        newTrack = req.body.track
+    }
+    let newAnnouncementData = {
+        title: newTitle,
+        description: newDescription,
+        course: newCourse,
+        yearLevel: newYearLevel,
+        track: newTrack
+    }
+    if(req.files != null || req.files != ''){
+        newAnnouncementData = {
+            title: newTitle,
+            description: newDescription,
+            course: newCourse,
+            yearLevel: newYearLevel,
+            track: newTrack,
+            fileAttachments: req.files
+        }
+    }
+    let existingAttachments = announcement.fileAttachments
+    announcement = await Announcement.findByIdAndUpdate(req.params.id, newAnnouncementData, {
         new: true,
         runValidators: true,
         useFindAndModify: false
@@ -136,6 +190,7 @@ exports.updateAnnouncement = catchAsyncErrors (async(req,res,next) =>{
     })
 
 })
+
 
 // delete announcement /api/v1/admin/announcement/:id
 exports.deleteAnnouncement = catchAsyncErrors (async(req,res,next) =>{
