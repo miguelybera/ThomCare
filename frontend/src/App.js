@@ -9,6 +9,7 @@ import Register from './components/Register'
 import ForgotPassword from './components/ForgotPassword'
 import Profile from './components/Profile'
 import NewPassword from './components/NewPassword'
+import VerifyRegistration from './components/VerifyRegistration'
 import Messenger from './components/chat/chatbox/Messenger'
 
 import ProtectedRoute from './components/route/ProtectedRoute'
@@ -40,6 +41,7 @@ function App() {
                     <Route path='/login' component={Login} exact/>
                     <Route path='/forgotpassword' component={ForgotPassword} exact/>
                     <Route path='/password/reset/:token' component={NewPassword} exact/>
+                    <Route path='/verify/account/:token' component={VerifyRegistration} exact/>
                     <Route path='/register' component={Register} exact/>
 
                     {/**needs to be logged in */}

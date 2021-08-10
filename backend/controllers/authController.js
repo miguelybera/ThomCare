@@ -207,7 +207,7 @@ exports.registerStudent = catchAsyncErrors(async (req, res,next) => {
     const registerToken = jwt.sign({firstName, lastName, studentNumber, course, email, password}, process.env.ACCOUNT_TOKEN, {expiresIn: process.env.REGISTER_EXPIRES});
 
     // create reset password url
-    const resetUrl = `${req.protocol}://${req.get('host')}/api/v1/verify/account/${registerToken}`
+    const resetUrl = `${req.protocol}://${req.get('host')}/verify/account/${registerToken}`
 
     const message = `Your account verification link is as follows:\n${resetUrl}\n\n
     If you have not requested this email, please ignore it.`
@@ -232,6 +232,7 @@ exports.registerStudent = catchAsyncErrors(async (req, res,next) => {
 // Activate Student Account => /api/v1/verify/account/:token
 exports.verifyStudent = catchAsyncErrors(async (req, res,next) =>{
     const token = req.params.token;
+
     if(token){
         jwt.verify(token, process.env.ACCOUNT_TOKEN, function(err, decodedToken){
             if(err){
