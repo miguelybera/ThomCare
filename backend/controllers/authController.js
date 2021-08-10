@@ -234,24 +234,29 @@ exports.verifyStudent = catchAsyncErrors(async (req, res,next) =>{
     const token = req.params.token;
 
     if(token){
-        jwt.verify(token, process.env.ACCOUNT_TOKEN, function(err, decodedToken){
+        jwt.verify(token, process.env.ACCOUNT_TOKEN, function(err, decodedToken) {
             if(err){
                 return next(new ErrorHandler('Token is invalid or expired'))
             }
             const {firstName, lastName, studentNumber, course, email, password} = decodedToken;
-            const user = User.create({
-                firstName,
-                lastName,
-                studentNumber,
-                course,
-                email,
-                password
+            User.findOne({email}).exec((err, existingUser)=>{
+                if(existingUser){
+                    return next(new ErrorHandler('Email already exists'))
+                }
+                const user = User.create({
+                    firstName,
+                    lastName,
+                    studentNumber,
+                    course,
+                    email,
+                    password
+                })
+                res.status(201).json({
+                    success: true,
+                    message: "User has been registered"
+                })
             })
-        
-            res.status(201).json({
-                success: true,
-                message: "User has been registered"
-            })
+            
         })
     }else{
         return next(new ErrorHandler('Token is invalid or expired'))
