@@ -94,7 +94,7 @@ exports.forgotPassword = catchAsyncErrors( async(req,res,next)=>{
     await user.save({ validateBeforeSave: false})
 
     // create reset password url
-    const resetUrl = `${req.protocol}://${req.get('host')}/password/reset/${resetToken}`
+    const resetUrl = `${req.protocol}://${process.env.THOM_HOST}/password/reset/${resetToken}`
 
     const message = `Your password reset link is as follows:\n${resetUrl}\n\n
     If you have not requested this email, then ignore it`
@@ -207,7 +207,7 @@ exports.registerStudent = catchAsyncErrors(async (req, res,next) => {
     const registerToken = jwt.sign({firstName, lastName, studentNumber, course, email, password}, process.env.ACCOUNT_TOKEN, {expiresIn: process.env.REGISTER_EXPIRES});
 
     // create reset password url
-    const resetUrl = `${req.protocol}://${req.get('host')}/verify/account/${registerToken}`
+    const resetUrl = `${req.protocol}://${process.env.THOM_HOST}/verify/account/${registerToken}`
 
     const message = `Your account verification link is as follows:\n${resetUrl}\n\n
     If you have not requested this email, please ignore it.`
