@@ -15,6 +15,8 @@ const requestSchema = new mongoose.Schema({
                 'Request for Petition Classes within CICS',
                 'Request for Crediting of Courses',
                 'Request for Overload',
+                'Request for late enrollment',
+                'Request for manual enrollment',
                 'Others'
             ]
         }

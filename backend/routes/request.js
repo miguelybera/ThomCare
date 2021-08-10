@@ -54,15 +54,17 @@ const thomcareAdminUpload = multer({storage: fileStorageAdmin,
     }
 })
 
-const {submitRequest, myRequests, getSubmittedRequests, getSingleRequest, updateRequest, deleteRequest, requestTracker} = require('../controllers/requestController');
+const {submitRequest, myRequests, getSubmittedRequests, getSingleRequest, updateRequest, deleteRequest, requestTracker,
+    getSubmittedRequestsCICSStaff} = require('../controllers/requestController');
 const { isAuthenticatedUser, authorizeRoles} = require('../middlewares/auth');
 
 router.route('/submitRequest').post(isAuthenticatedUser, thomcareStudentUpload.array('requiredFiles',5), submitRequest);
-router.route('/myRequests').get(isAuthenticatedUser, myRequests);
+router.route('/myRequests').get(isAuthenticatedUser, authorizeRoles('Student'), myRequests);
 router.route('/admin/requests').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getSubmittedRequests);
 router.route('/request/:requestId').get(getSingleRequest); // no isAuthenticatedUser because a student can open request details while not signed in because of the tracker
 router.route('/admin/updateRequest/:requestId').put(isAuthenticatedUser, thomcareAdminUpload.array('returningFiles',5),authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), updateRequest );
-router.route('/deleteRequest/:requestId').delete(isAuthenticatedUser, deleteRequest);
+router.route('/deleteRequest/:requestId').delete(isAuthenticatedUser, authorizeRoles('Student'), deleteRequest);
 router.route('/requestTracker').get(requestTracker);
+router.route('/cicsAdmin/requests').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getSubmittedRequestsCICSStaff);
 
 module.exports = router;

@@ -4,11 +4,6 @@ const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const APIFeatures = require('../utils/apiFeatures');
 const sendUpdateRequest = require('../utils/sendUpdateRequest');
 const Audit = require('../models/audit');
-const path = require('path')
-const multer = require('multer');
-const fileMimeTypes = ['image/jpeg', 'image/png', 'images/jpg', 'application/vnd.ms-excel',
-'application/msword', 'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
-'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
 
 
 
@@ -36,9 +31,15 @@ exports.submitRequest = catchAsyncErrors (async (req,res,next)=>{
     if(requestType == "Request for Overload"){
         trackStart = '5'
     }
-    if(requestType == "Others"){
+    if(requestType == "Request for late enrollment"){
          trackStart = '6'
     }
+    if(requestType == "Request for manual enrollment"){
+        trackStart = '7'
+   }
+   if(requestType == "Others"){
+    trackStart = '8'
+}
     const trackingNumber  = trackStart + req.user.studentNumber + Date.now()
     const requestedById = req.user.id
     const requestorFirstName = req.user.firstName
@@ -74,13 +75,35 @@ exports.myRequests = catchAsyncErrors (async (req,res,next)=>{
                         .searchRequests()
                         .filter()
                         .pagination(resPerPage);
+                        const apiFeaturesPending = new APIFeatures(Request.find({requestedById: req.user.id,requestStatus: 'Pending'}), req.query)
+                        .searchRequests()
+                        .filter()
+                        .pagination(resPerPage);
+    const apiFeaturesProcessing = new APIFeatures(Request.find({requestedById: req.user.id,requestStatus: 'Processing'}), req.query)
+                        .searchRequests()
+                        .filter()
+                        .pagination(resPerPage);
+    const apiFeaturesApproved = new APIFeatures(Request.find({requestedById: req.user.id,requestStatus: 'Approved'}), req.query)
+                        .searchRequests()
+                        .filter()
+                        .pagination(resPerPage);
+    const apiFeaturesDenied = new APIFeatures(Request.find({requestedById: req.user.id,requestStatus: 'Denied'}), req.query)
+                        .searchRequests()
+                        .filter()
+                        .pagination(resPerPage);
     const requests = await apiFeatures.query;
+    const pendingRequests = await apiFeaturesPending.query;
+    const processingRequests = await apiFeaturesProcessing.query;
+    const approvedRequests = await apiFeaturesApproved.query;
+    const deniedRequests = await apiFeaturesDenied.query;
    
     res.status(200).json({
         success: true,
-        count: requests.length,
-        requests
-
+        totalRequestCount: requests.length,
+        totalPendingRequest: pendingRequests.length,
+        totalProcessingRequests: processingRequests.length,
+        totalApprovedRequests: approvedRequests.length,
+        totalDeniedRequests: deniedRequests.length 
     })
 })
 
@@ -103,13 +126,35 @@ exports.getSubmittedRequests = catchAsyncErrors (async (req,res,next)=>{
                         .searchRequests()
                         .filter()
                         .pagination(resPerPage);
+    const apiFeaturesPending = new APIFeatures(Request.find({requestorCourse: deptCourse,requestStatus: 'Pending'}), req.query)
+                        .searchRequests()
+                        .filter()
+                        .pagination(resPerPage);
+    const apiFeaturesProcessing = new APIFeatures(Request.find({requestorCourse: deptCourse,requestStatus: 'Processing'}), req.query)
+                        .searchRequests()
+                        .filter()
+                        .pagination(resPerPage);
+    const apiFeaturesApproved = new APIFeatures(Request.find({requestorCourse: deptCourse,requestStatus: 'Approved'}), req.query)
+                        .searchRequests()
+                        .filter()
+                        .pagination(resPerPage);
+    const apiFeaturesDenied = new APIFeatures(Request.find({requestorCourse: deptCourse,requestStatus: 'Denied'}), req.query)
+                        .searchRequests()
+                        .filter()
+                        .pagination(resPerPage);
     const requests = await apiFeatures.query;
+    const pendingRequests = await apiFeaturesPending.query;
+    const processingRequests = await apiFeaturesProcessing.query;
+    const approvedRequests = await apiFeaturesApproved.query;
+    const deniedRequests = await apiFeaturesDenied.query;
    
     res.status(200).json({
         success: true,
-        count: requests.length,
-        requests
-
+        totalRequestCount: requests.length,
+        totalPendingRequest: pendingRequests.length,
+        totalProcessingRequests: processingRequests.length,
+        totalApprovedRequests: approvedRequests.length,
+        totalDeniedRequests: deniedRequests.length 
     })
 })
 
@@ -213,6 +258,11 @@ exports.deleteRequest = catchAsyncErrors (async (req,res,next)=>{
         return next(new ErrorHandler('The requestor can only delete this request'))
     }
     await request.remove();
+    const auditLog = await Audit.create({
+        userAudit: req.user.email,
+        requestAudit: req.params.requestId,
+        actionAudit: `User account: (${req.user.email}) has deleted the request with the tracking number: (${request.trackingNumber})`
+})
     res.status(200).json({
         success: true,
         message: "request has been deleted"
@@ -235,5 +285,45 @@ exports.requestTracker = catchAsyncErrors (async (req,res,next)=>{
     res.status(200).json({
         success: true,
         request
+    })
+})
+
+// Get all requests cics staff side => /api/v1/cicsAdmin/requests
+exports.getSubmittedRequestsCICSStaff = catchAsyncErrors (async (req,res,next)=>{
+    const resPerPage = 15;
+    const apiFeatures = new APIFeatures(Request.find(), req.query)
+                        .searchRequests()
+                        .filter()
+                        .pagination(resPerPage);
+    const apiFeaturesPending = new APIFeatures(Request.find({requestStatus: 'Pending'}), req.query)
+                        .searchRequests()
+                        .filter()
+                        .pagination(resPerPage);
+    const apiFeaturesProcessing = new APIFeatures(Request.find({requestStatus: 'Processing'}), req.query)
+                        .searchRequests()
+                        .filter()
+                        .pagination(resPerPage);
+    const apiFeaturesApproved = new APIFeatures(Request.find({requestStatus: 'Approved'}), req.query)
+                        .searchRequests()
+                        .filter()
+                        .pagination(resPerPage);
+    const apiFeaturesDenied = new APIFeatures(Request.find({requestStatus: 'Denied'}), req.query)
+                        .searchRequests()
+                        .filter()
+                        .pagination(resPerPage);
+    const requests = await apiFeatures.query;
+    const pendingRequests = await apiFeaturesPending.query;
+    const processingRequests = await apiFeaturesProcessing.query;
+    const approvedRequests = await apiFeaturesApproved.query;
+    const deniedRequests = await apiFeaturesDenied.query;
+   
+    res.status(200).json({
+        success: true,
+        totalRequestCount: requests.length,
+        totalPendingRequest: pendingRequests.length,
+        totalProcessingRequests: processingRequests.length,
+        totalApprovedRequests: approvedRequests.length,
+        totalDeniedRequests: deniedRequests.length 
+
     })
 })
