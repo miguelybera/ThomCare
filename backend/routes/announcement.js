@@ -31,7 +31,8 @@ const announcementUpload = multer({storage: announcementStorage,
 })
 
 
-const { getAllAnnouncements, newAnnouncement, getSingleAnnouncement, updateAnnouncement, deleteAnnouncement,getAnnouncements } = require('../controllers/announcementController');
+const { getAllAnnouncements, newAnnouncement, getSingleAnnouncement, updateAnnouncement, deleteAnnouncement,getAnnouncements,
+    getArchivedAnnouncements} = require('../controllers/announcementController');
 
 const { isAuthenticatedUser, authorizeRoles} = require('../middlewares/auth');
 
@@ -42,5 +43,6 @@ router.route('/announcement/:id').get(getSingleAnnouncement);
 router.route('/admin/announcement/:id').put(isAuthenticatedUser,announcementUpload.array('announcementFiles',5),authorizeRoles('CICS Staff'),updateAnnouncement);
 router.route('/admin/announcement/:id').delete(isAuthenticatedUser,authorizeRoles('CICS Staff'),deleteAnnouncement);
 router.route('/announcements').get(getAnnouncements);
+router.route('/admin/archivedAnnouncements').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getArchivedAnnouncements);
 
 module.exports = router;
