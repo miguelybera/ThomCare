@@ -5,40 +5,66 @@ const APIFeatures = require('../utils/apiFeatures');
 
 // Create new announcement => /api/v1/new/announcement
 exports.newAnnouncement = catchAsyncErrors (async (req,res,next)=>{
-    const { title, description, course, yearLevel, track}= req.body;
-   const createdBy = req.user.id;
+    const { title, description, course, yearLevel }= req.body;
+    let track = req.body.track
+    const createdBy = req.user.id;
     const fileAttachments = req.files
     let archiveDate
     if (req.body.setExpiry == true){
-        archiveDate = req.body.archiveDate
+        archiveDate = new Date(req.body.archiveDate)
     }else{
-        archiveDate = new Date('3000-01-01')
+        archiveDate = new Date('3000-01-01') //yyyy-mm-dd
     }
-    if(course === "Computer Science"){
-        if(yearLevel === '3rd Year' || yearLevel =='4th Year'){
-            if(track !== "Core Computer Science"&&track !== "Game Development"&&track !== "Data Science"&&track !== "All"){
+    if(yearLevel == '1st Year' || yearLevel =='2nd Year'){
+        if(track == "Core Computer Science" || track == "Game Development" || track == "Data Science" ||
+        track == "Network and Security" || track == "Web and Mobile App Development" || track == "IT Automation" ||
+        track == "Business Analytics" || track == "Service Management"){
+            return next(new ErrorHandler('1st year and 2nd year do not have tracks'))
+        }
+        track = 'All'
+    }
+    if(course == "Computer Science"){
+        if(yearLevel == '3rd Year' || yearLevel =='4th Year'){
+            if(track == "Core Computer Science" || track == "Game Development" || track == "Data Science" || track == "All"){
+            }else{
                 return next(new ErrorHandler('Course does not match this track', 400))
-            }
+            } 
         }
     }
-    if(course === "Information Technology"){
-        if(yearLevel === '3rd Year' || yearLevel =='4th Year'){
-            if(track !== "Network and Security"&&track !== "Web and Mobile App Development"&&track !== "IT Automation"&&track !== "All"){
+    if(course == "Information Technology"){
+        if(yearLevel == '3rd Year' || yearLevel =='4th Year'){
+            if(track == "Network and Security" || track == "Web and Mobile App Development" || track == "IT Automation" || track == "All"){
+            }else{
                 return next(new ErrorHandler('Course does not match this track', 400))
-            }
+            } 
         }
     }
     if(course === "Information Systems"){
-        if(yearLevel === '3rd Year' || yearLevel =='4th Year'){
-            if(track !== "Business Analytics"&&track !== "Service Management"&&track !== "All"){
+        if(yearLevel == '3rd Year' || yearLevel =='4th Year'){
+            if(track == "Business Analytics" || track == "Service Management" || track == "All"){
+            }else{
                 return next(new ErrorHandler('Course does not match this track', 400))
-            }
+            } 
         }
     }
-        if(yearLevel === '1st Year' || yearLevel =='2nd Year'){
-           track = 'N/A'
-        }
-    
+    if(course == "Computer Science"){
+        if(track == "Core Computer Science" || track == "Game Development" || track == "Data Science" || track == "All"){
+        }else{
+            return next(new ErrorHandler('Course does not match this track', 400))
+        } 
+    }
+    if(course == "Information Technology"){
+        if(track == "Network and Security" || track == "Web and Mobile App Development" || track == "IT Automation" || track == "All"){
+        }else{
+            return next(new ErrorHandler('Course does not match this track', 400))
+        } 
+    }
+    if(course === "Information Systems"){
+        if(track == "Business Analytics" || track == "Service Management" || track == "All"){
+        }else{
+            return next(new ErrorHandler('Course does not match this track', 400))
+        } 
+    }
     const announcement = await Announcement.create({
         title, 
         description, 
@@ -96,13 +122,37 @@ exports.getAnnouncements = catchAsyncErrors (async (req,res,next) => {
     res.status(200).json({
         success: true,
         count: announcements.length,
-        announcementCount,
         announcements,
         allIT,
         allIS,
         allCS
     })
 })
+
+// Get all unarchived announcements /api/v1/announcements
+exports.getArchivedAnnouncements = catchAsyncErrors (async (req,res,next) => {
+    const resPerPage = 5;
+    const announcementCount = await Announcement.countDocuments()
+    const apiFeatures = new APIFeatures(Announcement.find({archiveDate: {$lte: Date.now()}}), req.query)
+                        .search()
+                        .filter()
+                        .pagination(resPerPage);
+    const announcements = await apiFeatures.query;
+    const allIT = await Announcement.find({course: "Information Technology",archiveDate: {$lte: Date.now()}});
+    const allIS = await Announcement.find({course: "Information Systems",archiveDate: {$lte: Date.now()}});
+    const allCS = await Announcement.find({course: "Computer Science",archiveDate: {$lte: Date.now()}});
+    
+    res.status(200).json({
+        success: true,
+        count: announcements.length,
+        announcements,
+        allIT,
+        allIS,
+        allCS
+    })
+})
+
+
 
 // Get single announcement /api/v1/announcement/:id
 exports.getSingleAnnouncement = catchAsyncErrors (async (req, res, next) =>{
@@ -156,30 +206,56 @@ exports.updateAnnouncement = catchAsyncErrors (async(req,res,next) =>{
     }else{
         newTrack = req.body.track
     }
-    if(newCourse === "Computer Science"){
-        if(newYearLevel === '3rd Year' || newYearLevel =='4th Year'){
-            if(newTrack !== "Core Computer Science"&&newTrack !== "Game Development"&&newTrack !== "Data Science"&&newTrack !== "All"){
+    if(yearLevel == '1st Year' || yearLevel =='2nd Year'){
+        if(track == "Core Computer Science" || track == "Game Development" || track == "Data Science" ||
+        track == "Network and Security" || track == "Web and Mobile App Development" || track == "IT Automation" ||
+        track == "Business Analytics" || track == "Service Management"){
+            return next(new ErrorHandler('1st year and 2nd year do not have tracks'))
+        }
+        track = 'All'
+    }
+    if(course == "Computer Science"){
+        if(yearLevel == '3rd Year' || yearLevel =='4th Year'){
+            if(track == "Core Computer Science" || track == "Game Development" || track == "Data Science" || track == "All"){
+            }else{
                 return next(new ErrorHandler('Course does not match this track', 400))
-            }
+            } 
         }
     }
-    if(newCourse === "Information Technology"){
-        if(newYearLevel === '3rd Year' || newYearLevel =='4th Year'){
-            if(newTrack !== "Network and Security"&&newTrack !== "Web and Mobile App Development"&&newTrack !== "IT Automation"&&newTrack !== "All"){
+    if(course == "Information Technology"){
+        if(yearLevel == '3rd Year' || yearLevel =='4th Year'){
+            if(track == "Network and Security" || track == "Web and Mobile App Development" || track == "IT Automation" || track == "All"){
+            }else{
                 return next(new ErrorHandler('Course does not match this track', 400))
-            }
+            } 
         }
     }
-    if(newCourse === "Information Systems"){
-        if(newYearLevel === '3rd Year' || newYearLevel =='4th Year'){
-            if(newTrack !== "Business Analytics"&&newTrack !== "Service Management"&&newTrack !== "All"){
+    if(course === "Information Systems"){
+        if(yearLevel == '3rd Year' || yearLevel =='4th Year'){
+            if(track == "Business Analytics" || track == "Service Management" || track == "All"){
+            }else{
                 return next(new ErrorHandler('Course does not match this track', 400))
-            }
+            } 
         }
     }
-        if(newYearLevel === '1st Year' || newYearLevel =='2nd Year'){
-           newTrack = 'N/A'
-        }
+    if(course == "Computer Science"){
+        if(track == "Core Computer Science" || track == "Game Development" || track == "Data Science" || track == "All"){
+        }else{
+            return next(new ErrorHandler('Course does not match this track', 400))
+        } 
+    }
+    if(course == "Information Technology"){
+        if(track == "Network and Security" || track == "Web and Mobile App Development" || track == "IT Automation" || track == "All"){
+        }else{
+            return next(new ErrorHandler('Course does not match this track', 400))
+        } 
+    }
+    if(course === "Information Systems"){
+        if(track == "Business Analytics" || track == "Service Management" || track == "All"){
+        }else{
+            return next(new ErrorHandler('Course does not match this track', 400))
+        } 
+    }
     let newAnnouncementData = {
         title: newTitle,
         description: newDescription,

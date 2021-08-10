@@ -53,8 +53,7 @@ const announcementSchema = new mongoose.Schema({
                     'IT Automation',
                     'Business Analytics',
                     'Service Management',
-                    'All',
-                    'N/A'
+                    'All'
                 ]
             },
             default: 'All'
