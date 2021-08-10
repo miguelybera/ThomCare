@@ -40,7 +40,6 @@ router.route('/admin/allAnnouncements').get(isAuthenticatedUser, authorizeRoles(
 router.route('/announcement/new').post(isAuthenticatedUser,announcementUpload.array('announcementFiles',5),authorizeRoles('CICS Staff'),newAnnouncement);
 router.route('/announcement/:id').get(getSingleAnnouncement);
 router.route('/admin/announcement/:id').put(isAuthenticatedUser,announcementUpload.array('announcementFiles',5),authorizeRoles('CICS Staff'),updateAnnouncement);
-//router.route('/admin/announcementAttachment/:id').put(isAuthenticatedUser,announcementUpload.array('announcementFiles',5),authorizeRoles('CICS Staff'),updateAnnouncementAttachment);
 router.route('/admin/announcement/:id').delete(isAuthenticatedUser,authorizeRoles('CICS Staff'),deleteAnnouncement);
 router.route('/announcements').get(getAnnouncements);
 
