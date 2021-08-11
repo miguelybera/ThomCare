@@ -17,18 +17,24 @@ const Announcements = () => {
 
     const [currentPage, setCurrentPage] = useState(1)
 
-    /**
-     * filter code here
-     * const [x, setX] = useState('')
-     * 
-     * const category = []
-     */
+    const [search, setSearch] = useState('')
+
+    const category = []
 
     function setCurrentPageNo(pageNumber) {
         setCurrentPage(pageNumber)
     }
 
     let count = announcementCount
+
+
+    const [filter, setFilter] = useState({
+        course: '',
+        yearLevel: '',
+        track: ''
+    })
+
+    const { course, yearLevel, track } = filter
 
     /**
      * if(category) {
@@ -42,8 +48,21 @@ const Announcements = () => {
             dispatch(clearErrors())
         }
 
-        dispatch(getAnnouncements())
-    }, [dispatch, alert, error])
+        dispatch(getAnnouncements(currentPage, course, yearLevel, track))
+        console.log(yearLevel)
+    }, [dispatch, alert, error, currentPage, course, yearLevel, track])
+
+    function searchKeyword() {
+        console.log('search clicked')
+    }
+
+    
+    const onChange = e => {
+        setFilter({
+            ...filter,
+            [e.target.name]: e.target.value
+        })
+    }
 
     return (
         <>
@@ -51,32 +70,37 @@ const Announcements = () => {
             <h1> Announcements </h1>
             <Row>
                 <Col col-md-15>
-                    <ButtonToolbar aria-label="Toolbar with button groups" size="sm">
-                        <ButtonGroup className="me-2" aria-label="Course">
-                            <p> Filters: </p>
-                            <DropdownButton as={ButtonGroup} title="Course" id="bg-nested-dropdown" variant="outline-dark" >
-                                <Dropdown.Item eventKey="1">Computer Science</Dropdown.Item>
-                                <Dropdown.Item eventKey="2">Information Systems</Dropdown.Item>
-                                <Dropdown.Item eventKey="2">Information Technology</Dropdown.Item>
-                            </DropdownButton>
-                        </ButtonGroup>
-                        <ButtonGroup className="me-2" aria-label="Year Level">
-                            <DropdownButton as={ButtonGroup} title="Year Level" id="bg-nested-dropdown" variant="outline-dark" >
-                                <Dropdown.Item eventKey="1">First Year</Dropdown.Item>
-                                <Dropdown.Item eventKey="2">Second Year</Dropdown.Item>
-                                <Dropdown.Item eventKey="1">Third Year</Dropdown.Item>
-                                <Dropdown.Item eventKey="2">Fourth Year</Dropdown.Item>
-                            </DropdownButton>
-                        </ButtonGroup>
-                        <ButtonGroup className="me-2" aria-label="Track">
-                            <DropdownButton as={ButtonGroup} title="Track" id="bg-nested-dropdown" variant="outline-dark" >
-                            </DropdownButton>
-                        </ButtonGroup>
-                        <ButtonGroup className="me-2" aria-label="Announcement Type">
-                            <DropdownButton as={ButtonGroup} title="Announcement Type" id="bg-nested-dropdown" variant="outline-dark" >
-                            </DropdownButton>
-                        </ButtonGroup>
-                    </ButtonToolbar>
+                    <Form>
+                        <p> Filters: </p>
+                        <Form.Group className="mb-3" controlId="formGridCourse">
+                            <Form.Label>Course/Program</Form.Label>
+                            <Form.Select aria-label="Default select example" name="course" value={course} onChange={onChange} required>
+                                <option value=''>-</option>
+                                <option value="Computer Science">Computer Science</option>
+                                <option value="Information Systems">Information Systems</option>
+                                <option value="Information Technology">Information Technology</option>
+                            </Form.Select>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formGridCourse">
+                            <Form.Label>Year Level</Form.Label>
+                            <Form.Select aria-label="Default select example" name="yearLevel" value={yearLevel} onChange={onChange} required>
+                                <option value=''>-</option>
+                                <option value="1st Year">1st Year</option>
+                                <option value="2nd Year">2nd Year</option>
+                                <option value="3rd Year">3rd Year</option>
+                                <option value="4th Year">4th Year</option>
+                            </Form.Select>
+                        </Form.Group>
+                        <Form.Group className="mb-3" controlId="formGridCourse">
+                            <Form.Label>Track</Form.Label>
+                            <Form.Select aria-label="Default select example" name="track" value={track} onChange={onChange} required>
+                                <option value=''>-</option>
+                                <option value="Network and Security">Network and Security</option>
+                                <option value="All">All</option>
+                                <option value="Information Technology">Information Technology</option>
+                            </Form.Select>
+                        </Form.Group>
+                    </Form>
                 </Col>
                 <Col xs={3} col-auto>
                     <Form className="d-flex">
@@ -85,8 +109,10 @@ const Announcements = () => {
                             placeholder="Search"
                             className="mr-2"
                             aria-label="Search"
+                            value={search}
+                            onChange={e => setSearch(e.target.value)}
                         />
-                        <Button variant="outline-success">Search</Button>
+                        <Button variant="outline-success" onClick={() => searchKeyword()}>Search</Button>
                     </Form>
                 </Col>
             </Row>
@@ -98,9 +124,9 @@ const Announcements = () => {
                                 <Card>
                                     <Card.Body>
                                         <Card.Title>{announcement.title}</Card.Title>
-                                        <Card.Text style={{fontSize: '12px', color: 'gray'}}>{announcement.createdAt}</Card.Text>
-                                        <Card.Text style={{fontSize: '12px', color: 'gray'}}>Year Level: {announcement.yearLevel}</Card.Text>
-                                        <Card.Text style={{fontSize: '12px', color: 'gray'}}>Course: {announcement.course} Track: {announcement.track}</Card.Text>
+                                        <Card.Text style={{ fontSize: '12px', color: 'gray' }}>{announcement.createdAt}</Card.Text>
+                                        <Card.Text style={{ fontSize: '12px', color: 'gray' }}>Year Level: {announcement.yearLevel}</Card.Text>
+                                        <Card.Text style={{ fontSize: '12px', color: 'gray' }}>Course: {announcement.course} Track: {announcement.track}</Card.Text>
                                         <Card.Text>{announcement.description}</Card.Text>
                                     </Card.Body>
                                 </Card>
@@ -113,22 +139,22 @@ const Announcements = () => {
                     </Row>
                 )}
             </Row>
-                {resPerPage < count && (
-                    <div className="d-flex justify-content-center mt-5">
-                        <Pagination
-                            activePage={currentPage}
-                            itemsCountPerPage={resPerPage}
-                            totalItemsCount={announcementCount}
-                            onChange={setCurrentPageNo}
-                            nextPageText={'Next'}
-                            prevPageText={'Prev'}
-                            firstPageText={'First'}
-                            lastPageText={'Last'}
-                            itemClass='page-item'
-                            linkClass='page-link'
-                        />
-                    </div>
-                )}
+            {resPerPage < count && (
+                <div className="d-flex justify-content-center mt-5">
+                    <Pagination
+                        activePage={currentPage}
+                        itemsCountPerPage={resPerPage}
+                        totalItemsCount={announcementCount}
+                        onChange={setCurrentPageNo}
+                        nextPageText={'Next'}
+                        prevPageText={'Prev'}
+                        firstPageText={'First'}
+                        lastPageText={'Last'}
+                        itemClass='page-item'
+                        linkClass='page-link'
+                    />
+                </div>
+            )}
         </>
     )
 }
