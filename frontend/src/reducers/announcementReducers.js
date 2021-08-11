@@ -20,7 +20,10 @@ export const getAnnouncementsReducer = (state = { announcements: [] }, action) =
         case ALL_ANNOUNCEMENTS_SUCCESS:
             return {
                 loading: false,
-                announcements: action.payload.announcements
+                announcements: action.payload.announcements,
+                announcementCount: action.payload.announcementCount,
+                resPerPage: action.payload.resPerPage,
+                filteredAnnouncementsCount: action.payload.filteredAnnouncementsCount
             }
 
         case ALL_ANNOUNCEMENTS_FAIL:

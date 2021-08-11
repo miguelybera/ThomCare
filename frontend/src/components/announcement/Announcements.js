@@ -1,9 +1,53 @@
-import React from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import { useAlert } from 'react-alert'
+import { useDispatch, useSelector } from 'react-redux'
+import Pagination from 'react-js-pagination'
+import { getAnnouncements, clearErrors } from './../../actions/announcementActions'
+import MetaData from './../layout/MetaData'
+import Loader from './../layout/Loader'
 import { Accordion, ButtonGroup, Button, ButtonToolbar, DropdownButton, Dropdown, Form, FormControl, Card, Row, Col } from 'react-bootstrap'
 
 const Announcements = () => {
+
+    const alert = useAlert()
+    const dispatch = useDispatch()
+
+    const { loading, announcements, error, announcementCount, resPerPage, filteredAnnouncementsCount } = useSelector(state => state.announcements)
+
+    const [currentPage, setCurrentPage] = useState(1)
+
+    /**
+     * filter code here
+     * const [x, setX] = useState('')
+     * 
+     * const category = []
+     */
+
+    function setCurrentPageNo(pageNumber) {
+        setCurrentPage(pageNumber)
+    }
+
+    let count = announcementCount
+
+    /**
+     * if(category) {
+     *      count = filteredAnnouncementsCount
+     * }
+     */
+
+    useEffect(() => {
+        if (error) {
+            alert.error(error)
+            dispatch(clearErrors())
+        }
+
+        dispatch(getAnnouncements())
+    }, [dispatch, alert, error])
+
     return (
         <>
+            <MetaData title={`Announcements`} />
             <h1> Announcements </h1>
             <Row>
                 <Col col-md-15>
@@ -47,22 +91,44 @@ const Announcements = () => {
                 </Col>
             </Row>
             <Row>
-                <Row xs={1} md={2} className="g-4">
-                    {Array.from({ length: 8 }).map((_, idx) => (
-                        <Col>
-                            <Card>
-                                <Card.Body>
-                                    <Card.Title>Card title</Card.Title>
-                                    <Card.Text>
-                                        This is a longer card with supporting text below as a natural
-                                        lead-in to additional content. This content is a little bit longer.
-                                    </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    ))}
-                </Row>
+                {loading ? <Loader /> : (
+                    <Row xs={1} md={2} className="g-4">
+                        {announcements && (announcements.length !== 0) ? announcements.map(announcement => (
+                            <Col>
+                                <Card>
+                                    <Card.Body>
+                                        <Card.Title>{announcement.title}</Card.Title>
+                                        <Card.Text style={{fontSize: '12px', color: 'gray'}}>{announcement.createdAt}</Card.Text>
+                                        <Card.Text style={{fontSize: '12px', color: 'gray'}}>Year Level: {announcement.yearLevel}</Card.Text>
+                                        <Card.Text style={{fontSize: '12px', color: 'gray'}}>Course: {announcement.course} Track: {announcement.track}</Card.Text>
+                                        <Card.Text>{announcement.description}</Card.Text>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                        )) : (
+                            <Col>
+                                <h3 style={{ margin: '10px 0' }}>No announcements found.</h3>
+                            </Col>
+                        )}
+                    </Row>
+                )}
             </Row>
+                {resPerPage < count && (
+                    <div className="d-flex justify-content-center mt-5">
+                        <Pagination
+                            activePage={currentPage}
+                            itemsCountPerPage={resPerPage}
+                            totalItemsCount={announcementCount}
+                            onChange={setCurrentPageNo}
+                            nextPageText={'Next'}
+                            prevPageText={'Prev'}
+                            firstPageText={'First'}
+                            lastPageText={'Last'}
+                            itemClass='page-item'
+                            linkClass='page-link'
+                        />
+                    </div>
+                )}
         </>
     )
 }

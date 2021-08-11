@@ -131,21 +131,31 @@ exports.getAnnouncements = catchAsyncErrors (async (req,res,next) => {
 
 // Get all unarchived announcements /api/v1/announcements
 exports.getArchivedAnnouncements = catchAsyncErrors (async (req,res,next) => {
-    const resPerPage = 5;
+    const resPerPage = 10;
     const announcementCount = await Announcement.countDocuments()
     const apiFeatures = new APIFeatures(Announcement.find({archiveDate: {$lte: Date.now()}}), req.query)
                         .search()
                         .filter()
-                        .pagination(resPerPage);
-    const announcements = await apiFeatures.query;
+
+    let announcements = await apiFeatures.query;
+    let filteredAnnouncementsCount = announcements.length
+
+    apiFeatures.pagination(resPerPage)
+
+    announcements = await apiFeatures.query; 
+
     const allIT = await Announcement.find({course: "Information Technology",archiveDate: {$lte: Date.now()}});
     const allIS = await Announcement.find({course: "Information Systems",archiveDate: {$lte: Date.now()}});
     const allCS = await Announcement.find({course: "Computer Science",archiveDate: {$lte: Date.now()}});
     
     res.status(200).json({
         success: true,
-        count: announcements.length,
+        //count: announcements.length,
+        announcementCount,
         announcements,
+        resPerPage,
+        filteredAnnouncementsCount,
+        
         allIT,
         allIS,
         allCS
