@@ -3,8 +3,8 @@ import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { FloatingLabel, Form, Button, Card, Container, Row } from 'react-bootstrap'
 import axios from 'axios'
-import MetaData from './layout/MetaData'
-import { VERIFY_STUDENT_REQUEST, VERIFY_STUDENT_SUCCESS, VERIFY_STUDENT_FAIL } from './../constants/userConstants'
+import MetaData from './../layout/MetaData'
+import { VERIFY_STUDENT_REQUEST, VERIFY_STUDENT_SUCCESS, VERIFY_STUDENT_FAIL } from './../../constants/userConstants'
 
 
 const VerifyRegistration = ({history, match}) => {

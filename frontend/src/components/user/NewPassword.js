@@ -2,9 +2,9 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { FloatingLabel, Form, Button, Card, Container, Row } from 'react-bootstrap'
-import { resetPassword, clearErrors } from './../actions/userActions'
-import { NEW_PASSWORD_RESET } from './../constants/userConstants'
-import MetaData from './layout/MetaData'
+import { resetPassword, clearErrors } from './../../actions/userActions'
+import { NEW_PASSWORD_RESET } from './../../constants/userConstants'
+import MetaData from './../layout/MetaData'
 
 const NewPassword = ({history, match}) => {
     const alert = useAlert()

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from  'react-redux'
 import { FloatingLabel, Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
-import MetaData from './layout/MetaData'
+import MetaData from '../layout/MetaData'
 
 const Login = ({history}) => {
     const alert = useAlert()

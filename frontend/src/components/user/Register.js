@@ -2,10 +2,10 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from  'react-redux'
-import { register, clearErrors } from './../actions/userActions'
-import { REGISTER_USER_RESET } from './../constants/userConstants'
+import { register, clearErrors } from './../../actions/userActions'
+import { REGISTER_USER_RESET } from './../../constants/userConstants'
 import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
-import MetaData from './layout/MetaData'
+import MetaData from './../layout/MetaData'
 
 const Register = ({history}) => {
 

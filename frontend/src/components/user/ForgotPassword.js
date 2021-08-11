@@ -2,10 +2,10 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from  'react-redux'
-import { forgotPassword, clearErrors } from './../actions/userActions'
-import { FORGOT_PASSWORD_RESET } from './../constants/userConstants'
+import { forgotPassword, clearErrors } from '../../actions/userActions'
+import { FORGOT_PASSWORD_RESET } from '../../constants/userConstants'
 import { FloatingLabel, Form, Button, Card, Container, Row } from 'react-bootstrap'
-import MetaData from './layout/MetaData'
+import MetaData from '../layout/MetaData'
 
 const ForgotPassword = ({history}) => {
     const alert = useAlert();

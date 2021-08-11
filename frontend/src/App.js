@@ -3,18 +3,25 @@ import { useSelector } from 'react-redux'
 import store from './store'
 import { useEffect } from 'react'
 
+//layout folder
 import Header from './components/layout/Header'
 import ScrollToTop from './components/layout/ScrollToTop'
 
-import Login from './components/Login'
-import Announcements from './components/Announcements'
-import Register from './components/Register'
-import ForgotPassword from './components/ForgotPassword'
-import Profile from './components/Profile'
-import NewPassword from './components/NewPassword'
-import VerifyRegistration from './components/VerifyRegistration'
+//user folder
+import Login from './components/user/Login'
+import Register from './components/user/Register'
+import ForgotPassword from './components/user/ForgotPassword'
+import Profile from './components/user/Profile'
+import NewPassword from './components/user/NewPassword'
+import VerifyRegistration from './components/user/VerifyRegistration'
+
+//chat folder
 import Messenger from './components/chat/chatbox/Messenger'
 
+//announcement folder
+import Announcements from './components/announcement/Announcements'
+
+//route folder
 import ProtectedRoute from './components/route/ProtectedRoute'
 
 import { loadUser } from './actions/userActions'

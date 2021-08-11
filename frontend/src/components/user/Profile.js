@@ -2,9 +2,9 @@ import React, { Fragment, useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from  'react-redux'
-import { clearErrors } from './../actions/userActions'
+import { clearErrors } from '../../actions/userActions'
 import { FloatingLabel, Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
-import MetaData from './layout/MetaData'
+import MetaData from '../layout/MetaData'
 
 const Profile = () => {
 
