@@ -20,6 +20,7 @@ import {
     VERIFY_STUDENT_REQUEST,
     VERIFY_STUDENT_SUCCESS,
     VERIFY_STUDENT_FAIL,
+    VERIFY_STUDENT_RESET,
     FORGOT_PASSWORD_REQUEST,
     FORGOT_PASSWORD_SUCCESS,
     FORGOT_PASSWORD_FAIL,
@@ -188,6 +189,7 @@ export const registerReducer = ( state = { }, action ) => {
             }
 
         case REGISTER_USER_RESET:
+        case VERIFY_STUDENT_RESET:
             return {
                 ...state,
                 isCreated: false

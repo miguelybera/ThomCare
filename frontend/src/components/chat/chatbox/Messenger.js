@@ -11,9 +11,9 @@ import { sendMessage, getConversations, createConversation } from '../../../acti
 import axios from 'axios'
 import {io} from 'socket.io-client'
 import {
-    GET_MESSAGES_REQUEST,
-    GET_MESSAGES_SUCCESS,
-    GET_MESSAGES_FAIL, 
+    ALL_MESSAGES_REQUEST,
+    ALL_MESSAGES_SUCCESS,
+    ALL_MESSAGES_FAIL, 
     CLEAR_ERRORS
 } from '../../../constants/chatConstants'
 import {
@@ -75,7 +75,7 @@ const Messenger = () => {
             catch(error){
                 dispatch({
                     type: ALL_USERS_FAIL,
-                    payload: error.response.data.message
+                    payload: error.response.data.errMessage
                 })
             }
         }
@@ -119,21 +119,21 @@ const Messenger = () => {
         const getMessages = async (id) => {
             try {        
                 dispatch({
-                    type: GET_MESSAGES_REQUEST
+                    type: ALL_MESSAGES_REQUEST
                 })
                 const { data } = await axios.get(`/api/v1/getMsg/${id}`)
                 
                 setMessageList(data.messages)
                 dispatch({
-                    type: GET_MESSAGES_SUCCESS,
+                    type: ALL_MESSAGES_SUCCESS,
                     payload: data
                     }
                 )
             }
             catch (error) {
                 dispatch({
-                    type: GET_MESSAGES_FAIL,
-                    payload: error.response.data.message
+                    type: ALL_MESSAGES_FAIL,
+                    payload: error.response.data.errMessage
                     }
                 )
             }

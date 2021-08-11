@@ -17,6 +17,9 @@ import {
     createConversationReducer
 } from './reducers/chatReducers'
 
+import {
+    getAnnouncementsReducer
+} from './reducers/announcementReducers'
 
 const reducer = combineReducers({
     auth: authReducer,
@@ -27,7 +30,8 @@ const reducer = combineReducers({
     register: registerReducer,
     forgotPassword: forgotPasswordReducer,
     sendMessage: sendMessageReducer,
-    createConvo: createConversationReducer
+    createConvo: createConversationReducer,
+    announcements: getAnnouncementsReducer
 })
 
 let initialState = {} //contains all the data we want to put in this state just before loading the application

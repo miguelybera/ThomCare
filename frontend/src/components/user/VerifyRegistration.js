@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FloatingLabel, Form, Button, Card, Container, Row } from 'react-bootstrap'
 import axios from 'axios'
 import MetaData from './../layout/MetaData'
-import { VERIFY_STUDENT_REQUEST, VERIFY_STUDENT_SUCCESS, VERIFY_STUDENT_FAIL } from './../../constants/userConstants'
+import { VERIFY_STUDENT_REQUEST, VERIFY_STUDENT_SUCCESS, VERIFY_STUDENT_FAIL, VERIFY_STUDENT_RESET } from './../../constants/userConstants'
 
 
 const VerifyRegistration = ({history, match}) => {
@@ -16,6 +16,7 @@ const VerifyRegistration = ({history, match}) => {
     const { error, loading, message } = useSelector(state => state.register)
 
     const [messageText, setMessageText] = useState('')
+
     useEffect(() => {
         const verify = async () => {
             try {
@@ -51,6 +52,9 @@ const VerifyRegistration = ({history, match}) => {
     useEffect(() => {
         if(message) {
             setMessageText(message)
+            dispatch({
+                type: VERIFY_STUDENT_RESET
+            })
         }
 
         if(error) {

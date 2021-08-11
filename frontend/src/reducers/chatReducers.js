@@ -7,15 +7,15 @@ import {
     CREATE_CONVERSATION_SUCCESS,
     CREATE_CONVERSATION_FAIL,
     CREATE_CONVERSATION_RESET,
-    GET_CONVERSATIONS_REQUEST,
-    GET_CONVERSATIONS_SUCCESS,
-    GET_CONVERSATIONS_FAIL,
-    GET_BOTH_CONVERSATIONS_REQUEST,
-    GET_BOTH_CONVERSATIONS_SUCCESS,
-    GET_BOTH_CONVERSATIONS_FAIL,
-    GET_MESSAGES_REQUEST,
-    GET_MESSAGES_SUCCESS,
-    GET_MESSAGES_FAIL,
+    ALL_CONVERSATIONS_REQUEST,
+    ALL_CONVERSATIONS_SUCCESS,
+    ALL_CONVERSATIONS_FAIL,
+    BOTH_CONVERSATIONS_REQUEST,
+    BOTH_CONVERSATIONS_SUCCESS,
+    BOTH_CONVERSATIONS_FAIL,
+    ALL_MESSAGES_REQUEST,
+    ALL_MESSAGES_SUCCESS,
+    ALL_MESSAGES_FAIL,
     CLEAR_ERRORS
 } from '../constants/chatConstants'
 
@@ -63,19 +63,19 @@ export const createConversationReducer = (state = {}, action) => {
 //get conversations
 export const conversationReducer = (state = { conversations: [] }, action ) => {
     switch(action.type) {
-        case GET_CONVERSATIONS_REQUEST:
+        case ALL_CONVERSATIONS_REQUEST:
             return {
                 ...state,
                 loading: true
             }
 
-        case GET_CONVERSATIONS_SUCCESS:
+        case ALL_CONVERSATIONS_SUCCESS:
             return {
                 loading: false,
                 conversations: action.payload.conversations
             }
 
-        case GET_CONVERSATIONS_FAIL:
+        case ALL_CONVERSATIONS_FAIL:
             return {
                 ...state,
                 loading: false,
@@ -96,19 +96,19 @@ export const conversationReducer = (state = { conversations: [] }, action ) => {
 //get conversations
 export const bothConversationReducer = (state = { conversation: {} }, action ) => {
     switch(action.type) {
-        case GET_BOTH_CONVERSATIONS_REQUEST:
+        case BOTH_CONVERSATIONS_REQUEST:
             return {
                 ...state,
                 loading: true
             }
 
-        case GET_BOTH_CONVERSATIONS_SUCCESS:
+        case BOTH_CONVERSATIONS_SUCCESS:
             return {
                 loading: false,
                 conversation: action.payload
             }
 
-        case GET_BOTH_CONVERSATIONS_FAIL:
+        case BOTH_CONVERSATIONS_FAIL:
             return {
                 ...state,
                 loading: false,
@@ -170,19 +170,19 @@ export const sendMessageReducer = (state = {}, action) => {
 //get all messages
 export const messageReducer = ( state = { messages: [] }, action) => {
     switch(action.type){
-        case GET_MESSAGES_REQUEST:
+        case ALL_MESSAGES_REQUEST:
             return {
                 loading: true,
                 messages: []
             }
         
-        case GET_MESSAGES_SUCCESS:
+        case ALL_MESSAGES_SUCCESS:
             return {
                 loading: false,
                 messages: action.payload.messages
             }
         
-        case GET_MESSAGES_FAIL:
+        case ALL_MESSAGES_FAIL:
             return {
                 loading: false,
                 error: action.payload
