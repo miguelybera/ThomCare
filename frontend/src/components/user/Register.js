@@ -1,27 +1,25 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { Fragment, useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
-import { useDispatch, useSelector } from  'react-redux'
-import { register, clearErrors } from './../../actions/userActions'
-import { REGISTER_USER_RESET } from './../../constants/userConstants'
-import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
-import MetaData from './../layout/MetaData'
+import { useDispatch, useSelector } from 'react-redux'
+import { saveStudentInfo, clearErrors } from '../../actions/userActions'
+import { FloatingLabel, Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
+import MetaData from '../layout/MetaData'
 
-const Register = ({history}) => {
+const Register = ({ history }) => {
 
-    const alert = useAlert()
     const dispatch = useDispatch()
 
-    const { error, loading, message, isCreated } = useSelector(state => state.register)
+    const { studentInfo } = useSelector(state => state.student)
 
     const [user, setUser] = useState({
-        firstName: '',
-        lastName: '',
-        email: '',
-        studentNumber: '',
-        course: '',
-        password: '',
-        confirmPassword: ''
+        firstName: studentInfo ? studentInfo.firstName : '',
+        lastName: studentInfo ? studentInfo.lastName : '',
+        studentNumber: studentInfo ? studentInfo.studentNumber : '',
+        email: studentInfo ? studentInfo.email : '',
+        course: studentInfo ? studentInfo.course : '',
+        password: studentInfo ? studentInfo.password : '',
+        confirmPassword: studentInfo ? studentInfo.confirmPassword : ''
     })
 
     const { firstName, lastName, email, studentNumber, course, password, confirmPassword } = user
@@ -29,7 +27,8 @@ const Register = ({history}) => {
     const submitHandler = e => {
         e.preventDefault()
 
-        dispatch(register(user))
+        dispatch(saveStudentInfo({ firstName, lastName, studentNumber, email, course, password, confirmPassword }))
+        history.push('/confirmregister')
     }
 
     const onChange = e => {
@@ -38,47 +37,42 @@ const Register = ({history}) => {
             [e.target.name]: e.target.value
         })
     }
-    
-    useEffect(() => {
-        if(error){
-            alert.error(error)
-            dispatch(clearErrors())
-        }
-        
-        if(isCreated){
-            alert.success(message)
-            history.push('/')
-
-            dispatch({
-                type: REGISTER_USER_RESET
-            })
-        }
-
-    }, [dispatch, alert, error, message, history, isCreated])
 
     return (
         <>
-            <MetaData title={'Register'}/>
+            <MetaData title={'Register'} />
             <Container fluid>
+                <div class="progress">
+                    <div
+                        class="progress-bar"
+                        role="progressbar"
+                        style={{ width: '50%' }}
+                        aria-valuenow='50'
+                        aria-valuemin="0"
+                        aria-valuemax="100"
+                    >
+                        50%
+                    </div>
+                </div>
                 <Card>
                     <Card.Body>
-                        <Card.Title style={{margin: '50px 0 20px 0'}}>Register an account</Card.Title>
+                        <Card.Title style={{ margin: '50px 0 20px 0' }}>Register an account</Card.Title>
                         <Form method='post' onSubmit={submitHandler} encType='application/json'>
                             <Row className="mb-3">
                                 <Form.Group as={Col} controlId="formGridFirstName">
-                                <Form.Label>First Name</Form.Label>
-                                <Form.Control type="text" placeholder="Student first name" name="firstName" value={firstName} onChange={onChange} required/>
+                                    <Form.Label>First Name</Form.Label>
+                                    <Form.Control type="text" placeholder="Student first name" name="firstName" value={firstName} onChange={onChange} required />
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridLastName">
-                                <Form.Label>Last Name</Form.Label>
-                                <Form.Control type="text" placeholder="Student last name" name="lastName" value={lastName} onChange={onChange} required/>
+                                    <Form.Label>Last Name</Form.Label>
+                                    <Form.Control type="text" placeholder="Student last name" name="lastName" value={lastName} onChange={onChange} required />
                                 </Form.Group>
                             </Row>
 
                             <Form.Group className="mb-3" controlId="formGridStudentNumber">
                                 <Form.Label>Student Number</Form.Label>
-                                <Form.Control placeholder="20xxxxxxxx" name="studentNumber" pattern="20[0-9]{8}" value={studentNumber} onChange={onChange} required/>
+                                <Form.Control placeholder="20xxxxxxxx" name="studentNumber" pattern="20[0-9]{8}" value={studentNumber} onChange={onChange} required />
                             </Form.Group>
 
                             <Form.Group className="mb-3" controlId="formGridCourse">
@@ -93,22 +87,22 @@ const Register = ({history}) => {
 
                             <Form.Group className="mb-3" controlId="formGridEmail">
                                 <Form.Label>Email address</Form.Label>
-                                <Form.Control type='email' placeholder="juan.delacruz.iics@ust.edu.ph" pattern="[a-z]{1,}\.[a-z]{1,}\.(iics|cics)@ust\.edu\.ph" name="email" value={email} onChange={onChange} required/>
+                                <Form.Control type='email' placeholder="juan.delacruz.iics@ust.edu.ph" pattern="[a-z]{1,}\.[a-z]{1,}\.(iics|cics)@ust\.edu\.ph" name="email" value={email} onChange={onChange} required />
                             </Form.Group>
 
                             <Row className="mb-3">
                                 <Form.Group as={Col} controlId="formGridPassword">
                                     <Form.Label>Password</Form.Label>
-                                    <Form.Control type="password" placeholder="Password" name="password" value={password} onChange={onChange} required/>
+                                    <Form.Control type="password" placeholder="Password" name="password" value={password} onChange={onChange} required />
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridConfirmPassword">
                                     <Form.Label>Confirm Password</Form.Label>
-                                    <Form.Control type="password" placeholder="Confirm password" name="confirmPassword" value={confirmPassword} onChange={onChange} required/>
+                                    <Form.Control type="password" placeholder="Confirm password" name="confirmPassword" value={confirmPassword} onChange={onChange} required />
                                 </Form.Group>
                             </Row>
 
-                            <Button type='submit' style={{marginTop: '10px', borderRadius: '50px', width: '10rem'}} disabled={loading ? true : false}>Register</Button>
+                            <Button type='submit' style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}>Next</Button>
                         </Form>
                     </Card.Body>
                 </Card>

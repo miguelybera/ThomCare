@@ -7,7 +7,8 @@ import {
     getUsersReducer,
     userDetailsReducer,
     registerReducer,
-    forgotPasswordReducer
+    forgotPasswordReducer,
+    studentInfoReducer
 } from './reducers/userReducers'
 
 import {
@@ -33,10 +34,15 @@ const reducer = combineReducers({
     sendMessage: sendMessageReducer,
     createConvo: createConversationReducer,
     announcements: getAnnouncementsReducer,
-    announcementDetails: getSingleAnnouncementReducer
+    announcementDetails: getSingleAnnouncementReducer,
+    student: studentInfoReducer
 })
 
-let initialState = {} //contains all the data we want to put in this state just before loading the application
+let initialState = {
+    student: {
+        studentInfo: localStorage.getItem('studentInfo') ? JSON.parse(localStorage.getItem('studentInfo')) : {}
+    }
+} //contains all the data we want to put in this state just before loading the application
 
 //clear the store
 const middleware = [thunk]

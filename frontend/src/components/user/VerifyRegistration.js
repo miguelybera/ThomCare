@@ -4,15 +4,17 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FloatingLabel, Form, Button, Card, Container, Row } from 'react-bootstrap'
 import axios from 'axios'
 import MetaData from './../layout/MetaData'
+import Loader from './../layout/Loader'
+
 import { VERIFY_STUDENT_REQUEST, VERIFY_STUDENT_SUCCESS, VERIFY_STUDENT_FAIL, VERIFY_STUDENT_RESET } from './../../constants/userConstants'
 
 
-const VerifyRegistration = ({history, match}) => {
+const VerifyRegistration = ({ history, match }) => {
     const alert = useAlert()
     const dispatch = useDispatch()
-    
+
     const token = match.params.token
-    
+
     const { error, loading, message } = useSelector(state => state.register)
 
     const [messageText, setMessageText] = useState('')
@@ -29,9 +31,9 @@ const VerifyRegistration = ({history, match}) => {
                         'Content-Type': 'application/json'
                     }
                 }
-    
+
                 const { data } = await axios.post(`/api/v1/verify/account/${token}`, {}, config)
-    
+
                 dispatch({
                     type: VERIFY_STUDENT_SUCCESS,
                     payload: data.message
@@ -50,14 +52,14 @@ const VerifyRegistration = ({history, match}) => {
     }, [dispatch])
 
     useEffect(() => {
-        if(message) {
+        if (message) {
             setMessageText(message)
             dispatch({
                 type: VERIFY_STUDENT_RESET
             })
         }
 
-        if(error) {
+        if (error) {
             setMessageText(error)
         }
     }, [message, error])
@@ -68,34 +70,56 @@ const VerifyRegistration = ({history, match}) => {
 
     return (
         <>
-            <MetaData title={'Registration successful'}/>
+            <MetaData title={'Registration successful'} />
             <Container fluid>
-                <Row className='justify-content-md-center' style={{marginTop: '50px'}}>
+                <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
                     <Card style={{ width: '30rem', align: 'center' }}>
-                        {loading ? (<>
-                            <h1>loading</h1>
-                        </>) : (
+                        {loading ? ((<Loader />)) : (
                             <>
                                 {message ? (
                                     <>
+                                        <div class="progress">
+                                            <div
+                                                class="progress-bar"
+                                                role="progressbar"
+                                                style={{ width: '100%' }}
+                                                aria-valuenow='100'
+                                                aria-valuemin="0"
+                                                aria-valuemax="100"
+                                            >
+                                                100%
+                                            </div>
+                                        </div>
                                         <Card.Body>
-                                            <Card.Title style={{margin: '50px 0 20px 0'}}>Registration successful</Card.Title>
+                                            <Card.Title style={{ margin: '50px 0 20px 0' }}>Registration successful</Card.Title>
                                             <Card.Text>{messageText}</Card.Text>
                                             <Button
-                                                type='submit' 
-                                                style={{marginTop: '10px', borderRadius: '50px', width: '10rem'}}
+                                                type='submit'
+                                                style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
                                                 onClick={goToLogin}
                                             >Log in</Button>
                                         </Card.Body>
                                     </>
                                 ) : (
                                     <>
+                                    <div class="progress">
+                                            <div
+                                                class="progress-bar"
+                                                role="progressbar"
+                                                style={{ width: '90%' }}
+                                                aria-valuenow='90'
+                                                aria-valuemin="0"
+                                                aria-valuemax="100"
+                                            >
+                                                90%
+                                            </div>
+                                        </div>
                                         <Card.Body>
-                                            <Card.Title style={{margin: '50px 0 20px 0'}}>Registration error</Card.Title>
+                                            <Card.Title style={{ margin: '50px 0 20px 0' }}>Registration error</Card.Title>
                                             <Card.Text>{messageText}</Card.Text>
                                             <Button
-                                                type='submit' 
-                                                style={{marginTop: '10px', borderRadius: '50px', width: '10rem'}}
+                                                type='submit'
+                                                style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
                                                 onClick={goToLogin}
                                             >Log in</Button>
                                         </Card.Body>

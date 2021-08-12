@@ -120,7 +120,7 @@ const Announcements = () => {
                         </Form.Select>
                     </Form.Group>
                     <Form.Group as={Col} controlId="seachAnnouncement" xs={2}>
-                        <Form.Label>Search title</Form.Label>
+                        <Form.Label>Search by title</Form.Label>
                         <FormControl
                             type="search"
                             placeholder="Search"

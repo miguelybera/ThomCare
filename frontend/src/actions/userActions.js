@@ -17,6 +17,8 @@ import {
     GET_USER_REQUEST,
     GET_USER_SUCCESS,
     GET_USER_FAIL,
+    SAVE_STUDENT_INFO,
+    RESET_STUDENT_INFO,
     REGISTER_USER_REQUEST,
     REGISTER_USER_SUCCESS,
     REGISTER_USER_FAIL,
@@ -139,7 +141,7 @@ export const logout = () => async (dispatch) => {
 }
 
 // Register STUDENT
-export const register = ( userData ) => async (dispatch) => {
+export const register = ( user ) => async (dispatch) => {
     try {
         dispatch ({
             type: REGISTER_USER_REQUEST
@@ -151,19 +153,34 @@ export const register = ( userData ) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post(`/api/v1/registerStudent`, userData, config)
+        const { data } = await axios.post(`/api/v1/registerStudent`, user, config)
         
         dispatch({
             type: REGISTER_USER_SUCCESS,
             payload: data.message
         })
 
+        dispatch({
+            type: RESET_STUDENT_INFO
+        })
+
+        localStorage.setItem('studentInfo', JSON.stringify({}))
     } catch (error) {
         dispatch({
             type: REGISTER_USER_FAIL,
             payload: error.response.data.errMessage
         })
     }
+}
+
+// save STUDENT info
+export const saveStudentInfo = (data) => async (dispatch) => {
+    dispatch ({
+        type: SAVE_STUDENT_INFO,
+        payload: data
+    })
+
+    localStorage.setItem('studentInfo', JSON.stringify(data))
 }
 
 //forgot password

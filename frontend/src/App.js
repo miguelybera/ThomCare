@@ -10,6 +10,7 @@ import ScrollToTop from './components/layout/ScrollToTop'
 //user folder
 import Login from './components/user/Login'
 import Register from './components/user/Register'
+import ConfirmRegister from './components/user/ConfirmRegister'
 import ForgotPassword from './components/user/ForgotPassword'
 import Profile from './components/user/Profile'
 import NewPassword from './components/user/NewPassword'
@@ -57,6 +58,7 @@ function App() {
                         <Route path='/password/reset/:token' component={NewPassword} exact/>
                         <Route path='/verify/account/:token' component={VerifyRegistration} exact/>
                         <Route path='/register' component={Register} exact/>
+                        <Route path='/confirmregister' component={ConfirmRegister} exact/>
 
                         {/**needs to be logged in */}
                         <ProtectedRoute path='/messenger' loggedIn={true} component={Messenger} exact/>

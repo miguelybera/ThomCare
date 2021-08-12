@@ -13,6 +13,8 @@ import {
     GET_USER_REQUEST,
     GET_USER_SUCCESS,
     GET_USER_FAIL,
+    SAVE_STUDENT_INFO,
+    RESET_STUDENT_INFO,
     REGISTER_USER_REQUEST,
     REGISTER_USER_SUCCESS,
     REGISTER_USER_FAIL,
@@ -192,8 +194,37 @@ export const registerReducer = ( state = { }, action ) => {
         case VERIFY_STUDENT_RESET:
             return {
                 ...state,
-                isCreated: false
+                isCreated: false,
+                studentInfo: {}
             }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+//save shipping info
+export const studentInfoReducer = ( state = { studentInfo: {} }, action ) => {
+    switch(action.type){
+        case SAVE_STUDENT_INFO: {
+            return {
+                ...state,
+                studentInfo: action.payload
+            }
+        }
+
+        case RESET_STUDENT_INFO: {
+            return {
+                ...state,
+                studentInfo: null
+            }
+        }
 
         case CLEAR_ERRORS:
             return {
