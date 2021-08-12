@@ -5,7 +5,7 @@ const APIFeatures = require('../utils/apiFeatures');
 
 // Create new announcement => /api/v1/new/announcement
 exports.newAnnouncement = catchAsyncErrors (async (req,res,next)=>{
-    const { title, description, course, yearLevel }= req.body;
+    const { title, description, course, yearLevel, announcementType }= req.body;
     let track = req.body.track
     const createdBy = req.user.id;
     const fileAttachments = req.files
@@ -73,7 +73,8 @@ exports.newAnnouncement = catchAsyncErrors (async (req,res,next)=>{
         track,
         archiveDate,
         createdBy,
-        fileAttachments
+        fileAttachments,
+        announcementType
 
     });
 
@@ -85,20 +86,30 @@ exports.newAnnouncement = catchAsyncErrors (async (req,res,next)=>{
 
 // Get all announcements /api/v1/admin/allAnnouncements
 exports.getAdminAnnouncements = catchAsyncErrors (async (req,res,next) => {
-    const resPerPage = 15;
+    const resPerPage = 10;
     const announcementCount = await Announcement.countDocuments()
     const apiFeatures = new APIFeatures(Announcement.find(), req.query)
                         .search()
                         .filter()
-                        .pagination(resPerPage);
-    const announcements = await apiFeatures.query;
+
+    let announcements = await apiFeatures.query;
+    let filteredAnnouncementsCount = announcements.length
+
+    apiFeatures.pagination(resPerPage)
+
+    announcements = await apiFeatures.query; 
+
     const allIT = await Announcement.find({course: "Information Technology"});
     const allIS = await Announcement.find({course: "Information Systems"});
     const allCS = await Announcement.find({course: "Computer Science"});
-   
+    
     res.status(200).json({
         success: true,
         count: announcements.length,
+        announcementCount,
+        announcements,
+        resPerPage,
+        filteredAnnouncementsCount,
         announcements,
         allIT,
         allIS,
@@ -108,13 +119,19 @@ exports.getAdminAnnouncements = catchAsyncErrors (async (req,res,next) => {
 
 // Get all unarchived announcements /api/v1/announcements
 exports.getAnnouncements = catchAsyncErrors (async (req,res,next) => {
-    const resPerPage = 5;
+    const resPerPage = 10;
     const announcementCount = await Announcement.countDocuments()
     const apiFeatures = new APIFeatures(Announcement.find({archiveDate: {$gte: Date.now()}}), req.query)
                         .search()
                         .filter()
-                        .pagination(resPerPage);
-    const announcements = await apiFeatures.query;
+
+    let announcements = await apiFeatures.query;
+    let filteredAnnouncementsCount = announcements.length
+
+    apiFeatures.pagination(resPerPage)
+
+    announcements = await apiFeatures.query; 
+
     const allIT = await Announcement.find({course: "Information Technology",archiveDate: {$gte: Date.now()}});
     const allIS = await Announcement.find({course: "Information Systems",archiveDate: {$gte: Date.now()}});
     const allCS = await Announcement.find({course: "Computer Science",archiveDate: {$gte: Date.now()}});
@@ -122,6 +139,10 @@ exports.getAnnouncements = catchAsyncErrors (async (req,res,next) => {
     res.status(200).json({
         success: true,
         count: announcements.length,
+        announcementCount,
+        announcements,
+        resPerPage,
+        filteredAnnouncementsCount,
         announcements,
         allIT,
         allIS,
@@ -185,7 +206,7 @@ exports.updateAnnouncement = catchAsyncErrors (async(req,res,next) =>{
     if(!announcement){
         return next(new ErrorHandler('Announcement Not Found', 404))
     }
-    let newTitle,newDescription, newCourse, newYearLevel, newTrack, newArchiveDate
+    let newTitle,newDescription, newCourse, newYearLevel, newTrack, newArchiveDate, newAnnouncementType
     if(req.body.archiveDate == null || req.body.archiveDate == ''){
         newArchiveDate = announcement.archiveDate
     }else{
@@ -200,6 +221,11 @@ exports.updateAnnouncement = catchAsyncErrors (async(req,res,next) =>{
         newDescription = announcement.description
     }else{
         newDescription = req.body.description
+    }
+    if(req.body.announcementType == null || req.body.announcementType == ''){
+        newAnnouncementType = announcement.announcementType
+    }else{
+        newAnnouncementType = req.body.announcementType
     }
     if(req.body.course == null || req.body.course == ''){
         newCourse = announcement.course
@@ -271,7 +297,9 @@ exports.updateAnnouncement = catchAsyncErrors (async(req,res,next) =>{
         description: newDescription,
         course: newCourse,
         yearLevel: newYearLevel,
-        track: newTrack
+        track: newTrack,
+        announcementType: newAnnouncementType,
+        archiveDate: newArchiveDate
     }
     if(req.files != null || req.files != ''){
         newAnnouncementData = {
@@ -280,6 +308,8 @@ exports.updateAnnouncement = catchAsyncErrors (async(req,res,next) =>{
             course: newCourse,
             yearLevel: newYearLevel,
             track: newTrack,
+            announcementType: newAnnouncementType,
+            archiveDate: newArchiveDate,
             fileAttachments: req.files
         }
     }

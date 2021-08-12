@@ -73,6 +73,10 @@ const announcementSchema = new mongoose.Schema({
         },
         fileAttachments:{
             type: Array
+        },
+        announcementType:{
+            type: String,
+            required: true
         }
 })
 

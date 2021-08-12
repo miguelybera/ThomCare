@@ -3,6 +3,7 @@ const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const APIFeatures = require('../utils/apiFeatures');
 const User = require('../models/user');
+const Message = require('../models/message')
 
 // Create conversation => /createConversation
 exports.createConversation = catchAsyncErrors (async (req,res,next)=>{
