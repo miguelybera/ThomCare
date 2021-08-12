@@ -35,17 +35,6 @@ const Header = () => {
                                     <Nav.Link><Link to='/'>Announcements</Link></Nav.Link>
                                     <Nav.Link><Link to='/request'>Request</Link></Nav.Link>
                                     <Nav.Link><Link to='/track-request'>Track my request</Link></Nav.Link>
-                                </>) : (
-                                <>
-                                    <Nav.Link><Link to='/'>Announcements</Link></Nav.Link>
-                                    <Nav.Link><Link to='/request'>Request</Link></Nav.Link>
-                                    <Nav.Link><Link to='/track-request'>Track my request</Link></Nav.Link>
-                                    <Nav.Link><Link to='/login'>Login</Link></Nav.Link>
-                                </>
-
-                            )}
-                            {user ? (
-                                <>
                                     <NavDropdown title={userName} id="basic-nav-dropdown">
                                         <NavDropdown.Item>Dashboard</NavDropdown.Item>
                                         <NavDropdown.Item><Link to='/profile'>My Profile</Link></NavDropdown.Item>
@@ -53,9 +42,13 @@ const Header = () => {
                                         <NavDropdown.Divider />
                                         <NavDropdown.Item style={{ color: 'red' }}><span onClick={() => logoutHandler()}>Log out</span></NavDropdown.Item>
                                     </NavDropdown>
+                                </>) : (
+                                <>
+                                    <Nav.Link><Link to='/'>Announcements</Link></Nav.Link>
+                                    <Nav.Link><Link to='/request'>Request</Link></Nav.Link>
+                                    <Nav.Link><Link to='/track-request'>Track my request</Link></Nav.Link>
+                                    <Nav.Link><Link to='/login'>Login</Link></Nav.Link>
                                 </>
-                            ) : (
-                                <></>
                             )}
                         </Nav>
                     </Navbar.Collapse>

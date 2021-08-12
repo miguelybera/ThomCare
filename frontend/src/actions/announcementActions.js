@@ -3,9 +3,9 @@ import {
     ALL_ANNOUNCEMENTS_REQUEST,
     ALL_ANNOUNCEMENTS_SUCCESS,
     ALL_ANNOUNCEMENTS_FAIL,
-    GET_SINGLE_ANNOUNCEMENT_REQUEST,
-    GET_SINGLE_ANNOUNCEMENT_SUCCESS,
-    GET_SINGLE_ANNOUNCEMENT_FAIL,
+    ANNOUNCEMENT_DETAILS_REQUEST,
+    ANNOUNCEMENT_DETAILS_SUCCESS,
+    ANNOUNCEMENT_DETAILS_FAIL,
     CLEAR_ERRORS
 } from '../constants/announcementConstants'
 
@@ -53,6 +53,28 @@ export const getAnnouncements = (currentPage, course, yearLevel, track) => async
     }
 }
 
+//get all announcements
+export const getAnnouncementDetails = (id) => async(dispatch) => {
+    try {
+        dispatch({
+            type: ANNOUNCEMENT_DETAILS_REQUEST
+        })
+
+        const { data }= await axios.get(`/api/v1/announcement/${id}`)
+
+        dispatch({
+            type: ANNOUNCEMENT_DETAILS_SUCCESS,
+            payload: data.announcement
+        })
+    }
+    catch (error) {
+        dispatch({
+            type: ANNOUNCEMENT_DETAILS_FAIL,
+            payload: error.response.data.errMessage
+            }
+        )
+    }
+}
 
 //clear errors
 export const clearErrors = () => async(dispatch) => {

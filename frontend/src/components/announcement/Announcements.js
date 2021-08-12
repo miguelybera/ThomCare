@@ -20,6 +20,7 @@ const Announcements = () => {
     const [currentPage, setCurrentPage] = useState(1)
 
     const [search, setSearch] = useState('')
+    const [readMore, setReadMore] = useState(false)
 
     const category = []
 
@@ -52,7 +53,7 @@ const Announcements = () => {
         }
 
         dispatch(getAnnouncements(currentPage, course, yearLevel, track))
-        console.log(yearLevel)
+        
     }, [dispatch, alert, error, currentPage, course, yearLevel, track])
 
     function searchKeyword() {
@@ -68,6 +69,17 @@ const Announcements = () => {
 
     function changeDateFormat(date) {
         return dateFormat(date, "ddd, mmm dS, yyyy h:mm tt")
+    }
+
+    function shortenDescription(description) {
+        let y = description.split(' ')
+        let z = description.split(' ').slice(0, 50).join(' ')
+
+        if(y.length > 50 ) {
+            z = z + '...'
+        }
+
+        return z
     }
 
     return (
@@ -139,8 +151,8 @@ const Announcements = () => {
                                     <Card.Body>
                                         <Card.Title>{announcement.title}</Card.Title>
                                         <Card.Text style={{ fontSize: '12px', color: 'gray' }}>{changeDateFormat(announcement.createdAt)}</Card.Text>
-                                        <Card.Text>{announcement.description}</Card.Text>
-                                        <Card.Text style={{ fontSize: '12px', color: 'gray' }}><Link>Read More</Link></Card.Text>
+                                        <Card.Text>{shortenDescription(announcement.description)}</Card.Text>
+                                        <Card.Text style={{ fontSize: '12px', color: 'gray' }}><Link to={`/announcement/${announcement._id}`}>Read More</Link></Card.Text>
                                         <Card.Text style={{ fontSize: '10px', color: 'gray' }}>Tags: {announcement.yearLevel}, {announcement.course}, {announcement.track}</Card.Text>
                                     </Card.Body>
                                 </Card>
