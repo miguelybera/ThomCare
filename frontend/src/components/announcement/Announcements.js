@@ -19,9 +19,6 @@ const Announcements = () => {
 
     const [currentPage, setCurrentPage] = useState(1)
 
-    const [search, setSearch] = useState('')
-    const [readMore, setReadMore] = useState(false)
-
     const category = []
 
     function setCurrentPageNo(pageNumber) {
@@ -35,10 +32,11 @@ const Announcements = () => {
         course: '',
         yearLevel: '',
         track: '',
-        annnouncementType: ''
+        annnouncementType: '',
+        title: ''
     })
 
-    const { course, yearLevel, track, annnouncementType } = filter
+    const { course, yearLevel, track, annnouncementType, title } = filter
 
     /**
      * if(category) {
@@ -52,13 +50,9 @@ const Announcements = () => {
             dispatch(clearErrors())
         }
 
-        dispatch(getAnnouncements(currentPage, course, yearLevel, track))
-        
-    }, [dispatch, alert, error, currentPage, course, yearLevel, track])
+        dispatch(getAnnouncements(currentPage, course, yearLevel, track, title))
 
-    function searchKeyword() {
-        console.log('search clicked')
-    }
+    }, [dispatch, alert, error, currentPage, course, yearLevel, track, title])
 
     const onChange = e => {
         setFilter({
@@ -75,7 +69,7 @@ const Announcements = () => {
         let y = description.split(' ')
         let z = description.split(' ').slice(0, 50).join(' ')
 
-        if(y.length > 50 ) {
+        if (y.length > 50) {
             z = z + '...'
         }
 
@@ -111,9 +105,9 @@ const Announcements = () => {
                         <Form.Label>Track</Form.Label>
                         <Form.Select aria-label="ITTracks" size="sm" name="track" value={track} onChange={onChange} required>
                             <option value=''>-</option>
-                            <option value="WMD">Web and Mobile Development</option>
-                            <option value="NS">Network Security</option>
-                            <option value="ITA">IT Automation</option>
+                            <option value="Web and Mobile Development">Web and Mobile Development</option>
+                            <option value="Network and Security">Network and Security</option>
+                            <option value="IT Automation">IT Automation</option>
                         </Form.Select>
                     </Form.Group>
                     <Form.Group as={Col} xs={2} controlId="selectAnnouncementTypeforAnnouncement">
@@ -133,11 +127,10 @@ const Announcements = () => {
                             className="mr-2"
                             aria-label="Search"
                             size="sm"
-                            name="search"
-                            value={search}
-                            onChange={e => setSearch(e.target.value)}
+                            name="title"
+                            value={title}
+                            onChange={onChange}
                         />
-                        <Button variant="outline-success" xs={1} onClick={() => searchKeyword()}>Search</Button>
                     </Form.Group>
                 </Row>
             </Form>
