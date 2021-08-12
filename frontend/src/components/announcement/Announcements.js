@@ -8,6 +8,8 @@ import MetaData from './../layout/MetaData'
 import Loader from './../layout/Loader'
 import { Accordion, ButtonGroup, Button, ButtonToolbar, DropdownButton, Dropdown, Form, FormControl, Card, Row, Col } from 'react-bootstrap'
 
+var dateFormat = require('dateformat')
+
 const Announcements = () => {
 
     const alert = useAlert()
@@ -31,10 +33,11 @@ const Announcements = () => {
     const [filter, setFilter] = useState({
         course: '',
         yearLevel: '',
-        track: ''
+        track: '',
+        annnouncementType: ''
     })
 
-    const { course, yearLevel, track } = filter
+    const { course, yearLevel, track, annnouncementType } = filter
 
     /**
      * if(category) {
@@ -56,7 +59,6 @@ const Announcements = () => {
         console.log('search clicked')
     }
 
-    
     const onChange = e => {
         setFilter({
             ...filter,
@@ -64,58 +66,70 @@ const Announcements = () => {
         })
     }
 
+    function changeDateFormat(date) {
+        return dateFormat(date, "ddd, mmm dS, yyyy h:mm tt")
+    }
+
     return (
         <>
             <MetaData title={`Announcements`} />
             <h1> Announcements </h1>
-            <Row>
-                <Col col-md-15>
-                    <Form>
-                        <p> Filters: </p>
-                        <Form.Group className="mb-3" controlId="formGridCourse">
-                            <Form.Label>Course/Program</Form.Label>
-                            <Form.Select aria-label="Default select example" name="course" value={course} onChange={onChange} required>
-                                <option value=''>-</option>
-                                <option value="Computer Science">Computer Science</option>
-                                <option value="Information Systems">Information Systems</option>
-                                <option value="Information Technology">Information Technology</option>
-                            </Form.Select>
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="formGridCourse">
-                            <Form.Label>Year Level</Form.Label>
-                            <Form.Select aria-label="Default select example" name="yearLevel" value={yearLevel} onChange={onChange} required>
-                                <option value=''>-</option>
-                                <option value="1st Year">1st Year</option>
-                                <option value="2nd Year">2nd Year</option>
-                                <option value="3rd Year">3rd Year</option>
-                                <option value="4th Year">4th Year</option>
-                            </Form.Select>
-                        </Form.Group>
-                        <Form.Group className="mb-3" controlId="formGridCourse">
-                            <Form.Label>Track</Form.Label>
-                            <Form.Select aria-label="Default select example" name="track" value={track} onChange={onChange} required>
-                                <option value=''>-</option>
-                                <option value="Network and Security">Network and Security</option>
-                                <option value="All">All</option>
-                                <option value="Information Technology">Information Technology</option>
-                            </Form.Select>
-                        </Form.Group>
-                    </Form>
-                </Col>
-                <Col xs={3} col-auto>
-                    <Form className="d-flex">
+            <Form>
+                <Row>
+                    <Form.Group as={Col} xs={2} controlId="selectCourseforAnnouncement">
+                        <Form.Label>Course</Form.Label>
+                        <Form.Select aria-label="Course" size="sm" name="course" value={course} onChange={onChange} required>
+                            <option value=''>-</option>
+                            <option value="Computer Science">Computer Science</option>
+                            <option value="Information Systems">Information Systems</option>
+                            <option value="Information Technology">Information Technology</option>
+                        </Form.Select>
+                    </Form.Group>
+                    <Form.Group as={Col} xs={2} controlId="selectYearLevelforAnnouncement">
+                        <Form.Label>Year Level</Form.Label>
+                        <Form.Select aria-label="YearLevel" size="sm" name="yearLevel" value={yearLevel} onChange={onChange} required>
+                            <option value=''>-</option>
+                            <option value="1st Year">1st Year</option>
+                            <option value="2nd Year">2nd Year</option>
+                            <option value="3rd Year">3rd Year</option>
+                            <option value="4th Year">4th Year</option>
+                        </Form.Select>
+                    </Form.Group>
+                    <Form.Group as={Col} xs={3} controlId="selectTrackforAnnouncement">
+                        <Form.Label>Track</Form.Label>
+                        <Form.Select aria-label="ITTracks" size="sm" name="track" value={track} onChange={onChange} required>
+                            <option value=''>-</option>
+                            <option value="WMD">Web and Mobile Development</option>
+                            <option value="NS">Network Security</option>
+                            <option value="ITA">IT Automation</option>
+                        </Form.Select>
+                    </Form.Group>
+                    <Form.Group as={Col} xs={2} controlId="selectAnnouncementTypeforAnnouncement">
+                        <Form.Label>Announcement Type</Form.Label>
+                        <Form.Select aria-label="AnnouncementType" size="sm" name="annnouncementType" value={annnouncementType} onChange={onChange} required>
+                            <option value=''>-</option>
+                            <option value="Memorandum">Memorandum</option>
+                            <option value="Enrollment">Enrollment</option>
+                            <option value="Class Suspension">Class Suspension</option>
+                        </Form.Select>
+                    </Form.Group>
+                    <Form.Group as={Col} controlId="seachAnnouncement" xs={2}>
+                        <Form.Label>Search title</Form.Label>
                         <FormControl
                             type="search"
                             placeholder="Search"
                             className="mr-2"
                             aria-label="Search"
+                            size="sm"
+                            name="search"
                             value={search}
                             onChange={e => setSearch(e.target.value)}
                         />
-                        <Button variant="outline-success" onClick={() => searchKeyword()}>Search</Button>
-                    </Form>
-                </Col>
-            </Row>
+                        <Button variant="outline-success" xs={1} onClick={() => searchKeyword()}>Search</Button>
+                    </Form.Group>
+                </Row>
+            </Form>
+
             <Row>
                 {loading ? <Loader /> : (
                     <Row xs={1} md={2} className="g-4">
@@ -124,10 +138,10 @@ const Announcements = () => {
                                 <Card>
                                     <Card.Body>
                                         <Card.Title>{announcement.title}</Card.Title>
-                                        <Card.Text style={{ fontSize: '12px', color: 'gray' }}>{announcement.createdAt}</Card.Text>
-                                        <Card.Text style={{ fontSize: '12px', color: 'gray' }}>Year Level: {announcement.yearLevel}</Card.Text>
-                                        <Card.Text style={{ fontSize: '12px', color: 'gray' }}>Course: {announcement.course} Track: {announcement.track}</Card.Text>
+                                        <Card.Text style={{ fontSize: '12px', color: 'gray' }}>{changeDateFormat(announcement.createdAt)}</Card.Text>
                                         <Card.Text>{announcement.description}</Card.Text>
+                                        <Card.Text style={{ fontSize: '12px', color: 'gray' }}><Link>Read More</Link></Card.Text>
+                                        <Card.Text style={{ fontSize: '10px', color: 'gray' }}>Tags: {announcement.yearLevel}, {announcement.course}, {announcement.track}</Card.Text>
                                     </Card.Body>
                                 </Card>
                             </Col>
