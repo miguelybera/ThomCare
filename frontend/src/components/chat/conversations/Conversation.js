@@ -5,8 +5,12 @@ import { useDispatch, useSelector } from  'react-redux'
 import { getSingleUser } from '../../../actions/userActions'
 import './conversation.css'
 import axios from 'axios'
+import {
+    GET_USER_REQUEST,
+    GET_USER_SUCCESS,
+    GET_USER_FAIL
+} from './../../../constants/userConstants'
 
-//same issue sa Home before
 const Conversations = ({conversation, currentUser}) => {
     const dispatch = useDispatch()
     
@@ -18,10 +22,23 @@ const Conversations = ({conversation, currentUser}) => {
 
         const getUser = async () => {
             try {
+                dispatch({
+                    type: GET_USER_REQUEST
+                })
+
                 const { data } = await axios.get(`/api/v1/chat/user/${receiver}`)
+                
+                dispatch({
+                    type: GET_USER_SUCCESS,
+                    payload: data.singleUser
+                })
+
                 setFriend(data)
-            } catch (err) {
-                console.log(err)
+            } catch (error) {
+                dispatch({
+                    type: GET_USER_FAIL,
+                    payload: error.response.data.errMessage
+                })
             }
         }
         getUser()

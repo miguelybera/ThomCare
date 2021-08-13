@@ -31,10 +31,12 @@ const Register = ({ history }) => {
         history.push('/confirmregister')
     }
 
+    const upperCase = (text) => text.toUpperCase()
+
     const onChange = e => {
         setUser({
             ...user,
-            [e.target.name]: e.target.value
+            [e.target.name]: e.target.name == 'firstName' || e.target.name == 'lastName' ? upperCase(e.target.value) : e.target.value
         })
     }
 

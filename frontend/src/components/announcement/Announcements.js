@@ -145,7 +145,7 @@ const Announcements = () => {
                                         <Card.Title>{announcement.title}</Card.Title>
                                         <Card.Text style={{ fontSize: '12px', color: 'gray' }}>{changeDateFormat(announcement.createdAt)}</Card.Text>
                                         <Card.Text>{shortenDescription(announcement.description)}</Card.Text>
-                                        <Card.Text style={{ fontSize: '12px', color: 'gray' }}><Link to={`/announcement/${announcement._id}`}>Read More</Link></Card.Text>
+                                        <Card.Text style={{ fontSize: '12px', color: 'gray' }}><Link to={`/announcement/${announcement._id}`}>Read More &#xbb;</Link></Card.Text>
                                         <Card.Text style={{ fontSize: '10px', color: 'gray' }}>Tags: {announcement.yearLevel}, {announcement.course}, {announcement.track}</Card.Text>
                                     </Card.Body>
                                 </Card>

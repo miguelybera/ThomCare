@@ -17,7 +17,9 @@ const{
         updateUser, 
         deleteUser, 
         getChatUser, 
-        getChatUsers} = require('../controllers/authController');
+        getChatUsers,
+        getAnnouncementUser
+    } = require('../controllers/authController');
 const { isAuthenticatedUser, authorizeRoles} = require('../middlewares/auth');
 
 //all users
@@ -29,6 +31,7 @@ router.route('/me').get(isAuthenticatedUser,getUserProfile);
 router.route('/password/update').put(isAuthenticatedUser,updatePassword);
 router.route('/chat/user/:id').get(isAuthenticatedUser,getChatUser);
 router.route('/chat/users').get(isAuthenticatedUser,getChatUsers);
+router.route('/announcement/user/:id').get(getAnnouncementUser);
 
 //student
 router.route('/registerStudent').post(registerStudent);

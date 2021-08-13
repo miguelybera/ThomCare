@@ -3,12 +3,25 @@ import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import Pagination from 'react-js-pagination'
-import { getAnnouncementDetails, clearErrors } from './../../actions/announcementActions'
+import { getAnnouncementDetails, getUser, clearErrors } from './../../actions/announcementActions'
 import MetaData from './../layout/MetaData'
 import Loader from './../layout/Loader'
-import { Accordion, ButtonGroup, Button, ButtonToolbar, DropdownButton, Dropdown, Form, FormControl, Card, Row, Col } from 'react-bootstrap'
+import { Accordion, ButtonGroup, Button, ButtonToolbar, DropdownButton, Dropdown, Form, FormControl, Card, Row, Col, Breadcrumb } from 'react-bootstrap'
+import axios from 'axios'
+import {
+    GET_USER_REQUEST,
+    GET_USER_SUCCESS,
+    GET_USER_FAIL
+} from './../../constants/userConstants'
 
 var dateFormat = require('dateformat')
+
+const cardStyle = {
+    marginTop: '20px',
+    width: '75%',
+    align: 'center',
+    border: 'solid 0.69px gray'
+}
 
 const AnnouncementDetails = ({ history, match }) => {
 
@@ -16,6 +29,7 @@ const AnnouncementDetails = ({ history, match }) => {
     const dispatch = useDispatch()
 
     const { loading, announcement, error } = useSelector(state => state.announcementDetails)
+    const { singleUser } = useSelector(state => state.singleUser)
 
     const announcementId = match.params.id
 
@@ -25,41 +39,26 @@ const AnnouncementDetails = ({ history, match }) => {
     const [course, setCourse] = useState('')
     const [track, setTrack] = useState('')
     const [date, setDate] = useState('')
-    
+    const [createdBy, setCreatedBy] = useState('')
+
     let announcementTitle = ''
     let announcementDescription = ''
     let announcementYearLevel = ''
     let announcementCourse = ''
     let announcementTrack = ''
     let announcementDate = ''
-    
-    if (announcement && announcement.title) {
-        announcementTitle = announcement.title
-    }
+    let announcementCreatedBy = ''
 
-    if (announcement && announcement.description) {
-        announcementDescription = announcement.description
-    }
+    if (announcement && announcement.title) { announcementTitle = announcement.title }
+    if (announcement && announcement.description) { announcementDescription = announcement.description }
+    if (announcement && announcement.yearLevel) { announcementYearLevel = announcement.yearLevel }
+    if (announcement && announcement.course) { announcementCourse = announcement.course }
+    if (announcement && announcement.track) { announcementTrack = announcement.track }
+    if (announcement && announcement.createdAt) { announcementDate = announcement.createdAt }
+    if (announcement && announcement.createdBy) { announcementCreatedBy = announcement.createdBy }
 
-    if (announcement && announcement.yearLevel) {
-        announcementYearLevel = announcement.yearLevel
-    }
-
-    if (announcement && announcement.course) {
-        announcementCourse = announcement.course
-    }
-
-    if (announcement && announcement.track) {
-        announcementTrack = announcement.track
-    }
-
-    if (announcement && announcement.createdAt) {
-        announcementDate = announcement.createdAt
-    }
-
-    
     useEffect(() => {
-        if(announcement && announcement._id !== announcementId) {
+        if (announcement && announcement._id !== announcementId) {
             dispatch(getAnnouncementDetails(announcementId))
         } else {
             setTitle(announcementTitle)
@@ -68,6 +67,7 @@ const AnnouncementDetails = ({ history, match }) => {
             setCourse(announcementCourse)
             setTrack(announcementTrack)
             setDate(announcementDate)
+            setCreatedBy(announcementCreatedBy)
         }
 
         if (error) {
@@ -76,29 +76,41 @@ const AnnouncementDetails = ({ history, match }) => {
         }
     }, [dispatch, alert, error, announcement, announcementId])
 
-    function changeDateFormat(date) {
-        return dateFormat(date, "ddd, mmm dS, yyyy h:mm tt")
-    }
+    useEffect(() => {
+        if (announcementCreatedBy) {
+            dispatch(getUser(createdBy))
+        }
 
+        if (error) {
+            alert.error(error)
+            dispatch(clearErrors())
+        }
+
+    }, [dispatch, alert, error, createdBy, announcement, announcementId])
+
+    const changeDateFormat = (date) => dateFormat(date, "ddd, mmm dS, yyyy h:mm tt")
+    const upperCase = (name) => name.toUpperCase()
+    
     return (
         <>
             <MetaData title={`Announcements`} />
-            <Row>
-                {loading ? <Loader /> : (
-                    <Row xs={1} md={2} className="g-4">
-                        <Col>
-                            <Card>
-                                <Card.Body>
-                                    <Card.Title>{title}</Card.Title>
-                                    <Card.Text style={{ fontSize: '12px', color: 'gray' }}>{changeDateFormat(date)}</Card.Text>
-                                    <Card.Text>{description}</Card.Text>
-                                    <Card.Text style={{ fontSize: '10px', color: 'gray' }}>Tags: {yearLevel}, {course}, {track}</Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    </Row>
-                )}
-            </Row>
+            {loading ? <Loader /> : (
+                <Card style={cardStyle}>
+                    <Card.Header>
+                        <Breadcrumb>
+                            <Breadcrumb.Item><Link to='/'>Announcements</Link></Breadcrumb.Item>
+                            <Breadcrumb.Item active>{title}</Breadcrumb.Item>
+                        </Breadcrumb>
+                    </Card.Header>
+                    <Card.Body>
+                        <Card.Title>{title}</Card.Title>
+                        <Card.Text style={{ fontWeight: 'lighter', color: 'gray', fontSize: '12px' }}>Posted on: {changeDateFormat(date)}</Card.Text>
+                        <Card.Text style={{ paddingBottom: '45px' }}>{description}</Card.Text>
+                        <Card.Text style={{ fontWeight: '600', color: 'gray', fontSize: '12px' }}>Posted by: {singleUser && upperCase(singleUser.firstName + ' ' + singleUser.lastName)}</Card.Text>
+                        <Card.Text style={{ fontSize: '10px', color: 'gray' }}>Tags: {yearLevel}, {course}, {track}</Card.Text>
+                    </Card.Body>
+                </Card>
+            )}
         </>
     )
 }

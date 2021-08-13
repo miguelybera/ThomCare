@@ -9,6 +9,12 @@ import {
     CLEAR_ERRORS
 } from '../constants/announcementConstants'
 
+import {
+    GET_USER_REQUEST,
+    GET_USER_SUCCESS,
+    GET_USER_FAIL
+} from '../constants/userConstants'
+
 //get all announcements
 export const getAnnouncements = (currentPage, course, yearLevel, track, title) => async(dispatch) => {
     try {
@@ -93,6 +99,29 @@ export const getAnnouncementDetails = (id) => async(dispatch) => {
     catch (error) {
         dispatch({
             type: ANNOUNCEMENT_DETAILS_FAIL,
+            payload: error.response.data.errMessage
+            }
+        )
+    }
+}
+
+//Get admin name
+export const getUser = (id) => async(dispatch) => {
+    try{
+        dispatch({
+            type: GET_USER_REQUEST
+        })
+        
+        const { data } = await axios.get(`/api/v1/announcement/user/${id}`)
+
+        dispatch({
+            type: GET_USER_SUCCESS,
+            payload: data.singleUser
+        })
+    }
+    catch(error){
+        dispatch({
+            type: GET_USER_FAIL,
             payload: error.response.data.errMessage
             }
         )
