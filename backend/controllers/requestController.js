@@ -122,23 +122,23 @@ exports.getSubmittedRequests = catchAsyncErrors (async (req,res,next)=>{
         return next(new ErrorHandler('Role does not have access to this resource'))
     }
     const resPerPage = 15;
-    const apiFeatures = new APIFeatures(Request.find({requestorCourse: deptCourse}), req.query)
+    const apiFeatures = new APIFeatures(Request.find({requestorCourse: deptCourse, isTrash: false}), req.query)
                         .searchRequests()
                         .filter()
                         .pagination(resPerPage);
-    const apiFeaturesPending = new APIFeatures(Request.find({requestorCourse: deptCourse,requestStatus: 'Pending'}), req.query)
+    const apiFeaturesPending = new APIFeatures(Request.find({requestorCourse: deptCourse,requestStatus: 'Pending', isTrash: false}), req.query)
                         .searchRequests()
                         .filter()
                         .pagination(resPerPage);
-    const apiFeaturesProcessing = new APIFeatures(Request.find({requestorCourse: deptCourse,requestStatus: 'Processing'}), req.query)
+    const apiFeaturesProcessing = new APIFeatures(Request.find({requestorCourse: deptCourse,requestStatus: 'Processing', isTrash: false}), req.query)
                         .searchRequests()
                         .filter()
                         .pagination(resPerPage);
-    const apiFeaturesApproved = new APIFeatures(Request.find({requestorCourse: deptCourse,requestStatus: 'Approved'}), req.query)
+    const apiFeaturesApproved = new APIFeatures(Request.find({requestorCourse: deptCourse,requestStatus: 'Approved',isTrash: false}), req.query)
                         .searchRequests()
                         .filter()
                         .pagination(resPerPage);
-    const apiFeaturesDenied = new APIFeatures(Request.find({requestorCourse: deptCourse,requestStatus: 'Denied'}), req.query)
+    const apiFeaturesDenied = new APIFeatures(Request.find({requestorCourse: deptCourse,requestStatus: 'Denied', isTrash: false}), req.query)
                         .searchRequests()
                         .filter()
                         .pagination(resPerPage);
@@ -150,6 +150,7 @@ exports.getSubmittedRequests = catchAsyncErrors (async (req,res,next)=>{
    
     res.status(200).json({
         success: true,
+        requests,
         totalRequestCount: requests.length,
         totalPendingRequest: pendingRequests.length,
         totalProcessingRequests: processingRequests.length,
@@ -301,19 +302,19 @@ exports.getSubmittedRequestsCICSStaff = catchAsyncErrors (async (req,res,next)=>
                         .searchRequests()
                         .filter()
                         .pagination(resPerPage);
-    const apiFeaturesPending = new APIFeatures(Request.find({requestStatus: 'Pending'}), req.query)
+    const apiFeaturesPending = new APIFeatures(Request.find({requestStatus: 'Pending', isTrash: false}), req.query)
                         .searchRequests()
                         .filter()
                         .pagination(resPerPage);
-    const apiFeaturesProcessing = new APIFeatures(Request.find({requestStatus: 'Processing'}), req.query)
+    const apiFeaturesProcessing = new APIFeatures(Request.find({requestStatus: 'Processing', isTrash: false}), req.query)
                         .searchRequests()
                         .filter()
                         .pagination(resPerPage);
-    const apiFeaturesApproved = new APIFeatures(Request.find({requestStatus: 'Approved'}), req.query)
+    const apiFeaturesApproved = new APIFeatures(Request.find({requestStatus: 'Approved', isTrash: false}), req.query)
                         .searchRequests()
                         .filter()
                         .pagination(resPerPage);
-    const apiFeaturesDenied = new APIFeatures(Request.find({requestStatus: 'Denied'}), req.query)
+    const apiFeaturesDenied = new APIFeatures(Request.find({requestStatus: 'Denied', isTrash: false}), req.query)
                         .searchRequests()
                         .filter()
                         .pagination(resPerPage);
@@ -331,5 +332,50 @@ exports.getSubmittedRequestsCICSStaff = catchAsyncErrors (async (req,res,next)=>
         totalApprovedRequests: approvedRequests.length,
         totalDeniedRequests: deniedRequests.length 
 
+    })
+})
+
+// Move request to trash => /api/v1/admin/trashRequest/:requestId
+exports.trashRequest = catchAsyncErrors (async (req,res,next)=>{
+    let request = await Request.findById(req.params.requestId);
+   
+    if(!request){
+        return next(new ErrorHandler(`Request does not exist with this id:(${req.params.requestId})`));
+    }
+    const newRequestData = {
+        isTrash: true
+    }
+    request = await Request.findByIdAndUpdate(req.params.requestId, newRequestData, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false
+    });
+    const auditRequest = await Request.findById(req.params.requestId);
+   const auditLog = await Audit.create({
+        userAudit: req.user.email,
+        requestAudit: req.params.requestId,
+        actionAudit: `User account: (${req.user.email}) has moved the request to trash with the tracking number: (${auditRequest.trackingNumber})`
+})
+    res.status(200).json({
+        success: true,
+        message: "request has been moved to trash"
+    })
+
+})
+
+// View trashed requests => /api/v1/admin/trash/requests
+exports.getTrashedRequests = catchAsyncErrors (async (req,res,next)=>{
+    let deptCourse
+    const resPerPage = 15;
+    const apiFeatures = new APIFeatures(Request.find({ isTrash: true}), req.query)
+                        .searchRequests()
+                        .filter()
+                        .pagination(resPerPage);
+    const requests = await apiFeatures.query;
+
+   
+    res.status(200).json({
+        success: true,
+        totalRequestCount: requests.length,
     })
 })
