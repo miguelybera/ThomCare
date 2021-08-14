@@ -83,7 +83,6 @@ router.route('/request/:requestId').get(getSingleRequest); // no isAuthenticated
 
 //student
 router.route('/submitRequest').post(isAuthenticatedUser, thomcareStudentUpload.array('requiredFiles',5), submitRequest);
-router.route('/deleteRequest/:requestId').delete(isAuthenticatedUser, authorizeRoles('Student'), deleteRequest);
 router.route('/myRequests').get(isAuthenticatedUser, authorizeRoles('Student'), myRequests);
 
 //dept chair
@@ -95,6 +94,8 @@ router.route('/cicsAdmin/requests').get(isAuthenticatedUser, authorizeRoles('CIC
 //dept chair and cics staff
 router.route('/admin/updateRequest/:requestId').put(isAuthenticatedUser, thomcareAdminUpload.array('returningFiles',5),authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), updateRequest );
 
+//dept chair, cics staff, student
+router.route('/deleteRequest/:requestId').delete(isAuthenticatedUser, authorizeRoles('Student', 'CICS Staff', 'IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), deleteRequest);
 
 
 module.exports = router;
