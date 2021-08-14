@@ -47,7 +47,8 @@ const {
         newAnnouncement,          
         updateAnnouncement, 
         deleteAnnouncement,
-        getArchivedAnnouncements
+        getArchivedAnnouncements,
+        archiveAnnouncement
     } = require('../controllers/announcementController');
 
 const { isAuthenticatedUser, authorizeRoles} = require('../middlewares/auth');
@@ -64,5 +65,6 @@ router.route('/admin/new/announcement').post(isAuthenticatedUser,announcementUpl
 router.route('/admin/announcement/:id').put(isAuthenticatedUser,announcementUpload.array('announcementFiles',5),authorizeRoles('CICS Staff'),updateAnnouncement);
 router.route('/admin/announcement/:id').delete(isAuthenticatedUser,authorizeRoles('CICS Staff'),deleteAnnouncement);
 router.route('/admin/archivedAnnouncements').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getArchivedAnnouncements);
+router.route('/admin/archiveAnnouncement/:id').put(isAuthenticatedUser, authorizeRoles('CICS Staff'), archiveAnnouncement);
 
 module.exports = router;

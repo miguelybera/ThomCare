@@ -153,9 +153,6 @@ exports.getArchivedAnnouncements = catchAsyncErrors (async (req,res,next) => {
 
     announcements = await apiFeatures.query; 
 
-    const allIT = await Announcement.find({course: "Information Technology",archiveDate: {$lte: Date.now()}});
-    const allIS = await Announcement.find({course: "Information Systems",archiveDate: {$lte: Date.now()}});
-    const allCS = await Announcement.find({course: "Computer Science",archiveDate: {$lte: Date.now()}});
     
     res.status(200).json({
         success: true,
@@ -164,10 +161,7 @@ exports.getArchivedAnnouncements = catchAsyncErrors (async (req,res,next) => {
         announcements,
         resPerPage,
         filteredAnnouncementsCount,
-        
-        allIT,
-        allIS,
-        allCS
+    
     })
 })
 
@@ -327,3 +321,39 @@ exports.deleteAnnouncement = catchAsyncErrors (async(req,res,next) =>{
     })
 
 })
+
+// delete announcement /api/v1/admin/announcement/:id
+exports.deleteAnnouncement = catchAsyncErrors (async(req,res,next) =>{
+    const announcement = await Announcement.findById(req.params.id);
+    if(!announcement){
+        return next(new ErrorHandler('Announcement Not Found', 404))
+    }
+    await announcement.remove()
+    res.status(200).json({
+        success: true,
+        message: "Announcement deleted"
+    })
+
+})
+// archive announcement /api/v1/admin/archiveAnnouncement/:id
+exports.archiveAnnouncement = catchAsyncErrors (async(req,res,next) =>{
+    let announcement = await Announcement.findById(req.params.id);
+    if(!announcement){
+        return next(new ErrorHandler('Announcement Not Found', 404))
+    }
+
+    const newAnnouncementData = {
+        archiveDate: Date.now()
+    }
+    announcement = await Announcement.findByIdAndUpdate(req.params.id, newAnnouncementData, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false
+    });
+    res.status(200).json({
+        success: true,
+        message: "Announcement moved to archives"
+    })
+
+})
+

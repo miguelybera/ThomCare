@@ -121,6 +121,10 @@ const requestSchema = new mongoose.Schema({
     },
     requestorNotes:{
         type: String
+    },
+    isTrash:{
+        type: Boolean,
+        default: false
     }
 
 })
