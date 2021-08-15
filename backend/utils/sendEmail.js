@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer')
 
-const sendRegisterVerification = async options => {
+const sendEmail = async options => {
     const transport = nodemailer.createTransport({
         service: 'gmail',
         auth: {
@@ -19,4 +19,4 @@ const sendRegisterVerification = async options => {
     await transport.sendMail(message)
 }
 
-module.exports = sendRegisterVerification
+module.exports = sendEmail

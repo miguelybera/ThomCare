@@ -2,8 +2,7 @@ const User = require('../models/user');
 const ErrorHandler =  require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const sendToken = require('../utils/jwtToken');
-const sendForgotPassword = require('../utils/sendForgotPassword');
-const sendRegisterVerification = require('../utils/sendForgotPassword');
+const sendEmail = require('../utils/sendEmail');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
  
@@ -100,7 +99,7 @@ exports.forgotPassword = catchAsyncErrors( async(req,res,next)=>{
     If you have not requested this email, then ignore it`
 
     try{
-        await sendForgotPassword({
+        await sendEmail({
             email: user.email,
             subject: 'ThomCare Password Recovery',
             message
@@ -213,7 +212,7 @@ exports.registerStudent = catchAsyncErrors(async (req, res,next) => {
     If you have not requested this email, please ignore it.`
 
     try{
-        await sendRegisterVerification({
+        await sendEmail({
             email: email,
             subject: 'ThomCare Account Verification',
             message
@@ -360,30 +359,8 @@ exports.deleteUser = catchAsyncErrors(async(req,res,next)=>{
     })
 })
 
-// Get a user => /api/v1/chat/user/:id
-exports.getChatUser = catchAsyncErrors(async(req,res,next)=>{
-    const singleUser = await User.findById(req.params.id);
-    
-    if(!singleUser){
-        return next(new ErrorHandler(`User not found with this id:(${req.params.id})`));
-    }
-    res.status(200).json({
-        success: true,
-        singleUser
-    })
-})
 
 
-// Get all users for chat => /api/v1/chat/users
-exports.getChatUsers = catchAsyncErrors(async(req,res,next)=>{
-    const users = await User.find();
-
-    res.status(200).json({
-        success: true,
-        count:users.length,
-        users
-    })
-})
 
 // get user name for announcement => /api/v1/announcement/user/:id
 exports.getAnnouncementUser = catchAsyncErrors(async(req,res,next)=>{

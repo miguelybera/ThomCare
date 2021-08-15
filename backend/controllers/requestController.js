@@ -2,7 +2,7 @@ const Request = require('../models/request');
 const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const APIFeatures = require('../utils/apiFeatures');
-const sendUpdateRequest = require('../utils/sendUpdateRequest');
+const sendEmail = require('../utils/sendEmail');
 const Audit = require('../models/audit');
 
 
@@ -239,7 +239,7 @@ exports.updateRequest = catchAsyncErrors (async (req,res,next)=>{
     const message = `Request with tracking number: ${rqst.trackingNumber} \n \n
     Current Status: ${request.requestStatus}`
     try{
-        await sendUpdateRequest({
+        await sendEmail({
             email: rqst.requestorEmail,
             subject: `Status update for request tracking number (${rqst.trackingNumber})`,
             message
