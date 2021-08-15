@@ -358,27 +358,3 @@ exports.deleteUser = catchAsyncErrors(async(req,res,next)=>{
         message: "User has been deleted"
     })
 })
-
-
-
-
-// get user name for announcement => /api/v1/announcement/user/:id
-exports.getAnnouncementUser = catchAsyncErrors(async(req,res,next)=>{
-    const singleUser = await User.findById(req.params.id);
-    
-    if(!singleUser){
-        return next(new ErrorHandler(`User not found with this id:(${req.params.id})`));
-    }
-    const firstName = singleUser.firstName
-    const lastName = singleUser.lastName
-    const userId = singleUser.id
-    const role = singleUser.role
-    
-    res.status(200).json({
-        success: true,
-        firstName,
-        lastName,
-        userId,
-        role
-    })
-})
