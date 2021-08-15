@@ -369,9 +369,16 @@ exports.getAnnouncementUser = catchAsyncErrors(async(req,res,next)=>{
     if(!singleUser){
         return next(new ErrorHandler(`User not found with this id:(${req.params.id})`));
     }
+    const firstName = singleUser.firstName
+    const lastName = singleUser.lastName
+    const userId = singleUser.id
+    const role = singleUser.role
     
     res.status(200).json({
         success: true,
-        singleUser
+        firstName,
+        lastName,
+        userId,
+        role
     })
 })

@@ -27,7 +27,7 @@ router.route('/password/forgot').post(forgotPassword);
 router.route('/password/reset/:token').put(resetPassword);
 router.route('/me').get(isAuthenticatedUser,getUserProfile);
 router.route('/password/update').put(isAuthenticatedUser,updatePassword);
-router.route('/chat/user/:id').get(isAuthenticatedUser,getUser);
+router.route('/chat/user/:id').get(isAuthenticatedUser,getAnnouncementUser);
 router.route('/chat/users').get(isAuthenticatedUser,getUsers);
 router.route('/announcement/user/:id').get(getAnnouncementUser);
 
