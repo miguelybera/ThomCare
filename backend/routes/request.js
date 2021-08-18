@@ -80,7 +80,7 @@ const {
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth')
 
 //all users
-router.route('/requestTracker').get(requestTracker);
+router.route('/requestTracker').post(requestTracker);
 router.route('/request/:requestId').get(getSingleRequest); // no isAuthenticatedUser because a student can open request details while not signed in because of the tracker
 
 //student

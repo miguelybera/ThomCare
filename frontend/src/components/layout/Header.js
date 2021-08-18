@@ -46,7 +46,7 @@ const Header = () => {
                                 <>
                                     <Nav.Link><Link to='/'>Announcements</Link></Nav.Link>
                                     <Nav.Link><Link to='/request'>Request</Link></Nav.Link>
-                                    <Nav.Link><Link to='/track-request'>Track my request</Link></Nav.Link>
+                                    <Nav.Link><Link to='/track'>Track my request</Link></Nav.Link>
                                     <Nav.Link><Link to='/login'>
                                         <Button variant='danger'>Login</Button>    
                                     </Link></Nav.Link>

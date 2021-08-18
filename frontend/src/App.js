@@ -23,6 +23,9 @@ import Messenger from './components/chat/chatbox/Messenger'
 import Announcements from './components/announcement/Announcements'
 import AnnouncementDetails from './components/announcement/AnnouncementDetails'
 
+//request folder
+import TrackingPage from './components/request/TrackingPage'
+
 //route folder
 import ProtectedRoute from './components/route/ProtectedRoute'
 
@@ -60,6 +63,7 @@ function App() {
                         <Route path='/register' component={Register} exact/>
                         <Route path='/confirmregister' component={ConfirmRegister} exact/>
 
+                        <Route path='/track' component={TrackingPage} exact/>
                         {/**needs to be logged in */}
                         <ProtectedRoute path='/messenger' loggedIn={true} component={Messenger} exact/>
                         <ProtectedRoute path='/profile' loggedIn={true} component={Profile} exact/>

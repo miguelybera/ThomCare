@@ -279,14 +279,14 @@ exports.deleteRequest = catchAsyncErrors (async (req,res,next)=>{
 
 // Request Tracker => /api/v1/requestTracker
 exports.requestTracker = catchAsyncErrors (async (req,res,next)=>{
-    const enteredTrackNum = req.body.enteredTrackNum
-    const enteredLastName = req.body.enteredLastName
-    const request = await Request.findOne({trackingNumber: enteredTrackNum})
+    const trackingNumber = req.body.trackingNumber
+    const lastName = req.body.lastName
+    const request = await Request.findOne({trackingNumber})
 
     if(!request){
-        return next(new ErrorHandler(`Request with Tracking Number: (${enteredTrackNum}) does not exist`))
+        return next(new ErrorHandler(`Request with Tracking Number: (${trackingNumber}) does not exist`))
     }
-    if(request.requestorLastName !== enteredLastName){
+    if(request.requestorLastName !== lastName){
         return next(new ErrorHandler(`Last name does not match with the request surname`))
     }
     res.status(200).json({

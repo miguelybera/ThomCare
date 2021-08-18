@@ -23,6 +23,10 @@ import {
     getSingleAnnouncementReducer
 } from './reducers/announcementReducers'
 
+import {
+    getRequestDetailsReducer
+} from './reducers/requestReducer'
+
 const reducer = combineReducers({
     auth: authReducer,
     users: getUsersReducer,
@@ -35,8 +39,11 @@ const reducer = combineReducers({
     createConvo: createConversationReducer,
     announcements: getAnnouncementsReducer,
     announcementDetails: getSingleAnnouncementReducer,
-    student: studentInfoReducer
+    student: studentInfoReducer,
+    request: getRequestDetailsReducer
 })
+
+
 
 let initialState = {
     student: {
