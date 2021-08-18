@@ -1,15 +1,16 @@
 import {
     REQUEST_DETAILS_REQUEST,
     REQUEST_DETAILS_SUCCESS,
-    REQUEST_DETAILS_FAIL, 
+    REQUEST_DETAILS_FAIL,
+    REQUEST_DETAILS_RESET,
     CLEAR_ERRORS
 } from '../constants/requestConstants'
 
 
 //get single user details
-export const getRequestDetailsReducer = (state = { request: {} }, action ) => {
-    switch(action.type) {
-        
+export const getRequestDetailsReducer = (state = { request: {} }, action) => {
+    switch (action.type) {
+
         case REQUEST_DETAILS_REQUEST:
             return {
                 ...state,
@@ -26,6 +27,13 @@ export const getRequestDetailsReducer = (state = { request: {} }, action ) => {
             return {
                 ...state,
                 error: action.payload
+            }
+
+        case REQUEST_DETAILS_FAIL:
+            return {
+                ...state,
+                success: null,
+                request: {}
             }
 
         case CLEAR_ERRORS:
