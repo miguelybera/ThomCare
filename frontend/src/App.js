@@ -26,6 +26,7 @@ import AnnouncementDetails from './components/announcement/AnnouncementDetails'
 
 //request folder
 import TrackingPage from './components/request/TrackingPage'
+import TrackingPageProgress from './components/request/TrackingPageProgress'
 
 //route folder
 import ProtectedRoute from './components/route/ProtectedRoute'
@@ -60,6 +61,7 @@ function App() {
                                 <Route path='/confirmregister' component={ConfirmRegister} exact />
 
                                 <Route path='/track' component={TrackingPage} exact />
+                                <Route path='/track/request' component={TrackingPageProgress} exact />
                                 {/**needs to be logged in */}
                                 <ProtectedRoute path='/messenger' loggedIn={true} component={Messenger} exact />
                                 <ProtectedRoute path='/profile' loggedIn={true} component={Profile} exact />
