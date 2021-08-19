@@ -23,7 +23,7 @@ export const trackRequest = ( userInput ) => async(dispatch) => {
 
         dispatch({
             type: REQUEST_DETAILS_SUCCESS,
-            payload: data.request
+            payload: data
         })
     }
     catch(error){

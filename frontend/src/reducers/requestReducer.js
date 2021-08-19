@@ -20,7 +20,8 @@ export const getRequestDetailsReducer = (state = { request: {} }, action) => {
         case REQUEST_DETAILS_SUCCESS:
             return {
                 loading: false,
-                request: action.payload
+                request: action.payload.request,
+                success: action.payload.success
             }
 
         case REQUEST_DETAILS_FAIL:
@@ -29,11 +30,10 @@ export const getRequestDetailsReducer = (state = { request: {} }, action) => {
                 error: action.payload
             }
 
-        case REQUEST_DETAILS_FAIL:
+        case REQUEST_DETAILS_RESET:
             return {
                 ...state,
-                success: null,
-                request: {}
+                success: null
             }
 
         case CLEAR_ERRORS:
