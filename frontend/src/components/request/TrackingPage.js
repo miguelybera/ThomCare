@@ -16,7 +16,7 @@ const cardStyle = {
     borderWidth: '0'
 }
 
-const TrackingPage = ({history}) => {
+const TrackingPage = ({ history }) => {
     const alert = useAlert()
     const dispatch = useDispatch()
 
@@ -91,17 +91,17 @@ const TrackingPage = ({history}) => {
                 updatedStatus: <Fragment>
                     <p style={{
                         color: remark.updatedStatus === 'Pending' ? 'blue' : (
-                                remark.updatedStatus === 'Processing' ? '#ffcc00' : (
-                                    remark.updatedStatus === 'Denied' ? 'red' : 'green'
-                                )
+                            remark.updatedStatus === 'Processing' ? '#ffcc00' : (
+                                remark.updatedStatus === 'Denied' ? 'red' : 'green'
                             )
+                        )
                     }}>
                         {remark.updatedStatus}
                     </p>
                 </Fragment>,
                 remarksMessage: <Fragment>
                     <p>{remark.remarksMessage}</p>
-                    <p style={{fontSize: '12px', color: 'gray', paddingTop: '10px'}}>By: {remark.userUpdated}</p>
+                    <p style={{ fontSize: '12px', color: 'gray', paddingTop: '10px' }}>By: {remark.userUpdated}</p>
                 </Fragment>
             })
         })
@@ -113,28 +113,28 @@ const TrackingPage = ({history}) => {
             <MetaData title={request ? 'Track my request' : `Tracking ID: ${request.trackingNumber}`} />
             {!userInput ? (
                 <Container fluid>
-                <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
-                    <Card style={{ width: '30rem', align: 'center' }}>
-                        <Card.Body>
-                            <Card.Title style={{ margin: '50px 0 20px 0' }}>Track my Request</Card.Title>
+                    <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
+                        <Card style={{ width: '30rem', align: 'center' }}>
+                            <Card.Body>
+                                <Card.Title style={{ margin: '50px 0 20px 0' }}>Track my Request</Card.Title>
 
-                            <FloatingLabel
-                                controlId="floatingInput"
-                                label="Tracking ID"
-                                className="mb-3"
-                            >
-                                <Form.Control type="text" placeholder="ABC123" name="trackingNumber" value={trackingNumber} onChange={onChange} />
-                            </FloatingLabel>
+                                <FloatingLabel
+                                    controlId="floatingInput"
+                                    label="Tracking ID"
+                                    className="mb-3"
+                                >
+                                    <Form.Control type="text" placeholder="ABC123" name="trackingNumber" value={trackingNumber} onChange={onChange} />
+                                </FloatingLabel>
 
-                            <FloatingLabel controlId="floatingInput" label="Surname">
-                                <Form.Control type="text" placeholder="Surname" name="lastName" value={lastName} onChange={onChange} />
-                            </FloatingLabel>
+                                <FloatingLabel controlId="floatingInput" label="Surname">
+                                    <Form.Control type="text" placeholder="Surname" name="lastName" value={lastName} onChange={onChange} />
+                                </FloatingLabel>
 
-                            <Button type='submit' style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }} onClick={submitHandler}>Track</Button>
-                        </Card.Body>
-                    </Card>
-                </Row>
-            </Container>
+                                <Button type='submit' style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }} onClick={submitHandler}>Track</Button>
+                            </Card.Body>
+                        </Card>
+                    </Row>
+                </Container>
             ) : (
                 !loading ? (
                     <Fragment style={{ marginTop: '30px' }}>
@@ -156,23 +156,27 @@ const TrackingPage = ({history}) => {
                                 <Card.Text><b>Course:</b> {request && request.requestorCourse}</Card.Text>
                             </Card.Body>
                         </Card>
-
-                        <Card style={cardStyle}>
-                            <Card.Title>Request Progress</Card.Title>
+                        <Card style={{
+                            marginTop: '30px',
+                            marginBottom: '40px',
+                            borderWidth: '0',
+                            width: '90%',
+                            marginLeft: 'auto',
+                            marginRight: 'auto'
+                        }}>
+                            <MDBDataTableV5
+                                data={setHistory()}
+                                scrollX
+                                searching={false}
+                                paging={false}
+                                sortable={false}
+                                hover
+                            />
                         </Card>
-
-                        <MDBDataTableV5
-                            data={setHistory()}
-                            scrollX
-                            searching={false}
-                            paging={false}
-                            sortable={false}
-                            hover
-                        />
                     </Fragment>
                 ) : (
                     <Fragment>
-                        <Loader/>
+                        <Loader />
                     </Fragment>
                 )
             )}
