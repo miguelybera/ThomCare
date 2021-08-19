@@ -65,7 +65,7 @@ const ConfirmRegister = ({ history }) => {
                         <Card.Text><b>Student Number:</b> {studentInfo.studentNumber}</Card.Text>
                         <Card.Text><b>Course:</b> {studentInfo.course}</Card.Text>
                         <Card.Text><b>Email:</b> {studentInfo.email}</Card.Text>
-                        <Button variant='danger' onClick={goBack} style={{marginRight: '5px', marginTop: '10px'}}>Back</Button>
+                        <Button variant='danger' onClick={goBack} style={{marginRight: '5px', marginTop: '10px'}} disabled={loading ? true : false}>Back</Button>
                         <Button onClick={submitHandler} style={{marginTop: '10px'}} disabled={loading ? true : false}>Register</Button>
                     </Card.Body>
                 </Card>
