@@ -103,8 +103,7 @@ const requestSchema = new mongoose.Schema({
             required: true
         },
         userUpdated:{
-            type: mongoose.Schema.ObjectId,
-            ref: 'User',
+            type: String,
             required: true
         },
         remarksMessage:{

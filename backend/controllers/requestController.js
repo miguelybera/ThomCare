@@ -220,7 +220,7 @@ exports.updateRequest = catchAsyncErrors (async (req,res,next)=>{
     let remarksData = {
         dateOfRemark: new Date(Date.now()),
         updatedStatus: req.body.requestStatus,
-        userUpdated: req.user.id,
+        userUpdated: req.user.firstName + ' ' + req.user.lastName,
         remarksMessage: req.body.remarksMessage
     }
     Request.findOneAndUpdate(
