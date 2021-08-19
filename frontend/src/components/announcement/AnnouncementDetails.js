@@ -2,17 +2,10 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import Pagination from 'react-js-pagination'
+import { Card, Breadcrumb } from 'react-bootstrap'
 import { getAnnouncementDetails, getUser, clearErrors } from './../../actions/announcementActions'
 import MetaData from './../layout/MetaData'
 import Loader from './../layout/Loader'
-import { Accordion, ButtonGroup, Button, ButtonToolbar, DropdownButton, Dropdown, Form, FormControl, Card, Row, Col, Breadcrumb } from 'react-bootstrap'
-import axios from 'axios'
-import {
-    GET_USER_REQUEST,
-    GET_USER_SUCCESS,
-    GET_USER_FAIL
-} from './../../constants/userConstants'
 
 var dateFormat = require('dateformat')
 
@@ -88,7 +81,7 @@ const AnnouncementDetails = ({ history, match }) => {
 
     }, [dispatch, alert, error, createdBy, announcement, announcementId])
 
-    const changeDateFormat = (date) => dateFormat(date, "ddd, mmm dS, yyyy h:mm tt")
+    const changeDateFormat = (date) => dateFormat(date, "ddd, mmm d, yyyy h:MMtt")
     const upperCase = (name) => name.toUpperCase()
     
     return (

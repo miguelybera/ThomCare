@@ -1,13 +1,10 @@
-import React, { Fragment, useEffect, useState, useRef } from 'react'
-import { Link } from 'react-router-dom'
-import { useAlert } from 'react-alert'
+import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { saveStudentInfo, clearErrors } from '../../actions/userActions'
-import { FloatingLabel, Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
+import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
+import { saveStudentInfo } from '../../actions/userActions'
 import MetaData from '../layout/MetaData'
 
 const Register = ({ history }) => {
-
     const dispatch = useDispatch()
 
     const { studentInfo } = useSelector(state => state.student)
@@ -25,8 +22,6 @@ const Register = ({ history }) => {
     const { firstName, lastName, email, studentNumber, course, password, confirmPassword } = user
 
     const submitHandler = e => {
-        e.preventDefault()
-
         dispatch(saveStudentInfo({ firstName, lastName, studentNumber, email, course, password, confirmPassword }))
         history.push('/confirmregister')
     }
@@ -34,9 +29,11 @@ const Register = ({ history }) => {
     const upperCase = (text) => text.toUpperCase()
 
     const onChange = e => {
+        e.preventDefault()
+
         setUser({
             ...user,
-            [e.target.name]: e.target.name == 'firstName' || e.target.name == 'lastName' ? upperCase(e.target.value) : e.target.value
+            [e.target.name]: e.target.name === 'firstName' || e.target.name === 'lastName' ? upperCase(e.target.value) : e.target.value
         })
     }
 

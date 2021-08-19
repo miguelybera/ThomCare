@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from  'react-redux'
 import { forgotPassword, clearErrors } from '../../actions/userActions'
@@ -31,7 +30,7 @@ const ForgotPassword = ({history}) => {
                 type: FORGOT_PASSWORD_RESET
             })
         }
-    }, [dispatch, alert, error, message])
+    }, [dispatch, alert, error, message, history])
 
     const submitHandler = (e) => {
         e.preventDefault();

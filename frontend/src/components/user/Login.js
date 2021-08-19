@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from  'react-redux'
@@ -32,7 +32,7 @@ const Login = ({history}) => {
             dispatch(clearErrors())
         }
 
-    }, [dispatch, alert, isAuthenticated, error])
+    }, [dispatch, alert, isAuthenticated, error, history])
 
     return (
         <>
@@ -70,7 +70,7 @@ const Login = ({history}) => {
                                 <Button 
                                     type='submit' 
                                     style={{marginTop: '10px', borderRadius: '50px', width: '10rem'}}
-                                    
+                                    disabled={loading ? true : false}
                                 >Submit</Button>
                             </Form>
                             <Row>

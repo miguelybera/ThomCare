@@ -24,7 +24,7 @@ export const getAnnouncements = (currentPage, course, yearLevel, track, title) =
 
         let link = ``
         
-        if (course == '' && yearLevel == '' && track  == '' && title == '')  {
+        if (course === '' && yearLevel === '' && track  === '' && title === '')  {
             link = `/api/v1/announcements?page=${currentPage}`
         }
         else {
