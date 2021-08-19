@@ -6,15 +6,13 @@ import Pagination from 'react-js-pagination'
 import { getAnnouncements, clearErrors } from './../../actions/announcementActions'
 import MetaData from './../layout/MetaData'
 import Loader from './../layout/Loader'
-import { Accordion, ButtonGroup, Button, ButtonToolbar, DropdownButton, Dropdown, Form, FormControl, Card, Row, Col, Container } from 'react-bootstrap'
+import { Form, FormControl, Card, Row, Col, Container } from 'react-bootstrap'
 
 var dateFormat = require('dateformat')
 
 const titles = {
     width: '10px',
-    color: 'white',
-    paddingTop: '160px',
-    paddingBottom: '10px'
+    color: 'white'
 }
 
 const rectangle = {
@@ -26,11 +24,16 @@ const rectangle = {
     position:'absolute',
     fontFamily: 'Mukta Malar',
     fontWeight: '500',
-    paddingTop: '100px',
-    paddingRight: '50px',
+    padding: '90px 50px 55px 50px',
     zIndex: -1,
     top: 0,
     left: 0
+}
+
+const formLabel = {
+    fontSize: '1rem',
+    color: 'gray',
+    paddingTop: '10px'
 }
 
 const Announcements = () => {
@@ -61,12 +64,6 @@ const Announcements = () => {
 
     const { course, yearLevel, track, annnouncementType, title } = filter
 
-    /**
-     * if(category) {
-     *      count = filteredAnnouncementsCount
-     * }
-     */
-
     useEffect(() => {
         if (error) {
             alert.error(error)
@@ -85,7 +82,7 @@ const Announcements = () => {
     }
 
     function changeDateFormat(date) {
-        return dateFormat(date, "ddd, mmm dS, yyyy h:mm tt")
+        return dateFormat(date, "dddd mmm d, yyyy h:MMtt")
     }
 
     function shortenDescription(description) {
@@ -107,14 +104,14 @@ const Announcements = () => {
                     <h3>Announcements</h3>
                 </div>
             </Container>
-            <Container>
+            <Container style={{paddingTop: '120px'}}>
                 <Form>
                     <Row xs="auto">
                         <Col sm>
                             <Form.Group controlId="selectYearLevelforAnnouncement">
-                                <Form.Label>Year Level</Form.Label>
+                                <Form.Label style={formLabel} style={formLabel}>Year Level</Form.Label>
                                 <Form.Select aria-label="YearLevel" size="sm" name="yearLevel" value={yearLevel} onChange={onChange} required>
-                                    <option value=''>-</option>
+                                    <option value=''></option>
                                     <option value="1st Year">1st Year</option>
                                     <option value="2nd Year">2nd Year</option>
                                     <option value="3rd Year">3rd Year</option>
@@ -124,8 +121,8 @@ const Announcements = () => {
                         </Col>
                         <Col sm>
                             <Form.Group controlId="selectCourseforAnnouncement">
-                                <Form.Label>Course</Form.Label>
-                                <Form.Select aria-label="Course" size="s" name="course" value={course} onChange={onChange} required>
+                                <Form.Label style={formLabel}>Course</Form.Label>
+                                <Form.Select aria-label="Course" size="sm" name="course" value={course} onChange={onChange} required>
                                     <option value=''></option>
                                     <option value="Computer Science">Computer Science</option>
                                     <option value="Information Systems">Information Systems</option>
@@ -135,7 +132,7 @@ const Announcements = () => {
                         </Col>
                         <Col sm>
                             <Form.Group controlId="selectTrackforAnnouncement">
-                                <Form.Label>Track</Form.Label>
+                                <Form.Label style={formLabel}>Track</Form.Label>
                                 <Form.Select aria-label="ITTracks" size="sm" name="track" value={track} onChange={onChange} required>
                                     <option value=''>-</option>
                                     <option value="Web and Mobile Development">Web and Mobile Development</option>
@@ -146,7 +143,7 @@ const Announcements = () => {
                         </Col>
                         <Col sm>
                             <Form.Group controlId="selectAnnouncementTypeforAnnouncement">
-                                <Form.Label>Announcement Type</Form.Label>
+                                <Form.Label style={formLabel}>Announcement Type</Form.Label>
                                 <Form.Select aria-label="AnnouncementType" size="sm" name="annnouncementType" value={annnouncementType} onChange={onChange} required>
                                     <option value=''>-</option>
                                     <option value="Memorandum">Memorandum</option>
@@ -157,7 +154,7 @@ const Announcements = () => {
                         </Col>
                         <Col sm>
                             <Form.Group controlId="seachAnnouncement" xs={2}>
-                                <Form.Label>Search by title</Form.Label>
+                                <Form.Label style={formLabel}>Search by title</Form.Label>
                                 <FormControl
                                     type="search"
                                     placeholder="Search"

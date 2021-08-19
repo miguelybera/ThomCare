@@ -78,6 +78,7 @@ const NewPassword = ({history, match}) => {
                                 <Button
                                     type='submit' 
                                     style={{marginTop: '10px', borderRadius: '50px', width: '10rem'}}
+                                    disabled={loading ? true : false}
                                 >Change Password</Button>
                             </Form>
                         </Card.Body>

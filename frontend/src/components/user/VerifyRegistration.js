@@ -1,24 +1,27 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import { useAlert } from 'react-alert'
+import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { FloatingLabel, Form, Button, Card, Container, Row } from 'react-bootstrap'
+import { Button, Card, Container, Row } from 'react-bootstrap'
 import axios from 'axios'
 import MetaData from './../layout/MetaData'
 import Loader from './../layout/Loader'
-
-import { VERIFY_STUDENT_REQUEST, VERIFY_STUDENT_SUCCESS, VERIFY_STUDENT_FAIL, VERIFY_STUDENT_RESET } from './../../constants/userConstants'
+import { 
+    VERIFY_STUDENT_REQUEST,
+    VERIFY_STUDENT_SUCCESS,
+    VERIFY_STUDENT_FAIL,
+    VERIFY_STUDENT_RESET 
+} from './../../constants/userConstants'
 
 
 const VerifyRegistration = ({ history, match }) => {
-    const alert = useAlert()
     const dispatch = useDispatch()
+
+    const { error, loading, message } = useSelector(state => state.register)
+    const [messageText, setMessageText] = useState('')
 
     const token = match.params.token
 
-    const { error, loading, message } = useSelector(state => state.register)
-
-    const [messageText, setMessageText] = useState('')
-
+    const goToLogin = () => history.push('/login')
+    
     useEffect(() => {
         const verify = async () => {
             try {
@@ -49,7 +52,7 @@ const VerifyRegistration = ({ history, match }) => {
 
         verify()
 
-    }, [dispatch])
+    }, [dispatch, token])
 
     useEffect(() => {
         if (message) {
@@ -62,11 +65,7 @@ const VerifyRegistration = ({ history, match }) => {
         if (error) {
             setMessageText(error)
         }
-    }, [message, error])
-
-    const goToLogin = () => {
-        history.push('/login')
-    }
+    }, [dispatch, message, error])
 
     return (
         <>

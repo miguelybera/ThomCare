@@ -1,5 +1,4 @@
 import React, { Fragment, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { trackRequest, clearErrors } from './../../actions/requestActions'
@@ -26,7 +25,7 @@ const TrackingPage = ({history}) => {
     const { loading, success, error, request } = useSelector(state => state.request)
 
     const [userInfo, setUserInfo] = useState({
-        lastName: '',
+        trackingNumber: '',
         lastName: ''
     })
 
@@ -61,7 +60,7 @@ const TrackingPage = ({history}) => {
     }
 
     function changeDateFormat(date) {
-        return dateFormat(date, "mmm dS, yyyy h:mm tt")
+        return dateFormat(date, "mmm d, yyyy h:MMtt")
     }
 
     const setHistory = () => {
@@ -71,19 +70,16 @@ const TrackingPage = ({history}) => {
                 {
                     label: 'Date',
                     field: 'dateOfRemark',
-                    sort: 'asc',
-                    width: 175
+                    width: 100
                 },
                 {
                     label: 'Status',
                     field: 'updatedStatus',
-                    sort: 'asc',
                     width: 70
                 },
                 {
                     label: 'Remarks',
                     field: 'remarksMessage',
-                    sort: 'asc',
                     width: 300
                 }
             ],
@@ -94,9 +90,9 @@ const TrackingPage = ({history}) => {
                 dateOfRemark: changeDateFormat(remark.dateOfRemark),
                 updatedStatus: <Fragment>
                     <p style={{
-                        color: remark.updatedStatus == 'Pending' ? 'blue' : (
-                                remark.updatedStatus == 'Processing' ? '#ffcc00' : (
-                                    remark.updatedStatus == 'Denied' ? 'red' : 'green'
+                        color: remark.updatedStatus === 'Pending' ? 'blue' : (
+                                remark.updatedStatus === 'Processing' ? '#ffcc00' : (
+                                    remark.updatedStatus === 'Denied' ? 'red' : 'green'
                                 )
                             )
                     }}>
@@ -148,9 +144,9 @@ const TrackingPage = ({history}) => {
                                 <Card.Text><b>Name:</b> {request && request.requestorLastName}, {request && request.requestorFirstName}</Card.Text>
                                 <Card.Text><b>Current status:</b> <font color={
                                     !request ? '' : (
-                                        (request.requestStatus == 'Pending' ? 'blue' : (
-                                            request.requestStatus == 'Processing' ? '#ffcc00' : (
-                                                request.requestStatus == 'Denied' ? 'red' : 'green'
+                                        (request.requestStatus === 'Pending' ? 'blue' : (
+                                            request.requestStatus === 'Processing' ? '#ffcc00' : (
+                                                request.requestStatus === 'Denied' ? 'red' : 'green'
                                             )
                                         ))
                                     )
@@ -170,6 +166,7 @@ const TrackingPage = ({history}) => {
                             scrollX
                             searching={false}
                             paging={false}
+                            sortable={false}
                             hover
                         />
                     </Fragment>

@@ -1,10 +1,9 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import React, { Fragment, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { register, clearErrors } from '../../actions/userActions'
 import { REGISTER_USER_RESET } from '../../constants/userConstants'
-import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
+import { Button, Card, Container } from 'react-bootstrap'
 import MetaData from '../layout/MetaData'
 
 const ConfirmRegister = ({ history }) => {
@@ -60,7 +59,7 @@ const ConfirmRegister = ({ history }) => {
                 <Card style={{ width: '30rem', marginTop: '40px' }}>
                     <Card.Body>
                         <Card.Title style={{textAlign: 'center'}}>Confirm Student Information</Card.Title>
-                        <Card.Subtitle className="text-muted" style={{fontSize: '12px', fontWeight: '10px', textAlign: 'center', marginBottom: '20px'}}>Kindly confirm your student info. Once you submit, you won't be able to update your profile (unless you contact your administrator to submit a request to update your profile).</Card.Subtitle>
+                        <Card.Subtitle className="text-muted" style={{fontSize: '12px', textAlign: 'center', marginBottom: '20px'}}>Kindly confirm your student info. Once you submit, you won't be able to update your profile (unless you contact your administrator to submit a request to update your profile).</Card.Subtitle>
                         <Card.Text><b>Name:</b> {studentInfo.firstName} {studentInfo.lastName}</Card.Text>
                         <Card.Text><b>Student Number:</b> {studentInfo.studentNumber}</Card.Text>
                         <Card.Text><b>Course:</b> {studentInfo.course}</Card.Text>
