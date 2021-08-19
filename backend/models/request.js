@@ -17,6 +17,8 @@ const requestSchema = new mongoose.Schema({
                 'Request for Overload',
                 'Request for late enrollment',
                 'Request for manual enrollment',
+                'Request for Course Description',
+                'Request for Certificate of Grades',
                 'Others'
             ]
         }
@@ -103,8 +105,7 @@ const requestSchema = new mongoose.Schema({
             required: true
         },
         userUpdated:{
-            type: mongoose.Schema.ObjectId,
-            ref: 'User',
+            type: String,
             required: true
         },
         remarksMessage:{
