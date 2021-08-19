@@ -5,7 +5,7 @@ const APIFeatures = require('../utils/apiFeatures');
 const sendEmail = require('../utils/sendEmail');
 const Audit = require('../models/audit');
 
-
+const requestTypeOfficeStaff = ['Request for Certificate of Grades' , 'Request for Course Description' ,'Others'];
 
 // Submit new request => /api/v1/submitRequest
 
@@ -107,7 +107,7 @@ exports.myRequests = catchAsyncErrors (async (req,res,next)=>{
     })
 })
 
-// Get all requests involving specific department chair => /api/v1/admin/requests
+// Get all requests involving specific department chair => /api/v1/deptChair/requests
 exports.getSubmittedRequests = catchAsyncErrors (async (req,res,next)=>{
     let deptCourse
     if(req.user.role == 'IT Dept Chair'){
@@ -122,23 +122,32 @@ exports.getSubmittedRequests = catchAsyncErrors (async (req,res,next)=>{
         return next(new ErrorHandler('Role does not have access to this resource'))
     }
     const resPerPage = 15;
-    const apiFeatures = new APIFeatures(Request.find({requestorCourse: deptCourse, isTrash: false}), req.query)
+    const apiFeatures = new APIFeatures(Request.find({requestorCourse: deptCourse, isTrash: false,
+                                                requestType: {$nin: requestTypeOfficeStaff}}), req.query)
                         .searchRequests()
                         .filter()
                         .pagination(resPerPage);
-    const apiFeaturesPending = new APIFeatures(Request.find({requestorCourse: deptCourse,requestStatus: 'Pending', isTrash: false}), req.query)
+    const apiFeaturesPending = new APIFeatures(Request.find({requestorCourse: deptCourse,requestStatus: 'Pending', isTrash: false,
+                                                            requestType: {$nin: requestTypeOfficeStaff}}), 
+                                                            req.query)
                         .searchRequests()
                         .filter()
                         .pagination(resPerPage);
-    const apiFeaturesProcessing = new APIFeatures(Request.find({requestorCourse: deptCourse,requestStatus: 'Processing', isTrash: false}), req.query)
+    const apiFeaturesProcessing = new APIFeatures(Request.find({requestorCourse: deptCourse,requestStatus: 'Processing', isTrash: false,
+                                                                requestType: {$nin: requestTypeOfficeStaff}}), 
+                                                                req.query)
                         .searchRequests()
                         .filter()
                         .pagination(resPerPage);
-    const apiFeaturesApproved = new APIFeatures(Request.find({requestorCourse: deptCourse,requestStatus: 'Approved',isTrash: false}), req.query)
+    const apiFeaturesApproved = new APIFeatures(Request.find({requestorCourse: deptCourse,requestStatus: 'Approved',isTrash: false,
+                                                                requestType: {$nin: requestTypeOfficeStaff}}), 
+                                                                req.query)
                         .searchRequests()
                         .filter()
                         .pagination(resPerPage);
-    const apiFeaturesDenied = new APIFeatures(Request.find({requestorCourse: deptCourse,requestStatus: 'Denied', isTrash: false}), req.query)
+    const apiFeaturesDenied = new APIFeatures(Request.find({requestorCourse: deptCourse,requestStatus: 'Denied', isTrash: false,
+                                                requestType: {$nin: requestTypeOfficeStaff}}), 
+                                                req.query)
                         .searchRequests()
                         .filter()
                         .pagination(resPerPage);
@@ -333,6 +342,52 @@ exports.getSubmittedRequestsCICSStaff = catchAsyncErrors (async (req,res,next)=>
         totalDeniedRequests: deniedRequests.length 
 
     })
+})
+
+// Get requests that are handled by the office only => /api/v1/cicsAdmin/officeRequests
+exports.getRequestOfficeOnly = catchAsyncErrors (async (req,res,next)=>{
+    const resPerPage = 15;
+    const apiFeatures = new APIFeatures(Request.find({isTrash: false,
+        requestType: {$in: requestTypeOfficeStaff}}), req.query)
+                        .searchRequests()
+                        .filter()
+                        .pagination(resPerPage);
+    const apiFeaturesPending = new APIFeatures(Request.find({requestStatus: 'Pending', isTrash: false,
+                                            requestType: {$in: requestTypeOfficeStaff}}), req.query)
+                        .searchRequests()
+                        .filter()
+                        .pagination(resPerPage);
+    const apiFeaturesProcessing = new APIFeatures(Request.find({requestStatus: 'Processing', isTrash: false,
+                                            requestType: {$in: requestTypeOfficeStaff}}), req.query)
+                        .searchRequests()
+                        .filter()
+                        .pagination(resPerPage);
+    const apiFeaturesApproved = new APIFeatures(Request.find({requestStatus: 'Approved', isTrash: false,
+                                            requestType: {$in: requestTypeOfficeStaff}}), req.query)
+                        .searchRequests()
+                        .filter()
+                        .pagination(resPerPage);
+    const apiFeaturesDenied = new APIFeatures(Request.find({requestStatus: 'Denied',isTrash: false,
+                                            requestType: {$in: requestTypeOfficeStaff}}), req.query)
+                        .searchRequests()
+                        .filter()
+                        .pagination(resPerPage);
+    const requests = await apiFeatures.query;
+    const pendingRequests = await apiFeaturesPending.query;
+    const processingRequests = await apiFeaturesProcessing.query;
+    const approvedRequests = await apiFeaturesApproved.query;
+    const deniedRequests = await apiFeaturesDenied.query;
+   
+    res.status(200).json({
+        success: true,
+        totalRequestCount: requests.length,
+        totalPendingRequest: pendingRequests.length,
+        totalProcessingRequests: processingRequests.length,
+        totalApprovedRequests: approvedRequests.length,
+        totalDeniedRequests: deniedRequests.length 
+
+    })
+
 })
 
 // Move request to trash => /api/v1/admin/trashRequest/:requestId

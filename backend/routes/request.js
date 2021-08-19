@@ -75,7 +75,8 @@ const {
         requestTracker,
         getSubmittedRequestsCICSStaff,
         trashRequest,
-        getTrashedRequests
+        getTrashedRequests,
+        getRequestOfficeOnly
     } = require('../controllers/requestController')
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth')
 
@@ -88,10 +89,11 @@ router.route('/submitRequest').post(isAuthenticatedUser, thomcareStudentUpload.a
 router.route('/myRequests').get(isAuthenticatedUser, authorizeRoles('Student'), myRequests);
 
 //dept chair
-router.route('/admin/requests').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getSubmittedRequests);
+router.route('/deptChair/requests').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getSubmittedRequests);
 
 //cics staff
 router.route('/cicsAdmin/requests').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getSubmittedRequestsCICSStaff);
+router.route('/cicsAdmin/officeRequests').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getRequestOfficeOnly);
 
 //dept chair and cics staff
 router.route('/admin/updateRequest/:requestId').put(isAuthenticatedUser, thomcareAdminUpload.array('returningFiles',5),authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), updateRequest );
