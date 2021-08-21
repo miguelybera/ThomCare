@@ -171,7 +171,7 @@ export const createAnnouncement = (announcementData) => async(dispatch) => {
 
         const config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'multipart/form-data'
             }
         }
         console.log(announcementData);

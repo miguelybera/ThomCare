@@ -48,8 +48,6 @@ const CreateAnnouncement = ({ history }) => {
                 [e.target.name]: e.target.value
             })
         }
-
-        console.log(announcementData)
     }
 
     const submitHandler = e => {

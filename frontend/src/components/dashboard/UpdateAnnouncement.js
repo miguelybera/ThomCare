@@ -33,16 +33,27 @@ const UpdateAnnouncement = ({ history, match }) => {
     const submitHandler = e => {
         e.preventDefault()
 
-        const formData = {
-            title,
-            description,
-            yearLevel,
-            course,
-            track,
-            announcementType,
-            setExpiry,
-            archiveDate
-        }
+        // const formData = {
+        //     title,
+        //     description,
+        //     yearLevel,
+        //     course,
+        //     track,
+        //     announcementType,
+        //     setExpiry,
+        //     archiveDate
+        // }
+
+        const formData = new FormData()
+
+        formData.set('title', title)
+        formData.set('description', description)
+        formData.set('yearLevel', yearLevel)
+        formData.set('course', course)
+        formData.set('track', track)
+        formData.set('announcementType', announcementType)
+        formData.set('archiveDate', archiveDate)
+        formData.set('setExpiry', setExpiry)
 
         dispatch(updateAnnouncement(announcement._id, formData))
     }
@@ -82,8 +93,6 @@ const UpdateAnnouncement = ({ history, match }) => {
             setAnnouncementType(announcementAnnouncementType)
             setArchiveDate(changeDateFormat(announcementArchiveDate))
             setSetExpiry(announcementSetExpiry)
-
-            console.log(announcement)
         }
 
         if (error) {
