@@ -134,7 +134,7 @@ export const newAnnouncementReducer = (state = { announcement: {} }, action) => 
 }
 
 //update and delete announcement
-export const productReducer = (state = {}, action) => {
+export const announcementReducer = (state = {}, action) => {
     switch(action.type){
 
         case DELETE_ANNOUNCEMENT_REQUEST:
