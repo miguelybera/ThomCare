@@ -419,8 +419,8 @@ exports.trashRequest = catchAsyncErrors (async (req,res,next)=>{
 
 })
 
-// View trashed requests => /api/v1/admin/trash/requests
-exports.getTrashedRequests = catchAsyncErrors (async (req,res,next)=>{
+// View trashed requests => /api/v1/deptChair/trash
+exports.getTrashedRequestsDeptChair = catchAsyncErrors (async (req,res,next)=>{
     let deptCourse
     if(req.user.role == 'IT Dept Chair'){
         deptCourse = 'Information Technology'
@@ -446,5 +446,25 @@ exports.getTrashedRequests = catchAsyncErrors (async (req,res,next)=>{
     res.status(200).json({
         success: true,
         totalRequestCount: requests.length,
+        requests
+    })
+})
+// View trashed requests => /api/v1/cicsAdmin/trash
+exports.getTrashedRequestsCICSStaff = catchAsyncErrors (async (req,res,next)=>{
+    const resPerPage = 15;
+    const apiFeatures = new APIFeatures(Request.find({isTrash: true,
+        requestType: {$in: requestTypeOfficeStaff}}), req.query)
+                        .searchRequests()
+                        .filter()
+                        .pagination(resPerPage);
+
+
+    const requests = await apiFeatures.query;
+
+   
+    res.status(200).json({
+        success: true,
+        totalRequestCount: requests.length,
+        requests
     })
 })

@@ -75,8 +75,9 @@ const {
         requestTracker,
         getSubmittedRequestsCICSStaff,
         trashRequest,
-        getTrashedRequests,
-        getRequestOfficeOnly
+        getTrashedRequestsDeptChair,
+        getRequestOfficeOnly,
+        getTrashedRequestsCICSStaff
     } = require('../controllers/requestController')
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth')
 
@@ -90,15 +91,16 @@ router.route('/myRequests').get(isAuthenticatedUser, authorizeRoles('Student'), 
 
 //dept chair
 router.route('/deptChair/requests').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getSubmittedRequests);
-
+router.route('/deptChair/trash').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getTrashedRequestsDeptChair );
 //cics staff
 router.route('/cicsAdmin/requests').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getSubmittedRequestsCICSStaff);
 router.route('/cicsAdmin/officeRequests').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getRequestOfficeOnly);
+router.route('/cicsAdmin/trash').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getTrashedRequestsCICSStaff );
 
 //dept chair and cics staff
 router.route('/admin/updateRequest/:requestId').put(isAuthenticatedUser, thomcareAdminUpload.array('returningFiles',5),authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), updateRequest );
 router.route('/admin/trashRequest/:requestId').put(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), trashRequest);
-router.route('/admin/trash/requests').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), getTrashedRequests );
+
 //dept chair, cics staff, student
 router.route('/deleteRequest/:requestId').delete(isAuthenticatedUser, authorizeRoles('Student', 'CICS Staff', 'IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), deleteRequest);
 

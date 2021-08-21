@@ -1,4 +1,4 @@
-const Course = require('../models/announcement');
+const Course = require('../models/course');
 const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const APIFeatures = require('../utils/apiFeatures');
@@ -61,7 +61,7 @@ exports.updateCourse = catchAsyncErrors(async (req,res,next)=>{
     course = await Course.findByIdAndUpdate(req.params.id, req.body,{
         new:true,
         runValidators:true,
-        useFindAndModify: true
+        useFindAndModify: false
     })
     res.status(200).json({
         success: true,
