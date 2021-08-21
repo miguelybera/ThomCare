@@ -12,6 +12,12 @@ import {
     NEW_ANNOUNCEMENT_REQUEST,
     NEW_ANNOUNCEMENT_SUCCESS,
     NEW_ANNOUNCEMENT_FAIL,
+    UPDATE_ANNOUNCEMENT_REQUEST,
+    UPDATE_ANNOUNCEMENT_SUCCESS,
+    UPDATE_ANNOUNCEMENT_FAIL,
+    DELETE_ANNOUNCEMENT_REQUEST,
+    DELETE_ANNOUNCEMENT_SUCCESS,
+    DELETE_ANNOUNCEMENT_FAIL,
     CLEAR_ERRORS
 } from '../constants/announcementConstants'
 
@@ -165,11 +171,9 @@ export const createAnnouncement = (announcementData) => async(dispatch) => {
 
         const config = {
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'multipart/form-data'
             }
         }
-
-        console.log(announcementData)
 
         const { data }= await axios.post(`/api/v1/admin/new/announcement`, announcementData, config)
 
@@ -186,6 +190,59 @@ export const createAnnouncement = (announcementData) => async(dispatch) => {
         )
     }
 }
+
+// Delete announcement (ADMIN)
+export const deleteAnnouncement = (id) => async(dispatch) => {
+    try{
+        dispatch({
+            type: DELETE_ANNOUNCEMENT_REQUEST
+        })
+
+        const { data } = await axios.delete(`/api/v1/admin/announcement/${id}`)
+
+        dispatch({
+            type: DELETE_ANNOUNCEMENT_SUCCESS,
+            payload: data.success
+        })
+    }
+    catch(error){
+        dispatch({
+            type: DELETE_ANNOUNCEMENT_FAIL,
+            payload: error.response.data.message
+            }
+        )
+    }
+}
+
+// Update announcement (ADMIN)
+export const updateAnnouncement = (id, announcementData) => async(dispatch) => {
+    try{
+        dispatch({
+            type: UPDATE_ANNOUNCEMENT_REQUEST
+        })
+
+        const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }
+        
+        const { data } = await axios.put(`/api/v1/admin/announcement/${id}`, announcementData, config)
+
+        dispatch({
+            type: UPDATE_ANNOUNCEMENT_SUCCESS,
+            payload: data.success
+        })
+    }
+    catch(error){
+        dispatch({
+            type: UPDATE_ANNOUNCEMENT_FAIL,
+            payload: error.response.data.message
+            }
+        )
+    }
+}
+
 //clear errors
 export const clearErrors = () => async(dispatch) => {
     dispatch({

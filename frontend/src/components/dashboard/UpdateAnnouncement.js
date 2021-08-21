@@ -9,7 +9,7 @@ import { NEW_ANNOUNCEMENT_RESET } from '../../constants/announcementConstants'
 import { createAnnouncement, clearErrors } from '../../actions/announcementActions'
 
 // <Card.Title style={{margin: '50px 0 20px 0'}}>Register an account</Card.Title>
-const CreateAnnouncement = ({history}) => {
+const UpdateAnnouncement = ({history}) => {
 
     const dispatch = useDispatch()
     const alert = useAlert()
@@ -135,4 +135,4 @@ const CreateAnnouncement = ({history}) => {
     )
 }
 
-export default CreateAnnouncement
+export default UpdateAnnouncement

@@ -12,6 +12,14 @@ import {
     NEW_ANNOUNCEMENT_SUCCESS,
     NEW_ANNOUNCEMENT_FAIL,
     NEW_ANNOUNCEMENT_RESET,
+    UPDATE_ANNOUNCEMENT_REQUEST,
+    UPDATE_ANNOUNCEMENT_SUCCESS,
+    UPDATE_ANNOUNCEMENT_FAIL,
+    UPDATE_ANNOUNCEMENT_RESET,
+    DELETE_ANNOUNCEMENT_REQUEST,
+    DELETE_ANNOUNCEMENT_SUCCESS,
+    DELETE_ANNOUNCEMENT_FAIL,
+    DELETE_ANNOUNCEMENT_RESET,
     CLEAR_ERRORS
 } from '../constants/announcementConstants'
 
@@ -120,6 +128,64 @@ export const newAnnouncementReducer = (state = { announcement: {} }, action) => 
                 error: null
             }
 
+        default:
+            return state
+    }
+}
+
+//update and delete announcement
+export const productReducer = (state = {}, action) => {
+    switch(action.type){
+
+        case DELETE_ANNOUNCEMENT_REQUEST:
+        case UPDATE_ANNOUNCEMENT_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+
+        case DELETE_ANNOUNCEMENT_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                isDeleted: action.payload
+            }
+        
+        case UPDATE_ANNOUNCEMENT_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                isUpdated: action.payload
+            }
+
+        case DELETE_ANNOUNCEMENT_FAIL:
+        case UPDATE_ANNOUNCEMENT_FAIL:
+            return {
+                ...state,
+                error: action.payload,
+                loading: false
+            }
+
+        case DELETE_ANNOUNCEMENT_RESET:
+            return {
+                ...state,
+                isDeleted: false,
+                loading: false
+            }
+
+        case UPDATE_ANNOUNCEMENT_RESET:
+            return {
+                ...state,
+                isUpdated: false,
+                loading: false
+            }
+            
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+            
         default:
             return state
     }
