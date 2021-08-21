@@ -13,6 +13,14 @@ import {
     GET_USER_REQUEST,
     GET_USER_SUCCESS,
     GET_USER_FAIL,
+    UPDATE_USER_REQUEST,
+    UPDATE_USER_SUCCESS,
+    UPDATE_USER_FAIL,
+    UPDATE_USER_RESET,
+    DELETE_USER_REQUEST,
+    DELETE_USER_SUCCESS,
+    DELETE_USER_FAIL,
+    DELETE_USER_RESET,
     SAVE_STUDENT_INFO,
     RESET_STUDENT_INFO,
     REGISTER_USER_REQUEST,
@@ -196,6 +204,65 @@ export const registerReducer = ( state = { }, action ) => {
                 ...state,
                 isCreated: false,
                 studentInfo: {}
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+
+//update and delete user
+export const userReducer = (state = {}, action) => {
+    switch (action.type) {
+
+        case DELETE_USER_REQUEST:
+        case UPDATE_USER_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+
+        case DELETE_USER_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                isDeleted: action.payload
+            }
+
+        case UPDATE_USER_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                isUpdated: action.payload
+            }
+
+        case DELETE_USER_FAIL:
+        case UPDATE_USER_FAIL:
+            return {
+                ...state,
+                error: action.payload,
+                loading: false
+            }
+
+        case DELETE_USER_RESET:
+            return {
+                ...state,
+                isDeleted: false,
+                loading: false
+            }
+
+        case UPDATE_USER_RESET:
+            return {
+                ...state,
+                isUpdated: false,
+                loading: false
             }
 
         case CLEAR_ERRORS:

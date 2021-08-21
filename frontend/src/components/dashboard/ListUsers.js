@@ -2,26 +2,24 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { getArchivedAnnouncements, deleteAnnouncement, clearErrors } from '../../actions/announcementActions'
-import { DELETE_ANNOUNCEMENT_RESET } from '../../constants/announcementConstants'
+import { getUsers, deleteUser, clearErrors } from '../../actions/userActions'
+import { DELETE_USER_RESET } from '../../constants/userConstants'
 import Sidebar from '../layout/Sidebar'
 import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
 import { Container } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 
-var dateFormat = require('dateformat')
-
-const ListArchivedAnnouncements = ({history}) => {
+const ListUsers = ({history}) => {
 
     const alert = useAlert()
     const dispatch = useDispatch()
 
-    const { loading, announcements, error } = useSelector(state => state.announcements)
-    const { error: deleteError, isDeleted } = useSelector(state => state.announcement)
+    const { loading, users, error } = useSelector(state => state.users)
+    const { error: deleteError, isDeleted } = useSelector(state => state.user)
 
     useEffect(() => {
-        dispatch(getArchivedAnnouncements())
+        dispatch(getUsers())
 
         if(error){
             alert.error(error)
@@ -35,46 +33,37 @@ const ListArchivedAnnouncements = ({history}) => {
 
         if(isDeleted){
             alert.success('Announcement has been deleted successfully.')
-            history.push('/admin/announcements')
+            history.push('/admin/users')
 
             dispatch({
-                type: DELETE_ANNOUNCEMENT_RESET
+                type: DELETE_USER_RESET
             })
         }
         
     }, [dispatch, alert, error, isDeleted, deleteError])
 
-    function changeDateFormat(date) {
-        return dateFormat(date, "mmm d, yyyy h:MMtt")
+    const deleteUserHandler = (id) => {
+        dispatch(deleteUser(id))
     }
 
-    const deleteAnnouncementHandler = (id) => {
-        dispatch(deleteAnnouncement(id))
-    }
-
-    const setHistory = () => {
+    const setUsers = () => {
 
         const data = {
             columns: [
                 {
-                    label: 'Date',
-                    field: 'date',
+                    label: 'Role',
+                    field: 'role',
                     width: 100
                 },
                 {
-                    label: 'Title',
-                    field: 'title',
+                    label: 'Name',
+                    field: 'name',
                     width: 150
                 },
                 {
-                    label: 'Description',
-                    field: 'description',
+                    label: 'Email',
+                    field: 'email',
                     width: 300
-                },
-                {
-                    label: 'Tags',
-                    field: 'tags',
-                    width: 150
                 },
                 {
                     label: 'Actions',
@@ -85,17 +74,14 @@ const ListArchivedAnnouncements = ({history}) => {
             rows: []
         }
 
-        announcements.forEach(announcement => {
+        users.forEach(user => {
             data.rows.push({
-                date: changeDateFormat(announcement.createdAt),
-                title: announcement.title,
-                description: announcement.description,
-                tags: <Fragment>
-                    <p>{announcement.yearLevel}, {announcement.course}, {announcement.track}</p>
-                </Fragment>,
+                role: user.role,
+                name: `${user.firstName} ${user.lastName}`,
+                email: user.email,
                 actions: <Fragment>
-                    <button><Link to={`/admin/announcement/${announcement._id}`}>Update</Link></button>
-                    <button onClick={() => deleteAnnouncementHandler(announcement._id)}>Delete</button>
+                    <button><Link to={`/admin/user/${user._id}`}>Update</Link></button>
+                    <button onClick={() => deleteUserHandler(user._id)}>Delete</button>
                 </Fragment>
             })
 
@@ -106,7 +92,7 @@ const ListArchivedAnnouncements = ({history}) => {
 
     return (
         <Fragment>
-            <MetaData title={'Archived Announcements'} />
+            <MetaData title={'All Users'} />
             {loading ? <Loader /> : (
                 <div className="row">
                     <div className="col-12 col-md-2">
@@ -119,10 +105,10 @@ const ListArchivedAnnouncements = ({history}) => {
                         <Container className="space_inside"></Container>
 
                         <Container>
-                            <h3>Archives | Announcements</h3>
+                            <h3>Users</h3>
                             
                             <MDBDataTableV5
-                                data={setHistory()}
+                                data={setUsers()}
                                 hover
                                 searchTop
                                 pagingTop
@@ -138,4 +124,4 @@ const ListArchivedAnnouncements = ({history}) => {
     )
 }
 
-export default ListArchivedAnnouncements
+export default ListUsers

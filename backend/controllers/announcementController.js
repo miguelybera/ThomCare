@@ -104,7 +104,7 @@ exports.getAnnouncements = catchAsyncErrors(async (req, res, next) => {
         announcementCount,
         announcements,
         resPerPage,
-        filteredAnnouncementsCount,
+        filteredAnnouncementsCount
     })
 })
 
@@ -117,10 +117,12 @@ exports.getArchivedAnnouncements = catchAsyncErrors(async (req, res, next) => {
 
     let announcements = await apiFeatures.query;
 
-
     res.status(200).json({
         success: true,
-        announcements
+        announcements,
+        announcementCount,
+        resPerPage: '',
+        filteredAnnouncementsCount: ''
     })
 })
 

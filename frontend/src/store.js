@@ -8,7 +8,8 @@ import {
     userDetailsReducer,
     registerReducer,
     forgotPasswordReducer,
-    studentInfoReducer
+    studentInfoReducer,
+    userReducer
 } from './reducers/userReducers'
 
 import {
@@ -44,7 +45,8 @@ const reducer = combineReducers({
     student: studentInfoReducer,
     request: getRequestDetailsReducer,
     newAnnouncement: newAnnouncementReducer,
-    announcement: announcementReducer
+    announcement: announcementReducer,
+    user: userReducer
 })
 
 

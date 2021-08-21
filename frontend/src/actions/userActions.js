@@ -17,6 +17,12 @@ import {
     GET_USER_REQUEST,
     GET_USER_SUCCESS,
     GET_USER_FAIL,
+    UPDATE_USER_REQUEST,
+    UPDATE_USER_SUCCESS,
+    UPDATE_USER_FAIL,
+    DELETE_USER_REQUEST,
+    DELETE_USER_SUCCESS,
+    DELETE_USER_FAIL,
     SAVE_STUDENT_INFO,
     RESET_STUDENT_INFO,
     REGISTER_USER_REQUEST,
@@ -85,7 +91,7 @@ export const getUsers = () => async (dispatch) => {
             type: ALL_USERS_REQUEST
         })
 
-        const { data } = await axios.get('/api/v1/admin/allUsers')
+        const { data } = await axios.get('/api/v1/admin/users')
 
         dispatch({
             type: ALL_USERS_SUCCESS,
@@ -236,6 +242,61 @@ export const resetPassword = ( token, passwords ) => async (dispatch) => {
             type: NEW_PASSWORD_FAIL,
             payload: error.response.data.errMessage
         })
+    }
+}
+
+
+// Delete USER (ADMIN)
+export const deleteUser = (id) => async(dispatch) => {
+    try{
+        dispatch({
+            type: DELETE_USER_REQUEST
+        })
+
+        const { data } = await axios.delete(`/api/v1/admin/user/${id}`)
+
+        dispatch({
+            type: DELETE_USER_SUCCESS,
+            payload: data.success
+        })
+    }
+    
+    catch(error){
+        dispatch({
+            type: DELETE_USER_FAIL,
+            payload: error.response.data.message
+            }
+        )
+    }
+}
+
+// Update USER (ADMIN)
+export const updateUser = (id, userData) => async(dispatch) => {
+    try{
+        dispatch({
+            type: UPDATE_USER_REQUEST
+        })
+
+        const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }
+
+        const { data } = await axios.put(`/api/v1/admin/user/${id}`, userData, config)
+
+        
+        dispatch({
+            type: UPDATE_USER_SUCCESS,
+            payload: data.success
+        })
+    }
+    catch(error){
+        dispatch({
+            type: UPDATE_USER_FAIL,
+            payload: error.response.data.message
+            }
+        )
     }
 }
 

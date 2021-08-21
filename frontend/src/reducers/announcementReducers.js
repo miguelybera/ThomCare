@@ -8,6 +8,9 @@ import {
     ALL_ADMIN_ANNOUNCEMENTS_REQUEST,
     ALL_ADMIN_ANNOUNCEMENTS_SUCCESS,
     ALL_ADMIN_ANNOUNCEMENTS_FAIL,
+    ALL_ARCHIVED_ANNOUNCEMENTS_REQUEST,
+    ALL_ARCHIVED_ANNOUNCEMENTS_SUCCESS,
+    ALL_ARCHIVED_ANNOUNCEMENTS_FAIL,
     NEW_ANNOUNCEMENT_REQUEST,
     NEW_ANNOUNCEMENT_SUCCESS,
     NEW_ANNOUNCEMENT_FAIL,
@@ -28,6 +31,7 @@ export const getAnnouncementsReducer = (state = { announcements: [] }, action) =
     switch (action.type) {
         case ALL_ANNOUNCEMENTS_REQUEST:
         case ALL_ADMIN_ANNOUNCEMENTS_REQUEST:
+        case ALL_ARCHIVED_ANNOUNCEMENTS_REQUEST:
             return {
                 loading: true,
                 announcements: []
@@ -35,6 +39,7 @@ export const getAnnouncementsReducer = (state = { announcements: [] }, action) =
 
         case ALL_ANNOUNCEMENTS_SUCCESS:
         case ALL_ADMIN_ANNOUNCEMENTS_SUCCESS:
+        case ALL_ARCHIVED_ANNOUNCEMENTS_SUCCESS:
             return {
                 loading: false,
                 announcements: action.payload.announcements,
@@ -45,6 +50,7 @@ export const getAnnouncementsReducer = (state = { announcements: [] }, action) =
 
         case ALL_ANNOUNCEMENTS_FAIL:
         case ALL_ADMIN_ANNOUNCEMENTS_FAIL:
+        case ALL_ARCHIVED_ANNOUNCEMENTS_FAIL:
             return {
                 loading: false,
                 error: action.payload
@@ -135,7 +141,7 @@ export const newAnnouncementReducer = (state = { announcement: {} }, action) => 
 
 //update and delete announcement
 export const announcementReducer = (state = {}, action) => {
-    switch(action.type){
+    switch (action.type) {
 
         case DELETE_ANNOUNCEMENT_REQUEST:
         case UPDATE_ANNOUNCEMENT_REQUEST:
@@ -150,7 +156,7 @@ export const announcementReducer = (state = {}, action) => {
                 loading: false,
                 isDeleted: action.payload
             }
-        
+
         case UPDATE_ANNOUNCEMENT_SUCCESS:
             return {
                 ...state,
@@ -179,13 +185,13 @@ export const announcementReducer = (state = {}, action) => {
                 isUpdated: false,
                 loading: false
             }
-            
+
         case CLEAR_ERRORS:
             return {
                 ...state,
                 error: null
             }
-            
+
         default:
             return state
     }

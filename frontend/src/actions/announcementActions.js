@@ -9,6 +9,9 @@ import {
     ALL_ADMIN_ANNOUNCEMENTS_REQUEST,
     ALL_ADMIN_ANNOUNCEMENTS_SUCCESS,
     ALL_ADMIN_ANNOUNCEMENTS_FAIL,
+    ALL_ARCHIVED_ANNOUNCEMENTS_REQUEST,
+    ALL_ARCHIVED_ANNOUNCEMENTS_SUCCESS,
+    ALL_ARCHIVED_ANNOUNCEMENTS_FAIL,
     NEW_ANNOUNCEMENT_REQUEST,
     NEW_ANNOUNCEMENT_SUCCESS,
     NEW_ANNOUNCEMENT_FAIL,
@@ -161,6 +164,28 @@ export const getAdminAnnouncements = () => async(dispatch) => {
     }
 }
 
+//get all ARCHIVED announcements
+export const getArchivedAnnouncements = () => async(dispatch) => {
+    try {
+        dispatch({
+            type: ALL_ARCHIVED_ANNOUNCEMENTS_REQUEST
+        })
+
+        const { data } = await axios.get(`/api/v1/admin/archivedAnnouncements`)
+
+        dispatch({
+            type: ALL_ARCHIVED_ANNOUNCEMENTS_SUCCESS,
+            payload: data
+        })
+    }
+    catch (error) {
+        dispatch({
+            type: ALL_ARCHIVED_ANNOUNCEMENTS_FAIL,
+            payload: error.response.data.errMessage
+            }
+        )
+    }
+}
 
 //create new announcement
 export const createAnnouncement = (announcementData) => async(dispatch) => {
@@ -174,7 +199,7 @@ export const createAnnouncement = (announcementData) => async(dispatch) => {
                 'Content-Type': 'application/json'
             }
         }
-        console.log(announcementData);
+        
         const { data }= await axios.post(`/api/v1/admin/new/announcement`, announcementData, config)
 
         dispatch({
@@ -227,8 +252,6 @@ export const updateAnnouncement = (id, announcementData) => async(dispatch) => {
                 'Content-Type': 'multipart/form-data'
             }
         }
-        
-        console.log(announcementData)
 
         const { data } = await axios.put(`/api/v1/admin/announcement/${id}`, announcementData, config)
 
