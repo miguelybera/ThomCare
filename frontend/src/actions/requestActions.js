@@ -6,7 +6,7 @@ import {
     CLEAR_ERRORS
 } from '../constants/requestConstants'
 
-//Get single user
+//Get request (using tracking number)
 export const trackRequest = ( userInput ) => async(dispatch) => {
     try{
         dispatch({

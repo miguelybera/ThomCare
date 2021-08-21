@@ -2,13 +2,13 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from  'react-redux'
-import { getSingleUser } from '../../../actions/userActions'
+import { getUserDetails } from '../../../actions/userActions'
 import './conversation.css'
 import axios from 'axios'
 import {
-    GET_USER_REQUEST,
-    GET_USER_SUCCESS,
-    GET_USER_FAIL
+    GET_USER_DETAILS_REQUEST,
+    GET_USER_DETAILS_SUCCESS,
+    GET_USER_DETAILS_FAIL
 } from './../../../constants/userConstants'
 
 const Conversations = ({conversation, currentUser}) => {
@@ -23,20 +23,20 @@ const Conversations = ({conversation, currentUser}) => {
         const getUser = async () => {
             try {
                 dispatch({
-                    type: GET_USER_REQUEST
+                    type: GET_USER_DETAILS_REQUEST
                 })
 
                 const { data } = await axios.get(`/api/v1/chat/user/${receiver}`)
                 
                 dispatch({
-                    type: GET_USER_SUCCESS,
+                    type: GET_USER_DETAILS_SUCCESS,
                     payload: data.singleUser
                 })
 
                 setFriend(data)
             } catch (error) {
                 dispatch({
-                    type: GET_USER_FAIL,
+                    type: GET_USER_DETAILS_FAIL,
                     payload: error.response.data.errMessage
                 })
             }

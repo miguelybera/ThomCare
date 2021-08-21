@@ -17,9 +17,9 @@ import {
     ALL_USERS_REQUEST,
     ALL_USERS_SUCCESS,
     ALL_USERS_FAIL,
-    GET_USER_REQUEST,
-    GET_USER_SUCCESS,
-    GET_USER_FAIL,
+    GET_USER_DETAILS_REQUEST,
+    GET_USER_DETAILS_SUCCESS,
+    GET_USER_DETAILS_FAIL,
     UPDATE_USER_REQUEST,
     UPDATE_USER_SUCCESS,
     UPDATE_USER_FAIL,
@@ -110,22 +110,22 @@ export const getUsers = () => async (dispatch) => {
 }
 
 //Get single user
-export const getSingleUser = (id) => async(dispatch) => {
+export const getUserDetails = (id) => async(dispatch) => {
     try{
         dispatch({
-            type: GET_USER_REQUEST
+            type: GET_USER_DETAILS_REQUEST
         })
 
         const { data } = await axios.get(`/api/v1/admin/user/${id}`)
 
         dispatch({
-            type: GET_USER_SUCCESS,
+            type: GET_USER_DETAILS_SUCCESS,
             payload: data.singleUser
         })
     }
     catch(error){
         dispatch({
-            type: GET_USER_FAIL,
+            type: GET_USER_DETAILS_FAIL,
             payload: error.response.data.errMessage
             }
         )
@@ -149,8 +149,8 @@ export const logout = () => async (dispatch) => {
     }
 }
 
-// Register STUDENT
-export const register = ( user ) => async (dispatch) => {
+// Register
+export const register = (admin, user) => async (dispatch) => {
     try {
         dispatch ({
             type: REGISTER_USER_REQUEST
@@ -162,7 +162,15 @@ export const register = ( user ) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post(`/api/v1/registerStudent`, user, config)
+        let link = ''
+
+        if(admin) {
+            link = `/api/v1/admin/register`
+        } else {
+            link = `/api/v1/registerStudent`
+        }
+
+        const { data } = await axios.post(link, user, config)
         
         dispatch({
             type: REGISTER_USER_SUCCESS,
@@ -182,7 +190,7 @@ export const register = ( user ) => async (dispatch) => {
     }
 }
 
-// save STUDENT info
+// save student info to local storage
 export const saveStudentInfo = (data) => async (dispatch) => {
     dispatch ({
         type: SAVE_STUDENT_INFO,
@@ -277,7 +285,7 @@ export const resetPassword = ( token, passwords ) => async (dispatch) => {
 }
 
 
-// Delete USER (ADMIN)
+// Delete user
 export const deleteUser = (id) => async(dispatch) => {
     try{
         dispatch({
@@ -301,7 +309,7 @@ export const deleteUser = (id) => async(dispatch) => {
     }
 }
 
-// Update USER (ADMIN)
+// Update user
 export const updateUser = (id, userData) => async(dispatch) => {
     try{
         dispatch({

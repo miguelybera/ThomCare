@@ -16,7 +16,7 @@ const ConfirmRegister = ({ history }) => {
     const submitHandler = (e) => {
         e.preventDefault()
 
-        dispatch(register(studentInfo))
+        dispatch(register(false, studentInfo))
     }
 
     useEffect(() => {

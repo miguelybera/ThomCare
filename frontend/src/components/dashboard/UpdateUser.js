@@ -7,7 +7,7 @@ import Sidebar from '../layout/Sidebar'
 import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
 import { UPDATE_USER_RESET } from '../../constants/userConstants'
-import { getSingleUser, updateUser, clearErrors } from '../../actions/userActions'
+import { getUserDetails, updateUser, clearErrors } from '../../actions/userActions'
 
 // <Card.Title style={{margin: '50px 0 20px 0'}}>Register an account</Card.Title>
 
@@ -88,7 +88,7 @@ const UpdateUser = ({ history, match }) => {
 
     useEffect(() => {
         if (singleUser && singleUser._id !== userId) {
-            dispatch(getSingleUser(userId))
+            dispatch(getUserDetails(userId))
         }
         else {
             setFirstName(userFirstName)
@@ -118,7 +118,7 @@ const UpdateUser = ({ history, match }) => {
 
         if (isUpdated) {
             history.push('/admin/users')
-            dispatch(getSingleUser(userId))
+            dispatch(getUserDetails(userId))
             alert.success('User updated successfully.')
 
             dispatch({

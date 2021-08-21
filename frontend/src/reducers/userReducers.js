@@ -14,9 +14,9 @@ import {
     ALL_USERS_REQUEST,
     ALL_USERS_SUCCESS,
     ALL_USERS_FAIL,
-    GET_USER_REQUEST,
-    GET_USER_SUCCESS,
-    GET_USER_FAIL,
+    GET_USER_DETAILS_REQUEST,
+    GET_USER_DETAILS_SUCCESS,
+    GET_USER_DETAILS_FAIL,
     UPDATE_USER_REQUEST,
     UPDATE_USER_SUCCESS,
     UPDATE_USER_FAIL,
@@ -143,19 +143,19 @@ export const getUsersReducer = (state = { users: [] }, action) => {
 export const userDetailsReducer = (state = { singleUser: {} }, action) => {
     switch (action.type) {
 
-        case GET_USER_REQUEST:
+        case GET_USER_DETAILS_REQUEST:
             return {
                 ...state,
                 loading: true
             }
 
-        case GET_USER_SUCCESS:
+        case GET_USER_DETAILS_SUCCESS:
             return {
                 loading: false,
                 singleUser: action.payload
             }
 
-        case GET_USER_FAIL:
+        case GET_USER_DETAILS_FAIL:
             return {
                 ...state,
                 error: action.payload

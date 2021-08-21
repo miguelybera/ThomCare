@@ -12,6 +12,7 @@ import {
     CLEAR_ERRORS
 } from '../constants/chatConstants'
 
+//get all conversations
 export const getConversations = (id) => async(dispatch) => {
 
     try {
@@ -63,6 +64,7 @@ export const sendMessage = ( message ) => async (dispatch, getState) => {
     }
 }
 
+//create new conversation
 export const createConversation = (convo) => async(dispatch) => {
 
     try {
