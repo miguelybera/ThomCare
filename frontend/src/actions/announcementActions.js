@@ -9,6 +9,9 @@ import {
     ALL_ADMIN_ANNOUNCEMENTS_REQUEST,
     ALL_ADMIN_ANNOUNCEMENTS_SUCCESS,
     ALL_ADMIN_ANNOUNCEMENTS_FAIL,
+    NEW_ANNOUNCEMENT_REQUEST,
+    NEW_ANNOUNCEMENT_SUCCESS,
+    NEW_ANNOUNCEMENT_FAIL,
     CLEAR_ERRORS
 } from '../constants/announcementConstants'
 
@@ -152,6 +155,35 @@ export const getAdminAnnouncements = () => async(dispatch) => {
     }
 }
 
+
+//create new announcement
+export const createAnnouncement = (announcement) => async(dispatch) => {
+    try {
+        dispatch({
+            type: NEW_ANNOUNCEMENT_REQUEST
+        })
+
+        const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }
+
+        const { data }= await axios.post(`/api/v1/admin/new/announcement`, announcement, config)
+
+        dispatch({
+            type: NEW_ANNOUNCEMENT_SUCCESS,
+            payload: data
+        })
+    }
+    catch (error) {
+        dispatch({
+            type: NEW_ANNOUNCEMENT_FAIL,
+            payload: error.response.data.errMessage
+            }
+        )
+    }
+}
 //clear errors
 export const clearErrors = () => async(dispatch) => {
     dispatch({

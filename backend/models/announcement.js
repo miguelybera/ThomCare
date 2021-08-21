@@ -38,7 +38,6 @@ const announcementSchema = new mongoose.Schema({
                 ]
             },
             default: 'All'
-
         },
         track:{
             type: String,

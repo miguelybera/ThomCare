@@ -8,6 +8,10 @@ import {
     ALL_ADMIN_ANNOUNCEMENTS_REQUEST,
     ALL_ADMIN_ANNOUNCEMENTS_SUCCESS,
     ALL_ADMIN_ANNOUNCEMENTS_FAIL,
+    NEW_ANNOUNCEMENT_REQUEST,
+    NEW_ANNOUNCEMENT_SUCCESS,
+    NEW_ANNOUNCEMENT_FAIL,
+    NEW_ANNOUNCEMENT_RESET,
     CLEAR_ERRORS
 } from '../constants/announcementConstants'
 
@@ -67,6 +71,47 @@ export const getSingleAnnouncementReducer = (state = { announcement: {} }, actio
             return {
                 loading: false,
                 error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+//create new announcement
+export const newAnnouncementReducer = (state = { announcement: {} }, action) => {
+    switch (action.type) {
+        case NEW_ANNOUNCEMENT_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+
+        case NEW_ANNOUNCEMENT_SUCCESS:
+            return {
+                loading: false,
+                success: action.payload.success,
+                announcement: action.payload.announcement
+            }
+
+        case NEW_ANNOUNCEMENT_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+
+        case NEW_ANNOUNCEMENT_RESET:
+            return {
+                ...state,
+                loading: false,
+                success: false
             }
 
         case CLEAR_ERRORS:

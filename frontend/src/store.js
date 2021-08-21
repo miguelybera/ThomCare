@@ -20,7 +20,8 @@ import {
 
 import {
     getAnnouncementsReducer,
-    getSingleAnnouncementReducer
+    getSingleAnnouncementReducer,
+    newAnnouncementReducer
 } from './reducers/announcementReducers'
 
 import {
@@ -40,7 +41,8 @@ const reducer = combineReducers({
     announcements: getAnnouncementsReducer,
     announcementDetails: getSingleAnnouncementReducer,
     student: studentInfoReducer,
-    request: getRequestDetailsReducer
+    request: getRequestDetailsReducer,
+    newAnnouncement: newAnnouncementReducer
 })
 
 
