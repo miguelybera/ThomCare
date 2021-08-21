@@ -14,6 +14,7 @@ import Register from './components/user/Register'
 import ConfirmRegister from './components/user/ConfirmRegister'
 import ForgotPassword from './components/user/ForgotPassword'
 import Profile from './components/user/Profile'
+import UpdatePassword from './components/user/UpdatePassword'
 import NewPassword from './components/user/NewPassword'
 import VerifyRegistration from './components/user/VerifyRegistration'
 
@@ -74,6 +75,7 @@ function App() {
                                 {/**needs to be logged in */}
                                 <ProtectedRoute path='/messenger' loggedIn={true} component={Messenger} exact />
                                 <ProtectedRoute path='/profile' loggedIn={true} component={Profile} exact />
+                                <ProtectedRoute path='/password/update' loggedIn={true} component={UpdatePassword} exact />
 
                                 {/*control panel*/}
                                 <ProtectedRoute path='/controlpanel' loggedIn={true} component={ControlPanel} exact />

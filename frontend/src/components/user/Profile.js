@@ -1,7 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { clearErrors } from '../../actions/userActions'
-import { Form, Card, Container, Row, Col } from 'react-bootstrap'
+import { Form, Card, Button, Container, Row, Col } from 'react-bootstrap'
 import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
 
@@ -99,6 +100,7 @@ const Profile = () => {
                                             <Form.Control type="email" placeholder="Email address" value={email} disabled />
                                         </Col>
                                     </Form.Group>
+                                    <Button><Link to='/password/update' style={{textDecoration: 'none', color: 'white'}}>Change Password</Link></Button>
                                 </Form>
                             </Card.Body>
                         </Card>
