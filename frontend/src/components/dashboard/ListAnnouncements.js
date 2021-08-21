@@ -17,11 +17,13 @@ const ListAnnouncements = ({history}) => {
     const alert = useAlert()
     const dispatch = useDispatch()
 
-    const { loading, announcements, error, success } = useSelector(state => state.announcements)
+    const { loading, announcements, error } = useSelector(state => state.announcements)
     const { error: deleteError, isDeleted } = useSelector(state => state.announcement)
 
     useEffect(() => {
-        if (error) {
+        dispatch(getAdminAnnouncements())
+
+        if(error){
             alert.error(error)
             dispatch(clearErrors())
         }
@@ -31,22 +33,22 @@ const ListAnnouncements = ({history}) => {
             dispatch(clearErrors())
         }
 
-        if(isDeleted) {
-            alert.success('Announcement has been deleted sucessfully.')
-            history.push('/admin/announecments')
+        if(isDeleted){
+            alert.success('Announcement has been deleted successfully.')
+            history.push('/admin/announcements')
 
             dispatch({
                 type: DELETE_ANNOUNCEMENT_RESET
             })
         }
-        dispatch(getAdminAnnouncements())
+        
     }, [dispatch, alert, error, isDeleted, deleteError])
 
     function changeDateFormat(date) {
         return dateFormat(date, "mmm d, yyyy h:MMtt")
     }
 
-    const deleteAnnouncement = (id) => {
+    const deleteAnnouncementHandler = (id) => {
         dispatch(deleteAnnouncement(id))
     }
 
@@ -93,7 +95,7 @@ const ListAnnouncements = ({history}) => {
                 </Fragment>,
                 actions: <Fragment>
                     <button><Link to={`/admin/announcement/${announcement._id}`}>Update</Link></button>
-                    <button onClick={() => deleteAnnouncement(announcement._id)}>Delete</button>
+                    <button onClick={() => deleteAnnouncementHandler(announcement._id)}>Delete</button>
                 </Fragment>
             })
 
