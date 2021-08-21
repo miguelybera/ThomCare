@@ -68,7 +68,7 @@ export const getAnnouncementsReducer = (state = { announcements: [] }, action) =
 }
 
 //get single of announcement
-export const getSingleAnnouncementReducer = (state = { announcement: {} }, action) => {
+export const getAnnouncementDetailsReducer = (state = { announcement: {} }, action) => {
     switch (action.type) {
         case ANNOUNCEMENT_DETAILS_REQUEST:
             return {

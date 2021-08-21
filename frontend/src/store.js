@@ -21,7 +21,7 @@ import {
 
 import {
     getAnnouncementsReducer,
-    getSingleAnnouncementReducer,
+    getAnnouncementDetailsReducer,
     newAnnouncementReducer,
     announcementReducer
 } from './reducers/announcementReducers'
@@ -31,22 +31,26 @@ import {
 } from './reducers/requestReducer'
 
 const reducer = combineReducers({
-    auth: authReducer,
-    users: getUsersReducer,
-    singleUser: userDetailsReducer,
-    conversations: conversationReducer,
-    messages: messageReducer,
-    register: registerReducer,
-    forgotPassword: forgotPasswordReducer,
-    sendMessage: sendMessageReducer,
-    createConvo: createConversationReducer,
-    announcements: getAnnouncementsReducer,
-    announcementDetails: getSingleAnnouncementReducer,
-    student: studentInfoReducer,
-    request: getRequestDetailsReducer,
-    newAnnouncement: newAnnouncementReducer,
-    announcement: announcementReducer,
-    user: userReducer
+    auth: authReducer, //get currently logged in, for login and logout
+    users: getUsersReducer, //get all users
+    singleUser: userDetailsReducer, //get single user details
+    user: userReducer, //update and delete profile
+    
+    conversations: conversationReducer, //get all conversations of user
+    messages: messageReducer, //get all messages in conversation
+    sendMessage: sendMessageReducer, //send message in conversation
+    createConvo: createConversationReducer, //for creating conversation with a user
+
+    register: registerReducer, //register and verify registration link
+    forgotPassword: forgotPasswordReducer, //for forgot password and set new password
+
+    announcements: getAnnouncementsReducer, //get all announcements
+    announcementDetails: getAnnouncementDetailsReducer, //get single announcement details
+    newAnnouncement: newAnnouncementReducer, //create new announcement
+    announcement: announcementReducer, //update or delete announcement
+    
+    student: studentInfoReducer, //save trackingNumber and surname ? or request details in local storage
+    request: getRequestDetailsReducer //get single request details
 })
 
 
