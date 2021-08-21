@@ -53,7 +53,6 @@ const Messenger = () => {
         currentChatId = currentChat._id
     }
 
-
     const [users, setUsers] = useState([])
 
     useEffect(() => {
@@ -110,7 +109,7 @@ const Messenger = () => {
         socket.current.on('getUsers', users => {
             setOnlineUsers(users)
         })
-    }, [user])
+    }, [])
     //sockets end
 
     useEffect(() => {

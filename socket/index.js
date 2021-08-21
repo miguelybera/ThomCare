@@ -22,7 +22,7 @@ const getUser = (userId) => {
 };
 
 io.on('connection', (socket) => {
-    console.log('a user connected')
+    console.log('a user connected', socket.id)
 
     //take userID and socketId from user
     socket.on('addUser', (userId) => {
@@ -39,13 +39,13 @@ io.on('connection', (socket) => {
                 text
                 });
         } catch (err) {
-            console.log(err)
+            console.log('user is offline')
         }
     });
 
     //on disconnection
     socket.on('disconnect', ()=>{
-        console.log('a user disconnected')
+        console.log('a user disconnected', socket.id)
         removeUser(socket.id)
         io.emit("getUsers", users);
     })
