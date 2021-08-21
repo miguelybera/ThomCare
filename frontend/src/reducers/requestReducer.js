@@ -7,10 +7,9 @@ import {
 } from '../constants/requestConstants'
 
 
-//get single user details
+//get single request details
 export const getRequestDetailsReducer = (state = { request: {} }, action) => {
     switch (action.type) {
-
         case REQUEST_DETAILS_REQUEST:
             return {
                 ...state,

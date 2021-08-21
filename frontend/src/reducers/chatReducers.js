@@ -93,7 +93,7 @@ export const conversationReducer = (state = { conversations: [] }, action ) => {
     }
 }
 
-//get conversations
+//get existing conversations
 export const bothConversationReducer = (state = { conversation: {} }, action ) => {
     switch(action.type) {
         case BOTH_CONVERSATIONS_REQUEST:

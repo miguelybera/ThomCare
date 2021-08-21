@@ -46,7 +46,7 @@ import {
     CLEAR_ERRORS
 } from '../constants/userConstants'
 
-//login and get currently logged in
+//login, logout, and get currently logged in
 export const authReducer = (state = { user: {} }, action) => {
     switch (action.type) {
         case LOGIN_REQUEST:
@@ -107,7 +107,7 @@ export const authReducer = (state = { user: {} }, action) => {
     }
 }
 
-//get list of users
+//get all users
 export const getUsersReducer = (state = { users: [] }, action) => {
     switch (action.type) {
         case ALL_USERS_REQUEST:
@@ -172,7 +172,7 @@ export const userDetailsReducer = (state = { singleUser: {} }, action) => {
     }
 }
 
-//create user
+//register user and verify registration link
 export const registerReducer = (state = {}, action) => {
     switch (action.type) {
         case REGISTER_USER_REQUEST:
@@ -222,7 +222,7 @@ export const registerReducer = (state = {}, action) => {
 }
 
 
-//update and delete user
+//update and delete user profile
 export const userReducer = (state = {}, action) => {
     switch (action.type) {
 
@@ -284,7 +284,7 @@ export const userReducer = (state = {}, action) => {
     }
 }
 
-//save shipping info
+//save student info to local storage
 export const studentInfoReducer = (state = { studentInfo: {} }, action) => {
     switch (action.type) {
         case SAVE_STUDENT_INFO: {
@@ -312,7 +312,7 @@ export const studentInfoReducer = (state = { studentInfo: {} }, action) => {
     }
 }
 
-//forgot password
+//forgot password and set new password
 export const forgotPasswordReducer = (state = {}, action) => {
     switch (action.type) {
 
