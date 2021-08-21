@@ -157,7 +157,7 @@ export const getAdminAnnouncements = () => async(dispatch) => {
 
 
 //create new announcement
-export const createAnnouncement = (announcement) => async(dispatch) => {
+export const createAnnouncement = (announcementData) => async(dispatch) => {
     try {
         dispatch({
             type: NEW_ANNOUNCEMENT_REQUEST
@@ -165,11 +165,13 @@ export const createAnnouncement = (announcement) => async(dispatch) => {
 
         const config = {
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'application/json'
             }
         }
 
-        const { data }= await axios.post(`/api/v1/admin/new/announcement`, announcement, config)
+        console.log(announcementData)
+
+        const { data }= await axios.post(`/api/v1/admin/new/announcement`, announcementData, config)
 
         dispatch({
             type: NEW_ANNOUNCEMENT_SUCCESS,

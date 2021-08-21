@@ -102,6 +102,7 @@ const ListAnnouncements = () => {
                                 data={setHistory()}
                                 hover
                                 searchTop
+                                pagingTop
                                 scrollX
                                 entriesOptions={[5, 20, 25]}
                                 entries={5}
