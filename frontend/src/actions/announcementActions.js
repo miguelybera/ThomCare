@@ -171,10 +171,10 @@ export const createAnnouncement = (announcementData) => async(dispatch) => {
 
         const config = {
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'application/json'
             }
         }
-
+        console.log(announcementData);
         const { data }= await axios.post(`/api/v1/admin/new/announcement`, announcementData, config)
 
         dispatch({
@@ -224,7 +224,7 @@ export const updateAnnouncement = (id, announcementData) => async(dispatch) => {
 
         const config = {
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'application/json'
             }
         }
         
