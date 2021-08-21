@@ -52,8 +52,11 @@ const Profile = () => {
                                         <Form.Label column sm={2}>
                                             Name
                                     </Form.Label>
-                                        <Col sm={10}>
-                                            <Form.Control type="text" placeholder="First Name" value={firstName + ' ' + lastName} disabled />
+                                        <Col sm={6}>
+                                            <Form.Control type="text" placeholder="First Name" value={firstName} disabled />
+                                        </Col>
+                                        <Col sm={4}>
+                                            <Form.Control type="text" placeholder="Last Name" value={lastName} disabled />
                                         </Col>
                                     </Form.Group>
 

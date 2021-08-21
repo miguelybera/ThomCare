@@ -10,28 +10,29 @@ import Loader from '../layout/Loader'
 import { Container } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 
-const ListUsers = ({history}) => {
+const ListUsers = ({ history }) => {
 
     const alert = useAlert()
     const dispatch = useDispatch()
 
+    const { user: currentUser } = useSelector(state => state.auth)
     const { loading, users, error } = useSelector(state => state.users)
     const { error: deleteError, isDeleted } = useSelector(state => state.user)
 
     useEffect(() => {
         dispatch(getUsers())
 
-        if(error){
+        if (error) {
             alert.error(error)
             dispatch(clearErrors())
         }
 
-        if(deleteError){
+        if (deleteError) {
             alert.error(deleteError)
             dispatch(clearErrors())
         }
 
-        if(isDeleted){
+        if (isDeleted) {
             alert.success('User has been deleted successfully.')
             history.push('/admin/users')
 
@@ -39,7 +40,7 @@ const ListUsers = ({history}) => {
                 type: DELETE_USER_RESET
             })
         }
-        
+
     }, [dispatch, alert, error, isDeleted, deleteError])
 
     const deleteUserHandler = (id) => {
@@ -80,48 +81,55 @@ const ListUsers = ({history}) => {
                 name: `${user.firstName} ${user.lastName}`,
                 email: user.email,
                 actions: <Fragment>
-                    <button><Link to={`/admin/user/${user._id}`}>Update</Link></button>
-                    <button onClick={() => deleteUserHandler(user._id)}>Delete</button>
-                </Fragment>
+                    <button>
+                        {(user._id === currentUser._id) ? (
+                                <Link to={`/profile`}>Update</Link>
+                        ) : (
+                                <Link to={`/admin/user/${user._id}`}>Update</Link>
+                            )
+                        }
+                        </button>
+                    <button disabled={user._id === currentUser._id ? true : false} onClick={() => deleteUserHandler(user._id)}>Delete</button>
+                </Fragment >
             })
 
         })
 
-        return data
+return data
     }
 
-    return (
-        <Fragment>
-            <MetaData title={'All Users'} />
-            {loading ? <Loader /> : (
-                <div className="row">
-                    <div className="col-12 col-md-2">
-                        <Sidebar />
-                    </div>
-
-                    <div className="col-12 col-md-10">
-                        <h1 className="my-4">Control Panel</h1>
-
-                        <Container className="space_inside"></Container>
-
-                        <Container>
-                            <h3>Users</h3>
-                            
-                            <MDBDataTableV5
-                                data={setUsers()}
-                                hover
-                                searchTop
-                                pagingTop
-                                scrollX
-                                entriesOptions={[5, 20, 25]}
-                                entries={5}
-                            />
-                        </Container>
-                    </div>
+return (
+    <Fragment>
+        <MetaData title={'All Users'} />
+        {loading ? <Loader /> : (
+            <div className="row">
+                <div className="col-12 col-md-2">
+                    <Sidebar />
                 </div>
-            )}
-        </Fragment>
-    )
+
+                <div className="col-12 col-md-10">
+                    <h1 className="my-4">Control Panel</h1>
+
+                    <Container className="space_inside"></Container>
+
+                    <Container>
+                        <h3>Users</h3>
+
+                        <MDBDataTableV5
+                            data={setUsers()}
+                            hover
+                            searchTop
+                            pagingTop
+                            scrollX
+                            entriesOptions={[5, 20, 25]}
+                            entries={5}
+                        />
+                    </Container>
+                </div>
+            </div>
+        )}
+    </Fragment>
+)
 }
 
 export default ListUsers

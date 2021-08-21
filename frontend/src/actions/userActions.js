@@ -279,12 +279,11 @@ export const updateUser = (id, userData) => async(dispatch) => {
 
         const config = {
             headers: {
-                'Content-Type': 'multipart/form-data'
+                'Content-Type': 'application/json'
             }
         }
 
         const { data } = await axios.put(`/api/v1/admin/user/${id}`, userData, config)
-
         
         dispatch({
             type: UPDATE_USER_SUCCESS,

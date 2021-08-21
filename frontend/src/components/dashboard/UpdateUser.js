@@ -25,26 +25,43 @@ const UpdateUser = ({ history, match }) => {
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
     const [role, setRole] = useState('')
-    // const [course, setCourse] = useState('')
-    // const [track, setTrack] = useState('')
-    // const [announcementType, setAnnouncementType] = useState('')
-    // const [archiveDate, setArchiveDate] = useState('')
-    // const [setExpiry, setSetExpiry] = useState(false)
+    const [studentNumber, setStudentNumber] = useState('')
+    const [course, setCourse] = useState('')
+    const [track, setTrack] = useState('')
 
     const submitHandler = e => {
         e.preventDefault()
 
-        const formData = new FormData()
+        // const formData = new FormData()
 
-        formData.set('firstName', firstName)
-        formData.set('lastName', lastName)
-        formData.set('role', role)
-        formData.set('email', email)
+        // formData.set('firstName', firstName)
+        // formData.set('lastName', lastName)
+        // formData.set('role', role)
+        // formData.set('email', email)
         // formData.set('course', course)
         // formData.set('track', track)
         // formData.set('announcementType', announcementType)
         // formData.set('archiveDate', archiveDate)
         // formData.set('setExpiry', setExpiry)
+
+        let formData = ''
+        if (role === 'Student') {
+            formData = {
+                firstName,
+                lastName,
+                studentNumber,
+                course,
+                role
+            }
+        } else {
+            formData = {
+                firstName,
+                lastName,
+                role,
+                course: 'N/A',
+                studentNumber: '0000000000'
+            }
+        }
 
         dispatch(updateUser(singleUser._id, formData))
     }
@@ -55,17 +72,17 @@ const UpdateUser = ({ history, match }) => {
     let userLastName = ''
     let userEmail = ''
     let userRole = ''
-    // let announcementCourse = ''
-    // let announcementTrack = ''
-    // let announcementAnnouncementType = ''
-    // let announcementArchiveDate = ''
+    let userStudentNumber = ''
+    let userCourse = ''
+    let userTrack = ''
 
     if (singleUser && singleUser.firstName) { userFirstName = singleUser.firstName }
     if (singleUser && singleUser.lastName) { userLastName = singleUser.lastName }
     if (singleUser && singleUser.email) { userEmail = singleUser.email }
     if (singleUser && singleUser.role) { userRole = singleUser.role }
-    // if (announcement && announcement.course) { announcementCourse = announcement.course }
-    // if (announcement && announcement.track) { announcementTrack = announcement.track }
+    if (singleUser && singleUser.studentNumber) { userStudentNumber = singleUser.studentNumber }
+    if (singleUser && singleUser.course) { userCourse = singleUser.course }
+    if (singleUser && singleUser.track) { userTrack = singleUser.track }
     // if (announcement && announcement.announcementType) { announcementAnnouncementType = announcement.announcementType }
     // if (announcement && announcement.archiveDate) { announcementArchiveDate = announcement.archiveDate }
 
@@ -78,13 +95,9 @@ const UpdateUser = ({ history, match }) => {
             setLastName(userLastName)
             setEmail(userEmail)
             setRole(userRole)
-            // setCourse(announcementCourse)
-            // setTrack(announcementTrack)
-            // setAnnouncementType(announcementAnnouncementType)
-            // setArchiveDate(changeDateFormat(announcementArchiveDate))
-            // if(archiveDate !== '3000-01-01') {
-            //     setSetExpiry(true)
-            // }
+            setStudentNumber(userStudentNumber)
+            setCourse(userCourse)
+            setTrack(userTrack)
         }
 
         if (error) {
@@ -145,21 +158,21 @@ const UpdateUser = ({ history, match }) => {
                                                         Name
                                                     </Form.Label>
                                                     <Col sm={6}>
-                                                        <Form.Control type="text" placeholder="First Name" value={firstName} name="firstName" onChange={e => setFirstName(e.target.value)}/>
+                                                        <Form.Control type="text" placeholder="First Name" value={firstName} name="firstName" onChange={e => setFirstName(e.target.value)} />
                                                     </Col>
                                                     <Col sm={4}>
                                                         <Form.Control type="text" placeholder="Last Name" value={lastName} name="lastName" onChange={e => setLastName(e.target.value)} />
                                                     </Col>
                                                 </Form.Group>
-                                                {/*
-{role === 'Student' ? (
+
+                                                {role === 'Student' ? (
                                                     <>
                                                         <Form.Group as={Row} className="mb-3" controlId="formHorizontalStudentNumber">
                                                             <Form.Label column sm={3}>
                                                                 Student number
                                                             </Form.Label>
                                                             <Col sm={9}>
-                                                                <Form.Control type="text" placeholder="Student number" value={studentNumber} />
+                                                                <Form.Control type="text" placeholder="Student number" value={studentNumber} name="studentNumber" onChange={e => setStudentNumber(e.target.value)} />
                                                             </Col>
                                                         </Form.Group>
 
@@ -168,7 +181,15 @@ const UpdateUser = ({ history, match }) => {
                                                                 Course
                                                         </Form.Label>
                                                             <Col sm={10}>
-                                                                <Form.Control type="text" placeholder="Course" value={course} />
+                                                                <Form.Control type="text" placeholder="Course" value={course} name="course" onChange={e => setCourse(e.target.value)} />
+                                                            </Col>
+                                                        </Form.Group>
+                                                        <Form.Group as={Row} className="mb-3" controlId="formHorizontalRole">
+                                                            <Form.Label column sm={3}>
+                                                                Role
+                                                            </Form.Label>
+                                                            <Col sm={9}>
+                                                                <Form.Control type="text" placeholder="Role" value={role} disabled />
                                                             </Col>
                                                         </Form.Group>
                                                     </>
@@ -179,20 +200,16 @@ const UpdateUser = ({ history, match }) => {
                                                                 Role
                                                             </Form.Label>
                                                             <Col sm={9}>
-                                                                <Form.Control type="text" placeholder="Role" value={role} />
+                                                                <Form.Select aria-label="Default select example" value={role} name="role" onChange={e => setRole(e.target.value)} required>
+                                                                    <option value=''>-</option>
+                                                                    <option value="CICS Staff">CICS Staff</option>
+                                                                    <option value="IT Dept Chair">IT Dept Chair</option>
+                                                                    <option value="IS Dept Chair">IS Dept Chair</option>
+                                                                    <option value="CS Dept Chair">CS Dept Chair</option>
+                                                                </Form.Select>
                                                             </Col>
                                                         </Form.Group>
                                                     </>)}
-*/}
-
-                                                <Form.Group as={Row} className="mb-3" controlId="formHorizontalRole">
-                                                    <Form.Label column sm={3}>
-                                                        Role
-                                                            </Form.Label>
-                                                    <Col sm={9}>
-                                                        <Form.Control type="text" placeholder="Role" value={role} disabled />
-                                                    </Col>
-                                                </Form.Group>
                                                 <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
                                                     <Form.Label column sm={3}>
                                                         Email address
