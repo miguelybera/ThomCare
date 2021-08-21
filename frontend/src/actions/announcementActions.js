@@ -227,8 +227,11 @@ export const updateAnnouncement = (id, announcementData) => async(dispatch) => {
             }
         }
         
+        console.log(announcementData)
+        
         const { data } = await axios.put(`/api/v1/admin/announcement/${id}`, announcementData, config)
 
+        
         dispatch({
             type: UPDATE_ANNOUNCEMENT_SUCCESS,
             payload: data.success

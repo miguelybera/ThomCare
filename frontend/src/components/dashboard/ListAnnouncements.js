@@ -12,12 +12,13 @@ import { MDBDataTableV5 } from 'mdbreact'
 
 var dateFormat = require('dateformat')
 
-const ListAnnouncements = () => {
+const ListAnnouncements = ({history}) => {
 
     const alert = useAlert()
     const dispatch = useDispatch()
 
     const { loading, announcements, error, success } = useSelector(state => state.announcements)
+    const { error: deleteError, isDeleted } = useSelector(state => state.announcement)
 
     useEffect(() => {
         if (error) {
@@ -25,8 +26,21 @@ const ListAnnouncements = () => {
             dispatch(clearErrors())
         }
 
+        if(deleteError){
+            alert.error(deleteError)
+            dispatch(clearErrors())
+        }
+
+        if(isDeleted) {
+            alert.success('Announcement has been deleted sucessfully.')
+            history.push('/admin/announecments')
+
+            dispatch({
+                type: DELETE_ANNOUNCEMENT_RESET
+            })
+        }
         dispatch(getAdminAnnouncements())
-    }, [dispatch, alert, error])
+    }, [dispatch, alert, error, isDeleted, deleteError])
 
     function changeDateFormat(date) {
         return dateFormat(date, "mmm d, yyyy h:MMtt")
@@ -34,9 +48,6 @@ const ListAnnouncements = () => {
 
     const deleteAnnouncement = (id) => {
         dispatch(deleteAnnouncement(id))
-        dispatch({
-            type: DELETE_ANNOUNCEMENT_RESET
-        })
     }
 
     const setHistory = () => {

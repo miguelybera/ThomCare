@@ -49,7 +49,7 @@ const CreateAnnouncement = ({history}) => {
 
         if(success) {
             history.push('/admin/announcements')
-            alert.success(success)
+            alert.success('Announcement created successfully.')
             dispatch({
                 type: NEW_ANNOUNCEMENT_RESET
             })
