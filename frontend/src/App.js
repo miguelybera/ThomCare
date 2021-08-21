@@ -30,9 +30,10 @@ import TrackingPageProgress from './components/request/TrackingPageProgress'
 
 //dashboard folder
 import ControlPanel from './components/dashboard/ControlPanel'
+import ListAnnouncements from './components/dashboard/ListAnnouncements'
 import CreateAnnouncement from './components/dashboard/CreateAnnouncement'
 import UpdateAnnouncement from './components/dashboard/UpdateAnnouncement'
-import ListAnnouncements from './components/dashboard/ListAnnouncements'
+import ListArchivedAnnouncements from './components/dashboard/ListArchivedAnnouncements'
 
 //route folder
 import ProtectedRoute from './components/route/ProtectedRoute'
@@ -77,6 +78,7 @@ function App() {
                                 <ProtectedRoute path='/admin/announcements' loggedIn={true} component={ListAnnouncements} exact />
                                 <ProtectedRoute path='/admin/new/announcement' loggedIn={true} component={CreateAnnouncement} exact />
                                 <ProtectedRoute path='/admin/announcement/:id' loggedIn={true} component={UpdateAnnouncement} exact />
+                                <ProtectedRoute path='/admin/archives/announcements' loggedIn={true} component={ListArchivedAnnouncements} exact />
                             </div>
                         </Fragment>
                     {/*})}*/}

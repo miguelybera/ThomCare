@@ -43,10 +43,11 @@ const announcementUpload = multer({storage: announcementStorage,
 const { 
         getAnnouncements,
         getSingleAnnouncement,
-        getAdminAnnouncements,
+
         newAnnouncement,          
         updateAnnouncement, 
         deleteAnnouncement,
+        
         getArchivedAnnouncements,
         archiveAnnouncement
     } = require('../controllers/announcementController');
@@ -60,7 +61,7 @@ router.route('/announcements').get(getAnnouncements);
 //student
 
 //cics staff
-router.route('/admin/announcements').get(isAuthenticatedUser, authorizeRoles('CICS Staff'),getAdminAnnouncements);
+router.route('/admin/announcements').get(isAuthenticatedUser, authorizeRoles('CICS Staff'),getAnnouncements);
 router.route('/admin/new/announcement').post(isAuthenticatedUser,announcementUpload.array('announcementFiles',5),authorizeRoles('CICS Staff'),newAnnouncement);
 router.route('/admin/announcement/:id').put(isAuthenticatedUser,announcementUpload.array('announcementFiles',5),authorizeRoles('CICS Staff'),updateAnnouncement);
 router.route('/admin/announcement/:id').delete(isAuthenticatedUser,authorizeRoles('CICS Staff'),deleteAnnouncement);

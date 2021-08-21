@@ -84,32 +84,7 @@ exports.newAnnouncement = catchAsyncErrors(async (req, res, next) => {
     })
 })
 
-// Get all announcements /api/v1/admin/allAnnouncements
-exports.getAdminAnnouncements = catchAsyncErrors(async (req, res, next) => {
-    const resPerPage = 10;
-    const announcementCount = await Announcement.countDocuments()
-    const apiFeatures = new APIFeatures(Announcement.find(), req.query)
-        .search()
-        .filter()
-
-    let announcements = await apiFeatures.query;
-    let filteredAnnouncementsCount = announcements.length
-
-    apiFeatures.pagination(resPerPage)
-
-    announcements = await apiFeatures.query;
-
-
-    res.status(200).json({
-        success: true,
-        announcementCount,
-        announcements,
-        resPerPage,
-        filteredAnnouncementsCount
-    })
-})
-
-// Get all unarchived announcements /api/v1/announcements
+// Get all unarchived announcements /api/v1/announcements (For website Home page)
 exports.getAnnouncements = catchAsyncErrors(async (req, res, next) => {
     const resPerPage = 10;
     const announcementCount = await Announcement.countDocuments({ archiveDate: { $gte: Date.now() } })
@@ -133,34 +108,21 @@ exports.getAnnouncements = catchAsyncErrors(async (req, res, next) => {
     })
 })
 
-// Get all archived announcements /api/v1/announcements
+// Get all archived announcements /api/v1/announcements (FOR  PUBLIC)
 exports.getArchivedAnnouncements = catchAsyncErrors(async (req, res, next) => {
-    const resPerPage = 10;
     const announcementCount = await Announcement.countDocuments({ archiveDate: { $lte: Date.now() } })
     const apiFeatures = new APIFeatures(Announcement.find({ archiveDate: { $lte: Date.now() } }), req.query)
         .search()
         .filter()
 
     let announcements = await apiFeatures.query;
-    let filteredAnnouncementsCount = announcements.length
-
-    apiFeatures.pagination(resPerPage)
-
-    announcements = await apiFeatures.query;
 
 
     res.status(200).json({
         success: true,
-        //count: announcements.length,
-        announcementCount,
-        announcements,
-        resPerPage,
-        filteredAnnouncementsCount,
-
+        announcements
     })
 })
-
-
 
 // Get single announcement /api/v1/announcement/:id
 exports.getSingleAnnouncement = catchAsyncErrors(async (req, res, next) => {
@@ -174,7 +136,6 @@ exports.getSingleAnnouncement = catchAsyncErrors(async (req, res, next) => {
         success: true,
         announcement
     })
-
 })
 
 // Update announcement /api/v1/admin/announcement/:id
@@ -339,6 +300,5 @@ exports.archiveAnnouncement = catchAsyncErrors(async (req, res, next) => {
         success: true,
         message: "Announcement moved to archives"
     })
-
 })
 

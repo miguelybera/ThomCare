@@ -33,17 +33,6 @@ const UpdateAnnouncement = ({ history, match }) => {
     const submitHandler = e => {
         e.preventDefault()
 
-        // const formData = {
-        //     title,
-        //     description,
-        //     yearLevel,
-        //     course,
-        //     track,
-        //     announcementType,
-        //     setExpiry,
-        //     archiveDate
-        // }
-
         const formData = new FormData()
 
         formData.set('title', title)
@@ -69,7 +58,6 @@ const UpdateAnnouncement = ({ history, match }) => {
     let announcementTrack = ''
     let announcementAnnouncementType = ''
     let announcementArchiveDate = ''
-    let announcementSetExpiry = false
 
     if (announcement && announcement.title) { announcementTitle = announcement.title }
     if (announcement && announcement.description) { announcementDescription = announcement.description }
@@ -78,7 +66,6 @@ const UpdateAnnouncement = ({ history, match }) => {
     if (announcement && announcement.track) { announcementTrack = announcement.track }
     if (announcement && announcement.announcementType) { announcementAnnouncementType = announcement.announcementType }
     if (announcement && announcement.archiveDate) { announcementArchiveDate = announcement.archiveDate }
-    if (announcement && announcement.setExpiry) { announcementSetExpiry = announcement.setExpiry }
 
     useEffect(() => {
         if (announcement && announcement._id !== announcementId) {
@@ -92,7 +79,9 @@ const UpdateAnnouncement = ({ history, match }) => {
             setTrack(announcementTrack)
             setAnnouncementType(announcementAnnouncementType)
             setArchiveDate(changeDateFormat(announcementArchiveDate))
-            setSetExpiry(announcementSetExpiry)
+            if(archiveDate !== '3000-01-01') {
+                setSetExpiry(true)
+            }
         }
 
         if (error) {
@@ -182,9 +171,9 @@ const UpdateAnnouncement = ({ history, match }) => {
                                                 <option value="Class Suspension">Class Suspension</option>
                                             </Form.Select>
                                         </Form.Group>
-                                        <Form.Group controlId="formFileMultiple" className="mb-3">
-                                            <Form.Label>Set expiry date:</Form.Label>
-                                            <Form.Control type="date" name="archiveDate" value={archiveDate} onChange={e => setArchiveDate(changeDateFormat(e.target.value))} />
+                                        <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                                            <Form.Check type="checkbox" label="Set expiry date" defaultChecked={setExpiry} value={setExpiry} nme="setExpiry" onChange={e => setSetExpiry(!setExpiry)}/>
+                                            <Form.Control type="date" name="archiveDate" value={archiveDate} onChange={e => setArchiveDate(changeDateFormat(e.target.value))} disabled={setExpiry ? false : true}/>
                                         </Form.Group>
                                         <Form.Group controlId="formFileMultiple" className="mb-3">
                                             <Form.Label>Attach image(s):</Form.Label>

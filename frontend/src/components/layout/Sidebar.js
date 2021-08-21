@@ -11,11 +11,11 @@ const Sidebar = () => {
                     </li>
 
                     <li>
-                        <Link to='/admin/announcements'><i></i> Announcements *</Link>
+                        <Link to='/admin/announcements'><i></i> Announcements</Link>
                     </li>
 
                     <li>
-                        <Link to="/admin/archived/announcements"><i className="fa fa-tachometer"></i> Archives *</Link>
+                        <Link to="/admin/archives/announcements"><i className="fa fa-tachometer"></i> Archived Announcements</Link>
                     </li>
 
                     <hr/>

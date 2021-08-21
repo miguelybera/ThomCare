@@ -25,29 +25,37 @@ const CreateAnnouncement = ({ history }) => {
         yearLevel: 'All',
         course: 'All',
         track: 'All',
-        announcementType: '',
+        announcementType: 'All',
         archiveDate: '',
-        setExpiry: false,
         fileAttachments: []
     })
 
-    const { title, description, yearLevel, course, track, announcementType, archiveDate, setExpiry, fileAttachments } = announcementData
+    const [setExpiry, setSetExpiry] = useState(false)
+    const { title, description, yearLevel, course, track, announcementType, archiveDate, fileAttachments } = announcementData
 
     const changeDateFormat = (date) => dateFormat(date, "yyyy-mm-dd")
 
     const onChange = e => {
-        if (e.target.name === 'archiveDate') {
-            setAnnouncementData({
-                ...announcementData,
-                setExpiry: true,
-                archiveDate: changeDateFormat(e.target.value)
-            })
+        if(setExpiry) {
+            if (e.target.name === 'archiveDate') {
+                setAnnouncementData({
+                    ...announcementData,
+                    setExpiry,
+                    archiveDate: changeDateFormat(e.target.value)
+                })
+            } else {
+                setAnnouncementData({
+                    ...announcementData,
+                    [e.target.name]: e.target.value
+                })
+            }
         } else {
             setAnnouncementData({
                 ...announcementData,
                 [e.target.name]: e.target.value
             })
         }
+        
     }
 
     const submitHandler = e => {
@@ -129,9 +137,9 @@ const CreateAnnouncement = ({ history }) => {
                                             <option value="Class Suspension">Class Suspension</option>
                                         </Form.Select>
                                     </Form.Group>
-                                    <Form.Group controlId="formFileMultiple" className="mb-3">
-                                        <Form.Label>Set expiry date:</Form.Label>
-                                        <Form.Control type="date" name="archiveDate" value={archiveDate} onChange={onChange} />
+                                    <Form.Group className="mb-3" controlId="formBasicCheckbox">
+                                        <Form.Check type="checkbox" label="Set expiry date" defaultChecked={setExpiry} value={setExpiry} nme="setExpiry" onChange={e => setSetExpiry(!setExpiry)} />
+                                        <Form.Control type="date" name="archiveDate" value={archiveDate} onChange={onChange} disabled={setExpiry ? false : true} />
                                     </Form.Group>
                                     <Form.Group controlId="formFileMultiple" className="mb-3">
                                         <Form.Label>Attach image(s):</Form.Label>
@@ -146,11 +154,9 @@ const CreateAnnouncement = ({ history }) => {
                             </Card.Body>
                         </Card>
                     </Container>
-
                 </div>
             </div>
         </Fragment>
-
     )
 }
 
