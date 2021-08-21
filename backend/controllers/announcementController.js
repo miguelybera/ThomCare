@@ -322,19 +322,7 @@ exports.deleteAnnouncement = catchAsyncErrors (async(req,res,next) =>{
 
 })
 
-// delete announcement /api/v1/admin/announcement/:id
-exports.deleteAnnouncement = catchAsyncErrors (async(req,res,next) =>{
-    const announcement = await Announcement.findById(req.params.id);
-    if(!announcement){
-        return next(new ErrorHandler('Announcement Not Found', 404))
-    }
-    await announcement.remove()
-    res.status(200).json({
-        success: true,
-        message: "Announcement deleted"
-    })
 
-})
 // archive announcement /api/v1/admin/archiveAnnouncement/:id
 exports.archiveAnnouncement = catchAsyncErrors (async(req,res,next) =>{
     let announcement = await Announcement.findById(req.params.id);

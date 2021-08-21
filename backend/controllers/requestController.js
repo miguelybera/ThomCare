@@ -422,11 +422,24 @@ exports.trashRequest = catchAsyncErrors (async (req,res,next)=>{
 // View trashed requests => /api/v1/admin/trash/requests
 exports.getTrashedRequests = catchAsyncErrors (async (req,res,next)=>{
     let deptCourse
+    if(req.user.role == 'IT Dept Chair'){
+        deptCourse = 'Information Technology'
+    }
+    else if(req.user.role == 'IS Dept Chair'){
+        deptCourse = 'Information Systems'
+    }
+    else if(req.user.role == 'CS Dept Chair'){
+        deptCourse = 'Computer Science'
+    }else{
+        return next(new ErrorHandler('Role does not have access to this resource'))
+    }
     const resPerPage = 15;
-    const apiFeatures = new APIFeatures(Request.find({ isTrash: true}), req.query)
+    const apiFeatures = new APIFeatures(Request.find({requestorCourse: deptCourse, isTrash: true,
+                                                requestType: {$nin: requestTypeOfficeStaff}}), req.query)
                         .searchRequests()
                         .filter()
                         .pagination(resPerPage);
+
     const requests = await apiFeatures.query;
 
    
