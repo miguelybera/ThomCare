@@ -36,7 +36,7 @@ const Header = () => {
                                     <Nav.Link><Link to='/request'>Request</Link></Nav.Link>
                                     <Nav.Link><Link to='/track-request'>Track my request</Link></Nav.Link>
                                     <NavDropdown title={userName} id="basic-nav-dropdown">
-                                        <NavDropdown.Item>Dashboard</NavDropdown.Item>
+                                        <NavDropdown.Item><Link to='/controlpanel'>Control Panel</Link></NavDropdown.Item>
                                         <NavDropdown.Item><Link to='/profile'>My Profile</Link></NavDropdown.Item>
                                         <NavDropdown.Item><Link to='/messenger'>Messenger</Link></NavDropdown.Item>
                                         <NavDropdown.Divider />

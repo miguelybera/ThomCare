@@ -70,7 +70,6 @@ const Login = ({history}) => {
                                 <Button 
                                     type='submit' 
                                     style={{marginTop: '10px', borderRadius: '50px', width: '10rem'}}
-                                    disabled={loading ? true : false}
                                 >Submit</Button>
                             </Form>
                             <Row>

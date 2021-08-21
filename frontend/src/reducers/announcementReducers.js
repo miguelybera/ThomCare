@@ -5,19 +5,24 @@ import {
     ANNOUNCEMENT_DETAILS_REQUEST,
     ANNOUNCEMENT_DETAILS_SUCCESS,
     ANNOUNCEMENT_DETAILS_FAIL,
+    ALL_ADMIN_ANNOUNCEMENTS_REQUEST,
+    ALL_ADMIN_ANNOUNCEMENTS_SUCCESS,
+    ALL_ADMIN_ANNOUNCEMENTS_FAIL,
     CLEAR_ERRORS
 } from '../constants/announcementConstants'
 
 //get list of announcements
 export const getAnnouncementsReducer = (state = { announcements: [] }, action) => {
-    switch(action.type){
+    switch (action.type) {
         case ALL_ANNOUNCEMENTS_REQUEST:
+        case ALL_ADMIN_ANNOUNCEMENTS_REQUEST:
             return {
                 loading: true,
                 announcements: []
             }
 
         case ALL_ANNOUNCEMENTS_SUCCESS:
+        case ALL_ADMIN_ANNOUNCEMENTS_SUCCESS:
             return {
                 loading: false,
                 announcements: action.payload.announcements,
@@ -27,6 +32,7 @@ export const getAnnouncementsReducer = (state = { announcements: [] }, action) =
             }
 
         case ALL_ANNOUNCEMENTS_FAIL:
+        case ALL_ADMIN_ANNOUNCEMENTS_FAIL:
             return {
                 loading: false,
                 error: action.payload
@@ -45,7 +51,7 @@ export const getAnnouncementsReducer = (state = { announcements: [] }, action) =
 
 //get single of announcement
 export const getSingleAnnouncementReducer = (state = { announcement: {} }, action) => {
-    switch(action.type){
+    switch (action.type) {
         case ANNOUNCEMENT_DETAILS_REQUEST:
             return {
                 loading: true

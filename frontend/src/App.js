@@ -28,6 +28,11 @@ import AnnouncementDetails from './components/announcement/AnnouncementDetails'
 import TrackingPage from './components/request/TrackingPage'
 import TrackingPageProgress from './components/request/TrackingPageProgress'
 
+//dashboard folder
+import ControlPanel from './components/dashboard/ControlPanel'
+import CreateAnnouncement from './components/dashboard/CreateAnnouncement'
+import ListAnnouncements from './components/dashboard/ListAnnouncements'
+
 //route folder
 import ProtectedRoute from './components/route/ProtectedRoute'
 
@@ -65,6 +70,11 @@ function App() {
                                 {/**needs to be logged in */}
                                 <ProtectedRoute path='/messenger' loggedIn={true} component={Messenger} exact />
                                 <ProtectedRoute path='/profile' loggedIn={true} component={Profile} exact />
+
+                                {/*control panel*/}
+                                <ProtectedRoute path='/controlpanel' loggedIn={true} component={ControlPanel} exact />
+                                <ProtectedRoute path='/admin/announcements' loggedIn={true} component={ListAnnouncements} exact />
+                                <ProtectedRoute path='/admin/new/announcement' loggedIn={true} component={CreateAnnouncement} exact />
                             </div>
                         </Fragment>
                     {/*})}*/}

@@ -6,6 +6,9 @@ import {
     ANNOUNCEMENT_DETAILS_REQUEST,
     ANNOUNCEMENT_DETAILS_SUCCESS,
     ANNOUNCEMENT_DETAILS_FAIL,
+    ALL_ADMIN_ANNOUNCEMENTS_REQUEST,
+    ALL_ADMIN_ANNOUNCEMENTS_SUCCESS,
+    ALL_ADMIN_ANNOUNCEMENTS_FAIL,
     CLEAR_ERRORS
 } from '../constants/announcementConstants'
 
@@ -63,9 +66,6 @@ export const getAnnouncements = (currentPage, course, yearLevel, track, title) =
             }
         }
 
-
-
-
         const { data } = await axios.get(link)
 
         dispatch({
@@ -81,6 +81,7 @@ export const getAnnouncements = (currentPage, course, yearLevel, track, title) =
         )
     }
 }
+
 
 //get all announcements
 export const getAnnouncementDetails = (id) => async(dispatch) => {
@@ -122,6 +123,29 @@ export const getUser = (id) => async(dispatch) => {
     catch(error){
         dispatch({
             type: GET_USER_FAIL,
+            payload: error.response.data.errMessage
+            }
+        )
+    }
+}
+
+//get all announcements
+export const getAdminAnnouncements = () => async(dispatch) => {
+    try {
+        dispatch({
+            type: ALL_ADMIN_ANNOUNCEMENTS_REQUEST
+        })
+
+        const { data } = await axios.get(`/api/v1/admin/announcements`)
+
+        dispatch({
+            type: ALL_ADMIN_ANNOUNCEMENTS_SUCCESS,
+            payload: data
+        })
+    }
+    catch (error) {
+        dispatch({
+            type: ALL_ADMIN_ANNOUNCEMENTS_FAIL,
             payload: error.response.data.errMessage
             }
         )
