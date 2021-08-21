@@ -2,7 +2,8 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAdminAnnouncements, clearErrors } from './../../actions/announcementActions'
+import { getAdminAnnouncements, deleteAnnouncement, clearErrors } from './../../actions/announcementActions'
+import { DELETE_ANNOUNCEMENT_RESET } from './../../constants/announcementConstants'
 import Sidebar from './../layout/Sidebar'
 import MetaData from './../layout/MetaData'
 import Loader from './../layout/Loader'
@@ -29,6 +30,13 @@ const ListAnnouncements = () => {
 
     function changeDateFormat(date) {
         return dateFormat(date, "mmm d, yyyy h:MMtt")
+    }
+
+    const deleteAnnouncement = (id) => {
+        dispatch(deleteAnnouncement(id))
+        dispatch({
+            type: DELETE_ANNOUNCEMENT_RESET
+        })
     }
 
     const setHistory = () => {
@@ -73,7 +81,8 @@ const ListAnnouncements = () => {
                     <p>{announcement.yearLevel}, {announcement.course}, {announcement.track}</p>
                 </Fragment>,
                 actions: <Fragment>
-                    <button>Click me</button>
+                    <button><Link to={`/admin/announcement/${announcement._id}`}>Update</Link></button>
+                    <button onClick={() => deleteAnnouncement(announcement._id)}>Delete</button>
                 </Fragment>
             })
 
@@ -81,6 +90,7 @@ const ListAnnouncements = () => {
 
         return data
     }
+
     return (
         <Fragment>
             <MetaData title={'Announcements'} />

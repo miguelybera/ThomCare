@@ -6,7 +6,7 @@ import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
 import Sidebar from '../layout/Sidebar'
 import MetaData from '../layout/MetaData'
 import { NEW_ANNOUNCEMENT_RESET } from '../../constants/announcementConstants'
-import { createAnnouncement, clearErrors } from '../../actions/announcementActions'
+import { getAnnouncementDetails, updateAnnouncement, clearErrors } from '../../actions/announcementActions'
 
 // <Card.Title style={{margin: '50px 0 20px 0'}}>Register an account</Card.Title>
 const UpdateAnnouncement = ({history}) => {
@@ -14,7 +14,7 @@ const UpdateAnnouncement = ({history}) => {
     const dispatch = useDispatch()
     const alert = useAlert()
 
-    const { loading, error, success } = useSelector(state => state.newAnnouncement)
+    const { loading, error, success, announcement } = useSelector(state => state.announcementDetails)
 
     const [announcementData, setAnnouncementData] = useState({
         title: '',
