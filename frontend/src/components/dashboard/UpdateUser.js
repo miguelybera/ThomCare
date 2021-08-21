@@ -106,7 +106,7 @@ const UpdateUser = ({ history, match }) => {
         if (isUpdated) {
             history.push('/admin/users')
             dispatch(getSingleUser(userId))
-            alert.success('USER updated successfully.')
+            alert.success('User updated successfully.')
 
             dispatch({
                 type: UPDATE_USER_RESET

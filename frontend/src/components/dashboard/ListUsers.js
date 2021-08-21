@@ -32,7 +32,7 @@ const ListUsers = ({history}) => {
         }
 
         if(isDeleted){
-            alert.success('Announcement has been deleted successfully.')
+            alert.success('User has been deleted successfully.')
             history.push('/admin/users')
 
             dispatch({
