@@ -68,16 +68,17 @@ const thomcareAdminUpload = multer({storage: fileStorageAdmin,
 const {
         submitRequest,
         myRequests, 
-        getSubmittedRequests, 
         getSingleRequest, 
+        requestTracker,
+
+        getAllRequestsDeptChair, 
+        getAllOfficeRequests,
+        getAllRequestsStaff,
+        getTrashedRequests,
+
         updateRequest, 
         deleteRequest, 
-        requestTracker,
-        getSubmittedRequestsCICSStaff,
-        trashRequest,
-        getTrashedRequestsDeptChair,
-        getRequestOfficeOnly,
-        getTrashedRequestsCICSStaff
+        trashRequest
     } = require('../controllers/requestController')
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth')
 
@@ -90,12 +91,13 @@ router.route('/submitRequest').post(isAuthenticatedUser, thomcareStudentUpload.a
 router.route('/myRequests').get(isAuthenticatedUser, authorizeRoles('Student'), myRequests);
 
 //dept chair
-router.route('/deptChair/requests').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getSubmittedRequests);
-router.route('/deptChair/trash').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getTrashedRequestsDeptChair );
+router.route('/deptChair/requests').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getAllRequestsDeptChair);
+router.route('/deptChair/trash').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getTrashedRequests );
+
 //cics staff
-router.route('/cicsAdmin/requests').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getSubmittedRequestsCICSStaff);
-router.route('/cicsAdmin/officeRequests').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getRequestOfficeOnly);
-router.route('/cicsAdmin/trash').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getTrashedRequestsCICSStaff );
+router.route('/cicsAdmin/requests').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getAllRequestsStaff);
+router.route('/cicsAdmin/officeRequests').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getAllOfficeRequests);
+router.route('/cicsAdmin/trash').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getTrashedRequests );
 
 //dept chair and cics staff
 router.route('/admin/updateRequest/:requestId').put(isAuthenticatedUser, thomcareAdminUpload.array('returningFiles',5),authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), updateRequest );

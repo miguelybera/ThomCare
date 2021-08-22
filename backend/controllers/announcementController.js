@@ -89,7 +89,7 @@ exports.newAnnouncement = catchAsyncErrors(async (req, res, next) => {
 exports.getAnnouncements = catchAsyncErrors(async (req, res, next) => {
     const resPerPage = 10;
     const announcementCount = await Announcement.countDocuments({ archiveDate: { $gte: Date.now() } })
-    const apiFeatures = new APIFeatures(Announcement.find({ archiveDate: { $gte: Date.now() } }).sort({createdAt: -1}), req.query)
+    const apiFeatures = new APIFeatures(Announcement.find({ archiveDate: { $gte: Date.now() } }), req.query)
         .search()
         .filter()
     let announcements = await apiFeatures.query;
@@ -98,6 +98,7 @@ exports.getAnnouncements = catchAsyncErrors(async (req, res, next) => {
     apiFeatures.pagination(resPerPage)
 
     announcements = await apiFeatures.query;
+
 
     res.status(200).json({
         success: true,
@@ -111,7 +112,7 @@ exports.getAnnouncements = catchAsyncErrors(async (req, res, next) => {
 // Get all archived announcements /api/v1/announcements (FOR  PUBLIC)
 exports.getArchivedAnnouncements = catchAsyncErrors(async (req, res, next) => {
     const announcementCount = await Announcement.countDocuments({ archiveDate: { $lte: Date.now() } })
-    const apiFeatures = new APIFeatures(Announcement.find({ archiveDate: { $lte: Date.now() } }).sort({createdAt: -1}), req.query)
+    const apiFeatures = new APIFeatures(Announcement.find({ archiveDate: { $lte: Date.now() } }), req.query)
         .search()
         .filter()
 
@@ -156,7 +157,7 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
         newSetExpiry = announcement.setExpiry
     } else {
         newSetExpiry = req.body.setExpiry
-        if (req.body.setExpiry) {
+        if (true) {
             newArchiveDate = new Date(req.body.archiveDate)
         } else {
             newArchiveDate = new Date('3000-01-01') //yyyy-mm-dd
@@ -252,7 +253,6 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
             track: newTrack,
             announcementType: newAnnouncementType,
             archiveDate: newArchiveDate,
-            setExpiry: newSetExpiry,
             fileAttachments: req.files
         }
     } else {
@@ -263,7 +263,6 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
             yearLevel: newYearLevel,
             track: newTrack,
             announcementType: newAnnouncementType,
-            setExpiry: newSetExpiry,
             archiveDate: newArchiveDate
         }
     }
@@ -279,6 +278,7 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
 
 })
 
+
 // delete announcement /api/v1/admin/announcement/:id
 exports.deleteAnnouncement = catchAsyncErrors(async (req, res, next) => {
     const announcement = await Announcement.findById(req.params.id);
@@ -292,6 +292,7 @@ exports.deleteAnnouncement = catchAsyncErrors(async (req, res, next) => {
     })
 
 })
+
 
 // archive announcement /api/v1/admin/archiveAnnouncement/:id
 exports.archiveAnnouncement = catchAsyncErrors(async (req, res, next) => {
@@ -313,3 +314,4 @@ exports.archiveAnnouncement = catchAsyncErrors(async (req, res, next) => {
         message: "Announcement moved to archives"
     })
 })
+
