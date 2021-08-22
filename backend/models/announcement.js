@@ -75,6 +75,11 @@ const announcementSchema = new mongoose.Schema({
         announcementType:{
             type: String,
             required: true
+        },
+        setExpiry:{
+            type: Boolean,
+            required: true,
+            default: false
         }
 })
 

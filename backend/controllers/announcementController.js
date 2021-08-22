@@ -5,7 +5,7 @@ const APIFeatures = require('../utils/apiFeatures');
 
 // Create new announcement => /api/v1/new/announcement
 exports.newAnnouncement = catchAsyncErrors(async (req, res, next) => {
-    const { title, description, course, yearLevel, announcementType } = req.body;
+    const { title, description, course, yearLevel, announcementType, setExpiry } = req.body;
     let track = req.body.track
     const createdBy = req.user.id;
     const fileAttachments = req.files
@@ -74,7 +74,8 @@ exports.newAnnouncement = catchAsyncErrors(async (req, res, next) => {
         archiveDate,
         createdBy,
         fileAttachments,
-        announcementType
+        announcementType,
+        setExpiry
 
     });
 
@@ -146,11 +147,21 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
     if (!announcement) {
         return next(new ErrorHandler('Announcement Not Found', 404))
     }
-    let newTitle, newDescription, newCourse, newYearLevel, newTrack, newArchiveDate, newAnnouncementType
+    let newTitle, newDescription, newCourse, newYearLevel, newTrack, newArchiveDate, newAnnouncementType, newSetExpiry
     if (req.body.archiveDate == null || req.body.archiveDate == '') {
         newArchiveDate = announcement.archiveDate
     } else {
         newArchiveDate = req.body.archiveDate
+    }
+    if (req.body.setExpiry == null || req.body.setExpiry == '') {
+        newSetExpiry = announcement.setExpiry
+    } else {
+        newSetExpiry = req.body.setExpiry
+        if (req.body.setExpiry == true) {
+            archiveDate = new Date(req.body.archiveDate)
+        } else {
+            archiveDate = new Date('3000-01-01') //yyyy-mm-dd
+        }
     }
     if (req.body.title == null || req.body.title == '') {
         newTitle = announcement.title
