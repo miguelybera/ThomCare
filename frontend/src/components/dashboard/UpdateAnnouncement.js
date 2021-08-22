@@ -41,7 +41,11 @@ const UpdateAnnouncement = ({ history, match }) => {
         formData.set('course', course)
         formData.set('track', track)
         formData.set('announcementType', announcementType)
-        formData.set('archiveDate', archiveDate)
+        if(!setExpiry) {
+            formData.set('archiveDate', '3000-01-01')
+        } else {
+            formData.set('archiveDate', changeDateFormat(archiveDate))
+        }
         formData.set('setExpiry', setExpiry)
 
         dispatch(updateAnnouncement(announcement._id, formData))
@@ -159,7 +163,7 @@ const UpdateAnnouncement = ({ history, match }) => {
                                         </Form.Group>
                                         <Form.Group className="mb-3" controlId="formBasicCheckbox">
                                             <Form.Check type="checkbox" label="Set expiry date" defaultChecked={setExpiry} value={setExpiry} nme="setExpiry" onClick={() => {setSetExpiry(!setExpiry)}} />
-                                            <Form.Control type="date" name="archiveDate" value={archiveDate} onChange={e => setArchiveDate(changeDateFormat(e.target.value))} disabled={setExpiry ? false : true} />
+                                            <Form.Control type="date" name="archiveDate" value={archiveDate} onChange={e => setArchiveDate(e.target.value)} disabled={setExpiry ? false : true} />
                                         </Form.Group>
                                         <Form.Group controlId="formFileMultiple" className="mb-3">
                                             <Form.Label>Attach image(s):</Form.Label>

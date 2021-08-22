@@ -156,10 +156,10 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
         newSetExpiry = announcement.setExpiry
     } else {
         newSetExpiry = req.body.setExpiry
-        if (req.body.setExpiry == true) {
-            archiveDate = new Date(req.body.archiveDate)
+        if (req.body.setExpiry) {
+            newArchiveDate = new Date(req.body.archiveDate)
         } else {
-            archiveDate = new Date('3000-01-01') //yyyy-mm-dd
+            newArchiveDate = new Date('3000-01-01') //yyyy-mm-dd
         }
     }
     if (req.body.title == null || req.body.title == '') {
