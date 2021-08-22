@@ -27,28 +27,20 @@ const UpdateUser = ({ history, match }) => {
     const [role, setRole] = useState('')
     const [studentNumber, setStudentNumber] = useState('')
     const [course, setCourse] = useState('')
-    const [track, setTrack] = useState('')
+
+    const programs = ['Computer Science', 'Information Systems', 'Information Technology']
+    const roles = ['CICS Staff', 'IT Dept Chair', 'IS Dept Chair', 'CS Dept Chair']
+
+    const upperCase = (text) => text.toUpperCase()
 
     const submitHandler = e => {
         e.preventDefault()
 
-        // const formData = new FormData()
-
-        // formData.set('firstName', firstName)
-        // formData.set('lastName', lastName)
-        // formData.set('role', role)
-        // formData.set('email', email)
-        // formData.set('course', course)
-        // formData.set('track', track)
-        // formData.set('announcementType', announcementType)
-        // formData.set('archiveDate', archiveDate)
-        // formData.set('setExpiry', setExpiry)
-
         let formData = ''
         if (role === 'Student') {
             formData = {
-                firstName,
-                lastName,
+                firstName: upperCase(firstName),
+                lastName: upperCase(lastName),
                 studentNumber,
                 course,
                 role
@@ -57,9 +49,7 @@ const UpdateUser = ({ history, match }) => {
             formData = {
                 firstName,
                 lastName,
-                role,
-                course: 'N/A',
-                studentNumber: '0000000000'
+                role
             }
         }
 
@@ -68,36 +58,20 @@ const UpdateUser = ({ history, match }) => {
 
     const userId = match.params.id
 
-    let userFirstName = ''
-    let userLastName = ''
-    let userEmail = ''
-    let userRole = ''
-    let userStudentNumber = ''
-    let userCourse = ''
-    let userTrack = ''
-
-    if (singleUser && singleUser.firstName) { userFirstName = singleUser.firstName }
-    if (singleUser && singleUser.lastName) { userLastName = singleUser.lastName }
-    if (singleUser && singleUser.email) { userEmail = singleUser.email }
-    if (singleUser && singleUser.role) { userRole = singleUser.role }
-    if (singleUser && singleUser.studentNumber) { userStudentNumber = singleUser.studentNumber }
-    if (singleUser && singleUser.course) { userCourse = singleUser.course }
-    if (singleUser && singleUser.track) { userTrack = singleUser.track }
-    // if (announcement && announcement.announcementType) { announcementAnnouncementType = announcement.announcementType }
-    // if (announcement && announcement.archiveDate) { announcementArchiveDate = announcement.archiveDate }
 
     useEffect(() => {
         if (singleUser && singleUser._id !== userId) {
             dispatch(getUserDetails(userId))
         }
-        else {
-            setFirstName(userFirstName)
-            setLastName(userLastName)
-            setEmail(userEmail)
-            setRole(userRole)
-            setStudentNumber(userStudentNumber)
-            setCourse(userCourse)
-            setTrack(userTrack)
+        else if (singleUser) {
+            setFirstName(singleUser.firstName)
+            setLastName(singleUser.lastName)
+            setEmail(singleUser.email)
+            setRole(singleUser.role)
+            setStudentNumber(singleUser.studentNumber)
+            setCourse(singleUser.course)
+        } else {
+            dispatch(getUserDetails(userId))
         }
 
         if (error) {
@@ -158,10 +132,10 @@ const UpdateUser = ({ history, match }) => {
                                                         Name
                                                     </Form.Label>
                                                     <Col sm={6}>
-                                                        <Form.Control type="text" placeholder="First Name" value={firstName} name="firstName" onChange={e => setFirstName(e.target.value)} />
+                                                        <Form.Control type="text" placeholder="First Name" value={upperCase(firstName)} name="firstName" onChange={e => setFirstName(e.target.value)} />
                                                     </Col>
                                                     <Col sm={4}>
-                                                        <Form.Control type="text" placeholder="Last Name" value={lastName} name="lastName" onChange={e => setLastName(e.target.value)} />
+                                                        <Form.Control type="text" placeholder="Last Name" value={upperCase(lastName)} name="lastName" onChange={e => setLastName(e.target.value)} />
                                                     </Col>
                                                 </Form.Group>
 
@@ -179,9 +153,13 @@ const UpdateUser = ({ history, match }) => {
                                                         <Form.Group as={Row} className="mb-3" controlId="formHorizontalCourse">
                                                             <Form.Label column sm={2}>
                                                                 Course
-                                                        </Form.Label>
+                                                            </Form.Label>
                                                             <Col sm={10}>
-                                                                <Form.Control type="text" placeholder="Course" value={course} name="course" onChange={e => setCourse(e.target.value)} />
+                                                                <Form.Select aria-label="Default select example" value={course} name="course" onChange={e => setCourse(e.target.value)} required>
+                                                                    {programs.map(program => (
+                                                                        <option value={program}>{program}</option>
+                                                                    ))}
+                                                                </Form.Select>
                                                             </Col>
                                                         </Form.Group>
                                                         <Form.Group as={Row} className="mb-3" controlId="formHorizontalRole">
@@ -201,11 +179,9 @@ const UpdateUser = ({ history, match }) => {
                                                             </Form.Label>
                                                             <Col sm={9}>
                                                                 <Form.Select aria-label="Default select example" value={role} name="role" onChange={e => setRole(e.target.value)} required>
-                                                                    <option value=''>-</option>
-                                                                    <option value="CICS Staff">CICS Staff</option>
-                                                                    <option value="IT Dept Chair">IT Dept Chair</option>
-                                                                    <option value="IS Dept Chair">IS Dept Chair</option>
-                                                                    <option value="CS Dept Chair">CS Dept Chair</option>
+                                                                    {roles.map(role => (
+                                                                        <option value={role}>{role}</option>
+                                                                    ))}
                                                                 </Form.Select>
                                                             </Col>
                                                         </Form.Group>

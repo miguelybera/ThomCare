@@ -37,6 +37,7 @@ import UpdateAnnouncement from './components/dashboard/UpdateAnnouncement'
 import ListArchivedAnnouncements from './components/dashboard/ListArchivedAnnouncements'
 import ListUsers from './components/dashboard/ListUsers'
 import UpdateUser from './components/dashboard/UpdateUser'
+import RegisterAdmin from './components/dashboard/RegisterAdmin'
 
 //route folder
 import ProtectedRoute from './components/route/ProtectedRoute'
@@ -85,6 +86,7 @@ function App() {
                                 <ProtectedRoute path='/admin/archives/announcements' loggedIn={true} component={ListArchivedAnnouncements} exact />
                                 <ProtectedRoute path='/admin/users' loggedIn={true} component={ListUsers} exact />
                                 <ProtectedRoute path='/admin/user/:id' loggedIn={true} component={UpdateUser} exact />
+                                <ProtectedRoute path='/admin/register' loggedIn={true} component={RegisterAdmin} exact />
                             </div>
                         </Fragment>
                     {/*})}*/}

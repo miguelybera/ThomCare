@@ -39,7 +39,7 @@ const Sidebar = () => {
                     </li>
 
                     <li>
-                        <Link to="/dashboard"><i className="fa fa-tachometer"></i> Register</Link>
+                        <Link to='/admin/register'><i className="fa fa-tachometer"></i> Register</Link>
                     </li>
 
 

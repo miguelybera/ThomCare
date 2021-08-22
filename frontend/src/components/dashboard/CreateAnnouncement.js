@@ -30,6 +30,29 @@ const CreateAnnouncement = ({ history }) => {
 
     const changeDateFormat = (date) => dateFormat(date, "yyyy-mm-dd")
 
+    const levels = ['All', '1st Year', '2nd Year', '3rd Year', '4th Year']
+    const programs = ['All', 'Computer Science', 'Information Systems', 'Information Technology']
+
+    const csTracks = [
+        "All",
+        "Core Computer Science",
+        "Game Development",
+        "Data Science"
+    ]
+
+    const itTracks = [
+        "All",
+        "Network and Security",
+        "Web and Mobile App Development",
+        "IT Automation"
+    ]
+
+    const isTracks = [
+        "All",
+        "Business Analytics",
+        "Service Management"
+    ]
+
     const submitHandler = e => {
         e.preventDefault()
 
@@ -93,25 +116,39 @@ const CreateAnnouncement = ({ history }) => {
                                     <Form.Group className="mb-3" controlId="formGridAddress2">
                                         <Form.Label>Year Level</Form.Label>
                                         <Form.Select aria-label="Default select example" name="yearLevel" value={yearLevel} onChange={e => setYearLevel(e.target.value)}>
-                                            <option value='All'>-</option>
-                                            <option value="1st Year">First Year</option>
-                                            <option value="2nd Year">Second Year</option>
-                                            <option value="3rd Year">Third Year</option>
-                                            <option value="4th Year">Fourth Year</option>
+                                            {levels.map(level => (
+                                                <option value={level}>{level}</option>
+                                            ))}
                                         </Form.Select>
                                         <Form.Label>Course</Form.Label>
-                                        <Form.Select aria-label="Default select example" name="course" value={course} onChange={e => setCourse(e.target.value)}>
-                                            <option value='All'>-</option>
-                                            <option value="Computer Science">Computer Science</option>
-                                            <option value="Information Systems">Information Systems</option>
-                                            <option value="Information Technology">Information Technology</option>
+                                        <Form.Select aria-label="Default select example" value={course} name="course" onChange={e => setCourse(e.target.value)} required>
+                                            {programs.map(program => (
+                                                <option value={program}>{program}</option>
+                                            ))}
                                         </Form.Select>
                                         <Form.Label>Track</Form.Label>
-                                        <Form.Select aria-label="Default select example" name="track" value={track} onChange={e => setTrack(e.target.value)}>
-                                            <option value='All'>-</option>
-                                            <option value="Web and Mobile App Development">Web and Mobile App Development</option>
-                                            <option value="Network and Security">Network and Security</option>
-                                            <option value="IT Automation">IT Automation</option>
+                                        <Form.Select aria-label="Default select example" name="track" value={track} onChange={e => setTrack(e.target.value)} disabled={course === 'All' ? true : false}>
+                                            {course === 'Computer Science' ? (
+                                                <Fragment>
+                                                    {csTracks.map(track => (
+                                                        <option value={track}>{track}</option>
+                                                    ))}
+                                                </Fragment>
+                                            ) : (
+                                                course === 'Information Technology' ? (
+                                                    <Fragment>
+                                                        {itTracks.map(track => (
+                                                            <option value={track}>{track}</option>
+                                                        ))}
+                                                    </Fragment>
+                                                ) : (
+                                                    <Fragment>
+                                                        {isTracks.map(track => (
+                                                            <option value={track}>{track}</option>
+                                                        ))}
+                                                    </Fragment>
+                                                )
+                                            )}
                                         </Form.Select>
                                         <Form.Label>Announcement Type</Form.Label>
                                         <Form.Select aria-label="Default select example" name="announcementType" value={announcementType} onChange={e => setAnnouncementType(e.target.value)}>
@@ -122,7 +159,7 @@ const CreateAnnouncement = ({ history }) => {
                                         </Form.Select>
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                                        <Form.Check type="checkbox" label="Set expiry date" defaultChecked={setExpiry} value={setExpiry} nme="setExpiry" onChange={e => setSetExpiry(!setExpiry)}/>
+                                        <Form.Check type="checkbox" label="Set expiry date" defaultChecked={setExpiry} value={setExpiry} nme="setExpiry" onChange={e => setSetExpiry(!setExpiry)} />
                                         <Form.Control type="date" name="archiveDate" value={archiveDate} onChange={e => setArchiveDate(e.target.value)} disabled={setExpiry ? false : true} />
                                     </Form.Group>
                                     <Form.Group controlId="formFileMultiple" className="mb-3">
@@ -140,7 +177,7 @@ const CreateAnnouncement = ({ history }) => {
                     </Container>
                 </div>
             </div>
-        </Fragment>
+        </Fragment >
     )
 }
 
