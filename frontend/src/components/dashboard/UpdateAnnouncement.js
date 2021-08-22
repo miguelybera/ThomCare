@@ -18,7 +18,7 @@ const UpdateAnnouncement = ({ history, match }) => {
     const dispatch = useDispatch()
     const alert = useAlert()
 
-    const { loading: announcementLoading, error, success, announcement } = useSelector(state => state.announcementDetails)
+    const { loading: announcementLoading, error, announcement } = useSelector(state => state.announcementDetails)
     const { loading, error: updateError, isUpdated } = useSelector(state => state.announcement)
 
     const [title, setTitle] = useState('')
@@ -28,7 +28,7 @@ const UpdateAnnouncement = ({ history, match }) => {
     const [track, setTrack] = useState('')
     const [announcementType, setAnnouncementType] = useState('')
     const [archiveDate, setArchiveDate] = useState('')
-    const [setExpiry, setSetExpiry] = useState(false)
+    const [setExpiry, setSetExpiry] = useState()
 
     const submitHandler = e => {
         e.preventDefault()
@@ -51,39 +51,26 @@ const UpdateAnnouncement = ({ history, match }) => {
 
     const announcementId = match.params.id
 
-    let announcementTitle = ''
-    let announcementDescription = ''
-    let announcementYearLevel = ''
-    let announcementCourse = ''
-    let announcementTrack = ''
-    let announcementAnnouncementType = ''
-    let announcementArchiveDate = ''
-
-    if (announcement && announcement.title) { announcementTitle = announcement.title }
-    if (announcement && announcement.description) { announcementDescription = announcement.description }
-    if (announcement && announcement.yearLevel) { announcementYearLevel = announcement.yearLevel }
-    if (announcement && announcement.course) { announcementCourse = announcement.course }
-    if (announcement && announcement.track) { announcementTrack = announcement.track }
-    if (announcement && announcement.announcementType) { announcementAnnouncementType = announcement.announcementType }
-    if (announcement && announcement.archiveDate) { announcementArchiveDate = announcement.archiveDate }
-
     useEffect(() => {
         if (announcement && announcement._id !== announcementId) {
             dispatch(getAnnouncementDetails(announcementId))
         }
-        else {
-            setTitle(announcementTitle)
-            setDescription(announcementDescription)
-            setYearLevel(announcementYearLevel)
-            setCourse(announcementCourse)
-            setTrack(announcementTrack)
-            setAnnouncementType(announcementAnnouncementType)
-            setArchiveDate(changeDateFormat(announcementArchiveDate))
-            if(archiveDate !== '3000-01-01') {
-                setSetExpiry(true)
-            }
+        else if (announcement) {
+            setTitle(announcement.title)
+            setDescription(announcement.description)
+            setYearLevel(announcement.yearLevel)
+            setCourse(announcement.course)
+            setTrack(announcement.track)
+            setAnnouncementType(announcement.announcementType)
+            setArchiveDate(changeDateFormat(announcement.archiveDate))
+            setSetExpiry(announcement.setExpiry)
+        } else {
+            dispatch(getAnnouncementDetails(announcementId))
         }
+    }, [announcement])
 
+    useEffect(() => {
+        
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
@@ -101,7 +88,7 @@ const UpdateAnnouncement = ({ history, match }) => {
         }
 
         if (isUpdated) {
-            history.push('/admin/announcements')
+            window.history.back()
             dispatch(getAnnouncementDetails(announcementId))
             alert.success('Announcement updated successfully.')
 
@@ -123,7 +110,6 @@ const UpdateAnnouncement = ({ history, match }) => {
 
                 <div className="col-12 col-md-10">
                     <h1 className="my-4">Control Panel</h1>
-
                     <Container className="space_inside"></Container>
 
                     <Container fluid>
@@ -172,8 +158,8 @@ const UpdateAnnouncement = ({ history, match }) => {
                                             </Form.Select>
                                         </Form.Group>
                                         <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                                            <Form.Check type="checkbox" label="Set expiry date" defaultChecked={setExpiry} value={setExpiry} nme="setExpiry" onChange={e => setSetExpiry(!setExpiry)}/>
-                                            <Form.Control type="date" name="archiveDate" value={archiveDate} onChange={e => setArchiveDate(changeDateFormat(e.target.value))} disabled={setExpiry ? false : true}/>
+                                            <Form.Check type="checkbox" label="Set expiry date" defaultChecked={setExpiry} value={setExpiry} nme="setExpiry" onClick={() => {setSetExpiry(!setExpiry)}} />
+                                            <Form.Control type="date" name="archiveDate" value={archiveDate} onChange={e => setArchiveDate(changeDateFormat(e.target.value))} disabled={setExpiry ? false : true} />
                                         </Form.Group>
                                         <Form.Group controlId="formFileMultiple" className="mb-3">
                                             <Form.Label>Attach image(s):</Form.Label>

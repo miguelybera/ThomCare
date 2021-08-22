@@ -7,7 +7,7 @@ import { DELETE_USER_RESET } from '../../constants/userConstants'
 import Sidebar from '../layout/Sidebar'
 import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
-import { Container } from 'react-bootstrap'
+import { Container, Modal, Button } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 
 const ListUsers = ({ history }) => {
@@ -18,6 +18,12 @@ const ListUsers = ({ history }) => {
     const { user: currentUser } = useSelector(state => state.auth)
     const { loading, users, error } = useSelector(state => state.users)
     const { error: deleteError, isDeleted } = useSelector(state => state.user)
+
+    const [show, setShow] = useState(false);
+    const [deleteUserId, setDeleteUserId] = useState('');
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     useEffect(() => {
         dispatch(getUsers())
@@ -45,6 +51,7 @@ const ListUsers = ({ history }) => {
 
     const deleteUserHandler = (id) => {
         dispatch(deleteUser(id))
+        handleClose()
     }
 
     const setUsers = () => {
@@ -83,53 +90,80 @@ const ListUsers = ({ history }) => {
                 actions: <Fragment>
                     <button>
                         {(user._id === currentUser._id) ? (
-                                <Link to={`/profile`}>Update</Link>
+                            <Link to={`/profile`}>Update</Link>
                         ) : (
-                                <Link to={`/admin/user/${user._id}`}>Update</Link>
-                            )
+                            <Link to={`/admin/user/${user._id}`}>Update</Link>
+                        )
                         }
-                        </button>
-                    <button disabled={user._id === currentUser._id ? true : false} onClick={() => deleteUserHandler(user._id)}>Delete</button>
+                    </button>
+                    <button disabled={user._id === currentUser._id ? true : false} onClick={()=>{
+                        handleShow()
+                        setDeleteUserId(user._id)
+                    }}>Delete</button>
                 </Fragment >
             })
 
         })
 
-return data
+        return data
     }
 
-return (
-    <Fragment>
-        <MetaData title={'All Users'} />
-        {loading ? <Loader /> : (
-            <div className="row">
-                <div className="col-12 col-md-2">
-                    <Sidebar />
-                </div>
+    return (
+        <Fragment>
+            <MetaData title={'All Users'} />
+            {loading ? <Loader /> : (
+                <>
+                    <>
+                        <Modal
+                            show={show}
+                            onHide={handleClose}
+                            backdrop="static"
+                            keyboard={false}
+                        >
+                            <Modal.Header closeButton>
+                                <Modal.Title>Are you sure you want to delete this user?</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>
+                                This change cannot be undone.
+                            </Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleClose}>
+                                    Cancel
+                                </Button>
+                                <Button variant="primary" onClick={() => deleteUserHandler(deleteUserId)}>Yes, I'm sure</Button>
+                            </Modal.Footer>
+                        </Modal>
+                    </>
+                    <div className="row">
+                        <div className="col-12 col-md-2">
+                            <Sidebar />
+                        </div>
 
-                <div className="col-12 col-md-10">
-                    <h1 className="my-4">Control Panel</h1>
+                        <div className="col-12 col-md-10">
+                            <h1 className="my-4">Control Panel</h1>
 
-                    <Container className="space_inside"></Container>
+                            <Container className="space_inside"></Container>
 
-                    <Container>
-                        <h3>Users</h3>
+                            <Container>
+                                <h3>Users</h3>
 
-                        <MDBDataTableV5
-                            data={setUsers()}
-                            hover
-                            searchTop
-                            pagingTop
-                            scrollX
-                            entriesOptions={[5, 20, 25]}
-                            entries={5}
-                        />
-                    </Container>
-                </div>
-            </div>
-        )}
-    </Fragment>
-)
+                                <MDBDataTableV5
+                                    data={setUsers()}
+                                    hover
+                                    searchTop
+                                    pagingTop
+                                    scrollX
+                                    entriesOptions={[5, 20, 25]}
+                                    entries={5}
+                                />
+                            </Container>
+                        </div>
+                    </div>
+                </>
+
+            )}
+        </Fragment>
+    )
 }
 
 export default ListUsers

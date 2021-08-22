@@ -19,49 +19,32 @@ const CreateAnnouncement = ({ history }) => {
 
     const { loading, error, success } = useSelector(state => state.newAnnouncement)
 
-    const [announcementData, setAnnouncementData] = useState({
-        title: '',
-        description: '',
-        yearLevel: 'All',
-        course: 'All',
-        track: 'All',
-        announcementType: 'All',
-        archiveDate: '',
-        fileAttachments: []
-    })
-
+    const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
+    const [yearLevel, setYearLevel] = useState('All')
+    const [course, setCourse] = useState('All')
+    const [track, setTrack] = useState('All')
+    const [announcementType, setAnnouncementType] = useState('All')
+    const [archiveDate, setArchiveDate] = useState('')
     const [setExpiry, setSetExpiry] = useState(false)
-    const { title, description, yearLevel, course, track, announcementType, archiveDate, fileAttachments } = announcementData
 
     const changeDateFormat = (date) => dateFormat(date, "yyyy-mm-dd")
-
-    const onChange = e => {
-        if(setExpiry) {
-            if (e.target.name === 'archiveDate') {
-                setAnnouncementData({
-                    ...announcementData,
-                    setExpiry,
-                    archiveDate: changeDateFormat(e.target.value)
-                })
-            } else {
-                setAnnouncementData({
-                    ...announcementData,
-                    [e.target.name]: e.target.value
-                })
-            }
-        } else {
-            setAnnouncementData({
-                ...announcementData,
-                [e.target.name]: e.target.value
-            })
-        }
-        
-    }
 
     const submitHandler = e => {
         e.preventDefault()
 
-        dispatch(createAnnouncement(announcementData))
+        const formData = new FormData()
+
+        formData.set('title', title)
+        formData.set('description', description)
+        formData.set('yearLevel', yearLevel)
+        formData.set('course', course)
+        formData.set('track', track)
+        formData.set('announcementType', announcementType)
+        formData.set('archiveDate', changeDateFormat(archiveDate))
+        formData.set('setExpiry', setExpiry)
+
+        dispatch(createAnnouncement(formData))
     }
 
     useEffect(() => {
@@ -79,6 +62,7 @@ const CreateAnnouncement = ({ history }) => {
         }
     }, [dispatch, alert, success, error])
 
+    console.log(setExpiry)
 
     return (
         <Fragment>
@@ -100,15 +84,15 @@ const CreateAnnouncement = ({ history }) => {
                                 <Form onSubmit={submitHandler}>
                                     <Form.Group className="mb-3" controlId="formGridAddress1">
                                         <Form.Label>Title</Form.Label>
-                                        <Form.Control type="text" name="title" value={title} onChange={onChange} />
+                                        <Form.Control type="text" name="title" value={title} onChange={e => setTitle(e.target.value)} />
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="formGridAddress1">
                                         <Form.Label>Description</Form.Label>
-                                        <Form.Control as="textarea" rows={10} name="description" value={description} onChange={onChange} />
+                                        <Form.Control as="textarea" rows={10} name="description" value={description} onChange={e => setDescription(e.target.value)} />
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="formGridAddress2">
                                         <Form.Label>Year Level</Form.Label>
-                                        <Form.Select aria-label="Default select example" name="yearLevel" value={yearLevel} onChange={onChange}>
+                                        <Form.Select aria-label="Default select example" name="yearLevel" value={yearLevel} onChange={e => setYearLevel(e.target.value)}>
                                             <option value='All'>-</option>
                                             <option value="1st Year">First Year</option>
                                             <option value="2nd Year">Second Year</option>
@@ -116,21 +100,21 @@ const CreateAnnouncement = ({ history }) => {
                                             <option value="4th Year">Fourth Year</option>
                                         </Form.Select>
                                         <Form.Label>Course</Form.Label>
-                                        <Form.Select aria-label="Default select example" name="course" value={course} onChange={onChange}>
+                                        <Form.Select aria-label="Default select example" name="course" value={course} onChange={e => setCourse(e.target.value)}>
                                             <option value='All'>-</option>
                                             <option value="Computer Science">Computer Science</option>
                                             <option value="Information Systems">Information Systems</option>
                                             <option value="Information Technology">Information Technology</option>
                                         </Form.Select>
                                         <Form.Label>Track</Form.Label>
-                                        <Form.Select aria-label="Default select example" name="track" value={track} onChange={onChange}>
+                                        <Form.Select aria-label="Default select example" name="track" value={track} onChange={e => setTrack(e.target.value)}>
                                             <option value='All'>-</option>
                                             <option value="Web and Mobile App Development">Web and Mobile App Development</option>
                                             <option value="Network and Security">Network and Security</option>
                                             <option value="IT Automation">IT Automation</option>
                                         </Form.Select>
                                         <Form.Label>Announcement Type</Form.Label>
-                                        <Form.Select aria-label="Default select example" name="announcementType" value={announcementType} onChange={onChange}>
+                                        <Form.Select aria-label="Default select example" name="announcementType" value={announcementType} onChange={e => setAnnouncementType(e.target.value)}>
                                             <option value='All'>-</option>
                                             <option value="Memorandum">Memorandum</option>
                                             <option value="Enrollment">Enrollment</option>
@@ -138,8 +122,8 @@ const CreateAnnouncement = ({ history }) => {
                                         </Form.Select>
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                                        <Form.Check type="checkbox" label="Set expiry date" defaultChecked={setExpiry} value={setExpiry} nme="setExpiry" onChange={e => setSetExpiry(!setExpiry)} />
-                                        <Form.Control type="date" name="archiveDate" value={archiveDate} onChange={onChange} disabled={setExpiry ? false : true} />
+                                        <Form.Check type="checkbox" label="Set expiry date" defaultChecked={setExpiry} value={setExpiry} nme="setExpiry" onChange={e => setSetExpiry(!setExpiry)}/>
+                                        <Form.Control type="date" name="archiveDate" value={archiveDate} onChange={e => setArchiveDate(e.target.value)} disabled={setExpiry ? false : true} />
                                     </Form.Group>
                                     <Form.Group controlId="formFileMultiple" className="mb-3">
                                         <Form.Label>Attach image(s):</Form.Label>

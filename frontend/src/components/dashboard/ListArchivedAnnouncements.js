@@ -7,12 +7,12 @@ import { DELETE_ANNOUNCEMENT_RESET } from '../../constants/announcementConstants
 import Sidebar from '../layout/Sidebar'
 import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
-import { Container } from 'react-bootstrap'
+import { Container, Modal, Button } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 
 var dateFormat = require('dateformat')
 
-const ListArchivedAnnouncements = ({history}) => {
+const ListArchivedAnnouncements = ({ history }) => {
 
     const alert = useAlert()
     const dispatch = useDispatch()
@@ -20,28 +20,34 @@ const ListArchivedAnnouncements = ({history}) => {
     const { loading, announcements, error } = useSelector(state => state.announcements)
     const { error: deleteError, isDeleted } = useSelector(state => state.announcement)
 
+    const [show, setShow] = useState(false);
+    const [deleteAnnouncementId, setDeleteAnnouncementId] = useState('');
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     useEffect(() => {
         dispatch(getArchivedAnnouncements())
 
-        if(error){
+        if (error) {
             alert.error(error)
             dispatch(clearErrors())
         }
 
-        if(deleteError){
+        if (deleteError) {
             alert.error(deleteError)
             dispatch(clearErrors())
         }
 
-        if(isDeleted){
+        if (isDeleted) {
             alert.success('Announcement has been deleted successfully.')
-            history.push('/admin/announcements')
+            history.push('/admin/archives/announcements')
 
             dispatch({
                 type: DELETE_ANNOUNCEMENT_RESET
             })
         }
-        
+
     }, [dispatch, alert, error, isDeleted, deleteError])
 
     function changeDateFormat(date) {
@@ -50,9 +56,10 @@ const ListArchivedAnnouncements = ({history}) => {
 
     const deleteAnnouncementHandler = (id) => {
         dispatch(deleteAnnouncement(id))
+        handleClose()
     }
 
-    const setHistory = () => {
+    const setAnnouncements = () => {
 
         const data = {
             columns: [
@@ -91,11 +98,16 @@ const ListArchivedAnnouncements = ({history}) => {
                 title: announcement.title,
                 description: announcement.description,
                 tags: <Fragment>
-                    <p>{announcement.yearLevel}, {announcement.course}, {announcement.track}</p>
+                    <p>Year Level: {announcement.yearLevel}</p>
+                    <p>Course: {announcement.course}</p>
+                    <p>Track: {announcement.track}</p>
                 </Fragment>,
                 actions: <Fragment>
                     <button><Link to={`/admin/announcement/${announcement._id}`}>Update</Link></button>
-                    <button onClick={() => deleteAnnouncementHandler(announcement._id)}>Delete</button>
+                    <button onClick={() => {
+                        handleShow()
+                        setDeleteAnnouncementId(announcement._id)
+                    }}>Delete</button>
                 </Fragment>
             })
 
@@ -108,31 +120,51 @@ const ListArchivedAnnouncements = ({history}) => {
         <Fragment>
             <MetaData title={'Archived Announcements'} />
             {loading ? <Loader /> : (
-                <div className="row">
-                    <div className="col-12 col-md-2">
-                        <Sidebar />
+                <>
+                    <Modal
+                        show={show}
+                        onHide={handleClose}
+                        backdrop="static"
+                        keyboard={false}
+                    >
+                        <Modal.Header closeButton>
+                            <Modal.Title>Are you sure you want to delete this announcement?</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            This change cannot be undone.
+                    </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={handleClose}>
+                                Close
+                        </Button>
+                            <Button variant="primary" onClick={() => deleteAnnouncementHandler(deleteAnnouncementId)}>Yes, I'm sure</Button>
+                        </Modal.Footer>
+                    </Modal>
+                    <div className="row">
+                        <div className="col-12 col-md-2">
+                            <Sidebar />
+                        </div>
+
+                        <div className="col-12 col-md-10">
+                            <h1 className="my-4">Control Panel</h1>
+
+                            <Container className="space_inside"></Container>
+
+                            <Container>
+                                <h3>Archived Announcements</h3>
+                                <MDBDataTableV5
+                                    data={setAnnouncements()}
+                                    hover
+                                    searchTop
+                                    pagingTop
+                                    scrollX
+                                    entriesOptions={[5, 20, 25]}
+                                    entries={5}
+                                />
+                            </Container>
+                        </div>
                     </div>
-
-                    <div className="col-12 col-md-10">
-                        <h1 className="my-4">Control Panel</h1>
-
-                        <Container className="space_inside"></Container>
-
-                        <Container>
-                            <h3>Archives | Announcements</h3>
-                            
-                            <MDBDataTableV5
-                                data={setHistory()}
-                                hover
-                                searchTop
-                                pagingTop
-                                scrollX
-                                entriesOptions={[5, 20, 25]}
-                                entries={5}
-                            />
-                        </Container>
-                    </div>
-                </div>
+                </>
             )}
         </Fragment>
     )
