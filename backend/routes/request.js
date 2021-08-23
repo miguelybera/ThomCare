@@ -12,6 +12,36 @@ const fileMimeTypes = [
                         'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 
                         'application/pdf'
                     ]
+const {GridFsStorage} = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+const mongoose = require('mongoose');
+const mongoURI = 'mongodb+srv://admin:admin@thomcare.yjumx.mongodb.net/ThomCare?retryWrites=true&w=majority'
+
+const conn = mongoose.createConnection(mongoURI);
+
+let gfs;
+conn.once('open', () =>{
+    gfs = Grid(conn.db, mongoose.mongo);
+    gfs.collection('studentRequirements');
+})
+
+const studentStorage = new GridFsStorage({
+    url: mongoURI,
+    file: (req, file) =>{
+        return new Promise((resolve, reject)=>{
+                
+                const filename = Date.now() + path.extname(file.originalname);
+                const fileInfo ={
+                    filename: filename,
+                    bucketName: 'studentRequirements'
+                };
+                resolve(fileInfo);
+            
+        })
+    }
+
+})
+
 
 const fileStorageStudent = multer.diskStorage({
     destination:(req,file,cb) => {
@@ -28,7 +58,7 @@ const fileStorageStudent = multer.diskStorage({
     }
 })
 
-const thomcareStudentUpload = multer({storage: fileStorageStudent,
+const thomcareStudentUpload = multer({storage: studentStorage,
     fileFilter: function (req, file, cb){
         const ext = path.extname(file.originalname)
         if(!fileMimeTypes.includes(file.mimetype)) {
@@ -81,6 +111,7 @@ const {
         trashRequest
     } = require('../controllers/requestController')
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth')
+const { Mongoose } = require('mongoose')
 
 //all users
 router.route('/requestTracker').post(requestTracker);
