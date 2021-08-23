@@ -11,6 +11,10 @@ import {
     UPDATE_PASSWORD_RESET,
     LOGOUT_SUCCESS,
     LOGOUT_FAIL,
+    UPDATE_PROFILE_REQUEST,
+    UPDATE_PROFILE_SUCCESS,
+    UPDATE_PROFILE_FAIL,
+    UPDATE_PROFILE_RESET,
     ALL_USERS_REQUEST,
     ALL_USERS_SUCCESS,
     ALL_USERS_FAIL,
@@ -228,6 +232,7 @@ export const userReducer = (state = {}, action) => {
 
         case DELETE_USER_REQUEST:
         case UPDATE_USER_REQUEST:
+        case UPDATE_PROFILE_REQUEST:
         case UPDATE_PASSWORD_REQUEST:
             return {
                 ...state,
@@ -243,6 +248,7 @@ export const userReducer = (state = {}, action) => {
 
         case UPDATE_USER_SUCCESS:
         case UPDATE_PASSWORD_SUCCESS:
+        case UPDATE_PROFILE_SUCCESS:
             return {
                 ...state,
                 loading: false,
@@ -252,6 +258,7 @@ export const userReducer = (state = {}, action) => {
         case DELETE_USER_FAIL:
         case UPDATE_USER_FAIL:
         case UPDATE_PASSWORD_FAIL:
+        case UPDATE_PROFILE_FAIL:
             return {
                 ...state,
                 error: action.payload,
@@ -267,6 +274,7 @@ export const userReducer = (state = {}, action) => {
 
         case UPDATE_USER_RESET:
         case UPDATE_PASSWORD_RESET:
+        case UPDATE_PROFILE_RESET:
             return {
                 ...state,
                 isUpdated: false,
