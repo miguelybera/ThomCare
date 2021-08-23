@@ -4,7 +4,6 @@ const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const APIFeatures = require('../utils/apiFeatures');
 const sendEmail = require('../utils/sendEmail');
 const Audit = require('../models/audit');
-const {GridFsStorage} = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
@@ -194,19 +193,13 @@ exports.getAllOfficeRequests = catchAsyncErrors(async (req, res, next) => {
 // Get single request => /api/v1/request/:requestId
 exports.getSingleRequest = catchAsyncErrors(async (req, res, next) => {
     const request = await Request.findById(req.params.requestId);
-    const fileAttachments = request.fileRequirements
-    fileLength= fileAttachments.length
-    let testing = []
-    for (let i = 0; i < fileLength; i++) {
-        testing.push(fileAttachments[i].id) 
-      }
+   
 
     if (!request) { return next(new ErrorHandler('Request Id does not exist')) }
 
     res.status(200).json({
         success: true,
-        fileLength,
-        testing
+        request
 
     })
 
@@ -298,16 +291,23 @@ exports.deleteRequest = catchAsyncErrors(async (req, res, next) => {
     const request = await Request.findById(req.params.requestId);
 
     if (!request) { return next(new ErrorHandler(`Request does not exist with this id:(${req.params.requestId})`)) }
-    if (request.requestedById != req.user.id) { return next(new ErrorHandler('The requestor can only delete this request')) }
 
-    const fileAttachments = request.fileRequirements
-    fileLength= fileAttachments.length
-    let testing = []
+    // this is commented out because this function only allows the requestor to delete the request and not the other roles
+    //if (request.requestedById != req.user.id) { return next(new ErrorHandler('The requestor can only delete this request')) }
+
+    const filesAttached = request.fileRequirements
+    const filesReturned = request.returningFiles
+    fileLength= filesAttached.length
+    returnLength = filesReturned.length
+    let arrayIds = []
     for (let i = 0; i < fileLength; i++) {
-        testing.push(fileAttachments[i].id) 
+        arrayIds.push(filesAttached[i].id) 
+      }
+    for (let i = 0; i < returnLength; i++) {
+        arrayIds.push(filesReturned[i].id) 
       }
 
-      gfs.remove({_id: testing, root: 'fileStorage'}, (err, gridStore)=>{
+      gfs.remove({_id: arrayIds, root: 'fileStorage'}, (err, gridStore)=>{
           if(err){
             return next(new ErrorHandler('Error deleting request'))
           }

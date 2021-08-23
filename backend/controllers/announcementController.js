@@ -2,6 +2,18 @@ const Announcement = require('../models/announcement');
 const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const APIFeatures = require('../utils/apiFeatures');
+const Grid = require('gridfs-stream');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+dotenv.config({ path: 'backend/config/config.env'});
+
+const conn = mongoose.connection;
+
+let gfs;
+conn.once('open', () =>{
+    gfs = Grid(conn.db, mongoose.mongo);
+    gfs.collection('fileStorage');
+})
 
 // Create new announcement => /api/v1/new/announcement
 exports.newAnnouncement = catchAsyncErrors(async (req, res, next) => {
@@ -305,6 +317,18 @@ exports.deleteAnnouncement = catchAsyncErrors(async (req, res, next) => {
     if (!announcement) {
         return next(new ErrorHandler('Announcement Not Found', 404))
     }
+    const filesAttached = announcement.fileAttachments
+    fileLength= filesAttached.length
+    let arrayIds = []
+    for (let i = 0; i < fileLength; i++) {
+        arrayIds.push(filesAttached[i].id) 
+      }
+
+      gfs.remove({_id: arrayIds, root: 'fileStorage'}, (err, gridStore)=>{
+          if(err){
+            return next(new ErrorHandler('Error deleting announcement'))
+          }
+      })
     await announcement.remove()
     res.status(200).json({
         success: true,
