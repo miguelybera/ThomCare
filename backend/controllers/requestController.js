@@ -292,7 +292,7 @@ exports.deleteRequest = catchAsyncErrors(async (req, res, next) => {
 
     if (!request) { return next(new ErrorHandler(`Request does not exist with this id:(${req.params.requestId})`)) }
 
-    // this is commented out because this function only allows the requestor to delete the request and not the other roles
+    // this is commented out because this function only allows the requestor to delete the request and not the other roles.
     //if (request.requestedById != req.user.id) { return next(new ErrorHandler('The requestor can only delete this request')) }
 
     const filesAttached = request.fileRequirements
