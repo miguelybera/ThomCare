@@ -19,11 +19,7 @@ const dotenv = require('dotenv');
 dotenv.config({ path: 'backend/config/config.env'});
 
 
-const conn = mongoose.createConnection(process.env.DB_URI,{
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true
-});
+const conn = mongoose.connection;
 
 let gfs;
 conn.once('open', () =>{

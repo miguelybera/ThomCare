@@ -4,6 +4,20 @@ const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const APIFeatures = require('../utils/apiFeatures');
 const sendEmail = require('../utils/sendEmail');
 const Audit = require('../models/audit');
+const {GridFsStorage} = require('multer-gridfs-storage');
+const Grid = require('gridfs-stream');
+const mongoose = require('mongoose');
+const dotenv = require('dotenv');
+dotenv.config({ path: 'backend/config/config.env'});
+
+
+const conn = mongoose.connection;
+
+let gfs;
+conn.once('open', () =>{
+    gfs = Grid(conn.db, mongoose.mongo);
+    gfs.collection('fileStorage');
+})
 
 const requestTypeOfficeStaff = ['Request for Certificate of Grades', 'Request for Course Description', 'Others'];
 
@@ -180,12 +194,20 @@ exports.getAllOfficeRequests = catchAsyncErrors(async (req, res, next) => {
 // Get single request => /api/v1/request/:requestId
 exports.getSingleRequest = catchAsyncErrors(async (req, res, next) => {
     const request = await Request.findById(req.params.requestId);
+    const fileAttachments = request.fileRequirements
+    fileLength= fileAttachments.length
+    let testing = []
+    for (let i = 0; i < fileLength; i++) {
+        testing.push(fileAttachments[i].id) 
+      }
 
     if (!request) { return next(new ErrorHandler('Request Id does not exist')) }
 
     res.status(200).json({
         success: true,
-        request
+        fileLength,
+        testing
+
     })
 
 })
@@ -277,6 +299,20 @@ exports.deleteRequest = catchAsyncErrors(async (req, res, next) => {
 
     if (!request) { return next(new ErrorHandler(`Request does not exist with this id:(${req.params.requestId})`)) }
     if (request.requestedById != req.user.id) { return next(new ErrorHandler('The requestor can only delete this request')) }
+
+    const fileAttachments = request.fileRequirements
+    fileLength= fileAttachments.length
+    let testing = []
+    for (let i = 0; i < fileLength; i++) {
+        testing.push(fileAttachments[i].id) 
+      }
+
+      gfs.remove({_id: testing, root: 'fileStorage'}, (err, gridStore)=>{
+          if(err){
+            return next(new ErrorHandler('Error deleting request'))
+          }
+      })
+     
 
     await request.remove()
 
