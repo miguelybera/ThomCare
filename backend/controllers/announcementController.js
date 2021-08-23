@@ -65,6 +65,16 @@ exports.newAnnouncement = catchAsyncErrors(async (req, res, next) => {
             return next(new ErrorHandler('Course does not match this track', 400))
         }
     }
+    if(yearLevel == 'All'){
+        if (track != 'All'){
+            return next(new ErrorHandler('1st year and 2nd year do not have tracks', 400))
+        }
+    }
+    if(course == 'All'){
+        if (track != 'All'){
+            return next(new ErrorHandler('1st year and 2nd year do not have tracks', 400))
+        }
+    }
     const announcement = await Announcement.create({
         title,
         description,
@@ -241,6 +251,16 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
         if (newTrack == "Business Analytics" || newTrack == "Service Management" || newTrack == "All") {
         } else {
             return next(new ErrorHandler('Course does not match this track', 400))
+        }
+    }
+    if(newYearLevel == 'All'){
+        if (newTrack != 'All'){
+            return next(new ErrorHandler('1st year and 2nd year do not have tracks', 400))
+        }
+    }
+    if(newCourse == 'All'){
+        if (newTrack != 'All'){
+            return next(new ErrorHandler('1st year and 2nd year do not have tracks', 400))
         }
     }
     let newAnnouncementData
