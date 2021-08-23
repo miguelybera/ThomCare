@@ -72,7 +72,7 @@ function App() {
                                 <Route path='/confirmregister' component={ConfirmRegister} exact />
 
                                 <Route path='/track' component={TrackingPage} exact />
-                                <Route path='/track/request' component={TrackingPageProgress} exact />
+                                <Route path='/track/:id' component={TrackingPageProgress} exact />
                                 {/**needs to be logged in */}
                                 <ProtectedRoute path='/messenger' loggedIn={true} component={Messenger} exact />
                                 <ProtectedRoute path='/profile' loggedIn={true} component={Profile} exact />

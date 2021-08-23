@@ -21,6 +21,9 @@ export const trackRequest = ( userInput ) => async(dispatch) => {
 
         const { data } = await axios.post(`/api/v1/requestTracker`, userInput, config )
 
+        
+        localStorage.setItem('trackData', JSON.stringify(data.request))
+
         dispatch({
             type: REQUEST_DETAILS_SUCCESS,
             payload: data

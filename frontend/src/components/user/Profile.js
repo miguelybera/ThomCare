@@ -23,9 +23,11 @@ const Profile = () => {
 
     const [editProfile, setEditProfile] = useState(false)
 
+    const upperCase = (text) => text.toUpperCase()
+
     useEffect(() => {
-        setFirstName(user.firstName)
-        setLastName(user.lastName)
+        setFirstName(upperCase(user.firstName))
+        setLastName(upperCase(user.lastName))
         setStudentNumber(user.studentNumber)
         setEmail(user.email)
         setCourse(user.course)
@@ -77,10 +79,10 @@ const Profile = () => {
                                             Name
                                     </Form.Label>
                                         <Col sm={6}>
-                                            <Form.Control type="text" placeholder="First Name" value={firstName} disabled={editProfile ? false : true} onChange={e => setFirstName(e.target.value)}/>
+                                            <Form.Control type="text" placeholder="First Name" value={firstName} disabled={editProfile ? false : true} onChange={e => setFirstName(upperCase(e.target.value))}/>
                                         </Col>
                                         <Col sm={4}>
-                                            <Form.Control type="text" placeholder="Last Name" value={lastName} disabled={editProfile ? false : true} onChange={e => setLastName(e.target.value)}/>
+                                            <Form.Control type="text" placeholder="Last Name" value={lastName} disabled={editProfile ? false : true} onChange={e => setLastName(upperCase(e.target.value))}/>
                                         </Col>
                                     </Form.Group>
 

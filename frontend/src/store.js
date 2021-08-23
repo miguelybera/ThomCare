@@ -58,6 +58,9 @@ const reducer = combineReducers({
 let initialState = {
     student: {
         studentInfo: localStorage.getItem('studentInfo') ? JSON.parse(localStorage.getItem('studentInfo')) : {}
+    },
+    request: {
+        request: localStorage.getItem('trackData') ? JSON.parse(localStorage.getItem('trackData')) : {}
     }
 } //contains all the data we want to put in this state just before loading the application
 
