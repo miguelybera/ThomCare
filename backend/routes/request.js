@@ -15,25 +15,31 @@ const fileMimeTypes = [
 const {GridFsStorage} = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const mongoose = require('mongoose');
-const mongoURI = 'mongodb+srv://admin:admin@thomcare.yjumx.mongodb.net/ThomCare?retryWrites=true&w=majority'
+const dotenv = require('dotenv');
+dotenv.config({ path: 'backend/config/config.env'});
 
-const conn = mongoose.createConnection(mongoURI);
+
+const conn = mongoose.createConnection(process.env.DB_URI,{
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+        useCreateIndex: true
+});
 
 let gfs;
 conn.once('open', () =>{
     gfs = Grid(conn.db, mongoose.mongo);
-    gfs.collection('studentRequirements');
+    gfs.collection('fileStorage');
 })
 
-const studentStorage = new GridFsStorage({
-    url: mongoURI,
+const fileStorage = new GridFsStorage({
+    url: process.env.DB_URI,
     file: (req, file) =>{
         return new Promise((resolve, reject)=>{
                 
-                const filename = Date.now() + path.extname(file.originalname);
+                const filename = Date.now() + '-'+ (file.originalname);
                 const fileInfo ={
                     filename: filename,
-                    bucketName: 'studentRequirements'
+                    bucketName: 'fileStorage'
                 };
                 resolve(fileInfo);
             
@@ -42,7 +48,7 @@ const studentStorage = new GridFsStorage({
 
 })
 
-
+/*
 const fileStorageStudent = multer.diskStorage({
     destination:(req,file,cb) => {
         const ext = path.extname(file.originalname)
@@ -57,8 +63,9 @@ const fileStorageStudent = multer.diskStorage({
         cb(null, `${Date.now()}-${originalname}`)
     }
 })
+*/
 
-const thomcareStudentUpload = multer({storage: studentStorage,
+const thomcareStudentUpload = multer({storage: fileStorage,
     fileFilter: function (req, file, cb){
         const ext = path.extname(file.originalname)
         if(!fileMimeTypes.includes(file.mimetype)) {
@@ -69,6 +76,7 @@ const thomcareStudentUpload = multer({storage: studentStorage,
     }
 })
 
+/*
 const fileStorageAdmin = multer.diskStorage({
     destination:(req,file,cb) => {
         const ext = path.extname(file.originalname)
@@ -83,8 +91,9 @@ const fileStorageAdmin = multer.diskStorage({
         cb(null, `${Date.now()}-${originalname}`)
     }
 })
+*/
 
-const thomcareAdminUpload = multer({storage: fileStorageAdmin,
+const thomcareAdminUpload = multer({storage: fileStorage,
     fileFilter: function (req, file, cb){
         const ext = path.extname(file.originalname)
         if(!fileMimeTypes.includes(file.mimetype)) {
