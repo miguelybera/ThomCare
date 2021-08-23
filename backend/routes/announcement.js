@@ -16,9 +16,42 @@ const fileMimeTypes = [
 const {GridFsStorage} = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-dotenv.config({ path: 'backend/config/config.env'});
 
+
+
+
+/*
+const announcementStorage = multer.diskStorage({
+    destination:(req,file,cb) => {
+        const ext = path.extname(file.originalname);
+        if(!fileMimeTypes.includes(file.mimetype)) {
+            return cb(new Error('File type not supported'))
+        } else {
+            cb(null,'./backend/announcementFiles')
+        }
+    },
+    filename:(req,file,cb) => {
+        const { originalname } = file
+        cb(null, `${Date.now()}-${originalname}`)
+    }
+})
+*/
+
+
+
+const { 
+        getAnnouncements,
+        getSingleAnnouncement,
+
+        newAnnouncement,          
+        updateAnnouncement, 
+        deleteAnnouncement,
+        
+        getArchivedAnnouncements,
+        archiveAnnouncement
+    } = require('../controllers/announcementController');
+
+const { isAuthenticatedUser, authorizeRoles} = require('../middlewares/auth');
 
 const conn = mongoose.connection;
 
@@ -44,23 +77,6 @@ const fileStorage = new GridFsStorage({
     }
 
 })
-/*
-const announcementStorage = multer.diskStorage({
-    destination:(req,file,cb) => {
-        const ext = path.extname(file.originalname);
-        if(!fileMimeTypes.includes(file.mimetype)) {
-            return cb(new Error('File type not supported'))
-        } else {
-            cb(null,'./backend/announcementFiles')
-        }
-    },
-    filename:(req,file,cb) => {
-        const { originalname } = file
-        cb(null, `${Date.now()}-${originalname}`)
-    }
-})
-*/
-
 const announcementUpload = multer({storage: fileStorage,
     fileFilter: function (req, file, cb) {
         const ext = path.extname(file.originalname)
@@ -71,21 +87,6 @@ const announcementUpload = multer({storage: fileStorage,
         }
     }
 })
-
-
-const { 
-        getAnnouncements,
-        getSingleAnnouncement,
-
-        newAnnouncement,          
-        updateAnnouncement, 
-        deleteAnnouncement,
-        
-        getArchivedAnnouncements,
-        archiveAnnouncement
-    } = require('../controllers/announcementController');
-
-const { isAuthenticatedUser, authorizeRoles} = require('../middlewares/auth');
 
 //all users
 router.route('/announcement/:id').get(getSingleAnnouncement);

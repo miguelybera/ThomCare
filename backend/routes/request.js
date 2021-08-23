@@ -15,10 +15,65 @@ const fileMimeTypes = [
 const {GridFsStorage} = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-dotenv.config({ path: 'backend/config/config.env'});
 
 
+
+
+
+/*
+const fileStorageStudent = multer.diskStorage({
+    destination:(req,file,cb) => {
+        const ext = path.extname(file.originalname)
+        if(!fileMimeTypes.includes(file.mimetype)){
+            return cb(new Error('File type not supported'))
+        } else {
+            cb(null,'./backend/submittedFiles')
+        }
+    },
+    filename:(req,file,cb) => {
+        const { originalname } = file
+        cb(null, `${Date.now()}-${originalname}`)
+    }
+})
+*/
+
+
+
+/*
+const fileStorageAdmin = multer.diskStorage({
+    destination:(req,file,cb) => {
+        const ext = path.extname(file.originalname)
+        if(!fileMimeTypes.includes(file.mimetype)) {
+            return cb(new Error('File type not supported'))
+        } else {
+            cb(null,'./backend/returnFiles')
+        }
+    },
+    filename:(req,file,cb) => {
+        const { originalname } = file
+        cb(null, `${Date.now()}-${originalname}`)
+    }
+})
+*/
+
+
+
+const {
+        submitRequest,
+        myRequests, 
+        getSingleRequest, 
+        requestTracker,
+
+        getAllRequestsDeptChair, 
+        getAllOfficeRequests,
+        getAllRequestsStaff,
+        getTrashedRequests,
+
+        updateRequest, 
+        deleteRequest, 
+        trashRequest
+    } = require('../controllers/requestController')
+const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth')
 const conn = mongoose.connection;
 
 let gfs;
@@ -43,24 +98,6 @@ const fileStorage = new GridFsStorage({
     }
 
 })
-
-/*
-const fileStorageStudent = multer.diskStorage({
-    destination:(req,file,cb) => {
-        const ext = path.extname(file.originalname)
-        if(!fileMimeTypes.includes(file.mimetype)){
-            return cb(new Error('File type not supported'))
-        } else {
-            cb(null,'./backend/submittedFiles')
-        }
-    },
-    filename:(req,file,cb) => {
-        const { originalname } = file
-        cb(null, `${Date.now()}-${originalname}`)
-    }
-})
-*/
-
 const thomcareStudentUpload = multer({storage: fileStorage,
     fileFilter: function (req, file, cb){
         const ext = path.extname(file.originalname)
@@ -71,24 +108,6 @@ const thomcareStudentUpload = multer({storage: fileStorage,
         }
     }
 })
-
-/*
-const fileStorageAdmin = multer.diskStorage({
-    destination:(req,file,cb) => {
-        const ext = path.extname(file.originalname)
-        if(!fileMimeTypes.includes(file.mimetype)) {
-            return cb(new Error('File type not supported'))
-        } else {
-            cb(null,'./backend/returnFiles')
-        }
-    },
-    filename:(req,file,cb) => {
-        const { originalname } = file
-        cb(null, `${Date.now()}-${originalname}`)
-    }
-})
-*/
-
 const thomcareAdminUpload = multer({storage: fileStorage,
     fileFilter: function (req, file, cb){
         const ext = path.extname(file.originalname)
@@ -99,24 +118,6 @@ const thomcareAdminUpload = multer({storage: fileStorage,
         }
     }
 })
-
-const {
-        submitRequest,
-        myRequests, 
-        getSingleRequest, 
-        requestTracker,
-
-        getAllRequestsDeptChair, 
-        getAllOfficeRequests,
-        getAllRequestsStaff,
-        getTrashedRequests,
-
-        updateRequest, 
-        deleteRequest, 
-        trashRequest
-    } = require('../controllers/requestController')
-const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth')
-const { Mongoose } = require('mongoose')
 
 //all users
 router.route('/requestTracker').post(requestTracker);
