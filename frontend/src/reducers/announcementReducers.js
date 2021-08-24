@@ -19,6 +19,10 @@ import {
     UPDATE_ANNOUNCEMENT_SUCCESS,
     UPDATE_ANNOUNCEMENT_FAIL,
     UPDATE_ANNOUNCEMENT_RESET,
+    ARCHIVE_ANNOUNCEMENT_REQUEST,
+    ARCHIVE_ANNOUNCEMENT_SUCCESS,
+    ARCHIVE_ANNOUNCEMENT_FAIL,
+    ARCHIVE_ANNOUNCEMENT_RESET,
     DELETE_ANNOUNCEMENT_REQUEST,
     DELETE_ANNOUNCEMENT_SUCCESS,
     DELETE_ANNOUNCEMENT_FAIL,
@@ -145,6 +149,7 @@ export const announcementReducer = (state = {}, action) => {
 
         case DELETE_ANNOUNCEMENT_REQUEST:
         case UPDATE_ANNOUNCEMENT_REQUEST:
+        case ARCHIVE_ANNOUNCEMENT_REQUEST:
             return {
                 ...state,
                 loading: true
@@ -158,6 +163,7 @@ export const announcementReducer = (state = {}, action) => {
             }
 
         case UPDATE_ANNOUNCEMENT_SUCCESS:
+        case ARCHIVE_ANNOUNCEMENT_SUCCESS:
             return {
                 ...state,
                 loading: false,
@@ -166,6 +172,7 @@ export const announcementReducer = (state = {}, action) => {
 
         case DELETE_ANNOUNCEMENT_FAIL:
         case UPDATE_ANNOUNCEMENT_FAIL:
+        case ARCHIVE_ANNOUNCEMENT_FAIL:
             return {
                 ...state,
                 error: action.payload,
@@ -180,6 +187,7 @@ export const announcementReducer = (state = {}, action) => {
             }
 
         case UPDATE_ANNOUNCEMENT_RESET:
+        case ARCHIVE_ANNOUNCEMENT_RESET:
             return {
                 ...state,
                 isUpdated: false,

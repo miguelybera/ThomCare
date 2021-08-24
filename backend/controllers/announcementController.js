@@ -345,7 +345,7 @@ exports.archiveAnnouncement = catchAsyncErrors(async (req, res, next) => {
     }
 
     const newAnnouncementData = {
-        archiveDate: Date.now()
+        archiveDate: Date.now() - 1000
     }
     announcement = await Announcement.findByIdAndUpdate(req.params.id, newAnnouncementData, {
         new: true,

@@ -18,6 +18,9 @@ import {
     UPDATE_ANNOUNCEMENT_REQUEST,
     UPDATE_ANNOUNCEMENT_SUCCESS,
     UPDATE_ANNOUNCEMENT_FAIL,
+    ARCHIVE_ANNOUNCEMENT_REQUEST,
+    ARCHIVE_ANNOUNCEMENT_SUCCESS,
+    ARCHIVE_ANNOUNCEMENT_FAIL,
     DELETE_ANNOUNCEMENT_REQUEST,
     DELETE_ANNOUNCEMENT_SUCCESS,
     DELETE_ANNOUNCEMENT_FAIL,
@@ -269,6 +272,37 @@ export const updateAnnouncement = (id, announcementData) => async(dispatch) => {
         )
     }
 }
+
+// Update announcement (ADMIN)
+export const archiveAnnouncement = (id) => async(dispatch) => {
+    try{
+        dispatch({
+            type: UPDATE_ANNOUNCEMENT_REQUEST
+        })
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const { data } = await axios.put(`/api/v1/admin/archiveAnnouncement/${id}`, {}, config)
+
+        
+        dispatch({
+            type: UPDATE_ANNOUNCEMENT_SUCCESS,
+            payload: data.success
+        })
+    }
+    catch(error){
+        dispatch({
+            type: UPDATE_ANNOUNCEMENT_FAIL,
+            payload: error.response.data.message
+            }
+        )
+    }
+}
+
 
 //clear errors
 export const clearErrors = () => async(dispatch) => {

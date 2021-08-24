@@ -2,8 +2,8 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAdminAnnouncements, deleteAnnouncement, clearErrors } from './../../actions/announcementActions'
-import { DELETE_ANNOUNCEMENT_RESET } from './../../constants/announcementConstants'
+import { getAdminAnnouncements, deleteAnnouncement, archiveAnnouncement, clearErrors } from './../../actions/announcementActions'
+import { ARCHIVE_ANNOUNCEMENT_RESET, DELETE_ANNOUNCEMENT_RESET } from './../../constants/announcementConstants'
 import Sidebar from './../layout/Sidebar'
 import MetaData from './../layout/MetaData'
 import Loader from './../layout/Loader'
@@ -18,7 +18,7 @@ const ListAnnouncements = ({ history }) => {
     const dispatch = useDispatch()
 
     const { loading, announcements, error } = useSelector(state => state.announcements)
-    const { error: deleteError, isDeleted } = useSelector(state => state.announcement)
+    const { error: deleteError, isDeleted, isUpdated } = useSelector(state => state.announcement)
 
     const [show, setShow] = useState(false);
     const [deleteAnnouncementId, setDeleteAnnouncementId] = useState('');
@@ -48,7 +48,16 @@ const ListAnnouncements = ({ history }) => {
             })
         }
 
-    }, [dispatch, alert, error, isDeleted, deleteError])
+        if (isUpdated) {
+            alert.success('Announcement has been archived successfully.')
+            history.push('/admin/announcements')
+
+            dispatch({
+                type: ARCHIVE_ANNOUNCEMENT_RESET
+            })
+        }
+
+    }, [dispatch, alert, error, isDeleted, isUpdated, deleteError])
 
     function changeDateFormat(date) {
         return dateFormat(date, "mmm d, yyyy h:MMtt")
@@ -104,6 +113,9 @@ const ListAnnouncements = ({ history }) => {
                 </Fragment>,
                 actions: <Fragment>
                     <button><Link to={`/admin/announcement/${announcement._id}`}>Update</Link></button>
+                    <button onClick={() => {
+                        dispatch(archiveAnnouncement(announcement._id))
+                    }}>Archive</button>
                     <button onClick={() => {
                         handleShow()
                         setDeleteAnnouncementId(announcement._id)
