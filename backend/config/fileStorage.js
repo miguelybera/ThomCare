@@ -1,6 +1,8 @@
 const {GridFsStorage} = require('multer-gridfs-storage');
+const dotenv = require('dotenv');
+dotenv.config({ path: 'backend/config/config.env'})
 const fileStorage = new GridFsStorage({
-    url: 'mongodb+srv://admin:admin@thomcare.xnkwv.mongodb.net/Thomcare?retryWrites=true&w=majority',
+    url: process.env.DB_URI,
     file: (req, file) =>{
         return new Promise((resolve, reject)=>{
                 
