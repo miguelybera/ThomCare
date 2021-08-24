@@ -4,8 +4,7 @@ const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const APIFeatures = require('../utils/apiFeatures');
 const Grid = require('gridfs-stream');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-dotenv.config({ path: 'backend/config/config.env'});
+
 
 const conn = mongoose.connection;
 

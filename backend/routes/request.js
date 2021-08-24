@@ -15,47 +15,8 @@ const fileMimeTypes = [
 const {GridFsStorage} = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const mongoose = require('mongoose');
-
-
-
-
-
-/*
-const fileStorageStudent = multer.diskStorage({
-    destination:(req,file,cb) => {
-        const ext = path.extname(file.originalname)
-        if(!fileMimeTypes.includes(file.mimetype)){
-            return cb(new Error('File type not supported'))
-        } else {
-            cb(null,'./backend/submittedFiles')
-        }
-    },
-    filename:(req,file,cb) => {
-        const { originalname } = file
-        cb(null, `${Date.now()}-${originalname}`)
-    }
-})
-*/
-
-
-
-/*
-const fileStorageAdmin = multer.diskStorage({
-    destination:(req,file,cb) => {
-        const ext = path.extname(file.originalname)
-        if(!fileMimeTypes.includes(file.mimetype)) {
-            return cb(new Error('File type not supported'))
-        } else {
-            cb(null,'./backend/returnFiles')
-        }
-    },
-    filename:(req,file,cb) => {
-        const { originalname } = file
-        cb(null, `${Date.now()}-${originalname}`)
-    }
-})
-*/
-
+const dotenv = require('dotenv');
+dotenv.config({ path: 'backend/config/config.env'});
 
 
 const {

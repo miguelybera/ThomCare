@@ -6,8 +6,6 @@ const sendEmail = require('../utils/sendEmail');
 const Audit = require('../models/audit');
 const Grid = require('gridfs-stream');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-dotenv.config({ path: 'backend/config/config.env'});
 
 
 const conn = mongoose.connection;
