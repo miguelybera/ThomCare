@@ -103,11 +103,17 @@ const ListArchivedAnnouncements = ({ history }) => {
                     <p>Track: {announcement.track}</p>
                 </Fragment>,
                 actions: <Fragment>
-                    <button><Link to={`/admin/announcement/${announcement._id}`}>Update</Link></button>
-                    <button onClick={() => {
+                    <Link to={`/admin/announcement/${announcement._id}`}>
+                        <Button variant="primary" className="mr-5" style={{ marginRight: '5px' }}>
+                            <i class="fa fa-pencil" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                        </Button>
+                    </Link>
+                    <Button variant="danger" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
                         handleShow()
                         setDeleteAnnouncementId(announcement._id)
-                    }}>Delete</button>
+                    }}>
+                        <i class="fa fa-trash" aria-hidden="true" />
+                    </Button>
                 </Fragment>
             })
 

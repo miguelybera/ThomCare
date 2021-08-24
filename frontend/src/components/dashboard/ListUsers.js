@@ -88,18 +88,30 @@ const ListUsers = ({ history }) => {
                 name: `${user.firstName} ${user.lastName}`,
                 email: user.email,
                 actions: <Fragment>
-                    <button>
-                        {(user._id === currentUser._id) ? (
-                            <Link to={`/profile`}>Update</Link>
-                        ) : (
-                            <Link to={`/admin/user/${user._id}`}>Update</Link>
-                        )
-                        }
-                    </button>
-                    <button disabled={user._id === currentUser._id ? true : false} onClick={()=>{
+                    {(user._id === currentUser._id) ? (
+                        <span>
+                            <Link to={`/profile`}>
+                                <Button variant="primary" className="mr-5" style={{ marginRight: '5px' }}>
+                                    <i class="fa fa-pencil" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                                </Button>
+                            </Link>
+                        </span>
+                    ) : (
+                        <span>
+                            <Link to={`/admin/user/${user._id}`}>
+                                <Button variant="primary" className="mr-5" style={{ marginRight: '5px' }}>
+                                    <i class="fa fa-pencil" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                                </Button>
+                            </Link>
+                        </span>
+                    )
+                    }
+                    <Button variant="danger" className="mr-5" disabled={user._id === currentUser._id ? true : false} style={{ marginRight: '5px' }} onClick={() => {
                         handleShow()
                         setDeleteUserId(user._id)
-                    }}>Delete</button>
+                    }}>
+                        <i class="fa fa-trash" aria-hidden="true" />
+                    </Button>
                 </Fragment >
             })
 

@@ -95,7 +95,7 @@ const ListAnnouncements = ({ history }) => {
                 {
                     label: 'Actions',
                     field: 'actions',
-                    width: 100
+                    width: 150
                 }
             ],
             rows: []
@@ -112,14 +112,22 @@ const ListAnnouncements = ({ history }) => {
                     <p>Track: {announcement.track}</p>
                 </Fragment>,
                 actions: <Fragment>
-                    <button><Link to={`/admin/announcement/${announcement._id}`}>Update</Link></button>
-                    <button onClick={() => {
+                    <Link to={`/admin/announcement/${announcement._id}`}>
+                        <Button variant="primary" className="mr-5" style={{ marginRight: '5px' }}>
+                            <i class="fa fa-pencil" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                        </Button>
+                    </Link>
+                    <Button variant="warning" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
                         dispatch(archiveAnnouncement(announcement._id))
-                    }}>Archive</button>
-                    <button onClick={() => {
+                    }}>
+                        <i class="fa fa-archive" aria-hidden="true" />
+                    </Button>
+                    <Button variant="danger" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
                         handleShow()
                         setDeleteAnnouncementId(announcement._id)
-                    }}>Delete</button>
+                    }}>
+                        <i class="fa fa-trash" aria-hidden="true" />
+                    </Button>
                 </Fragment>
             })
 
@@ -164,10 +172,9 @@ const ListAnnouncements = ({ history }) => {
 
                             <Container>
                                 <h3>Announcements</h3>
-                                <button><Link to='/admin/new/announcement'>Create announcement</Link></button>
+                                <Button variant="primary"><Link to='/admin/new/announcement' style={{ textDecoration: 'none', color: 'white' }}>Create announcement</Link></Button>
                                 <MDBDataTableV5
                                     data={setAnnouncements()}
-                                    hover
                                     searchTop
                                     pagingTop
                                     scrollX
