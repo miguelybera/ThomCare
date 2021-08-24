@@ -52,28 +52,40 @@ const TrackingPage = ({ history }) => {
         <Fragment>
             <MetaData title={'Track my request'} />
             <Container fluid>
-                    <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
-                        <Card style={{ width: '30rem', align: 'center' }}>
-                            <Card.Body>
-                                <Card.Title style={{ margin: '50px 0 20px 0' }}>Track my Request</Card.Title>
+                <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
+                    <Card style={{ width: '30rem', align: 'center' }}>
+                        <Card.Body>
+                            <Card.Title style={{ margin: '50px 0 20px 0' }}>Track my Request</Card.Title>
 
-                                <FloatingLabel
-                                    controlId="floatingInput"
-                                    label="Tracking ID"
-                                    className="mb-3"
-                                >
-                                    <Form.Control type="text" placeholder="ABC123" name="trackingNumber" value={trackingNumber} onChange={onChange} />
-                                </FloatingLabel>
+                            <FloatingLabel
+                                controlId="floatingInput"
+                                label="Tracking ID"
+                                className="mb-3"
+                            >
+                                <Form.Control type="text" placeholder="ABC123" name="trackingNumber" value={trackingNumber} onChange={onChange} />
+                            </FloatingLabel>
 
-                                <FloatingLabel controlId="floatingInput" label="Surname">
-                                    <Form.Control type="text" placeholder="Surname" name="lastName" value={lastName} onChange={onChange} />
-                                </FloatingLabel>
+                            <FloatingLabel controlId="floatingInput" label="Surname">
+                                <Form.Control type="text" placeholder="Surname" name="lastName" value={lastName} onChange={onChange} />
+                            </FloatingLabel>
 
-                                <Button type='submit' style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }} onClick={submitHandler}>Track</Button>
-                            </Card.Body>
-                        </Card>
-                    </Row>
-                </Container>
+                            <Button
+                                onClick={submitHandler}
+                                type='submit'
+                                style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                disabled={loading ? true : false}>
+                                {loading ? (
+                                    <span>
+                                        <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
+                                    </span>
+                                ) : (
+                                    <span>Track</span>
+                                )}
+                            </Button>
+                        </Card.Body>
+                    </Card>
+                </Row>
+            </Container>
         </Fragment>
     )
 }

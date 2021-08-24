@@ -90,7 +90,7 @@ const ListAnnouncements = ({ history }) => {
                 {
                     label: 'Tags',
                     field: 'tags',
-                    width: 150
+                    width: 180
                 },
                 {
                     label: 'Actions',
@@ -107,9 +107,11 @@ const ListAnnouncements = ({ history }) => {
                 title: announcement.title,
                 description: announcement.description,
                 tags: <Fragment>
-                    <p>Year Level: {announcement.yearLevel}</p>
-                    <p>Course: {announcement.course}</p>
-                    <p>Track: {announcement.track}</p>
+                    <span>
+                        <p style={{ margin: '0' }}><b>Year Level: </b>{announcement.yearLevel}</p>
+                        <p style={{ margin: '0' }}><b>Course: </b>{announcement.course}</p>
+                        <p style={{ margin: '0' }}><b>Track: </b>{announcement.track}</p>
+                    </span>
                 </Fragment>,
                 actions: <Fragment>
                     <Link to={`/admin/announcement/${announcement._id}`}>
@@ -139,40 +141,38 @@ const ListAnnouncements = ({ history }) => {
     return (
         <Fragment>
             <MetaData title={'Announcements'} />
-            {loading ? <Loader /> : (
-                <>
-                    <Modal
-                        show={show}
-                        onHide={handleClose}
-                        backdrop="static"
-                        keyboard={false}
-                    >
-                        <Modal.Header closeButton>
-                            <Modal.Title>Are you sure you want to delete this announcement?</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            This change cannot be undone.
+            <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Are you sure you want to delete this announcement?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    This change cannot be undone.
                         </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={handleClose}>
-                                Close
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
                             </Button>
-                            <Button variant="primary" onClick={() => deleteAnnouncementHandler(deleteAnnouncementId)}>Yes, I'm sure</Button>
-                        </Modal.Footer>
-                    </Modal>
-                    <div className="row">
-                        <div className="col-12 col-md-2">
-                            <Sidebar />
-                        </div>
+                    <Button variant="primary" onClick={() => deleteAnnouncementHandler(deleteAnnouncementId)}>Yes, I'm sure</Button>
+                </Modal.Footer>
+            </Modal>
+            <div className="row">
+                <div className="col-12 col-md-2">
+                    <Sidebar />
+                </div>
+                <div className="col-12 col-md-10">
+                    <h1 className="my-4">Control Panel</h1>
 
-                        <div className="col-12 col-md-10">
-                            <h1 className="my-4">Control Panel</h1>
-
-                            <Container className="space_inside"></Container>
-
-                            <Container>
-                                <h3>Announcements</h3>
-                                <Button variant="primary"><Link to='/admin/new/announcement' style={{ textDecoration: 'none', color: 'white' }}>Create announcement</Link></Button>
+                    <Container className="space_inside"></Container>
+                    <Container>
+                        <h3>Announcements</h3>
+                        <Button variant="primary"><Link to='/admin/new/announcement' style={{ textDecoration: 'none', color: 'white' }}>Create announcement</Link></Button>
+                        {loading ? <Loader /> : (
+                            <>
                                 <MDBDataTableV5
                                     data={setAnnouncements()}
                                     searchTop
@@ -181,11 +181,11 @@ const ListAnnouncements = ({ history }) => {
                                     entriesOptions={[5, 20, 25]}
                                     entries={5}
                                 />
-                            </Container>
-                        </div>
-                    </div>
-                </>
-            )}
+                            </>
+                        )}
+                    </Container>
+                </div>
+            </div>
         </Fragment>
     )
 }

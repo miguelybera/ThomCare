@@ -88,8 +88,15 @@ const UpdatePassword = ({ history }) => {
                                 <Button
                                     type='submit'
                                     style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
-                                    disabled={loading ? true : false}
-                                >Change Password</Button>
+                                    disabled={loading ? true : false}>
+                                    {loading ? (
+                                        <span>
+                                            <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
+                                        </span>
+                                    ) : (
+                                        <span>Update Password</span>
+                                    )}
+                                </Button>
                             </Form>
                         </Card.Body>
                     </Card>

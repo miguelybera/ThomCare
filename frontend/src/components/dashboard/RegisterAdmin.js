@@ -12,7 +12,7 @@ import { register, clearErrors } from '../../actions/userActions'
 
 var dateFormat = require('dateformat')
 
-const UpdateUser = ({history}) => {
+const UpdateUser = ({ history }) => {
 
     const dispatch = useDispatch()
     const alert = useAlert()
@@ -112,7 +112,7 @@ const UpdateUser = ({history}) => {
                                                     Email address
                                                     </Form.Label>
                                                 <Col sm={9}>
-                                                    <Form.Control type="email" placeholder="juan.delacruz.iics@ust.edu.ph" pattern="[a-z]{1,}\.[a-z]{1,}@ust\.edu\.ph" value={email} name="email" onChange={e => setEmail(e.target.value)} required/>
+                                                    <Form.Control type="email" placeholder="juan.delacruz.iics@ust.edu.ph" pattern="[a-z]{1,}\.[a-z]{1,}@ust\.edu\.ph" value={email} name="email" onChange={e => setEmail(e.target.value)} required />
                                                 </Col>
                                             </Form.Group>
                                             <Row className="mb-3">
@@ -126,7 +126,18 @@ const UpdateUser = ({history}) => {
                                                     <Form.Control type="password" placeholder="Confirm password" name="confirmPassword" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} required />
                                                 </Form.Group>
                                             </Row>
-                                            <Button type='submit' style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }} disabled={loading ? true : false}>Register</Button>
+                                            <Button
+                                                type='submit'
+                                                style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                                disabled={loading ? true : false}>
+                                                {loading ? (
+                                                    <span>
+                                                        <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
+                                                    </span>
+                                                ) : (
+                                                    <span>Register</span>
+                                                )}
+                                            </Button>
                                         </Form>
                                     </Card.Body>
                                 </Card>

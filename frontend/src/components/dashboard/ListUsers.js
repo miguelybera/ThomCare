@@ -123,57 +123,50 @@ const ListUsers = ({ history }) => {
     return (
         <Fragment>
             <MetaData title={'All Users'} />
-            {loading ? <Loader /> : (
-                <>
-                    <>
-                        <Modal
-                            show={show}
-                            onHide={handleClose}
-                            backdrop="static"
-                            keyboard={false}
-                        >
-                            <Modal.Header closeButton>
-                                <Modal.Title>Are you sure you want to delete this user?</Modal.Title>
-                            </Modal.Header>
-                            <Modal.Body>
-                                This change cannot be undone.
+            <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Are you sure you want to delete this user?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    This change cannot be undone.
                             </Modal.Body>
-                            <Modal.Footer>
-                                <Button variant="secondary" onClick={handleClose}>
-                                    Cancel
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Cancel
                                 </Button>
-                                <Button variant="primary" onClick={() => deleteUserHandler(deleteUserId)}>Yes, I'm sure</Button>
-                            </Modal.Footer>
-                        </Modal>
-                    </>
-                    <div className="row">
-                        <div className="col-12 col-md-2">
-                            <Sidebar />
-                        </div>
+                    <Button variant="primary" onClick={() => deleteUserHandler(deleteUserId)}>Yes, I'm sure</Button>
+                </Modal.Footer>
+            </Modal>
+            <div className="row">
+                <div className="col-12 col-md-2">
+                    <Sidebar />
+                </div>
 
-                        <div className="col-12 col-md-10">
-                            <h1 className="my-4">Control Panel</h1>
+                <div className="col-12 col-md-10">
+                    <h1 className="my-4">Control Panel</h1>
 
-                            <Container className="space_inside"></Container>
+                    <Container className="space_inside"></Container>
 
-                            <Container>
-                                <h3>Users</h3>
-
+                    <Container>
+                        <h3>Users</h3>
+                        {loading ? <Loader /> : (
                                 <MDBDataTableV5
                                     data={setUsers()}
-                                    hover
                                     searchTop
                                     pagingTop
                                     scrollX
                                     entriesOptions={[5, 20, 25]}
                                     entries={5}
                                 />
-                            </Container>
-                        </div>
-                    </div>
-                </>
-
-            )}
+                        )}
+                    </Container>
+                </div>
+            </div>
         </Fragment>
     )
 }

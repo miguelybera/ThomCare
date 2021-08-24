@@ -58,14 +58,25 @@ const ConfirmRegister = ({ history }) => {
                 </div>
                 <Card style={{ width: '30rem', marginTop: '40px' }}>
                     <Card.Body>
-                        <Card.Title style={{textAlign: 'center'}}>Confirm Student Information</Card.Title>
-                        <Card.Subtitle className="text-muted" style={{fontSize: '12px', textAlign: 'center', marginBottom: '20px'}}>Kindly confirm your student info. Once you submit, you won't be able to update your profile (unless you contact your administrator to submit a request to update your profile).</Card.Subtitle>
+                        <Card.Title style={{ textAlign: 'center' }}>Confirm Student Information</Card.Title>
+                        <Card.Subtitle className="text-muted" style={{ fontSize: '12px', textAlign: 'center', marginBottom: '20px' }}>Kindly confirm your student info. Once you submit, you won't be able to update your profile (unless you contact your administrator to submit a request to update your profile).</Card.Subtitle>
                         <Card.Text><b>Name:</b> {studentInfo.firstName} {studentInfo.lastName}</Card.Text>
                         <Card.Text><b>Student Number:</b> {studentInfo.studentNumber}</Card.Text>
                         <Card.Text><b>Course:</b> {studentInfo.course}</Card.Text>
                         <Card.Text><b>Email:</b> {studentInfo.email}</Card.Text>
-                        <Button variant='danger' onClick={goBack} style={{marginRight: '5px', marginTop: '10px'}} disabled={loading ? true : false}>Back</Button>
-                        <Button onClick={submitHandler} style={{marginTop: '10px'}} disabled={loading ? true : false}>Register</Button>
+                        <Button variant='danger' onClick={goBack} style={{ marginRight: '5px', marginTop: '10px' }} disabled={loading ? true : false}>Back</Button>
+                        <Button
+                            onClick={submitHandler}
+                            style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                            disabled={loading ? true : false}>
+                            {loading ? (
+                                <span>
+                                    <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
+                                </span>
+                            ) : (
+                                <span>Register</span>
+                            )}
+                        </Button>
                     </Card.Body>
                 </Card>
 

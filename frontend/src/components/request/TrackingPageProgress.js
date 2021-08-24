@@ -109,9 +109,7 @@ const TrackingPageProgress = () => {
                     </Card>
                 </Fragment>
             ) : (
-                <Fragment>
-                    <Loader />
-                </Fragment>
+                <Loader/>
             )}
         </Fragment>
     )

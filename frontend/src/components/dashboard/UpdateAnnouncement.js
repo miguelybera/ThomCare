@@ -212,7 +212,18 @@ const UpdateAnnouncement = ({ history, match }) => {
                                             <Form.Label>Attach document(s):</Form.Label>
                                             <Form.Control type="file" multiple />
                                         </Form.Group>
-                                        <Button type='submit' style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }} disabled={loading ? true : false}>Update</Button>
+                                        <Button
+                                            type='submit'
+                                            style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                            disabled={loading ? true : false}>
+                                            {loading ? (
+                                                <span>
+                                                    <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
+                                                </span>
+                                            ) : (
+                                                <span>Update</span>
+                                            )}
+                                        </Button>
                                     </Form>
                                 </Card.Body>
                             </Card>

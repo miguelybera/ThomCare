@@ -58,7 +58,7 @@ const Profile = () => {
     const submitHandler = e => {
         e.preventDefault()
 
-        dispatch(updateProfile({firstName, lastName}))
+        dispatch(updateProfile({ firstName, lastName }))
     }
 
     return (
@@ -79,10 +79,10 @@ const Profile = () => {
                                             Name
                                     </Form.Label>
                                         <Col sm={6}>
-                                            <Form.Control type="text" placeholder="First Name" value={firstName} disabled={editProfile ? false : true} onChange={e => setFirstName(upperCase(e.target.value))}/>
+                                            <Form.Control type="text" placeholder="First Name" value={firstName} disabled={editProfile ? false : true} onChange={e => setFirstName(upperCase(e.target.value))} />
                                         </Col>
                                         <Col sm={4}>
-                                            <Form.Control type="text" placeholder="Last Name" value={lastName} disabled={editProfile ? false : true} onChange={e => setLastName(upperCase(e.target.value))}/>
+                                            <Form.Control type="text" placeholder="Last Name" value={lastName} disabled={editProfile ? false : true} onChange={e => setLastName(upperCase(e.target.value))} />
                                         </Col>
                                     </Form.Group>
 
@@ -127,16 +127,25 @@ const Profile = () => {
                                     </Form.Group>
                                     {
                                         editProfile ? (
-                                            <Button type='submit' disabled={editLoading ? true : false}>Save</Button>
+                                            <Button
+                                                type='submit'
+                                                style={{ marginTop: '10px', marginRight: '5px', borderRadius: '50px', width: '10rem' }}
+                                                disabled={editLoading ? true : false}>
+                                                {editLoading ? (
+                                                    <span>
+                                                        <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
+                                                    </span>
+                                                ) : (
+                                                    <span>Save</span>
+                                                )}
+                                            </Button>
                                         ) : (
                                             <Fragment>
-                                                <Button onClick={() => setEditProfile(!editProfile)}>Edit Profile</Button>
-                                                <Button><Link to='/password/update' style={{ textDecoration: 'none', color: 'white' }}>Change Password</Link></Button>
+                                                <Button style={{marginRight: '5px'}} onClick={() => setEditProfile(!editProfile)}>Edit Profile</Button>
+                                                <Link to='/password/update' style={{ textDecoration: 'none', color: 'white' }}><Button>Change Password</Button></Link>
                                             </Fragment>
-
                                         )
                                     }
-
                                 </Form>
                             </Card.Body>
                         </Card>
