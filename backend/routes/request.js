@@ -15,8 +15,7 @@ const fileMimeTypes = [
 const {GridFsStorage} = require('multer-gridfs-storage');
 const Grid = require('gridfs-stream');
 const mongoose = require('mongoose');
-const dotenv = require('dotenv');
-dotenv.config({ path: 'backend/config/config.env'});
+
 
 
 const {
@@ -39,6 +38,7 @@ const {
         assignRequestToSelfCICS
     } = require('../controllers/requestController')
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth')
+const fileStorage = require('../config/fileStorage')
 const conn = mongoose.connection;
 
 let gfs;
@@ -47,22 +47,7 @@ conn.once('open', () =>{
     gfs.collection('fileStorage');
 })
 
-const fileStorage = new GridFsStorage({
-    url: process.env.DB_URI,
-    file: (req, file) =>{
-        return new Promise((resolve, reject)=>{
-                
-                const filename = Date.now() + '-'+ (file.originalname);
-                const fileInfo ={
-                    filename: filename,
-                    bucketName: 'fileStorage'
-                };
-                resolve(fileInfo);
-            
-        })
-    }
 
-})
 const thomcareStudentUpload = multer({storage: fileStorage,
     fileFilter: function (req, file, cb){
         const ext = path.extname(file.originalname)
