@@ -323,11 +323,11 @@ exports.deleteAnnouncement = catchAsyncErrors(async (req, res, next) => {
         arrayIds.push(filesAttached[i].id) 
       }
 
-      gfs.remove({_id: arrayIds, root: 'fileStorage'}, (err, gridStore)=>{
-          if(err){
-            return next(new ErrorHandler('Error deleting announcement'))
-          }
-      })
+      gfs.remove({_id: arrayIds, root: 'fileStorage'}, (err, gridStore) =>{
+        if (err){
+          return next(new ErrorHandler('Error deleting file'))
+        }
+    });
     await announcement.remove()
     res.status(200).json({
         success: true,
