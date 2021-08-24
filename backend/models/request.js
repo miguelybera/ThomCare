@@ -42,8 +42,8 @@ const requestSchema = new mongoose.Schema({
         default: 'Pending'
     },
     managedBy:{
-        type: mongoose.Schema.ObjectId,
-        ref: 'User'
+        type: String,
+        default: ''
     },
     requestorFirstName:{
         type: String,

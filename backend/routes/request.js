@@ -68,10 +68,14 @@ const {
         getAllOfficeRequests,
         getAllRequestsStaff,
         getTrashedRequests,
+        getAvailableRequests,
+        getAllAssignedRequests,
+
 
         updateRequest, 
         deleteRequest, 
-        trashRequest
+        trashRequest,
+        assignRequestToSelfCICS
     } = require('../controllers/requestController')
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth')
 const conn = mongoose.connection;
@@ -135,7 +139,9 @@ router.route('/deptChair/trash').get(isAuthenticatedUser, authorizeRoles('IT Dep
 router.route('/cicsAdmin/requests').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getAllRequestsStaff);
 router.route('/cicsAdmin/officeRequests').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getAllOfficeRequests);
 router.route('/cicsAdmin/trash').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getTrashedRequests );
-
+router.route('/cicsAdmin/available/requests').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getAvailableRequests );
+router.route('/cicsAdmin/assign/request/:requestId').put(isAuthenticatedUser, authorizeRoles('CICS Staff'), assignRequestToSelfCICS );
+router.route('/cicsAdmin/assigned/requests').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getAllAssignedRequests );
 //dept chair and cics staff
 router.route('/admin/updateRequest/:requestId').put(isAuthenticatedUser, thomcareAdminUpload.array('returningFiles',5),authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), updateRequest );
 router.route('/admin/trashRequest/:requestId').put(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), trashRequest);
