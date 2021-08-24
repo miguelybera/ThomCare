@@ -310,11 +310,7 @@ exports.deleteRequest = catchAsyncErrors(async (req, res, next) => {
         arrayIds.push(filesReturned[i].id) 
       }
 
-      gfs.remove({_id: arrayIds, root: 'fileStorage'}, (err, gridStore)=>{
-          if(err){
-            return next(new ErrorHandler('Error deleting request'))
-          }
-      })
+      gfs.remove({_id: arrayIds, root: 'fileStorage'});
      
 
     await request.remove()
