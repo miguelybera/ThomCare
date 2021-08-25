@@ -13,9 +13,7 @@ const fileMimeTypes = [
                         'application/pdf'
                     ]
 
-const {GridFsStorage} = require('multer-gridfs-storage');
-const Grid = require('gridfs-stream');
-const mongoose = require('mongoose');
+
 
 
 
@@ -33,13 +31,7 @@ const {
 
 const { isAuthenticatedUser, authorizeRoles} = require('../middlewares/auth');
 const fileStorage = require('../config/fileStorage')
-const conn = mongoose.connection;
 
-let gfs;
-conn.once('open', () =>{
-    gfs = Grid(conn.db, mongoose.mongo);
-    gfs.collection('fileStorage');
-})
 
 const announcementUpload = multer({storage: fileStorage,
     fileFilter: function (req, file, cb) {
