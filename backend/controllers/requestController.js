@@ -346,13 +346,13 @@ exports.requestTracker = catchAsyncErrors(async (req, res, next) => {
     })
 })
 
-// Move request to trash => /api/v1/admin/trashRequest/:requestId
+// Move request to trash or trash to restore => /api/v1/admin/trashRequest/:requestId
 exports.trashRequest = catchAsyncErrors(async (req, res, next) => {
     let request = await Request.findById(req.params.requestId);
 
     if (!request) { return next(new ErrorHandler(`Request does not exist with this id:(${req.params.requestId})`)) }
 
-    const newRequestData = { isTrash: true }
+    const newRequestData = { isTrash: req.body.isTrash }
     
     request = await Request.findByIdAndUpdate(req.params.requestId, newRequestData, {
         new: true,

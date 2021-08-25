@@ -168,7 +168,7 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
     if (!announcement) {
         return next(new ErrorHandler('Announcement Not Found', 404))
     }
-    let newTitle, newDescription, newCourse, newYearLevel, newTrack, newArchiveDate, newAnnouncementType, newSetExpiry
+    let newTitle, newDescription, newCourse, newYearLevel, newTrack, newArchiveDate, newAnnouncementType, newSetExpiry, newAnnouncementFiles
     if (req.body.archiveDate == null || req.body.archiveDate == '') {
         newArchiveDate = announcement.archiveDate
     } else {
@@ -180,9 +180,10 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
         newSetExpiry = req.body.setExpiry
         if (true) {
             newArchiveDate = new Date(req.body.archiveDate)
-        } else {
+        } else{
             newArchiveDate = new Date('3000-01-01') //yyyy-mm-dd
         }
+        
     }
     if (req.body.title == null || req.body.title == '') {
         newTitle = announcement.title
@@ -213,6 +214,11 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
         newTrack = announcement.track
     } else {
         newTrack = req.body.track
+    }
+    if (req.files == null || req.files == ''){
+        newAnnouncementFiles = announcement.fileAttachments
+    }else{
+        newAnnouncementFiles = req.files
     }
     if (newYearLevel == '1st Year' || newYearLevel == '2nd Year') {
         if (newTrack == "Core Computer Science" || newTrack == "Game Development" || newTrack == "Data Science" ||
@@ -274,29 +280,18 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
             return next(new ErrorHandler('1st year and 2nd year do not have tracks', 400))
         }
     }
-    let newAnnouncementData
-    if (req.files != null || req.files != '') {
-        newAnnouncementData = {
+    let  newAnnouncementData = {
             title: newTitle,
             description: newDescription,
             course: newCourse,
             yearLevel: newYearLevel,
             track: newTrack,
             announcementType: newAnnouncementType,
+            setExpiry: newSetExpiry,
             archiveDate: newArchiveDate,
-            fileAttachments: req.files
+            fileAttachments: newAnnouncementFiles
         }
-    } else {
-        newAnnouncementData = {
-            title: newTitle,
-            description: newDescription,
-            course: newCourse,
-            yearLevel: newYearLevel,
-            track: newTrack,
-            announcementType: newAnnouncementType,
-            archiveDate: newArchiveDate
-        }
-    }
+     
     announcement = await Announcement.findByIdAndUpdate(req.params.id, newAnnouncementData, {
         new: true,
         runValidators: true,
@@ -304,7 +299,8 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
     });
     res.status(200).json({
         success: true,
-        announcement
+        announcement,
+        newSetExpiry
     })
 
 })

@@ -37,6 +37,17 @@ class APIFeatures{
         this.query = this.query.find({...keyword});
         return this;
     }
+    searchForms(){
+        const keyword = this.queryStr.keyword ? {
+            formName: {
+                $regex: this.queryStr.keyword,
+                $options: 'i' // i means case insensitive
+            }
+        }: {}
+        //console.log(keyword)
+        this.query = this.query.find({...keyword});
+        return this;
+    }
 
     filter() {
 
