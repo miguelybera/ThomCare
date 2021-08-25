@@ -180,7 +180,11 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
         newSetExpiry = req.body.setExpiry
         
         if (newSetExpiry === true) {
-            newArchiveDate = new Date(req.body.archiveDate)
+            if (req.body.archiveDate == null || req.body.archiveDate == '') {
+                newArchiveDate = announcement.archiveDate
+            } else {
+                newArchiveDate = new Date(req.body.archiveDate)
+            }
         } else{
             newArchiveDate = new Date('3000-01-01') //yyyy-mm-dd
         }
