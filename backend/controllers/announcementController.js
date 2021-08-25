@@ -174,7 +174,7 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
     } else {
         newArchiveDate = new Date(req.body.archiveDate)
     }
-    if (req.body.setExpiry == null && req.body.setExpiry == '') {
+    if (req.body.setExpiry === null) {
         newSetExpiry = announcement.setExpiry
     } else {
         newSetExpiry = req.body.setExpiry
