@@ -30,6 +30,10 @@ import {
     getRequestDetailsReducer
 } from './reducers/requestReducer'
 
+import {
+    getCoursesReducer
+} from './reducers/courseReducers'
+
 const reducer = combineReducers({
     auth: authReducer, //get currently logged in, for login and logout
     users: getUsersReducer, //get all users
@@ -50,7 +54,9 @@ const reducer = combineReducers({
     announcement: announcementReducer, //update or delete announcement
     
     student: studentInfoReducer, //save trackingNumber and surname ? or request details in local storage
-    request: getRequestDetailsReducer //get single request details
+    request: getRequestDetailsReducer, //get single request details
+
+    courses: getCoursesReducer //get single request details
 })
 
 

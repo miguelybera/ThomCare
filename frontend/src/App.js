@@ -28,6 +28,7 @@ import AnnouncementDetails from './components/announcement/AnnouncementDetails'
 //request folder
 import TrackingPage from './components/request/TrackingPage'
 import TrackingPageProgress from './components/request/TrackingPageProgress'
+import SampleForm from './components/request/SampleForm'
 
 //dashboard folder
 import ControlPanel from './components/dashboard/ControlPanel'
@@ -73,6 +74,8 @@ function App() {
 
                                 <Route path='/track' component={TrackingPage} exact />
                                 <Route path='/track/:id' component={TrackingPageProgress} exact />
+
+                                <ProtectedRoute path='/request' component={SampleForm} exact />
                                 {/**needs to be logged in */}
                                 <ProtectedRoute path='/messenger' loggedIn={true} component={Messenger} exact />
                                 <ProtectedRoute path='/profile' loggedIn={true} component={Profile} exact />
