@@ -3,14 +3,7 @@ const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const APIFeatures = require('../utils/apiFeatures');
 const Audit = require('../models/audit');
-const Grid = require('gridfs-stream');
-const mongoose = require('mongoose');
-const conn = mongoose.connection;
-let gfs;
-conn.once('open', () =>{
-    gfs = Grid(conn.db, mongoose.mongo);
-    gfs.collection('fileStorage');
-})
+const cloudinary = require('cloudinary').v2;
 
 // Create or upload a new form => /api/v1/admin/new/form
 exports.createForm = catchAsyncErrors(async (req, res, next) => {
@@ -102,18 +95,19 @@ exports.updateForm = catchAsyncErrors(async (req, res, next) => {
 exports.deleteForm = catchAsyncErrors(async (req, res, next) => {
     const form = await Form.findById(req.params.formId);
     if (!form) { return next(new ErrorHandler('Form Id does not exist')) }
+    
     const filesAttached = form.formFiles
     fileLength= filesAttached.length
     let arrayIds = []
     for (let i = 0; i < fileLength; i++) {
-        arrayIds.push(filesAttached[i].id) 
+        arrayIds.push(filesAttached[i].filename) 
       }
 
-      gfs.remove({_id: arrayIds, root: 'fileStorage'}, (err, gridStore) =>{
-        if (err){
-          return next(new ErrorHandler('Error deleting file'))
-        }
-    });
+      for (let x = 0; x< arrayIds; x++ ){
+        await cloudinary.v2.uploader.destroy(arrayIds[x], resource_type = 'raw');
+     }
+    
+    
     await form.remove()
     res.status(200).json({
         success: true,

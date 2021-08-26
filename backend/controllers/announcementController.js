@@ -2,17 +2,8 @@ const Announcement = require('../models/announcement');
 const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const APIFeatures = require('../utils/apiFeatures');
-const Grid = require('gridfs-stream');
-const mongoose = require('mongoose');
+const cloudinary = require('cloudinary').v2;
 
-
-const conn = mongoose.connection;
-
-let gfs;
-conn.once('open', () =>{
-    gfs = Grid(conn.db, mongoose.mongo);
-    gfs.collection('fileStorage');
-})
 
 // Create new announcement => /api/v1/new/announcement
 exports.newAnnouncement = catchAsyncErrors(async (req, res, next) => {
@@ -317,18 +308,19 @@ exports.deleteAnnouncement = catchAsyncErrors(async (req, res, next) => {
     if (!announcement) {
         return next(new ErrorHandler('Announcement Not Found', 404))
     }
+    
     const filesAttached = announcement.fileAttachments
     fileLength= filesAttached.length
     let arrayIds = []
-    for (let i = 0; i < fileLength; i++) {
-        arrayIds.push(filesAttached[i].id) 
+    
+      for (let i = 0; i < fileLength; i++) {
+        arrayIds.push(filesAttached[i].filename) 
       }
 
-      gfs.remove({_id: arrayIds, root: 'fileStorage'}, (err, gridStore) =>{
-        if (err){
-          return next(new ErrorHandler('Error deleting file'))
-        }
-    });
+      for (let x = 0; x< arrayIds; x++ ){
+        await cloudinary.v2.uploader.destroy(arrayIds[x], resource_type = 'raw');
+     }
+    
     await announcement.remove()
     res.status(200).json({
         success: true,

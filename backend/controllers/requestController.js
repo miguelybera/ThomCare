@@ -4,18 +4,7 @@ const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const APIFeatures = require('../utils/apiFeatures');
 const sendEmail = require('../utils/sendEmail');
 const Audit = require('../models/audit');
-const Grid = require('gridfs-stream');
-const mongoose = require('mongoose');
-
-
-const conn = mongoose.connection;
-
-let gfs;
-conn.once('open', () =>{
-    gfs = Grid(conn.db, mongoose.mongo);
-    gfs.collection('fileStorage');
-})
-
+const cloudinary = require('cloudinary');
 const requestTypeOfficeStaff = ['Request for Certificate of Grades', 'Request for Course Description', 'Others'];
 
 // Submit new request => /api/v1/submitRequest
@@ -299,24 +288,23 @@ exports.deleteRequest = catchAsyncErrors(async (req, res, next) => {
 
     // this is commented out because this function only allows the requestor to delete the request and not the other roles.
     //if (request.requestedById != req.user.id) { return next(new ErrorHandler('The requestor can only delete this request')) }
-
+  
     const filesAttached = request.fileRequirements
     const filesReturned = request.returningFiles
     fileLength= filesAttached.length
     returnLength = filesReturned.length
     let arrayIds = []
     for (let i = 0; i < fileLength; i++) {
-        arrayIds.push(filesAttached[i].id) 
+        arrayIds.push(filesAttached[i].filename) 
       }
     for (let i = 0; i < returnLength; i++) {
-        arrayIds.push(filesReturned[i].id) 
+        arrayIds.push(filesReturned[i].filename) 
       }
+    
 
-      gfs.remove({_id: arrayIds, root: 'fileStorage'}, (err, gridStore) =>{
-          if (err){
-            return next(new ErrorHandler('Error deleting file'))
-          }
-      });
+     for (let x = 0; x< arrayIds; x++ ){
+        await cloudinary.v2.uploader.destroy(arrayIds[x], resource_type = 'raw');
+     }
      
 
     await request.remove()
