@@ -58,6 +58,7 @@ exports.submitRequest = catchAsyncErrors(async (req, res, next) => {
     const trackingNumber = trackStart + req.user.studentNumber + Date.now()
     const requestedById = req.user.id
     const requestorFirstName = req.user.firstName
+    const requestorMiddleName = req.user.middleName 
     const requestorLastName = req.user.lastName
     const requestorStudentNumber = req.user.studentNumber
     const requestorEmail = req.user.email
@@ -69,6 +70,7 @@ exports.submitRequest = catchAsyncErrors(async (req, res, next) => {
         requestorSection,
         requestedById,
         requestorFirstName,
+        requestorMiddleName,
         requestorLastName,
         requestorStudentNumber,
         requestorEmail,
@@ -254,7 +256,7 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
     let remarksData = {
         dateOfRemark: new Date(Date.now()),
         updatedStatus: req.body.requestStatus,
-        userUpdated: req.user.firstName + ' ' + req.user.lastName,
+        userUpdated: req.user.firstName + ' ' + req.user.middleName + ' ' + req.user.lastName,
         remarksMessage: req.body.remarksMessage
     }
 

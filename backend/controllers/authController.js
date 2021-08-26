@@ -9,7 +9,7 @@ const jwt = require('jsonwebtoken');
 
 // Register a user => /api/v1/admin/register
 exports.registerAdmin = catchAsyncErrors(async (req, res, next) => {
-    const { firstName, lastName, email, password, role } = req.body;
+    const { firstName,middleName, lastName, email, password, role } = req.body;
     
     const studentNumber = '0000000000'
     const course = 'N/A'
@@ -25,6 +25,7 @@ exports.registerAdmin = catchAsyncErrors(async (req, res, next) => {
 
     const user = await User.create({
         firstName,
+        middleName,
         lastName,
         studentNumber,
         course,
@@ -146,7 +147,7 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
 // Register a student => /api/v1/registerStudent
 exports.registerStudent = catchAsyncErrors(async (req, res, next) => {
 
-    const { firstName, lastName, studentNumber, course, email, password } = req.body;
+    const { firstName,middleName, lastName, studentNumber, course, email, password } = req.body;
 
     //for postman
     if ((firstName == null) || (firstName == '')) { return next(new ErrorHandler('Please enter first name')) }
@@ -164,7 +165,7 @@ exports.registerStudent = catchAsyncErrors(async (req, res, next) => {
 
     if (req.body.password !== req.body.confirmPassword) { return next(new ErrorHandler('Password does not match')) }
 
-    const registerToken = jwt.sign({ firstName, lastName, studentNumber, course, email, password }, process.env.ACCOUNT_TOKEN, { expiresIn: process.env.REGISTER_EXPIRES });
+    const registerToken = jwt.sign({ firstName,middleName, lastName, studentNumber, course, email, password }, process.env.ACCOUNT_TOKEN, { expiresIn: process.env.REGISTER_EXPIRES });
 
     // create reset password url
     const resetUrl = `${req.protocol}://${process.env.THOM_HOST}/verify/account/${registerToken}`
@@ -195,12 +196,13 @@ exports.verifyStudent = catchAsyncErrors(async (req, res, next) => {
     if (token) {
         jwt.verify(token, process.env.ACCOUNT_TOKEN, function (err, decodedToken) {
             if (err) { return next(new ErrorHandler('Token is invalid or expired')) }
-            const { firstName, lastName, studentNumber, course, email, password } = decodedToken;
+            const { firstName,middleName, lastName, studentNumber, course, email, password } = decodedToken;
 
             User.findOne({ email }).exec((err, existingUser) => {
                 if (existingUser) { return next(new ErrorHandler('Email already exists')) }
                 const user = User.create({
                     firstName,
+                    middleName,
                     lastName,
                     studentNumber,
                     course,

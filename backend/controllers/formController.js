@@ -16,8 +16,8 @@ conn.once('open', () =>{
 exports.createForm = catchAsyncErrors(async (req, res, next) => {
     const {formName, formDescription} = req.body
     const formFiles = req.files
-    const createdBy = req.user.firstName + ' ' + req.user.lastName
-    const updatedBy = req.user.firstName + ' ' + req.user.lastName
+    const createdBy = req.user.firstName + ' ' + req.user.middleName + ' ' + req.user.lastName
+    const updatedBy = req.user.firstName + ' ' + req.user.middleName + ' ' + req.user.lastName
 
     const form = await Form.create({
         formName,
@@ -82,7 +82,7 @@ exports.updateForm = catchAsyncErrors(async (req, res, next) => {
         formName: newFormName,
         formDescription: newFormDescription,
         formFiles: newFormFiles,
-        updatedBy: req.user.firstName + ' ' + req.user.lastName
+        updatedBy: req.user.firstName + ' ' + req.user.middleName + ' ' + req.user.lastName,
     }
     
     form = await Form.findByIdAndUpdate(req.params.formId, newFormsData, {
