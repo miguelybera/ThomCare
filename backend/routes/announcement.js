@@ -13,10 +13,6 @@ const fileMimeTypes = [
                         'application/pdf'
                     ]
 
-
-
-
-
 const { 
         getAnnouncements,
         getSingleAnnouncement,

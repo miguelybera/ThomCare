@@ -13,9 +13,6 @@ const fileMimeTypes = [
                         'application/pdf'
                     ]
 
-
-
-
 const {
         submitRequest,
         myRequests, 
@@ -29,7 +26,6 @@ const {
         getAvailableRequests,
         getAllAssignedRequests,
 
-
         updateRequest, 
         deleteRequest, 
         trashRequest,
@@ -37,8 +33,6 @@ const {
     } = require('../controllers/requestController')
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth')
 const fileStorage = require('../config/fileStorage')
-
-
 
 const thomcareUpload = multer({storage: fileStorage,
     fileFilter: function (req, file, cb){
@@ -50,7 +44,6 @@ const thomcareUpload = multer({storage: fileStorage,
         }
     }
 })
-
 
 //all users
 router.route('/requestTracker').post(requestTracker);
