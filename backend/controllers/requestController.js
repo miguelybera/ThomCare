@@ -9,7 +9,6 @@ const requestTypeOfficeStaff = ['Request for Certificate of Grades', 'Request fo
 
 // Submit new request => /api/v1/submitRequest
 exports.submitRequest = catchAsyncErrors(async (req, res, next) => {
-    console.log('pumasok b d2 SA CONTROLLER')
     const { requestType, requestorYearLevel, requestorSection, requestorNotes } = req.body
 
     const fileRequirements = req.files

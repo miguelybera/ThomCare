@@ -59,15 +59,11 @@ export const submitRequest = (request) => async (dispatch) => {
             type: SUBMIT_REQUEST_REQUEST
         })
 
-        console.log('pumasok b d2 BEFORE CONFIG')
-
         const config = {
             headers: {
                 'Content-Type': 'multipart/form-data'
             }
         }
-
-        console.log('pumasok b d2 AFTER CONFIG')
 
         const { data } = await axios.post(`/api/v1/submitRequest`, request, config)
 
