@@ -17,7 +17,7 @@ const SubmitRequest = ({ history }) => {
         e.preventDefault()
 
         const formData = new FormData()
-        formData.set('fileRequirements', fileRequirements)
+        formData.set('requiredFiles', requiredFiles)
         formData.set('requestorSection', requestorSection)
         formData.set('requestorYearLevel', requestorYearLevel)
         formData.set('requestorNotes', requestorNotes)
@@ -27,7 +27,7 @@ const SubmitRequest = ({ history }) => {
         dispatch(submitRequest(formData))
     }
 
-    const [fileRequirements, setFileRequirements] = useState()
+    const [requiredFiles, setRequiredFiles] = useState()
     const [isFilePicked, setIsFilePicked] = useState(false)
     const [requestorSection, setRequestorSection] = useState()
     const [requestorYearLevel, setRequestorYearLevel] = useState()
@@ -35,7 +35,7 @@ const SubmitRequest = ({ history }) => {
     const [requestorNotes, setRequestorNotes] = useState()
 
     const onChange = e => {
-        setFileRequirements(e.target.files[0])
+        setRequiredFiles(e.target.files[0])
         setIsFilePicked(true)
     }
 
