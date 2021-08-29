@@ -36,6 +36,7 @@ const fileStorage = require('../config/fileStorage')
 
 const thomcareUpload = multer({storage: fileStorage,
     fileFilter: function (req, file, cb){
+        console.log('pumasok b d2 SA THOMCARE UPLOAD')
         const ext = path.extname(file.originalname)
         if(!fileMimeTypes.includes(file.mimetype)) {
             return cb(new Error('File type not supported'))

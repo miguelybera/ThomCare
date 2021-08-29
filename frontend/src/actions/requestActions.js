@@ -4,6 +4,9 @@ import {
     REQUEST_DETAILS_SUCCESS,
     REQUEST_DETAILS_FAIL,
     SAVE_FORM_SUCCESS,
+    SUBMIT_REQUEST_REQUEST,
+    SUBMIT_REQUEST_SUCCESS,
+    SUBMIT_REQUEST_FAIL,
     CLEAR_ERRORS
 } from '../constants/requestConstants'
 
@@ -47,6 +50,40 @@ export const saveForm = (formData) => async (dispatch) => {
         type: SAVE_FORM_SUCCESS,
         payload: formData
     })
+}
+
+//Submit request
+export const submitRequest = (request) => async (dispatch) => {
+    try {
+        dispatch({
+            type: SUBMIT_REQUEST_REQUEST
+        })
+
+        console.log('pumasok b d2 BEFORE CONFIG')
+
+        const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }
+
+        console.log('pumasok b d2 AFTER CONFIG')
+
+        const { data } = await axios.post(`/api/v1/submitRequest`, request, config)
+
+
+        dispatch({
+            type: SUBMIT_REQUEST_SUCCESS,
+            payload: data
+        })
+    }
+    catch (error) {
+        dispatch({
+            type: SUBMIT_REQUEST_FAIL,
+            payload: error.response.data.errMessage
+        }
+        )
+    }
 }
 
 //clear errors

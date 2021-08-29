@@ -4,6 +4,10 @@ import {
     REQUEST_DETAILS_FAIL,
     REQUEST_DETAILS_RESET,
     SAVE_FORM_SUCCESS,
+    SUBMIT_REQUEST_REQUEST,
+    SUBMIT_REQUEST_SUCCESS,
+    SUBMIT_REQUEST_FAIL,
+    SUBMIT_REQUEST_RESET,
     CLEAR_ERRORS
 } from '../constants/requestConstants'
 
@@ -12,12 +16,14 @@ import {
 export const getRequestDetailsReducer = (state = { request: {} }, action) => {
     switch (action.type) {
         case REQUEST_DETAILS_REQUEST:
+        case SUBMIT_REQUEST_REQUEST:
             return {
                 ...state,
                 loading: true
             }
 
         case REQUEST_DETAILS_SUCCESS:
+        case SUBMIT_REQUEST_SUCCESS:
             return {
                 loading: false,
                 request: action.payload.request,
@@ -25,12 +31,14 @@ export const getRequestDetailsReducer = (state = { request: {} }, action) => {
             }
 
         case REQUEST_DETAILS_FAIL:
+        case SUBMIT_REQUEST_FAIL:
             return {
                 ...state,
                 error: action.payload
             }
 
         case REQUEST_DETAILS_RESET:
+        case SUBMIT_REQUEST_RESET:
             return {
                 ...state,
                 success: null
