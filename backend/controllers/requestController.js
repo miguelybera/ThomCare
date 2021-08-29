@@ -53,6 +53,12 @@ exports.submitRequest = catchAsyncErrors(async (req, res, next) => {
     const requestorEmail = req.user.email
     const requestorCourse = req.user.course
 
+    let remarksData = {
+        dateOfRemark: new Date(Date.now()),
+        updatedStatus: 'Pending',
+        userUpdated: ' '
+    }
+
     const request = await Request.create({
         requestType,
         requestorYearLevel,
@@ -66,7 +72,8 @@ exports.submitRequest = catchAsyncErrors(async (req, res, next) => {
         trackingNumber,
         requestorCourse,
         fileRequirements,
-        requestorNotes
+        requestorNotes,
+        remarks: remarksData
     })
     res.status(201).json({
         success: true,
