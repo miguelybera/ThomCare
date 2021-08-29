@@ -56,7 +56,8 @@ exports.submitRequest = catchAsyncErrors(async (req, res, next) => {
     let remarksData = {
         dateOfRemark: new Date(Date.now()),
         updatedStatus: 'Pending',
-        userUpdated: ' '
+        userUpdated: ' ',
+        remarksMessage: ' '
     }
 
     const request = await Request.create({
@@ -246,14 +247,18 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
         runValidators: true,
         useFindAndModify: false
     })
-
-    if (req.body.remarksMessage == null) { req.body.remarksMessage = '' }
+    let remarksMessage
+    if (req.body.remarksMessage == null) { 
+        remarksMessage = ' ' 
+    }else{
+        remarksMessage = req.body.remarksMessage
+    }
     
     let remarksData = {
         dateOfRemark: new Date(Date.now()),
         updatedStatus: req.body.requestStatus,
         userUpdated: req.user.firstName + ' ' + req.user.middleName + ' ' + req.user.lastName,
-        remarksMessage: req.body.remarksMessage
+        remarksMessage
     }
 
     Request.findOneAndUpdate(
