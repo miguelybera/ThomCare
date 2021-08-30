@@ -8,6 +8,9 @@ import {
     SUBMIT_REQUEST_SUCCESS,
     SUBMIT_REQUEST_FAIL,
     SUBMIT_REQUEST_RESET,
+    GET_REQUESTS_REQUEST,
+    GET_REQUESTS_SUCCESS,
+    GET_REQUESTS_FAIL,
     CLEAR_ERRORS
 } from '../constants/requestConstants'
 
@@ -46,7 +49,8 @@ export const getRequestDetailsReducer = (state = { request: {} }, action) => {
 
         case CLEAR_ERRORS:
             return {
-                ...state,
+                ...state,            
+                loading: false,
                 error: null
             }
 
@@ -61,6 +65,42 @@ export const saveFormDetailsReducer = (state = { formData: {} }, action) => {
         case SAVE_FORM_SUCCESS:
             return {
                 formData: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                loading: false,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+
+//get ALL requests
+export const getRequestsReducer = (state = { requests: [] }, action) => {
+    switch (action.type) {
+        case GET_REQUESTS_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                requests: []
+            }
+
+        case GET_REQUESTS_SUCCESS:
+            return {
+                loading: false,
+                requests: action.payload.requests,
+                success: action.payload.success
+            }
+
+        case GET_REQUESTS_FAIL:
+            return {
+                ...state,
+                error: action.payload
             }
 
         case CLEAR_ERRORS:

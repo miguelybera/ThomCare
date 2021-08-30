@@ -44,9 +44,11 @@ const TrackingPage = ({ history }) => {
 
         setUserInfo({
             ...userInfo,
-            [e.target.name]: e.target.value
+            [e.target.name]: upperCase(e.target.value)
         })
     }
+    
+    const upperCase = (text) => text.toUpperCase()
 
     return (
         <Fragment>

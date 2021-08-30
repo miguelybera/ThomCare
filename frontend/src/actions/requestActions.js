@@ -7,6 +7,9 @@ import {
     SUBMIT_REQUEST_REQUEST,
     SUBMIT_REQUEST_SUCCESS,
     SUBMIT_REQUEST_FAIL,
+    GET_REQUESTS_REQUEST,
+    GET_REQUESTS_SUCCESS,
+    GET_REQUESTS_FAIL,
     CLEAR_ERRORS
 } from '../constants/requestConstants'
 
@@ -24,7 +27,6 @@ export const trackRequest = (userInput) => async (dispatch) => {
         }
 
         const { data } = await axios.post(`/api/v1/requestTracker`, userInput, config)
-
 
         localStorage.setItem('trackData', JSON.stringify(data.request))
 
@@ -76,6 +78,32 @@ export const submitRequest = (request) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: SUBMIT_REQUEST_FAIL,
+            payload: error.response.data.errMessage
+        }
+        )
+    }
+}
+
+//get all requests
+export const getCICSRequests = () => async (dispatch) => {
+    try {
+        dispatch({
+            type: GET_REQUESTS_REQUEST
+        })
+
+        let link = ``
+
+        const { data } = await axios.get(`/api/v1/cicsAdmin/requests`)
+
+
+        dispatch({
+            type: GET_REQUESTS_SUCCESS,
+            payload: data
+        })
+    }
+    catch (error) {
+        dispatch({
+            type: GET_REQUESTS_FAIL,
             payload: error.response.data.errMessage
         }
         )
