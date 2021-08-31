@@ -64,7 +64,7 @@ router.route('/cicsAdmin/trash').get(isAuthenticatedUser, authorizeRoles('CICS S
 router.route('/cicsAdmin/available/requests').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getAvailableRequests );
 router.route('/cicsAdmin/assign/request/:requestId').put(isAuthenticatedUser, authorizeRoles('CICS Staff'), assignRequestToSelfCICS );
 router.route('/cicsAdmin/assigned/requests').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getAllAssignedRequests );
-//dept chair and cics staff
+//dept chair and cics staff (the trash request can also be used for restoring the request back)
 router.route('/admin/updateRequest/:requestId').put(isAuthenticatedUser, thomcareUpload.array('returningFiles',5),authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), updateRequest );
 router.route('/admin/trashRequest/:requestId').put(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), trashRequest);
 
