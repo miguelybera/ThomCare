@@ -14,7 +14,7 @@ const fileMimeTypes = [
                     ]
 
 const { 
-        getAnnouncements,
+        getUnarchivedAnnouncement,
         getSingleAnnouncement,
 
         newAnnouncement,          
@@ -41,16 +41,16 @@ const announcementUpload = multer({storage: announcementStorage,
 
 //all users
 router.route('/announcement/:id').get(getSingleAnnouncement);
-router.route('/announcements').get(getAnnouncements);
+router.route('/announcements').get(getUnarchivedAnnouncement);
 
 //student
 
-//cics staff
-router.route('/admin/announcements').get(isAuthenticatedUser, authorizeRoles('CICS Staff'),getAnnouncements);
-router.route('/admin/new/announcement').post(isAuthenticatedUser,announcementUpload.array('announcementFiles',5),authorizeRoles('CICS Staff'),newAnnouncement);
-router.route('/admin/announcement/:id').put(isAuthenticatedUser,announcementUpload.array('announcementFiles',5),authorizeRoles('CICS Staff'),updateAnnouncement);
-router.route('/admin/announcement/:id').delete(isAuthenticatedUser,authorizeRoles('CICS Staff'),deleteAnnouncement);
-router.route('/admin/archivedAnnouncements').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getArchivedAnnouncements);
-router.route('/admin/archiveAnnouncement/:id').put(isAuthenticatedUser, authorizeRoles('CICS Staff'), archiveAnnouncement);
+//dept chair and cics staff
+router.route('/admin/announcements').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'),getUnarchivedAnnouncement);
+router.route('/admin/new/announcement').post(isAuthenticatedUser,announcementUpload.array('fileAttachments',5),authorizeRoles('CICS Staff'),newAnnouncement);
+router.route('/admin/announcement/:id').put(isAuthenticatedUser,announcementUpload.array('fileAttachments',5),authorizeRoles('CICS Staff'),updateAnnouncement);
+router.route('/admin/announcement/:id').delete(isAuthenticatedUser,authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'),deleteAnnouncement);
+router.route('/admin/archivedAnnouncements').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), getArchivedAnnouncements);
+router.route('/admin/archiveAnnouncement/:id').put(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), archiveAnnouncement);
 
 module.exports = router;

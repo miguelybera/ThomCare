@@ -61,7 +61,7 @@ router.route('/requestTracker').post(requestTracker);
 router.route('/request/:requestId').get(isAuthenticatedUser, getSingleRequest); // no isAuthenticatedUser because a student can open request details while not signed in because of the tracker
 
 //student
-router.route('/submitRequest').post(isAuthenticatedUser, thomcareUploadStudent.array('requiredFiles',5), submitRequest);
+router.route('/submitRequest').post(isAuthenticatedUser, thomcareUploadStudent.array('fileRequirements',5), submitRequest);
 router.route('/myRequests').get(isAuthenticatedUser, authorizeRoles('Student'), myRequests);
 
 //dept chair
