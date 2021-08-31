@@ -27,7 +27,7 @@ const CreateAnnouncement = ({ history }) => {
     const [announcementType, setAnnouncementType] = useState('All')
     const [archiveDate, setArchiveDate] = useState('')
     const [setExpiry, setSetExpiry] = useState(false)
-    const [announcementFiles, setAnnouncementFiles] = useState([])
+    const [fileAttachments, setFileAttachments] = useState([])
 
     const changeDateFormat = (date) => dateFormat(date, "yyyy-mm-dd")
 
@@ -67,7 +67,7 @@ const CreateAnnouncement = ({ history }) => {
         formData.set('announcementType', announcementType)
         formData.set('archiveDate', changeDateFormat(archiveDate))
         formData.set('setExpiry', setExpiry)
-        formData.set('announcementFiles', announcementFiles)
+        formData.set('fileAttachments', fileAttachments)
 
         dispatch(createAnnouncement(formData))
     }
@@ -88,7 +88,7 @@ const CreateAnnouncement = ({ history }) => {
     }, [dispatch, alert, success, error])
 
     const onChange = e => {
-        setAnnouncementFiles(e.target.files[0])
+        setFileAttachments(e.target.files[0])
     }
 
     return (

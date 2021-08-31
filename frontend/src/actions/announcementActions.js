@@ -151,7 +151,7 @@ export const getAdminAnnouncements = () => async(dispatch) => {
             type: ALL_ADMIN_ANNOUNCEMENTS_REQUEST
         })
 
-        const { data } = await axios.get(`/api/v1/admin/announcements`)
+        const { data } = await axios.get(`/api/v1/admin/unarchivedAnnouncements`)
 
         dispatch({
             type: ALL_ADMIN_ANNOUNCEMENTS_SUCCESS,

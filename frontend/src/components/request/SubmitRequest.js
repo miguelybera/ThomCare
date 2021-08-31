@@ -17,7 +17,7 @@ const SubmitRequest = ({ history }) => {
         e.preventDefault()
 
         const formData = new FormData()
-        formData.set('requiredFiles', requiredFiles)
+        formData.set('fileRequirements', fileRequirements)
         formData.set('requestorSection', requestorSection)
         formData.set('requestorYearLevel', requestorYearLevel)
         formData.set('requestorNotes', requestorNotes)
@@ -27,14 +27,14 @@ const SubmitRequest = ({ history }) => {
         dispatch(submitRequest(formData))
     }
 
-    const [requiredFiles, setRequiredFiles] = useState()
+    const [fileRequirements, setFileRequirements] = useState()
     const [requestorSection, setRequestorSection] = useState()
     const [requestorYearLevel, setRequestorYearLevel] = useState()
     const [requestType, setRequestType] = useState()
     const [requestorNotes, setRequestorNotes] = useState()
 
     const onChange = e => {
-        setRequiredFiles(e.target.files[0])
+        setFileRequirements(e.target.files[0])
     }
 
     const requestTypes = [
@@ -133,7 +133,7 @@ const SubmitRequest = ({ history }) => {
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="formGridCourse">
                                     <Form.Label>Attachments</Form.Label>
-                                    <Form.Control type="file" name="file" onChange={onChange} />
+                                    <Form.Control type="file" name="fileRequirements" onChange={onChange} />
                                 </Form.Group>
                                 <Button
                                     type='submit'
