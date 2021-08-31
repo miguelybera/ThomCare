@@ -16,12 +16,12 @@ const titles = {
 }
 
 const rectangle = {
-    width:'100%',
-    height:'18%',                   /* gran changed this from 22 > 18 */
+    width: '100%',
+    height: '18%',                   /* gran changed this from 22 > 18 */
     background: '#9c0b0b',
     textAlign: 'center',
     color: 'white',
-    position:'absolute',
+    position: 'absolute',
     fontFamily: 'Mukta Malar',
     fontWeight: '500',
     padding: '90px 50px 55px 50px',
@@ -45,7 +45,33 @@ const Announcements = () => {
 
     const [currentPage, setCurrentPage] = useState(1)
 
-    const category = []
+    const tracks = [
+        'Core Computer Science',
+        'Game Development',
+        'Data Science',
+        'Network and Security',
+        'Web and Mobile App Development',
+        'IT Automation',
+        'Business Analytics',
+        'Service Management'
+    ]
+
+    const csTracks = [
+        'Core Computer Science',
+        'Game Development',
+        'Data Science'
+    ]
+
+    const itTracks = [
+        'Network and Security',
+        'Web and Mobile App Development',
+        'IT Automation'
+    ]
+
+    const isTracks = [
+        'Business Analytics',
+        'Service Management'
+    ]
 
     function setCurrentPageNo(pageNumber) {
         setCurrentPage(pageNumber)
@@ -75,10 +101,30 @@ const Announcements = () => {
     }, [dispatch, alert, error, currentPage, course, yearLevel, track, title])
 
     const onChange = e => {
-        setFilter({
-            ...filter,
-            [e.target.name]: e.target.value
-        })
+        if (e.target.name === 'course') {
+            let value = e.target.value
+            setFilter({
+                ...filter,
+                [e.target.name]: value,
+                track: String(value).includes('') ? '' : track
+            })
+        } else if(e.target.name === 'track') {
+            let value = e.target.value
+            setFilter({
+                ...filter,
+                [e.target.name]: value,
+                course: csTracks.includes(value) ? 'Computer Science' : (
+                    itTracks.includes(value) ? 'Information Technology' : (
+                        isTracks.includes(value) ? 'Information Systems' : course
+                    )
+                )
+            })
+        } else {
+            setFilter({
+                ...filter,
+                [e.target.name]: e.target.value
+            })
+        }
     }
 
     function changeDateFormat(date) {
@@ -104,7 +150,7 @@ const Announcements = () => {
                     <h3>Announcements</h3>
                 </div>
             </Container>
-            <Container style={{paddingTop: '120px'}}>
+            <Container style={{ paddingTop: '120px' }}>
                 <Form>
                     <Row xs="auto">
                         <Col sm>
@@ -134,10 +180,37 @@ const Announcements = () => {
                             <Form.Group controlId="selectTrackforAnnouncement">
                                 <Form.Label style={formLabel}>Track</Form.Label>
                                 <Form.Select aria-label="ITTracks" size="sm" name="track" value={track} onChange={onChange} required>
-                                    <option value=''>-</option>
-                                    <option value="Web and Mobile Development">Web and Mobile Development</option>
-                                    <option value="Network and Security">Network and Security</option>
-                                    <option value="IT Automation">IT Automation</option>
+                                    <option value=''></option>
+                                    {String(course).includes('Information Systems') ? (
+                                        <Fragment>
+                                            {isTracks.map(track => (
+                                                <option value={track}>{track}</option>
+                                            ))}
+                                        </Fragment>
+                                    ) : (
+                                        String(course).includes('Computer Science') ? (
+                                            <Fragment>
+                                                {csTracks.map(track => (
+                                                    <option value={track}>{track}</option>
+                                                ))}
+                                            </Fragment>
+                                        ) : (
+                                            String(course).includes('Information Technology') ? (
+                                                <Fragment>
+                                                    {itTracks.map(track => (
+                                                        <option value={track}>{track}</option>
+                                                    ))}
+                                                </Fragment>
+                                            ) : (
+                                                <Fragment>
+                                                    {tracks.map(track => (
+                                                        <option value={track}>{track}</option>
+                                                    ))}
+                                                </Fragment>
+                                            )
+                                        )
+                                    )}
+
                                 </Form.Select>
                             </Form.Group>
                         </Col>
@@ -145,7 +218,7 @@ const Announcements = () => {
                             <Form.Group controlId="selectAnnouncementTypeforAnnouncement">
                                 <Form.Label style={formLabel}>Announcement Type</Form.Label>
                                 <Form.Select aria-label="AnnouncementType" size="sm" name="annnouncementType" value={annnouncementType} onChange={onChange} required>
-                                    <option value=''>-</option>
+                                    <option value=''></option>
                                     <option value="Memorandum">Memorandum</option>
                                     <option value="Enrollment">Enrollment</option>
                                     <option value="Class Suspension">Class Suspension</option>
@@ -174,7 +247,7 @@ const Announcements = () => {
                 {loading ? <Loader /> : (
                     <Row xs={1} md={2} className="g-4">
                         {announcements && (announcements.length !== 0) ? announcements.map(announcement => (
-                            <Col style={{marginBottom: '20px'}}>
+                            <Col style={{ marginBottom: '20px' }}>
                                 <Card>
                                     <Card.Body>
                                         <Card.Title>{announcement.title}</Card.Title>

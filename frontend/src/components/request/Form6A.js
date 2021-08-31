@@ -9,7 +9,7 @@ import Loader from './../layout/Loader'
 import { Row, Container, Button, Col, Card, Form } from 'react-bootstrap'
 import PDF from './PDF'
 
-function SampleForm() {
+function Form6A() {
     const alert = useAlert()
     const dispatch = useDispatch()
 
@@ -274,4 +274,4 @@ function SampleForm() {
     )
 }
 
-export default SampleForm
+export default Form6A
