@@ -22,7 +22,8 @@ const {
         deleteAnnouncement,
         
         getArchivedAnnouncements,
-        archiveAnnouncement
+        archiveAnnouncement,
+        getHomepageAnnouncements
     } = require('../controllers/announcementController');
 
 const { isAuthenticatedUser, authorizeRoles} = require('../middlewares/auth');
@@ -41,12 +42,12 @@ const announcementUpload = multer({storage: announcementStorage,
 
 //all users
 router.route('/announcement/:id').get(getSingleAnnouncement);
-router.route('/announcements').get(getUnarchivedAnnouncement);
+router.route('/announcements').get(getHomepageAnnouncements);
 
 //student
 
 //dept chair and cics staff
-router.route('/admin/announcements').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'),getUnarchivedAnnouncement);
+router.route('/admin/unarchivedAnnouncements').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'),getUnarchivedAnnouncement);
 router.route('/admin/new/announcement').post(isAuthenticatedUser,announcementUpload.array('fileAttachments',5),authorizeRoles('CICS Staff'),newAnnouncement);
 router.route('/admin/announcement/:id').put(isAuthenticatedUser,announcementUpload.array('fileAttachments',5),authorizeRoles('CICS Staff'),updateAnnouncement);
 router.route('/admin/announcement/:id').delete(isAuthenticatedUser,authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'),deleteAnnouncement);

@@ -96,8 +96,26 @@ exports.newAnnouncement = catchAsyncErrors(async (req, res, next) => {
         announcement
     })
 })
-
 // Get all unarchived announcements /api/v1/announcements (For website Home page)
+exports.getHomepageAnnouncements = catchAsyncErrors(async (req, res, next) => {
+    const resPerPage = 15;
+    const announcementCount = await Announcement.countDocuments({ archiveDate: { $gte: Date.now() } })
+    const apiFeatures = new APIFeatures(Announcement.find({ archiveDate: { $gte: Date.now() } }), req.query)
+        .search()
+        .filter()
+        .pagination(resPerPage)
+    let announcements = await apiFeatures.query;
+    let filteredAnnouncementsCount = announcements.length
+
+    res.status(200).json({
+        success: true,
+        announcementCount,
+        announcements,
+        filteredAnnouncementsCount
+    })
+})
+
+// Get all unarchived announcements /api/v1/admin/unarchivedAnnouncements (For Admin)
 exports.getUnarchivedAnnouncement = catchAsyncErrors(async (req, res, next) => {
     const announcementCount = await Announcement.countDocuments({ archiveDate: { $gte: Date.now() } })
     const apiFeatures = new APIFeatures(Announcement.find({ archiveDate: { $gte: Date.now() } }), req.query)
