@@ -15,7 +15,8 @@ const{
         getUsers, 
         getUser, 
         updateUser, 
-        deleteUser
+        deleteUser,
+        getStudentAccounts
     } = require('../controllers/authController');
 const { isAuthenticatedUser, authorizeRoles} = require('../middlewares/auth');
 
@@ -35,6 +36,7 @@ router.route('/registerStudent').post(registerStudent);
 router.route('/verify/account/:token').post(verifyStudent);
 
 //dept chair
+router.route('/deptChair/users').get(isAuthenticatedUser,authorizeRoles('IT Dept Chair','CS Dept Chair','IS Dept Chair'),getStudentAccounts);
 
 //cics staff
 router.route('/admin/me/update').put(isAuthenticatedUser,authorizeRoles('CICS Staff'),updateProfile);
