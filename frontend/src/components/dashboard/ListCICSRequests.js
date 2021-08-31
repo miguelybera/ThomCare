@@ -121,7 +121,7 @@ const ListCICSRequests = ({ history }) => {
                     </p>
                 </Fragment>,
                 actions: <Fragment>
-                    <Link to={`/admin/request/${request._id}`}>
+                    <Link to={`/admin/cics/request/${request._id}`}>
                         <Button variant="primary" className="mr-5" style={{ marginRight: '5px' }}>
                             <i class="fa fa-pencil" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
                         </Button>

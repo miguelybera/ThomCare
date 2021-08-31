@@ -42,6 +42,7 @@ import ListUsers from './components/dashboard/ListUsers'
 import UpdateUser from './components/dashboard/UpdateUser'
 import RegisterAdmin from './components/dashboard/RegisterAdmin'
 import ListCICSRequests from './components/dashboard/ListCICSRequests'
+import UpdateRequest from './components/dashboard/UpdateRequest'
 
 //route folder
 import ProtectedRoute from './components/route/ProtectedRoute'
@@ -96,6 +97,7 @@ function App() {
                                 <ProtectedRoute path='/admin/user/:id' loggedIn={true} component={UpdateUser} exact />
                                 <ProtectedRoute path='/admin/register' loggedIn={true} component={RegisterAdmin} exact />
                                 <ProtectedRoute path='/admin/cics/requests' loggedIn={true} component={ListCICSRequests} exact />
+                                <ProtectedRoute path='/admin/cics/request/:id' loggedIn={true} component={UpdateRequest} exact />
                             </div>
                         </Fragment>
                     {/*})}*/}

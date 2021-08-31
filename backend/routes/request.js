@@ -58,7 +58,7 @@ const thomcareUploadAdmin = multer({storage: adminStorage,
 
 //all users
 router.route('/requestTracker').post(requestTracker);
-router.route('/request/:requestId').get(getSingleRequest); // no isAuthenticatedUser because a student can open request details while not signed in because of the tracker
+router.route('/request/:requestId').get(isAuthenticatedUser, getSingleRequest); // no isAuthenticatedUser because a student can open request details while not signed in because of the tracker
 
 //student
 router.route('/submitRequest').post(isAuthenticatedUser, thomcareUploadStudent.array('requiredFiles',5), submitRequest);

@@ -83,8 +83,7 @@ const UpdateAnnouncement = ({ history, match }) => {
     useEffect(() => {
         if (announcement && announcement._id !== announcementId) {
             dispatch(getAnnouncementDetails(announcementId))
-        }
-        else if (announcement) {
+        } else if (announcement) {
             setTitle(announcement.title)
             setDescription(announcement.description)
             setYearLevel(announcement.yearLevel)

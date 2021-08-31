@@ -191,13 +191,11 @@ exports.getAllOfficeRequests = catchAsyncErrors(async (req, res, next) => {
 exports.getSingleRequest = catchAsyncErrors(async (req, res, next) => {
     const request = await Request.findById(req.params.requestId);
    
-
     if (!request) { return next(new ErrorHandler('Request Id does not exist')) }
 
     res.status(200).json({
         success: true,
         request
-
     })
 
 })
