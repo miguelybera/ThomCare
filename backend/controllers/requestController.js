@@ -227,18 +227,28 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
 
     }
     else if(rqst.requestorCourse !== deptCourse ) { return next(new ErrorHandler('Role does not have access to this resource')) }
-    
 
-    let newRequestData = {
-        requestStatus: req.body.requestStatus,
-        managedBy: req.user.id,
-        returningFiles: req.files
-    }
-
-    if (req.files == null || req.files == '') {
+    const filesReturned = rqst.returningFiles
+    const returnLength = filesReturned.length
+    let arrayIds = []
+        for (let i = 0; i < returnLength; i++) {
+            arrayIds.push(filesReturned[i].filename) 
+          }
+          
+    let newRequestData
+    if(req.files == null || req.files == ''){
         newRequestData = {
             requestStatus: req.body.requestStatus,
             managedBy: req.user.id
+        }
+    }else{
+        if(arrayIds.length != 0){
+            cloudinary.api.delete_resources(arrayIds,{ resource_type: 'raw' })
+           }
+        newRequestData= {
+            requestStatus: req.body.requestStatus,
+            managedBy: req.user.id,
+            returningFiles: req.files
         }
     }
 
@@ -303,8 +313,8 @@ exports.deleteRequest = catchAsyncErrors(async (req, res, next) => {
   
     const filesAttached = request.fileRequirements
     const filesReturned = request.returningFiles
-    fileLength= filesAttached.length
-    returnLength = filesReturned.length
+    const fileLength= filesAttached.length
+    const returnLength = filesReturned.length
     let arrayIds = []
     for (let i = 0; i < fileLength; i++) {
         arrayIds.push(filesAttached[i].filename) 
@@ -312,8 +322,10 @@ exports.deleteRequest = catchAsyncErrors(async (req, res, next) => {
     for (let i = 0; i < returnLength; i++) {
         arrayIds.push(filesReturned[i].filename) 
       }
-      cloudinary.api.delete_resources(arrayIds, 
-        { resource_type: 'raw' })
+      if(arrayIds.length != 0){
+        cloudinary.api.delete_resources(arrayIds, 
+            { resource_type: 'raw' })
+      }
     await request.remove()
 
     const auditLog = await Audit.create({

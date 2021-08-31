@@ -211,9 +211,19 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
     } else {
         newTrack = req.body.track
     }
+    const filesAttached = announcement.fileAttachments
+    const fileLength= filesAttached.length
+    let arrayIds = []
+    
+      for (let i = 0; i < fileLength; i++) {
+        arrayIds.push(filesAttached[i].filename) 
+      }
     if (req.files == null || req.files == ''){
         newAnnouncementFiles = announcement.fileAttachments
     }else{
+        if(arrayIds.length != 0){
+            cloudinary.api.delete_resources(arrayIds,{ resource_type: 'raw' })
+           }
         newAnnouncementFiles = req.files
     }
     if (newYearLevel == '1st Year' || newYearLevel == '2nd Year') {
@@ -310,15 +320,17 @@ exports.deleteAnnouncement = catchAsyncErrors(async (req, res, next) => {
     }
     
     const filesAttached = announcement.fileAttachments
-    fileLength= filesAttached.length
+    const fileLength= filesAttached.length
     let arrayIds = []
     
       for (let i = 0; i < fileLength; i++) {
         arrayIds.push(filesAttached[i].filename) 
       }
 
-      cloudinary.api.delete_resources(arrayIds, 
-        { resource_type: 'raw' })
+      if(arrayIds.length != 0){
+        cloudinary.api.delete_resources(arrayIds, 
+            { resource_type: 'raw' })
+      }
     
     await announcement.remove()
     res.status(200).json({
