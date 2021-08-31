@@ -368,11 +368,11 @@ exports.trashRequest = catchAsyncErrors(async (req, res, next) => {
     if(req.body.isTrash == true){
         actionAudit = `User account: (${req.user.email}) has moved the request to trash with the tracking number: (${auditRequest.trackingNumber})`
         statusMessage = "Request has been moved to trash"
-    }
-    if(req.body.isTrash == false){
+    }else if (req.body.isTrash == false){
         actionAudit = `User account: (${req.user.email}) has restored the request from trash with the tracking number: (${auditRequest.trackingNumber})`
         statusMessage = "Request has been restored from trash"
     }
+    
     const auditLog = await Audit.create({
         userAudit: req.user.email,
         requestAudit: req.params.requestId,
