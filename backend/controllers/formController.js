@@ -104,10 +104,9 @@ exports.deleteForm = catchAsyncErrors(async (req, res, next) => {
       }
 
       for (let x = 0; x< arrayIds; x++ ){
-        await cloudinary.v2.uploader.destroy(arrayIds[x], resource_type = 'raw');
+        await cloudinary.v2.uploader.destroy(arrayIds[x], resource_type = 'auto');
      }
-    const public_id = 'formFiles/1630378586341-Sample text.docx'
-    await cloudinary.uploader.destroy(public_id, resource_type = 'raw');
+
     await form.remove()
     res.status(200).json({
         success: true,
