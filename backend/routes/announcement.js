@@ -28,7 +28,6 @@ const {
 const { isAuthenticatedUser, authorizeRoles} = require('../middlewares/auth');
 const announcementStorage = require('../config/announcementFiles')
 
-
 const announcementUpload = multer({storage: announcementStorage,
     fileFilter: function (req, file, cb) {
         const ext = path.extname(file.originalname)

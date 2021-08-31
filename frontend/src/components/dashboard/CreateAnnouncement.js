@@ -27,6 +27,7 @@ const CreateAnnouncement = ({ history }) => {
     const [announcementType, setAnnouncementType] = useState('All')
     const [archiveDate, setArchiveDate] = useState('')
     const [setExpiry, setSetExpiry] = useState(false)
+    const [announcementFiles, setAnnouncementFiles] = useState([])
 
     const changeDateFormat = (date) => dateFormat(date, "yyyy-mm-dd")
 
@@ -66,6 +67,7 @@ const CreateAnnouncement = ({ history }) => {
         formData.set('announcementType', announcementType)
         formData.set('archiveDate', changeDateFormat(archiveDate))
         formData.set('setExpiry', setExpiry)
+        formData.set('announcementFiles', announcementFiles)
 
         dispatch(createAnnouncement(formData))
     }
@@ -85,7 +87,9 @@ const CreateAnnouncement = ({ history }) => {
         }
     }, [dispatch, alert, success, error])
 
-    console.log(setExpiry)
+    const onChange = e => {
+        setAnnouncementFiles(e.target.files[0])
+    }
 
     return (
         <Fragment>
@@ -168,19 +172,19 @@ const CreateAnnouncement = ({ history }) => {
                                     </Form.Group>
                                     <Form.Group controlId="formFileMultiple" className="mb-3">
                                         <Form.Label>Attach document(s):</Form.Label>
-                                        <Form.Control type="file" multiple />
+                                        <Form.Control type="file" name="file" onChange={onChange}/>
                                     </Form.Group>
                                     <Button
                                         type='submit'
                                         style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
                                         disabled={loading ? true : false}>
-                                            {loading ? (
-                                                <span>
-                                                    <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{textAlign: 'center'}}></i>
-                                                </span>
-                                            ) : (
-                                                <span>Create</span>
-                                            )}
+                                        {loading ? (
+                                            <span>
+                                                <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
+                                            </span>
+                                        ) : (
+                                            <span>Create</span>
+                                        )}
                                     </Button>
                                 </Form>
                             </Card.Body>

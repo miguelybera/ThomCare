@@ -28,7 +28,6 @@ const SubmitRequest = ({ history }) => {
     }
 
     const [requiredFiles, setRequiredFiles] = useState()
-    const [isFilePicked, setIsFilePicked] = useState(false)
     const [requestorSection, setRequestorSection] = useState()
     const [requestorYearLevel, setRequestorYearLevel] = useState()
     const [requestType, setRequestType] = useState()
@@ -36,7 +35,6 @@ const SubmitRequest = ({ history }) => {
 
     const onChange = e => {
         setRequiredFiles(e.target.files[0])
-        setIsFilePicked(true)
     }
 
     const requestTypes = [

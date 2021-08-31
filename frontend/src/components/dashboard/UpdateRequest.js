@@ -28,8 +28,31 @@ const UpdateRequest = ({ history, match }) => {
     const [requestorNotes, setRequestorNotes] = useState('')
     const [trackingNumber, setTrackingNumber] = useState('')
     const [fileRequirements, setFileRequirements] = useState([])
+    const [filePath, setFilePath] = useState('')
     const [remarks, setRemarks] = useState([])
 
+    const submitHandler = e => {
+        e.preventDefault()
+
+        const formData = new FormData
+        formData.set('requestorFirstName', requestorFirstName)
+        formData.set('requestorLastName', requestorLastName)
+        formData.set('requestorStudentNumber', requestorStudentNumber)
+        formData.set('requestorEmail', requestorEmail)
+        formData.set('requestorYearLevel', requestorYearLevel)
+        formData.set('requestorSection', requestorSection)
+        formData.set('requestorCourse', requestorCourse)
+        formData.set('requestStatus', requestStatus)
+        formData.set('requestType', requestType)
+        formData.set('requestType', requestType)
+        formData.set('requestorNotes', requestorNotes)
+        formData.set('trackingNumber', trackingNumber)
+        formData.set('fileRequirements', fileRequirements)
+        formData.set('remarks', remarks)
+
+        dispatch(updateRequest(requestId, formData))
+    }
+    
     useEffect(() => {
         if (request && request._id !== requestId) {
             dispatch(getRequestDetails(requestId))
@@ -46,6 +69,7 @@ const UpdateRequest = ({ history, match }) => {
             setRequestorNotes(request.requestorNotes)
             setTrackingNumber(request.trackingNumber)
             setFileRequirements(request.fileRequirements)
+            setFilePath(request.fileRequirements[0].path)
             setRemarks(request.remarks)
         } else {
             dispatch(getRequestDetails(requestId))
@@ -81,12 +105,12 @@ const UpdateRequest = ({ history, match }) => {
                 <Fragment>
                     <p>{requestorFirstName} {requestorLastName}</p>
                     <p>{requestorStudentNumber} {requestorEmail}</p>
-                    <p>{setRequestorYearLevel} {requestorSection} {requestorCourse}</p>
+                    <p>{requestorYearLevel} {requestorSection} {requestorCourse}</p>
                     <p>{requestStatus}</p>
                     <p>{requestType}</p>
                     <p>{requestorNotes}</p>
                     <p>{trackingNumber}</p>
-                    <p>cant display file requirements</p>
+                    <a href={filePath}>Download PDF</a>
                 </Fragment>
             )}
         </Fragment>
