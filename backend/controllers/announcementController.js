@@ -112,7 +112,6 @@ exports.getUnarchivedAnnouncement = catchAsyncErrors(async (req, res, next) => {
         success: true,
         announcementCount,
         announcements,
-        resPerPage,
         filteredAnnouncementsCount
     })
 })
@@ -129,9 +128,7 @@ exports.getArchivedAnnouncements = catchAsyncErrors(async (req, res, next) => {
     res.status(200).json({
         success: true,
         announcements,
-        announcementCount,
-        resPerPage: '',
-        filteredAnnouncementsCount: ''
+        announcementCount
     })
 })
 
