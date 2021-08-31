@@ -308,3 +308,30 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
         message: "User has been deleted"
     })
 })
+
+// Get all student accounts dept chair => /api/v1/deptchair/users
+exports.getStudentAccounts = catchAsyncErrors(async (req, res, next) => {
+    let deptCourse = ''
+
+    switch (req.user.role) {
+        case 'IT Dept Chair':
+            deptCourse = 'Information Technology'
+            break
+        case 'IS Dept Chair':
+            deptCourse = 'Information Systems'
+            break
+        case 'CS Dept Chair':
+            deptCourse = 'Computer Science'
+            break
+        case 'CICS Staff':
+        case 'Student':
+            return next(new ErrorHandler('Role does not have access to this resource'))
+    }
+    const users = await User.find({role: 'Student', course: deptCourse})
+
+    res.status(200).json({
+        success: true,
+        count: users.length,
+        users
+    })
+})
