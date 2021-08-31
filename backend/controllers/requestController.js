@@ -4,7 +4,7 @@ const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const APIFeatures = require('../utils/apiFeatures');
 const sendEmail = require('../utils/sendEmail');
 const Audit = require('../models/audit');
-const cloudinary = require('cloudinary');
+const cloudinary = require('cloudinary').v2;
 const requestTypeOfficeStaff = ['Request for Certificate of Grades', 'Request for Course Description', 'Others'];
 
 // Submit new request => /api/v1/submitRequest
@@ -312,13 +312,8 @@ exports.deleteRequest = catchAsyncErrors(async (req, res, next) => {
     for (let i = 0; i < returnLength; i++) {
         arrayIds.push(filesReturned[i].filename) 
       }
-    
-
-     for (let x = 0; x< arrayIds; x++ ){
-        await cloudinary.uploader.destroy(arrayIds[x], resource_type = 'auto');
-     }
-     
-
+      cloudinary.api.delete_resources(arrayIds, 
+        { resource_type: 'raw' })
     await request.remove()
 
     const auditLog = await Audit.create({

@@ -103,9 +103,8 @@ exports.deleteForm = catchAsyncErrors(async (req, res, next) => {
         arrayIds.push(filesAttached[i].filename) 
       }
 
-      for (let x = 0; x< arrayIds; x++ ){
-        await cloudinary.v2.uploader.destroy(arrayIds[x], resource_type = 'auto');
-     }
+      cloudinary.api.delete_resources(arrayIds, 
+        { resource_type: 'raw' })
 
     await form.remove()
     res.status(200).json({
