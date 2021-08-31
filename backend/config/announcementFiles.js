@@ -10,7 +10,7 @@ const announcementFiles = new CloudinaryStorage({
                 const fileInfo ={
                     public_id: filename,
                     folder: 'announcementFiles',
-                    resource_type: "auto"
+                    resource_type: "raw"
                 };
                 resolve(fileInfo);
             
