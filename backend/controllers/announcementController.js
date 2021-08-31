@@ -318,7 +318,7 @@ exports.deleteAnnouncement = catchAsyncErrors(async (req, res, next) => {
       }
 
       for (let x = 0; x< arrayIds; x++ ){
-        await cloudinary.v2.uploader.destroy(arrayIds[x], resource_type = 'raw');
+        await cloudinary.v2.uploader.destroy(arrayIds[x], resource_type = 'auto');
      }
     
     await announcement.remove()

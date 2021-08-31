@@ -14,8 +14,8 @@ const fileMimeTypes = [
                     ]
 const {createForm, getAllForms, getSingleForm, updateForm,deleteForm} = require('../controllers/formController');
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth')
-const fileStorage = require('../config/fileStorage')
-const thomcareUpload = multer({storage: fileStorage,
+const formStorage = require('../config/formFiles')
+const thomcareUpload = multer({storage: formStorage,
     fileFilter: function (req, file, cb){
         const ext = path.extname(file.originalname)
         if(!fileMimeTypes.includes(file.mimetype)) {
