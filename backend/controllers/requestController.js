@@ -363,16 +363,25 @@ exports.trashRequest = catchAsyncErrors(async (req, res, next) => {
     })
 
     const auditRequest = await Request.findById(req.params.requestId);
-    
+
+    let actionAudit, statusMessage
+    if(req.body.isTrash == true){
+        actionAudit = `User account: (${req.user.email}) has moved the request to trash with the tracking number: (${auditRequest.trackingNumber})`
+        statusMessage = "Request has been moved to trash"
+    }
+    if(req.body.isTrash == false){
+        actionAudit = `User account: (${req.user.email}) has restored the request from trash with the tracking number: (${auditRequest.trackingNumber})`
+        statusMessage = "Request has been restored from trash"
+    }
     const auditLog = await Audit.create({
         userAudit: req.user.email,
         requestAudit: req.params.requestId,
-        actionAudit: `User account: (${req.user.email}) has moved the request to trash with the tracking number: (${auditRequest.trackingNumber})`
+        actionAudit
     })
 
     res.status(200).json({
         success: true,
-        message: "request has been moved to trash"
+        message: statusMessage
     })
 
 })
