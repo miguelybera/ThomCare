@@ -29,7 +29,8 @@ import {
 import {
     getRequestDetailsReducer,
     getRequestsReducer,
-    saveFormDetailsReducer
+    saveFormDetailsReducer,
+    requestReducer
 } from './reducers/requestReducer'
 
 import {
@@ -56,9 +57,10 @@ const reducer = combineReducers({
     announcement: announcementReducer, //update or delete announcement
     
     student: studentInfoReducer, //save trackingNumber and surname ? or request details in local storage
-    request: getRequestDetailsReducer, //get single request details
+    requestDetails: getRequestDetailsReducer, //get single request details
     requests: getRequestsReducer, //get all requests
     form: saveFormDetailsReducer,
+    request: requestReducer,
     
     courses: getCoursesReducer //get single request details
 })

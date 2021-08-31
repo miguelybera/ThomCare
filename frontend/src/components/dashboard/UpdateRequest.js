@@ -4,13 +4,15 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getRequestDetails, updateRequest, clearErrors } from './../../actions/requestActions'
 import { REQUEST_DETAILS_RESET } from './../../constants/requestConstants'
 import MetaData from './../layout/MetaData'
+import Loader from './../layout/Loader'
 
 const UpdateRequest = ({ history, match }) => {
 
     const dispatch = useDispatch()
     const alert = useAlert()
 
-    const { loading, success, error, request } = useSelector(state => state.request)
+    const { loading: requestLoading, error, request } = useSelector(state => state.requestDetails)
+    const { loading, error: updateError, isUpdated } = useSelector(state => state.request)
 
     const requestId = match.params.id
 
@@ -27,9 +29,9 @@ const UpdateRequest = ({ history, match }) => {
     const [trackingNumber, setTrackingNumber] = useState('')
     const [fileRequirements, setFileRequirements] = useState([])
     const [remarks, setRemarks] = useState([])
-    
+
     useEffect(() => {
-        if(request && request._id !== requestId) {
+        if (request && request._id !== requestId) {
             dispatch(getRequestDetails(requestId))
         } else if (request) {
             setRequestorFirstName(request.requestorFirstName)
@@ -48,27 +50,45 @@ const UpdateRequest = ({ history, match }) => {
         } else {
             dispatch(getRequestDetails(requestId))
         }
-    }, [request])
-
-    useEffect(() => {
-        if (success) {
-            // history.push(`/admin/cics/request`)
-            // // dispatch({
-            // //     type: REQUEST_DETAILS_RESET
-            // // })
-        }
 
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
+            history.push('/admin/cics/requests')
         }
-    }, [loading, dispatch, alert, success, error, history])
-    
+    }, [request, error, history, alert, dispatch])
+
+    useEffect(() => {
+        if (isUpdated) {
+            history.push(`/admin/cics/requests`)
+            alert.success('Request updated successfully.')
+            dispatch({
+                type: REQUEST_DETAILS_RESET
+            })
+        }
+
+        if (updateError) {
+            alert.error(error)
+            dispatch(clearErrors())
+        }
+    }, [loading, dispatch, alert, isUpdated, updateError, history])
+
 
     return (
         <Fragment>
             <MetaData title={`Update Request`} />
-            <p>{requestorFirstName} {requestorLastName}</p>
+            {requestLoading ? <Loader /> : (
+                <Fragment>
+                    <p>{requestorFirstName} {requestorLastName}</p>
+                    <p>{requestorStudentNumber} {requestorEmail}</p>
+                    <p>{setRequestorYearLevel} {requestorSection} {requestorCourse}</p>
+                    <p>{requestStatus}</p>
+                    <p>{requestType}</p>
+                    <p>{requestorNotes}</p>
+                    <p>{trackingNumber}</p>
+                    <p>cant display file requirements</p>
+                </Fragment>
+            )}
         </Fragment>
     )
 }

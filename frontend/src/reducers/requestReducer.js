@@ -11,6 +11,14 @@ import {
     GET_REQUESTS_REQUEST,
     GET_REQUESTS_SUCCESS,
     GET_REQUESTS_FAIL,
+    UPDATE_REQUEST_REQUEST,
+    UPDATE_REQUEST_SUCCESS,
+    UPDATE_REQUEST_FAIL,
+    UPDATE_REQUEST_RESET,
+    DELETE_REQUEST_REQUEST,
+    DELETE_REQUEST_SUCCESS,
+    DELETE_REQUEST_FAIL,
+    DELETE_REQUEST_RESET,
     CLEAR_ERRORS
 } from '../constants/requestConstants'
 
@@ -79,7 +87,6 @@ export const saveFormDetailsReducer = (state = { formData: {} }, action) => {
     }
 }
 
-
 //get ALL requests
 export const getRequestsReducer = (state = { requests: [] }, action) => {
     switch (action.type) {
@@ -101,6 +108,64 @@ export const getRequestsReducer = (state = { requests: [] }, action) => {
             return {
                 ...state,
                 error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+//update and delete announcement
+export const requestReducer = (state = {}, action) => {
+    switch (action.type) {
+
+        case DELETE_REQUEST_REQUEST:
+        case UPDATE_REQUEST_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+
+        case DELETE_REQUEST_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                isDeleted: action.payload
+            }
+
+        case UPDATE_REQUEST_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                isUpdated: action.payload
+            }
+
+        case DELETE_REQUEST_FAIL:
+        case UPDATE_REQUEST_FAIL:
+            return {
+                ...state,
+                error: action.payload,
+                loading: false
+            }
+
+        case DELETE_REQUEST_RESET:
+            return {
+                ...state,
+                isDeleted: false,
+                loading: false
+            }
+
+        case UPDATE_REQUEST_RESET:
+            return {
+                ...state,
+                isUpdated: false,
+                loading: false
             }
 
         case CLEAR_ERRORS:

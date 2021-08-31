@@ -11,7 +11,7 @@ const TrackingPage = ({ history }) => {
     const alert = useAlert()
     const dispatch = useDispatch()
 
-    const { loading, success, error, request } = useSelector(state => state.request)
+    const { loading, success, error, request } = useSelector(state => state.requestDetails)
 
     const [userInfo, setUserInfo] = useState({
         trackingNumber: '',

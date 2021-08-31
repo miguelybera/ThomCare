@@ -14,7 +14,7 @@ const cardStyle = {
 }
 
 const TrackingPageProgress = () => {
-    const { loading, request } = useSelector(state => state.request)
+    const { loading, request } = useSelector(state => state.requestDetails)
 
     function changeDateFormat(date) {
         return dateFormat(date, "mmm d, yyyy h:MMtt")
