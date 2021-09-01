@@ -76,7 +76,10 @@ exports.updateForm = catchAsyncErrors(async (req, res, next) => {
         newFormFiles = form.formFiles
     }else{
         if(arrayIds.length != 0){
-            cloudinary.api.delete_resources(arrayIds,{ resource_type: 'raw' })
+            for (let x = 0; x < arrayIds.length; x++){
+                cloudinary.uploader.destroy(arrayIds[x], 
+                    { resource_type: 'raw' })
+              }
            }
         newFormFiles = req.files
     }
@@ -112,11 +115,11 @@ exports.deleteForm = catchAsyncErrors(async (req, res, next) => {
         arrayIds.push(filesAttached[i].filename) 
       }
       if(arrayIds.length != 0){
-        cloudinary.api.delete_resources(arrayIds, 
-            { resource_type: 'raw' })
+        for (let x = 0; x < arrayIds.length; x++){
+            cloudinary.uploader.destroy(arrayIds[x], 
+                { resource_type: 'raw' })
+          }
       }
-      
-
     await form.remove()
     res.status(200).json({
         success: true,
