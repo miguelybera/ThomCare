@@ -241,7 +241,10 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
         }
     }else{
         if(arrayIds.length != 0){
-            cloudinary.api.delete_resources(arrayIds,{ resource_type: 'raw' })
+            for (let x = 0; x < arrayIds.length; x++){
+                cloudinary.uploader.destroy(arrayIds[x], 
+                    { resource_type: 'raw' })
+              }
            }
         newRequestData= {
             requestStatus: req.body.requestStatus,
@@ -321,8 +324,10 @@ exports.deleteRequest = catchAsyncErrors(async (req, res, next) => {
         arrayIds.push(filesReturned[i].filename) 
       }
       if(arrayIds.length != 0){
-        cloudinary.api.delete_resources(arrayIds, 
-            { resource_type: 'raw' })
+        for (let x = 0; x < arrayIds.length; x++){
+            cloudinary.uploader.destroy(arrayIds[x], 
+                { resource_type: 'raw' })
+          }
       }
     await request.remove()
 

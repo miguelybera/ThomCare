@@ -232,7 +232,10 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
         newAnnouncementFiles = announcement.fileAttachments
     }else{
         if(arrayIds.length != 0){
-            cloudinary.api.delete_resources(arrayIds,{ resource_type: 'raw' })
+            for (let x = 0; x < arrayIds.length; x++){
+                cloudinary.uploader.destroy(arrayIds[x], 
+                    { resource_type: 'raw' })
+              }
            }
         newAnnouncementFiles = req.files
     }
@@ -338,8 +341,10 @@ exports.deleteAnnouncement = catchAsyncErrors(async (req, res, next) => {
       }
 
       if(arrayIds.length != 0){
-        cloudinary.api.delete_resources(arrayIds, 
-            { resource_type: 'raw' })
+        for (let x = 0; x < arrayIds.length; x++){
+            cloudinary.uploader.destroy(arrayIds[x], 
+                { resource_type: 'raw' })
+          }
       }
     
     await announcement.remove()
