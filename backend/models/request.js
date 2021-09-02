@@ -49,6 +49,10 @@ const requestSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Requestor First Name required']
     },
+    requestorMiddleName:{
+        type: String,
+        required: [true, 'Requestor Middle Name required']
+    },
     requestorLastName:{
         type: String,
         required: [true, 'Requestor Last Name required']
