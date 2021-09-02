@@ -51,7 +51,7 @@ const requestSchema = new mongoose.Schema({
     },
     requestorMiddleName:{
         type: String,
-        required: [true, 'Requestor Middle Name required']
+        default: ''
     },
     requestorLastName:{
         type: String,
