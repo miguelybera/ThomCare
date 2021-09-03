@@ -33,14 +33,23 @@ exports.submitRequest = catchAsyncErrors(async (req, res, next) => {
         case "Request for Overload":
             trackStart = '5'
             break
-        case "Request for late enrollment":
+        case "Request Override":
             trackStart = '6'
             break
-        case "Request for manual enrollment":
+        case "Request for late enrollment":
             trackStart = '7'
             break
-        case "Others":
+        case "Request for manual enrollment":
             trackStart = '8'
+            break
+        case "Request for Course Description":
+            trackStart = '9'
+            break
+        case "Request for Certificate of Grades":
+            trackStart = '10'
+            break
+        case "Others":
+            trackStart = '11'
             break
     }
 
@@ -120,12 +129,14 @@ exports.getAllRequestsDeptChair = catchAsyncErrors(async (req, res, next) => {
     const apiFeaturesProcessing = new APIFeatures(Request.find({ requestorCourse: deptCourse, requestStatus: 'Processing', isTrash: false, requestType: { $nin: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
     const apiFeaturesApproved = new APIFeatures(Request.find({ requestorCourse: deptCourse, requestStatus: 'Approved', isTrash: false, requestType: { $nin: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
     const apiFeaturesDenied = new APIFeatures(Request.find({ requestorCourse: deptCourse, requestStatus: 'Denied', isTrash: false, requestType: { $nin: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
+    const apiFeaturesCrossEnrollment = new APIFeatures(Request.find({ isTrash: false, requestType: 'Cross Enrollment within CICS' }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
 
     const requests = await apiFeatures.query
     const pendingRequests = await apiFeaturesPending.query
     const processingRequests = await apiFeaturesProcessing.query
     const approvedRequests = await apiFeaturesApproved.query
     const deniedRequests = await apiFeaturesDenied.query
+    const crossEnrollmentRequests = await apiFeaturesCrossEnrollment.query
 
     res.status(200).json({
         success: true,
@@ -133,7 +144,8 @@ exports.getAllRequestsDeptChair = catchAsyncErrors(async (req, res, next) => {
         pendingRequests,
         processingRequests,
         approvedRequests,
-        deniedRequests
+        deniedRequests,
+        crossEnrollmentRequests
     })
 })
 
@@ -204,6 +216,9 @@ exports.getSingleRequest = catchAsyncErrors(async (req, res, next) => {
 exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
     let deptCourse = ''
     const rqst = await Request.findById(req.params.requestId)
+    /* removed the if condition for updating requests only within their department because the cross enrollment request
+     requires department chairs from other courses to also approve the switch case can be replaced into an if condition that the student
+     role cannot have access. */
     switch (req.user.role) {
         case 'IT Dept Chair':
             deptCourse = 'Information Technology'
@@ -220,11 +235,6 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
             return next(new ErrorHandler('Role does not have access to this resource'))
             break
     }
-
-    if(req.user.role === 'CICS Staff'){
-
-    }
-    else if(rqst.requestorCourse !== deptCourse ) { return next(new ErrorHandler('Role does not have access to this resource')) }
 
     const filesReturned = rqst.returningFiles
     const returnLength = filesReturned.length
