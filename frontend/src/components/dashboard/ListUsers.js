@@ -134,35 +134,31 @@ const ListUsers = ({ history }) => {
                 </Modal.Header>
                 <Modal.Body>
                     This change cannot be undone.
-                            </Modal.Body>
+                </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Cancel
-                                </Button>
+                    </Button>
                     <Button variant="primary" onClick={() => deleteUserHandler(deleteUserId)}>Yes, I'm sure</Button>
                 </Modal.Footer>
             </Modal>
+
+            <Sidebar />
             <div className="row">
-                <div className="col-12 col-md-2">
-                    <Sidebar />
-                </div>
-
                 <div className="col-12 col-md-10">
-                    <h1 className="my-4">Control Panel</h1>
-
                     <Container className="space_inside"></Container>
 
                     <Container>
                         <h3>Users</h3>
                         {loading ? <Loader /> : (
-                                <MDBDataTableV5
-                                    data={setUsers()}
-                                    searchTop
-                                    pagingTop
-                                    scrollX
-                                    entriesOptions={[5, 20, 25]}
-                                    entries={5}
-                                />
+                            <MDBDataTableV5
+                                data={setUsers()}
+                                searchTop
+                                pagingTop
+                                scrollX
+                                entriesOptions={[5, 20, 25]}
+                                entries={5}
+                            />
                         )}
                     </Container>
                 </div>

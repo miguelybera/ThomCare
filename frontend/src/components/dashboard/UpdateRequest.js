@@ -5,6 +5,7 @@ import { getRequestDetails, updateRequest, clearErrors } from './../../actions/r
 import { REQUEST_DETAILS_RESET } from './../../constants/requestConstants'
 import MetaData from './../layout/MetaData'
 import Loader from './../layout/Loader'
+import Sidebar from './../layout/Sidebar'
 
 const UpdateRequest = ({ history, match }) => {
 
@@ -101,6 +102,7 @@ const UpdateRequest = ({ history, match }) => {
     return (
         <Fragment>
             <MetaData title={`Update Request`} />
+            <Sidebar/>
             {requestLoading ? <Loader /> : (
                 <Fragment>
                     <p>{requestorFirstName} {requestorLastName}</p>

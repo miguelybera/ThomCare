@@ -1,5 +1,7 @@
-import React, { useState } from 'react'
+import React, { Fragment, useState } from 'react'
 import styled from 'styled-components'
+import { useAlert } from 'react-alert'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import * as FaIcons from 'react-icons/fa'
 import * as AiIcons from 'react-icons/ai'
@@ -70,6 +72,8 @@ const SidebarWrap = styled.div`
 
 const Sidebar = () => {
 
+    const { user } = useSelector(state => state.auth)
+
     const [sidebar, setSidebar] = useState(false);
 
     const showSidebar = () => setSidebar(!sidebar);
@@ -82,7 +86,6 @@ const Sidebar = () => {
                         <FaIcons.FaBars onClick={showSidebar} />
                     </NavIcon>
                     <p style={{ paddingTop: "13px", fontSize: "20px", color: "white", paddingLeft: "20px", paddingRight: "22px" }}>Control Panel</p>
-
                 </Nav>
 
                 <SidebarNav sidebar={sidebar} >
@@ -90,10 +93,29 @@ const Sidebar = () => {
                         <NavIcon to="#">
                             <AiIcons.AiOutlineClose onClick={showSidebar} />
                         </NavIcon>
-
-                        {SidebarData.map((item, index) => {
-                            return <SubMenu item={item} key={index} />;
-                        })}
+                        {
+                            user.role === 'Student' ? (
+                                <Fragment>
+                                    {SidebarData[0].map((item, index) => {
+                                        return <SubMenu item={item} key={index} />;
+                                    })}
+                                </Fragment>
+                            ) : (
+                                user.role === 'Dept Chair' ? (
+                                    <Fragment>
+                                        {SidebarData[1].map((item, index) => {
+                                            return <SubMenu item={item} key={index} />;
+                                        })}
+                                    </Fragment>
+                                ) : (
+                                    <Fragment>
+                                        {SidebarData[2].map((item, index) => {
+                                            return <SubMenu item={item} key={index} />;
+                                        })}
+                                    </Fragment>
+                                )
+                            )
+                        }
 
                     </SidebarWrap>
                 </SidebarNav>

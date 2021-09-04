@@ -94,14 +94,9 @@ const CreateAnnouncement = ({ history }) => {
     return (
         <Fragment>
             <MetaData title={'New Announcement'} />
+            <Sidebar />
             <div className="row">
-                <div className="col-12 col-md-2">
-                    <Sidebar />
-                </div>
-
                 <div className="col-12 col-md-10">
-                    <h1 className="my-4">Control Panel</h1>
-
                     <Container className="space_inside"></Container>
 
                     <Container fluid>
@@ -172,7 +167,7 @@ const CreateAnnouncement = ({ history }) => {
                                     </Form.Group>
                                     <Form.Group controlId="formFileMultiple" className="mb-3">
                                         <Form.Label>Attach document(s):</Form.Label>
-                                        <Form.Control type="file" name="file" onChange={onChange}/>
+                                        <Form.Control type="file" name="file" onChange={onChange} />
                                     </Form.Group>
                                     <Button
                                         type='submit'

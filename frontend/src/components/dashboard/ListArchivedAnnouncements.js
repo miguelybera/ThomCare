@@ -146,10 +146,8 @@ const ListArchivedAnnouncements = ({ history }) => {
                     <Button variant="primary" onClick={() => deleteAnnouncementHandler(deleteAnnouncementId)}>Yes, I'm sure</Button>
                 </Modal.Footer>
             </Modal>
+            <Sidebar/>
             <div className="row">
-                <div className="col-12 col-md-2">
-                    <Sidebar />
-                </div>
                 <div className="col-12 col-md-10">
                     <h1 className="my-4">Control Panel</h1>
 

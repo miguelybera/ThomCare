@@ -65,14 +65,10 @@ const UpdateUser = ({ history }) => {
     return (
         <Fragment>
             <MetaData title={'Update User'} />
+            <Sidebar />
             <div className="row">
-                <div className="col-12 col-md-2">
-                    <Sidebar />
-                </div>
 
                 <div className="col-12 col-md-10">
-                    <h1 className="my-4">Control Panel</h1>
-
                     <Container className="space_inside"></Container>
 
                     <Container fluid>
@@ -86,7 +82,7 @@ const UpdateUser = ({ history }) => {
                                             <Form.Group as={Row} className="mb-3" controlId="formHorizontalName">
                                                 <Form.Label column sm={2}>
                                                     Name
-                                                    </Form.Label>
+                                                </Form.Label>
                                                 <Col sm={6}>
                                                     <Form.Control type="text" placeholder="First Name" value={upperCase(firstName)} name="firstName" onChange={e => setFirstName(e.target.value)} />
                                                 </Col>
@@ -97,7 +93,7 @@ const UpdateUser = ({ history }) => {
                                             <Form.Group as={Row} className="mb-3" controlId="formHorizontalRole">
                                                 <Form.Label column sm={3}>
                                                     Role
-                                                            </Form.Label>
+                                                </Form.Label>
                                                 <Col sm={9}>
                                                     <Form.Select aria-label="Default select example" value={role} name="role" onChange={e => setRole(e.target.value)} required>
                                                         <option value=''>-</option>
@@ -110,7 +106,7 @@ const UpdateUser = ({ history }) => {
                                             <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
                                                 <Form.Label column sm={3}>
                                                     Email address
-                                                    </Form.Label>
+                                                </Form.Label>
                                                 <Col sm={9}>
                                                     <Form.Control type="email" placeholder="juan.delacruz.iics@ust.edu.ph" pattern="[a-z]{1,}\.[a-z]{1,}@ust\.edu\.ph" value={email} name="email" onChange={e => setEmail(e.target.value)} required />
                                                 </Col>

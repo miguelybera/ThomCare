@@ -152,21 +152,17 @@ const ListAnnouncements = ({ history }) => {
                 </Modal.Header>
                 <Modal.Body>
                     This change cannot be undone.
-                        </Modal.Body>
+                </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
-                            </Button>
+                    </Button>
                     <Button variant="primary" onClick={() => deleteAnnouncementHandler(deleteAnnouncementId)}>Yes, I'm sure</Button>
                 </Modal.Footer>
             </Modal>
+            <Sidebar />
             <div className="row">
-                <div className="col-12 col-md-2">
-                    <Sidebar />
-                </div>
                 <div className="col-12 col-md-10">
-                    <h1 className="my-4">Control Panel</h1>
-
                     <Container className="space_inside"></Container>
                     <Container>
                         <h3>Announcements</h3>
