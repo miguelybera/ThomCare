@@ -8,6 +8,9 @@ import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
 import { UPDATE_ANNOUNCEMENT_RESET } from '../../constants/announcementConstants'
 import { getAnnouncementDetails, updateAnnouncement, clearErrors } from '../../actions/announcementActions'
+import {
+    INSIDE_DASHBOARD_TRUE
+} from '../../constants/dashboardConstants'
 
 // <Card.Title style={{margin: '50px 0 20px 0'}}>Register an account</Card.Title>
 
@@ -129,6 +132,9 @@ const UpdateAnnouncement = ({ history, match }) => {
             })
         }
 
+        dispatch({
+            type: INSIDE_DASHBOARD_TRUE
+        })
     }, [dispatch, error, alert, isUpdated, updateError, announcement, announcementId, history])
 
     const onChange = e => {
@@ -140,7 +146,7 @@ const UpdateAnnouncement = ({ history, match }) => {
             <MetaData title={'Update Announcement'} />
             <Sidebar />
             <div className="row">
-                <div className="col-12 col-md-10">
+                <div className="">
                     <Container className="space_inside"></Container>
 
                     <Container fluid>

@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
 import { saveStudentInfo } from '../../actions/userActions'
 import MetaData from '../layout/MetaData'
+import {
+    INSIDE_DASHBOARD_FALSE
+} from '../../constants/dashboardConstants'
 
 const Register = ({ history }) => {
     const dispatch = useDispatch()
@@ -37,6 +40,11 @@ const Register = ({ history }) => {
         })
     }
 
+    useEffect(() => {
+        dispatch({
+            type: INSIDE_DASHBOARD_FALSE
+        })
+    }, [dispatch])
     return (
         <>
             <MetaData title={'Register'} />

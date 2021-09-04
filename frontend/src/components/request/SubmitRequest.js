@@ -6,6 +6,9 @@ import { submitRequest, clearErrors } from './../../actions/requestActions'
 import { SUBMIT_REQUEST_RESET } from './../../constants/requestConstants'
 import MetaData from './../layout/MetaData'
 import { FloatingLabel, Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
+import {
+    INSIDE_DASHBOARD_FALSE
+} from '../../constants/dashboardConstants'
 
 const SubmitRequest = ({ history }) => {
     const alert = useAlert()
@@ -64,6 +67,9 @@ const SubmitRequest = ({ history }) => {
             dispatch(clearErrors())
         }
 
+        dispatch({
+            type: INSIDE_DASHBOARD_FALSE
+        })
     }, [dispatch, alert, success, error, history])
 
     return (

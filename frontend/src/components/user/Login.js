@@ -5,6 +5,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { login, clearErrors } from './../../actions/userActions'
 import MetaData from './../layout/MetaData'
 import { FloatingLabel, Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
+import {
+    INSIDE_DASHBOARD_FALSE
+} from '../../constants/dashboardConstants'
 
 const Login = ({ history }) => {
     const alert = useAlert()
@@ -32,6 +35,9 @@ const Login = ({ history }) => {
             dispatch(clearErrors())
         }
 
+        dispatch({
+            type: INSIDE_DASHBOARD_FALSE
+        })
     }, [dispatch, alert, isAuthenticated, error, history])
 
     return (

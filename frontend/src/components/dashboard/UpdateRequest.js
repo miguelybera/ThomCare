@@ -6,6 +6,9 @@ import { REQUEST_DETAILS_RESET } from './../../constants/requestConstants'
 import MetaData from './../layout/MetaData'
 import Loader from './../layout/Loader'
 import Sidebar from './../layout/Sidebar'
+import {
+    INSIDE_DASHBOARD_TRUE
+} from '../../constants/dashboardConstants'
 
 const UpdateRequest = ({ history, match }) => {
 
@@ -96,6 +99,10 @@ const UpdateRequest = ({ history, match }) => {
             alert.error(error)
             dispatch(clearErrors())
         }
+        
+        dispatch({
+            type: INSIDE_DASHBOARD_TRUE
+        })
     }, [loading, dispatch, alert, isUpdated, updateError, history])
 
 

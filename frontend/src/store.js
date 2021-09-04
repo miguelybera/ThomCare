@@ -37,6 +37,10 @@ import {
     getCoursesReducer
 } from './reducers/courseReducers'
 
+import {
+    dashboardReducer
+} from './reducers/dashboardReducers'
+
 const reducer = combineReducers({
     auth: authReducer, //get currently logged in, for login and logout
     users: getUsersReducer, //get all users
@@ -62,7 +66,9 @@ const reducer = combineReducers({
     form: saveFormDetailsReducer,
     request: requestReducer,
     
-    courses: getCoursesReducer //get single request details
+    courses: getCoursesReducer, //get single request details
+
+    dashboard: dashboardReducer //check if inside dashboard
 })
 
 

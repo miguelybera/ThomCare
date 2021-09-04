@@ -3,13 +3,23 @@ import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import Pdf from "react-to-pdf";
+import {
+    INSIDE_DASHBOARD_FALSE
+} from '../../constants/dashboardConstants'
 
 const ref = React.createRef();
 
 const PDF = (props) => {
+    const dispatch = useDispatch();
 
     const { formData } = useSelector(state => state.form)
 
+    useEffect(() => {
+        dispatch({
+            type: INSIDE_DASHBOARD_FALSE
+        })
+    }, [dispatch])
+    
     return (
         <>
             <div className="Post" ref={ref}>

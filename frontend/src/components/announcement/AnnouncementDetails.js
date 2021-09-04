@@ -6,6 +6,9 @@ import { Card, Breadcrumb } from 'react-bootstrap'
 import { getAnnouncementDetails, getUser, clearErrors } from './../../actions/announcementActions'
 import MetaData from './../layout/MetaData'
 import Loader from './../layout/Loader'
+import {
+    INSIDE_DASHBOARD_FALSE
+} from '../../constants/dashboardConstants'
 
 var dateFormat = require('dateformat')
 
@@ -67,6 +70,10 @@ const AnnouncementDetails = ({ history, match }) => {
             alert.error(error)
             dispatch(clearErrors())
         }
+        
+        dispatch({
+            type: INSIDE_DASHBOARD_FALSE
+        })
     }, [dispatch, alert, error, announcement, announcementId])
 
     useEffect(() => {

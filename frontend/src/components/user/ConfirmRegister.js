@@ -5,6 +5,9 @@ import { register, clearErrors } from '../../actions/userActions'
 import { REGISTER_USER_RESET } from '../../constants/userConstants'
 import { Button, Card, Container } from 'react-bootstrap'
 import MetaData from '../layout/MetaData'
+import {
+    INSIDE_DASHBOARD_FALSE
+} from '../../constants/dashboardConstants'
 
 const ConfirmRegister = ({ history }) => {
     const alert = useAlert()
@@ -33,6 +36,10 @@ const ConfirmRegister = ({ history }) => {
                 type: REGISTER_USER_RESET
             })
         }
+        
+        dispatch({
+            type: INSIDE_DASHBOARD_FALSE
+        })
 
     }, [dispatch, alert, error, message, history, isCreated])
 

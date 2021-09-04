@@ -9,6 +9,9 @@ import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
 import { Container, Modal, Button } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
+import {
+    INSIDE_DASHBOARD_TRUE
+} from '../../constants/dashboardConstants'
 
 var dateFormat = require('dateformat')
 
@@ -48,6 +51,9 @@ const ListArchivedAnnouncements = ({ history }) => {
             })
         }
 
+        dispatch({
+            type: INSIDE_DASHBOARD_TRUE
+        })
     }, [dispatch, alert, error, isDeleted, deleteError])
 
     function changeDateFormat(date) {
@@ -148,9 +154,7 @@ const ListArchivedAnnouncements = ({ history }) => {
             </Modal>
             <Sidebar/>
             <div className="row">
-                <div className="col-12 col-md-10">
-                    <h1 className="my-4">Control Panel</h1>
-
+                <div className="">
                     <Container className="space_inside"></Container>
                     <Container>
                         <h3>Archived Announcements</h3>

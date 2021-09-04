@@ -7,6 +7,9 @@ import Sidebar from '../layout/Sidebar'
 import MetaData from '../layout/MetaData'
 import { REGISTER_USER_RESET } from '../../constants/userConstants'
 import { register, clearErrors } from '../../actions/userActions'
+import {
+    INSIDE_DASHBOARD_TRUE
+} from '../../constants/dashboardConstants'
 
 // <Card.Title style={{margin: '50px 0 20px 0'}}>Register an account</Card.Title>
 
@@ -60,6 +63,9 @@ const UpdateUser = ({ history }) => {
             })
         }
 
+        dispatch({
+            type: INSIDE_DASHBOARD_TRUE
+        })
     }, [dispatch, alert, error, message, history, isCreated])
 
     return (
@@ -68,7 +74,7 @@ const UpdateUser = ({ history }) => {
             <Sidebar />
             <div className="row">
 
-                <div className="col-12 col-md-10">
+                <div className="">
                     <Container className="space_inside"></Container>
 
                     <Container fluid>

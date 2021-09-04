@@ -85,7 +85,7 @@ const Sidebar = () => {
                     <NavIcon to="#">
                         <FaIcons.FaBars onClick={showSidebar} />
                     </NavIcon>
-                    <p style={{ paddingTop: "13px", fontSize: "20px", color: "white", paddingLeft: "20px", paddingRight: "22px" }}>Control Panel</p>
+                    <p style={{ paddingTop: "13px", fontSize: "20px", color: "white", paddingLeft: "20px", paddingRight: "22px" }}>ThomCare</p>
                 </Nav>
 
                 <SidebarNav sidebar={sidebar} >

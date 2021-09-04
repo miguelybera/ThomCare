@@ -9,6 +9,9 @@ import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
 import { Container, Modal, Button } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
+import {
+    INSIDE_DASHBOARD_TRUE
+} from '../../constants/dashboardConstants'
 
 const ListUsers = ({ history }) => {
 
@@ -47,6 +50,9 @@ const ListUsers = ({ history }) => {
             })
         }
 
+        dispatch({
+            type: INSIDE_DASHBOARD_TRUE
+        })
     }, [dispatch, alert, error, isDeleted, deleteError])
 
     const deleteUserHandler = (id) => {
@@ -145,7 +151,7 @@ const ListUsers = ({ history }) => {
 
             <Sidebar />
             <div className="row">
-                <div className="col-12 col-md-10">
+                <div className="">
                     <Container className="space_inside"></Container>
 
                     <Container>

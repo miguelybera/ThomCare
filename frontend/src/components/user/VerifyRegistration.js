@@ -10,6 +10,9 @@ import {
     VERIFY_STUDENT_FAIL,
     VERIFY_STUDENT_RESET 
 } from './../../constants/userConstants'
+import {
+    INSIDE_DASHBOARD_FALSE
+} from '../../constants/dashboardConstants'
 
 
 const VerifyRegistration = ({ history, match }) => {
@@ -52,6 +55,9 @@ const VerifyRegistration = ({ history, match }) => {
 
         verify()
 
+        dispatch({
+            type: INSIDE_DASHBOARD_FALSE
+        })
     }, [dispatch, token])
 
     useEffect(() => {

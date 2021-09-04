@@ -9,6 +9,9 @@ import Loader from './../layout/Loader'
 import '../../App.css'
 import styled from 'styled-components'
 import { Form, FormControl, Card, Row, Col, Container } from 'react-bootstrap'
+import {
+    INSIDE_DASHBOARD_FALSE
+} from '../../constants/dashboardConstants'
 
 var dateFormat = require('dateformat')
 
@@ -103,7 +106,10 @@ const Announcements = () => {
         }
 
         dispatch(getAnnouncements(currentPage, course, yearLevel, track, title))
-
+        
+        dispatch({
+            type: INSIDE_DASHBOARD_FALSE
+        })
     }, [dispatch, alert, error, currentPage, course, yearLevel, track, title])
 
     const onChange = e => {

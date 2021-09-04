@@ -23,6 +23,10 @@ import {
 } from '../../../constants/userConstants'
 import { Modal, Button } from 'react-bootstrap'
 import MetaData from '../../layout/MetaData'
+import Sidebar from '../../layout/Sidebar'
+import {
+    INSIDE_DASHBOARD_TRUE
+} from '../../../constants/dashboardConstants'
 
 const Messenger = () => {
     const dispatch = useDispatch()
@@ -191,6 +195,10 @@ const Messenger = () => {
         if(error){
             alert.error(error)
         }
+
+        dispatch({
+            type: INSIDE_DASHBOARD_TRUE
+        })
     }, [dispatch, success, convo, error])
 
     const displayUsers = o => {
@@ -209,10 +217,12 @@ const Messenger = () => {
             )
         }
     }
+    console.log(currentChat)
 
     return (
         <>
             <MetaData title={'Messages'}/>
+            <Sidebar/>
             <Modal
                 show={show}
                 onHide={handleClose}
@@ -261,6 +271,7 @@ const Messenger = () => {
                     <div className='chatBoxWrapper'>
                         {
                             currentChat ? (<>
+                            <p>{currentChat.members[1]}</p>
                             <div className='chatBoxTop'>
                                 {messageList && messageList.map(m => (
                                     <>

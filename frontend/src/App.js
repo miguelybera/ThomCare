@@ -54,6 +54,7 @@ import { loadUser } from './actions/userActions'
 function App() {
 
     const { loading } = useSelector(state => state.auth)
+    const { dashboard } = useSelector(state => state.dashboard)
 
     useEffect(() => {
         store.dispatch(loadUser())
@@ -66,7 +67,9 @@ function App() {
                 <ScrollToTop>
                     {/*{loading ? <Loader /> : (*/}
                         <Fragment>
-                            <Header />
+                            {
+                                dashboard ? <></> : <Header />
+                            }
                             <div className='container container-fluid'>
                                 <Route path='/' component={Announcements} exact />
                                 <Route path='/announcement/:id' component={AnnouncementDetails} exact />

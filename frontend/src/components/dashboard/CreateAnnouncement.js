@@ -7,6 +7,9 @@ import Sidebar from '../layout/Sidebar'
 import MetaData from '../layout/MetaData'
 import { NEW_ANNOUNCEMENT_RESET } from '../../constants/announcementConstants'
 import { createAnnouncement, clearErrors } from '../../actions/announcementActions'
+import {
+    INSIDE_DASHBOARD_TRUE
+} from '../../constants/dashboardConstants'
 
 // <Card.Title style={{margin: '50px 0 20px 0'}}>Register an account</Card.Title>
 // hello testing 
@@ -85,6 +88,10 @@ const CreateAnnouncement = ({ history }) => {
                 type: NEW_ANNOUNCEMENT_RESET
             })
         }
+
+        dispatch({
+            type: INSIDE_DASHBOARD_TRUE
+        })
     }, [dispatch, alert, success, error])
 
     const onChange = e => {
@@ -96,7 +103,7 @@ const CreateAnnouncement = ({ history }) => {
             <MetaData title={'New Announcement'} />
             <Sidebar />
             <div className="row">
-                <div className="col-12 col-md-10">
+                <div className="">
                     <Container className="space_inside"></Container>
 
                     <Container fluid>

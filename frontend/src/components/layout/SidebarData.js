@@ -19,7 +19,7 @@ export const SidebarData = [
         },
         {
             title: 'My Profile',
-            path: '/me',
+            path: '/profile',
             icon: <AiIcons.AiFillHome />
         },
         {
@@ -56,11 +56,11 @@ export const SidebarData = [
         },
         {
             title: 'My Profile',
-            path: '/me',
+            path: '/profile',
             icon: <AiIcons.AiFillHome />
         },
         {
-            title: 'Announcement',
+            title: 'Announcements',
             icon: <AiIcons.AiFillHome />,
             iconClosed: <RiIcons.RiArrowDownSFill />,
             iconOpened: <RiIcons.RiArrowUpSFill />,
@@ -129,11 +129,11 @@ export const SidebarData = [
         },
         {
             title: 'My Profile',
-            path: '/me',
+            path: '/profile',
             icon: <AiIcons.AiFillHome />
         },
         {
-            title: 'Announcement',
+            title: 'Announcements',
             icon: <AiIcons.AiFillHome />,
             iconClosed: <RiIcons.RiArrowDownSFill />,
             iconOpened: <RiIcons.RiArrowUpSFill />,

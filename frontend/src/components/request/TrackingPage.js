@@ -5,7 +5,9 @@ import { trackRequest, clearErrors } from './../../actions/requestActions'
 import { REQUEST_DETAILS_RESET } from './../../constants/requestConstants'
 import MetaData from './../layout/MetaData'
 import { Card, Container, Row, FloatingLabel, Form, Button } from 'react-bootstrap'
-
+import {
+    INSIDE_DASHBOARD_FALSE
+} from '../../constants/dashboardConstants'
 
 const TrackingPage = ({ history }) => {
     const alert = useAlert()
@@ -36,6 +38,10 @@ const TrackingPage = ({ history }) => {
             alert.error(error)
             dispatch(clearErrors())
         }
+        
+        dispatch({
+            type: INSIDE_DASHBOARD_FALSE
+        })
     }, [loading, dispatch, alert, success, error, history])
 
 

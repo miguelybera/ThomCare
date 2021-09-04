@@ -1,10 +1,14 @@
-import React, { Fragment} from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import MetaData from './../layout/MetaData'
 import Loader from './../layout/Loader'
 import { MDBDataTableV5 } from 'mdbreact'
 import { Card } from 'react-bootstrap'
+import {
+    INSIDE_DASHBOARD_FALSE
+} from '../../constants/dashboardConstants'
+
 var dateFormat = require('dateformat')
 
 const cardStyle = {
@@ -14,6 +18,8 @@ const cardStyle = {
 }
 
 const TrackingPageProgress = () => {
+    const dispatch = useDispatch()
+
     const { loading, request } = useSelector(state => state.requestDetails)
 
     function changeDateFormat(date) {
@@ -22,6 +28,11 @@ const TrackingPageProgress = () => {
 
     const upperCase = (text) => text.toUpperCase()
 
+    useEffect(() => {
+        dispatch({
+            type: INSIDE_DASHBOARD_FALSE
+        })
+    }, [dispatch])
     const setHistory = () => {
         const remarks = request.remarks
         const data = {

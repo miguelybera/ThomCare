@@ -8,6 +8,9 @@ import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
 import { UPDATE_USER_RESET } from '../../constants/userConstants'
 import { getUserDetails, updateUser, clearErrors } from '../../actions/userActions'
+import {
+    INSIDE_DASHBOARD_TRUE
+} from '../../constants/dashboardConstants'
 
 // <Card.Title style={{margin: '50px 0 20px 0'}}>Register an account</Card.Title>
 
@@ -100,6 +103,9 @@ const UpdateUser = ({ history, match }) => {
             })
         }
 
+        dispatch({
+            type: INSIDE_DASHBOARD_TRUE
+        })
     }, [dispatch, error, alert, isUpdated, updateError, singleUser, userId, history])
 
 
@@ -108,7 +114,7 @@ const UpdateUser = ({ history, match }) => {
             <MetaData title={'Update User'} />
             <Sidebar />
             <div className="row">
-                <div className="col-12 col-md-10">
+                <div className="">
                     <Container className="space_inside"></Container>
                     <Container fluid>
                         <h3>Update User</h3>

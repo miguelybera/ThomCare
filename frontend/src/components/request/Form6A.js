@@ -8,6 +8,10 @@ import MetaData from './../layout/MetaData'
 import Loader from './../layout/Loader'
 import { Row, Container, Button, Col, Card, Form } from 'react-bootstrap'
 import PDF from './PDF'
+import {
+    INSIDE_DASHBOARD_FALSE
+} from '../../constants/dashboardConstants'
+
 
 function Form6A() {
     const alert = useAlert()
@@ -23,7 +27,9 @@ function Form6A() {
             alert.error(error)
             dispatch(clearErrors())
         }
-
+        dispatch({
+            type: INSIDE_DASHBOARD_FALSE
+        })
     }, [dispatch, alert, error])
 
     //new 

@@ -5,6 +5,9 @@ import { forgotPassword, clearErrors } from '../../actions/userActions'
 import { FORGOT_PASSWORD_RESET } from '../../constants/userConstants'
 import { FloatingLabel, Form, Button, Card, Container, Row } from 'react-bootstrap'
 import MetaData from '../layout/MetaData'
+import {
+    INSIDE_DASHBOARD_FALSE
+} from '../../constants/dashboardConstants'
 
 const ForgotPassword = ({ history }) => {
     const alert = useAlert();
@@ -30,6 +33,10 @@ const ForgotPassword = ({ history }) => {
                 type: FORGOT_PASSWORD_RESET
             })
         }
+        
+        dispatch({
+            type: INSIDE_DASHBOARD_FALSE
+        })
     }, [dispatch, alert, error, message, history])
 
     const submitHandler = (e) => {

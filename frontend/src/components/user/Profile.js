@@ -6,6 +6,10 @@ import { UPDATE_PROFILE_RESET } from '../../constants/userConstants'
 import { Form, Card, Button, Container, Row, Col } from 'react-bootstrap'
 import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
+import Sidebar from '../layout/Sidebar'
+import {
+    INSIDE_DASHBOARD_TRUE
+} from '../../constants/dashboardConstants'
 
 const Profile = () => {
 
@@ -53,6 +57,10 @@ const Profile = () => {
                 type: UPDATE_PROFILE_RESET
             })
         }
+
+        dispatch({
+            type: INSIDE_DASHBOARD_TRUE
+        })
     }, [dispatch, alert, error, user, isUpdated, editError])
 
     const submitHandler = e => {
@@ -65,6 +73,7 @@ const Profile = () => {
         <>
             <MetaData title={'My Profile'} />
             {/** add here if user.role = 'something' display , else display student profile*/}
+            <Sidebar/>
             {loading ? (
                 <Loader />
             ) : (

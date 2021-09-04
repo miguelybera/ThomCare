@@ -5,6 +5,9 @@ import { FloatingLabel, Form, Button, Card, Container, Row } from 'react-bootstr
 import { resetPassword, clearErrors } from './../../actions/userActions'
 import { NEW_PASSWORD_RESET } from './../../constants/userConstants'
 import MetaData from './../layout/MetaData'
+import {
+    INSIDE_DASHBOARD_FALSE
+} from '../../constants/dashboardConstants'
 
 const NewPassword = ({history, match}) => {
     const alert = useAlert()
@@ -38,6 +41,9 @@ const NewPassword = ({history, match}) => {
             })
         }
 
+        dispatch({
+            type: INSIDE_DASHBOARD_FALSE
+        })
     }, [dispatch, alert, error, success, history])
 
     return (

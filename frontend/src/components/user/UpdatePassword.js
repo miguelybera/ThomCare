@@ -5,6 +5,10 @@ import { FloatingLabel, Form, Button, Card, Container, Row } from 'react-bootstr
 import { updatePassword, clearErrors } from './../../actions/userActions'
 import { UPDATE_PASSWORD_RESET } from './../../constants/userConstants'
 import MetaData from './../layout/MetaData'
+import {
+    INSIDE_DASHBOARD_FALSE
+} from '../../constants/dashboardConstants'
+
 
 const UpdatePassword = ({ history }) => {
     const alert = useAlert()
@@ -36,6 +40,9 @@ const UpdatePassword = ({ history }) => {
             dispatch(clearErrors())
         }
 
+        dispatch({
+            type: INSIDE_DASHBOARD_FALSE
+        })
     }, [dispatch, alert, error, isUpdated, history])
     return (
         <>
