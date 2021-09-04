@@ -47,18 +47,20 @@ const TrackingPage = ({ history }) => {
             [e.target.name]: upperCase(e.target.value)
         })
     }
-    
+
     const upperCase = (text) => text.toUpperCase()
 
     return (
         <Fragment>
             <MetaData title={'Track my request'} />
-            <Container fluid>
+            <Container className="space"></Container>
+            <Container fluid >
                 <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
-                    <Card style={{ width: '30rem', align: 'center' }}>
+                    <Card style={{ width: '30rem', align: 'center', backgroundColor: '#9c0b0b' }}>
                         <Card.Body>
-                            <Card.Title style={{ margin: '50px 0 20px 0' }}>Track my Request</Card.Title>
-
+                            <Card.Title style={{
+                                margin: '50px 0 20px 0', align: 'center', color: 'white', fontWeight: 'bold'
+                            }}>Track my Request</Card.Title>
                             <FloatingLabel
                                 controlId="floatingInput"
                                 label="Tracking ID"
@@ -70,24 +72,26 @@ const TrackingPage = ({ history }) => {
                             <FloatingLabel controlId="floatingInput" label="Surname">
                                 <Form.Control type="text" placeholder="Surname" name="lastName" value={lastName} onChange={onChange} />
                             </FloatingLabel>
-
-                            <Button
-                                onClick={submitHandler}
-                                type='submit'
-                                style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
-                                disabled={loading ? true : false}>
-                                {loading ? (
-                                    <span>
-                                        <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
-                                    </span>
-                                ) : (
-                                    <span>Track</span>
-                                )}
-                            </Button>
+                            <center>
+                                <Button
+                                    onClick={submitHandler}
+                                    type='submit'
+                                    style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                    disabled={loading ? true : false}>
+                                    {loading ? (
+                                        <span>
+                                            <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
+                                        </span>
+                                    ) : (
+                                        <span>Track</span>
+                                    )}
+                                </Button>
+                            </center>
                         </Card.Body>
                     </Card>
                 </Row>
             </Container>
+            <Container className="space"></Container>
         </Fragment>
     )
 }
