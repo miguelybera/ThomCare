@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import store from './store'
 import { Fragment, useEffect } from 'react'
+import './App.css';
 
 //layout folder
 import Header from './components/layout/Header'
