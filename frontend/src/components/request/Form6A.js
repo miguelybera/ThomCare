@@ -56,6 +56,10 @@ function Form6A() {
             values[index]["courseName"] = getCourseName(values[index]["courseCode"], "courseName")
             values[index]["labUnits"] = getCourseName(values[index]["courseCode"], "labUnits")
             values[index]["lecUnits"] = getCourseName(values[index]["courseCode"], "lecUnits")
+        } else {
+            values[index]["courseName"] = ''
+            values[index]["labUnits"] = ''
+            values[index]["lecUnits"] = ''
         }
         setInputFields(values)
     }
@@ -218,7 +222,7 @@ function Form6A() {
 
                                                     <Form.Group as={Col}>
                                                         <Form.Select aria-label="Default select example" name="courseCode" id={courseCode} data-id={idx} value={val.courseCode} onChange={e => onChange(idx, e)} required>
-                                                            <option>-</option>
+                                                            <option value=''>-</option>
                                                             {courses && courses.map(course => (
                                                                 <option value={course.courseCode}>{course.courseCode}</option>
                                                             ))}
@@ -238,7 +242,16 @@ function Form6A() {
                                                     </Form.Group>
 
                                                     <Form.Group as={Col}>
-                                                        <Form.Control type="number" placeholder="14 Days" name="days" id={days} data-id={idx} value={val.days} onChange={e => onChange(idx, e)} required />
+                                                        <Form.Select aria-label="Default select example" placeholder='M' name="days" id={days} data-id={idx} value={val.days} onChange={e => onChange(idx, e)} required >
+                                                            <option value=''>-</option>
+                                                            <option value='M'>M</option>
+                                                            <option value='T'>T</option>
+                                                            <option value='W'>W</option>
+                                                            <option value='Th'>Th</option>
+                                                            <option value='F'>F</option>
+                                                            <option value='S'>S</option>
+                                                            <option value='Su'>Su</option>
+                                                        </Form.Select>
                                                     </Form.Group>
 
                                                     <Form.Group as={Col}>

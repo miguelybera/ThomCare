@@ -86,8 +86,7 @@ const Announcements = () => {
         setCurrentPage(pageNumber)
     }
 
-    let count = announcementCount
-
+    let count = announcementCount 
 
     const [filter, setFilter] = useState({
         course: '',
@@ -96,6 +95,10 @@ const Announcements = () => {
         annnouncementType: '',
         title: ''
     })
+
+    if(filter.course !== '' || filter.yearLevel !== '' || filter.track !== '' || filter.annnouncementType !== '' || filter.title !== '' ) {
+        count = filteredAnnouncementsCount
+    }
 
     const { course, yearLevel, track, annnouncementType, title } = filter
 
