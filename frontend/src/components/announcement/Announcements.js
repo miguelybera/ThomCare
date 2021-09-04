@@ -241,7 +241,7 @@ const Announcements = () => {
                                     onChange={onChange}
                                     width="170px"
                                     right="0px"
-                                    style={{ border: "2px solid black" }}
+                                    style={{ border: "2px solid black", borderRadius: "20px", margin: '5px 0'  }}
                                 />
                             </Form.Group>
                         </Col>
@@ -254,17 +254,17 @@ const Announcements = () => {
                 <Row xs={1} md={2} className="g-4">
                     {announcements && (announcements.length !== 0) ? announcements.map(announcement => (
                         <Col>
-                            <Card style={{ borderRadius: '25px', background: '#e7e7e7' }}>
+                            <Card style={{ borderRadius: '25px', background: '#f5f5f5' }}>
                                 <Card.Body>
-                                    <Card.Header style={{ background: '#e7e7e7' }}>{announcement.title}</Card.Header>
-                                    <Card.Text style={{ marginLeft: '15px', fontWeight: '600', color: 'gray', fontSize: '12px' }}>
-                                        <p></p>
-                                        {changeDateFormat(announcement.createdAt)}
-                                        <br></br><br></br>
-                                        {shortenDescription(announcement.description)}
-                                        <br></br>
-                                        <Link to={`/announcement/${announcement._id}`}>Read More &#xbb;</Link>
-                                    Tags: {announcement.yearLevel}, {announcement.course}, {announcement.track}
+                                    <Card.Header style={{ background: '#f5f5f5', fontWeight: '600' }}>{announcement.title}</Card.Header>
+                                    <Card.Text style={{ marginLeft: '15px' }}>
+                                        <span style={{ fontWeight: '500', color: 'gray', fontSize: '12px' }}>{changeDateFormat(announcement.createdAt)}</span>
+                                        <br/>
+                                        <span style={{ fontSize: '14px' }}>{shortenDescription(announcement.description)}</span>
+                                        <br/><br/>
+                                        <span style={{ fontSize: '12px' }}><Link to={`/announcement/${announcement._id}`}>Read More &#xbb;</Link></span>
+                                        <br/>
+                                        <span style={{ fontWeight: '300', color: 'gray', fontSize: '12px' }}>Tags: {announcement.yearLevel}, {announcement.course}, {announcement.track}</span>
                                     </Card.Text>
                                 </Card.Body>
                             </Card>

@@ -70,8 +70,8 @@ const Login = ({ history }) => {
                                         required
                                     />
                                 </FloatingLabel>
+                                <center><Button type='submit' style={{ marginTop: '15px', borderRadius: '50px', width: '10rem' }}>Submit</Button></center>
                             </Form>
-                            <center><Button type='submit' style={{ marginTop: '15px', borderRadius: '50px', width: '10rem' }}>Submit</Button></center>
                             <Row style={{ paddingTop: '10px' }} >
                                 <Col style={{ textAlign: 'center', color: 'white' }}>No account yet? Click <Link to='/register' style={{ textDecoration: 'underline', color: 'white' }}>here</Link> to register.</Col>
                             </Row>

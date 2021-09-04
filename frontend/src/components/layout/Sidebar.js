@@ -1,70 +1,106 @@
-import React from 'react'
+import React, { useState } from 'react'
+import styled from 'styled-components'
 import { Link } from 'react-router-dom'
+import * as FaIcons from 'react-icons/fa'
+import * as AiIcons from 'react-icons/ai'
+import { SidebarData } from './SidebarData'
+import SubMenu from './SubMenu'
+import { IconContext } from 'react-icons/lib'
+
+const Nav = styled.div`
+    background: #640606;
+    height: 50px;
+    right:0px;
+    left:0px;
+    width: 100%;
+    display: flex;
+    justify-contents: flex-start;
+    align-items: center;
+    padding: 0px;
+    margin: 0px;
+    position: absolute;
+    top: 0px;
+    z-index:10;
+   
+    
+`;
+
+const NavBottom = styled.div`
+
+`;
+
+const NavIcon = styled(Link)`
+    margin-left: 2rem;
+    font-size: 2rem;
+    height 80px;
+    display: flex;
+    justify-contents: flex-start;
+    align-items: center;
+    color: white;
+
+    &:hover {
+        color: yellow;
+    }
+    
+`;
+
+const SidebarNav = styled.nav`
+    background: #9C0B0A;
+    width: 220px;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 0; 
+    left: ${({ sidebar }) => (sidebar ? '0' : '-100%')};
+    transition: 130ms;
+    z-index:1000;
+    overflow-y: auto;
+`;
+
+const SidebarText = styled.div`
+    font-size: 20px;
+`;
+
+
+const SidebarWrap = styled.div`
+    width: 100%;
+    
+`;
 
 const Sidebar = () => {
+
+    const [sidebar, setSidebar] = useState(false);
+
+    const showSidebar = () => setSidebar(!sidebar);
+
     return (
-        <div className="sidebar-wrapper" style={{marginTop: "160px", padding: "10px", border: "#9c0b0b"}}>
-            <nav id="sidebar">
-                <ul className="list-unstyled components">
-                    <li>
-                        <Link to="/controlpanel"><i className="fa fa-tachometer"></i> Control Panel</Link>
-                    </li>
+        <>
+            <IconContext.Provider value={{ color: '#red' }}>
+                <Nav>
+                    <NavIcon to="#">
+                        <FaIcons.FaBars onClick={showSidebar} />
+                    </NavIcon>
+                    <p style={{ paddingTop: "13px", fontSize: "20px", color: "white", paddingLeft: "20px", paddingRight: "22px" }}>Control Panel</p>
 
-                    <li>
-                        <Link to='/admin/announcements'><i></i> Announcements</Link>
-                    </li>
+                </Nav>
 
-                    <li>
-                        <Link to="/admin/archives/announcements"><i className="fa fa-tachometer"></i> Archived Announcements</Link>
-                    </li>
+                <SidebarNav sidebar={sidebar} >
+                    <SidebarWrap>
+                        <NavIcon to="#">
+                            <AiIcons.AiOutlineClose onClick={showSidebar} />
+                        </NavIcon>
 
-                    <hr/>
-                    
-                    <li>
-                    <Link to='/manageforms'><i className="fa fa-tachometer"></i> Downloadable Forms *</Link>
-                    </li>
+                        {SidebarData.map((item, index) => {
+                            return <SubMenu item={item} key={index} />;
+                        })}
 
-
-                    <li>
-                    <Link to='/studentrequestslist'><i className="fa fa-tachometer"></i> Requests *</Link>
-                    </li>
-
-                    <li>
-                        <Link to="/dashboard"><i className="fa fa-tachometer"></i> Trash</Link>
-                    </li>
-
-                    <hr/>
-                    <li>
-                        <Link to="/dashboard"><i className="fa fa-tachometer"></i> Audit Log</Link>
-                    </li>
-
-                    <li>
-                        <Link to='/admin/register'><i className="fa fa-tachometer"></i> Register</Link>
-                    </li>
-
-
-                                
-
-                    <li>
-                        <Link to="/admin/users"><i className="fa fa-users"></i> Users *</Link>
-                    </li>
-
-                    <li>
-                        <Link to="/dashboard"><i className="fa fa-tachometer"></i> Messages</Link>
-                    </li>
-
-                    <li>
-                        <Link to="/admin/reviews"><i className="fa fa-star"></i> Settings</Link>
-                    </li>
-
-                    <li>
-                        <Link to="/dashboard"><i className="fa fa-tachometer"></i> Log out</Link>
-                    </li>
-
-                </ul>
-            </nav>
-        </div>
-    )
-}
+                    </SidebarWrap>
+                </SidebarNav>
+                <NavBottom></NavBottom>
+            </IconContext.Provider>
+        </>
+    );
+};
 
 export default Sidebar
