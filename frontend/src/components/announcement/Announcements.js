@@ -6,35 +6,41 @@ import Pagination from 'react-js-pagination'
 import { getAnnouncements, clearErrors } from './../../actions/announcementActions'
 import MetaData from './../layout/MetaData'
 import Loader from './../layout/Loader'
+import '../../App.css'
+import styled from 'styled-components'
 import { Form, FormControl, Card, Row, Col, Container } from 'react-bootstrap'
 
 var dateFormat = require('dateformat')
 
-const titles = {
-    width: '10px',
-    color: 'white'
-}
+const Title = styled.h3`
+background-color: #9c0b0b;
+  text-align: center;
+  color: white;
+  padding-top: 7px;
+  padding-bottom: 7px;
+  margin-right: 0px;
+  font-family: MuktaMalar;
+  width:100%;
+  position: absolute;
+  z-index: 1;
+  right:0;
+  left:0;
+`;
 
-const rectangle = {
-    width: '100%',
-    height: '18%',                   /* gran changed this from 22 > 18 */
-    background: '#9c0b0b',
-    textAlign: 'center',
-    color: 'white',
-    position: 'absolute',
-    fontFamily: 'Mukta Malar',
-    fontWeight: '500',
-    padding: '90px 50px 55px 50px',
-    zIndex: -1,
-    top: 0,
-    left: 0
-}
-
-const formLabel = {
-    fontSize: '1rem',
-    color: 'gray',
-    paddingTop: '10px'
-}
+const Cards = styled.div`
+    background-color: yellow;
+    
+    
+  text-align: center;
+  color: white;
+  padding-top: 1px;
+  padding-bottom: 5px;
+  
+  
+  position: absolute;
+  z-index: 1;
+  
+`;
 
 const Announcements = () => {
 
@@ -108,14 +114,14 @@ const Announcements = () => {
                 [e.target.name]: value,
                 track: String(value).includes('') ? '' : track
             })
-        } else if(e.target.name === 'track') {
+        } else if (e.target.name === 'track') {
             let value = e.target.value
             setFilter({
                 ...filter,
                 [e.target.name]: value,
                 course: csTracks.includes(value) ? 'Computer Science' : (
                     itTracks.includes(value) ? 'Information Technology' : (
-                        isTracks.includes(value) ? 'Information Systems' : course
+                        isTracks.includes(value) ? 'Information Systems' : ''
                     )
                 )
             })
@@ -143,21 +149,19 @@ const Announcements = () => {
     }
 
     return (
-        <>
-            <MetaData title={`Announcements`} />
-            <Container style={titles}>
-                <div style={rectangle}>
-                    <h3>Announcements</h3>
-                </div>
-            </Container>
-            <Container style={{ paddingTop: '120px' }}>
-                <Form>
-                    <Row xs="auto">
-                        <Col sm>
-                            <Form.Group controlId="selectYearLevelforAnnouncement">
-                                <Form.Label style={formLabel} style={formLabel}>Year Level</Form.Label>
-                                <Form.Select aria-label="YearLevel" size="sm" name="yearLevel" value={yearLevel} onChange={onChange} required>
-                                    <option value=''></option>
+        <Fragment>
+            <MetaData title={`Announcements`}/>
+            <Container>
+                <Title>Announcements</Title>
+                <Container className="space"></Container>
+                <Form >
+                    <Row >
+                        <Col md="auto" style={{ paddingTop: "5px" }}><h7>Filters:</h7>
+                        </Col>
+                        <Col md="auto">
+                            <Form.Group controlId="selectCourseforAnnouncement" >
+                                <Form.Select aria-label="Course" size="sm" style={{ border: "2px solid black", borderRadius: "20px", margin: '5px 0' }} name="yearLevel" value={yearLevel} onChange={onChange}>
+                                    <option value=''>Year Level</option>
                                     <option value="1st Year">1st Year</option>
                                     <option value="2nd Year">2nd Year</option>
                                     <option value="3rd Year">3rd Year</option>
@@ -165,22 +169,22 @@ const Announcements = () => {
                                 </Form.Select>
                             </Form.Group>
                         </Col>
-                        <Col sm>
-                            <Form.Group controlId="selectCourseforAnnouncement">
-                                <Form.Label style={formLabel}>Course</Form.Label>
-                                <Form.Select aria-label="Course" size="sm" name="course" value={course} onChange={onChange} required>
-                                    <option value=''></option>
+                        <Col md="auto">
+                            <Form.Group controlId="selectYearLevelforAnnouncement">
+
+                                <Form.Select aria-label="YearLevel" size="sm" style={{ border: "2px solid black", borderRadius: "20px", margin: '5px 0' }} name="course" value={course} onChange={onChange}>
+                                    <option value=''>Course</option>
                                     <option value="Computer Science">Computer Science</option>
                                     <option value="Information Systems">Information Systems</option>
                                     <option value="Information Technology">Information Technology</option>
                                 </Form.Select>
                             </Form.Group>
                         </Col>
-                        <Col sm>
+                        <Col md="auto">
                             <Form.Group controlId="selectTrackforAnnouncement">
-                                <Form.Label style={formLabel}>Track</Form.Label>
-                                <Form.Select aria-label="ITTracks" size="sm" name="track" value={track} onChange={onChange} required>
-                                    <option value=''></option>
+
+                                <Form.Select aria-label="ITTracks" size="sm" style={{ border: "2px solid black", borderRadius: "20px", margin: '5px 0' }} name="track" value={track} onChange={onChange}>
+                                    <option value=''>Track</option>
                                     {String(course).includes('Information Systems') ? (
                                         <Fragment>
                                             {isTracks.map(track => (
@@ -214,58 +218,65 @@ const Announcements = () => {
                                 </Form.Select>
                             </Form.Group>
                         </Col>
-                        <Col sm>
+                        <Col md="auto">
                             <Form.Group controlId="selectAnnouncementTypeforAnnouncement">
-                                <Form.Label style={formLabel}>Announcement Type</Form.Label>
-                                <Form.Select aria-label="AnnouncementType" size="sm" name="annnouncementType" value={annnouncementType} onChange={onChange} required>
-                                    <option value=''></option>
+                                <Form.Select aria-label="AnnouncementType" size="sm" style={{ border: "2px solid black", borderRadius: "20px", margin: '5px 0' }} name="annnouncementType" value={annnouncementType} onChange={onChange}>
+                                    <option value=''>Announcement Type</option>
                                     <option value="Memorandum">Memorandum</option>
                                     <option value="Enrollment">Enrollment</option>
                                     <option value="Class Suspension">Class Suspension</option>
                                 </Form.Select>
                             </Form.Group>
                         </Col>
-                        <Col sm>
-                            <Form.Group controlId="seachAnnouncement" xs={2}>
-                                <Form.Label style={formLabel}>Search by title</Form.Label>
+                        <Col >
+                            <Form.Group controlId="searchAnnouncement" sm >
                                 <FormControl
                                     type="search"
-                                    placeholder="Search"
+                                    placeholder="Search by title"
                                     className="mr-2"
-                                    aria-label="Search"
+                                    aria-label="Search by title"
                                     size="sm"
                                     name="title"
                                     value={title}
                                     onChange={onChange}
+                                    width="170px"
+                                    right="0px"
+                                    style={{ border: "2px solid black" }}
                                 />
                             </Form.Group>
                         </Col>
                     </Row>
                 </Form>
             </Container>
-            <Row>
-                {loading ? <Loader /> : (
-                    <Row xs={1} md={2} className="g-4">
-                        {announcements && (announcements.length !== 0) ? announcements.map(announcement => (
-                            <Col style={{ marginBottom: '20px' }}>
-                                <Card>
-                                    <Card.Body>
-                                        <Card.Title>{announcement.title}</Card.Title>
-                                        <Card.Text style={{ fontSize: '12px', color: 'gray' }}>{changeDateFormat(announcement.createdAt)}</Card.Text>
-                                        <Card.Text>{shortenDescription(announcement.description)}</Card.Text>
-                                        <Card.Text style={{ fontSize: '12px', color: 'gray' }}><Link to={`/announcement/${announcement._id}`}>Read More &#xbb;</Link></Card.Text>
-                                        <Card.Text style={{ fontSize: '10px', color: 'gray' }}>Tags: {announcement.yearLevel}, {announcement.course}, {announcement.track}</Card.Text>
-                                    </Card.Body>
-                                </Card>
-                            </Col>
-                        )) : (
-                            <Col>
-                                <h3 style={{ margin: '10px 0' }}>No announcements found.</h3>
-                            </Col>
-                        )}
-                    </Row>
-                )}
-            </Row>
+            <br />
+
+            {loading ? <Loader /> : (
+                <Row xs={1} md={2} className="g-4">
+                    {announcements && (announcements.length !== 0) ? announcements.map(announcement => (
+                        <Col>
+                            <Card style={{ borderRadius: '25px', background: '#e7e7e7' }}>
+                                <Card.Body>
+                                    <Card.Header style={{ background: '#e7e7e7' }}>{announcement.title}</Card.Header>
+                                    <Card.Text style={{ marginLeft: '15px' }}>
+                                        <p></p>
+                                        {changeDateFormat(announcement.createdAt)}
+                                        <br></br><br></br>
+                                        {shortenDescription(announcement.description)}
+                                        <br></br>
+                                        <Link to={`/announcement/${announcement._id}`}>Read More &#xbb;</Link>
+                                    Tags: {announcement.yearLevel}, {announcement.course}, {announcement.track}
+                                    </Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </Col>
+                    )) : (
+                        <Col>
+                            <h3 style={{ margin: '10px 0' }}>No announcements found.</h3>
+                        </Col>
+                    )}
+                </Row>
+            )}
+
             {resPerPage < count && (
                 <div className="d-flex justify-content-center mt-5">
                     <Pagination
@@ -282,7 +293,7 @@ const Announcements = () => {
                     />
                 </div>
             )}
-        </>
+        </Fragment>
     )
 }
 
