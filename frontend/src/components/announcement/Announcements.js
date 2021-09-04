@@ -257,7 +257,7 @@ const Announcements = () => {
                             <Card style={{ borderRadius: '25px', background: '#e7e7e7' }}>
                                 <Card.Body>
                                     <Card.Header style={{ background: '#e7e7e7' }}>{announcement.title}</Card.Header>
-                                    <Card.Text style={{ marginLeft: '15px' }}>
+                                    <Card.Text style={{ marginLeft: '15px', fontWeight: '600', color: 'gray', fontSize: '12px' }}>
                                         <p></p>
                                         {changeDateFormat(announcement.createdAt)}
                                         <br></br><br></br>
