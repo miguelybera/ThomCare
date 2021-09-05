@@ -40,6 +40,8 @@ const SubmitRequest = ({ history }) => {
         setFileRequirements(e.target.files[0])
     }
 
+    const levels = ['1st Year', '2nd Year', '3rd Year', '4th Year']
+
     const requestTypes = [
         'Adding/Dropping of Course',
         'Cross Enrollment within CICS',
@@ -54,7 +56,7 @@ const SubmitRequest = ({ history }) => {
     ]
 
     useEffect(() => {
-        if(success) {
+        if (success) {
             alert.success('File submitted.')
             history.push('/')
             dispatch({
@@ -62,7 +64,7 @@ const SubmitRequest = ({ history }) => {
             })
         }
 
-        if(error){
+        if (error) {
             alert.error(error)
             dispatch(clearErrors())
         }
@@ -74,7 +76,7 @@ const SubmitRequest = ({ history }) => {
 
     return (
         <>
-            <MetaData title={'Login'} />
+            <MetaData title={'Submit Request'} />
             <Container fluid>
                 <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
                     <Card style={{ width: '30rem', align: 'center' }}>
@@ -96,23 +98,23 @@ const SubmitRequest = ({ history }) => {
                                     </FloatingLabel>
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="formGridCourse">
-                                    <FloatingLabel
-                                        controlId="floatingInput"
-                                        label="Year Level"
+                                    <Form.Label>Year Level</Form.Label>
+                                    <Form.Select
                                         className="mb-3"
-                                        name='requestorYearLevel'
-                                        value={requestorYearLevel}
+                                        aria-label="Default select example"
+                                        name="requestorYearLevel" value={requestorYearLevel}
                                         onChange={e => setRequestorYearLevel(e.target.value)}
                                     >
-                                        <Form.Control
-                                            type='text'
-                                        />
-                                    </FloatingLabel>
+                                        <option>-</option>
+                                        {levels.map(level => (
+                                            <option value={level}>{level}</option>
+                                        ))}
+                                    </Form.Select>
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="formGridCourse">
                                     <Form.Label>Request Type</Form.Label>
                                     <Form.Select
-                                        aria-label="Default select example" 
+                                        aria-label="Default select example"
                                         name='requestType'
                                         value={requestType}
                                         onChange={e => setRequestType(e.target.value)}

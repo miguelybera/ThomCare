@@ -9,6 +9,7 @@ import Loader from './../layout/Loader'
 import {
     INSIDE_DASHBOARD_FALSE
 } from '../../constants/dashboardConstants'
+import { set } from 'mongoose'
 
 var dateFormat = require('dateformat')
 
@@ -34,50 +35,50 @@ const AnnouncementDetails = ({ history, match }) => {
     const [yearLevel, setYearLevel] = useState('')
     const [course, setCourse] = useState('')
     const [track, setTrack] = useState('')
-    const [date, setDate] = useState('')
+    const [createdAt, setCreatedAt] = useState('')
     const [createdBy, setCreatedBy] = useState('')
-
-    let announcementTitle = ''
-    let announcementDescription = ''
-    let announcementYearLevel = ''
-    let announcementCourse = ''
-    let announcementTrack = ''
-    let announcementDate = ''
-    let announcementCreatedBy = ''
-
-    if (announcement && announcement.title) { announcementTitle = announcement.title }
-    if (announcement && announcement.description) { announcementDescription = announcement.description }
-    if (announcement && announcement.yearLevel) { announcementYearLevel = announcement.yearLevel }
-    if (announcement && announcement.course) { announcementCourse = announcement.course }
-    if (announcement && announcement.track) { announcementTrack = announcement.track }
-    if (announcement && announcement.createdAt) { announcementDate = announcement.createdAt }
-    if (announcement && announcement.createdBy) { announcementCreatedBy = announcement.createdBy }
+    const [fileAttachments, setFileAttachments] = useState([])
+    const [files, setFiles] = useState([])
+    const [images, setImages] = useState([])
 
     useEffect(() => {
         if (announcement && announcement._id !== announcementId) {
             dispatch(getAnnouncementDetails(announcementId))
+        } else if (announcement) {
+            setTitle(announcement.title)
+            setDescription(announcement.description)
+            setYearLevel(announcement.yearLevel)
+            setCourse(announcement.course)
+            setTrack(announcement.track)
+            setCreatedBy(announcement.createdBy)
+            setCreatedAt(announcement.createdAt)
+            setFileAttachments(announcement.fileAttachments)
         } else {
-            setTitle(announcementTitle)
-            setDescription(announcementDescription)
-            setYearLevel(announcementYearLevel)
-            setCourse(announcementCourse)
-            setTrack(announcementTrack)
-            setDate(announcementDate)
-            setCreatedBy(announcementCreatedBy)
+            dispatch(getAnnouncementDetails(announcementId))
         }
 
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
         }
-        
+
         dispatch({
             type: INSIDE_DASHBOARD_FALSE
         })
+
+        if (fileAttachments) {
+            fileAttachments.forEach(file => {
+                if (file.mimetype.includes('image')) {
+                    setImages(oldArray => [...oldArray, file])
+                } else {
+                    setFiles(oldArray => [...oldArray, file])
+                }
+            })
+        }
     }, [dispatch, alert, error, announcement, announcementId])
 
     useEffect(() => {
-        if (announcementCreatedBy) {
+        if (createdBy) {
             dispatch(getUser(createdBy))
         }
 
@@ -90,7 +91,7 @@ const AnnouncementDetails = ({ history, match }) => {
 
     const changeDateFormat = (date) => dateFormat(date, "ddd, mmm d, yyyy h:MMtt")
     const upperCase = (name) => name.toUpperCase()
-    
+
     return (
         <>
             <MetaData title={`Announcements`} />
@@ -104,8 +105,26 @@ const AnnouncementDetails = ({ history, match }) => {
                     </Card.Header>
                     <Card.Body>
                         <Card.Title>{title}</Card.Title>
-                        <Card.Text style={{ fontWeight: 'lighter', color: 'gray', fontSize: '12px' }}>Posted on: {changeDateFormat(date)}</Card.Text>
+                        <Card.Text style={{ fontWeight: 'lighter', color: 'gray', fontSize: '12px' }}>Posted on: {changeDateFormat(createdAt)}</Card.Text>
                         <Card.Text style={{ paddingBottom: '45px' }}>{description}</Card.Text>
+                        <Card.Text>
+                            {images && images.map(file => (
+                                <Fragment>
+                                    <center>
+                                        <img src={file.path} style={{ width: '500px' }}></img>
+                                        <p>{file.originalname}</p>
+                                    </center>
+                                </Fragment>
+                            ))}
+                            {files && (
+                                <p>Attachments:</p>
+                            )}
+                            {files && files.map(file => (
+                                <Fragment>
+                                    <p><a href={file.path}>{file.originalname}</a> Size: {file.size / 1000} Kb</p>
+                                </Fragment>
+                            ))}
+                        </Card.Text>
                         <Card.Text style={{ fontWeight: '600', color: 'gray', fontSize: '12px' }}>Posted by: {singleUser && upperCase(singleUser.firstName + ' ' + singleUser.lastName)}</Card.Text>
                         <Card.Text style={{ fontSize: '10px', color: 'gray' }}>Tags: {yearLevel}, {course}, {track}</Card.Text>
                     </Card.Body>
