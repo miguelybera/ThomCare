@@ -66,9 +66,9 @@ const AnnouncementDetails = ({ history, match }) => {
             type: INSIDE_DASHBOARD_FALSE
         })
 
-        if(fileAttachments) {
+        if (fileAttachments) {
             fileAttachments.forEach(file => {
-                if (file.mimetype === 'image/png') {
+                if (file.mimetype.includes('image')) {
                     setImages(oldArray => [...oldArray, file])
                 } else {
                     setFiles(oldArray => [...oldArray, file])
@@ -109,10 +109,20 @@ const AnnouncementDetails = ({ history, match }) => {
                         <Card.Text style={{ paddingBottom: '45px' }}>{description}</Card.Text>
                         <Card.Text>
                             {images && images.map(file => (
-                                <img src={file.path} style={{ width: '500px' }}></img>
+                                <Fragment>
+                                    <center>
+                                        <img src={file.path} style={{ width: '500px' }}></img>
+                                        <p>{file.originalname}</p>
+                                    </center>
+                                </Fragment>
                             ))}
+                            {files && (
+                                <p>Attachments:</p>
+                            )}
                             {files && files.map(file => (
-                                <p><a href={file.path}>{file.originalname}</a> Size: {file.size / 1000} Kb</p>
+                                <Fragment>
+                                    <p><a href={file.path}>{file.originalname}</a> Size: {file.size / 1000} Kb</p>
+                                </Fragment>
                             ))}
                         </Card.Text>
                         <Card.Text style={{ fontWeight: '600', color: 'gray', fontSize: '12px' }}>Posted by: {singleUser && upperCase(singleUser.firstName + ' ' + singleUser.lastName)}</Card.Text>

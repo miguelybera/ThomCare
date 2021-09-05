@@ -17,7 +17,7 @@ const cardStyle = {
     borderWidth: '0'
 }
 
-const TrackingPageProgress = () => {
+const TrackingPageProgress = ({ history, match }) => {
     const dispatch = useDispatch()
 
     const { loading, request } = useSelector(state => state.requestDetails)
@@ -28,11 +28,15 @@ const TrackingPageProgress = () => {
 
     const upperCase = (text) => text.toUpperCase()
 
+    const requestId = match.params.id
+
+
     useEffect(() => {
         dispatch({
             type: INSIDE_DASHBOARD_FALSE
         })
-    }, [dispatch])
+    }, [dispatch, history])
+
     const setHistory = () => {
         const remarks = request.remarks
         const data = {
@@ -71,8 +75,14 @@ const TrackingPageProgress = () => {
                 </Fragment>,
                 remarksMessage: <Fragment>
                     <p>{remark.remarksMessage}</p>
+                    <ul>
+                        {remark.returningFiles && remark.returningFiles.map(file => (
+                            <li><a href={file.path}>{file.originalname}</a></li>
+                        ))}
+                    </ul>
                     <p style={{ fontSize: '12px', color: 'gray', paddingTop: '10px' }}>By: {upperCase(remark.userUpdated)}</p>
                 </Fragment>
+
             })
         })
         return data
@@ -99,6 +109,14 @@ const TrackingPageProgress = () => {
                             <Card.Text><b>Student number:</b> {request && request.requestorStudentNumber}</Card.Text>
                             <Card.Text><b>Email:</b> {request && request.requestorEmail}</Card.Text>
                             <Card.Text><b>Course:</b> {request && request.requestorCourse}</Card.Text>
+                            <Card.Text>
+                                Attachments:
+                                <ul>
+                                    {request.fileRequirements && request.fileRequirements.map(file => (
+                                        <li><a href={file.path}>{file.originalname}</a></li>
+                                    ))}
+                                </ul>
+                            </Card.Text>
                         </Card.Body>
                     </Card>
                     <Card style={{
@@ -120,7 +138,7 @@ const TrackingPageProgress = () => {
                     </Card>
                 </Fragment>
             ) : (
-                <Loader/>
+                <Loader />
             )}
         </Fragment>
     )
