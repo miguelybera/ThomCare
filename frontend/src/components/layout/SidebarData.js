@@ -12,211 +12,213 @@ export const SidebarData = [
         {
             title: 'ThomCare Homepage',
             path: '/',
-            icon: <AiIcons.AiFillHome />
+            icon: <i class="fa fa-home" aria-hidden="true"></i>
         },
         {
             title: 'Control Panel',
             path: '/controlpanel',
-            icon: <AiIcons.AiFillControl />
+            icon: <i class="fa fa-cog" aria-hidden="true"></i>
         },
         {
             title: 'My Profile',
             path: '/profile',
-            icon: <FaIcons.FaUserCircle />
+            icon: <i class="fa fa-user" aria-hidden="true"></i>
         },
         {
             title: 'My Requests',
             path: '/my-requests',
-            icon: <IoIcons.IoDocumentText />
+            icon: <i class="fa fa-list-ul" aria-hidden="true"></i>
         },
         {
             title: 'Downloadable Forms',
             path: '/downloadable-forms',
-            icon: <RiIcons.RiFileDownloadFill />
+            icon: <i class="fa fa-file-text" aria-hidden="true"></i>
         },
         {
             title: 'Messages',
             path: '/messenger',
-            icon: <RiIcons.RiMessageFill />
+            icon: <i class="fa fa-comments" aria-hidden="true"></i>
         },
         {
             title: 'Log out',
             path: '/logout',
-            icon: <RiIcons.RiLogoutBoxRFill />
+            icon: <i class="fa fa-sign-out" aria-hidden="true"></i>
         }
     ],
     [ //dept chair
         {
             title: 'ThomCare Homepage',
             path: '/',
-            icon: <AiIcons.AiFillHome />
+            icon: <i class="fa fa-home" aria-hidden="true"></i>
         },
         {
             title: 'Control Panel',
             path: '/controlpanel',
-            icon: <AiIcons.AiFillControl />
+            icon: <i class="fa fa-cog" aria-hidden="true"></i>
         },
         {
             title: 'My Profile',
             path: '/profile',
-            icon: <FaIcons.FaUserCircle />
+            icon: <i class="fa fa-user" aria-hidden="true"></i>
         },
         {
             title: 'Announcements',
-            icon: <IoIcons.IoNewspaper />,
-            iconClosed: <RiIcons.RiArrowDownSFill />,
-            iconOpened: <RiIcons.RiArrowUpSFill />,
+            icon: <i class="fa fa-bullhorn" aria-hidden="true"></i>
+            ,
+            iconClosed: <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>,
+            iconOpened: <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>,
             subNav: [
                 {
                     title: 'Create Announcement',
                     path: '/admin/new/announcement',
-                    icon: <IoIcons.IoAddCircleSharp />
+                    icon: <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                 },
                 {
                     title: 'Announcements',
                     path: '/admin/announcements',
-                    icon: <IoIcons.IoIosPaper />
+                    icon: <i class="fa fa-list-ul" aria-hidden="true"></i>
                 },
                 {
                     title: 'Archived Announcements',
                     path: '/admin/archives/announcements',
-                    icon: <RiIcons.RiInboxArchiveFill />
+                    icon: <i class="fa fa-archive" aria-hidden="true"></i>
                 }
             ]
         },
         {
             title: 'Forms',
             path: '/manageforms',
-            icon: <HiIcons.HiDocumentDuplicate />
+            icon: <i class="fa fa-home" aria-hidden="true"></i>
         },
         {
             title: 'Requests',
-            icon: <FaIcons.FaListUl />,
-            iconClosed: <RiIcons.RiArrowDownSFill />,
-            iconOpened: <RiIcons.RiArrowUpSFill />,
+            icon: <i class="fa fa-file" aria-hidden="true"></i>,
+            iconClosed: <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>,
+            iconOpened: <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>,
             subNav: [
                 {
                     title: 'Requests',
                     path: '/admin/deptchair/requests',
-                    icon: <RiIcons.RiAdminFill />
+                    icon: <i class="fa fa-list-ul" aria-hidden="true"></i>
                 },
                 {
                     title: 'Trash',
                     path: '/requests/trash',
-                    icon: <FaIcons.FaTrash />
+                    icon: <i class="fa fa-trash" aria-hidden="true"></i>
                 }
             ]
         },
         {
             title: 'Messages',
             path: '/messenger',
-            icon: <SiIcons.SiMessenger />
+            icon: <i class="fa fa-comments" aria-hidden="true"></i>
         },
         {
             title: 'Log out',
             path: '/logout',
-            icon: <RiIcons.RiLogoutBoxRFill />
+            icon: <i class="fa fa-sign-out" aria-hidden="true"></i>
         }
     ],
     [ //cics staff
         {
             title: 'ThomCare Homepage',
             path: '/',
-            icon: <AiIcons.AiFillHome />
+            icon: <i class="fa fa-home" aria-hidden="true"></i>
+
         },
         {
             title: 'Control Panel',
             path: '/controlpanel',
-            icon: <AiIcons.AiFillControl />
+            icon: <i class="fa fa-cog" aria-hidden="true"></i>
         },
         {
             title: 'My Profile',
             path: '/profile',
-            icon: <FaIcons.FaUserCircle />
+            icon: <i class="fa fa-user" aria-hidden="true"></i>
         },
         {
             title: 'Announcements',
-            icon: <IoIcons.IoNewspaper />,
-            iconClosed: <RiIcons.RiArrowDownSFill />,
-            iconOpened: <RiIcons.RiArrowUpSFill />,
+            icon: <i class="fa fa-bullhorn" aria-hidden="true"></i>,
+            iconClosed: <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>,
+            iconOpened: <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>,
             subNav: [
                 {
                     title: 'Create Announcement',
                     path: '/admin/new/announcement',
-                    icon: <IoIcons.IoAddCircleSharp />
+                    icon: <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
                 },
                 {
                     title: 'Announcements',
                     path: '/admin/announcements',
-                    icon: <IoIcons.IoIosPaper />
+                    icon: <i class="fa fa-list-ul" aria-hidden="true"></i>
                 },
                 {
                     title: 'Archived Announcements',
                     path: '/admin/archives/announcements',
-                    icon: <RiIcons.RiInboxArchiveFill />
+                    icon: <i class="fa fa-archive" aria-hidden="true"></i>
                 }
             ]
         },
         {
             title: 'Forms',
             path: '/manageforms',
-            icon: <HiIcons.HiDocumentDuplicate />
+            icon: <i class="fa fa-home" aria-hidden="true"></i>
         },
         {
             title: 'Requests',
-            icon: <FaIcons.FaListUl />,
-            iconClosed: <RiIcons.RiArrowDownSFill />,
-            iconOpened: <RiIcons.RiArrowUpSFill />,
+            icon: <i class="fa fa-file" aria-hidden="true"></i>,
+            iconClosed: <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>,
+            iconOpened: <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>,
             subNav: [
                 {
                     title: 'All Requests',
                     path: '/admin/cics/requests',
-                    icon: <RiIcons.RiAdminFill />
+                    icon: <i class="fa fa-list-ul" aria-hidden="true"></i>
                 },
                 {
                     title: 'Requests to Office',
                     path: '/admin/cics/requests',
-                    icon: <ImIcons.ImOffice />
+                    icon: <i class="fa fa-home" aria-hidden="true"></i>
                 },
                 {
                     title: 'Trash',
                     path: '/requests/trash',
-                    icon: <FaIcons.FaTrash />
+                    icon: <i class="fa fa-trash" aria-hidden="true"></i>
                 }
             ]
         },
         {
             title: 'Users',
-            icon: <RiIcons.RiAccountCircleFill />,
-            iconClosed: <RiIcons.RiArrowDownSFill />,
-            iconOpened: <RiIcons.RiArrowUpSFill />,
+            icon: <i class="fa fa-user" aria-hidden="true"></i>,
+            iconClosed: <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>,
+            iconOpened: <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>,
             subNav: [
                 {
                     title: 'Register User',
                     path: '/admin/register',
-                    icon: <IoIcons.IoCreate />
+                    icon: <i class="fa fa-plus-circle" aria-hidden="true"></i>
                 },
                 {
                     title: 'View Users',
                     path: '/admin/users',
-                    icon: <FaIcons.FaListUl />
+                    icon: <i class="fa fa-list-ul" aria-hidden="true"></i>
                 }
             ]
         },
         {
             title: 'Audit Log',
             path: '/audit',
-            icon: <FaIcons.FaHistory />,
+            icon: <i class="fa fa-book" aria-hidden="true"></i>,
         },
         {
             title: 'Messages',
             path: '/messenger',
-            icon: <RiIcons.RiMessageFill />
+            icon: <i class="fa fa-comments" aria-hidden="true"></i>
         },
         {
             title: 'Log out',
             path: '/logout',
-            icon: <RiIcons.RiLogoutBoxRFill />
+            icon: <i class="fa fa-sign-out" aria-hidden="true"></i>
         }
     ]
 ]
