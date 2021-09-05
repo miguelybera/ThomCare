@@ -35,6 +35,8 @@ const UpdateAnnouncement = ({ history, match }) => {
     const [fileAttachments, setFileAttachments] = useState([])
     const [oldAttachments, setOldAttachments] = useState([])
     const [preview, setPreview] = useState([])
+    const [files, setFiles] = useState([])
+    const [images, setImages] = useState([])
 
     const levels = ['All', '1st Year', '2nd Year', '3rd Year', '4th Year']
 
@@ -105,10 +107,19 @@ const UpdateAnnouncement = ({ history, match }) => {
         } else {
             dispatch(getAnnouncementDetails(announcementId))
         }
+
+        if (oldAttachments) {
+            oldAttachments.forEach(file => {
+                if (file.mimetype.includes('image/')) {
+                    setImages(oldArray => [...oldArray, file])
+                } else {
+                    setFiles(oldArray => [...oldArray, file])
+                }
+            })
+        }
     }, [announcement])
 
     useEffect(() => {
-
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
@@ -145,14 +156,14 @@ const UpdateAnnouncement = ({ history, match }) => {
 
         setFileAttachments([])
         setOldAttachments([])
+        setImages([])
+        setFiles([])
 
         files.forEach(file => {
-            setPreview(oldArray => [...oldArray, file])
             setFileAttachments(oldArray => [...oldArray, file])
         })
     }
 
-    console.log(oldAttachments)
     return (
         <Fragment>
             <MetaData title={'Update Announcement'} />
@@ -225,20 +236,29 @@ const UpdateAnnouncement = ({ history, match }) => {
                                             <Form.Control type="date" name="archiveDate" value={archiveDate} onChange={e => setArchiveDate(e.target.value)} disabled={setExpiry ? false : true} />
                                         </Form.Group>
                                         <Form.Group controlId="formFileMultiple" className="mb-3">
-                                            <Form.Label>Attach image(s):</Form.Label>
-                                            <Form.Control type="file" multiple />
-                                        </Form.Group>
-                                        <Form.Group controlId="formFileMultiple" className="mb-3">
                                             <Form.Label>Attach document(s):</Form.Label>
                                             <Form.Control type="file" name="file" onChange={onChange} multiple />
                                         </Form.Group>
                                         <Form.Group controlId="formFileMultiple" className="mb-3">
-                                            {fileAttachments && fileAttachments.map(file => (
-                                                <p>{file.name}</p>
+                                            {files && (<p>Attachments:</p>)}
+                                            <ul>
+                                                {fileAttachments && fileAttachments.map(file => (
+                                                    <li>{file.name}</li>
+                                                ))}
+                                            </ul>
+                                            {images && images.map(file => (
+                                                <Fragment>
+                                                    <img src={file.path} style={{ width: '150px' }}></img>
+                                                    <p>{file.originalname}</p>
+                                                </Fragment>
                                             ))}
-                                            {oldAttachments && oldAttachments.map(file => (
-                                                <p><a href={file.path}>{file.originalname}</a></p>
-                                            ))}
+                                            <ul>
+                                                {files && files.map(file => (
+                                                    <Fragment>
+                                                        <li><a href={file.path}>{file.originalname} <i class="fa fa-download" aria-hidden="true"></i></a> Size: {file.size / 1000} Kb</li>
+                                                    </Fragment>
+                                                ))}
+                                            </ul>
                                         </Form.Group>
                                         <Button
                                             type='submit'
