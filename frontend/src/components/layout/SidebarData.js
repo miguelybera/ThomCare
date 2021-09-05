@@ -3,7 +3,9 @@ import * as FaIcons from 'react-icons/fa'
 import * as AiIcons from 'react-icons/ai'
 import * as IoIcons from 'react-icons/io'
 import * as RiIcons from 'react-icons/ri'
-
+import * as HiIcons from 'react-icons/hi'
+import * as SiIcons from 'react-icons/si'
+import * as ImIcons from 'react-icons/im'
 
 export const SidebarData = [
     [ //student
@@ -15,32 +17,32 @@ export const SidebarData = [
         {
             title: 'Control Panel',
             path: '/controlpanel',
-            icon: <AiIcons.AiFillHome />
+            icon: <AiIcons.AiFillControl />
         },
         {
             title: 'My Profile',
             path: '/profile',
-            icon: <AiIcons.AiFillHome />
+            icon: <FaIcons.FaUserCircle />
         },
         {
             title: 'My Requests',
             path: '/my-requests',
-            icon: <AiIcons.AiFillHome />
+            icon: <IoIcons.IoDocumentText />
         },
         {
             title: 'Downloadable Forms',
             path: '/downloadable-forms',
-            icon: <AiIcons.AiFillHome />
+            icon: <RiIcons.RiFileDownloadFill />
         },
         {
             title: 'Messages',
             path: '/messenger',
-            icon: <AiIcons.AiFillHome />
+            icon: <RiIcons.RiMessageFill />
         },
         {
             title: 'Log out',
             path: '/logout',
-            icon: <AiIcons.AiFillHome />
+            icon: <RiIcons.RiLogoutBoxRFill />
         }
     ],
     [ //dept chair
@@ -52,23 +54,23 @@ export const SidebarData = [
         {
             title: 'Control Panel',
             path: '/controlpanel',
-            icon: <AiIcons.AiFillHome />
+            icon: <AiIcons.AiFillControl />
         },
         {
             title: 'My Profile',
             path: '/profile',
-            icon: <AiIcons.AiFillHome />
+            icon: <FaIcons.FaUserCircle />
         },
         {
             title: 'Announcements',
-            icon: <AiIcons.AiFillHome />,
+            icon: <IoIcons.IoNewspaper />,
             iconClosed: <RiIcons.RiArrowDownSFill />,
             iconOpened: <RiIcons.RiArrowUpSFill />,
             subNav: [
                 {
                     title: 'Create Announcement',
                     path: '/admin/new/announcement',
-                    icon: <IoIcons.IoIosPaper />
+                    icon: <IoIcons.IoAddCircleSharp />
                 },
                 {
                     title: 'Announcements',
@@ -78,42 +80,42 @@ export const SidebarData = [
                 {
                     title: 'Archived Announcements',
                     path: '/admin/archives/announcements',
-                    icon: <IoIcons.IoIosPaper />
+                    icon: <RiIcons.RiInboxArchiveFill />
                 }
             ]
         },
         {
             title: 'Forms',
             path: '/manageforms',
-            icon: <AiIcons.AiFillHome />
+            icon: <HiIcons.HiDocumentDuplicate />
         },
         {
             title: 'Requests',
-            icon: <AiIcons.AiFillHome />,
+            icon: <FaIcons.FaListUl />,
             iconClosed: <RiIcons.RiArrowDownSFill />,
             iconOpened: <RiIcons.RiArrowUpSFill />,
             subNav: [
                 {
                     title: 'Requests',
                     path: '/admin/deptchair/requests',
-                    icon: <AiIcons.AiFillHome />
+                    icon: <RiIcons.RiAdminFill />
                 },
                 {
                     title: 'Trash',
                     path: '/requests/trash',
-                    icon: <AiIcons.AiFillHome />
+                    icon: <FaIcons.FaTrash />
                 }
             ]
         },
         {
             title: 'Messages',
             path: '/messenger',
-            icon: <AiIcons.AiFillHome />
+            icon: <SiIcons.SiMessenger />
         },
         {
             title: 'Log out',
             path: '/logout',
-            icon: <AiIcons.AiFillHome />
+            icon: <RiIcons.RiLogoutBoxRFill />
         }
     ],
     [ //cics staff
@@ -125,23 +127,23 @@ export const SidebarData = [
         {
             title: 'Control Panel',
             path: '/controlpanel',
-            icon: <AiIcons.AiFillHome />
+            icon: <AiIcons.AiFillControl />
         },
         {
             title: 'My Profile',
             path: '/profile',
-            icon: <AiIcons.AiFillHome />
+            icon: <FaIcons.FaUserCircle />
         },
         {
             title: 'Announcements',
-            icon: <AiIcons.AiFillHome />,
+            icon: <IoIcons.IoNewspaper />,
             iconClosed: <RiIcons.RiArrowDownSFill />,
             iconOpened: <RiIcons.RiArrowUpSFill />,
             subNav: [
                 {
                     title: 'Create Announcement',
                     path: '/admin/new/announcement',
-                    icon: <IoIcons.IoIosPaper />
+                    icon: <IoIcons.IoAddCircleSharp />
                 },
                 {
                     title: 'Announcements',
@@ -151,70 +153,70 @@ export const SidebarData = [
                 {
                     title: 'Archived Announcements',
                     path: '/admin/archives/announcements',
-                    icon: <IoIcons.IoIosPaper />
+                    icon: <RiIcons.RiInboxArchiveFill />
                 }
             ]
         },
         {
             title: 'Forms',
             path: '/manageforms',
-            icon: <AiIcons.AiFillHome />
+            icon: <HiIcons.HiDocumentDuplicate />
         },
         {
             title: 'Requests',
-            icon: <AiIcons.AiFillHome />,
+            icon: <FaIcons.FaListUl />,
             iconClosed: <RiIcons.RiArrowDownSFill />,
             iconOpened: <RiIcons.RiArrowUpSFill />,
             subNav: [
                 {
                     title: 'All Requests',
                     path: '/admin/cics/requests',
-                    icon: <AiIcons.AiFillHome />
+                    icon: <RiIcons.RiAdminFill />
                 },
                 {
                     title: 'Requests to Office',
                     path: '/admin/cics/requests',
-                    icon: <AiIcons.AiFillHome />
+                    icon: <ImIcons.ImOffice />
                 },
                 {
                     title: 'Trash',
                     path: '/requests/trash',
-                    icon: <AiIcons.AiFillHome />
+                    icon: <FaIcons.FaTrash />
                 }
             ]
         },
         {
             title: 'Users',
-            icon: <AiIcons.AiFillHome />,
+            icon: <RiIcons.RiAccountCircleFill />,
             iconClosed: <RiIcons.RiArrowDownSFill />,
             iconOpened: <RiIcons.RiArrowUpSFill />,
             subNav: [
                 {
                     title: 'Register User',
                     path: '/admin/register',
-                    icon: <IoIcons.IoIosPaper />
+                    icon: <IoIcons.IoCreate />
                 },
                 {
                     title: 'View Users',
                     path: '/admin/users',
-                    icon: <IoIcons.IoIosPaper />
+                    icon: <FaIcons.FaListUl />
                 }
             ]
         },
         {
             title: 'Audit Log',
             path: '/audit',
-            icon: <AiIcons.AiFillHome />,
+            icon: <FaIcons.FaHistory />,
         },
         {
             title: 'Messages',
             path: '/messenger',
-            icon: <AiIcons.AiFillHome />
+            icon: <RiIcons.RiMessageFill />
         },
         {
             title: 'Log out',
             path: '/logout',
-            icon: <AiIcons.AiFillHome />
+            icon: <RiIcons.RiLogoutBoxRFill />
         }
     ]
 ]
