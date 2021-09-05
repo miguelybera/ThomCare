@@ -1,11 +1,4 @@
 import React from 'react'
-import * as FaIcons from 'react-icons/fa'
-import * as AiIcons from 'react-icons/ai'
-import * as IoIcons from 'react-icons/io'
-import * as RiIcons from 'react-icons/ri'
-import * as HiIcons from 'react-icons/hi'
-import * as SiIcons from 'react-icons/si'
-import * as ImIcons from 'react-icons/im'
 
 export const SidebarData = [
     [ //student
