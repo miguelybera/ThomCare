@@ -33,7 +33,8 @@ const UpdateAnnouncement = ({ history, match }) => {
     const [archiveDate, setArchiveDate] = useState('')
     const [setExpiry, setSetExpiry] = useState()
     const [fileAttachments, setFileAttachments] = useState([])
-    const [filePath, setFilePath] = useState('')
+    const [oldAttachments, setOldAttachments] = useState([])
+    const [preview, setPreview] = useState([])
 
     const levels = ['All', '1st Year', '2nd Year', '3rd Year', '4th Year']
 
@@ -77,6 +78,9 @@ const UpdateAnnouncement = ({ history, match }) => {
             formData.set('archiveDate', changeDateFormat(archiveDate))
         }
         formData.set('setExpiry', setExpiry)
+        fileAttachments.forEach(file => {
+            formData.append('fileAttachments', file)
+        })
 
         dispatch(updateAnnouncement(announcement._id, formData))
     }
@@ -97,8 +101,7 @@ const UpdateAnnouncement = ({ history, match }) => {
             setAnnouncementType(announcement.announcementType)
             setArchiveDate(changeDateFormat(announcement.archiveDate))
             setSetExpiry(announcement.setExpiry)
-            setFileAttachments(announcement.fileAttachments)
-            setFilePath(announcement.fileAttachments[0].path)
+            setOldAttachments(announcement.fileAttachments)
         } else {
             dispatch(getAnnouncementDetails(announcementId))
         }
@@ -138,9 +141,18 @@ const UpdateAnnouncement = ({ history, match }) => {
     }, [dispatch, error, alert, isUpdated, updateError, announcement, announcementId, history])
 
     const onChange = e => {
-        setFileAttachments(e.target.files[0])
+        const files = Array.from(e.target.files)
+
+        setFileAttachments([])
+        setOldAttachments([])
+
+        files.forEach(file => {
+            setPreview(oldArray => [...oldArray, file])
+            setFileAttachments(oldArray => [...oldArray, file])
+        })
     }
 
+    console.log(oldAttachments)
     return (
         <Fragment>
             <MetaData title={'Update Announcement'} />
@@ -218,10 +230,15 @@ const UpdateAnnouncement = ({ history, match }) => {
                                         </Form.Group>
                                         <Form.Group controlId="formFileMultiple" className="mb-3">
                                             <Form.Label>Attach document(s):</Form.Label>
-                                            <Form.Control type="file" name="file" onChange={onChange} />
+                                            <Form.Control type="file" name="file" onChange={onChange} multiple />
                                         </Form.Group>
                                         <Form.Group controlId="formFileMultiple" className="mb-3">
-                                            <Form.Label href={filePath}>Download PDF</Form.Label>
+                                            {fileAttachments && fileAttachments.map(file => (
+                                                <p>{file.name}</p>
+                                            ))}
+                                            {oldAttachments && oldAttachments.map(file => (
+                                                <p><a href={file.path}>{file.originalname}</a></p>
+                                            ))}
                                         </Form.Group>
                                         <Button
                                             type='submit'
