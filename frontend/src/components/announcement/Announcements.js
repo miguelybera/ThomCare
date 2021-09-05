@@ -273,6 +273,8 @@ const Announcements = () => {
                                         <br/><br/>
                                         <span style={{ fontSize: '12px' }}><Link to={`/announcement/${announcement._id}`}>Read More &#xbb;</Link></span>
                                         <br/>
+                                        <span style={{ fontSize: '12px' }}>Attachments: {announcement.fileAttachments.length} file(s)</span>
+                                        <br/>
                                         <span style={{ fontWeight: '300', color: 'gray', fontSize: '12px' }}>Tags: {announcement.yearLevel}, {announcement.course}, {announcement.track}</span>
                                     </Card.Text>
                                 </Card.Body>

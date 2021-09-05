@@ -174,7 +174,7 @@ const CreateAnnouncement = ({ history }) => {
                                     </Form.Group>
                                     <Form.Group controlId="formFileMultiple" className="mb-3">
                                         <Form.Label>Attach document(s):</Form.Label>
-                                        <Form.Control type="file" name="file" onChange={onChange} />
+                                        <Form.Control type="file" name="file" onChange={onChange} multiple/>
                                     </Form.Group>
                                     <Button
                                         type='submit'
