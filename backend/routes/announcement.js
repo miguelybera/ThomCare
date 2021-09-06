@@ -40,16 +40,7 @@ const announcementUpload = multer({storage: announcementStorage,
     }
 })
 
-const imageUpload = multer({storage: announcementStorage,
-    fileFilter: function (req, file, cb) {
-        const ext = path.extname(file.originalname)
-        if(!fileMimeTypes.includes(file.mimetype)){
-            return cb(new Error('File type not supported'))
-        } else {
-            cb(null,true)
-        }
-    }
-})
+
 
 //all users
 router.route('/announcement/:id').get(getSingleAnnouncement);
