@@ -168,7 +168,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
                                                                             <tbody>
                                                                                 <tr style="border-collapse:collapse">
                                                                                     <td width="100%" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
-                                                                                      Click <a href={${resetUrl}}>here</a> to reset your password. If you have not requested this email, then ignore it.
+                                                                                      Click <a href=${resetUrl}>here</a> to reset your password. If you have not requested this email, then ignore it.
                                                                                     </td>
                                                                                    
                                                                                 </tr>
