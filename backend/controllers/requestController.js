@@ -287,9 +287,14 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
         actionAudit: `User account: (${req.user.email}) has updated the status of request with the tracking number: (${request.trackingNumber}) \n Current Status: ${req.body.requestStatus}`
     })
 
-
-    const message = `Request with tracking number: ${rqst.trackingNumber} \n \n Current Status: ${request.requestStatus}`
-
+    let message
+    if(req.files == null || req.files == ''){
+        message = `Request with tracking number: ${rqst.trackingNumber} \n \n Current Status: ${request.requestStatus}`
+    }else{
+        message = `Request with tracking number: ${rqst.trackingNumber} \n \n Current Status: ${request.requestStatus} & a file has been 
+        attached to your request.`
+    }
+     
     try {
         await sendEmail({
             email: rqst.requestorEmail,
