@@ -50,8 +50,8 @@ router.route('/announcements').get(getHomepageAnnouncements);
 
 //dept chair and cics staff
 router.route('/admin/unarchivedAnnouncements').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'),getUnarchivedAnnouncement);
-router.route('/admin/new/announcement').post(isAuthenticatedUser,announcementUpload.fields([{name: 'fileAttachments', maxCount: 5}, {name: 'imageAttachments', maxCount: 5}]),authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'),newAnnouncement);
-router.route('/admin/announcement/:id').put(isAuthenticatedUser,announcementUpload.fields([{name: 'fileAttachments', maxCount: 5}, {name: 'imageAttachments', maxCount: 5}]),updateAnnouncement);
+router.route('/admin/new/announcement').post(isAuthenticatedUser,announcementUpload.array('fileAttachments' ,5),authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'),newAnnouncement);
+router.route('/admin/announcement/:id').put(isAuthenticatedUser,announcementUpload.array('fileAttachments' ,5),updateAnnouncement);
 router.route('/admin/announcement/:id').delete(isAuthenticatedUser,authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'),deleteAnnouncement);
 router.route('/admin/archivedAnnouncements').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), getArchivedAnnouncements);
 router.route('/admin/archiveAnnouncement/:id').put(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), archiveAnnouncement);

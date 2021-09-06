@@ -256,14 +256,24 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
     }else{
         remarksMessage = req.body.remarksMessage
     }
-    
-    let remarksData = {
-        dateOfRemark: new Date(Date.now()),
-        updatedStatus: req.body.requestStatus,
-        userUpdated: req.user.firstName + ' ' + req.user.middleName + ' ' + req.user.lastName,
-        remarksMessage,
-        returningFiles: req.files
+    let remarksData
+    if (req.files == null || req.files == ''){
+        remarksData = {
+            dateOfRemark: new Date(Date.now()),
+            updatedStatus: req.body.requestStatus,
+            userUpdated: req.user.firstName + ' ' + req.user.middleName + ' ' + req.user.lastName,
+            remarksMessage
+        }
+    }else{
+        remarksData = {
+            dateOfRemark: new Date(Date.now()),
+            updatedStatus: req.body.requestStatus,
+            userUpdated: req.user.firstName + ' ' + req.user.middleName + ' ' + req.user.lastName,
+            remarksMessage,
+            returningFiles: req.files
+        }
     }
+
 
     Request.findOneAndUpdate(
         { _id: req.params.requestId },
@@ -340,13 +350,14 @@ exports.deleteRequest = catchAsyncErrors(async (req, res, next) => {
                 { resource_type: 'raw' })
           }
       }
-    await request.remove()
-
-    const auditLog = await Audit.create({
+      const auditLog = await Audit.create({
         userAudit: req.user.email,
         requestAudit: req.params.requestId,
         actionAudit: `User account: (${req.user.email}) has deleted the request with the tracking number: (${request.trackingNumber})`
     })
+    await request.remove()
+
+    
     res.status(200).json({
         success: true,
         message: "request has been deleted"

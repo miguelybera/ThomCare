@@ -11,8 +11,8 @@ exports.newAnnouncement = catchAsyncErrors(async (req, res, next) => {
     const { title, description, course, yearLevel, announcementType, setExpiry } = req.body;
     let track = req.body.track
     const createdBy = req.user.id;
-    const fileAttachments = req.files.fileAttachments;
-    const imageAttachments = req.files.imageAttachments;
+    const fileAttachments = req.files;
+
     let archiveDate
     if (req.body.setExpiry == true) {
         archiveDate = new Date(req.body.archiveDate)
@@ -88,7 +88,6 @@ exports.newAnnouncement = catchAsyncErrors(async (req, res, next) => {
         archiveDate,
         createdBy,
         fileAttachments,
-        imageAttachments,
         announcementType,
         setExpiry
 
@@ -172,7 +171,7 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
     if (!announcement) {
         return next(new ErrorHandler('Announcement Not Found', 404))
     }
-    let newTitle, newDescription, newCourse, newYearLevel, newTrack, newArchiveDate, newAnnouncementType, newSetExpiry, newAnnouncementFiles, newImageFiles
+    let newTitle, newDescription, newCourse, newYearLevel, newTrack, newArchiveDate, newAnnouncementType, newSetExpiry, newAnnouncementFiles
     if (req.body.archiveDate == null || req.body.archiveDate == '') {
         newArchiveDate = announcement.archiveDate
     } else {
@@ -231,7 +230,7 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
       for (let i = 0; i < fileLength; i++) {
         arrayIds.push(filesAttached[i].filename) 
       }
-    if (req.files.fileAttachments == null || req.files.fileAttachments == ''){
+    if (req.files == null || req.files == ''){
         newAnnouncementFiles = announcement.fileAttachments
     }else{
         if(arrayIds.length != 0){
@@ -240,24 +239,7 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
                     { resource_type: 'raw' })
               }
            }
-        newAnnouncementFiles = req.files.fileAttachments
-    }
-    const imagesAttached = announcement.imageAttachments
-    const imageLength = imagesAttached.length
-    let imageIds = []
-    for (let i = 0; i < imageLength; i++) {
-        imageIds.push(imagesAttached[i].filename) 
-      }
-    if (req.files.imageAttachments == null || req.files.imageAttachments == ''){
-        newImageFiles = announcement.imageAttachments
-    }else{
-        if(imageIds.length != 0){
-            for (let x = 0; x < imageIds.length; x++){
-                cloudinary.uploader.destroy(imageIds[x], 
-                    { resource_type: 'raw' })
-              }
-           }
-           newImageFiles = req.files.imageAttachments
+        newAnnouncementFiles = req.files
     }
     
     if (newYearLevel == '1st Year' || newYearLevel == '2nd Year') {
