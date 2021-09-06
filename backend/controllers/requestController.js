@@ -369,7 +369,7 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
                                                                                 <tbody>
                                                                                     <tr style="border-collapse:collapse">
                                                                                         <td width="100%" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
-                                                                                          Request with tracking number: <strong>${rqst.trackingNumber}<strong> <br><br>Current Status: <strong>${request.requestStatus}<strong>
+                                                                                          Request with tracking number: <strong>${rqst.trackingNumber}</strong> <br><br>Current Status: <strong>${request.requestStatus}</strong>
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>
@@ -509,7 +509,7 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
                                                                                 <tbody>
                                                                                     <tr style="border-collapse:collapse">
                                                                                         <td width="100%" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
-                                                                                          Request with tracking number: <strong>${rqst.trackingNumber}<strong> <br><br>Current Status: <strong>${request.requestStatus}<strong> & a file has been attached to your request.
+                                                                                          Request with tracking number: <strong>${rqst.trackingNumber}</strong> <br><br>Current Status: <strong>${request.requestStatus}<strong> & a file has been attached to your request. Please view your request on the website to download the file attachment.</strong> 
                                                                                         </td>
                                                                                     </tr>
                                                                                 </tbody>
