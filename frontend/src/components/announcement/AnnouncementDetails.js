@@ -9,12 +9,11 @@ import Loader from './../layout/Loader'
 import {
     INSIDE_DASHBOARD_FALSE
 } from '../../constants/dashboardConstants'
-import { set } from 'mongoose'
 
 var dateFormat = require('dateformat')
 
 const cardStyle = {
-    marginTop: '20px',
+    margin: '20px',
     width: '75%',
     align: 'center',
     border: 'solid 0.69px gray'
@@ -68,7 +67,7 @@ const AnnouncementDetails = ({ history, match }) => {
 
         if (fileAttachments) {
             fileAttachments.forEach(file => {
-                if (file.mimetype.includes('image')) {
+                if (file.mimetype.includes('image/')) {
                     setImages(oldArray => [...oldArray, file])
                 } else {
                     setFiles(oldArray => [...oldArray, file])
@@ -116,14 +115,14 @@ const AnnouncementDetails = ({ history, match }) => {
                                     </center>
                                 </Fragment>
                             ))}
-                            {files && (
-                                <p>Attachments:</p>
-                            )}
-                            {files && files.map(file => (
-                                <Fragment>
-                                    <p><a href={file.path}>{file.originalname}</a> Size: {file.size / 1000} Kb</p>
-                                </Fragment>
-                            ))}
+                            {files && (<p>Attachments:</p>)}
+                            <ul>
+                                {files && files.map(file => (
+                                    <Fragment>
+                                        <li><a href={file.path}>{file.originalname} <i class="fa fa-download" aria-hidden="true"></i></a> Size: {file.size / 1000} Kb</li>
+                                    </Fragment>
+                                ))}
+                            </ul>
                         </Card.Text>
                         <Card.Text style={{ fontWeight: '600', color: 'gray', fontSize: '12px' }}>Posted by: {singleUser && upperCase(singleUser.firstName + ' ' + singleUser.lastName)}</Card.Text>
                         <Card.Text style={{ fontSize: '10px', color: 'gray' }}>Tags: {yearLevel}, {course}, {track}</Card.Text>

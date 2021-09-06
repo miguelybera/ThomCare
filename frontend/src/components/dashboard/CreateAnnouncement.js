@@ -70,7 +70,9 @@ const CreateAnnouncement = ({ history }) => {
         formData.set('announcementType', announcementType)
         formData.set('archiveDate', changeDateFormat(archiveDate))
         formData.set('setExpiry', setExpiry)
-        formData.set('fileAttachments', fileAttachments)
+        fileAttachments.forEach(file => {
+            formData.append('fileAttachments', file)
+        })
 
         dispatch(createAnnouncement(formData))
     }
@@ -95,7 +97,13 @@ const CreateAnnouncement = ({ history }) => {
     }, [dispatch, alert, success, error])
 
     const onChange = e => {
-        setFileAttachments(e.target.files[0])
+        const files = Array.from(e.target.files)
+
+        setFileAttachments([])
+
+        files.forEach(file => {
+            setFileAttachments(oldArray => [...oldArray, file])
+        })
     }
 
     return (
@@ -169,12 +177,16 @@ const CreateAnnouncement = ({ history }) => {
                                         <Form.Control type="date" name="archiveDate" value={archiveDate} onChange={e => setArchiveDate(e.target.value)} disabled={setExpiry ? false : true} />
                                     </Form.Group>
                                     <Form.Group controlId="formFileMultiple" className="mb-3">
-                                        <Form.Label>Attach image(s):</Form.Label>
-                                        <Form.Control type="file" multiple />
+                                        <Form.Label>Attach document(s):</Form.Label>
+                                        <Form.Control type="file" name="file" onChange={onChange} multiple />
                                     </Form.Group>
                                     <Form.Group controlId="formFileMultiple" className="mb-3">
-                                        <Form.Label>Attach document(s):</Form.Label>
-                                        <Form.Control type="file" name="file" onChange={onChange} multiple/>
+                                        {fileAttachments && (<p>Attachments:</p>)}
+                                        <ul>
+                                            {fileAttachments && fileAttachments.map(file => (
+                                                <li>{file.name}</li>
+                                            ))}
+                                        </ul>
                                     </Form.Group>
                                     <Button
                                         type='submit'
