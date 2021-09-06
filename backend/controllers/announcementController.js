@@ -5,12 +5,14 @@ const APIFeatures = require('../utils/apiFeatures');
 const cloudinary = require('cloudinary').v2;
 
 
+
 // Create new announcement => /api/v1/new/announcement
 exports.newAnnouncement = catchAsyncErrors(async (req, res, next) => {
     const { title, description, course, yearLevel, announcementType, setExpiry } = req.body;
     let track = req.body.track
     const createdBy = req.user.id;
-    const fileAttachments = req.files
+    const fileAttachments = req.files.fileAttachments;
+    const imageAttachments = req.files.imageAttachments;
     let archiveDate
     if (req.body.setExpiry == true) {
         archiveDate = new Date(req.body.archiveDate)
@@ -86,6 +88,7 @@ exports.newAnnouncement = catchAsyncErrors(async (req, res, next) => {
         archiveDate,
         createdBy,
         fileAttachments,
+        imageAttachments,
         announcementType,
         setExpiry
 
@@ -169,7 +172,7 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
     if (!announcement) {
         return next(new ErrorHandler('Announcement Not Found', 404))
     }
-    let newTitle, newDescription, newCourse, newYearLevel, newTrack, newArchiveDate, newAnnouncementType, newSetExpiry, newAnnouncementFiles
+    let newTitle, newDescription, newCourse, newYearLevel, newTrack, newArchiveDate, newAnnouncementType, newSetExpiry, newAnnouncementFiles, newImageFiles
     if (req.body.archiveDate == null || req.body.archiveDate == '') {
         newArchiveDate = announcement.archiveDate
     } else {
@@ -228,7 +231,7 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
       for (let i = 0; i < fileLength; i++) {
         arrayIds.push(filesAttached[i].filename) 
       }
-    if (req.files == null || req.files == ''){
+    if (req.files.fileAttachments == null || req.files.fileAttachments == ''){
         newAnnouncementFiles = announcement.fileAttachments
     }else{
         if(arrayIds.length != 0){
@@ -237,8 +240,26 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
                     { resource_type: 'raw' })
               }
            }
-        newAnnouncementFiles = req.files
+        newAnnouncementFiles = req.files.fileAttachments
     }
+    const imagesAttached = announcement.imageAttachments
+    const imageLength = imagesAttached.length
+    let imageIds = []
+    for (let i = 0; i < imageLength; i++) {
+        imageIds.push(imagesAttached[i].filename) 
+      }
+    if (req.files.imageAttachments == null || req.files.imageAttachments == ''){
+        newImageFiles = announcement.imageAttachments
+    }else{
+        if(imageIds.length != 0){
+            for (let x = 0; x < imageIds.length; x++){
+                cloudinary.uploader.destroy(imageIds[x], 
+                    { resource_type: 'raw' })
+              }
+           }
+           newImageFiles = req.files.imageAttachments
+    }
+    
     if (newYearLevel == '1st Year' || newYearLevel == '2nd Year') {
         if (newTrack == "Core Computer Science" || newTrack == "Game Development" || newTrack == "Data Science" ||
             newTrack == "Network and Security" || newTrack == "Web and Mobile App Development" || newTrack == "IT Automation" ||
@@ -308,7 +329,8 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
             announcementType: newAnnouncementType,
             setExpiry: newSetExpiry,
             archiveDate: newArchiveDate,
-            fileAttachments: newAnnouncementFiles
+            fileAttachments: newAnnouncementFiles,
+            imageAttachments: newImageFiles
         }
      
     announcement = await Announcement.findByIdAndUpdate(req.params.id, newAnnouncementData, {
@@ -318,8 +340,7 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
     });
     res.status(200).json({
         success: true,
-        announcement,
-        newSetExpiry
+        announcement
     })
 
 })
@@ -346,6 +367,20 @@ exports.deleteAnnouncement = catchAsyncErrors(async (req, res, next) => {
                 { resource_type: 'raw' })
           }
       }
+
+      const imagesAttached = announcement.imageAttachments
+      const imageLength = imagesAttached.length
+      let imageIds = []
+      for (let i = 0; i < imageLength; i++) {
+          imageIds.push(imagesAttached[i].filename) 
+        }
+    if(imageIds.length != 0){
+            for (let x = 0; x < imageIds.length; x++){
+                cloudinary.uploader.destroy(imageIds[x], 
+                    { resource_type: 'raw' })
+              }
+           }
+      
     
     await announcement.remove()
     res.status(200).json({

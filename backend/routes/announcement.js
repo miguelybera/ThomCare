@@ -40,6 +40,17 @@ const announcementUpload = multer({storage: announcementStorage,
     }
 })
 
+const imageUpload = multer({storage: announcementStorage,
+    fileFilter: function (req, file, cb) {
+        const ext = path.extname(file.originalname)
+        if(!fileMimeTypes.includes(file.mimetype)){
+            return cb(new Error('File type not supported'))
+        } else {
+            cb(null,true)
+        }
+    }
+})
+
 //all users
 router.route('/announcement/:id').get(getSingleAnnouncement);
 router.route('/announcements').get(getHomepageAnnouncements);
@@ -48,8 +59,8 @@ router.route('/announcements').get(getHomepageAnnouncements);
 
 //dept chair and cics staff
 router.route('/admin/unarchivedAnnouncements').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'),getUnarchivedAnnouncement);
-router.route('/admin/new/announcement').post(isAuthenticatedUser,announcementUpload.array('fileAttachments',5),authorizeRoles('CICS Staff'),newAnnouncement);
-router.route('/admin/announcement/:id').put(isAuthenticatedUser,announcementUpload.array('fileAttachments',5),authorizeRoles('CICS Staff'),updateAnnouncement);
+router.route('/admin/new/announcement').post(isAuthenticatedUser,announcementUpload.fields([{name: 'fileAttachments', maxCount: 5}, {name: 'imageAttachments', maxCount: 5}]),authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'),newAnnouncement);
+router.route('/admin/announcement/:id').put(isAuthenticatedUser,announcementUpload.fields([{name: 'fileAttachments', maxCount: 5}, {name: 'imageAttachments', maxCount: 5}]),updateAnnouncement);
 router.route('/admin/announcement/:id').delete(isAuthenticatedUser,authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'),deleteAnnouncement);
 router.route('/admin/archivedAnnouncements').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), getArchivedAnnouncements);
 router.route('/admin/archiveAnnouncement/:id').put(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), archiveAnnouncement);
