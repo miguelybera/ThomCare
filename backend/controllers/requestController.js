@@ -236,33 +236,15 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
             break
     }
 
-    const filesReturned = rqst.returningFiles
-    const returnLength = filesReturned.length
-    let arrayIds = []
-        for (let i = 0; i < returnLength; i++) {
-            arrayIds.push(filesReturned[i].filename) 
-          }
           
     let newRequestData
-    if(req.files == null || req.files == ''){
-        newRequestData = {
-            requestStatus: req.body.requestStatus,
-            managedBy: req.user.id
-        }
-    }else{
-        if(arrayIds.length != 0){
-            for (let x = 0; x < arrayIds.length; x++){
-                cloudinary.uploader.destroy(arrayIds[x], 
-                    { resource_type: 'raw' })
-              }
-           }
+    
         newRequestData= {
             requestStatus: req.body.requestStatus,
             managedBy: req.user.id,
-            returningFiles: req.files
+            
         }
-    }
-
+    
     const request = await Request.findByIdAndUpdate(req.params.requestId, newRequestData, {
         new: true,
         runValidators: true,
@@ -279,7 +261,8 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
         dateOfRemark: new Date(Date.now()),
         updatedStatus: req.body.requestStatus,
         userUpdated: req.user.firstName + ' ' + req.user.middleName + ' ' + req.user.lastName,
-        remarksMessage
+        remarksMessage,
+        returningFiles: req.files
     }
 
     Request.findOneAndUpdate(
@@ -323,15 +306,33 @@ exports.deleteRequest = catchAsyncErrors(async (req, res, next) => {
     //if (request.requestedById != req.user.id) { return next(new ErrorHandler('The requestor can only delete this request')) }
   
     const filesAttached = request.fileRequirements
-    const filesReturned = request.returningFiles
     const fileLength= filesAttached.length
-    const returnLength = filesReturned.length
     let arrayIds = []
+
+    const remarksData = request.remarks
+    const remarksLength = remarksData.length
+    const returningFilesArray = [] 
+    for(let i = 0; i < remarksLength; i++){
+        if(remarksData[i].returningFiles == null || remarksData[i].returningFiles == ''){
+        }else{
+            returningFilesArray.push(remarksData[i].returningFiles)
+        }
+    }
+    const rfaArrayLength = []
+    for(let i = 0; i < returningFilesArray.length; i++){
+        rfaArrayLength.push(returningFilesArray[i].length)
+    }
+    for(let i = 0; i < returningFilesArray.length; i++){
+        let fileReturned = returningFilesArray[i]
+        for(let y = 0; y < rfaArrayLength.length; y++){
+            for(let z = 0; z < rfaArrayLength[y]; z++){
+                arrayIds.push(fileReturned[z].filename)
+            }
+        }
+    }
+
     for (let i = 0; i < fileLength; i++) {
         arrayIds.push(filesAttached[i].filename) 
-      }
-    for (let i = 0; i < returnLength; i++) {
-        arrayIds.push(filesReturned[i].filename) 
       }
       if(arrayIds.length != 0){
         for (let x = 0; x < arrayIds.length; x++){

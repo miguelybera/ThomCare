@@ -115,15 +115,15 @@ const requestSchema = new mongoose.Schema({
         },
         remarksMessage:{
             type: String
+        },
+        returningFiles:{
+            type: Array
         }
 
     }],
     fileRequirements:{
         type:Array,
         required: [true, 'Please attach required documents']
-    },
-    returningFiles:{
-        type: Array
     },
     requestorNotes:{
         type: String
