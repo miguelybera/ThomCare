@@ -162,7 +162,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
                                                         <tbody>
                                                             <tr style="border-collapse:collapse">
                                                                 <td width="580" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
-                                                                    <p align="left" style="font-size:18px;line-height:24px;color:#8a0020;font-weight:bold;margin-top:0px;margin-bottom:18px;font-family:HelveticaNeue,sans-serif">Reset Password   Link</p>
+                                                                    <p align="left" style="font-size:18px;line-height:24px;color:#8a0020;font-weight:bold;margin-top:0px;margin-bottom:18px;font-family:HelveticaNeue,sans-serif">Reset Password Link</p>
                                                                     <div align="left" style="font-size:13px;line-height:18px;color:#464646;margin-top:0px;margin-bottom:18px;font-family:HelveticaNeue,sans-serif">
                                                                         <table border="0" cellpadding="5" cellspacing="0" width="100%" style="font-size:13px;font-family:'calibri',arial,verdana;line-height:1.4">
                                                                             <tbody>
