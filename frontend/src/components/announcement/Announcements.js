@@ -256,7 +256,7 @@ const Announcements = () => {
                 <Row xs={1} md={2} className="g-4">
                     {announcements && (announcements.length !== 0) ? announcements.map(announcement => (
                         <Col>
-                            <Card style={{ borderRadius: '25px', background: '#f5f5f5' }}>
+                            <Card style={{ borderRadius: '25px', background: '#f5f5f5', marginBottom: '20px' }}>
                                 <Card.Body>
                                     <Card.Header style={{ background: '#f5f5f5', fontWeight: '600' }}>{announcement.title}</Card.Header>
                                     <Card.Text style={{ marginLeft: '15px' }}>
