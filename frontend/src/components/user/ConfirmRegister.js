@@ -36,7 +36,7 @@ const ConfirmRegister = ({ history }) => {
                 type: REGISTER_USER_RESET
             })
         }
-        
+
         dispatch({
             type: INSIDE_DASHBOARD_FALSE
         })

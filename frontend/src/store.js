@@ -1,4 +1,4 @@
-import { createStore, combineReducers, applyMiddleware} from 'redux'
+import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 
@@ -46,7 +46,7 @@ const reducer = combineReducers({
     users: getUsersReducer, //get all users
     singleUser: userDetailsReducer, //get single user details
     user: userReducer, //update and delete profile
-    
+
     conversations: conversationReducer, //get all conversations of user
     messages: messageReducer, //get all messages in conversation
     sendMessage: sendMessageReducer, //send message in conversation
@@ -59,13 +59,13 @@ const reducer = combineReducers({
     announcementDetails: getAnnouncementDetailsReducer, //get single announcement details
     newAnnouncement: newAnnouncementReducer, //create new announcement
     announcement: announcementReducer, //update or delete announcement
-    
+
     student: studentInfoReducer, //save trackingNumber and surname ? or request details in local storage
     requestDetails: getRequestDetailsReducer, //get single request details
     requests: getRequestsReducer, //get all requests
     form: saveFormDetailsReducer,
     request: requestReducer,
-    
+
     courses: getCoursesReducer, //get single request details
 
     dashboard: dashboardReducer //check if inside dashboard

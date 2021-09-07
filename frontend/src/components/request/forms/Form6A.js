@@ -2,15 +2,15 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { getCourses, clearErrors } from './../../actions/courseActions'
-import { saveForm } from './../../actions/requestActions'
-import MetaData from './../layout/MetaData'
-import Loader from './../layout/Loader'
+import { getCourses, clearErrors } from '../../../actions/courseActions'
+import { saveForm } from '../../../actions/requestActions'
+import MetaData from '../../layout/MetaData'
+import Loader from '../../layout/Loader'
 import { Row, Container, Button, Col, Card, Form } from 'react-bootstrap'
 import PDF from './PDF'
 import {
     INSIDE_DASHBOARD_FALSE
-} from '../../constants/dashboardConstants'
+} from '../../../constants/dashboardConstants'
 
 
 function Form6A() {
@@ -45,7 +45,7 @@ function Form6A() {
             section: ''
         }
     ])
-    
+
     const onChange = (index, e) => {
         e.preventDefault()
         const values = [...inputFields]
@@ -76,7 +76,7 @@ function Form6A() {
             course: user.course,
             addDrop: inputFields
         }
-        
+
         setSubmitted(true)
 
         dispatch(saveForm(formData))
@@ -122,7 +122,7 @@ function Form6A() {
         <Fragment>
             <MetaData title={'Add/Drop Form'} />
             {loading ? <Loader /> : !submitted ? (
-                    <Container classname="align-me" fluid style={{ paddingBottom: '100px' }}>
+                <Container classname="align-me" fluid style={{ paddingBottom: '100px' }}>
                     <Card style={{ backgroundColor: '#9c0b0b' }}>  {/*, width: '100rem' */}
                         <Card.Body>
                             <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold' }}>Student Information</Card.Title>
@@ -286,9 +286,9 @@ function Form6A() {
                         </Card.Body>
                     </Card>
                 </Container>
-                ) : (
-                    <PDF title={`Download Add Drop Form`} content={localStorage.getItem('formData')}/>
-                )}
+            ) : (
+                <PDF title={`Download Add Drop Form`} content={localStorage.getItem('formData')} />
+            )}
         </Fragment>
     )
 }

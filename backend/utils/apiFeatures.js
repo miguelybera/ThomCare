@@ -1,57 +1,57 @@
-class APIFeatures{
-    constructor(query, queryStr){
+class APIFeatures {
+    constructor(query, queryStr) {
         this.query = query;
         this.queryStr = queryStr
     }
 
-    search(){
+    search() {
         const keyword = this.queryStr.keyword ? {
             title: {
                 $regex: this.queryStr.keyword,
                 $options: 'i' // i means case insensitive
             }
-        }: {}
+        } : {}
         //console.log(keyword)
-        this.query = this.query.find({...keyword});
+        this.query = this.query.find({ ...keyword });
         return this;
     }
-    searchRequests(){
+    searchRequests() {
         const keyword = this.queryStr.keyword ? {
             trackingNumber: {
                 $regex: this.queryStr.keyword,
                 $options: 'i' // i means case insensitive
             }
-        }: {}
+        } : {}
         //console.log(keyword)
-        this.query = this.query.find({...keyword});
+        this.query = this.query.find({ ...keyword });
         return this;
     }
-    searchAudit(){
+    searchAudit() {
         const keyword = this.queryStr.keyword ? {
             userAudit: {
                 $regex: this.queryStr.keyword,
                 $options: 'i' // i means case insensitive
             }
-        }: {}
+        } : {}
         //console.log(keyword)
-        this.query = this.query.find({...keyword});
+        this.query = this.query.find({ ...keyword });
         return this;
     }
-    searchForms(){
+    searchForms() {
         const keyword = this.queryStr.keyword ? {
             formName: {
                 $regex: this.queryStr.keyword,
                 $options: 'i' // i means case insensitive
             }
-        }: {}
+        } : {}
         //console.log(keyword)
-        this.query = this.query.find({...keyword});
+        this.query = this.query.find({ ...keyword });
         return this;
     }
 
     filter() {
 
-        const queryCopy = {...this.queryStr};
+        const queryCopy = { ...this.queryStr };
 
 
         // Removing fields from the query string
@@ -63,12 +63,13 @@ class APIFeatures{
         this.query = this.query.find(queryCopy);
         return this;
     }
-    pagination(resPerPage){
+    pagination(resPerPage) {
         const currentPage = Number(this.queryStr.page) || 1;
         const skip = resPerPage * (currentPage - 1);
 
         this.query = this.query.limit(resPerPage).skip(skip);
         return this;
-     }
-}  
+    }
+}
+
 module.exports = APIFeatures

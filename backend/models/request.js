@@ -1,15 +1,16 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
+
 const requestSchema = new mongoose.Schema({
-    trackingNumber:{
+    trackingNumber: {
         type: String,
         required: true,
         unique: true
     },
-    requestType:{
+    requestType: {
         type: String,
         required: [true, 'Please enter request type'],
-        enum:{
-            values:[
+        enum: {
+            values: [
                 'Adding/Dropping of Course',
                 'Cross Enrollment within CICS',
                 'Request for Petition Classes within CICS',
@@ -24,16 +25,16 @@ const requestSchema = new mongoose.Schema({
             ]
         }
     },
-    requestedById:{
+    requestedById: {
         type: mongoose.Schema.ObjectId,
         ref: 'User',
         required: true
     },
-    requestStatus:{
+    requestStatus: {
         type: String,
         required: [true, 'Please enter request status'],
-        enum:{
-            values:[
+        enum: {
+            values: [
                 'Pending',
                 'Processing',
                 'Denied',
@@ -42,35 +43,35 @@ const requestSchema = new mongoose.Schema({
         },
         default: 'Pending'
     },
-    managedBy:{
+    managedBy: {
         type: String,
         default: ''
     },
-    requestorFirstName:{
+    requestorFirstName: {
         type: String,
         required: [true, 'Requestor First Name required']
     },
-    requestorMiddleName:{
+    requestorMiddleName: {
         type: String,
         default: ''
     },
-    requestorLastName:{
+    requestorLastName: {
         type: String,
         required: [true, 'Requestor Last Name required']
     },
-    requestorStudentNumber:{
+    requestorStudentNumber: {
         type: String,
         required: [true, 'Requestor Last Name required']
     },
-    requestorEmail:{
+    requestorEmail: {
         type: String,
         required: [true, 'Requestor Email required']
     },
-    requestorYearLevel:{
+    requestorYearLevel: {
         type: String,
         required: [true, 'Requestor year level required'],
-        enum:{
-            values:[
+        enum: {
+            values: [
                 '1st Year',
                 '2nd Year',
                 '3rd Year',
@@ -80,59 +81,58 @@ const requestSchema = new mongoose.Schema({
             ]
         }
     },
-    requestorSection:{
+    requestorSection: {
         type: String,
         required: [true, 'Requestor Section required']
     },
-    requestorCourse:{
+    requestorCourse: {
         type: String,
         required: [true, 'Please enter request course'],
-        enum:{
-            values:[
+        enum: {
+            values: [
                 'Computer Science',
                 'Information Technology',
                 'Information Systems'
             ]
         }
     },
-    createdAt:{
+    createdAt: {
         type: Date,
         default: Date.now()
     },
-    remarks:[{
-        dateOfRemark:{
+    remarks: [{
+        dateOfRemark: {
             type: Date,
             required: true,
             default: Date.now()
         },
-        updatedStatus:{
+        updatedStatus: {
             type: String,
             required: true
         },
-        userUpdated:{
+        userUpdated: {
             type: String,
             required: true
         },
-        remarksMessage:{
+        remarksMessage: {
             type: String
         },
-        returningFiles:{
+        returningFiles: {
             type: Array
         }
 
     }],
-    fileRequirements:{
-        type:Array,
+    fileRequirements: {
+        type: Array,
         required: [true, 'Please attach required documents']
     },
-    requestorNotes:{
+    requestorNotes: {
         type: String
     },
-    isTrash:{
+    isTrash: {
         type: Boolean,
         default: false
     }
-
 })
 
-module.exports = mongoose.model('Request', requestSchema);
+module.exports = mongoose.model('Request', requestSchema)

@@ -73,7 +73,7 @@ const Profile = () => {
         <>
             <MetaData title={'My Profile'} />
             {/** add here if user.role = 'something' display , else display student profile*/}
-            <Sidebar/>
+            <Sidebar />
             {loading ? (
                 <Loader />
             ) : (
@@ -150,7 +150,7 @@ const Profile = () => {
                                             </Button>
                                         ) : (
                                             <Fragment>
-                                                <Button style={{marginRight: '5px'}} onClick={() => setEditProfile(!editProfile)}>Edit Profile</Button>
+                                                <Button style={{ marginRight: '5px' }} onClick={() => setEditProfile(!editProfile)}>Edit Profile</Button>
                                                 <Link to='/password/update' style={{ textDecoration: 'none', color: 'white' }}><Button>Change Password</Button></Link>
                                             </Fragment>
                                         )

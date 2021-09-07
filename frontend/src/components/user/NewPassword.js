@@ -9,7 +9,7 @@ import {
     INSIDE_DASHBOARD_FALSE
 } from '../../constants/dashboardConstants'
 
-const NewPassword = ({history, match}) => {
+const NewPassword = ({ history, match }) => {
     const alert = useAlert()
     const dispatch = useDispatch()
 
@@ -21,19 +21,19 @@ const NewPassword = ({history, match}) => {
     const submitHandler = e => {
         e.preventDefault()
 
-        dispatch(resetPassword(match.params.token, {password, confirmPassword}))
+        dispatch(resetPassword(match.params.token, { password, confirmPassword }))
     }
-    
+
     useEffect(() => {
-        if(success){
+        if (success) {
             history.push('/password-success')
             alert.success('Password updated successfully')
             dispatch({
                 type: NEW_PASSWORD_RESET
             })
         }
-        
-        if(error){
+
+        if (error) {
             alert.error(error)
             dispatch(clearErrors())
             dispatch({
@@ -48,12 +48,12 @@ const NewPassword = ({history, match}) => {
 
     return (
         <>
-            <MetaData title={'New Password'}/> 
+            <MetaData title={'New Password'} />
             <Container fluid>
-                <Row className='justify-content-md-center' style={{marginTop: '50px'}}>
+                <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
                     <Card style={{ width: '30rem', align: 'center' }}>
                         <Card.Body>
-                            <Card.Title style={{margin: '50px 0 20px 0'}}>Update Password</Card.Title>
+                            <Card.Title style={{ margin: '50px 0 20px 0' }}>Update Password</Card.Title>
                             <Form onSubmit={submitHandler}>
                                 <FloatingLabel
                                     controlId="floatingInput"
@@ -61,7 +61,7 @@ const NewPassword = ({history, match}) => {
                                     className="mb-3"
                                 >
                                     <Form.Control
-                                        type="password" 
+                                        type="password"
                                         placeholder="mypassword"
                                         name="password"
                                         value={password}
@@ -74,7 +74,7 @@ const NewPassword = ({history, match}) => {
                                     className="mb-3"
                                 >
                                     <Form.Control
-                                        type="password" 
+                                        type="password"
                                         placeholder="mypassword"
                                         name="confirmPassword"
                                         value={confirmPassword}

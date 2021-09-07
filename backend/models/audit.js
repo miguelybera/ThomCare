@@ -1,23 +1,21 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 const auditSchema = new mongoose.Schema({
-    userAudit:{
+    userAudit: {
         type: String,
         required: true
     },
-    requestAudit:{
+    requestAudit: {
         type: String,
         required: true
     },
-    actionAudit:{
+    actionAudit: {
         type: String,
         required: true
     },
-    dateAudit:{
+    dateAudit: {
         type: Date,
-        required:true,
+        required: true,
         default: Date.now()
     }
-
-
 })
-module.exports = mongoose.model('Audit', auditSchema);
+module.exports = mongoose.model('Audit', auditSchema)

@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-
 const SidebarLink = styled(Link)`
     display:flex;
     color: #e1e9fc;
@@ -17,13 +16,10 @@ const SidebarLink = styled(Link)`
         background: #640606;
         border-left: 4px solid #ffffff;
         cursor: pointer;
-    }
-`;
+    }`;
 
 const SidebarLabel = styled.span`
-    margin-left: 16px;
-
-`;
+    margin-left: 16px;`;
 
 const DropdownLink = styled(Link)`
     background: #640606;
@@ -39,8 +35,7 @@ const DropdownLink = styled(Link)`
         background: #ffffff;
         border-left: 4px solid #ffffff;
         cursor: pointer;
-    }
-`;
+    }`;
 
 const SubMenu = ({ item }) => {
 
@@ -59,8 +54,8 @@ const SubMenu = ({ item }) => {
                     {item.subNav && subnav
                         ? item.iconOpened
                         : item.subNav
-                        ? item.iconClosed
-                        : null}
+                            ? item.iconClosed
+                            : null}
                 </div>
             </SidebarLink>
             {subnav && item.subNav.map((item, index) => {

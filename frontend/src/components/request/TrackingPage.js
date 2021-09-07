@@ -38,7 +38,7 @@ const TrackingPage = ({ history }) => {
             alert.error(error)
             dispatch(clearErrors())
         }
-        
+
         dispatch({
             type: INSIDE_DASHBOARD_FALSE
         })

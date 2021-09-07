@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react'
+import React, { Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useAlert } from 'react-alert'
 import { Link } from 'react-router-dom'
@@ -143,7 +143,6 @@ const Header = () => {
                                     </Navbar.Collapse>
                                 </>
                             )}
-
                         </Container>
                     </Navbar>
                 </Styles>

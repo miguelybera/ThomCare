@@ -57,7 +57,7 @@ export const getRequestDetailsReducer = (state = { request: {} }, action) => {
 
         case CLEAR_ERRORS:
             return {
-                ...state,            
+                ...state,
                 loading: false,
                 error: null
             }

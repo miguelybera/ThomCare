@@ -17,7 +17,7 @@ export const dashboardReducer = (state = {}, action) => {
                 ...state,
                 dashboard: false
             }
-            
+
         default:
             return state
     }

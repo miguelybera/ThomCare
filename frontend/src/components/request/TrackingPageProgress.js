@@ -30,7 +30,6 @@ const TrackingPageProgress = ({ history, match }) => {
 
     const requestId = match.params.id
 
-
     useEffect(() => {
         dispatch({
             type: INSIDE_DASHBOARD_FALSE

@@ -30,8 +30,9 @@ import AnnouncementDetails from './components/announcement/AnnouncementDetails'
 import TrackingPage from './components/request/TrackingPage'
 import TrackingPageProgress from './components/request/TrackingPageProgress'
 import SubmitRequest from './components/request/SubmitRequest'
+
 //forms
-import Form6A from './components/request/Form6A'
+import Form6A from './components/request/forms/Form6A'
 
 //dashboard folder
 import ControlPanel from './components/dashboard/ControlPanel'
@@ -66,44 +67,44 @@ function App() {
             <div className="App">
                 <ScrollToTop>
                     {/*{loading ? <Loader /> : (*/}
-                        <Fragment>
-                            {
-                                dashboard ? <></> : <Header />
-                            }
-                            <div className='container container-fluid'>
-                                <Route path='/' component={Announcements} exact />
-                                <Route path='/announcement/:id' component={AnnouncementDetails} exact />
-                                <Route path='/login' component={Login} exact />
-                                <Route path='/forgotpassword' component={ForgotPassword} exact />
-                                <Route path='/password/reset/:token' component={NewPassword} exact />
-                                <Route path='/verify/account/:token' component={VerifyRegistration} exact />
-                                <Route path='/register' component={Register} exact />
-                                <Route path='/confirmregister' component={ConfirmRegister} exact />
+                    <Fragment>
+                        {
+                            dashboard ? <></> : <Header />
+                        }
+                        <div className='container container-fluid'>
+                            <Route path='/' component={Announcements} exact />
+                            <Route path='/announcement/:id' component={AnnouncementDetails} exact />
+                            <Route path='/login' component={Login} exact />
+                            <Route path='/forgotpassword' component={ForgotPassword} exact />
+                            <Route path='/password/reset/:token' component={NewPassword} exact />
+                            <Route path='/verify/account/:token' component={VerifyRegistration} exact />
+                            <Route path='/register' component={Register} exact />
+                            <Route path='/confirmregister' component={ConfirmRegister} exact />
 
-                                <Route path='/track' component={TrackingPage} exact />
-                                <Route path='/track/:id' component={TrackingPageProgress} exact />
+                            <Route path='/track' component={TrackingPage} exact />
+                            <Route path='/track/:id' component={TrackingPageProgress} exact />
 
-                                {/**needs to be logged in */}
-                                <ProtectedRoute path='/form-6a' component={Form6A} exact />
-                                <ProtectedRoute path='/submitrequest' component={SubmitRequest} exact />
-                                
-                                <ProtectedRoute path='/messenger' loggedIn={true} component={Messenger} exact />
-                                <ProtectedRoute path='/profile' loggedIn={true} component={Profile} exact />
-                                <ProtectedRoute path='/password/update' loggedIn={true} component={UpdatePassword} exact />
+                            {/**needs to be logged in */}
+                            <ProtectedRoute path='/form-6a' component={Form6A} exact />
+                            <ProtectedRoute path='/submitrequest' component={SubmitRequest} exact />
 
-                                {/*control panel*/}
-                                <ProtectedRoute path='/controlpanel' loggedIn={true} component={ControlPanel} exact />
-                                <ProtectedRoute path='/admin/announcements' loggedIn={true} component={ListAnnouncements} exact />
-                                <ProtectedRoute path='/admin/new/announcement' loggedIn={true} component={CreateAnnouncement} exact />
-                                <ProtectedRoute path='/admin/announcement/:id' loggedIn={true} component={UpdateAnnouncement} exact />
-                                <ProtectedRoute path='/admin/archives/announcements' loggedIn={true} component={ListArchivedAnnouncements} exact />
-                                <ProtectedRoute path='/admin/users' loggedIn={true} component={ListUsers} exact />
-                                <ProtectedRoute path='/admin/user/:id' loggedIn={true} component={UpdateUser} exact />
-                                <ProtectedRoute path='/admin/register' loggedIn={true} component={RegisterAdmin} exact />
-                                <ProtectedRoute path='/admin/cics/requests' loggedIn={true} component={ListCICSRequests} exact />
-                                <ProtectedRoute path='/admin/cics/request/:id' loggedIn={true} component={UpdateRequest} exact />
-                            </div>
-                        </Fragment>
+                            <ProtectedRoute path='/messenger' component={Messenger} exact />
+                            <ProtectedRoute path='/profile' component={Profile} exact />
+                            <ProtectedRoute path='/password/update' component={UpdatePassword} exact />
+
+                            {/*control panel*/}
+                            <ProtectedRoute path='/controlpanel' component={ControlPanel} exact />
+                            <ProtectedRoute path='/admin/announcements' component={ListAnnouncements} exact />
+                            <ProtectedRoute path='/admin/new/announcement' component={CreateAnnouncement} exact />
+                            <ProtectedRoute path='/admin/announcement/:id' component={UpdateAnnouncement} exact />
+                            <ProtectedRoute path='/admin/archives/announcements' component={ListArchivedAnnouncements} exact />
+                            <ProtectedRoute path='/admin/users' component={ListUsers} exact />
+                            <ProtectedRoute path='/admin/user/:id' component={UpdateUser} exact />
+                            <ProtectedRoute path='/admin/register' component={RegisterAdmin} exact />
+                            <ProtectedRoute path='/admin/cics/requests' component={ListCICSRequests} exact />
+                            <ProtectedRoute path='/admin/cics/request/:id' component={UpdateRequest} exact />
+                        </div>
+                    </Fragment>
                     {/*})}*/}
                 </ScrollToTop>
             </div>

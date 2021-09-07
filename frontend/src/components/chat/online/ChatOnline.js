@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState, useRef } from 'react'
-import { useDispatch, useSelector } from  'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import './chatonline.css'
 import axios from 'axios'
 import {
@@ -9,7 +9,7 @@ import {
     CLEAR_ERRORS
 } from '../../../constants/userConstants'
 
-const ChatOnline = ({onlineUsers, currentUser, setCurrentChat}) => {
+const ChatOnline = ({ onlineUsers, currentUser, setCurrentChat }) => {
 
     const [friends, setFriends] = useState([])
     const [onlineFriends, setOnlineFriends] = useState([])
@@ -18,14 +18,14 @@ const ChatOnline = ({onlineUsers, currentUser, setCurrentChat}) => {
     const dispatch = useDispatch()
 
     useEffect(() => {
-        const getFriends = async() => {
-            try{
+        const getFriends = async () => {
+            try {
                 dispatch({
                     type: ALL_USERS_REQUEST
                 })
-        
+
                 const { data } = await axios.get('/api/v1/chat/users')
-                
+
                 setFriends(data.users)
 
                 dispatch({
@@ -33,7 +33,7 @@ const ChatOnline = ({onlineUsers, currentUser, setCurrentChat}) => {
                     payload: data
                 })
             }
-            catch(error){
+            catch (error) {
                 dispatch({
                     type: ALL_USERS_FAIL,
                     payload: error.response.data.message
@@ -53,7 +53,7 @@ const ChatOnline = ({onlineUsers, currentUser, setCurrentChat}) => {
 
     useEffect(() => {
         setOnlineFriends(
-            friends.filter(f => 
+            friends.filter(f =>
                 getOnlineUsers(f._id)
             )
         )
@@ -65,15 +65,15 @@ const ChatOnline = ({onlineUsers, currentUser, setCurrentChat}) => {
         // ) //showing all users though
 
         //f._id is the id per json in friends(users)
-    },[onlineUsers, friends])
+    }, [onlineUsers, friends])
 
     const openConversation = async (user) => {
         const firstUserId = user._id
-        try{
+        try {
             const { data } = await axios.get(`/api/v1/find/${firstUserId}/${currentUser}`)
-            
+
             setCurrentChat(data.conversation)
-            
+
         } catch (error) {
             console.log(error)
         }
@@ -86,15 +86,15 @@ const ChatOnline = ({onlineUsers, currentUser, setCurrentChat}) => {
                     <>
                         <div className='chatOnlineFriend' onClick={() => openConversation(o)}>
                             <div className='chatOnlineImgContainer'>
-                                <img className='chatOnlineImg' src='https://res.cloudinary.com/exstrial/image/upload/v1627805763/ShopIT/sanake_ibs7sb.jpg' alt=''/>
+                                <img className='chatOnlineImg' src='https://res.cloudinary.com/exstrial/image/upload/v1627805763/ShopIT/sanake_ibs7sb.jpg' alt='' />
                                 <div className='chatOnlineBadge'></div>
                             </div>
                             <span className='chatOnlineName'>{o?.firstName}</span>
                         </div>
                     </>
                 ))}
-                
-            </div>   
+
+            </div>
         </>
     )
 }

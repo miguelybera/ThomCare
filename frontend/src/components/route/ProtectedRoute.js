@@ -4,19 +4,15 @@ import { useSelector } from 'react-redux'
 
 const ProtectedRoute = ({ loggedIn, component: Component, ...rest }) => {
     const { isAuthenticated, loading, user } = useSelector(state => state.auth)
-    
+
     return (
         <Fragment>
             {loading === false && (
-                <Route 
+                <Route
                     {...rest}
                     render={props => {
-                        if(isAuthenticated === false) {
-                            return <Redirect to='/' />
-                        }
-
-                        if(loggedIn === false) {
-                            return <Redirect to='/' />
+                        if (isAuthenticated === false) {
+                            return <Redirect to='/login' />
                         }
 
                         // if(forAdmins === true && (user.role !== 'admin' && user.role !== 'superadmin')) {

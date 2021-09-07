@@ -68,7 +68,7 @@ const Register = ({ history }) => {
                             <Row className="mb-3">
                                 <Form.Group as={Col} controlId="formGridFirstName">
                                     <Form.Label>First Name</Form.Label>
-                                    <Form.Control type="text" placeholder="Student first name" name="firstName" value={firstName} onChange={onChange} required/>
+                                    <Form.Control type="text" placeholder="Student first name" name="firstName" value={firstName} onChange={onChange} required />
                                 </Form.Group>
 
                                 <Form.Group as={Col} controlId="formGridLastName">

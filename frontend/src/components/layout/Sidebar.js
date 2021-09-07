@@ -22,14 +22,9 @@ const Nav = styled.div`
     margin: 0px;
     position: absolute;
     top: 0px;
-    z-index:10;
-   
-    
-`;
+    z-index:10;`;
 
-const NavBottom = styled.div`
-
-`;
+const NavBottom = styled.div``;
 
 const NavIcon = styled(Link)`
     margin-left: 2rem;
@@ -43,7 +38,6 @@ const NavIcon = styled(Link)`
     &:hover {
         color: yellow;
     }
-    
 `;
 
 const SidebarNav = styled.nav`
@@ -57,18 +51,14 @@ const SidebarNav = styled.nav`
     left: ${({ sidebar }) => (sidebar ? '0' : '-100%')};
     transition: 130ms;
     z-index:1000;
-    overflow-y: auto;
-`;
+    overflow-y: auto;`;
 
 const SidebarText = styled.div`
-    font-size: 20px;
-`;
+    font-size: 20px;`;
 
 
 const SidebarWrap = styled.div`
-    width: 100%;
-    
-`;
+    width: 100%;`;
 
 const Sidebar = () => {
 

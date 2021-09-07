@@ -16,34 +16,27 @@ import {
 var dateFormat = require('dateformat')
 
 const Title = styled.h3`
-background-color: #9c0b0b;
-  text-align: center;
-  color: white;
-  padding-top: 7px;
-  padding-bottom: 7px;
-  margin-right: 0px;
-  font-family: MuktaMalar;
-  width:100%;
-  position: absolute;
-  z-index: 1;
-  right:0;
-  left:0;
-`;
+    background-color: #9c0b0b;
+    text-align: center;
+    color: white;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    margin-right: 0px;
+    font-family: MuktaMalar;
+    width:100%;
+    position: absolute;
+    z-index: 1;
+    right:0;
+    left:0;`;
 
 const Cards = styled.div`
     background-color: yellow;
-    
-    
-  text-align: center;
-  color: white;
-  padding-top: 1px;
-  padding-bottom: 5px;
-  
-  
-  position: absolute;
-  z-index: 1;
-  
-`;
+    text-align: center;
+    color: white;
+    padding-top: 1px;
+    padding-bottom: 5px;
+    position: absolute;
+    z-index: 1;`;
 
 const Announcements = () => {
 
@@ -86,7 +79,7 @@ const Announcements = () => {
         setCurrentPage(pageNumber)
     }
 
-    let count = announcementCount 
+    let count = announcementCount
 
     const [filter, setFilter] = useState({
         course: '',
@@ -96,7 +89,7 @@ const Announcements = () => {
         title: ''
     })
 
-    if(filter.course !== '' || filter.yearLevel !== '' || filter.track !== '' || filter.annnouncementType !== '' || filter.title !== '' ) {
+    if (filter.course !== '' || filter.yearLevel !== '' || filter.track !== '' || filter.annnouncementType !== '' || filter.title !== '') {
         count = filteredAnnouncementsCount
     }
 
@@ -109,7 +102,7 @@ const Announcements = () => {
         }
 
         dispatch(getAnnouncements(currentPage, course, yearLevel, track, title))
-        
+
         dispatch({
             type: INSIDE_DASHBOARD_FALSE
         })
@@ -159,7 +152,7 @@ const Announcements = () => {
 
     return (
         <Fragment>
-            <MetaData title={`Announcements`}/>
+            <MetaData title={`Announcements`} />
             <Container>
                 <Title>Announcements</Title>
                 <Container className="space"></Container>
@@ -250,7 +243,7 @@ const Announcements = () => {
                                     onChange={onChange}
                                     width="170px"
                                     right="0px"
-                                    style={{ border: "2px solid black", borderRadius: "20px", margin: '5px 0'  }}
+                                    style={{ border: "2px solid black", borderRadius: "20px", margin: '5px 0' }}
                                 />
                             </Form.Group>
                         </Col>
@@ -268,13 +261,13 @@ const Announcements = () => {
                                     <Card.Header style={{ background: '#f5f5f5', fontWeight: '600' }}>{announcement.title}</Card.Header>
                                     <Card.Text style={{ marginLeft: '15px' }}>
                                         <span style={{ fontWeight: '500', color: 'gray', fontSize: '12px' }}>{changeDateFormat(announcement.createdAt)}</span>
-                                        <br/>
+                                        <br />
                                         <span style={{ fontSize: '14px' }}>{shortenDescription(announcement.description)}</span>
-                                        <br/><br/>
+                                        <br /><br />
                                         <span style={{ fontSize: '12px' }}><Link to={`/announcement/${announcement._id}`}>Read More &#xbb;</Link></span>
-                                        <br/>
+                                        <br />
                                         <span style={{ fontSize: '12px' }}>Attachments: {announcement.fileAttachments.length} file(s)</span>
-                                        <br/>
+                                        <br />
                                         <span style={{ fontWeight: '300', color: 'gray', fontSize: '12px' }}>Tags: {announcement.yearLevel}, {announcement.course}, {announcement.track}</span>
                                     </Card.Text>
                                 </Card.Body>

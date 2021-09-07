@@ -7,7 +7,7 @@ const History = () => {
     const myHistory = createHistory()
 
     const dispatch = useDispatch()
-    
+
     myHistory.listen(location => {
         console.log(location)
         dispatch({

@@ -73,7 +73,7 @@ const ListCICSRequests = ({ history }) => {
     //     dispatch(deleteAnnouncement(id))
     //     handleClose()
     // }
-    
+
     const upperCase = (text) => text.toUpperCase()
 
 
@@ -171,7 +171,7 @@ const ListCICSRequests = ({ history }) => {
                     <Button variant="primary">Yes, I'm sure</Button>
                 </Modal.Footer>
             </Modal>
-            <Sidebar/>
+            <Sidebar />
             <div className="row">
                 <div className="">
                     <h1 className="my-4">Control Panel</h1>

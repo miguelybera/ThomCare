@@ -56,7 +56,7 @@ const UpdateRequest = ({ history, match }) => {
 
         dispatch(updateRequest(requestId, formData))
     }
-    
+
     useEffect(() => {
         if (request && request._id !== requestId) {
             dispatch(getRequestDetails(requestId))
@@ -99,7 +99,7 @@ const UpdateRequest = ({ history, match }) => {
             alert.error(error)
             dispatch(clearErrors())
         }
-        
+
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
@@ -109,7 +109,7 @@ const UpdateRequest = ({ history, match }) => {
     return (
         <Fragment>
             <MetaData title={`Update Request`} />
-            <Sidebar/>
+            <Sidebar />
             {requestLoading ? <Loader /> : (
                 <Fragment>
                     <p>{requestorFirstName} {requestorLastName}</p>

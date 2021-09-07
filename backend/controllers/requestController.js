@@ -233,9 +233,7 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
             break
         case 'Student':
             return next(new ErrorHandler('Role does not have access to this resource'))
-            break
     }
-
 
     let newRequestData
 
@@ -250,13 +248,17 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
         runValidators: true,
         useFindAndModify: false
     })
+
     let remarksMessage
+
     if (req.body.remarksMessage == null) {
         remarksMessage = ' '
     } else {
         remarksMessage = req.body.remarksMessage
     }
+
     let remarksData
+
     if (req.files == null || req.files == '') {
         remarksData = {
             dateOfRemark: new Date(Date.now()),
@@ -274,7 +276,6 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
         }
     }
 
-
     Request.findOneAndUpdate(
         { _id: req.params.requestId },
         { $push: { remarks: remarksData } },
@@ -288,286 +289,283 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
     })
 
     let message
+
     if (req.files == null || req.files == '') {
-        message = `
-        <div style="width:100%!important;background-color:#ececec;margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;font-family:HelveticaNeue,sans-serif">
-        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#ececec">
-            <tbody>
-                <tr style="border-collapse:collapse">
-                    <td align="center" bgcolor="#ececec" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
-                        <table width="640" cellpadding="0" cellspacing="0" border="0" style="margin-top:0;margin-bottom:0;margin-right:10px;margin-left:10px">
-                            <tbody>
-                                <tr style="border-collapse:collapse">
-                                    <td width="640" height="20" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                </tr>
+        message = `<div style="width:100%!important;background-color:#ececec;margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;font-family:HelveticaNeue,sans-serif">
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#ececec">
+                <tbody>
+                    <tr style="border-collapse:collapse">
+                        <td align="center" bgcolor="#ececec" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
+                            <table width="640" cellpadding="0" cellspacing="0" border="0" style="margin-top:0;margin-bottom:0;margin-right:10px;margin-left:10px">
+                                <tbody>
+                                    <tr style="border-collapse:collapse">
+                                        <td width="640" height="20" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                    </tr>
 
-                              <tr style="border-collapse:collapse;">
-                                    <td width="640" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
-                                        <table width="640" cellpadding="0" cellspacing="0" border="0" bgcolor="#8A0020" style="border-radius:6px 6px 0px 0px;background-color:#8A0020;color:#464646">
-                                            <tbody>
-                                                <tr style="border-collapse:collapse">
-                                                    <td width="15" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                    <td width="350" valign="middle" align="left" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
+                                <tr style="border-collapse:collapse;">
+                                        <td width="640" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
+                                            <table width="640" cellpadding="0" cellspacing="0" border="0" bgcolor="#8A0020" style="border-radius:6px 6px 0px 0px;background-color:#8A0020;color:#464646">
+                                                <tbody>
+                                                    <tr style="border-collapse:collapse">
+                                                        <td width="15" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                        <td width="350" valign="middle" align="left" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
 
-                                                    </td>
-                                                    <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                    <td width="255" valign="middle" align="right" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
-                                                        <table width="255" cellpadding="0" cellspacing="0" border="0">
-                                                            <tbody>
-                                                                <tr style="border-collapse:collapse">
-                                                                    <td width="255" height="5" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                        <table width="255" cellpadding="0" cellspacing="0" border="0">
-                                                            <tbody>
-                                                                <tr style="border-collapse:collapse">
-                                                                    <td width="255" height="5" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                    <td width="15" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                                        </td>
+                                                        <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                        <td width="255" valign="middle" align="right" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
+                                                            <table width="255" cellpadding="0" cellspacing="0" border="0">
+                                                                <tbody>
+                                                                    <tr style="border-collapse:collapse">
+                                                                        <td width="255" height="5" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <table width="255" cellpadding="0" cellspacing="0" border="0">
+                                                                <tbody>
+                                                                    <tr style="border-collapse:collapse">
+                                                                        <td width="255" height="5" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                        <td width="15" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
 
-                                    </td>
-                                </tr>
-                                <tr style="border-collapse:collapse">
+                                        </td>
+                                    </tr>
+                                    <tr style="border-collapse:collapse">
 
-                                    <td width="640" align="center" bgcolor="#8A0020" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
+                                        <td width="640" align="center" bgcolor="#8A0020" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
 
-                                        <div align="center" style="text-align:center", "display: flex", "justify-content: center", "align-items: center">
-                                            <a href="http://openweblife.createsend4.com/t/d-i-ftrgl-l-d/" target="_blank" style="font-size:36px; color:#fff; text-decoration:none; font-family:'calibri', arial, verdana; display:block; margin:20px 0 0;">
-                <img style="max-width: 50px;" src="https://res.cloudinary.com/dwcxehcui/image/upload/v1630769727/logo/UST-Seal-College-of-Information-Computing-Sciences_ghtsuq.png" alt="logo">ThomCare 
-                                            </a><br />
-                                        </div>
+                                            <div align="center" style="text-align:center", "display: flex", "justify-content: center", "align-items: center">
+                                                <a href="http://openweblife.createsend4.com/t/d-i-ftrgl-l-d/" target="_blank" style="font-size:36px; color:#fff; text-decoration:none; font-family:'calibri', arial, verdana; display:block; margin:20px 0 0;">
+                    <img style="max-width: 50px;" src="https://res.cloudinary.com/dwcxehcui/image/upload/v1630769727/logo/UST-Seal-College-of-Information-Computing-Sciences_ghtsuq.png" alt="logo">ThomCare 
+                                                </a><br />
+                                            </div>
 
 
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
 
-                                <tr style="border-collapse:collapse">
-                                    <td width="640" height="30" bgcolor="#ffffff" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                </tr>
-                                <tr style="border-collapse:collapse">
-                                    <td width="640" bgcolor="#ffffff" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
-                                        <table align="left" width="640" cellpadding="0" cellspacing="0" border="0">
-                                            <tbody>
-                                                <tr style="border-collapse:collapse">
-                                                    <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                    <td width="580" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
+                                    <tr style="border-collapse:collapse">
+                                        <td width="640" height="30" bgcolor="#ffffff" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                    </tr>
+                                    <tr style="border-collapse:collapse">
+                                        <td width="640" bgcolor="#ffffff" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
+                                            <table align="left" width="640" cellpadding="0" cellspacing="0" border="0">
+                                                <tbody>
+                                                    <tr style="border-collapse:collapse">
+                                                        <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                        <td width="580" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
 
-                                                        <table width="580" cellpadding="0" cellspacing="0" border="0">
-                                                            <tbody>
-                                                                <tr style="border-collapse:collapse">
-                                                                    <td width="580" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
-                                                                        <p align="left" style="font-size:18px;line-height:24px;color:#8a0020;font-weight:bold;margin-top:0px;margin-bottom:18px;font-family:HelveticaNeue,sans-serif">Update on Request</p>
-                                                                        <div align="left" style="font-size:13px;line-height:18px;color:#464646;margin-top:0px;margin-bottom:18px;font-family:HelveticaNeue,sans-serif">
-                                                                            <table border="0" cellpadding="5" cellspacing="0" width="100%" style="font-size:13px;font-family:'calibri',arial,verdana;line-height:1.4">
-                                                                                <tbody>
-                                                                                    <tr style="border-collapse:collapse">
-                                                                                        <td width="100%" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
-                                                                                          Request with tracking number: <strong>${rqst.trackingNumber}</strong> <br><br>Current Status: <strong>${request.requestStatus}</strong>
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr style="border-collapse:collapse">
-                                                                    <td width="580" height="10" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
+                                                            <table width="580" cellpadding="0" cellspacing="0" border="0">
+                                                                <tbody>
+                                                                    <tr style="border-collapse:collapse">
+                                                                        <td width="580" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
+                                                                            <p align="left" style="font-size:18px;line-height:24px;color:#8a0020;font-weight:bold;margin-top:0px;margin-bottom:18px;font-family:HelveticaNeue,sans-serif">Update on Request</p>
+                                                                            <div align="left" style="font-size:13px;line-height:18px;color:#464646;margin-top:0px;margin-bottom:18px;font-family:HelveticaNeue,sans-serif">
+                                                                                <table border="0" cellpadding="5" cellspacing="0" width="100%" style="font-size:13px;font-family:'calibri',arial,verdana;line-height:1.4">
+                                                                                    <tbody>
+                                                                                        <tr style="border-collapse:collapse">
+                                                                                            <td width="100%" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
+                                                                                            Request with tracking number: <strong>${rqst.trackingNumber}</strong> <br><br>Current Status: <strong>${request.requestStatus}</strong>
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="border-collapse:collapse">
+                                                                        <td width="580" height="10" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
 
-                                                    </td>
-                                                    <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr style="border-collapse:collapse">
-                                    <td width="640" height="15" bgcolor="#ffffff" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                </tr>
+                                                        </td>
+                                                        <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-collapse:collapse">
+                                        <td width="640" height="15" bgcolor="#ffffff" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                    </tr>
 
-                                <tr style="border-collapse:collapse">
-                                    <td width="640" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
-                                        <table width="640" cellpadding="0" cellspacing="0" border="0" bgcolor="#043948" style="border-radius:0px 0px 6px 6px;background-color:#043948;color:#e2e2e2">
-                                            <tbody>
-                                                <tr style="border-collapse:collapse">
-                                                    <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                    <td width="360" height="10" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                    <td width="60" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                    <td width="160" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                    <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                </tr>
-                                                <tr style="border-collapse:collapse">
-                                                    <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                    <td width="360" height="15" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                    <td width="60" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                    <td width="160" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                    <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr style="border-collapse:collapse">
-                                    <td width="640" height="60" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <img src="https://ci3.googleusercontent.com/proxy/1Bf6wZ9D4_9D4XK1CLH23Tl727SqwAxtj2mvfZ0Hn5vWCT0Zbtb6SSOSb-KYRCmmIUG5ITKLhN1d9n-rzhxQZKE=s0-d-e1-ft#https://createsend4.com/t/d-o-ftrgl-l/o.gif" width="1" height="1" border="0" alt="" style="min-height:1px!important;width:1px!important;border-width:0!important;margin-top:0!important;margin-bottom:0!important;margin-right:0!important;margin-left:0!important;padding-top:0!important;padding-bottom:0!important;padding-right:0!important;padding-left:0!important;outline-style:none;text-decoration:none;display:block">
-    </div>
-    `
+                                    <tr style="border-collapse:collapse">
+                                        <td width="640" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
+                                            <table width="640" cellpadding="0" cellspacing="0" border="0" bgcolor="#043948" style="border-radius:0px 0px 6px 6px;background-color:#043948;color:#e2e2e2">
+                                                <tbody>
+                                                    <tr style="border-collapse:collapse">
+                                                        <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                        <td width="360" height="10" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                        <td width="60" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                        <td width="160" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                        <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                    </tr>
+                                                    <tr style="border-collapse:collapse">
+                                                        <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                        <td width="360" height="15" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                        <td width="60" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                        <td width="160" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                        <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-collapse:collapse">
+                                        <td width="640" height="60" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <img src="https://ci3.googleusercontent.com/proxy/1Bf6wZ9D4_9D4XK1CLH23Tl727SqwAxtj2mvfZ0Hn5vWCT0Zbtb6SSOSb-KYRCmmIUG5ITKLhN1d9n-rzhxQZKE=s0-d-e1-ft#https://createsend4.com/t/d-o-ftrgl-l/o.gif" width="1" height="1" border="0" alt="" style="min-height:1px!important;width:1px!important;border-width:0!important;margin-top:0!important;margin-bottom:0!important;margin-right:0!important;margin-left:0!important;padding-top:0!important;padding-bottom:0!important;padding-right:0!important;padding-left:0!important;outline-style:none;text-decoration:none;display:block">
+        </div>`
     } else {
-        message = `
-        <div style="width:100%!important;background-color:#ececec;margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;font-family:HelveticaNeue,sans-serif">
-        <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#ececec">
-            <tbody>
-                <tr style="border-collapse:collapse">
-                    <td align="center" bgcolor="#ececec" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
-                        <table width="640" cellpadding="0" cellspacing="0" border="0" style="margin-top:0;margin-bottom:0;margin-right:10px;margin-left:10px">
-                            <tbody>
-                                <tr style="border-collapse:collapse">
-                                    <td width="640" height="20" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                </tr>
+        message = `<div style="width:100%!important;background-color:#ececec;margin-top:0;margin-bottom:0;margin-right:0;margin-left:0;padding-top:0;padding-bottom:0;padding-right:0;padding-left:0;font-family:HelveticaNeue,sans-serif">
+            <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#ececec">
+                <tbody>
+                    <tr style="border-collapse:collapse">
+                        <td align="center" bgcolor="#ececec" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
+                            <table width="640" cellpadding="0" cellspacing="0" border="0" style="margin-top:0;margin-bottom:0;margin-right:10px;margin-left:10px">
+                                <tbody>
+                                    <tr style="border-collapse:collapse">
+                                        <td width="640" height="20" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                    </tr>
 
-                              <tr style="border-collapse:collapse;">
-                                    <td width="640" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
-                                        <table width="640" cellpadding="0" cellspacing="0" border="0" bgcolor="#8A0020" style="border-radius:6px 6px 0px 0px;background-color:#8A0020;color:#464646">
-                                            <tbody>
-                                                <tr style="border-collapse:collapse">
-                                                    <td width="15" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                    <td width="350" valign="middle" align="left" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
+                                <tr style="border-collapse:collapse;">
+                                        <td width="640" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
+                                            <table width="640" cellpadding="0" cellspacing="0" border="0" bgcolor="#8A0020" style="border-radius:6px 6px 0px 0px;background-color:#8A0020;color:#464646">
+                                                <tbody>
+                                                    <tr style="border-collapse:collapse">
+                                                        <td width="15" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                        <td width="350" valign="middle" align="left" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
 
-                                                    </td>
-                                                    <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                    <td width="255" valign="middle" align="right" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
-                                                        <table width="255" cellpadding="0" cellspacing="0" border="0">
-                                                            <tbody>
-                                                                <tr style="border-collapse:collapse">
-                                                                    <td width="255" height="5" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                        <table width="255" cellpadding="0" cellspacing="0" border="0">
-                                                            <tbody>
-                                                                <tr style="border-collapse:collapse">
-                                                                    <td width="255" height="5" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                    <td width="15" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
+                                                        </td>
+                                                        <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                        <td width="255" valign="middle" align="right" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
+                                                            <table width="255" cellpadding="0" cellspacing="0" border="0">
+                                                                <tbody>
+                                                                    <tr style="border-collapse:collapse">
+                                                                        <td width="255" height="5" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                            <table width="255" cellpadding="0" cellspacing="0" border="0">
+                                                                <tbody>
+                                                                    <tr style="border-collapse:collapse">
+                                                                        <td width="255" height="5" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                        <td width="15" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
 
-                                    </td>
-                                </tr>
-                                <tr style="border-collapse:collapse">
+                                        </td>
+                                    </tr>
+                                    <tr style="border-collapse:collapse">
 
-                                    <td width="640" align="center" bgcolor="#8A0020" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
+                                        <td width="640" align="center" bgcolor="#8A0020" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
 
-                                        <div align="center" style="text-align:center", "display: flex", "justify-content: center", "align-items: center">
-                                            <a href="http://openweblife.createsend4.com/t/d-i-ftrgl-l-d/" target="_blank" style="font-size:36px; color:#fff; text-decoration:none; font-family:'calibri', arial, verdana; display:block; margin:20px 0 0;">
-                <img style="max-width: 50px;" src="https://res.cloudinary.com/dwcxehcui/image/upload/v1630769727/logo/UST-Seal-College-of-Information-Computing-Sciences_ghtsuq.png" alt="logo">ThomCare 
-                                            </a><br />
-                                        </div>
+                                            <div align="center" style="text-align:center", "display: flex", "justify-content: center", "align-items: center">
+                                                <a href="http://openweblife.createsend4.com/t/d-i-ftrgl-l-d/" target="_blank" style="font-size:36px; color:#fff; text-decoration:none; font-family:'calibri', arial, verdana; display:block; margin:20px 0 0;">
+                    <img style="max-width: 50px;" src="https://res.cloudinary.com/dwcxehcui/image/upload/v1630769727/logo/UST-Seal-College-of-Information-Computing-Sciences_ghtsuq.png" alt="logo">ThomCare 
+                                                </a><br />
+                                            </div>
 
 
-                                    </td>
-                                </tr>
+                                        </td>
+                                    </tr>
 
-                                <tr style="border-collapse:collapse">
-                                    <td width="640" height="30" bgcolor="#ffffff" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                </tr>
-                                <tr style="border-collapse:collapse">
-                                    <td width="640" bgcolor="#ffffff" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
-                                        <table align="left" width="640" cellpadding="0" cellspacing="0" border="0">
-                                            <tbody>
-                                                <tr style="border-collapse:collapse">
-                                                    <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                    <td width="580" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
+                                    <tr style="border-collapse:collapse">
+                                        <td width="640" height="30" bgcolor="#ffffff" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                    </tr>
+                                    <tr style="border-collapse:collapse">
+                                        <td width="640" bgcolor="#ffffff" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
+                                            <table align="left" width="640" cellpadding="0" cellspacing="0" border="0">
+                                                <tbody>
+                                                    <tr style="border-collapse:collapse">
+                                                        <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                        <td width="580" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
 
-                                                        <table width="580" cellpadding="0" cellspacing="0" border="0">
-                                                            <tbody>
-                                                                <tr style="border-collapse:collapse">
-                                                                    <td width="580" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
-                                                                        <p align="left" style="font-size:18px;line-height:24px;color:#8a0020;font-weight:bold;margin-top:0px;margin-bottom:18px;font-family:HelveticaNeue,sans-serif">Update on Request</p>
-                                                                        <div align="left" style="font-size:13px;line-height:18px;color:#464646;margin-top:0px;margin-bottom:18px;font-family:HelveticaNeue,sans-serif">
-                                                                            <table border="0" cellpadding="5" cellspacing="0" width="100%" style="font-size:13px;font-family:'calibri',arial,verdana;line-height:1.4">
-                                                                                <tbody>
-                                                                                    <tr style="border-collapse:collapse">
-                                                                                        <td width="100%" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
-                                                                                          Request with tracking number: <strong>${rqst.trackingNumber}</strong> <br><br>Current Status: <strong>${request.requestStatus}<strong> & a file has been attached to your request. Please view your request on the website to download the file attachment.</strong> 
-                                                                                        </td>
-                                                                                    </tr>
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                                <tr style="border-collapse:collapse">
-                                                                    <td width="580" height="10" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
+                                                            <table width="580" cellpadding="0" cellspacing="0" border="0">
+                                                                <tbody>
+                                                                    <tr style="border-collapse:collapse">
+                                                                        <td width="580" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
+                                                                            <p align="left" style="font-size:18px;line-height:24px;color:#8a0020;font-weight:bold;margin-top:0px;margin-bottom:18px;font-family:HelveticaNeue,sans-serif">Update on Request</p>
+                                                                            <div align="left" style="font-size:13px;line-height:18px;color:#464646;margin-top:0px;margin-bottom:18px;font-family:HelveticaNeue,sans-serif">
+                                                                                <table border="0" cellpadding="5" cellspacing="0" width="100%" style="font-size:13px;font-family:'calibri',arial,verdana;line-height:1.4">
+                                                                                    <tbody>
+                                                                                        <tr style="border-collapse:collapse">
+                                                                                            <td width="100%" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
+                                                                                            Request with tracking number: <strong>${rqst.trackingNumber}</strong> <br><br>Current Status: <strong>${request.requestStatus}<strong> & a file has been attached to your request. Please view your request on the website to download the file attachment.</strong> 
+                                                                                            </td>
+                                                                                        </tr>
+                                                                                    </tbody>
+                                                                                </table>
+                                                                            </div>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr style="border-collapse:collapse">
+                                                                        <td width="580" height="10" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                                    </tr>
+                                                                </tbody>
+                                                            </table>
 
-                                                    </td>
-                                                    <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr style="border-collapse:collapse">
-                                    <td width="640" height="15" bgcolor="#ffffff" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                </tr>
+                                                        </td>
+                                                        <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-collapse:collapse">
+                                        <td width="640" height="15" bgcolor="#ffffff" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                    </tr>
 
-                                <tr style="border-collapse:collapse">
-                                    <td width="640" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
-                                        <table width="640" cellpadding="0" cellspacing="0" border="0" bgcolor="#043948" style="border-radius:0px 0px 6px 6px;background-color:#043948;color:#e2e2e2">
-                                            <tbody>
-                                                <tr style="border-collapse:collapse">
-                                                    <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                    <td width="360" height="10" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                    <td width="60" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                    <td width="160" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                    <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                </tr>
-                                                <tr style="border-collapse:collapse">
-                                                    <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                    <td width="360" height="15" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                    <td width="60" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                    <td width="160" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                    <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </td>
-                                </tr>
-                                <tr style="border-collapse:collapse">
-                                    <td width="640" height="60" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-        <img src="https://ci3.googleusercontent.com/proxy/1Bf6wZ9D4_9D4XK1CLH23Tl727SqwAxtj2mvfZ0Hn5vWCT0Zbtb6SSOSb-KYRCmmIUG5ITKLhN1d9n-rzhxQZKE=s0-d-e1-ft#https://createsend4.com/t/d-o-ftrgl-l/o.gif" width="1" height="1" border="0" alt="" style="min-height:1px!important;width:1px!important;border-width:0!important;margin-top:0!important;margin-bottom:0!important;margin-right:0!important;margin-left:0!important;padding-top:0!important;padding-bottom:0!important;padding-right:0!important;padding-left:0!important;outline-style:none;text-decoration:none;display:block">
-    </div>
-    `
+                                    <tr style="border-collapse:collapse">
+                                        <td width="640" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse">
+                                            <table width="640" cellpadding="0" cellspacing="0" border="0" bgcolor="#043948" style="border-radius:0px 0px 6px 6px;background-color:#043948;color:#e2e2e2">
+                                                <tbody>
+                                                    <tr style="border-collapse:collapse">
+                                                        <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                        <td width="360" height="10" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                        <td width="60" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                        <td width="160" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                        <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                    </tr>
+                                                    <tr style="border-collapse:collapse">
+                                                        <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                        <td width="360" height="15" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                        <td width="60" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                        <td width="160" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                        <td width="30" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                    <tr style="border-collapse:collapse">
+                                        <td width="640" height="60" style="font-family:HelveticaNeue,sans-serif;border-collapse:collapse"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <img src="https://ci3.googleusercontent.com/proxy/1Bf6wZ9D4_9D4XK1CLH23Tl727SqwAxtj2mvfZ0Hn5vWCT0Zbtb6SSOSb-KYRCmmIUG5ITKLhN1d9n-rzhxQZKE=s0-d-e1-ft#https://createsend4.com/t/d-o-ftrgl-l/o.gif" width="1" height="1" border="0" alt="" style="min-height:1px!important;width:1px!important;border-width:0!important;margin-top:0!important;margin-bottom:0!important;margin-right:0!important;margin-left:0!important;padding-top:0!important;padding-bottom:0!important;padding-right:0!important;padding-left:0!important;outline-style:none;text-decoration:none;display:block">
+        </div>`
     }
 
     try {
@@ -602,16 +600,20 @@ exports.deleteRequest = catchAsyncErrors(async (req, res, next) => {
     const remarksData = request.remarks
     const remarksLength = remarksData.length
     const returningFilesArray = []
+
     for (let i = 0; i < remarksLength; i++) {
         if (remarksData[i].returningFiles == null || remarksData[i].returningFiles == '') {
         } else {
             returningFilesArray.push(remarksData[i].returningFiles)
         }
     }
+
     const rfaArrayLength = []
+
     for (let i = 0; i < returningFilesArray.length; i++) {
         rfaArrayLength.push(returningFilesArray[i].length)
     }
+
     for (let i = 0; i < returningFilesArray.length; i++) {
         let fileReturned = returningFilesArray[i]
         for (let y = 0; y < rfaArrayLength.length; y++) {
@@ -624,19 +626,21 @@ exports.deleteRequest = catchAsyncErrors(async (req, res, next) => {
     for (let i = 0; i < fileLength; i++) {
         arrayIds.push(filesAttached[i].filename)
     }
+
     if (arrayIds.length != 0) {
         for (let x = 0; x < arrayIds.length; x++) {
             cloudinary.uploader.destroy(arrayIds[x],
                 { resource_type: 'raw' })
         }
     }
+
     const auditLog = await Audit.create({
         userAudit: req.user.email,
         requestAudit: req.params.requestId,
         actionAudit: `User account: (${req.user.email}) has deleted the request with the tracking number: (${request.trackingNumber})`
     })
-    await request.remove()
 
+    await request.remove()
 
     res.status(200).json({
         success: true,
@@ -677,6 +681,7 @@ exports.trashRequest = catchAsyncErrors(async (req, res, next) => {
     const auditRequest = await Request.findById(req.params.requestId);
 
     let actionAudit, statusMessage
+
     if (req.body.isTrash == true) {
         actionAudit = `User account: (${req.user.email}) has moved the request to trash with the tracking number: (${auditRequest.trackingNumber})`
         statusMessage = "Request has been moved to trash"

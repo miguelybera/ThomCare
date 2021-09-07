@@ -1,4 +1,5 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
+
 const formSchema = new mongoose.Schema({
     formName: {
         type: String,
@@ -8,20 +9,21 @@ const formSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
-    formFiles:{
+    formFiles: {
         type: Array,
         required: [true, 'Please attach form/s']
     },
-    createdBy:{
+    createdBy: {
         type: String,
         required: true
     },
-    updatedBy:{
+    updatedBy: {
         type: String,
         required: true
     }
 
-},{
+}, {
     timestamps: true
 })
-module.exports = mongoose.model('Form', formSchema);
+
+module.exports = mongoose.model('Form', formSchema)

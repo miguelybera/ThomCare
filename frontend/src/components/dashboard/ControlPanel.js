@@ -18,7 +18,7 @@ const ControlPanel = () => {
 
     const { loading } = useSelector(state => state.auth)
     const dispatch = useDispatch()
-    
+
     useEffect(() => {
         dispatch({
             type: INSIDE_DASHBOARD_TRUE

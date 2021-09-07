@@ -21,8 +21,8 @@ import {
 
 //create conversation
 export const createConversationReducer = (state = {}, action) => {
-    switch(action.type){
-        
+    switch (action.type) {
+
         case CREATE_CONVERSATION_REQUEST:
             return {
                 loading: true
@@ -54,15 +54,15 @@ export const createConversationReducer = (state = {}, action) => {
                 ...state,
                 error: null
             }
-        
+
         default:
             return state
     }
 }
 
 //get conversations
-export const conversationReducer = (state = { conversations: [] }, action ) => {
-    switch(action.type) {
+export const conversationReducer = (state = { conversations: [] }, action) => {
+    switch (action.type) {
         case ALL_CONVERSATIONS_REQUEST:
             return {
                 ...state,
@@ -94,8 +94,8 @@ export const conversationReducer = (state = { conversations: [] }, action ) => {
 }
 
 //get existing conversations
-export const bothConversationReducer = (state = { conversation: {} }, action ) => {
-    switch(action.type) {
+export const bothConversationReducer = (state = { conversation: {} }, action) => {
+    switch (action.type) {
         case BOTH_CONVERSATIONS_REQUEST:
             return {
                 ...state,
@@ -128,8 +128,8 @@ export const bothConversationReducer = (state = { conversation: {} }, action ) =
 
 //send message
 export const sendMessageReducer = (state = {}, action) => {
-    switch(action.type){
-        
+    switch (action.type) {
+
         case SEND_MESSAGE_REQUEST:
             return {
                 loading: true
@@ -161,27 +161,27 @@ export const sendMessageReducer = (state = {}, action) => {
                 ...state,
                 error: null
             }
-        
+
         default:
             return state
     }
 }
 
 //get all messages
-export const messageReducer = ( state = { messages: [] }, action) => {
-    switch(action.type){
+export const messageReducer = (state = { messages: [] }, action) => {
+    switch (action.type) {
         case ALL_MESSAGES_REQUEST:
             return {
                 loading: true,
                 messages: []
             }
-        
+
         case ALL_MESSAGES_SUCCESS:
             return {
                 loading: false,
                 messages: action.payload.messages
             }
-        
+
         case ALL_MESSAGES_FAIL:
             return {
                 loading: false,

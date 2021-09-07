@@ -1,13 +1,11 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose')
 const announcementTypeSchema = new mongoose.Schema({
-    
-    announcementCategory:{
+    announcementCategory: {
         type: String,
         required: [true, 'Please enter announcement type'],
         trim: true,
         unique: true
     }
-
 })
 
-module.exports = mongoose.model('AnnouncementType', announcementTypeSchema);
+module.exports = mongoose.model('AnnouncementType', announcementTypeSchema)

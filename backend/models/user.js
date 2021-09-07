@@ -1,31 +1,31 @@
-const mongoose = require('mongoose');
-const validator = require('validator');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const crypto = require('crypto');
+const mongoose = require('mongoose')
+const validator = require('validator')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const crypto = require('crypto')
 
 const userSchema = new mongoose.Schema({
-    firstName:{
+    firstName: {
         type: String,
         required: [true, 'Please enter your first name']
     },
-    middleName:{
+    middleName: {
         type: String,
         default: ''
     },
-    lastName:{
+    lastName: {
         type: String,
         required: [true, 'Please enter your last name']
     },
-    studentNumber:{
+    studentNumber: {
         type: String,
         required: [true, 'Please enter your student number']
     },
-    course:{
+    course: {
         type: String,
         required: [true, 'Please enter request course'],
-        enum:{
-            values:[
+        enum: {
+            values: [
                 'Computer Science',
                 'Information Technology',
                 'Information Systems',
@@ -33,7 +33,7 @@ const userSchema = new mongoose.Schema({
             ]
         }
     },
-    email:{
+    email: {
         type: String,
         required: [true, 'Please enter your email'],
         unique: true,
@@ -47,8 +47,8 @@ const userSchema = new mongoose.Schema({
     role: {
         type: String,
         required: [true, 'Please enter role'],
-        enum:{
-            values:[
+        enum: {
+            values: [
                 'Student',
                 'CICS Staff',
                 'IT Dept Chair',
@@ -65,27 +65,27 @@ const userSchema = new mongoose.Schema({
 })
 
 // Encrypting password before saving
-userSchema.pre('save', async function (next){
-    if(!this.isModified('password')){
+userSchema.pre('save', async function (next) {
+    if (!this.isModified('password')) {
         next()
     }
     this.password = await bcrypt.hash(this.password, 10)
 })
 
 //Compare user password
-userSchema.methods.comparePassword = async function(enteredPassword){
+userSchema.methods.comparePassword = async function (enteredPassword) {
     return await bcrypt.compare(enteredPassword, this.password)
 }
 
 // Return JWT Token
-userSchema.methods.getJwtToken = function() {
-    return jwt.sign({ id: this._id}, process.env.JWT_SECRET, {
+userSchema.methods.getJwtToken = function () {
+    return jwt.sign({ id: this._id }, process.env.JWT_SECRET, {
         expiresIn: process.env.JWT_EXPIRES_TIME
     });
 }
 
 // Generate password reset token
-userSchema.methods.getResetPasswordToken = function (){
+userSchema.methods.getResetPasswordToken = function () {
     // Generate token
     const resetToken = crypto.randomBytes(20).toString('hex');
 
@@ -98,6 +98,4 @@ userSchema.methods.getResetPasswordToken = function (){
     return resetToken
 }
 
-
-
-module.exports = mongoose.model('User', userSchema);
+module.exports = mongoose.model('User', userSchema)
