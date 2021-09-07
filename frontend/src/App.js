@@ -53,8 +53,7 @@ import { loadUser } from './actions/userActions'
 
 
 function App() {
-
-    const { loading } = useSelector(state => state.auth)
+    const { isAuthenticated, loading } = useSelector(state => state.auth)
     const { dashboard } = useSelector(state => state.dashboard)
 
     useEffect(() => {
@@ -109,7 +108,7 @@ function App() {
                 </ScrollToTop>
             </div>
         </Router>
-    );
+    )
 }
 
 export default App;

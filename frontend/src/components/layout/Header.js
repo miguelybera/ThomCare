@@ -75,15 +75,12 @@ const Header = () => {
                             <Navbar.Brand style={{
                                 fontFamily: "AveriaBold",
                                 color: "#9c0b0b",
-
                                 paddingBottom: "0px",
                                 paddingLeft: "10px"
                             }}>
                                 <p style={{ fontFamily: "MuktaMalar", fontWeight: "bold", fontSize: "70%", paddingTop: "5px", marginBottom: "0px" }}>College of Information and Computing Sciences</p>
                                 <h1 style={{ fontSize: "150%", marginTop: "0px", paddingTop: "0px", borderTop: "10px" }}>ThomCare</h1></Navbar.Brand>
-
                             <Navbar.Toggle aria-controls="basic-navbar-nav" />
-
                             {user ? (
                                 <>
                                     <Navbar.Collapse id="responsive-navbar-nav"
