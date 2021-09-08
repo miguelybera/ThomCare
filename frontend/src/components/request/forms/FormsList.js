@@ -46,8 +46,8 @@ const FormsList = () => {
                             <td>-</td>
                             <td>CICS Petition Classes</td>
                             <td>Available</td>
-                            <td><Link to='/form-6a'>
-                                <Button variant="primary" href="/form-6a">
+                            <td><Link to='/petition-classes'>
+                                <Button variant="primary" href="/petition-classes">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
                                 </Button>
                             </Link></td>
