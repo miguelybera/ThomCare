@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useAlert } from 'react-alert'
+import { useDispatch } from 'react-redux'
 import styled from 'styled-components'
+import { logout } from '../../actions/userActions'
 
 const SidebarLink = styled(Link)`
     display:flex;
@@ -43,9 +46,17 @@ const SubMenu = ({ item }) => {
 
     const showSubnav = () => setSubnav(!subnav);
 
+    const dispatch = useDispatch()
+    const alert = useAlert()
+
+    const logoutHandler = () => {
+        dispatch(logout())
+        alert.success('Logged out successfully')
+    }
+
     return (
         <>
-            <SidebarLink to={item.path} onClick={item.subNav && showSubnav}>
+            <SidebarLink to={item.path} onClick={item.title === 'Log out' ? (() => logoutHandler()) : item.subNav && showSubnav}>
                 <div>
                     {item.icon}
                     <SidebarLabel>{item.title}</SidebarLabel>

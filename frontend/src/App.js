@@ -50,6 +50,7 @@ import UpdateRequest from './components/dashboard/UpdateRequest'
 import ListCICSRequests from './components/dashboard/ListCICSRequests'
 import ListDeptChairRequests from './components/dashboard/ListDeptChairRequests'
 import ListAllRequests from './components/dashboard/ListAllRequests'
+import ListStudentRequests from './components/dashboard/ListStudentRequests'
 import ListTrash from './components/dashboard/ListTrash'
 
 //route folder
@@ -112,6 +113,7 @@ function App() {
                             <ProtectedRoute path='/admin/request/:id' component={UpdateRequest} exact />
                             <ProtectedRoute path='/admin/deptchair/requests' component={ListDeptChairRequests} exact />
                             <ProtectedRoute path='/admin/all/requests' component={ListAllRequests} exact />
+                            <ProtectedRoute path='/me/requests' component={ListStudentRequests} exact />
                             <ProtectedRoute path='/admin/requests/trash' component={ListTrash} exact />
                         </div>
                     </Fragment>

@@ -19,7 +19,7 @@ export const SidebarData = [
         },
         {
             title: 'My Requests',
-            path: '/my-requests',
+            path: '/me/requests',
             icon: <i class="fa fa-list-ul" aria-hidden="true"></i>
         },
         {
@@ -34,7 +34,7 @@ export const SidebarData = [
         },
         {
             title: 'Log out',
-            path: '/logout',
+            path: '',
             icon: <i class="fa fa-sign-out" aria-hidden="true"></i>
         }
     ],
@@ -108,7 +108,7 @@ export const SidebarData = [
         },
         {
             title: 'Log out',
-            path: '/logout',
+            path: '',
             icon: <i class="fa fa-sign-out" aria-hidden="true"></i>
         }
     ],
@@ -210,7 +210,7 @@ export const SidebarData = [
         },
         {
             title: 'Log out',
-            path: '/logout',
+            path: '',
             icon: <i class="fa fa-sign-out" aria-hidden="true"></i>
         }
     ]

@@ -107,7 +107,7 @@ export const getRequests = (role, office, trash) => async (dispatch) => {
                 link = `/api/v1/deptChair/requests`
                 console.log('dept chair requests')
             }
-        } else {
+        } else if (role === 'CICS Staff') {
             if(office) {
                 link = `/api/v1/cicsAdmin/officeRequests`
                 console.log('admin office requests')
@@ -120,6 +120,8 @@ export const getRequests = (role, office, trash) => async (dispatch) => {
                     console.log('admin all requests')
                 }
             }
+        } else {
+            link = `/api/v1/myRequests`
         }
 
         const { data } = await axios.get(link)
