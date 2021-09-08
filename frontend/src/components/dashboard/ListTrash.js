@@ -2,8 +2,8 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { getRequests, clearErrors } from '../../actions/requestActions'
-//import { ARCHIVE_ANNOUNCEMENT_RESET, DELETE_ANNOUNCEMENT_RESET } from '../../constants/requestConstants'
+import { getRequests, deleteRequest, clearErrors } from '../../actions/requestActions'
+import { UPDATE_REQUEST_RESET, DELETE_REQUEST_RESET } from '../../constants/requestConstants'
 import Sidebar from '../layout/Sidebar'
 import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
@@ -22,16 +22,16 @@ const ListAllRequests = ({ history }) => {
 
     const { loading, requests, error } = useSelector(state => state.requests)
     const { user } = useSelector(state => state.auth)
-    //const { error: deleteError, isDeleted, isUpdated } = useSelector(state => state.announcement)
+    const { error: deleteError, isDeleted, isUpdated } = useSelector(state => state.request)
 
     const [show, setShow] = useState(false);
-    //const [deleteAnnouncementId, setDeleteAnnouncementId] = useState('');
+    const [deleteRequestId, setDeleteRequestId] = useState('');
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     useEffect(() => {
-        if(user.role === 'CICS Staff') {
+        if (user.role === 'CICS Staff') {
             dispatch(getRequests('CICS Staff', false, true))
         } else {
             dispatch(getRequests('Dept Chair', false, true))
@@ -41,28 +41,28 @@ const ListAllRequests = ({ history }) => {
             dispatch(clearErrors())
         }
 
-        // if (deleteError) {
-        //     alert.error(deleteError)
-        //     dispatch(clearErrors())
-        // }
+        if (deleteError) {
+            alert.error(deleteError)
+            dispatch(clearErrors())
+        }
 
-        // if (isDeleted) {
-        //     alert.success('Announcement has been deleted successfully.')
-        //     history.push('/admin/announcements')
+        if (isDeleted) {
+            alert.success('Request has been deleted successfully.')
+            history.push('/controlpanel')
 
-        //     dispatch({
-        //         type: DELETE_ANNOUNCEMENT_RESET
-        //     })
-        // }
+            dispatch({
+                type: DELETE_REQUEST_RESET
+            })
+        }
 
-        // if (isUpdated) {
-        //     alert.success('Announcement has been archived successfully.')
-        //     history.push('/admin/announcements')
+        if (isUpdated) {
+            alert.success('Request has been restored successfully.')
+            history.push('/controlpanel')
 
-        //     dispatch({
-        //         type: ARCHIVE_ANNOUNCEMENT_RESET
-        //     })
-        // }
+            dispatch({
+                type: UPDATE_REQUEST_RESET
+            })
+        }
 
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
@@ -80,6 +80,10 @@ const ListAllRequests = ({ history }) => {
 
     const upperCase = (text) => text.toUpperCase()
 
+    const deleteRequestHandler = (id) => {
+        dispatch(deleteRequest(id))
+        handleClose()
+    }
 
     const setRequests = () => {
         const data = {
@@ -142,6 +146,7 @@ const ListAllRequests = ({ history }) => {
                     </Button>
                     <Button variant="danger" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
                         handleShow()
+                        setDeleteRequestId(request._id)
                     }}>
                         <i class="fa fa-trash" aria-hidden="true" />
                     </Button>
@@ -172,7 +177,7 @@ const ListAllRequests = ({ history }) => {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary">Yes, I'm sure</Button>
+                    <Button variant="primary" onClick={() => deleteRequestHandler(deleteRequestId)}>Yes, I'm sure</Button>
                 </Modal.Footer>
             </Modal>
             <Sidebar />
