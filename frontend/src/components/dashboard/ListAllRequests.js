@@ -2,8 +2,8 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { getRequests, clearErrors } from '../../actions/requestActions'
-//import { ARCHIVE_ANNOUNCEMENT_RESET, DELETE_ANNOUNCEMENT_RESET } from '../../constants/requestConstants'
+import { getRequests, updateRequest, clearErrors } from '../../actions/requestActions'
+import { UPDATE_REQUEST_RESET } from '../../constants/requestConstants'
 import Sidebar from '../layout/Sidebar'
 import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
@@ -21,10 +21,10 @@ const ListAllRequests = ({ history }) => {
     const dispatch = useDispatch()
 
     const { loading, requests, error } = useSelector(state => state.requests)
-    //const { error: deleteError, isDeleted, isUpdated } = useSelector(state => state.announcement)
+    const { error: updateError, isUpdated } = useSelector(state => state.request)
 
     const [show, setShow] = useState(false);
-    //const [deleteAnnouncementId, setDeleteAnnouncementId] = useState('');
+    const [updateRequestId, setUpdateRequestId] = useState('');
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -37,28 +37,14 @@ const ListAllRequests = ({ history }) => {
             dispatch(clearErrors())
         }
 
-        // if (deleteError) {
-        //     alert.error(deleteError)
-        //     dispatch(clearErrors())
-        // }
+        if (isUpdated) {
+            alert.success('Request has been archived successfully.')
+            history.push('/admin/all/requests')
 
-        // if (isDeleted) {
-        //     alert.success('Announcement has been deleted successfully.')
-        //     history.push('/admin/announcements')
-
-        //     dispatch({
-        //         type: DELETE_ANNOUNCEMENT_RESET
-        //     })
-        // }
-
-        // if (isUpdated) {
-        //     alert.success('Announcement has been archived successfully.')
-        //     history.push('/admin/announcements')
-
-        //     dispatch({
-        //         type: ARCHIVE_ANNOUNCEMENT_RESET
-        //     })
-        // }
+            dispatch({
+                type: UPDATE_REQUEST_RESET
+            })
+        }
 
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
@@ -69,13 +55,12 @@ const ListAllRequests = ({ history }) => {
         return dateFormat(date, "mmm d, yyyy h:MMtt")
     }
 
-    // const deleteAnnouncementHandler = (id) => {
-    //     dispatch(deleteAnnouncement(id))
-    //     handleClose()
-    // }
+    const updateRequestHandler = (id) => {
+        dispatch(updateRequest(id, {isTrash: true}))
+        handleClose()
+    }
 
     const upperCase = (text) => text.toUpperCase()
-
 
     const setRequests = () => {
         const data = {
@@ -132,12 +117,12 @@ const ListAllRequests = ({ history }) => {
                         </Button>
                     </Link>
                     <Button variant="warning" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
-                        console.log('here')
                     }}>
                         <i class="fa fa-archive" aria-hidden="true" />
                     </Button>
                     <Button variant="danger" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
                         handleShow()
+                        setUpdateRequestId(request._id)
                     }}>
                         <i class="fa fa-trash" aria-hidden="true" />
                     </Button>
@@ -159,7 +144,7 @@ const ListAllRequests = ({ history }) => {
                 keyboard={false}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Are you sure you want to delete this announcement?</Modal.Title>
+                    <Modal.Title>Are you sure you want to delete this request?</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     This change cannot be undone.
@@ -168,7 +153,7 @@ const ListAllRequests = ({ history }) => {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary">Yes, I'm sure</Button>
+                    <Button variant="primary" onClick={() => updateRequestHandler(updateRequestId)}>Yes, I'm sure</Button>
                 </Modal.Footer>
             </Modal>
             <Sidebar />
