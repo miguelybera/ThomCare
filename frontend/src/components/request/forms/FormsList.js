@@ -8,86 +8,96 @@ const FormsList = () => {
         <Fragment>
             <Container>
                 <div id="rectangle" >
-
                     <h3>FORMS</h3>
-
                 </div>
             </Container>
-
-
-
-            <Container fluid style={{paddingTop: '38px'}}>
-                
-
-                <Table striped bordered hover size="sm" style={{paddingTop: '100px', marginTop: '50px', justifyContent: 'center'}}>
+            <Container fluid style={{ paddingTop: '38px' }}>
+                <Table striped bordered hover size="sm" style={{ paddingTop: '100px', marginTop: '50px', justifyContent: 'center' }}>
                     <thead>
-                        <tr style={{textAlign: 'center'}}>
+                        <tr style={{ textAlign: 'center' }}>
                             <th>Document Code</th>
                             <th>Document Name</th>
                             <th>Availability</th>
-                            <th></th>
-
+                            <th>Actions</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody style={{ textAlign: 'center' }}>
                         <tr>
                             <td>Form 6A</td>
                             <td>Adding/Dropping of course</td>
                             <td>Available</td>
-                            <td><Button variant="primary" href="/form-6a">Fill up</Button></td>
-
+                            <td><Link to='/form-6a'>
+                                <Button variant="primary" href="/form-6a">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+                                </Button>
+                            </Link></td>
                         </tr>
                         <tr>
-                            <td>Form 6A</td>
+                            <td>Form 6B</td>
                             <td>Cross Enrollment (within CICS)</td>
                             <td>Available</td>
-                            <td><Button variant="primary" href="/form-6b">Fill up</Button></td>
-
+                            <td><Link to='/form-6b'>
+                                <Button variant="primary" href="/form-6a">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+                                </Button>
+                            </Link></td>
                         </tr>
                         <tr>
-                            <td></td>
+                            <td>-</td>
                             <td>CICS Petition Classes</td>
                             <td>Available</td>
-                            <td><Button variant="primary" href="/form-6a">Fill up</Button></td>
-
+                            <td><Link to='/form-6a'>
+                                <Button variant="primary" href="/form-6a">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+                                </Button>
+                            </Link></td>
                         </tr>
                         <tr>
-                            <td></td>
+                            <td>-</td>
                             <td>Crediting of Course/s</td>
                             <td>Available</td>
-                            <td><Button variant="primary" href="/form-6a">Fill up</Button></td>
-
+                            <td><Link to='/form-6a'>
+                                <Button variant="primary" href="/form-6a">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+                                </Button>
+                            </Link></td>
                         </tr>
                         <tr>
-                            <td></td>
-                            <td>Request for overload</td>
+                            <td>-</td>
+                            <td>Request for Overload</td>
                             <td>Available</td>
-                            <td><Button variant="primary" href="/form-6a">Fill up</Button></td>
-
+                            <td><Link to='/form-6a'>
+                                <Button variant="primary" href="/form-6a">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+                                </Button>
+                            </Link></td>
                         </tr>
                         <tr>
-                            <td></td>
-                            <td>Request for late enrollment</td>
+                            <td>-</td>
+                            <td>Request for Late Enrollment</td>
                             <td>Available</td>
-                            <td><Button variant="primary" href="/form-6a">Fill up</Button></td>
-
+                            <td><Link to='/form-6a'>
+                                <Button variant="primary" href="/form-6a">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+                                </Button>
+                            </Link></td>
                         </tr>
                         <tr>
-                            <td></td>
-                            <td>Request for manual enrollment</td>
+                            <td>-</td>
+                            <td>Request for Manual Enrollment</td>
                             <td>Available</td>
-                            <td><Button variant="primary" href="/form-6a">Fill up</Button></td>
-
+                            <td><Link to='/form-6a'>
+                                <Button variant="primary" href="/form-6a">
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+                                </Button>
+                            </Link></td>
                         </tr>
                     </tbody>
-
                 </Table>
-
-
             </Container>
             <Container className="space"></Container>
         </Fragment>
     )
-}   
+}
 
 export default FormsList
