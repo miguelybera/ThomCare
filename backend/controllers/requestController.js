@@ -149,7 +149,6 @@ exports.getAllRequestsDeptChair = catchAsyncErrors(async (req, res, next) => {
     })
 })
 
-
 // Get all requests cics staff side => /api/v1/cicsAdmin/requests
 exports.getAllRequestsStaff = catchAsyncErrors(async (req, res, next) => {
     const apiFeatures = new APIFeatures(Request.find().sort({ createdAt: -1 }), req.query).searchRequests().filter()
@@ -682,10 +681,10 @@ exports.trashRequest = catchAsyncErrors(async (req, res, next) => {
 
     let actionAudit, statusMessage
 
-    if (req.body.isTrash == true) {
+    if (req.body.isTrash === true) {
         actionAudit = `User account: (${req.user.email}) has moved the request to trash with the tracking number: (${auditRequest.trackingNumber})`
         statusMessage = "Request has been moved to trash"
-    } else if (req.body.isTrash == false) {
+    } else if (req.body.isTrash === false) {
         actionAudit = `User account: (${req.user.email}) has restored the request from trash with the tracking number: (${auditRequest.trackingNumber})`
         statusMessage = "Request has been restored from trash"
     }
@@ -700,7 +699,6 @@ exports.trashRequest = catchAsyncErrors(async (req, res, next) => {
         success: true,
         message: statusMessage
     })
-
 })
 
 // View trashed requests => /api/v1/deptChair/trash

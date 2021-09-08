@@ -107,6 +107,7 @@ export const getRequestsReducer = (state = { requests: [] }, action) => {
         case GET_REQUESTS_FAIL:
             return {
                 ...state,
+                loading: false,
                 error: action.payload
             }
 

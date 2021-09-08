@@ -54,7 +54,7 @@ const UpdateRequest = ({ history, match }) => {
         formData.set('fileRequirements', fileRequirements)
         formData.set('remarks', remarks)
 
-        dispatch(updateRequest(requestId, formData))
+        dispatch(updateRequest(requestId, formData, false))
     }
 
     useEffect(() => {

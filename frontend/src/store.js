@@ -41,6 +41,10 @@ import {
     dashboardReducer
 } from './reducers/dashboardReducers'
 
+import {
+    auditLogsReducer
+} from './reducers/auditReducers'
+
 const reducer = combineReducers({
     auth: authReducer, //get currently logged in, for login and logout
     users: getUsersReducer, //get all users
@@ -67,8 +71,9 @@ const reducer = combineReducers({
     request: requestReducer,
 
     courses: getCoursesReducer, //get single request details
+    audits: auditLogsReducer, //get all audits
 
-    dashboard: dashboardReducer //check if inside dashboard
+    dashboard: dashboardReducer //check if inside dashboard,
 })
 
 
