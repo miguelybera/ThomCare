@@ -33,11 +33,7 @@ const FormsList = () => {
                             </Link></td>
                         </tr>
                         <tr>
-<<<<<<< Updated upstream
                             <td>Form 6B</td>
-=======
-                            <td>Form 6A/6B</td>
->>>>>>> Stashed changes
                             <td>Cross Enrollment (within CICS)</td>
                             <td>Available</td>
                             <td><Link to='/form-6b'>
