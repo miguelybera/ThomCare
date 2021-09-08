@@ -284,7 +284,7 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
 
     const auditLog = await Audit.create({
         userAudit: req.user.email,
-        requestAudit: req.params.requestId,
+        requestAudit: request.trackingNumber,
         actionAudit: `User account: (${req.user.email}) has updated the status of request with the tracking number: (${request.trackingNumber}) \n Current Status: ${req.body.requestStatus}`
     })
 
@@ -636,7 +636,7 @@ exports.deleteRequest = catchAsyncErrors(async (req, res, next) => {
 
     const auditLog = await Audit.create({
         userAudit: req.user.email,
-        requestAudit: req.params.requestId,
+        requestAudit: request.trackingNumber,
         actionAudit: `User account: (${req.user.email}) has deleted the request with the tracking number: (${request.trackingNumber})`
     })
 
@@ -692,7 +692,7 @@ exports.trashRequest = catchAsyncErrors(async (req, res, next) => {
 
     const auditLog = await Audit.create({
         userAudit: req.user.email,
-        requestAudit: req.params.requestId,
+        requestAudit: auditRequest.trackingNumber,
         actionAudit
     })
 
