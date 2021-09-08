@@ -165,7 +165,7 @@ export const getRequestDetails = (requestId) => async (dispatch) => {
 }
 
 //update request
-export const updateRequest = (requestId, request) => async (dispatch) => {
+export const updateRequest = (requestId, request, isTrash) => async (dispatch) => {
     try {
         dispatch({
             type: UPDATE_REQUEST_REQUEST
@@ -177,12 +177,18 @@ export const updateRequest = (requestId, request) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.put(`/api/v1/admin/updateRequest/${requestId}`, request, config)
+        let link = ``
 
+        if(isTrash) {
+            link = `/api/v1/admin/trashRequest/${requestId}`
+        } else {
+            link = `/api/v1/admin/updateRequest/${requestId}`
+        }
+        const { data } = await axios.put(link, request, config)
 
         dispatch({
             type: UPDATE_REQUEST_SUCCESS,
-            payload: data
+            payload: data.success
         })
     }
     catch (error) {
@@ -201,9 +207,7 @@ export const deleteRequest = (requestId) => async (dispatch) => {
             type: DELETE_REQUEST_REQUEST
         })
 
-
         const { data } = await axios.put(`/api/v1/admin/trashRequest/${requestId}`)
-
 
         dispatch({
             type: DELETE_REQUEST_SUCCESS,

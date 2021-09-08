@@ -37,6 +37,11 @@ const ListAllRequests = ({ history }) => {
             dispatch(clearErrors())
         }
 
+        if (updateError) {
+            alert.error(updateError)
+            dispatch(clearErrors())
+        }
+        
         if (isUpdated) {
             alert.success('Request has been archived successfully.')
             history.push('/admin/all/requests')
@@ -49,14 +54,17 @@ const ListAllRequests = ({ history }) => {
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, alert, error])
+    }, [dispatch, history, alert, error, updateError])
 
     function changeDateFormat(date) {
         return dateFormat(date, "mmm d, yyyy h:MMtt")
     }
 
     const updateRequestHandler = (id) => {
-        dispatch(updateRequest(id, {isTrash: true}))
+        const formData = new FormData()
+        formData.set('isTrash', true)
+
+        dispatch(updateRequest(id, formData, true))
         handleClose()
     }
 

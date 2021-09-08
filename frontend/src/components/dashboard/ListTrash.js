@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { getRequests, deleteRequest, clearErrors } from '../../actions/requestActions'
+import { getRequests, updateRequest, deleteRequest, clearErrors } from '../../actions/requestActions'
 import { UPDATE_REQUEST_RESET, DELETE_REQUEST_RESET } from '../../constants/requestConstants'
 import Sidebar from '../layout/Sidebar'
 import MetaData from '../layout/MetaData'
@@ -25,7 +25,7 @@ const ListAllRequests = ({ history }) => {
     const { error: deleteError, isDeleted, isUpdated } = useSelector(state => state.request)
 
     const [show, setShow] = useState(false);
-    const [deleteRequestId, setDeleteRequestId] = useState('');
+    const [requestId, setRequestId] = useState('');
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -67,16 +67,11 @@ const ListAllRequests = ({ history }) => {
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, alert, error])
+    }, [dispatch, alert, error, isUpdated, isDeleted, deleteError])
 
     function changeDateFormat(date) {
         return dateFormat(date, "mmm d, yyyy h:MMtt")
     }
-
-    // const deleteAnnouncementHandler = (id) => {
-    //     dispatch(deleteAnnouncement(id))
-    //     handleClose()
-    // }
 
     const upperCase = (text) => text.toUpperCase()
 
@@ -85,6 +80,14 @@ const ListAllRequests = ({ history }) => {
         handleClose()
     }
 
+    const updateRequestHandler = (id) => {
+
+        const formData = new FormData()
+        formData.set('isTrash', false)
+
+        dispatch(updateRequest(id, formData, true))
+        handleClose()
+    }
     const setRequests = () => {
         const data = {
             columns: [
@@ -140,13 +143,13 @@ const ListAllRequests = ({ history }) => {
                         </Button>
                     </Link>
                     <Button variant="warning" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
-                        console.log('here')
+                        updateRequestHandler(request._id)
                     }}>
-                        <i class="fa fa-archive" aria-hidden="true" />
+                        <i class="fa fa-restore" aria-hidden="true" />
                     </Button>
                     <Button variant="danger" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
                         handleShow()
-                        setDeleteRequestId(request._id)
+                        setRequestId(request._id)
                     }}>
                         <i class="fa fa-trash" aria-hidden="true" />
                     </Button>
@@ -177,7 +180,7 @@ const ListAllRequests = ({ history }) => {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={() => deleteRequestHandler(deleteRequestId)}>Yes, I'm sure</Button>
+                    <Button variant="primary" onClick={() => deleteRequestHandler(requestId)}>Yes, I'm sure</Button>
                 </Modal.Footer>
             </Modal>
             <Sidebar />
