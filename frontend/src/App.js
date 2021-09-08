@@ -33,6 +33,7 @@ import SubmitRequest from './components/request/SubmitRequest'
 
 //forms
 import Form6A from './components/request/forms/Form6A'
+import Form6B from './components/request/forms/Form6B'
 
 //dashboard folder
 import ControlPanel from './components/dashboard/ControlPanel'
@@ -85,6 +86,7 @@ function App() {
 
                             {/**needs to be logged in */}
                             <ProtectedRoute path='/form-6a' component={Form6A} exact />
+                            <ProtectedRoute path='/form-6b' component={Form6B} exact />
                             <ProtectedRoute path='/submitrequest' component={SubmitRequest} exact />
 
                             <ProtectedRoute path='/messenger' component={Messenger} exact />
