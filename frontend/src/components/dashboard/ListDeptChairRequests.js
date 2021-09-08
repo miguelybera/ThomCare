@@ -15,7 +15,7 @@ import {
 
 var dateFormat = require('dateformat')
 
-const ListCICSRequests = ({ history }) => {
+const ListDeptChairRequests = ({ history }) => {
 
     const alert = useAlert()
     const dispatch = useDispatch()
@@ -30,7 +30,7 @@ const ListCICSRequests = ({ history }) => {
     const handleShow = () => setShow(true);
 
     useEffect(() => {
-        dispatch(getRequests('CICS Staff', true, false))
+        dispatch(getRequests('Dept Chair', false, false))
 
         if (error) {
             alert.error(error)
@@ -196,4 +196,4 @@ const ListCICSRequests = ({ history }) => {
     )
 }
 
-export default ListCICSRequests
+export default ListDeptChairRequests

@@ -96,7 +96,7 @@ export const SidebarData = [
                 },
                 {
                     title: 'Trash',
-                    path: '/requests/trash',
+                    path: '/admin/requests/trash',
                     icon: <i class="fa fa-trash" aria-hidden="true"></i>
                 }
             ]
@@ -165,7 +165,7 @@ export const SidebarData = [
             subNav: [
                 {
                     title: 'All Requests',
-                    path: '/admin/cics/requests',
+                    path: '/admin/all/requests',
                     icon: <i class="fa fa-list-ul" aria-hidden="true"></i>
                 },
                 {
@@ -175,7 +175,7 @@ export const SidebarData = [
                 },
                 {
                     title: 'Trash',
-                    path: '/requests/trash',
+                    path: '/admin/requests/trash',
                     icon: <i class="fa fa-trash" aria-hidden="true"></i>
                 }
             ]

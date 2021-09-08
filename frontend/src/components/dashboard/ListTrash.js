@@ -15,12 +15,13 @@ import {
 
 var dateFormat = require('dateformat')
 
-const ListCICSRequests = ({ history }) => {
+const ListAllRequests = ({ history }) => {
 
     const alert = useAlert()
     const dispatch = useDispatch()
 
     const { loading, requests, error } = useSelector(state => state.requests)
+    const { user } = useSelector(state => state.auth)
     //const { error: deleteError, isDeleted, isUpdated } = useSelector(state => state.announcement)
 
     const [show, setShow] = useState(false);
@@ -30,8 +31,11 @@ const ListCICSRequests = ({ history }) => {
     const handleShow = () => setShow(true);
 
     useEffect(() => {
-        dispatch(getRequests('CICS Staff', true, false))
-
+        if(user.role === 'CICS Staff') {
+            dispatch(getRequests('CICS Staff', false, true))
+        } else {
+            dispatch(getRequests('Dept Chair', false, true))
+        }
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
@@ -176,7 +180,7 @@ const ListCICSRequests = ({ history }) => {
                 <div className="">
                     <Container className="space_inside"></Container>
                     <Container>
-                        <h3>Requests</h3>
+                        <h3>Trash</h3>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5
@@ -196,4 +200,4 @@ const ListCICSRequests = ({ history }) => {
     )
 }
 
-export default ListCICSRequests
+export default ListAllRequests

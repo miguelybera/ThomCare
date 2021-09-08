@@ -90,8 +90,8 @@ export const submitRequest = (request) => async (dispatch) => {
     }
 }
 
-//get all requests
-export const getCICSRequests = () => async (dispatch) => {
+//get CICS requests
+export const getRequests = (role, office, trash) => async (dispatch) => {
     try {
         dispatch({
             type: GET_REQUESTS_REQUEST
@@ -99,8 +99,30 @@ export const getCICSRequests = () => async (dispatch) => {
 
         let link = ``
 
-        const { data } = await axios.get(`/api/v1/cicsAdmin/requests`)
+        if(role === 'Dept Chair' && !office) {
+            if(trash) {
+                link = `/api/v1/deptChair/trash`  
+                console.log('dept chair trash')
+            } else {
+                link = `/api/v1/deptChair/requests`
+                console.log('dept chair requests')
+            }
+        } else {
+            if(office) {
+                link = `/api/v1/cicsAdmin/officeRequests`
+                console.log('admin office requests')
+            } else {
+                if(trash) {
+                    link = `/api/v1/cicsAdmin/trash`
+                    console.log('admin trash')
+                } else {
+                    link = `/api/v1/cicsAdmin/requests`
+                    console.log('admin all requests')
+                }
+            }
+        }
 
+        const { data } = await axios.get(link)
 
         dispatch({
             type: GET_REQUESTS_SUCCESS,

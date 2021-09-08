@@ -46,8 +46,11 @@ import ListArchivedAnnouncements from './components/dashboard/ListArchivedAnnoun
 import ListUsers from './components/dashboard/ListUsers'
 import UpdateUser from './components/dashboard/UpdateUser'
 import RegisterAdmin from './components/dashboard/RegisterAdmin'
-import ListCICSRequests from './components/dashboard/ListCICSRequests'
 import UpdateRequest from './components/dashboard/UpdateRequest'
+import ListCICSRequests from './components/dashboard/ListCICSRequests'
+import ListDeptChairRequests from './components/dashboard/ListDeptChairRequests'
+import ListAllRequests from './components/dashboard/ListAllRequests'
+import ListTrash from './components/dashboard/ListTrash'
 
 //route folder
 import ProtectedRoute from './components/route/ProtectedRoute'
@@ -106,7 +109,10 @@ function App() {
                             <ProtectedRoute path='/admin/user/:id' component={UpdateUser} exact />
                             <ProtectedRoute path='/admin/register' component={RegisterAdmin} exact />
                             <ProtectedRoute path='/admin/cics/requests' component={ListCICSRequests} exact />
-                            <ProtectedRoute path='/admin/cics/request/:id' component={UpdateRequest} exact />
+                            <ProtectedRoute path='/admin/request/:id' component={UpdateRequest} exact />
+                            <ProtectedRoute path='/admin/deptchair/requests' component={ListDeptChairRequests} exact />
+                            <ProtectedRoute path='/admin/all/requests' component={ListAllRequests} exact />
+                            <ProtectedRoute path='/admin/requests/trash' component={ListTrash} exact />
                         </div>
                     </Fragment>
                     {/*})}*/}

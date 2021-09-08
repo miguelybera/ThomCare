@@ -91,15 +91,15 @@ const Sidebar = () => {
                                     })}
                                 </Fragment>
                             ) : (
-                                user.role === 'Dept Chair' ? (
+                                user.role === 'CICS Staff' ? (
                                     <Fragment>
-                                        {SidebarData[1].map((item, index) => {
+                                        {SidebarData[2].map((item, index) => {
                                             return <SubMenu item={item} key={index} />;
                                         })}
                                     </Fragment>
                                 ) : (
                                     <Fragment>
-                                        {SidebarData[2].map((item, index) => {
+                                        {SidebarData[1].map((item, index) => {
                                             return <SubMenu item={item} key={index} />;
                                         })}
                                     </Fragment>
