@@ -9,7 +9,7 @@ const FormsList = () => {
             <Container>
                 <div id="rectangle" >
 
-                    <h3>REQUEST FORMS</h3>
+                    <h3>FORMS</h3>
 
                 </div>
             </Container>
@@ -88,6 +88,6 @@ const FormsList = () => {
             <Container className="space"></Container>
         </Fragment>
     )
-}
+}   
 
 export default FormsList
