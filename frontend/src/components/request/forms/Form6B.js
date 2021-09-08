@@ -125,6 +125,7 @@ function Form6B() {
                 <Container classname="align-me" fluid style={{ paddingBottom: '100px' }}>
                     <Card style={{ backgroundColor: '#9c0b0b' }}>  {/*, width: '100rem' */}
                         <Card.Body>
+                            <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold', textAlign: 'center' }}>CROSS ENROLLMENT FORM</Card.Title>
                             <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold' }}>Student Information</Card.Title>
                             <Form style={{ color: 'white' }} onSubmit={submitHandler} >
                                 <Row className="mb-3">

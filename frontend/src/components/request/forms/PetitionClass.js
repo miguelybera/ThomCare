@@ -125,6 +125,8 @@ function PetitionClass() {
                 <Container classname="align-me" fluid style={{ paddingBottom: '100px' }}>
                     <Card style={{ backgroundColor: '#9c0b0b' }}>  {/*, width: '100rem' */}
                         <Card.Body>
+                            <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold', textAlign: 'center' }}>PETITION CLASS FORM</Card.Title>
+
                             <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold' }}>Student Information</Card.Title>
                             <Form style={{ color: 'white' }} onSubmit={submitHandler} >
                                 <Row className="mb-3">
@@ -171,7 +173,7 @@ function PetitionClass() {
                                     <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
                                         <Form.Label>Current Section</Form.Label>
                                         <Form.Control type='text' value='di ko alam iset hehe' readOnly />
-                                    </Form.Group> 
+                                    </Form.Group>
 
                                     <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
                                         <Form.Label>Implementing Curriculum</Form.Label>
@@ -180,7 +182,7 @@ function PetitionClass() {
 
                                     <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
                                         <Form.Label>Petition for:</Form.Label>
-                                        <Form.Control type='text' value='di ko alam iset basta course code'/>
+                                        <Form.Control type='text' value='di ko alam iset basta course code' />
                                     </Form.Group>
                                 </Row>
 

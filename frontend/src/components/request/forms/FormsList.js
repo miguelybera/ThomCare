@@ -37,7 +37,7 @@ const FormsList = () => {
                             <td>Cross Enrollment (within CICS)</td>
                             <td>Available</td>
                             <td><Link to='/form-6b'>
-                                <Button variant="primary" href="/form-6a">
+                                <Button variant="primary" href="/form-6b">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
                                 </Button>
                             </Link></td>
