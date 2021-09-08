@@ -13,7 +13,7 @@ import {
 } from '../../../constants/dashboardConstants'
 
 
-function Form6A() {
+function Form6B() {
     const alert = useAlert()
     const dispatch = useDispatch()
 
@@ -293,4 +293,4 @@ function Form6A() {
     )
 }
 
-export default Form6A
+export default Form6B
