@@ -34,6 +34,8 @@ import SubmitRequest from './components/request/SubmitRequest'
 //forms
 import Form6A from './components/request/forms/Form6A'
 import Form6B from './components/request/forms/Form6B'
+import FormsList from './components/request/forms/FormsList'
+
 
 //dashboard folder
 import ControlPanel from './components/dashboard/ControlPanel'
@@ -85,6 +87,7 @@ function App() {
                             <Route path='/track/:id' component={TrackingPageProgress} exact />
 
                             {/**needs to be logged in */}
+                            <ProtectedRoute path='/forms-list' component={FormsList} exact />
                             <ProtectedRoute path='/form-6a' component={Form6A} exact />
                             <ProtectedRoute path='/form-6b' component={Form6B} exact />
                             <ProtectedRoute path='/submitrequest' component={SubmitRequest} exact />

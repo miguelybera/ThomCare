@@ -99,7 +99,7 @@ const Header = () => {
                                                 backgroundColor: "#294b32"
                                             }}>
                                             <Nav.Link><Link to='/' activeStyle>Announcements</Link></Nav.Link>
-                                            <Nav.Link><Link to='/form-6a' activeStyle>Generate Form</Link></Nav.Link>
+                                            <Nav.Link><Link to='/forms-list' activeStyle>Generate Form</Link></Nav.Link>
                                             <Nav.Link><Link to='/submitrequest' activeStyle>Submit Request</Link></Nav.Link>
                                             <Nav.Link><Link to='/track' activeStyle>Track my Request</Link></Nav.Link>
                                         </Nav>
