@@ -8,9 +8,10 @@ import * as AiIcons from 'react-icons/ai'
 import { SidebarData } from './SidebarData'
 import SubMenu from './SubMenu'
 import { IconContext } from 'react-icons/lib'
+import { Container, Row } from 'react-bootstrap'
 
 const Nav = styled.div`
-    background: #640606;
+    background: #9C0B0A;
     height: 50px;
     right:0px;
     left:0px;
@@ -22,32 +23,60 @@ const Nav = styled.div`
     margin: 0px;
     position: absolute;
     top: 0px;
-    z-index:10;`;
-
-const NavBottom = styled.div``;
+    z-index:10;
+    border-bottom: 7px #750908 solid;
+`;
 
 const NavIcon = styled(Link)`
-    margin-left: 2rem;
+    margin-left: 1rem;
     font-size: 2rem;
     height 80px;
     display: flex;
     justify-contents: flex-start;
     align-items: center;
-    color: white;
+    color:  white;
+    padding-top: 0px;
+    margin-top: 0px;
+    margin-right: 0px;
 
     &:hover {
         color: yellow;
-    }
+    }`;
+
+const NavTitle = styled.div`
+    width: 100%;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    left: 0px;
+    right: 0px;
+    
+    z-index: -2;`;
+    
+
+const NavUser = styled.div`
+    width: 100%;
+    padding-right: 20px; 
+    justify-content: flex-end;
+    color: white;
+    display: flex;
+    padding-top: 14px;
+    font-weight: bold;
+    margin-right: 2rem;
+    height: 50px;
+    position: absolute;
+   
+    z-index: -1;
 `;
 
 const SidebarNav = styled.nav`
-    background: #9C0B0A;
-    width: 250px;
+    background: #750908;
+    width: 240px;
+    top: 50px;
     height: 100vh;
     display: flex;
     justify-content: center;
     position: fixed;
-    top: 0; 
     left: ${({ sidebar }) => (sidebar ? '0' : '-100%')};
     transition: 130ms;
     z-index:1000;
@@ -75,8 +104,38 @@ const Sidebar = () => {
                     <NavIcon to="#">
                         <FaIcons.FaBars onClick={showSidebar} />
                     </NavIcon>
-                    <p style={{ paddingTop: "13px", fontSize: "20px", color: "white", paddingLeft: "20px", paddingRight: "22px" }}>ThomCare</p>
-                </Nav>
+                    <NavTitle>
+                    
+                        <img
+                        src="/images/CICS_SEAL.png"
+                        width="26"
+                        height="29"
+                        paddingRight="0px"
+                            
+                        alt="CICS Seal"/>
+                        
+                        <p style={{  
+                            
+                            color: "white", 
+                            fontFamily: "AveriaBold", 
+                            paddingTop: "17px",
+                            
+                            fontSize: "20px",
+                            textAlign: "center",
+                            
+                            paddingLeft: "6px",
+                            }}>ThomCare Control Panel</p>
+                            </NavTitle> 
+               <NavUser >         
+
+              <p >{`${user.role}`} : </p>
+              <p style={{color: "#9C0B0A"}}>_ </p>
+              <p > {`${user.firstName}`}</p>
+              
+              </NavUser>
+              
+              
+                   </Nav>
 
                 <SidebarNav sidebar={sidebar} >
                     <SidebarWrap>
@@ -109,7 +168,7 @@ const Sidebar = () => {
 
                     </SidebarWrap>
                 </SidebarNav>
-                <NavBottom></NavBottom>
+                
             </IconContext.Provider>
         </>
     );

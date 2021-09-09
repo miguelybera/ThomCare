@@ -8,6 +8,7 @@ import './App.css';
 import Header from './components/layout/Header'
 import ScrollToTop from './components/layout/ScrollToTop'
 import Loader from './components/layout/Loader'
+import Footer from './components/layout/Footer'
 
 //user folder
 import Login from './components/user/Login'
@@ -124,6 +125,9 @@ function App() {
                             <ProtectedRoute path='/admin/me/requests' component={ListMyRequests} exact />
                             <ProtectedRoute path='/audit' component={ListAuditLog} exact />
                         </div>
+                        {
+                            dashboard ? <></> : <Footer />
+                        }
                     </Fragment>
                     {/*})}*/}
                 </ScrollToTop>

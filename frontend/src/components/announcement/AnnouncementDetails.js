@@ -17,6 +17,7 @@ const cardStyle = {
     width: '75%',
     align: 'center',
     border: 'solid 0.69px gray'
+    
 }
 
 const AnnouncementDetails = ({ history, match }) => {

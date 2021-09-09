@@ -84,9 +84,9 @@ const SubmitRequest = ({ history }) => {
             <MetaData title={'Submit Request'} />
             <Container fluid>
                 <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
-                    <Card style={{ width: '30rem', align: 'center' }}>
+                    <Card style={{ backgroundColor: "#F5F5F5",width: '30rem', align: 'center',borderTop: '7px solid #9c0b0b', marginBottom: '50px'}}>
                         <Card.Body>
-                            <Card.Title style={{ margin: '50px 0 20px 0' }}>Submit Request</Card.Title>
+                            <Card.Title style={{ margin: '20px 0 20px 0', fontWeight:"bold" }}>Submit Request</Card.Title>
                             <Form onSubmit={submitHandler}>
                                 <Form.Group className="mb-3" controlId="formGridCourse">
                                     <FloatingLabel
@@ -148,11 +148,11 @@ const SubmitRequest = ({ history }) => {
                                     <Form.Label>Attachments</Form.Label>
                                     <Form.Control type="file" name="fileRequirements" onChange={onChange} />
                                 </Form.Group>
-                                <Button
+                                <center><Button
                                     type='submit'
                                     style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
                                     disabled={loading ? true : false}
-                                >Submit</Button>
+                                >Submit</Button></center>
                             </Form>
                         </Card.Body>
                     </Card>

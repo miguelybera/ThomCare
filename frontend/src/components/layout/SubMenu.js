@@ -10,8 +10,8 @@ const SidebarLink = styled(Link)`
     color: #e1e9fc;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
-    height: 80px;
+    padding: 0 20px 0 20px;
+    height: 50px;
     text-decoration: none;
     font-size: 15px;
 
@@ -26,7 +26,7 @@ const SidebarLabel = styled.span`
 
 const DropdownLink = styled(Link)`
     background: #640606;
-    height: 60px;
+    height: 50px;
     padding-left: 3rem;
     display: flex;
     align-items: center;

@@ -11,7 +11,7 @@ const Styles = styled.div`
     background-color: white;
 
   a, .navbar-nav .nav-link {
-    color: white;
+    color: black;
     
     text-decoration: none;
     font-weight: bold;
@@ -22,7 +22,7 @@ const Styles = styled.div`
     
     &:active{ 
       background-color:#294b32;
-      color: black;
+      color: white;
     }
 
     &:hover{
@@ -33,14 +33,16 @@ const Styles = styled.div`
       
     }
    
-  }`;
+  }
+`;
 
 const Drop = styled.div` 
   a, .navbar-nav .nav-link  {
   border-radius: 105px;
   color: black;
   
-}`;
+}
+`;
 
 const Header = () => {
     const dispatch = useDispatch()
@@ -62,9 +64,9 @@ const Header = () => {
     return (
         <>
             <Fragment>
-                <Styles fixed="top">
-                    <Navbar expand="lg" >
-                        <Container>
+                <Styles >
+                    <Navbar style={{backgroundColor: 'white', borderBottom: "7px solid #9c0b0b" }} expand="lg" >
+                        <Container >
                             <img
                                 src="/images/CICS_SEAL.png"
                                 width="50"
@@ -90,18 +92,12 @@ const Header = () => {
                                             fontWeight: "bold",
                                         }}>
                                         <Nav variant="pills"
-                                            style={{
-                                                marginLeft: "auto",
-                                                paddingRight: "15px",
-                                                paddingLeft: "15px",
-                                                border: "2px solid #294b32",
-                                                borderRadius: "105px",
-                                                backgroundColor: "#294b32"
-                                            }}>
-                                            <Nav.Link><Link to='/' activeStyle>Announcements</Link></Nav.Link>
-                                            <Nav.Link><Link to='/forms-list' activeStyle>Generate Form</Link></Nav.Link>
-                                            <Nav.Link><Link to='/submitrequest' activeStyle>Submit Request</Link></Nav.Link>
-                                            <Nav.Link><Link to='/track' activeStyle>Track my Request</Link></Nav.Link>
+                                        className="image"
+                                            >
+                                            <Nav.Link className="image"><Link to='/' activeStyle>Announcements</Link></Nav.Link>
+                                            <Nav.Link className="image"><Link to='/forms-list' activeStyle>Generate Form</Link></Nav.Link>
+                                            <Nav.Link className="image"><Link to='/submitrequest' activeStyle>Submit Request</Link></Nav.Link>
+                                            <Nav.Link className="image"><Link to='/track' activeStyle>Track my Request</Link></Nav.Link>
                                         </Nav>
 
                                         <Drop>
@@ -123,19 +119,18 @@ const Header = () => {
                                             fontWeight: "bold",
                                         }}>
                                         <Nav variant="pills"
+                                        className="image"
                                             style={{
                                                 marginLeft: "auto",
                                                 paddingRight: "15px",
-                                                paddingLeft: "15px",
-                                                border: "2px solid #294b32",
-                                                borderRadius: "105px",
-                                                backgroundColor: "#294b32"
+                                                paddingLeft: "15px"
+                                                
                                             }}>
-                                            <Nav.Link><Link to='/' activeStyle>Announcements</Link></Nav.Link>
-                                            <Nav.Link><Link to='/forms-list' activeStyle>Generate Form</Link></Nav.Link>
-                                            <Nav.Link><Link to='/submitrequest' activeStyle>Submit Request</Link></Nav.Link>
-                                            <Nav.Link><Link to='/track' activeStyle>Track my Request</Link></Nav.Link>
-                                            <Nav.Link><Link to='/login' activeStyle>Login</Link></Nav.Link>
+                                            <Nav.Link className="image"><Link to='/' activeStyle>Announcements</Link></Nav.Link>
+                                            <Nav.Link className="image"><Link to='/forms-list' activeStyle>Generate Form</Link></Nav.Link>
+                                            <Nav.Link className="image"><Link to='/submitrequest' activeStyle>Submit Request</Link></Nav.Link>
+                                            <Nav.Link className="image"><Link to='/track' activeStyle>Track my Request</Link></Nav.Link>
+                                            <Nav.Link className="image"><Link to='/login' activeStyle>Login</Link></Nav.Link>
                                         </Nav>
                                     </Navbar.Collapse>
                                 </>

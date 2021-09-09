@@ -71,17 +71,20 @@ const Profile = () => {
 
     return (
         <>
+        
             <MetaData title={'My Profile'} />
             {/** add here if user.role = 'something' display , else display student profile*/}
             <Sidebar />
             {loading ? (
                 <Loader />
             ) : (
+                
                 <Container fluid>
-                    <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
-                        <Card style={{ width: '40rem', align: 'center' }}>
-                            <Card.Body>
-                                <Card.Title style={{ margin: '50px 0 20px 0' }}>My Profile</Card.Title>
+                    <Container className="space_inside"></Container>
+                    <Row className='justify-content-md-center' style={{ marginTop: '30px' }}>
+                        <Card style={{ backgroundColor: "#F5F5F5",width: '40rem', align: 'center' }}>
+                            <Card.Body >
+                                <Card.Title style={{ margin: '20px 0 20px 0', fontWeight:"bold" }}>My Profile</Card.Title>
                                 <Form onSubmit={submitHandler}>
                                     <Form.Group as={Row} className="mb-3" controlId="formHorizontalName">
                                         <Form.Label column sm={2}>
@@ -136,7 +139,7 @@ const Profile = () => {
                                     </Form.Group>
                                     {
                                         editProfile ? (
-                                            <Button
+                                            <center><Button
                                                 type='submit'
                                                 style={{ marginTop: '10px', marginRight: '5px', borderRadius: '50px', width: '10rem' }}
                                                 disabled={editLoading ? true : false}>
@@ -147,11 +150,11 @@ const Profile = () => {
                                                 ) : (
                                                     <span>Save</span>
                                                 )}
-                                            </Button>
+                                            </Button></center>
                                         ) : (
                                             <Fragment>
-                                                <Button style={{ marginRight: '5px' }} onClick={() => setEditProfile(!editProfile)}>Edit Profile</Button>
-                                                <Link to='/password/update' style={{ textDecoration: 'none', color: 'white' }}><Button>Change Password</Button></Link>
+                                                <center><Button style={{ marginRight: '5px', marginRight: '20px' }} onClick={() => setEditProfile(!editProfile)}>Edit Profile</Button>
+                                                <Link to='/password/update' style={{ textDecoration: 'none', color: 'white' }}><Button>Change Password</Button></Link></center>
                                             </Fragment>
                                         )
                                     }
@@ -161,7 +164,9 @@ const Profile = () => {
                     </Row>
                 </Container>
             )}
+           
         </>
+        
     )
 }
 
