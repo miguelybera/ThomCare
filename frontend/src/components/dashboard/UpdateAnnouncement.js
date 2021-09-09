@@ -6,7 +6,7 @@ import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
 import Sidebar from '../layout/Sidebar'
 import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
-import { UPDATE_ANNOUNCEMENT_RESET } from '../../constants/announcementConstants'
+import { ANNOUNCEMENT_DETAILS_RESET, UPDATE_ANNOUNCEMENT_RESET } from '../../constants/announcementConstants'
 import { getAnnouncementDetails, updateAnnouncement, clearErrors } from '../../actions/announcementActions'
 import {
     INSIDE_DASHBOARD_TRUE
@@ -34,7 +34,6 @@ const UpdateAnnouncement = ({ history, match }) => {
     const [setExpiry, setSetExpiry] = useState()
     const [fileAttachments, setFileAttachments] = useState([])
     const [oldAttachments, setOldAttachments] = useState([])
-    const [preview, setPreview] = useState([])
     const [files, setFiles] = useState([])
     const [images, setImages] = useState([])
 
@@ -80,6 +79,7 @@ const UpdateAnnouncement = ({ history, match }) => {
             formData.set('archiveDate', changeDateFormat(archiveDate))
         }
         formData.set('setExpiry', setExpiry)
+
         fileAttachments.forEach(file => {
             formData.append('fileAttachments', file)
         })
@@ -117,33 +117,27 @@ const UpdateAnnouncement = ({ history, match }) => {
                 }
             })
         }
-    }, [announcement])
 
-    useEffect(() => {
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
-            dispatch({
-                type: UPDATE_ANNOUNCEMENT_RESET
-            })
         }
 
         if (updateError) {
             alert.error(updateError)
             dispatch(clearErrors())
-            dispatch({
-                type: UPDATE_ANNOUNCEMENT_RESET
-            })
         }
 
         if (isUpdated) {
-            window.history.back()
-            dispatch(getAnnouncementDetails(announcementId))
-            alert.success('Announcement updated successfully.')
-
             dispatch({
                 type: UPDATE_ANNOUNCEMENT_RESET
             })
+
+            dispatch({
+                type: ANNOUNCEMENT_DETAILS_RESET
+            })
+            window.history.back()
+            alert.success('Announcement updated successfully.')
         }
 
         dispatch({
@@ -240,22 +234,16 @@ const UpdateAnnouncement = ({ history, match }) => {
                                             <Form.Control type="file" name="file" onChange={onChange} multiple />
                                         </Form.Group>
                                         <Form.Group controlId="formFileMultiple" className="mb-3">
-                                            {files && (<p>Attachments:</p>)}
                                             <ul>
-                                                {fileAttachments && fileAttachments.map(file => (
-                                                    <li>{file.name}</li>
-                                                ))}
-                                            </ul>
-                                            {images && images.map(file => (
-                                                <Fragment>
-                                                    <img src={file.path} style={{ width: '150px' }}></img>
-                                                    <p>{file.originalname}</p>
-                                                </Fragment>
-                                            ))}
-                                            <ul>
-                                                {files && files.map(file => (
+                                                {oldAttachments && oldAttachments.map(file => (
                                                     <Fragment>
                                                         <li><a href={file.path}>{file.originalname} <i class="fa fa-download" aria-hidden="true"></i></a> Size: {file.size / 1000} Kb</li>
+                                                    </Fragment>
+                                                ))}
+
+                                                {fileAttachments && fileAttachments.map(file => (
+                                                    <Fragment>
+                                                        <li>{file.name} Size: {file.size / 1000} Kb</li>
                                                     </Fragment>
                                                 ))}
                                             </ul>

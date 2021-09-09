@@ -328,8 +328,7 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
         announcementType: newAnnouncementType,
         setExpiry: newSetExpiry,
         archiveDate: newArchiveDate,
-        fileAttachments: newAnnouncementFiles,
-        imageAttachments: newImageFiles
+        fileAttachments: newAnnouncementFiles
     }
 
     announcement = await Announcement.findByIdAndUpdate(req.params.id, newAnnouncementData, {

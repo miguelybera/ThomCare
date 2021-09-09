@@ -53,6 +53,12 @@ export const getRequestDetailsReducer = (state = { request: {} }, action) => {
             }
 
         case REQUEST_DETAILS_RESET:
+            return {
+                ...state,
+                success: null,
+                request: {}
+            }
+
         case SUBMIT_REQUEST_RESET:
             return {
                 ...state,

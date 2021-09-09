@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { getRequestDetails, updateRequest, clearErrors } from './../../actions/requestActions'
-import { REQUEST_DETAILS_RESET } from './../../constants/requestConstants'
+import { REQUEST_DETAILS_RESET, UPDATE_REQUEST_RESET } from './../../constants/requestConstants'
 import MetaData from './../layout/MetaData'
 import Loader from './../layout/Loader'
 import Sidebar from './../layout/Sidebar'
@@ -15,7 +15,6 @@ import {
 var dateFormat = require('dateformat')
 
 const UpdateRequest = ({ history, match }) => {
-
     const dispatch = useDispatch()
     const alert = useAlert()
 
@@ -53,7 +52,10 @@ const UpdateRequest = ({ history, match }) => {
         const formData = new FormData()
         formData.set('requestStatus', requestStatus)
         formData.set('remarksMessage', remarksMessage)
-        formData.set('returningFiles', returningFiles)
+
+        returningFiles.forEach(file => {
+            formData.append('returningFiles', file)
+        })
 
         dispatch(updateRequest(requestId, formData, false))
     }
@@ -82,17 +84,19 @@ const UpdateRequest = ({ history, match }) => {
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
-            history.push('/controlpanel')
+            window.history.back()
         }
-    }, [request, error, history, alert, dispatch])
-
-    useEffect(() => {
+        
         if (isUpdated) {
-            history.push(`/controlpanel`)
-            alert.success('Request updated successfully.')
+            dispatch({
+                type: UPDATE_REQUEST_RESET
+            })
+            
             dispatch({
                 type: REQUEST_DETAILS_RESET
             })
+            window.history.back()
+            alert.success('Request updated successfully.')
         }
 
         if (updateError) {
@@ -103,7 +107,7 @@ const UpdateRequest = ({ history, match }) => {
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [loading, dispatch, alert, isUpdated, updateError, history])
+    }, [dispatch, request, error, history, alert, isUpdated, updateError])
 
     const onChange = e => {
         const files = Array.from(e.target.files)

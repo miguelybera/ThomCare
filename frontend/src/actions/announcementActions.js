@@ -28,9 +28,9 @@ import {
 } from '../constants/announcementConstants'
 
 import {
-    GET_USER_DETAILS_REQUEST,
-    GET_USER_DETAILS_SUCCESS,
-    GET_USER_DETAILS_FAIL
+    USER_DETAILS_REQUEST,
+    USER_DETAILS_SUCCESS,
+    USER_DETAILS_FAIL
 } from '../constants/userConstants'
 
 //get all announcements
@@ -125,19 +125,19 @@ export const getAnnouncementDetails = (id) => async(dispatch) => {
 export const getUser = (id) => async(dispatch) => {
     try{
         dispatch({
-            type: GET_USER_DETAILS_REQUEST
+            type: USER_DETAILS_REQUEST
         })
         
         const { data } = await axios.get(`/api/v1/announcement/user/${id}`)
 
         dispatch({
-            type: GET_USER_DETAILS_SUCCESS,
+            type: USER_DETAILS_SUCCESS,
             payload: data.singleUser
         })
     }
     catch(error){
         dispatch({
-            type: GET_USER_DETAILS_FAIL,
+            type: USER_DETAILS_FAIL,
             payload: error.response.data.errMessage
             }
         )

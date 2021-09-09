@@ -5,6 +5,7 @@ import {
     ANNOUNCEMENT_DETAILS_REQUEST,
     ANNOUNCEMENT_DETAILS_SUCCESS,
     ANNOUNCEMENT_DETAILS_FAIL,
+    ANNOUNCEMENT_DETAILS_RESET,
     ALL_ADMIN_ANNOUNCEMENTS_REQUEST,
     ALL_ADMIN_ANNOUNCEMENTS_SUCCESS,
     ALL_ADMIN_ANNOUNCEMENTS_FAIL,
@@ -89,6 +90,13 @@ export const getAnnouncementDetailsReducer = (state = { announcement: {} }, acti
             return {
                 loading: false,
                 error: action.payload
+            }
+
+        case ANNOUNCEMENT_DETAILS_RESET:
+            return {
+                ...state,
+                success: null,
+                announcement: {}
             }
 
         case CLEAR_ERRORS:

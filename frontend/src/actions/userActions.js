@@ -20,9 +20,9 @@ import {
     ALL_USERS_REQUEST,
     ALL_USERS_SUCCESS,
     ALL_USERS_FAIL,
-    GET_USER_DETAILS_REQUEST,
-    GET_USER_DETAILS_SUCCESS,
-    GET_USER_DETAILS_FAIL,
+    USER_DETAILS_REQUEST,
+    USER_DETAILS_SUCCESS,
+    USER_DETAILS_FAIL,
     UPDATE_USER_REQUEST,
     UPDATE_USER_SUCCESS,
     UPDATE_USER_FAIL,
@@ -116,19 +116,19 @@ export const getUsers = () => async (dispatch) => {
 export const getUserDetails = (id) => async(dispatch) => {
     try{
         dispatch({
-            type: GET_USER_DETAILS_REQUEST
+            type: USER_DETAILS_REQUEST
         })
 
         const { data } = await axios.get(`/api/v1/admin/user/${id}`)
 
         dispatch({
-            type: GET_USER_DETAILS_SUCCESS,
+            type: USER_DETAILS_SUCCESS,
             payload: data.singleUser
         })
     }
     catch(error){
         dispatch({
-            type: GET_USER_DETAILS_FAIL,
+            type: USER_DETAILS_FAIL,
             payload: error.response.data.errMessage
             }
         )
