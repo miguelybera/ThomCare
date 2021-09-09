@@ -12,7 +12,7 @@ const FormsList = () => {
                 </div>
             </Container>
             <Container fluid style={{ paddingTop: '38px' }}>
-                <Table striped bordered hover size="sm" style={{ paddingTop: '100px', marginTop: '50px', justifyContent: 'center' }}>
+                <Table  bordered striped hover size="sm" style={{ paddingTop: '100px', marginTop: '50px', justifyContent: 'center' }}>
                     <thead>
                         <tr style={{ textAlign: 'center' }}>
                             <th>Document Code</th>

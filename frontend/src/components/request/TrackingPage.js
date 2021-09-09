@@ -59,14 +59,12 @@ const TrackingPage = ({ history }) => {
     return (
         <Fragment>
             <MetaData title={'Track my request'} />
-            <Container className="space"></Container>
+            
             <Container fluid >
                 <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
-                    <Card style={{ width: '30rem', align: 'center', backgroundColor: '#9c0b0b' }}>
+                    <Card style={{ backgroundColor: "#F5F5F5",width: '30rem', align: 'center',borderTop: '7px solid #9c0b0b', marginBottom: '50px'}}>
                         <Card.Body>
-                            <Card.Title style={{
-                                margin: '50px 0 20px 0', align: 'center', color: 'white', fontWeight: 'bold'
-                            }}>Track my Request</Card.Title>
+                            <Card.Title style={{ margin: '20px 0 20px 0', fontWeight:"bold" }}>Track my Request</Card.Title>
                             <FloatingLabel
                                 controlId="floatingInput"
                                 label="Tracking ID"

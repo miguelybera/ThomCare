@@ -154,7 +154,9 @@ const Announcements = () => {
         <Fragment>
             <MetaData title={`Announcements`} />
             <Container>
-                <Title>Announcements</Title>
+                <div id="rectangle" >
+                    <h3>ANNOUNCEMENTS</h3>
+                </div>
                 <Container className="space"></Container>
                 <Form >
                     <Row >
@@ -222,7 +224,7 @@ const Announcements = () => {
                         </Col>
                         <Col md="auto">
                             <Form.Group controlId="selectAnnouncementTypeforAnnouncement">
-                                <Form.Select aria-label="AnnouncementType" size="sm" style={{ border: "2px solid black", borderRadius: "20px", margin: '5px 0' }} name="annnouncementType" value={annnouncementType} onChange={onChange}>
+                                <Form.Select aria-label="AnnouncementType" size="sm" style={{ border: "2px solid black", borderRadius: "20px", margin: '5px 0'}} name="annnouncementType" value={annnouncementType} onChange={onChange}>
                                     <option value=''>Announcement Type</option>
                                     <option value="Memorandum">Memorandum</option>
                                     <option value="Enrollment">Enrollment</option>
@@ -256,9 +258,9 @@ const Announcements = () => {
                 <Row xs={1} md={2} className="g-4">
                     {announcements && (announcements.length !== 0) ? announcements.map(announcement => (
                         <Col>
-                            <Card style={{ borderRadius: '25px', background: '#f5f5f5', marginBottom: '20px' }}>
+                            <Card style={{ borderRadius: '25px', background: '#F5F5F5', marginBottom: '20px' }}>
                                 <Card.Body>
-                                    <Card.Header style={{ background: '#f5f5f5', fontWeight: '600' }}>{announcement.title}</Card.Header>
+                                    <Card.Header style={{ background: '#F5F5F5', fontWeight: '600' }}>{announcement.title}</Card.Header>
                                     <Card.Text style={{ marginLeft: '15px' }}>
                                         <span style={{ fontWeight: '500', color: 'gray', fontSize: '12px' }}>{changeDateFormat(announcement.createdAt)}</span>
                                         <br />

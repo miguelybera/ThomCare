@@ -40,6 +40,7 @@
 
 .App {
     font-family: MuktaMalar;
+    
 }
 
 .titles {
@@ -77,6 +78,23 @@ solid {
 
 .space_control_panel {
     padding-top: 70px;
+}
+
+.image {
+  
+  
+  border-radius: 105px;
+  margin-left: auto;
+  padding-right: 15px;
+  padding-left: 15px;
+}
+
+@media only screen and (max-width: 700px) {
+  .image {
+    border: 2px solid white;
+    
+   
+  }
 }
 
 /* announcements */

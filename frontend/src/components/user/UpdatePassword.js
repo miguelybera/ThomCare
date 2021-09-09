@@ -49,9 +49,9 @@ const UpdatePassword = ({ history }) => {
             <MetaData title={'Update Password'} />
             <Container fluid>
                 <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
-                    <Card style={{ width: '30rem', align: 'center' }}>
+                    <Card style={{ backgroundColor: "#F5F5F5",width: '30rem', align: 'center', borderTop: '10px solid #9c0b0b' , marginBottom: '50px'}}>
                         <Card.Body>
-                            <Card.Title style={{ margin: '50px 0 20px 0' }}>Update Password</Card.Title>
+                            <Card.Title style={{ margin: '20px 0 20px 0', fontWeight:"bold" }}>Update Password</Card.Title>
                             <Form onSubmit={submitHandler}>
                                 <FloatingLabel
                                     controlId="floatingInput"
@@ -92,7 +92,7 @@ const UpdatePassword = ({ history }) => {
                                         onChange={e => setConfirmPassword(e.target.value)}
                                     />
                                 </FloatingLabel>
-                                <Button
+                                <center><Button
                                     type='submit'
                                     style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
                                     disabled={loading ? true : false}>
@@ -103,7 +103,7 @@ const UpdatePassword = ({ history }) => {
                                     ) : (
                                         <span>Update Password</span>
                                     )}
-                                </Button>
+                                </Button></center>
                             </Form>
                         </Card.Body>
                     </Card>
