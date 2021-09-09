@@ -6,9 +6,13 @@ import { REQUEST_DETAILS_RESET } from './../../constants/requestConstants'
 import MetaData from './../layout/MetaData'
 import Loader from './../layout/Loader'
 import Sidebar from './../layout/Sidebar'
+import { Row, Container, Button, Col, Card, Form } from 'react-bootstrap'
+import { MDBDataTableV5 } from 'mdbreact'
 import {
     INSIDE_DASHBOARD_TRUE
 } from '../../constants/dashboardConstants'
+
+var dateFormat = require('dateformat')
 
 const UpdateRequest = ({ history, match }) => {
 
@@ -32,27 +36,24 @@ const UpdateRequest = ({ history, match }) => {
     const [requestorNotes, setRequestorNotes] = useState('')
     const [trackingNumber, setTrackingNumber] = useState('')
     const [fileRequirements, setFileRequirements] = useState([])
-    const [filePath, setFilePath] = useState('')
+    const [returningFiles, setReturningFiles] = useState([])
     const [remarks, setRemarks] = useState([])
+    const [remarksMessage, setRemarksMessage] = useState([])
+
+    const status = [
+        "Pending",
+        "Processing",
+        "Denied",
+        "Approved"
+    ]
 
     const submitHandler = e => {
         e.preventDefault()
 
-        const formData = new FormData
-        formData.set('requestorFirstName', requestorFirstName)
-        formData.set('requestorLastName', requestorLastName)
-        formData.set('requestorStudentNumber', requestorStudentNumber)
-        formData.set('requestorEmail', requestorEmail)
-        formData.set('requestorYearLevel', requestorYearLevel)
-        formData.set('requestorSection', requestorSection)
-        formData.set('requestorCourse', requestorCourse)
+        const formData = new FormData()
         formData.set('requestStatus', requestStatus)
-        formData.set('requestType', requestType)
-        formData.set('requestType', requestType)
-        formData.set('requestorNotes', requestorNotes)
-        formData.set('trackingNumber', trackingNumber)
-        formData.set('fileRequirements', fileRequirements)
-        formData.set('remarks', remarks)
+        formData.set('remarksMessage', remarksMessage)
+        formData.set('returningFiles', returningFiles)
 
         dispatch(updateRequest(requestId, formData, false))
     }
@@ -64,16 +65,15 @@ const UpdateRequest = ({ history, match }) => {
             setRequestorFirstName(request.requestorFirstName)
             setRequestorLastName(request.requestorLastName)
             setRequestorStudentNumber(request.requestorStudentNumber)
-            setRequestorEmail(request.requestorFirstName)
+            setRequestorEmail(request.requestorEmail)
             setRequestorYearLevel(request.requestorYearLevel)
             setRequestorSection(request.requestorSection)
             setRequestorCourse(request.requestorCourse)
             setRequestStatus(request.requestStatus)
-            setRequestType(request.requestorFirstName)
+            setRequestType(request.requestType)
             setRequestorNotes(request.requestorNotes)
             setTrackingNumber(request.trackingNumber)
             setFileRequirements(request.fileRequirements)
-            setFilePath(request.fileRequirements[0].path)
             setRemarks(request.remarks)
         } else {
             dispatch(getRequestDetails(requestId))
@@ -82,13 +82,13 @@ const UpdateRequest = ({ history, match }) => {
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
-            history.push('/admin/cics/requests')
+            history.push('/controlpanel')
         }
     }, [request, error, history, alert, dispatch])
 
     useEffect(() => {
         if (isUpdated) {
-            history.push(`/admin/cics/requests`)
+            history.push(`/controlpanel`)
             alert.success('Request updated successfully.')
             dispatch({
                 type: REQUEST_DETAILS_RESET
@@ -105,22 +105,193 @@ const UpdateRequest = ({ history, match }) => {
         })
     }, [loading, dispatch, alert, isUpdated, updateError, history])
 
+    const onChange = e => {
+        const files = Array.from(e.target.files)
+
+        setReturningFiles([])
+
+        files.forEach(file => {
+            setReturningFiles(oldArray => [...oldArray, file])
+        })
+    }
+
+    function changeDateFormat(date) {
+        return dateFormat(date, "mmm d, yyyy h:MMtt")
+    }
+
+    const upperCase = (text) => text.toUpperCase()
+
+    const setHistory = () => {
+        const data = {
+            columns: [
+                {
+                    label: 'Date',
+                    field: 'dateOfRemark',
+                    width: 100
+                },
+                {
+                    label: 'Status',
+                    field: 'updatedStatus',
+                    width: 70
+                },
+                {
+                    label: 'Remarks',
+                    field: 'remarksMessage',
+                    width: 300
+                },
+                {
+                    label: 'Files',
+                    field: 'returningFiles',
+                    width: 300
+                }
+            ],
+            rows: []
+        }
+        remarks && remarks.forEach(remark => {
+            data.rows.push({
+                dateOfRemark: changeDateFormat(remark.dateOfRemark),
+                updatedStatus: <Fragment>
+                    <p style={{
+                        color: remark.updatedStatus === 'Pending' ? 'blue' : (
+                            remark.updatedStatus === 'Processing' ? '#ffcc00' : (
+                                remark.updatedStatus === 'Denied' ? 'red' : 'green'
+                            )
+                        )
+                    }}>
+                        {upperCase(remark.updatedStatus)}
+                    </p>
+                </Fragment>,
+                remarksMessage: <Fragment>
+                    <p>{remark.remarksMessage}</p>
+                    <p style={{ fontSize: '12px', color: 'gray', paddingTop: '10px' }}>By: {upperCase(remark.userUpdated)}</p>
+                </Fragment>,
+                returningFiles: <Fragment>
+                    <ul>
+                        {remark.returningFiles && remark.returningFiles.map(file => (
+                            <li><a href={file.path}>{file.originalname}</a></li>
+                        ))}
+                    </ul>
+                </Fragment>
+
+            })
+        })
+        return data
+    }
 
     return (
         <Fragment>
             <MetaData title={`Update Request`} />
             <Sidebar />
             {requestLoading ? <Loader /> : (
-                <Fragment>
-                    <p>{requestorFirstName} {requestorLastName}</p>
-                    <p>{requestorStudentNumber} {requestorEmail}</p>
-                    <p>{requestorYearLevel} {requestorSection} {requestorCourse}</p>
-                    <p>{requestStatus}</p>
-                    <p>{requestType}</p>
-                    <p>{requestorNotes}</p>
-                    <p>{trackingNumber}</p>
-                    <a href={filePath}>Download PDF</a>
-                </Fragment>
+                <Container classname="align-me" fluid style={{ paddingBottom: '100px' }}>
+                    <Card style={{ backgroundColor: '#9c0b0b' }}>  {/*, width: '100rem' */}
+                        <Card.Body>
+                            <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold', textAlign: 'center' }}>ADD / DROP COURSE FORM</Card.Title>
+                            <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold' }}>Student Information</Card.Title>
+                            <Form style={{ color: 'white' }} onSubmit={submitHandler} >
+                                <Row className="mb-3">
+                                    <Form.Group as={Col} controlId="formGridEmail">
+                                        <Form.Label>First Name</Form.Label>
+                                        <Form.Control type="text" value={requestorFirstName} readOnly />
+                                    </Form.Group>
+
+                                    <Form.Group as={Col} controlId="formGridEmail">
+                                        <Form.Label>Last Name</Form.Label>
+                                        <Form.Control type="text" value={requestorLastName} readOnly />
+                                    </Form.Group>
+
+                                    <Form.Group as={Col} controlId="formGridEmail">
+                                        <Form.Label>Middle Initial</Form.Label>
+                                        <Form.Control type="text" placeholder="N/A" value='' readOnly />
+                                    </Form.Group>
+                                </Row>
+
+                                <Form.Group className="mb-3" controlId="formGridAddress1">
+                                    <Form.Label>Student Number</Form.Label>
+                                    <Form.Control value={requestorStudentNumber} readOnly />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3" controlId="formGridAddress2">
+                                    <Form.Label>Course/Program</Form.Label>
+                                    <Form.Control type="text" value={requestorCourse} readOnly />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3" controlId="formGridAddress2">
+                                    <Form.Label>Year Level / Section</Form.Label>
+                                    <Form.Control type="text" value={requestorYearLevel + ' ' + requestorSection} readOnly />
+                                </Form.Group>
+
+                                <Form.Group className="mb-3" controlId="formGridAddress2">
+                                    <Form.Label>Notes</Form.Label>
+                                    <Form.Control type="text" value={requestorNotes} readOnly />
+
+                                    {fileRequirements && (<p>Attachments:</p>)}
+                                    {fileRequirements && fileRequirements.map(file => (
+                                        <li><a href={file.path}>{file.originalname}</a></li>
+                                    ))}
+                                </Form.Group>
+
+                                <Row className="mb-3">
+                                    <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
+                                        <Form.Label>Email address</Form.Label>
+                                        <Form.Control type='email' value={requestorEmail} readOnly />
+                                    </Form.Group>
+                                    <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
+                                        <Form.Label>Status</Form.Label>
+                                        <Form.Select aria-label="Default select example" value={requestStatus} name="requestStatus" onChange={e => setRequestStatus(e.target.value)} required>
+                                            <option value=''></option>
+                                            {status.map(status => (
+                                                <option value={status}>{status}</option>
+                                            ))}
+                                        </Form.Select>
+                                    </Form.Group>
+                                    <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
+                                        <Form.Label>Request Type</Form.Label>
+                                        <Form.Control type='email' value={requestType} readOnly />
+                                    </Form.Group>
+                                    <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
+                                        <Form.Label>Tracking Number</Form.Label>
+                                        <Form.Control type='email' value={trackingNumber} readOnly />
+                                    </Form.Group>
+                                </Row>
+
+
+                                <Form.Group className="mb-3" controlId="formGridAddress2">
+                                    <Form.Label>Remarks message</Form.Label>
+                                    <Form.Control type="text"value={remarksMessage} name="remarksMessage" onChange={e => setRemarksMessage(e.target.value)} required/>
+                                </Form.Group>
+
+                                <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold' }}>Courses to Add / Drop</Card.Title>
+
+                                <MDBDataTableV5
+                                    data={setHistory()}
+                                    searchTop
+                                    pagingTop
+                                    scrollX
+                                    entriesOptions={[5, 20, 25]}
+                                    entries={5}
+                                />
+
+                                <Row className="mb-3">
+                                    <Form.Group as={Col}>
+                                        <Form.Label>Attachments</Form.Label>
+                                        <Form.Control type="file" name="fileRequirements" onChange={onChange} multiple />
+                                    </Form.Group>
+
+                                    <Form.Group controlId="formFileMultiple" className="mb-3">
+                                        {returningFiles && (<p>Attachments:</p>)}
+                                        <ul>
+                                            {returningFiles && returningFiles.map(file => (
+                                                <li>{file.name}</li>
+                                            ))}
+                                        </ul>
+                                    </Form.Group>
+                                </Row>
+                                <center><Button type='submit' style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }} disabled={loading ? true : false}>Update</Button></center>
+                            </Form>
+                        </Card.Body>
+                    </Card>
+                </Container>
             )}
         </Fragment>
     )

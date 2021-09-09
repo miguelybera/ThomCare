@@ -37,9 +37,14 @@ const SubmitRequest = ({ history }) => {
     const [requestorNotes, setRequestorNotes] = useState()
 
     const onChange = e => {
-        setFileRequirements(e.target.files[0])
-    }
+        const files = Array.from(e.target.files)
 
+        setFileRequirements([])
+
+        files.forEach(file => {
+            setFileRequirements(oldArray => [...oldArray, file])
+        })
+    }
     const levels = ['1st Year', '2nd Year', '3rd Year', '4th Year']
 
     const requestTypes = [

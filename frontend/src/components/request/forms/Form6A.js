@@ -113,6 +113,8 @@ function Form6A() {
                 return val.lecUnits
             case "labUnits":
                 return val.labUnits
+            default:
+                return
         }
     }
 
