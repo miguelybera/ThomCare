@@ -44,12 +44,12 @@ const NavIcon = styled(Link)`
     }`;
 
 const NavTitle = styled.div`
-    width: 100%;
+    margin-left: 10px;
     display:flex;
     align-items: center;
     justify-content: center;
-    left: 0px;
-    right: 0px;
+    
+    
     
     z-index: -2;`;
     
