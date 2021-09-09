@@ -2,8 +2,8 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { getRequests, updateRequest, deleteRequest, clearErrors } from '../../actions/requestActions'
-import { UPDATE_REQUEST_RESET, DELETE_REQUEST_RESET } from '../../constants/requestConstants'
+import { getRequests, updateRequest, clearErrors } from '../../actions/requestActions'
+import { UPDATE_REQUEST_RESET } from '../../constants/requestConstants'
 import Sidebar from '../layout/Sidebar'
 import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
@@ -15,49 +15,36 @@ import {
 
 var dateFormat = require('dateformat')
 
-const ListAllRequests = ({ history }) => {
+const ListAvailableRequests = ({ history }) => {
 
     const alert = useAlert()
     const dispatch = useDispatch()
 
     const { loading, requests, error } = useSelector(state => state.requests)
-    const { user } = useSelector(state => state.auth)
-    const { error: deleteError, isDeleted, isUpdated } = useSelector(state => state.request)
+    const { error: updateError, isUpdated } = useSelector(state => state.request)
 
     const [show, setShow] = useState(false);
-    const [requestId, setRequestId] = useState('');
+    const [updateRequestId, setUpdateRequestId] = useState('');
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
     useEffect(() => {
-        if (user.role === 'CICS Staff') {
-            dispatch(getRequests('CICS Staff', 'Trash'))
-        } else {
-            dispatch(getRequests('Dept Chair', 'Trash'))
-        }
+        dispatch(getRequests('CICS Staff', 'Available'))
+
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
         }
 
-        if (deleteError) {
-            alert.error(deleteError)
+        if (updateError) {
+            alert.error(updateError)
             dispatch(clearErrors())
         }
-
-        if (isDeleted) {
-            alert.success('Request has been deleted successfully.')
-            history.push('/admin/requests/trash')
-
-            dispatch({
-                type: DELETE_REQUEST_RESET
-            })
-        }
-
+        
         if (isUpdated) {
-            alert.success('Request has been restored successfully.')
-            history.push('/admin/requests/trash')
+            alert.success('Request has been moved to Trash successfully.')
+            history.push('/admin/all/requests')
 
             dispatch({
                 type: UPDATE_REQUEST_RESET
@@ -67,24 +54,19 @@ const ListAllRequests = ({ history }) => {
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, alert, error, isUpdated, isDeleted, history, deleteError])
+    }, [dispatch, history, alert, error, updateError, isUpdated])
 
     function changeDateFormat(date) {
         return dateFormat(date, "mmm d, yyyy h:MMtt")
     }
 
+    const updateRequestHandler = (id) => {
+        dispatch(updateRequest(id, {isTrash: true}, true))
+        handleClose()
+    }
+
     const upperCase = (text) => text.toUpperCase()
 
-    const deleteRequestHandler = (id) => {
-        dispatch(deleteRequest(id))
-        handleClose()
-    }
-
-    const updateRequestHandler = (id) => {
-        dispatch(updateRequest(id, {isTrash: false}, true))
-        handleClose()
-    }
-    
     const setRequests = () => {
         const data = {
             columns: [
@@ -134,12 +116,18 @@ const ListAllRequests = ({ history }) => {
                     </p>
                 </Fragment>,
                 actions: <Fragment>
-                    <Button variant="warning" className="mr-5" style={{ marginRight: '5px' }} onClick={() => { updateRequestHandler(request._id)}}>
-                        <i class="fa fa-undo" aria-hidden="true" />
+                    <Link to={`/admin/request/${request._id}`}>
+                        <Button variant="primary" className="mr-5" style={{ marginRight: '5px' }}>
+                            <i class="fa fa-pencil" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                        </Button>
+                    </Link>
+                    <Button variant="warning" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
+                    }}>
+                        <i class="fa fa-archive" aria-hidden="true" />
                     </Button>
                     <Button variant="danger" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
                         handleShow()
-                        setRequestId(request._id)
+                        setUpdateRequestId(request._id)
                     }}>
                         <i class="fa fa-trash" aria-hidden="true" />
                     </Button>
@@ -153,7 +141,7 @@ const ListAllRequests = ({ history }) => {
 
     return (
         <Fragment>
-            <MetaData title={'Trashed Requests'} />
+            <MetaData title={'Requests'} />
             <Modal
                 show={show}
                 onHide={handleClose}
@@ -170,7 +158,7 @@ const ListAllRequests = ({ history }) => {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={() => deleteRequestHandler(requestId)}>Yes, I'm sure</Button>
+                    <Button variant="primary" onClick={() => updateRequestHandler(updateRequestId)}>Yes, I'm sure</Button>
                 </Modal.Footer>
             </Modal>
             <Sidebar />
@@ -178,7 +166,7 @@ const ListAllRequests = ({ history }) => {
                 <div className="">
                     <Container className="space_inside"></Container>
                     <Container>
-                        <h3>Trash</h3>
+                        <h3>Requests</h3>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5
@@ -198,4 +186,4 @@ const ListAllRequests = ({ history }) => {
     )
 }
 
-export default ListAllRequests
+export default ListAvailableRequests

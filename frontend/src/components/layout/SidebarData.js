@@ -169,8 +169,18 @@ export const SidebarData = [
                     icon: <i class="fa fa-list-ul" aria-hidden="true"></i>
                 },
                 {
-                    title: 'Requests to Office',
+                    title: 'Office Requests',
                     path: '/admin/cics/requests',
+                    icon: <i class="fa fa-home" aria-hidden="true"></i>
+                },
+                {
+                    title: 'Available requests',
+                    path: '/admin/cics/available/requests',
+                    icon: <i class="fa fa-home" aria-hidden="true"></i>
+                },
+                {
+                    title: 'Assigned to me',
+                    path: '/admin/me/requests',
                     icon: <i class="fa fa-home" aria-hidden="true"></i>
                 },
                 {

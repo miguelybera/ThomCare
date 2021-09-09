@@ -21,51 +21,22 @@ const ListAllRequests = ({ history }) => {
     const dispatch = useDispatch()
 
     const { loading, requests, error } = useSelector(state => state.requests)
-    const { error: updateError, isUpdated } = useSelector(state => state.request)
-
-    const [show, setShow] = useState(false);
-    const [updateRequestId, setUpdateRequestId] = useState('');
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
     useEffect(() => {
-        dispatch(getRequests('CICS Staff', false, false))
+        dispatch(getRequests('CICS Staff', 'All'))
 
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
         }
 
-        if (updateError) {
-            alert.error(updateError)
-            dispatch(clearErrors())
-        }
-        
-        if (isUpdated) {
-            alert.success('Request has been archived successfully.')
-            history.push('/admin/all/requests')
-
-            dispatch({
-                type: UPDATE_REQUEST_RESET
-            })
-        }
-
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, history, alert, error, updateError])
+    }, [dispatch, history, alert, error])
 
     function changeDateFormat(date) {
         return dateFormat(date, "mmm d, yyyy h:MMtt")
-    }
-
-    const updateRequestHandler = (id) => {
-        const formData = new FormData()
-        formData.set('isTrash', true)
-
-        dispatch(updateRequest(id, formData, true))
-        handleClose()
     }
 
     const upperCase = (text) => text.toUpperCase()
@@ -119,21 +90,11 @@ const ListAllRequests = ({ history }) => {
                     </p>
                 </Fragment>,
                 actions: <Fragment>
-                    <Link to={`/admin/request/${request._id}`}>
+                    <Link to={`/admin/view/request/${request._id}`}>
                         <Button variant="primary" className="mr-5" style={{ marginRight: '5px' }}>
-                            <i class="fa fa-pencil" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                            <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
                         </Button>
                     </Link>
-                    <Button variant="warning" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
-                    }}>
-                        <i class="fa fa-archive" aria-hidden="true" />
-                    </Button>
-                    <Button variant="danger" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
-                        handleShow()
-                        setUpdateRequestId(request._id)
-                    }}>
-                        <i class="fa fa-trash" aria-hidden="true" />
-                    </Button>
                 </Fragment>
             })
 
@@ -144,26 +105,7 @@ const ListAllRequests = ({ history }) => {
 
     return (
         <Fragment>
-            <MetaData title={'Requests'} />
-            <Modal
-                show={show}
-                onHide={handleClose}
-                backdrop="static"
-                keyboard={false}
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title>Are you sure you want to delete this request?</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    This change cannot be undone.
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={() => updateRequestHandler(updateRequestId)}>Yes, I'm sure</Button>
-                </Modal.Footer>
-            </Modal>
+            <MetaData title={'All Requests'} />
             <Sidebar />
             <div className="row">
                 <div className="">

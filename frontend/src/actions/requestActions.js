@@ -16,6 +16,9 @@ import {
     DELETE_REQUEST_REQUEST,
     DELETE_REQUEST_SUCCESS,
     DELETE_REQUEST_FAIL,
+    ASSIGN_REQUEST_REQUEST,
+    ASSIGN_REQUEST_SUCCESS,
+    ASSIGN_REQUEST_FAIL,
     CLEAR_ERRORS
 } from '../constants/requestConstants'
 
@@ -91,7 +94,7 @@ export const submitRequest = (request) => async (dispatch) => {
 }
 
 //get CICS requests
-export const getRequests = (role, office, trash) => async (dispatch) => {
+export const getRequests = (role, route) => async (dispatch) => {
     try {
         dispatch({
             type: GET_REQUESTS_REQUEST
@@ -99,28 +102,38 @@ export const getRequests = (role, office, trash) => async (dispatch) => {
 
         let link = ``
 
-        if(role === 'Dept Chair' && !office) {
-            if(trash) {
-                link = `/api/v1/deptChair/trash`  
-                console.log('dept chair trash')
-            } else {
-                link = `/api/v1/deptChair/requests`
-                console.log('dept chair requests')
+        if (role === 'Dept Chair') {
+            switch (route) {
+                case 'Trash':
+                    link = `/api/v1/deptChair/trash`
+                    break
+                case 'Requests':
+                    link = `/api/v1/deptChair/requests`
+                    break
+                default:
+                    link = ``
             }
         } else if (role === 'CICS Staff') {
-            if(office) {
-                link = `/api/v1/cicsAdmin/officeRequests`
-                console.log('admin office requests')
-            } else {
-                if(trash) {
+            switch (route) {
+                case 'Office':
+                    link = `/api/v1/cicsAdmin/officeRequests`
+                    break
+                case 'Trash':
                     link = `/api/v1/cicsAdmin/trash`
-                    console.log('admin trash')
-                } else {
+                    break
+                case 'Available':
+                    link = `/api/v1/cicsAdmin/available/requests`
+                    break
+                case 'All':
                     link = `/api/v1/cicsAdmin/requests`
-                    console.log('admin all requests')
-                }
+                    break
+                case 'Me':
+                    link = `/api/v1/cicsAdmin/assigned/requests`
+                    break
+                default:
+                    link = ``
             }
-        } else {
+        } else { //student
             link = `/api/v1/myRequests`
         }
 
@@ -171,18 +184,25 @@ export const updateRequest = (requestId, request, isTrash) => async (dispatch) =
             type: UPDATE_REQUEST_REQUEST
         })
 
-        const config = {
-            headers: {
-                'Content-Type': 'multipart/form-data'
-            }
-        }
+        let config = { headers: {} }
 
         let link = ``
 
-        if(isTrash) {
+        if (isTrash) {
             link = `/api/v1/admin/trashRequest/${requestId}`
+            config = {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+
         } else {
             link = `/api/v1/admin/updateRequest/${requestId}`
+            config = {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            }
         }
         const { data } = await axios.put(link, request, config)
 
@@ -194,6 +214,35 @@ export const updateRequest = (requestId, request, isTrash) => async (dispatch) =
     catch (error) {
         dispatch({
             type: UPDATE_REQUEST_FAIL,
+            payload: error.response.data.errMessage
+        }
+        )
+    }
+}
+
+//assign request to self
+export const assignRequest = (requestId, request) => async (dispatch) => {
+    try {
+        dispatch({
+            type: ASSIGN_REQUEST_REQUEST
+        })
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const { data } = await axios.put(`/api/v1/cicsAdmin/assign/request/${requestId}`, request, config)
+
+        dispatch({
+            type: ASSIGN_REQUEST_SUCCESS,
+            payload: data.success
+        })
+    }
+    catch (error) {
+        dispatch({
+            type: ASSIGN_REQUEST_FAIL,
             payload: error.response.data.errMessage
         }
         )

@@ -19,6 +19,10 @@ import {
     DELETE_REQUEST_SUCCESS,
     DELETE_REQUEST_FAIL,
     DELETE_REQUEST_RESET,
+    ASSIGN_REQUEST_REQUEST,
+    ASSIGN_REQUEST_SUCCESS,
+    ASSIGN_REQUEST_FAIL,
+    ASSIGN_REQUEST_RESET,
     CLEAR_ERRORS
 } from '../constants/requestConstants'
 
@@ -128,6 +132,7 @@ export const requestReducer = (state = {}, action) => {
 
         case DELETE_REQUEST_REQUEST:
         case UPDATE_REQUEST_REQUEST:
+        case ASSIGN_REQUEST_REQUEST:
             return {
                 ...state,
                 loading: true
@@ -141,6 +146,7 @@ export const requestReducer = (state = {}, action) => {
             }
 
         case UPDATE_REQUEST_SUCCESS:
+        case ASSIGN_REQUEST_SUCCESS:
             return {
                 ...state,
                 loading: false,
@@ -149,6 +155,7 @@ export const requestReducer = (state = {}, action) => {
 
         case DELETE_REQUEST_FAIL:
         case UPDATE_REQUEST_FAIL:
+        case ASSIGN_REQUEST_FAIL:
             return {
                 ...state,
                 error: action.payload,
@@ -163,6 +170,7 @@ export const requestReducer = (state = {}, action) => {
             }
 
         case UPDATE_REQUEST_RESET:
+        case ASSIGN_REQUEST_RESET:
             return {
                 ...state,
                 isUpdated: false,

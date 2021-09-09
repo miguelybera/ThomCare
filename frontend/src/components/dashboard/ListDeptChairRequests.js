@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { getRequests, updateRequest, clearErrors } from '../../actions/requestActions'
-import { UPDATE_ANNOUNCEMENT_RESET } from '../../constants/requestConstants'
+import { UPDATE_REQUEST_RESET } from '../../constants/requestConstants'
 import Sidebar from '../layout/Sidebar'
 import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
-import { Container, Modal, Button } from 'react-bootstrap'
+import { Container, Button } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import {
     INSIDE_DASHBOARD_TRUE
@@ -21,61 +21,44 @@ const ListDeptChairRequests = ({ history }) => {
     const dispatch = useDispatch()
 
     const { loading, requests, error } = useSelector(state => state.requests)
-    //const { error: deleteError, isDeleted, isUpdated } = useSelector(state => state.announcement)
-
-    const [show, setShow] = useState(false);
-    //const [deleteAnnouncementId, setDeleteAnnouncementId] = useState('');
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const { error: updateError, isUpdated } = useSelector(state => state.request)
 
     useEffect(() => {
-        dispatch(getRequests('Dept Chair', false, false))
+        dispatch(getRequests('Dept Chair', 'Requests'))
 
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
         }
 
-        // if (deleteError) {
-        //     alert.error(deleteError)
-        //     dispatch(clearErrors())
-        // }
+        if (updateError) {
+            alert.error(updateError)
+            dispatch(clearErrors())
+        }
 
-        // if (isDeleted) {
-        //     alert.success('Announcement has been deleted successfully.')
-        //     history.push('/admin/announcements')
+        if (isUpdated) {
+            alert.success('Request has been moved to Trash successfully.')
+            history.push('/admin/deptchair/requests')
 
-        //     dispatch({
-        //         type: DELETE_ANNOUNCEMENT_RESET
-        //     })
-        // }
-
-        // if (isUpdated) {
-        //     alert.success('Announcement has been archived successfully.')
-        //     history.push('/admin/announcements')
-
-        //     dispatch({
-        //         type: ARCHIVE_ANNOUNCEMENT_RESET
-        //     })
-        // }
+            dispatch({
+                type: UPDATE_REQUEST_RESET
+            })
+        }
 
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, alert, error])
+    }, [dispatch, history, alert, error, updateError, isUpdated])
 
     function changeDateFormat(date) {
         return dateFormat(date, "mmm d, yyyy h:MMtt")
     }
 
-    // const deleteAnnouncementHandler = (id) => {
-    //     dispatch(deleteAnnouncement(id))
-    //     handleClose()
-    // }
+    const updateRequestHandler = (id) => {
+        dispatch(updateRequest(id, { isTrash: true }, true))
+    }
 
     const upperCase = (text) => text.toUpperCase()
-
 
     const setRequests = () => {
         const data = {
@@ -131,13 +114,8 @@ const ListDeptChairRequests = ({ history }) => {
                             <i class="fa fa-pencil" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
                         </Button>
                     </Link>
-                    <Button variant="warning" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
-                        console.log('here')
-                    }}>
-                        <i class="fa fa-archive" aria-hidden="true" />
-                    </Button>
                     <Button variant="danger" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
-                        handleShow()
+                        updateRequestHandler(request._id)
                     }}>
                         <i class="fa fa-trash" aria-hidden="true" />
                     </Button>
@@ -151,32 +129,13 @@ const ListDeptChairRequests = ({ history }) => {
 
     return (
         <Fragment>
-            <MetaData title={'Requests'} />
-            <Modal
-                show={show}
-                onHide={handleClose}
-                backdrop="static"
-                keyboard={false}
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title>Are you sure you want to delete this announcement?</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    This change cannot be undone.
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary">Yes, I'm sure</Button>
-                </Modal.Footer>
-            </Modal>
+            <MetaData title={'My Requests'} />
             <Sidebar />
             <div className="row">
                 <div className="">
                     <Container className="space_inside"></Container>
                     <Container>
-                        <h3>Requests</h3>
+                        <h3>My Requests</h3>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5

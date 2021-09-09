@@ -2,8 +2,8 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { getRequests, updateRequest, clearErrors } from '../../actions/requestActions'
-import { UPDATE_ANNOUNCEMENT_RESET } from '../../constants/requestConstants'
+import { getRequests, assignRequest, clearErrors } from '../../actions/requestActions'
+import { ASSIGN_REQUEST_RESET } from '../../constants/requestConstants'
 import Sidebar from '../layout/Sidebar'
 import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
@@ -21,61 +21,44 @@ const ListCICSRequests = ({ history }) => {
     const dispatch = useDispatch()
 
     const { loading, requests, error } = useSelector(state => state.requests)
-    //const { error: deleteError, isDeleted, isUpdated } = useSelector(state => state.announcement)
-
-    const [show, setShow] = useState(false);
-    //const [deleteAnnouncementId, setDeleteAnnouncementId] = useState('');
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const { error: updateError, isUpdated } = useSelector(state => state.request)
 
     useEffect(() => {
-        dispatch(getRequests('CICS Staff', true, false))
+        dispatch(getRequests('CICS Staff', 'Office'))
 
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
         }
 
-        // if (deleteError) {
-        //     alert.error(deleteError)
-        //     dispatch(clearErrors())
-        // }
+        if (updateError) {
+            alert.error(updateError)
+            dispatch(clearErrors())
+        }
+        
+        if (isUpdated) {
+            alert.success('Request has been assigned to user.')
+            history.push('/admin/cics/available/requests')
 
-        // if (isDeleted) {
-        //     alert.success('Announcement has been deleted successfully.')
-        //     history.push('/admin/announcements')
-
-        //     dispatch({
-        //         type: DELETE_ANNOUNCEMENT_RESET
-        //     })
-        // }
-
-        // if (isUpdated) {
-        //     alert.success('Announcement has been archived successfully.')
-        //     history.push('/admin/announcements')
-
-        //     dispatch({
-        //         type: ARCHIVE_ANNOUNCEMENT_RESET
-        //     })
-        // }
+            dispatch({
+                type: ASSIGN_REQUEST_RESET
+            })
+        }
 
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, alert, error])
+    }, [dispatch, history, alert, error, updateError, isUpdated])
 
     function changeDateFormat(date) {
         return dateFormat(date, "mmm d, yyyy h:MMtt")
     }
 
-    // const deleteAnnouncementHandler = (id) => {
-    //     dispatch(deleteAnnouncement(id))
-    //     handleClose()
-    // }
+    const assignRequestHandler = (id) => {
+        dispatch(assignRequest(id, {}))
+    }
 
     const upperCase = (text) => text.toUpperCase()
-
 
     const setRequests = () => {
         const data = {
@@ -126,20 +109,15 @@ const ListCICSRequests = ({ history }) => {
                     </p>
                 </Fragment>,
                 actions: <Fragment>
-                    <Link to={`/admin/request/${request._id}`}>
+                    <Link to={`/admin/view/request/${request._id}`}>
                         <Button variant="primary" className="mr-5" style={{ marginRight: '5px' }}>
-                            <i class="fa fa-pencil" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                            <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
                         </Button>
                     </Link>
                     <Button variant="warning" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
-                        console.log('here')
+                        assignRequestHandler(request._id)
                     }}>
                         <i class="fa fa-archive" aria-hidden="true" />
-                    </Button>
-                    <Button variant="danger" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
-                        handleShow()
-                    }}>
-                        <i class="fa fa-trash" aria-hidden="true" />
                     </Button>
                 </Fragment>
             })
@@ -151,32 +129,13 @@ const ListCICSRequests = ({ history }) => {
 
     return (
         <Fragment>
-            <MetaData title={'Requests'} />
-            <Modal
-                show={show}
-                onHide={handleClose}
-                backdrop="static"
-                keyboard={false}
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title>Are you sure you want to delete this announcement?</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    This change cannot be undone.
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary">Yes, I'm sure</Button>
-                </Modal.Footer>
-            </Modal>
+            <MetaData title={'CICS Requests'} />
             <Sidebar />
             <div className="row">
                 <div className="">
                     <Container className="space_inside"></Container>
                     <Container>
-                        <h3>Requests</h3>
+                        <h3>CICS Requests</h3>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5

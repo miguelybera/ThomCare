@@ -73,7 +73,7 @@ router.route('/deptChair/requests').get(isAuthenticatedUser, authorizeRoles('IT 
 router.route('/deptChair/trash').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getTrashedRequests);
 
 //cics staff
-router.route('/cicsAdmin/requests').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getAllRequestsStaff);
+router.route('/cicsAdmin/requests').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getAllRequestsStaff); //didnt use it?
 router.route('/cicsAdmin/officeRequests').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getAllOfficeRequests);
 router.route('/cicsAdmin/trash').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getTrashedRequests);
 router.route('/cicsAdmin/available/requests').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getAvailableRequests);

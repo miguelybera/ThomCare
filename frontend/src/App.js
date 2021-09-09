@@ -52,6 +52,8 @@ import ListCICSRequests from './components/dashboard/ListCICSRequests'
 import ListDeptChairRequests from './components/dashboard/ListDeptChairRequests'
 import ListAllRequests from './components/dashboard/ListAllRequests'
 import ListStudentRequests from './components/dashboard/ListStudentRequests'
+import ListAvailableRequests from './components/dashboard/ListAvailableRequests'
+import ListMyRequests from './components/dashboard/ListMyRequests'
 import ListTrash from './components/dashboard/ListTrash'
 import ListAuditLog from './components/dashboard/ListAuditLog'
 
@@ -118,6 +120,8 @@ function App() {
                             <ProtectedRoute path='/admin/all/requests' component={ListAllRequests} exact />
                             <ProtectedRoute path='/me/requests' component={ListStudentRequests} exact />
                             <ProtectedRoute path='/admin/requests/trash' component={ListTrash} exact />
+                            <ProtectedRoute path='/admin/cics/available/requests' component={ListAvailableRequests} exact />
+                            <ProtectedRoute path='/admin/me/requests' component={ListMyRequests} exact />
                             <ProtectedRoute path='/audit' component={ListAuditLog} exact />
                         </div>
                     </Fragment>

@@ -30,7 +30,7 @@ const ListStudentRequests = ({ history }) => {
     const handleShow = () => setShow(true);
 
     useEffect(() => {
-        dispatch(getRequests('Student'))
+        dispatch(getRequests('Student', ''))
 
         if (error) {
             alert.error(error)
