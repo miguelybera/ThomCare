@@ -50,6 +50,7 @@ import ListUsers from './components/dashboard/ListUsers'
 import UpdateUser from './components/dashboard/UpdateUser'
 import RegisterAdmin from './components/dashboard/RegisterAdmin'
 import UpdateRequest from './components/dashboard/UpdateRequest'
+import ViewRequest from './components/dashboard/ViewRequest'
 import ListCICSRequests from './components/dashboard/ListCICSRequests'
 import ListDeptChairRequests from './components/dashboard/ListDeptChairRequests'
 import ListAllRequests from './components/dashboard/ListAllRequests'
@@ -119,6 +120,7 @@ function App() {
                             <ProtectedRoute path='/admin/register' component={RegisterAdmin} exact />
                             <ProtectedRoute path='/admin/cics/requests' component={ListCICSRequests} exact />
                             <ProtectedRoute path='/admin/request/:id' component={UpdateRequest} exact />
+                            <ProtectedRoute path='/admin/view/request/:id' component={ViewRequest} exact />
                             <ProtectedRoute path='/admin/deptchair/requests' component={ListDeptChairRequests} exact />
                             <ProtectedRoute path='/admin/all/requests' component={ListAllRequests} exact />
                             <ProtectedRoute path='/me/requests' component={ListStudentRequests} exact />
