@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAdminAnnouncements, deleteAnnouncement, archiveAnnouncement, clearErrors } from './../../actions/announcementActions'
+import { getMyAnnouncements, deleteAnnouncement, archiveAnnouncement, clearErrors } from './../../actions/announcementActions'
 import { ARCHIVE_ANNOUNCEMENT_RESET, DELETE_ANNOUNCEMENT_RESET } from './../../constants/announcementConstants'
 import Sidebar from './../layout/Sidebar'
 import MetaData from './../layout/MetaData'
@@ -15,7 +15,7 @@ import {
 
 var dateFormat = require('dateformat')
 
-const ListAnnouncements = ({ history }) => {
+const ListMyAnnoucements = ({ history }) => {
 
     const alert = useAlert()
     const dispatch = useDispatch()
@@ -30,7 +30,7 @@ const ListAnnouncements = ({ history }) => {
     const handleShow = () => setShow(true);
 
     useEffect(() => {
-        dispatch(getAdminAnnouncements('Not me'))
+        dispatch(getMyAnnouncements())
 
         if (error) {
             alert.error(error)
@@ -192,4 +192,4 @@ const ListAnnouncements = ({ history }) => {
     )
 }
 
-export default ListAnnouncements
+export default ListMyAnnoucements

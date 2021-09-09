@@ -2,6 +2,9 @@ import {
     ALL_ANNOUNCEMENTS_REQUEST,
     ALL_ANNOUNCEMENTS_SUCCESS,
     ALL_ANNOUNCEMENTS_FAIL,
+    MY_ANNOUNCEMENTS_REQUEST,
+    MY_ANNOUNCEMENTS_SUCCESS,
+    MY_ANNOUNCEMENTS_FAIL,
     ANNOUNCEMENT_DETAILS_REQUEST,
     ANNOUNCEMENT_DETAILS_SUCCESS,
     ANNOUNCEMENT_DETAILS_FAIL,
@@ -35,6 +38,7 @@ import {
 export const getAnnouncementsReducer = (state = { announcements: [] }, action) => {
     switch (action.type) {
         case ALL_ANNOUNCEMENTS_REQUEST:
+        case MY_ANNOUNCEMENTS_REQUEST:
         case ALL_ADMIN_ANNOUNCEMENTS_REQUEST:
         case ALL_ARCHIVED_ANNOUNCEMENTS_REQUEST:
             return {
@@ -43,6 +47,7 @@ export const getAnnouncementsReducer = (state = { announcements: [] }, action) =
             }
 
         case ALL_ANNOUNCEMENTS_SUCCESS:
+        case MY_ANNOUNCEMENTS_SUCCESS:
         case ALL_ADMIN_ANNOUNCEMENTS_SUCCESS:
         case ALL_ARCHIVED_ANNOUNCEMENTS_SUCCESS:
             return {
@@ -54,6 +59,7 @@ export const getAnnouncementsReducer = (state = { announcements: [] }, action) =
             }
 
         case ALL_ANNOUNCEMENTS_FAIL:
+        case MY_ANNOUNCEMENTS_FAIL:
         case ALL_ADMIN_ANNOUNCEMENTS_FAIL:
         case ALL_ARCHIVED_ANNOUNCEMENTS_FAIL:
             return {

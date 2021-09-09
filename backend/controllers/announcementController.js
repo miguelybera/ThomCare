@@ -169,6 +169,20 @@ exports.getSingleAnnouncement = catchAsyncErrors(async (req, res, next) => {
     })
 })
 
+// Get my announcements /api/v1/me/announcements
+exports.getMyAnnouncements = catchAsyncErrors(async (req, res, next) => {
+    const announcementCount = await Announcement.countDocuments({ createdBy: req.user.id })
+    const apiFeatures = new APIFeatures(Announcement.find({ createdBy: req.user.id }), req.query).search().filter()
+
+    let announcements = await apiFeatures.query
+
+    res.status(200).json({
+        success: true,
+        announcements,
+        announcementCount
+    })
+})
+
 // Update announcement /api/v1/admin/announcement/:id
 exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
     let announcement = await Announcement.findById(req.params.id);

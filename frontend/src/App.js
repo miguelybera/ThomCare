@@ -41,6 +41,7 @@ import FormsList from './components/request/forms/FormsList'
 //dashboard folder
 import ControlPanel from './components/dashboard/ControlPanel'
 import ListAnnouncements from './components/dashboard/ListAnnouncements'
+import ListMyAnnouncements from './components/dashboard/ListMyAnnouncements'
 import CreateAnnouncement from './components/dashboard/CreateAnnouncement'
 import UpdateAnnouncement from './components/dashboard/UpdateAnnouncement'
 import ListArchivedAnnouncements from './components/dashboard/ListArchivedAnnouncements'
@@ -108,6 +109,7 @@ function App() {
                             {/*control panel*/}
                             <ProtectedRoute path='/controlpanel' component={ControlPanel} exact />
                             <ProtectedRoute path='/admin/announcements' component={ListAnnouncements} exact />
+                            <ProtectedRoute path='/admin/me/announcements' component={ListMyAnnouncements} exact />
                             <ProtectedRoute path='/admin/new/announcement' component={CreateAnnouncement} exact />
                             <ProtectedRoute path='/admin/announcement/:id' component={UpdateAnnouncement} exact />
                             <ProtectedRoute path='/admin/archives/announcements' component={ListArchivedAnnouncements} exact />

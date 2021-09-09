@@ -3,6 +3,9 @@ import {
     ALL_ANNOUNCEMENTS_REQUEST,
     ALL_ANNOUNCEMENTS_SUCCESS,
     ALL_ANNOUNCEMENTS_FAIL,
+    MY_ANNOUNCEMENTS_REQUEST,
+    MY_ANNOUNCEMENTS_SUCCESS,
+    MY_ANNOUNCEMENTS_FAIL,
     ANNOUNCEMENT_DETAILS_REQUEST,
     ANNOUNCEMENT_DETAILS_SUCCESS,
     ANNOUNCEMENT_DETAILS_FAIL,
@@ -167,6 +170,29 @@ export const getAdminAnnouncements = () => async(dispatch) => {
     }
 }
 
+//get my announcements
+export const getMyAnnouncements = () => async(dispatch) => {
+    try {
+        dispatch({
+            type: MY_ANNOUNCEMENTS_REQUEST
+        })
+
+        const { data } = await axios.get(`/api/v1/admin/me/announcements`)
+
+        dispatch({
+            type: MY_ANNOUNCEMENTS_SUCCESS,
+            payload: data
+        })
+    }
+    catch (error) {
+        dispatch({
+            type: MY_ANNOUNCEMENTS_FAIL,
+            payload: error.response.data.errMessage
+            }
+        )
+    }
+}
+
 //get all ARCHIVED announcements
 export const getArchivedAnnouncements = () => async(dispatch) => {
     try {
@@ -182,6 +208,7 @@ export const getArchivedAnnouncements = () => async(dispatch) => {
         })
     }
     catch (error) {
+        console.log(error)
         dispatch({
             type: ALL_ARCHIVED_ANNOUNCEMENTS_FAIL,
             payload: error.response.data.errMessage

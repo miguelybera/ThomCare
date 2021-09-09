@@ -21,6 +21,8 @@ const {
     updateAnnouncement,
     deleteAnnouncement,
 
+    getMyAnnouncements,
+
     getArchivedAnnouncements,
     archiveAnnouncement,
     getHomepageAnnouncements
@@ -48,6 +50,7 @@ router.route('/announcements').get(getHomepageAnnouncements);
 //student
 
 //dept chair and cics staff
+router.route('/admin/me/announcements').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), getMyAnnouncements);
 router.route('/admin/unarchivedAnnouncements').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), getUnarchivedAnnouncement);
 router.route('/admin/new/announcement').post(isAuthenticatedUser, announcementUpload.array('fileAttachments', 5), authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), newAnnouncement);
 router.route('/admin/announcement/:id').put(isAuthenticatedUser, announcementUpload.array('fileAttachments', 5), updateAnnouncement);
