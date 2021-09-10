@@ -4,89 +4,81 @@ const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const APIFeatures = require('../utils/apiFeatures');
 const cloudinary = require('cloudinary').v2;
 
+const csTracks = ["All", "Core Computer Science", "Game Development", "Data Science"]
+const itTracks = ["All", "Network and Security", "Web and Mobile App Development", "IT Automation"]
+const isTracks = ["All", "Business Analytics", "Service Management"]
 
+const toBoolean = (str) => {
+    if (str === 'true') {
+        return true
+    } else {
+        return false
+    }
+}
 
 // Create new announcement => /api/v1/new/announcement
 exports.newAnnouncement = catchAsyncErrors(async (req, res, next) => {
     const { title, description, course, yearLevel, announcementType, setExpiry } = req.body
-    let track = req.body.track
     const createdBy = req.user.id
     const fileAttachments = req.files
-    let archiveDate
+    let track = req.body.track ? req.body.track : 'All', archiveDate = new Date('3000-01-01')
 
-    if (req.body.setExpiry == true) {
+    if (req.body.setExpiry) {
         archiveDate = new Date(req.body.archiveDate)
-    } else {
-        archiveDate = new Date('3000-01-01') //yyyy-mm-dd
     }
 
-    if (yearLevel == '1st Year' || yearLevel == '2nd Year') {
-        if (track == "Core Computer Science" || track == "Game Development" || track == "Data Science" ||
-            track == "Network and Security" || track == "Web and Mobile App Development" || track == "IT Automation" ||
-            track == "Business Analytics" || track == "Service Management") {
-            return next(new ErrorHandler('1st year and 2nd year do not have tracks'))
-        }
-        track = 'All'
+    switch (yearLevel) {
+        case '1st Year':
+        case '2nd Year':
+        case 'All':
+            if (track !== 'All') {
+                return next(new ErrorHandler('1st year and 2nd year do not have tracks'))
+            }
+            break
+        case '3rd Year':
+        case '4th Year':
+            switch (course) {
+                case 'Computer Science':
+                    if (!csTracks.includes(track)) {
+                        return next(new ErrorHandler('Course does not match this track', 400))
+                    }
+                    break
+                case 'Information Technology':
+                    if (!itTracks.includes(track)) {
+                        return next(new ErrorHandler('Course does not match this track', 400))
+                    }
+                    break
+                case 'Information Systems':
+                    if (!isTracks.includes(track)) {
+                        return next(new ErrorHandler('Course does not match this track', 400))
+                    }
+                    break
+            }
+        default:
     }
 
-    if (course == "Computer Science") {
-        if (yearLevel == '3rd Year' || yearLevel == '4th Year') {
-            if (track == "Core Computer Science" || track == "Game Development" || track == "Data Science" || track == "All") {
-            } else {
+    switch (course) {
+        case 'Computer Science':
+            if (!csTracks.includes(track)) {
                 return next(new ErrorHandler('Course does not match this track', 400))
             }
-        }
-    }
-
-    if (course == "Information Technology") {
-        if (yearLevel == '3rd Year' || yearLevel == '4th Year') {
-            if (track == "Network and Security" || track == "Web and Mobile App Development" || track == "IT Automation" || track == "All") {
-            } else {
+            break
+        case 'Information Technology':
+            if (!itTracks.includes(track)) {
                 return next(new ErrorHandler('Course does not match this track', 400))
             }
-        }
-    }
-
-    if (course === "Information Systems") {
-        if (yearLevel == '3rd Year' || yearLevel == '4th Year') {
-            if (track == "Business Analytics" || track == "Service Management" || track == "All") {
-            } else {
+            break
+        case 'Information Systems':
+            if (!isTracks.includes(track)) {
                 return next(new ErrorHandler('Course does not match this track', 400))
             }
-        }
-    }
-
-    if (course == "Computer Science") {
-        if (track == "Core Computer Science" || track == "Game Development" || track == "Data Science" || track == "All") {
-        } else {
-            return next(new ErrorHandler('Course does not match this track', 400))
-        }
-    }
-
-    if (course == "Information Technology") {
-        if (track == "Network and Security" || track == "Web and Mobile App Development" || track == "IT Automation" || track == "All") {
-        } else {
-            return next(new ErrorHandler('Course does not match this track', 400))
-        }
-    }
-
-    if (course === "Information Systems") {
-        if (track == "Business Analytics" || track == "Service Management" || track == "All") {
-        } else {
-            return next(new ErrorHandler('Course does not match this track', 400))
-        }
-    }
-
-    if (yearLevel == 'All') {
-        if (track != 'All') {
-            return next(new ErrorHandler('1st year and 2nd year do not have tracks', 400))
-        }
-    }
-
-    if (course == 'All') {
-        if (track != 'All') {
-            return next(new ErrorHandler('1st year and 2nd year do not have tracks', 400))
-        }
+            break
+        case 'All':
+            if (track !== 'All') {
+                return next(new ErrorHandler('1st year and 2nd year do not have tracks'))
+            }
+            break
+        default:
     }
 
     const announcement = await Announcement.create({
@@ -100,8 +92,7 @@ exports.newAnnouncement = catchAsyncErrors(async (req, res, next) => {
         fileAttachments,
         announcementType,
         setExpiry
-
-    });
+    })
 
     res.status(201).json({
         success: true,
@@ -185,79 +176,95 @@ exports.getMyAnnouncements = catchAsyncErrors(async (req, res, next) => {
 
 // Update announcement /api/v1/admin/announcement/:id
 exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
-    let announcement = await Announcement.findById(req.params.id);
+    let announcement = await Announcement.findById(req.params.id)
+
     if (!announcement) { return next(new ErrorHandler('Announcement Not Found', 404)) }
-    let newTitle, newDescription, newCourse, newYearLevel, newTrack, newArchiveDate, newAnnouncementType, newSetExpiry, newAnnouncementFiles
 
-    if (req.body.archiveDate == null || req.body.archiveDate == '') {
-        newArchiveDate = announcement.archiveDate
-    } else {
-        newArchiveDate = new Date(req.body.archiveDate)
-    }
+    let yearLevel = req.body.yearLevel ? req.body.yearLevel : announcement.yearLevel
+    let course = req.body.course ? req.body.course : announcement.course
+    let title = req.body.title ? req.body.title : announcement.title
+    let description = req.body.description ? req.body.description : announcement.description
+    let announcementType = req.body.announcementType ? req.body.announcementType : announcement.announcementType
+    let track = req.body.track ? req.body.track : 'All'
+    let newAttachments = req.files
 
-    if (req.body.setExpiry === null) {
-        newSetExpiry = announcement.setExpiry
-    } else {
-        newSetExpiry = req.body.setExpiry
-
-        if (newSetExpiry === true) {
-            if (req.body.archiveDate == null || req.body.archiveDate == '') {
-                newArchiveDate = announcement.archiveDate
-            } else {
-                newArchiveDate = new Date(req.body.archiveDate)
+    switch (yearLevel) {
+        case '1st Year':
+        case '2nd Year':
+        case 'All':
+            if (track !== 'All') {
+                return next(new ErrorHandler('1st year and 2nd year do not have tracks'))
             }
+            break
+        case '3rd Year':
+        case '4th Year':
+            switch (course) {
+                case 'Computer Science':
+                    if (!csTracks.includes(track)) {
+                        return next(new ErrorHandler('Course does not match this track', 400))
+                    }
+                    break
+                case 'Information Technology':
+                    if (!itTracks.includes(track)) {
+                        return next(new ErrorHandler('Course does not match this track', 400))
+                    }
+                    break
+                case 'Information Systems':
+                    if (!isTracks.includes(track)) {
+                        return next(new ErrorHandler('Course does not match this track', 400))
+                    }
+                    break
+            }
+        default:
+    }
+
+    switch (course) {
+        case 'Computer Science':
+            if (!csTracks.includes(track)) {
+                return next(new ErrorHandler('Course does not match this track', 400))
+            }
+            break
+        case 'Information Technology':
+            if (!itTracks.includes(track)) {
+                return next(new ErrorHandler('Course does not match this track', 400))
+            }
+            break
+        case 'Information Systems':
+            if (!isTracks.includes(track)) {
+                return next(new ErrorHandler('Course does not match this track', 400))
+            }
+            break
+        case 'All':
+            if (track !== 'All') {
+                return next(new ErrorHandler('1st year and 2nd year do not have tracks'))
+            }
+            break
+        default:
+    }
+
+    let setExpiry = req.body.setExpiry === null || req.body.setExpiry === undefined ? announcement.setExpiry : toBoolean(req.body.setExpiry)
+    let archiveDate = req.body.setExpiry === null || req.body.setExpiry === undefined ? announcement.archiveDate : req.body.archiveDate
+
+    if (setExpiry) {
+        if (req.body.archiveDate !== null || req.body.archiveDate !== undefined || req.body.archiveDate !== '') {
+            archiveDate = new Date(req.body.archiveDate)
         } else {
-            newArchiveDate = new Date('3000-01-01') //yyyy-mm-dd
+            return next(new ErrorHandler('Archive date is needed'))
         }
-
-    }
-
-    if (req.body.title == null || req.body.title == '') {
-        newTitle = announcement.title
     } else {
-        newTitle = req.body.title
+        archiveDate = new Date('3000-01-01') //yyyy-mm-dd
     }
 
-    if (req.body.description == null || req.body.description == '') {
-        newDescription = announcement.description
-    } else {
-        newDescription = req.body.description
-    }
-
-    if (req.body.announcementType == null || req.body.announcementType == '') {
-        newAnnouncementType = announcement.announcementType
-    } else {
-        newAnnouncementType = req.body.announcementType
-    }
-
-    if (req.body.course == null || req.body.course == '') {
-        newCourse = announcement.course
-    } else {
-        newCourse = req.body.course
-    }
-
-    if (req.body.yearLevel == null || req.body.yearLevel == '') {
-        newYearLevel = announcement.yearLevel
-    } else {
-        newYearLevel = req.body.yearLevel
-    }
-
-    if (req.body.track == null || req.body.track == '') {
-        newTrack = announcement.track
-    } else {
-        newTrack = req.body.track
-    }
-
-    const filesAttached = announcement.fileAttachments
-    const fileLength = filesAttached.length
+    const oldAttachments = announcement.fileAttachments
+    const attachmentsLength = oldAttachments && oldAttachments.length
     let arrayIds = []
 
-    for (let i = 0; i < fileLength; i++) {
-        arrayIds.push(filesAttached[i].filename)
+    for (let i = 0; i < attachmentsLength; i++) {
+        arrayIds.push(oldAttachments[i].filename)
     }
 
-    if (req.files == null || req.files == '') {
-        newAnnouncementFiles = announcement.fileAttachments
+    if (newAttachments == null || newAttachments == '') {
+        newAttachments = announcement.fileAttachments
     } else {
         if (arrayIds.length != 0) {
             for (let x = 0; x < arrayIds.length; x++) {
@@ -265,87 +272,21 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
                     { resource_type: 'raw' })
             }
         }
-        newAnnouncementFiles = req.files
     }
 
-    if (newYearLevel == '1st Year' || newYearLevel == '2nd Year') {
-        if (newTrack == "Core Computer Science" || newTrack == "Game Development" || newTrack == "Data Science" ||
-            newTrack == "Network and Security" || newTrack == "Web and Mobile App Development" || newTrack == "IT Automation" ||
-            newTrack == "Business Analytics" || newTrack == "Service Management") {
-            return next(new ErrorHandler('1st year and 2nd year do not have tracks'))
-        }
-        newTrack = 'All'
+    let announcementData = {
+        title,
+        description,
+        course,
+        yearLevel,
+        track,
+        announcementType,
+        setExpiry,
+        archiveDate,
+        fileAttachments: newAttachments
     }
 
-    if (newCourse == "Computer Science") {
-        if (newYearLevel == '3rd Year' || newYearLevel == '4th Year') {
-            if (newTrack == "Core Computer Science" || newTrack == "Game Development" || newTrack == "Data Science" || newTrack == "All") {
-            } else {
-                return next(new ErrorHandler('Course does not match this track', 400))
-            }
-        }
-    }
-
-    if (newCourse == "Information Technology") {
-        if (newYearLevel == '3rd Year' || newYearLevel == '4th Year') {
-            if (newTrack == "Network and Security" || newTrack == "Web and Mobile App Development" || newTrack == "IT Automation" || newTrack == "All") {
-            } else {
-                return next(new ErrorHandler('Course does not match this track', 400))
-            }
-        }
-    }
-
-    if (newCourse === "Information Systems") {
-        if (newYearLevel == '3rd Year' || newYearLevel == '4th Year') {
-            if (newTrack == "Business Analytics" || newTrack == "Service Management" || newTrack == "All") {
-            } else {
-                return next(new ErrorHandler('Course does not match this track', 400))
-            }
-        }
-    }
-
-    if (newCourse == "Computer Science") {
-        if (newTrack == "Core Computer Science" || newTrack == "Game Development" || newTrack == "Data Science" || newTrack == "All") {
-        } else {
-            return next(new ErrorHandler('Course does not match this track', 400))
-        }
-    }
-
-    if (newCourse == "Information Technology") {
-        if (newTrack == "Network and Security" || newTrack == "Web and Mobile App Development" || newTrack == "IT Automation" || newTrack == "All") {
-        } else {
-            return next(new ErrorHandler('Course does not match this track', 400))
-        }
-    }
-
-    if (newCourse === "Information Systems") {
-        if (newTrack == "Business Analytics" || newTrack == "Service Management" || newTrack == "All") {
-        } else {
-            return next(new ErrorHandler('Course does not match this track', 400))
-        }
-    }
-
-    if (newYearLevel == 'All') {
-        if (newTrack != 'All') { return next(new ErrorHandler('1st year and 2nd year do not have tracks', 400)) }
-    }
-
-    if (newCourse == 'All') {
-        if (newTrack != 'All') { return next(new ErrorHandler('1st year and 2nd year do not have tracks', 400)) }
-    }
-
-    let newAnnouncementData = {
-        title: newTitle,
-        description: newDescription,
-        course: newCourse,
-        yearLevel: newYearLevel,
-        track: newTrack,
-        announcementType: newAnnouncementType,
-        setExpiry: newSetExpiry,
-        archiveDate: newArchiveDate,
-        fileAttachments: newAnnouncementFiles
-    }
-
-    announcement = await Announcement.findByIdAndUpdate(req.params.id, newAnnouncementData, {
+    announcement = await Announcement.findByIdAndUpdate(req.params.id, announcementData, {
         new: true,
         runValidators: true,
         useFindAndModify: false
@@ -355,9 +296,7 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
         success: true,
         announcement
     })
-
 })
-
 
 // delete announcement /api/v1/admin/announcement/:id
 exports.deleteAnnouncement = catchAsyncErrors(async (req, res, next) => {
@@ -380,14 +319,13 @@ exports.deleteAnnouncement = catchAsyncErrors(async (req, res, next) => {
     }
 
     const imagesAttached = announcement.imageAttachments
-    const imageLength = imagesAttached.length
     let imageIds = []
 
-    for (let i = 0; i < imageLength; i++) {
+    for (let i = 0; i < imagesAttached.length; i++) {
         imageIds.push(imagesAttached[i].filename)
     }
 
-    if (imageIds.length != 0) {
+    if (imageIds.length !== 0) {
         for (let x = 0; x < imageIds.length; x++) {
             cloudinary.uploader.destroy(imageIds[x],
                 { resource_type: 'raw' })

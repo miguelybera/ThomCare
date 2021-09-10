@@ -232,12 +232,9 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
             return next(new ErrorHandler('Role does not have access to this resource'))
     }
 
-    let newRequestData
-
-    newRequestData = {
+    let newRequestData = {
         requestStatus: req.body.requestStatus,
         managedBy: req.user.id,
-
     }
 
     const request = await Request.findByIdAndUpdate(req.params.requestId, newRequestData, {
