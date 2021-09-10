@@ -95,7 +95,7 @@ function App() {
                             <Route path='/confirmregister' component={ConfirmRegister} exact />
 
                             <Route path='/track' component={TrackingPage} exact />
-                            <Route path='/track/:id' component={TrackingPageProgress} exact />
+                            <Route path='/track/:trackingNumber/:lastName' component={TrackingPageProgress} exact />
 
                             {/**needs to be logged in */}
                             <ProtectedRoute path='/forms-list' component={FormsList} exact />

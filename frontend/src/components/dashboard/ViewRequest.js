@@ -8,7 +8,7 @@ import Loader from './../layout/Loader'
 import { MDBDataTableV5 } from 'mdbreact'
 import { Card, Button } from 'react-bootstrap'
 import {
-    INSIDE_DASHBOARD_FALSE
+    INSIDE_DASHBOARD_TRUE
 } from '../../constants/dashboardConstants'
 
 var dateFormat = require('dateformat')
@@ -44,9 +44,7 @@ const ViewRequest = ({ history, match }) => {
     const [requestorNotes, setRequestorNotes] = useState('')
     const [trackingNumber, setTrackingNumber] = useState('')
     const [fileRequirements, setFileRequirements] = useState([])
-    const [returningFiles, setReturningFiles] = useState([])
     const [remarks, setRemarks] = useState([])
-    const [remarksMessage, setRemarksMessage] = useState([])
 
 
     useEffect(() => {
@@ -72,7 +70,7 @@ const ViewRequest = ({ history, match }) => {
 
 
         dispatch({
-            type: INSIDE_DASHBOARD_FALSE
+            type: INSIDE_DASHBOARD_TRUE
         })
     }, [dispatch, request, history])
 
@@ -144,9 +142,12 @@ const ViewRequest = ({ history, match }) => {
                                     ))
                                 )
                             }>{upperCase(requestStatus)}</font></Card.Text>
+                            <Card.Text><b>Request Type:</b> {requestType}</Card.Text>
                             <Card.Text><b>Student number:</b> {requestorStudentNumber}</Card.Text>
                             <Card.Text><b>Email:</b> {requestorEmail}</Card.Text>
                             <Card.Text><b>Course:</b> {requestorCourse}</Card.Text>
+                            <Card.Text><b>Year Level/Section:</b> {requestorYearLevel} {requestorSection}</Card.Text>
+                            <Card.Text><b>Notes:</b> {requestorNotes}</Card.Text>
                             <Card.Text>
                                 Attachments:
                                 <ul>

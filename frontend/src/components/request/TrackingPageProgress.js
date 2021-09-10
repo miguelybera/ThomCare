@@ -1,9 +1,10 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import MetaData from './../layout/MetaData'
 import Loader from './../layout/Loader'
 import { MDBDataTableV5 } from 'mdbreact'
+import { trackRequest, clearErrors } from './../../actions/requestActions'
 import { Card } from 'react-bootstrap'
 import {
     INSIDE_DASHBOARD_FALSE
@@ -19,8 +20,9 @@ const cardStyle = {
 
 const TrackingPageProgress = ({ history, match }) => {
     const dispatch = useDispatch()
+    const alert = useAlert()
 
-    const { loading, request } = useSelector(state => state.requestDetails)
+    const { loading, error, request } = useSelector(state => state.requestDetails)
 
     function changeDateFormat(date) {
         return dateFormat(date, "mmm d, yyyy h:MMtt")
@@ -28,16 +30,56 @@ const TrackingPageProgress = ({ history, match }) => {
 
     const upperCase = (text) => text.toUpperCase()
 
-    const requestId = match.params.id
+    const tracker = match.params.trackingNumber
+    const surname = match.params.lastName
+
+    const [requestorFirstName, setRequestorFirstName] = useState('')
+    const [requestorLastName, setRequestorLastName] = useState('')
+    const [requestorStudentNumber, setRequestorStudentNumber] = useState('')
+    const [requestorEmail, setRequestorEmail] = useState('')
+    const [requestorYearLevel, setRequestorYearLevel] = useState('')
+    const [requestorSection, setRequestorSection] = useState('')
+    const [requestorCourse, setRequestorCourse] = useState('')
+    const [requestStatus, setRequestStatus] = useState('')
+    const [requestType, setRequestType] = useState('')
+    const [requestorNotes, setRequestorNotes] = useState('')
+    const [trackingNumber, setTrackingNumber] = useState('')
+    const [fileRequirements, setFileRequirements] = useState([])
+    const [remarks, setRemarks] = useState([])
 
     useEffect(() => {
+        if (request && request.trackingNumber !== tracker) {
+            dispatch(trackRequest({ trackingNumber: tracker, lastName: surname }))
+        } else if (request) {
+            setRequestorFirstName(request.requestorFirstName)
+            setRequestorLastName(request.requestorLastName)
+            setRequestorStudentNumber(request.requestorStudentNumber)
+            setRequestorEmail(request.requestorEmail)
+            setRequestorYearLevel(request.requestorYearLevel)
+            setRequestorSection(request.requestorSection)
+            setRequestorCourse(request.requestorCourse)
+            setRequestStatus(request.requestStatus)
+            setRequestType(request.requestType)
+            setRequestorNotes(request.requestorNotes)
+            setTrackingNumber(request.trackingNumber)
+            setFileRequirements(request.fileRequirements)
+            setRemarks(request.remarks)
+        } else {
+            dispatch(trackRequest({ trackingNumber: tracker, lastName: surname }))
+        }
+
+        if (error) {
+            history.push('/track')
+            alert.error(error)
+
+            dispatch(clearErrors())
+        }
         dispatch({
             type: INSIDE_DASHBOARD_FALSE
         })
-    }, [dispatch, history])
+    }, [dispatch, history, request, error, tracker, surname])
 
     const setHistory = () => {
-        const remarks = request.remarks
         const data = {
             columns: [
                 {
@@ -89,29 +131,32 @@ const TrackingPageProgress = ({ history, match }) => {
 
     return (
         <Fragment>
-            <MetaData title={`Tracking ID: ${request.trackingNumber}`} />
+            <MetaData title={`Tracking ID: ${trackingNumber}`} />
             {!loading ? (
                 <Fragment style={{ marginTop: '30px' }}>
                     <Card style={cardStyle}>
                         <Card.Body>
-                            <Card.Title>Tracking ID#: {request && request.trackingNumber}</Card.Title>
-                            <Card.Text><b>Name:</b> {request && upperCase(request.requestorLastName)}, {request && upperCase(request.requestorFirstName)}</Card.Text>
+                            <Card.Title>Tracking ID#: {trackingNumber}</Card.Title>
+                            <Card.Text><b>Name:</b> {request && upperCase(requestorLastName)}, {upperCase(requestorFirstName)}</Card.Text>
                             <Card.Text><b>Current status:</b> <font color={
                                 !request ? '' : (
-                                    (request.requestStatus === 'Pending' ? 'blue' : (
-                                        request.requestStatus === 'Processing' ? '#ffcc00' : (
-                                            request.requestStatus === 'Denied' ? 'red' : 'green'
+                                    (requestStatus === 'Pending' ? 'blue' : (
+                                        requestStatus === 'Processing' ? '#ffcc00' : (
+                                            requestStatus === 'Denied' ? 'red' : 'green'
                                         )
                                     ))
                                 )
-                            }>{request && upperCase(request.requestStatus)}</font></Card.Text>
-                            <Card.Text><b>Student number:</b> {request && request.requestorStudentNumber}</Card.Text>
-                            <Card.Text><b>Email:</b> {request && request.requestorEmail}</Card.Text>
-                            <Card.Text><b>Course:</b> {request && request.requestorCourse}</Card.Text>
+                            }>{upperCase(requestStatus)}</font></Card.Text>
+                            <Card.Text><b>Request Type:</b> {requestType}</Card.Text>
+                            <Card.Text><b>Student number:</b> {requestorStudentNumber}</Card.Text>
+                            <Card.Text><b>Email:</b> {requestorEmail}</Card.Text>
+                            <Card.Text><b>Course:</b> {requestorCourse}</Card.Text>
+                            <Card.Text><b>Year Level/Section:</b> {requestorYearLevel} {requestorSection}</Card.Text>
+                            <Card.Text><b>Notes:</b> {requestorNotes}</Card.Text>
                             <Card.Text>
                                 Attachments:
                                 <ul>
-                                    {request.fileRequirements && request.fileRequirements.map(file => (
+                                    {fileRequirements && fileRequirements.map(file => (
                                         <li><a href={file.path}>{file.originalname}</a></li>
                                     ))}
                                 </ul>

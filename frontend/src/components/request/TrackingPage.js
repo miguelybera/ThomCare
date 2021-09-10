@@ -13,9 +13,6 @@ const TrackingPage = ({ history }) => {
     const alert = useAlert()
     const dispatch = useDispatch()
 
-    const { loading, success, error, request } = useSelector(state => state.requestDetails)
-    const [clicked, setClicked] = useState(false)
-
     const [userInfo, setUserInfo] = useState({
         trackingNumber: '',
         lastName: ''
@@ -24,24 +21,14 @@ const TrackingPage = ({ history }) => {
     const { trackingNumber, lastName } = userInfo
 
     const submitHandler = e => {
-        setClicked(!clicked)
-        dispatch(trackRequest(userInfo))
+        history.push(`/track/${userInfo.trackingNumber}/${userInfo.lastName}`)
     }
 
     useEffect(() => {
-        if (success && clicked) {
-            history.push(`/track/${request.trackingNumber}`)
-        }
-
-        if (error) {
-            alert.error(error)
-            dispatch(clearErrors())
-        }
-
         dispatch({
             type: INSIDE_DASHBOARD_FALSE
         })
-    }, [loading, dispatch, alert, success, error, history])
+    }, [dispatch])
 
 
     const onChange = e => {
@@ -80,14 +67,8 @@ const TrackingPage = ({ history }) => {
                                     onClick={submitHandler}
                                     type='submit'
                                     style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
-                                    disabled={loading ? true : false}>
-                                    {loading ? (
-                                        <span>
-                                            <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
-                                        </span>
-                                    ) : (
-                                        <span>Track</span>
-                                    )}
+                                >
+                                    Track
                                 </Button>
                             </center>
                         </Card.Body>
