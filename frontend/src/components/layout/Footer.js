@@ -24,13 +24,14 @@ const Cards = styled.div`
 
 const Style = styled.div`
 z-index: 1;
-  width: 100%;
+margin-top: auto;
+width: 100%;
 background-color: #9c0b0b;
 color: white;
 bottom: 0;
 right: 0;
 left:0;
-  position: relative;
+position: relative;
 `;
 
 const Left = styled.div`
@@ -43,31 +44,31 @@ const Footer = () => {
         <Fragment>
             <Style>
                 <Row xs={15}>
-                    <Col style={{bottom: "0px",paddingTop: "20px", display: "flex", paddingBottom: "0px", paddingLeft: "130px"}}>
-                <img
-                        src="/images/UST_SEAL.png"
-                        width="84px"
-                        height="80px" 
-                        float="right"
-                        
-                        alt="CICS Seal"
-                    />
+                    <Col style={{ bottom: "0px", paddingTop: "20px", display: "flex", paddingBottom: "0px", paddingLeft: "130px" }}>
+                        <img
+                            src="/images/UST_SEAL.png"
+                            width="84px"
+                            height="80px"
+                            float="right"
+
+                            alt="CICS Seal"
+                        />
                     </Col>
                     <Col xs={9}>
-                <p style={{paddingTop: "20px", paddingBottom: "0px", paddingLeft: "0px", fontSize: "80%"}}>
-                    UST-College of Information and Computing Sciences <br/>
-                    Blessed Pier Giorgio Frassati Building <br/>
-                    
-                    Espana Blvd., Sampaloc, Manila, Philippines 1008 <br/>
-                    +632-4061611 local 8241 or +632-7315738 for telefax 
-                    
-                </p>
-                </Col>
-                <Col>
-                </Col>
+                        <p style={{ paddingTop: "20px", paddingBottom: "0px", paddingLeft: "0px", fontSize: "80%" }}>
+                            UST-College of Information and Computing Sciences <br />
+                            Blessed Pier Giorgio Frassati Building <br />
+
+                            Espana Blvd., Sampaloc, Manila, Philippines 1008 <br />
+                            +632-4061611 local 8241 or +632-7315738 for telefax
+
+                        </p>
+                    </Col>
+                    <Col>
+                    </Col>
                 </Row>
                 <Row>
-                    <p style={{textAlign:"center" ,fontSize: "70%"}}>© COPYRIGHT 2021.ALL RIGHTS RESERVED.</p>
+                    <p style={{ textAlign: "center", fontSize: "70%" }}>© COPYRIGHT 2021.ALL RIGHTS RESERVED.</p>
                 </Row>
             </Style>
         </Fragment>

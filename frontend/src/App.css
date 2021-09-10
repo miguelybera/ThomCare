@@ -40,6 +40,10 @@
 
 .App {
     font-family: MuktaMalar;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+
     
 }
 

@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useAlert } from 'react-alert'
-import { Link } from 'react-router-dom'
+import { Link , NavLink } from 'react-router-dom'
 import { Nav, NavDropdown, Navbar, Container, Button } from 'react-bootstrap'
 import { logout } from '../../actions/userActions'
 import '../../App.css'
