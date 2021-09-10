@@ -118,6 +118,23 @@ function PetitionClass() {
 
     const [submitted, setSubmitted] = useState(false)
 
+    const csTracks = [
+        "Core Computer Science",
+        "Game Development",
+        "Data Science"
+    ]
+
+    const itTracks = [
+        "Network and Security",
+        "Web and Mobile App Development",
+        "IT Automation"
+    ]
+
+    const isTracks = [
+        "Business Analytics",
+        "Service Management"
+    ]
+
     return (
         <Fragment>
             <MetaData title={'Add/Drop Form'} />
@@ -162,11 +179,32 @@ function PetitionClass() {
                                         <Form.Control type="text" value={user && user.course} readOnly />
                                     </Form.Group>
 
-                                    <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
+                                    <Form.Group as={Col} className="mb-3">
                                         <Form.Label>Specialization Track</Form.Label>
-                                        <Form.Control type='text' value='di ko alam iset hehe' readOnly />
+                                        <Form.Select aria-label="Default select example" required>
+                                            {user.course === 'Computer Science' ? (
+                                                <Fragment>
+                                                    {csTracks.map(track => (
+                                                        <option value={track}>{track}</option>
+                                                    ))}
+                                                </Fragment>
+                                            ) : (
+                                                user.course === 'Information Technology' ? (
+                                                    <Fragment>
+                                                        {itTracks.map(track => (
+                                                            <option value={track}>{track}</option>
+                                                        ))}
+                                                    </Fragment>
+                                                ) : (
+                                                    <Fragment>
+                                                        {isTracks.map(track => (
+                                                            <option value={track}>{track}</option>
+                                                        ))}
+                                                    </Fragment>
+                                                )
+                                            )}
+                                        </Form.Select>
                                     </Form.Group>
-
                                 </Row>
 
                                 <Row className="mb-3">
