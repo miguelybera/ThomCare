@@ -14,27 +14,28 @@ const SubmitRequest = ({ history }) => {
     const alert = useAlert()
     const dispatch = useDispatch()
 
-    const { loading, success, error } = useSelector(state => state.request)
+    const { loading, success, error } = useSelector(state => state.requestDetails)
 
     const submitHandler = e => {
         e.preventDefault()
 
         const formData = new FormData()
-        formData.set('fileRequirements', fileRequirements)
-        formData.set('requestorSection', requestorSection)
-        formData.set('requestorYearLevel', requestorYearLevel)
-        formData.set('requestorNotes', requestorNotes)
+        fileRequirements.forEach(file => {
+            formData.append('fileRequirements', file)
+        })
+        formData.set('section', section)
+        formData.set('yearLevel', yearLevel)
+        formData.set('notes', notes)
         formData.set('requestType', requestType)
-
 
         dispatch(submitRequest(formData))
     }
 
     const [fileRequirements, setFileRequirements] = useState()
-    const [requestorSection, setRequestorSection] = useState()
-    const [requestorYearLevel, setRequestorYearLevel] = useState()
+    const [section, setSection] = useState()
+    const [yearLevel, setYearLevel] = useState()
     const [requestType, setRequestType] = useState()
-    const [requestorNotes, setRequestorNotes] = useState()
+    const [notes, setNotes] = useState()
 
     const onChange = e => {
         const files = Array.from(e.target.files)
@@ -53,8 +54,8 @@ const SubmitRequest = ({ history }) => {
         'Request for Petition Classes within CICS',
         'Request for Crediting of Courses',
         'Request for Overload',
-        'Request for late enrollment',
-        'Request for manual enrollment',
+        'Request for Late Enrollment',
+        'Request for Manual Enrollment',
         'Request for Course Description',
         'Request for Certificate of Grades',
         'Others'
@@ -71,6 +72,7 @@ const SubmitRequest = ({ history }) => {
 
         if (error) {
             alert.error(error)
+            console.log(error)
             dispatch(clearErrors())
         }
 
@@ -96,9 +98,9 @@ const SubmitRequest = ({ history }) => {
                                     >
                                         <Form.Control
                                             type='text'
-                                            name='requestorSection'
-                                            value={requestorSection}
-                                            onChange={e => setRequestorSection(e.target.value)}
+                                            name='section'
+                                            value={section}
+                                            onChange={e => setSection(e.target.value)}
                                         />
                                     </FloatingLabel>
                                 </Form.Group>
@@ -107,8 +109,8 @@ const SubmitRequest = ({ history }) => {
                                     <Form.Select
                                         className="mb-3"
                                         aria-label="Default select example"
-                                        name="requestorYearLevel" value={requestorYearLevel}
-                                        onChange={e => setRequestorYearLevel(e.target.value)}
+                                        name="yearLevel" value={yearLevel}
+                                        onChange={e => setYearLevel(e.target.value)}
                                     >
                                         <option>-</option>
                                         {levels.map(level => (
@@ -138,9 +140,9 @@ const SubmitRequest = ({ history }) => {
                                     >
                                         <Form.Control
                                             type='text'
-                                            name='requestorNotes'
-                                            value={requestorNotes}
-                                            onChange={e => setRequestorNotes(e.target.value)}
+                                            name='notes'
+                                            value={notes}
+                                            onChange={e => setNotes(e.target.value)}
                                         />
                                     </FloatingLabel>
                                 </Form.Group>

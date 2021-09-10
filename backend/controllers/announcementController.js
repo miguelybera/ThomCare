@@ -16,6 +16,11 @@ const toBoolean = (str) => {
     }
 }
 
+const sample = {
+    abby: 'u got abby',
+    jason: 'u got nino'
+}
+
 // Create new announcement => /api/v1/new/announcement
 exports.newAnnouncement = catchAsyncErrors(async (req, res, next) => {
     const { title, description, course, yearLevel, announcementType, setExpiry } = req.body
@@ -296,7 +301,7 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
         runValidators: true,
         useFindAndModify: false
     })
-    
+
     res.status(200).json({
         success: true,
         announcement
@@ -323,40 +328,20 @@ exports.deleteAnnouncement = catchAsyncErrors(async (req, res, next) => {
         }
     }
 
-    const imagesAttached = announcement.imageAttachments
-    let imageIds = []
-
-    for (let i = 0; i < imagesAttached.length; i++) {
-        imageIds.push(imagesAttached[i].filename)
-    }
-
-    if (imageIds.length !== 0) {
-        for (let x = 0; x < imageIds.length; x++) {
-            cloudinary.uploader.destroy(imageIds[x],
-                { resource_type: 'raw' })
-        }
-    }
-
     await announcement.remove()
 
     res.status(200).json({
         success: true,
         message: "Announcement deleted"
     })
-
 })
-
 
 // archive announcement /api/v1/admin/archiveAnnouncement/:id
 exports.archiveAnnouncement = catchAsyncErrors(async (req, res, next) => {
     let announcement = await Announcement.findById(req.params.id);
     if (!announcement) { return next(new ErrorHandler('Announcement Not Found', 404)) }
 
-    const newAnnouncementData = {
-        archiveDate: Date.now() - 1000
-    }
-
-    announcement = await Announcement.findByIdAndUpdate(req.params.id, newAnnouncementData, {
+    announcement = await Announcement.findByIdAndUpdate(req.params.id, { setExpiry: true, archiveDate: Date.now() - 1000 }, {
         new: true,
         runValidators: true,
         useFindAndModify: false

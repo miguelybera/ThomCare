@@ -76,7 +76,6 @@ export const submitRequest = (request) => async (dispatch) => {
 
         const { data } = await axios.post(`/api/v1/submitRequest`, request, config)
 
-
         dispatch({
             type: SUBMIT_REQUEST_SUCCESS,
             payload: data
