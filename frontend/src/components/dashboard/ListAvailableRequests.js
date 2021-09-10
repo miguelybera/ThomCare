@@ -166,7 +166,7 @@ const ListAvailableRequests = ({ history }) => {
                 <div className="">
                     <Container className="space_inside"></Container>
                     <Container>
-                        <h3>Requests</h3>
+                        <h3>Available Requests</h3>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5
