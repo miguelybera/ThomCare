@@ -23,16 +23,10 @@ const UpdateRequest = ({ history, match }) => {
 
     const requestId = match.params.id
 
-    const [requestorFirstName, setRequestorFirstName] = useState('')
-    const [requestorLastName, setRequestorLastName] = useState('')
-    const [requestorStudentNumber, setRequestorStudentNumber] = useState('')
-    const [requestorEmail, setRequestorEmail] = useState('')
-    const [requestorYearLevel, setRequestorYearLevel] = useState('')
-    const [requestorSection, setRequestorSection] = useState('')
-    const [requestorCourse, setRequestorCourse] = useState('')
+    const [requestorInfo, setRequestorInfo] = useState({})
+    const [notes, setNotes] = useState('')
     const [requestStatus, setRequestStatus] = useState('')
     const [requestType, setRequestType] = useState('')
-    const [requestorNotes, setRequestorNotes] = useState('')
     const [trackingNumber, setTrackingNumber] = useState('')
     const [fileRequirements, setFileRequirements] = useState([])
     const [returningFiles, setReturningFiles] = useState([])
@@ -64,16 +58,10 @@ const UpdateRequest = ({ history, match }) => {
         if (request && request._id !== requestId) {
             dispatch(getRequestDetails(requestId))
         } else if (request) {
-            setRequestorFirstName(request.requestorFirstName)
-            setRequestorLastName(request.requestorLastName)
-            setRequestorStudentNumber(request.requestorStudentNumber)
-            setRequestorEmail(request.requestorEmail)
-            setRequestorYearLevel(request.requestorYearLevel)
-            setRequestorSection(request.requestorSection)
-            setRequestorCourse(request.requestorCourse)
+            setRequestorInfo(request.requestorInfo)
             setRequestStatus(request.requestStatus)
             setRequestType(request.requestType)
-            setRequestorNotes(request.requestorNotes)
+            setNotes(request.notes)
             setTrackingNumber(request.trackingNumber)
             setFileRequirements(request.fileRequirements)
             setRemarks(request.remarks)
@@ -196,38 +184,38 @@ const UpdateRequest = ({ history, match }) => {
                                 <Row className="mb-3">
                                     <Form.Group as={Col} controlId="formGridEmail">
                                         <Form.Label>First Name</Form.Label>
-                                        <Form.Control type="text" value={requestorFirstName} readOnly />
+                                        <Form.Control type="text" value={requestorInfo.firstName} readOnly />
                                     </Form.Group>
 
                                     <Form.Group as={Col} controlId="formGridEmail">
                                         <Form.Label>Last Name</Form.Label>
-                                        <Form.Control type="text" value={requestorLastName} readOnly />
+                                        <Form.Control type="text" value={requestorInfo.lastName} readOnly />
                                     </Form.Group>
 
                                     <Form.Group as={Col} controlId="formGridEmail">
                                         <Form.Label>Middle Initial</Form.Label>
-                                        <Form.Control type="text" placeholder="N/A" value='' readOnly />
+                                        <Form.Control type="text" placeholder="N/A" value={requestorInfo.middleName} readOnly />
                                     </Form.Group>
                                 </Row>
 
                                 <Form.Group className="mb-3" controlId="formGridAddress1">
                                     <Form.Label>Student Number</Form.Label>
-                                    <Form.Control value={requestorStudentNumber} readOnly />
+                                    <Form.Control value={requestorInfo.studentNumber} readOnly />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formGridAddress2">
                                     <Form.Label>Course/Program</Form.Label>
-                                    <Form.Control type="text" value={requestorCourse} readOnly />
+                                    <Form.Control type="text" value={requestorInfo.course} readOnly />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formGridAddress2">
                                     <Form.Label>Year Level / Section</Form.Label>
-                                    <Form.Control type="text" value={requestorYearLevel + ' ' + requestorSection} readOnly />
+                                    <Form.Control type="text" value={requestorInfo.yearLevel + ' ' + requestorInfo.section} readOnly />
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formGridAddress2">
                                     <Form.Label>Notes</Form.Label>
-                                    <Form.Control type="text" value={requestorNotes} readOnly />
+                                    <Form.Control type="text" value={notes} readOnly />
 
                                     {fileRequirements && (<p>Attachments:</p>)}
                                     {fileRequirements && fileRequirements.map(file => (
@@ -238,7 +226,7 @@ const UpdateRequest = ({ history, match }) => {
                                 <Row className="mb-3">
                                     <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
                                         <Form.Label>Email address</Form.Label>
-                                        <Form.Control type='email' value={requestorEmail} readOnly />
+                                        <Form.Control type='email' value={requestorInfo.email} readOnly />
                                     </Form.Group>
                                     <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
                                         <Form.Label>Status</Form.Label>

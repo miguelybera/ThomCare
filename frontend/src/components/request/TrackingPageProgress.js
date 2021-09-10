@@ -33,39 +33,27 @@ const TrackingPageProgress = ({ history, match }) => {
     const tracker = match.params.trackingNumber
     const surname = match.params.lastName
 
-    const [requestorFirstName, setRequestorFirstName] = useState('')
-    const [requestorLastName, setRequestorLastName] = useState('')
-    const [requestorStudentNumber, setRequestorStudentNumber] = useState('')
-    const [requestorEmail, setRequestorEmail] = useState('')
-    const [requestorYearLevel, setRequestorYearLevel] = useState('')
-    const [requestorSection, setRequestorSection] = useState('')
-    const [requestorCourse, setRequestorCourse] = useState('')
+    const [requestorInfo, setRequestorInfo] = useState({})
+    const [notes, setNotes] = useState('')
     const [requestStatus, setRequestStatus] = useState('')
     const [requestType, setRequestType] = useState('')
-    const [requestorNotes, setRequestorNotes] = useState('')
     const [trackingNumber, setTrackingNumber] = useState('')
     const [fileRequirements, setFileRequirements] = useState([])
     const [remarks, setRemarks] = useState([])
 
     useEffect(() => {
         if (request && request.trackingNumber !== tracker) {
-            dispatch(trackRequest({ trackingNumber: tracker, lastName: surname }))
+            dispatch(trackRequest({trackingNumber: tracker, lastName: surname}))
         } else if (request) {
-            setRequestorFirstName(request.requestorFirstName)
-            setRequestorLastName(request.requestorLastName)
-            setRequestorStudentNumber(request.requestorStudentNumber)
-            setRequestorEmail(request.requestorEmail)
-            setRequestorYearLevel(request.requestorYearLevel)
-            setRequestorSection(request.requestorSection)
-            setRequestorCourse(request.requestorCourse)
+            setRequestorInfo(request.requestorInfo)
             setRequestStatus(request.requestStatus)
             setRequestType(request.requestType)
-            setRequestorNotes(request.requestorNotes)
+            setNotes(request.notes)
             setTrackingNumber(request.trackingNumber)
             setFileRequirements(request.fileRequirements)
             setRemarks(request.remarks)
         } else {
-            dispatch(trackRequest({ trackingNumber: tracker, lastName: surname }))
+            dispatch(trackRequest({trackingNumber: tracker, lastName: surname}))
         }
 
         if (error) {
@@ -121,7 +109,7 @@ const TrackingPageProgress = ({ history, match }) => {
                             <li><a href={file.path}>{file.originalname}</a></li>
                         ))}
                     </ul>
-                    <p style={{ fontSize: '12px', color: 'gray', paddingTop: '10px' }}>By: {upperCase(remark.userUpdated)}</p>
+                    <p style={{ fontSize: '12px', color: 'gray', paddingTop: '10px' }}>By: {remark.userUpdated}</p>
                 </Fragment>
 
             })
@@ -137,7 +125,7 @@ const TrackingPageProgress = ({ history, match }) => {
                     <Card style={cardStyle}>
                         <Card.Body>
                             <Card.Title>Tracking ID#: {trackingNumber}</Card.Title>
-                            <Card.Text><b>Name:</b> {request && upperCase(requestorLastName)}, {upperCase(requestorFirstName)}</Card.Text>
+                            <Card.Text><b>Name:</b> {requestorInfo.lastName}, {requestorInfo.firstName}</Card.Text>
                             <Card.Text><b>Current status:</b> <font color={
                                 !request ? '' : (
                                     (requestStatus === 'Pending' ? 'blue' : (
@@ -148,11 +136,11 @@ const TrackingPageProgress = ({ history, match }) => {
                                 )
                             }>{upperCase(requestStatus)}</font></Card.Text>
                             <Card.Text><b>Request Type:</b> {requestType}</Card.Text>
-                            <Card.Text><b>Student number:</b> {requestorStudentNumber}</Card.Text>
-                            <Card.Text><b>Email:</b> {requestorEmail}</Card.Text>
-                            <Card.Text><b>Course:</b> {requestorCourse}</Card.Text>
-                            <Card.Text><b>Year Level/Section:</b> {requestorYearLevel} {requestorSection}</Card.Text>
-                            <Card.Text><b>Notes:</b> {requestorNotes}</Card.Text>
+                            <Card.Text><b>Student number:</b> {requestorInfo.studentNumber}</Card.Text>
+                            <Card.Text><b>Email:</b> {requestorInfo.email}</Card.Text>
+                            <Card.Text><b>Course:</b> {requestorInfo.course}</Card.Text>
+                            <Card.Text><b>Year Level/Section:</b> {requestorInfo.yearLevel} {requestorInfo.section}</Card.Text>
+                            <Card.Text><b>Notes:</b> {notes}</Card.Text>
                             <Card.Text>
                                 Attachments:
                                 <ul>

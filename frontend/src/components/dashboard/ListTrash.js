@@ -100,7 +100,7 @@ const ListAllRequests = ({ history }) => {
                 },
                 {
                     label: 'Requested by',
-                    field: 'requestorName',
+                    field: 'name',
                     width: 300
                 },
                 {
@@ -121,7 +121,7 @@ const ListAllRequests = ({ history }) => {
             data.rows.push({
                 date: changeDateFormat(request.createdAt),
                 requestType: request.requestType,
-                requestorName: request.requestorFirstName + ' ' + request.requestorLastName,
+                name: request.requestorInfo.firstName + ' ' + request.requestorInfo.lastName,
                 requestStatus: <Fragment>
                     <p style={{
                         color: request.requestStatus === 'Pending' ? 'blue' : (

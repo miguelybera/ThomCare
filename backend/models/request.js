@@ -17,8 +17,8 @@ const requestSchema = new mongoose.Schema({
                 'Request for Crediting of Courses',
                 'Request for Overload',
                 'Request to Override',
-                'Request for late enrollment',
-                'Request for manual enrollment',
+                'Request for Late Enrollment',
+                'Request for Manual Enrollment',
                 'Request for Course Description',
                 'Request for Certificate of Grades',
                 'Others'
@@ -47,54 +47,56 @@ const requestSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
-    requestorFirstName: {
-        type: String,
-        required: [true, 'Requestor First Name required']
-    },
-    requestorMiddleName: {
-        type: String,
-        default: ''
-    },
-    requestorLastName: {
-        type: String,
-        required: [true, 'Requestor Last Name required']
-    },
-    requestorStudentNumber: {
-        type: String,
-        required: [true, 'Requestor Last Name required']
-    },
-    requestorEmail: {
-        type: String,
-        required: [true, 'Requestor Email required']
-    },
-    requestorYearLevel: {
-        type: String,
-        required: [true, 'Requestor year level required'],
-        enum: {
-            values: [
-                '1st Year',
-                '2nd Year',
-                '3rd Year',
-                '4th Year',
-                'Irregular',
-                'Alumni'
-            ]
-        }
-    },
-    requestorSection: {
-        type: String,
-        required: [true, 'Requestor Section required']
-    },
-    requestorCourse: {
-        type: String,
-        required: [true, 'Please enter request course'],
-        enum: {
-            values: [
-                'Computer Science',
-                'Information Technology',
-                'Information Systems'
-            ]
-        }
+    requestorInfo: {
+        firstName: {
+            type: String,
+            required: [true, 'Requestor First Name required']
+        },
+        middleName: {
+            type: String,
+            default: ''
+        },
+        lastName: {
+            type: String,
+            required: [true, 'Requestor Last Name required']
+        },
+        studentNumber: {
+            type: String,
+            required: [true, 'Requestor Last Name required']
+        },
+        email: {
+            type: String,
+            required: [true, 'Requestor Email required']
+        },
+        yearLevel: {
+            type: String,
+            required: [true, 'Requestor year level required'],
+            enum: {
+                values: [
+                    '1st Year',
+                    '2nd Year',
+                    '3rd Year',
+                    '4th Year',
+                    'Irregular',
+                    'Alumni'
+                ]
+            }
+        },
+        section: {
+            type: String,
+            required: [true, 'Requestor Section required']
+        },
+        course: {
+            type: String,
+            required: [true, 'Please enter request course'],
+            enum: {
+                values: [
+                    'Computer Science',
+                    'Information Technology',
+                    'Information Systems'
+                ]
+            }
+        },
     },
     createdAt: {
         type: Date,
@@ -120,13 +122,12 @@ const requestSchema = new mongoose.Schema({
         returningFiles: {
             type: Array
         }
-
     }],
     fileRequirements: {
         type: Array,
         required: [true, 'Please attach required documents']
     },
-    requestorNotes: {
+    notes: {
         type: String
     },
     isTrash: {

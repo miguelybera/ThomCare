@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getRequestDetails, clearErrors } from './../../actions/requestActions'
 import MetaData from './../layout/MetaData'
 import Loader from './../layout/Loader'
+import Sidebar from './../layout/Sidebar'
 import { MDBDataTableV5 } from 'mdbreact'
 import { Card, Button } from 'react-bootstrap'
 import {
@@ -21,46 +22,31 @@ const cardStyle = {
 
 const ViewRequest = ({ history, match }) => {
     const dispatch = useDispatch()
+    const alert = useAlert()
 
-    const { loading, request } = useSelector(state => state.requestDetails)
+    const { loading, error, request } = useSelector(state => state.requestDetails)
 
     function changeDateFormat(date) {
         return dateFormat(date, "mmm d, yyyy h:MMtt")
     }
 
-    const upperCase = (text) => text.toUpperCase()
-
     const requestId = match.params.id
-
-    const [requestorFirstName, setRequestorFirstName] = useState('')
-    const [requestorLastName, setRequestorLastName] = useState('')
-    const [requestorStudentNumber, setRequestorStudentNumber] = useState('')
-    const [requestorEmail, setRequestorEmail] = useState('')
-    const [requestorYearLevel, setRequestorYearLevel] = useState('')
-    const [requestorSection, setRequestorSection] = useState('')
-    const [requestorCourse, setRequestorCourse] = useState('')
+    const [requestorInfo, setRequestorInfo] = useState({})
+    const [notes, setNotes] = useState('')
     const [requestStatus, setRequestStatus] = useState('')
     const [requestType, setRequestType] = useState('')
-    const [requestorNotes, setRequestorNotes] = useState('')
     const [trackingNumber, setTrackingNumber] = useState('')
     const [fileRequirements, setFileRequirements] = useState([])
     const [remarks, setRemarks] = useState([])
-
 
     useEffect(() => {
         if (request && request._id !== requestId) {
             dispatch(getRequestDetails(requestId))
         } else if (request) {
-            setRequestorFirstName(request.requestorFirstName)
-            setRequestorLastName(request.requestorLastName)
-            setRequestorStudentNumber(request.requestorStudentNumber)
-            setRequestorEmail(request.requestorEmail)
-            setRequestorYearLevel(request.requestorYearLevel)
-            setRequestorSection(request.requestorSection)
-            setRequestorCourse(request.requestorCourse)
+            setRequestorInfo(request.requestorInfo)
             setRequestStatus(request.requestStatus)
             setRequestType(request.requestType)
-            setRequestorNotes(request.requestorNotes)
+            setNotes(request.notes)
             setTrackingNumber(request.trackingNumber)
             setFileRequirements(request.fileRequirements)
             setRemarks(request.remarks)
@@ -68,12 +54,18 @@ const ViewRequest = ({ history, match }) => {
             dispatch(getRequestDetails(requestId))
         }
 
+        if(error) {
+            window.history.back()
+            alert.error(error)
+        }
 
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, request, history])
+    }, [dispatch, request, history, error])
 
+    const upperCase = (text) => text.toUpperCase()
+    
     const setHistory = () => {
         const data = {
             columns: [
@@ -116,7 +108,7 @@ const ViewRequest = ({ history, match }) => {
                             <li><a href={file.path}>{file.originalname}</a></li>
                         ))}
                     </ul>
-                    <p style={{ fontSize: '12px', color: 'gray', paddingTop: '10px' }}>By: {upperCase(remark.userUpdated)}</p>
+                    <p style={{ fontSize: '12px', color: 'gray', paddingTop: '10px' }}>By: {remark.userUpdated}</p>
                 </Fragment>
 
             })
@@ -127,12 +119,13 @@ const ViewRequest = ({ history, match }) => {
     return (
         <Fragment>
             <MetaData title={`Tracking ID: ${trackingNumber}`} />
+            <Sidebar/>
             {!loading ? (
                 <Fragment style={{ marginTop: '30px' }}>
                     <Card style={cardStyle}>
                         <Card.Body>
                             <Card.Title>Tracking ID#: {trackingNumber}</Card.Title>
-                            <Card.Text><b>Name:</b> {request && upperCase(requestorLastName)}, {upperCase(requestorFirstName)}</Card.Text>
+                            <Card.Text><b>Name:</b> {requestorInfo.lastName}, {requestorInfo.firstName}</Card.Text>
                             <Card.Text><b>Current status:</b> <font color={
                                 !request ? '' : (
                                     (requestStatus === 'Pending' ? 'blue' : (
@@ -143,11 +136,11 @@ const ViewRequest = ({ history, match }) => {
                                 )
                             }>{upperCase(requestStatus)}</font></Card.Text>
                             <Card.Text><b>Request Type:</b> {requestType}</Card.Text>
-                            <Card.Text><b>Student number:</b> {requestorStudentNumber}</Card.Text>
-                            <Card.Text><b>Email:</b> {requestorEmail}</Card.Text>
-                            <Card.Text><b>Course:</b> {requestorCourse}</Card.Text>
-                            <Card.Text><b>Year Level/Section:</b> {requestorYearLevel} {requestorSection}</Card.Text>
-                            <Card.Text><b>Notes:</b> {requestorNotes}</Card.Text>
+                            <Card.Text><b>Student number:</b> {requestorInfo.studentNumber}</Card.Text>
+                            <Card.Text><b>Email:</b> {requestorInfo.email}</Card.Text>
+                            <Card.Text><b>Course:</b> {requestorInfo.course}</Card.Text>
+                            <Card.Text><b>Year Level/Section:</b> {requestorInfo.yearLevel} {requestorInfo.section}</Card.Text>
+                            <Card.Text><b>Notes:</b> {notes}</Card.Text>
                             <Card.Text>
                                 Attachments:
                                 <ul>

@@ -9,7 +9,7 @@ const requestTypeOfficeStaff = ['Request for Certificate of Grades', 'Request fo
 
 // Submit new request => /api/v1/submitRequest
 exports.submitRequest = catchAsyncErrors(async (req, res, next) => {
-    const { requestType, requestorYearLevel, requestorSection, requestorNotes } = req.body
+    const { requestType, yearLevel, section, notes } = req.body
 
     const fileRequirements = req.files
 
@@ -36,10 +36,10 @@ exports.submitRequest = catchAsyncErrors(async (req, res, next) => {
         case "Request Override":
             trackStart = '6'
             break
-        case "Request for late enrollment":
+        case "Request for Late Enrollment":
             trackStart = '7'
             break
-        case "Request for manual enrollment":
+        case "Request for Manual Enrollment":
             trackStart = '8'
             break
         case "Request for Course Description":
@@ -55,35 +55,32 @@ exports.submitRequest = catchAsyncErrors(async (req, res, next) => {
 
     const trackingNumber = trackStart + req.user.studentNumber + Date.now()
     const requestedById = req.user.id
-    const requestorFirstName = req.user.firstName
-    const requestorMiddleName = req.user.middleName
-    const requestorLastName = req.user.lastName
-    const requestorStudentNumber = req.user.studentNumber
-    const requestorEmail = req.user.email
-    const requestorCourse = req.user.course
+    const { firstName, middleName, lastName, studentNumber, email, course } = req.user
 
-    let remarksData = {
+    let remarks = {
         dateOfRemark: new Date(Date.now()),
         updatedStatus: 'Pending',
         userUpdated: ' ',
         remarksMessage: ' '
     }
 
+    let requestorInfo = {
+        firstName,
+        middleName,
+        lastName,studentNumber,
+        email,
+        yearLevel,
+        course,
+        section
+    }
     const request = await Request.create({
         requestType,
-        requestorYearLevel,
-        requestorSection,
         requestedById,
-        requestorFirstName,
-        requestorMiddleName,
-        requestorLastName,
-        requestorStudentNumber,
-        requestorEmail,
         trackingNumber,
-        requestorCourse,
         fileRequirements,
-        requestorNotes,
-        remarks: remarksData
+        notes,
+        requestorInfo,
+        remarks
     })
     res.status(201).json({
         success: true,
@@ -124,11 +121,11 @@ exports.getAllRequestsDeptChair = catchAsyncErrors(async (req, res, next) => {
             return next(new ErrorHandler('Role does not have access to this resource'))
     }
 
-    const apiFeatures = new APIFeatures(Request.find({ requestorCourse: deptCourse, isTrash: false, requestType: { $nin: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
-    const apiFeaturesPending = new APIFeatures(Request.find({ requestorCourse: deptCourse, requestStatus: 'Pending', isTrash: false, requestType: { $nin: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
-    const apiFeaturesProcessing = new APIFeatures(Request.find({ requestorCourse: deptCourse, requestStatus: 'Processing', isTrash: false, requestType: { $nin: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
-    const apiFeaturesApproved = new APIFeatures(Request.find({ requestorCourse: deptCourse, requestStatus: 'Approved', isTrash: false, requestType: { $nin: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
-    const apiFeaturesDenied = new APIFeatures(Request.find({ requestorCourse: deptCourse, requestStatus: 'Denied', isTrash: false, requestType: { $nin: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
+    const apiFeatures = new APIFeatures(Request.find({ course: deptCourse, isTrash: false, requestType: { $nin: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
+    const apiFeaturesPending = new APIFeatures(Request.find({ course: deptCourse, requestStatus: 'Pending', isTrash: false, requestType: { $nin: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
+    const apiFeaturesProcessing = new APIFeatures(Request.find({ course: deptCourse, requestStatus: 'Processing', isTrash: false, requestType: { $nin: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
+    const apiFeaturesApproved = new APIFeatures(Request.find({ course: deptCourse, requestStatus: 'Approved', isTrash: false, requestType: { $nin: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
+    const apiFeaturesDenied = new APIFeatures(Request.find({ course: deptCourse, requestStatus: 'Denied', isTrash: false, requestType: { $nin: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
     const apiFeaturesCrossEnrollment = new APIFeatures(Request.find({ isTrash: false, requestType: 'Cross Enrollment within CICS' }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
 
     const requests = await apiFeatures.query
@@ -569,7 +566,7 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
 
     try {
         await sendEmail({
-            email: rqst.requestorEmail,
+            email: rqst.email,
             subject: `Status update for request tracking number (${rqst.trackingNumber})`,
             message
         })
@@ -655,7 +652,7 @@ exports.requestTracker = catchAsyncErrors(async (req, res, next) => {
     const request = await Request.findOne({ trackingNumber })
 
     if (!request) { return next(new ErrorHandler(`Request with Tracking Number: (${trackingNumber}) does not exist`)) }
-    if (request.requestorLastName !== lastName) { return next(new ErrorHandler(`Last name does not match with the request surname`)) }
+    if (request.requestorInfo.lastName !== lastName) { return next(new ErrorHandler(`Last name does not match with the request surname`)) }
 
     res.status(200).json({
         success: true,
@@ -727,7 +724,7 @@ exports.getTrashedRequests = catchAsyncErrors(async (req, res, next) => {
     if (deptCourse === 'Office') {
         apiFeatures = new APIFeatures(Request.find({ isTrash: true, requestType: { $in: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
     } else {
-        apiFeatures = new APIFeatures(Request.find({ requestorCourse: deptCourse, isTrash: true, requestType: { $nin: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
+        apiFeatures = new APIFeatures(Request.find({ course: deptCourse, isTrash: true, requestType: { $nin: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
     }
 
     const requests = await apiFeatures.query;
