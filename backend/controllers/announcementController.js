@@ -113,7 +113,7 @@ exports.newAnnouncement = catchAsyncErrors(async (req, res, next) => {
 exports.getHomepageAnnouncements = catchAsyncErrors(async (req, res, next) => {
     const resPerPage = 10
     const announcementCount = await Announcement.countDocuments({ archiveDate: { $gte: Date.now() } })
-    const apiFeatures = new APIFeatures(Announcement.find({ archiveDate: { $gte: Date.now() } }), req.query).search().filter().pagination(resPerPage)
+    const apiFeatures = new APIFeatures(Announcement.find({ archiveDate: { $gte: Date.now() } }).sort({ createdAt: -1 }), req.query).search().filter().pagination(resPerPage)
 
     let announcements = await apiFeatures.query
     let filteredAnnouncementsCount = announcements.length
@@ -130,7 +130,7 @@ exports.getHomepageAnnouncements = catchAsyncErrors(async (req, res, next) => {
 // Get all unarchived announcements /api/v1/admin/unarchivedAnnouncements (For Admin)
 exports.getUnarchivedAnnouncement = catchAsyncErrors(async (req, res, next) => {
     const announcementCount = await Announcement.countDocuments({ archiveDate: { $gte: Date.now() } })
-    const apiFeatures = new APIFeatures(Announcement.find({ archiveDate: { $gte: Date.now() } }), req.query).search().filter()
+    const apiFeatures = new APIFeatures(Announcement.find({ archiveDate: { $gte: Date.now() } }).sort({ createdAt: -1 }), req.query).search().filter()
 
     let announcements = await apiFeatures.query
     let filteredAnnouncementsCount = announcements.length
@@ -146,7 +146,7 @@ exports.getUnarchivedAnnouncement = catchAsyncErrors(async (req, res, next) => {
 // Get all archived announcements /api/v1/admin/archivedAnnouncements (For admin only)
 exports.getArchivedAnnouncements = catchAsyncErrors(async (req, res, next) => {
     const announcementCount = await Announcement.countDocuments({ archiveDate: { $lte: Date.now() } })
-    const apiFeatures = new APIFeatures(Announcement.find({ archiveDate: { $lte: Date.now() } }), req.query).search().filter()
+    const apiFeatures = new APIFeatures(Announcement.find({ archiveDate: { $lte: Date.now() } }).sort({ createdAt: -1 }), req.query).search().filter()
 
     let announcements = await apiFeatures.query
 

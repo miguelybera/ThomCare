@@ -8,7 +8,6 @@ exports.allAudits = catchAsyncErrors(async (req, res, next) => {
     const apiFeatures = new APIFeatures(Audit.find().sort({ dateAudit: -1 }), req.query)
         .searchAudit() // Can search by user email (email of the one who updated the request)
         .filter()
-        .pagination(resPerPage);
     const audits = await apiFeatures.query;
 
     res.status(200).json({
