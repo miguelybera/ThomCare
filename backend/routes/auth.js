@@ -16,7 +16,8 @@ const {
     getUser,
     updateUser,
     deleteUser,
-    getStudentAccounts
+    getStudentAccounts,
+    getAdminAccounts
 } = require('../controllers/authController');
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth');
 
@@ -30,6 +31,7 @@ router.route('/password/update').put(isAuthenticatedUser, updatePassword);
 router.route('/chat/user/:id').get(isAuthenticatedUser, getUser);
 router.route('/chat/users').get(isAuthenticatedUser, getUsers);
 router.route('/announcement/user/:id').get(getUser);
+router.route('/chat/adminUsers').get(isAuthenticatedUser, getAdminAccounts);
 
 //student
 router.route('/registerStudent').post(registerStudent);
