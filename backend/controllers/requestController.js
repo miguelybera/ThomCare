@@ -67,7 +67,8 @@ exports.submitRequest = catchAsyncErrors(async (req, res, next) => {
     let requestorInfo = {
         firstName,
         middleName,
-        lastName,studentNumber,
+        lastName,
+        studentNumber,
         email,
         yearLevel,
         course,
