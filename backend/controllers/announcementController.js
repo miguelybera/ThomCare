@@ -16,11 +16,6 @@ const toBoolean = (str) => {
     }
 }
 
-const sample = {
-    abby: 'u got abby',
-    jason: 'u got nino'
-}
-
 // Create new announcement => /api/v1/new/announcement
 exports.newAnnouncement = catchAsyncErrors(async (req, res, next) => {
     const { title, description, course, yearLevel, announcementType, setExpiry } = req.body
