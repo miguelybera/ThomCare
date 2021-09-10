@@ -23,8 +23,12 @@ exports.newAnnouncement = catchAsyncErrors(async (req, res, next) => {
     const fileAttachments = req.files
     let track = req.body.track ? req.body.track : 'All', archiveDate = new Date('3000-01-01')
 
-    if (req.body.setExpiry) {
-        archiveDate = new Date(req.body.archiveDate)
+    if (toBoolean(req.body.setExpiry)) {
+        if (req.body.archiveDate !== null || req.body.archiveDate !== undefined || req.body.archiveDate !== '') {
+            archiveDate = new Date(req.body.archiveDate)
+        } else {
+            return next(new ErrorHandler('Archive date is needed'))
+        }
     }
 
     switch (yearLevel) {
@@ -89,6 +93,7 @@ exports.newAnnouncement = catchAsyncErrors(async (req, res, next) => {
         track,
         archiveDate,
         createdBy,
+        createdAt: Date.now(),
         fileAttachments,
         announcementType,
         setExpiry
@@ -163,7 +168,7 @@ exports.getSingleAnnouncement = catchAsyncErrors(async (req, res, next) => {
 // Get my announcements /api/v1/me/announcements
 exports.getMyAnnouncements = catchAsyncErrors(async (req, res, next) => {
     const announcementCount = await Announcement.countDocuments({ createdBy: req.user.id })
-    const apiFeatures = new APIFeatures(Announcement.find({ createdBy: req.user.id }), req.query).search().filter()
+    const apiFeatures = new APIFeatures(Announcement.find({ createdBy: req.user.id }).sort({ createdAt: -1 }), req.query).search().filter()
 
     let announcements = await apiFeatures.query
 
@@ -292,6 +297,8 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
         useFindAndModify: false
     })
 
+    console.log(announcement)
+    
     res.status(200).json({
         success: true,
         announcement

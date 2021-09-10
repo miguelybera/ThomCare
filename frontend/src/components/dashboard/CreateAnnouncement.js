@@ -16,11 +16,12 @@ import {
 var dateFormat = require('dateformat')
 
 const CreateAnnouncement = ({ history }) => {
-
     const dispatch = useDispatch()
     const alert = useAlert()
 
     const { loading, error, success } = useSelector(state => state.newAnnouncement)
+
+    const changeDateFormat = (date) => dateFormat(date, "yyyy-mm-dd")
 
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
@@ -28,11 +29,10 @@ const CreateAnnouncement = ({ history }) => {
     const [course, setCourse] = useState('All')
     const [track, setTrack] = useState('All')
     const [announcementType, setAnnouncementType] = useState('All')
-    const [archiveDate, setArchiveDate] = useState('')
+    const [archiveDate, setArchiveDate] = useState(changeDateFormat(Date.now()))
     const [setExpiry, setSetExpiry] = useState(false)
     const [fileAttachments, setFileAttachments] = useState([])
 
-    const changeDateFormat = (date) => dateFormat(date, "yyyy-mm-dd")
 
     const levels = ['All', '1st Year', '2nd Year', '3rd Year', '4th Year']
     const programs = ['All', 'Computer Science', 'Information Systems', 'Information Technology']
@@ -91,10 +91,20 @@ const CreateAnnouncement = ({ history }) => {
             })
         }
 
+        if(!setExpiry) {
+            setArchiveDate(changeDateFormat(Date.now()))
+        }
+
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, alert, success, error])
+    }, [dispatch, alert, success, error, setExpiry])
+
+    useEffect(() => {
+        if (yearLevel === '1st Year' || yearLevel === '2nd Year' || yearLevel === 'All') {
+            setTrack('All')
+        }
+    }, [track, yearLevel])
 
     const onChange = e => {
         const files = Array.from(e.target.files)
@@ -141,7 +151,7 @@ const CreateAnnouncement = ({ history }) => {
                                             ))}
                                         </Form.Select>
                                         <Form.Label>Track</Form.Label>
-                                        <Form.Select aria-label="Default select example" name="track" value={track} onChange={e => setTrack(e.target.value)} disabled={course === 'All' ? true : false}>
+                                        <Form.Select aria-label="Default select example" name="track" value={track} onChange={e => setTrack(e.target.value)} disabled={course === 'All' || yearLevel === 'All' || yearLevel === '1st Year' || yearLevel === '2nd Year' ? true : false}>
                                             {course === 'Computer Science' ? (
                                                 <Fragment>
                                                     {csTracks.map(track => (

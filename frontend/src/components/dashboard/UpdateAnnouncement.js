@@ -24,6 +24,8 @@ const UpdateAnnouncement = ({ history, match }) => {
     const { loading: announcementLoading, error, announcement } = useSelector(state => state.announcementDetails)
     const { loading, error: updateError, isUpdated } = useSelector(state => state.announcement)
 
+    const changeDateFormat = (date) => dateFormat(date, "yyyy-mm-dd")
+
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [yearLevel, setYearLevel] = useState('')
@@ -36,6 +38,7 @@ const UpdateAnnouncement = ({ history, match }) => {
     const [oldAttachments, setOldAttachments] = useState([])
     const [files, setFiles] = useState([])
     const [images, setImages] = useState([])
+    const [ctr, setCtr] = useState(0)
 
     const levels = ['All', '1st Year', '2nd Year', '3rd Year', '4th Year']
 
@@ -86,8 +89,6 @@ const UpdateAnnouncement = ({ history, match }) => {
 
         dispatch(updateAnnouncement(announcement._id, formData))
     }
-
-    const changeDateFormat = (date) => dateFormat(date, "yyyy-mm-dd")
 
     const announcementId = match.params.id
 
@@ -145,6 +146,20 @@ const UpdateAnnouncement = ({ history, match }) => {
         })
     }, [dispatch, error, alert, isUpdated, updateError, announcement, announcementId, history])
 
+    useEffect(() => {
+
+        if (!setExpiry && ctr > 0) {
+            setArchiveDate(changeDateFormat(Date.now()))
+        }
+
+    }, [ctr, setExpiry])
+
+    useEffect(() => {
+        if (yearLevel === '1st Year' || yearLevel === '2nd Year' || yearLevel === 'All') {
+            setTrack('All')
+        }
+    }, [track, yearLevel])
+
     const onChange = e => {
         const files = Array.from(e.target.files)
 
@@ -194,7 +209,7 @@ const UpdateAnnouncement = ({ history, match }) => {
                                                 ))}
                                             </Form.Select>
                                             <Form.Label>Track</Form.Label>
-                                            <Form.Select aria-label="Default select example" name="track" value={track} onChange={e => setTrack(e.target.value)} disabled={course === 'All' ? true : false}>
+                                            <Form.Select aria-label="Default select example" name="track" value={track} onChange={e => setTrack(e.target.value)} disabled={course === 'All' || yearLevel === 'All' || yearLevel === '1st Year' || yearLevel === '2nd Year' ? true : false}>
                                                 {course === 'Computer Science' ? (
                                                     <Fragment>
                                                         {csTracks.map(track => (
@@ -226,7 +241,11 @@ const UpdateAnnouncement = ({ history, match }) => {
                                             </Form.Select>
                                         </Form.Group>
                                         <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                                            <Form.Check type="checkbox" label="Set expiry date" defaultChecked={setExpiry} value={setExpiry} nme="setExpiry" onClick={() => { setSetExpiry(!setExpiry) }} />
+                                            <Form.Check type="checkbox" label="Set expiry date" defaultChecked={setExpiry} value={setExpiry} name="setExpiry" onClick={() => {
+                                                setSetExpiry(!setExpiry)
+                                                setCtr(ctr + 1)
+                                                console.log(ctr)
+                                            }} />
                                             <Form.Control type="date" name="archiveDate" value={archiveDate} onChange={e => setArchiveDate(e.target.value)} disabled={setExpiry ? false : true} />
                                         </Form.Group>
                                         <Form.Group controlId="formFileMultiple" className="mb-3">
