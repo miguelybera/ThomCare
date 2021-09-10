@@ -19,6 +19,8 @@ const SidebarLink = styled(Link)`
         background: #640606;
         border-left: 4px solid #ffffff;
         cursor: pointer;
+        text-decoration: none;
+        color: white;
     }`;
 
 const SidebarLabel = styled.span`
@@ -38,6 +40,7 @@ const DropdownLink = styled(Link)`
         background: #ffffff;
         border-left: 4px solid #ffffff;
         cursor: pointer;
+        text-decoration: none;
     }`;
 
 const SubMenu = ({ item }) => {

@@ -48,11 +48,7 @@ const NavTitle = styled.div`
     display:flex;
     align-items: center;
     justify-content: center;
-    
-    
-    
     z-index: -2;`;
-    
 
 const NavUser = styled.div`
     width: 100%;
@@ -65,9 +61,7 @@ const NavUser = styled.div`
     margin-right: 2rem;
     height: 50px;
     position: absolute;
-   
-    z-index: -1;
-`;
+    z-index: -1;`;
 
 const SidebarNav = styled.nav`
     background: #750908;
@@ -84,7 +78,6 @@ const SidebarNav = styled.nav`
 
 const SidebarText = styled.div`
     font-size: 20px;`;
-
 
 const SidebarWrap = styled.div`
     width: 100%;`;
@@ -105,37 +98,37 @@ const Sidebar = () => {
                         <FaIcons.FaBars onClick={showSidebar} />
                     </NavIcon>
                     <NavTitle>
-                    
+
                         <img
-                        src="/images/CICS_SEAL.png"
-                        width="26"
-                        height="29"
-                        paddingRight="0px"
-                            
-                        alt="CICS Seal"/>
-                        
-                        <p style={{  
-                            
-                            color: "white", 
-                            fontFamily: "AveriaBold", 
+                            src="/images/CICS_SEAL.png"
+                            width="26"
+                            height="29"
+                            paddingRight="0px"
+
+                            alt="CICS Seal" />
+
+                        <p style={{
+
+                            color: "white",
+                            fontFamily: "AveriaBold",
                             paddingTop: "17px",
-                            
+
                             fontSize: "20px",
                             textAlign: "center",
-                            
-                            paddingLeft: "6px",
-                            }}>ThomCare Control Panel</p>
-                            </NavTitle> 
-               <NavUser >         
 
-              <p >{`${user.role}`} : </p>
-              <p style={{color: "#9C0B0A"}}>_ </p>
-              <p > {`${user.firstName}`}</p>
-              
-              </NavUser>
-              
-              
-                   </Nav>
+                            paddingLeft: "6px",
+                        }}>ThomCare Control Panel</p>
+                    </NavTitle>
+                    <NavUser >
+
+                        <p >{`${user.role}`} : </p>
+                        <p style={{ color: "#9C0B0A" }}>_ </p>
+                        <p > {`${user.firstName}`}</p>
+
+                    </NavUser>
+
+
+                </Nav>
 
                 <SidebarNav sidebar={sidebar} >
                     <SidebarWrap>
@@ -168,7 +161,7 @@ const Sidebar = () => {
 
                     </SidebarWrap>
                 </SidebarNav>
-                
+
             </IconContext.Provider>
         </>
     );
