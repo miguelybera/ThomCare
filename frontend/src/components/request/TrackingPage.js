@@ -14,6 +14,7 @@ const TrackingPage = ({ history }) => {
     const dispatch = useDispatch()
 
     const { loading, success, error, request } = useSelector(state => state.requestDetails)
+    const [clicked, setClicked] = useState(false)
 
     const [userInfo, setUserInfo] = useState({
         trackingNumber: '',
@@ -23,15 +24,13 @@ const TrackingPage = ({ history }) => {
     const { trackingNumber, lastName } = userInfo
 
     const submitHandler = e => {
+        setClicked(!clicked)
         dispatch(trackRequest(userInfo))
     }
 
     useEffect(() => {
-        if (success) {
+        if (success && clicked) {
             history.push(`/track/${request.trackingNumber}`)
-            dispatch({
-                type: REQUEST_DETAILS_RESET
-            })
         }
 
         if (error) {
