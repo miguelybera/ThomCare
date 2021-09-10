@@ -296,8 +296,6 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
         runValidators: true,
         useFindAndModify: false
     })
-
-    console.log(announcement)
     
     res.status(200).json({
         success: true,
