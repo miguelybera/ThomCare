@@ -334,8 +334,14 @@ exports.getStudentAccounts = catchAsyncErrors(async (req, res, next) => {
 })
 
 // Get all admin accounts=> /api/v1/chat/adminUsers
-exports.getAdminAccounts = catchAsyncErrors(async (req, res, next) => {
-    const users = await User.find({ role: { $ne: 'Student' } })
+exports.getChatAccounts = catchAsyncErrors(async (req, res, next) => {
+    let users
+    if(req.user.role == 'Student'){
+        users = await User.find({ role: { $ne: 'Student' } })
+    }else{
+         users = await User.find()
+    }
+     
 
     res.status(200).json({
         success: true,
