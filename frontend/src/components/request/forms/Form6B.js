@@ -120,7 +120,7 @@ function Form6B() {
 
     return (
         <Fragment>
-            <MetaData title={'Add/Drop Form'} />
+            <MetaData title={'Cross Enrollment Form'} />
             {loading ? <Loader /> : !submitted ? (
                 <Container classname="align-me" fluid style={{ paddingBottom: '100px' }}>
                     <Card style={{ backgroundColor: '#9c0b0b' }}>  {/*, width: '100rem' */}
@@ -282,7 +282,7 @@ function Form6B() {
                                     )
                                 }
 
-                                <center><Button type='submit' style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}>Submit</Button></center>
+                                <center><Button type='submit' style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}>Generate Form</Button></center>
                             </Form>
                         </Card.Body>
                     </Card>

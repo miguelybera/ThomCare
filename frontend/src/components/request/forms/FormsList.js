@@ -12,7 +12,7 @@ const FormsList = () => {
                 </div>
             </Container>
             <Container fluid style={{ paddingTop: '38px' }}>
-                <Table  bordered striped hover size="sm" style={{ paddingTop: '100px', marginTop: '50px', justifyContent: 'center' }}>
+                <Table bordered striped hover size="sm" style={{ paddingTop: '100px', marginTop: '50px', justifyContent: 'center' }}>
                     <thead>
                         <tr style={{ textAlign: 'center' }}>
                             <th>Document Code</th>
@@ -26,11 +26,16 @@ const FormsList = () => {
                             <td>Form 6A</td>
                             <td>Adding/Dropping of course</td>
                             <td>Available</td>
-                            <td><Link to='/form-6a'>
-                                <Button variant="primary" href="/form-6a">
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+                            <td>
+                                <Link to='/form-6a'>
+                                    <Button variant="primary" href="/form-6a">
+                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Fill up
+                                    </Button>
+                                </Link>
+                                <Button variant="warning"  href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" >
+                                    <i class="fa fa-eye" aria-hidden="true"></i> View
                                 </Button>
-                            </Link></td>
+                            </td>
                         </tr>
                         <tr>
                             <td>Form 6B</td>
@@ -38,9 +43,13 @@ const FormsList = () => {
                             <td>Available</td>
                             <td><Link to='/form-6b'>
                                 <Button variant="primary" href="/form-6b">
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Fill up
                                 </Button>
-                            </Link></td>
+
+                            </Link>
+                                <Button variant="warning"  href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" >
+                                    <i class="fa fa-eye" aria-hidden="true"></i> View
+                                </Button></td>
                         </tr>
                         <tr>
                             <td>-</td>
@@ -48,9 +57,12 @@ const FormsList = () => {
                             <td>Available</td>
                             <td><Link to='/petition-classes'>
                                 <Button variant="primary" href="/petition-classes">
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Fill up
                                 </Button>
-                            </Link></td>
+                            </Link>
+                                <Button variant="warning"  href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" >
+                                    <i class="fa fa-eye" aria-hidden="true"></i> View
+                                </Button></td>
                         </tr>
                         <tr>
                             <td>-</td>
@@ -58,9 +70,13 @@ const FormsList = () => {
                             <td>Available</td>
                             <td><Link to='/form-6a'>
                                 <Button variant="primary" href="/form-6a">
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Fill up
                                 </Button>
-                            </Link></td>
+                            </Link>
+                                <Button variant="warning"  href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" >
+                                    <i class="fa fa-eye" aria-hidden="true"></i> View
+                                </Button>
+                            </td>
                         </tr>
                         <tr>
                             <td>-</td>
@@ -68,9 +84,12 @@ const FormsList = () => {
                             <td>Available</td>
                             <td><Link to='/overload-form'>
                                 <Button variant="primary" href="/form-6a">
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Fill up
                                 </Button>
-                            </Link></td>
+                            </Link>
+                                <Button variant="warning"  href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" >
+                                    <i class="fa fa-eye" aria-hidden="true"></i> View
+                                </Button></td>
                         </tr>
                         <tr>
                             <td>-</td>
@@ -78,9 +97,12 @@ const FormsList = () => {
                             <td>Available</td>
                             <td><Link to='/form-6a'>
                                 <Button variant="primary" href="/form-6a">
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Fill up
                                 </Button>
-                            </Link></td>
+                            </Link>
+                                <Button variant="warning"  href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" >
+                                    <i class="fa fa-eye" aria-hidden="true"></i> View
+                                </Button></td>
                         </tr>
                         <tr>
                             <td>-</td>
@@ -88,9 +110,12 @@ const FormsList = () => {
                             <td>Available</td>
                             <td><Link to='/form-6a'>
                                 <Button variant="primary" href="/form-6a">
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
+                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Fill up
                                 </Button>
-                            </Link></td>
+                            </Link>
+                                <Button variant="warning"  href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing">
+                                    <i class="fa fa-eye" aria-hidden="true"></i> View
+                                </Button></td>
                         </tr>
                     </tbody>
                 </Table>

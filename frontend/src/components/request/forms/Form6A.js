@@ -284,7 +284,7 @@ function Form6A() {
                                     )
                                 }
 
-                                <center><Button type='submit' style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}>Submit</Button></center>
+                                <center><Button type='submit' style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}>Generate Form</Button></center>
                             </Form>
                         </Card.Body>
                     </Card>
