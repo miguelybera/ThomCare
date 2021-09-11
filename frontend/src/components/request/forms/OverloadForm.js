@@ -13,7 +13,7 @@ import {
 } from '../../../constants/dashboardConstants'
 
 
-function Form6A() {
+function OverloadForm() {
     const alert = useAlert()
     const dispatch = useDispatch()
 
@@ -122,12 +122,12 @@ function Form6A() {
 
     return (
         <Fragment>
-            <MetaData title={'Add/Drop Form'} />
+            <MetaData title={'Overload Form'} />
             {loading ? <Loader /> : !submitted ? (
                 <Container classname="align-me" fluid style={{ paddingBottom: '100px' }}>
                     <Card style={{ backgroundColor: '#9c0b0b' }}>  {/*, width: '100rem' */}
                         <Card.Body>
-                            <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold', textAlign: 'center' }}>ADD / DROP COURSE FORM</Card.Title>
+                            <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold', textAlign: 'center' }}>REQUEST FOR STUDY OVERLOAD FORM (MAKE 3 COPIES)</Card.Title>
                             <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold' }}>Student Information</Card.Title>
                             <Form style={{ color: 'white' }} onSubmit={submitHandler} >
                                 <Row className="mb-3">
@@ -162,29 +162,28 @@ function Form6A() {
                                         <Form.Label>Email address</Form.Label>
                                         <Form.Control type='email' value={user && user.email} readOnly />
                                     </Form.Group>
+
+                                    <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
+                                        <Form.Label>Curriculum Year</Form.Label>
+                                        <Form.Control type='text' placeholder="2021" />
+                                    </Form.Group>
+
+                                    <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
+                                        <Form.Label>Term</Form.Label>
+                                        <Form.Control type='text' placeholder="2021 - 2022" />
+                                    </Form.Group>
                                 </Row>
 
-                                <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold' }}>Courses to Add / Drop</Card.Title>
+                                <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold' }}>Load Requested For Approval:</Card.Title>
 
                                 <Row className="mb-3">
-                                    <Form.Group as={Col}>
-                                        <Form.Label>Add/Drop</Form.Label>
-                                    </Form.Group>
-
-                                    <Form.Group as={Col}>
-                                        <Form.Label>Course ID</Form.Label>
-                                    </Form.Group>
 
                                     <Form.Group as={Col}>
                                         <Form.Label>Course Name</Form.Label>
                                     </Form.Group>
 
                                     <Form.Group as={Col}>
-                                        <Form.Label>Lec Units</Form.Label>
-                                    </Form.Group>
-
-                                    <Form.Group as={Col}>
-                                        <Form.Label>Lab Units</Form.Label>
+                                        <Form.Label>Units</Form.Label>
                                     </Form.Group>
 
                                     <Form.Group as={Col}>
@@ -215,33 +214,14 @@ function Form6A() {
                                         return (
                                             <Fragment>
                                                 <Row className="mb-3" key={val.index}>
-                                                    <Form.Group as={Col}>
-                                                        <Form.Select aria-label="Default select example" name="status" id={status} data-id={idx} value={val.status} onChange={e => onChange(idx, e)} required>
-                                                            <option>-</option>
-                                                            <option value="Add">Add</option>
-                                                            <option value="Drop">Drop</option>
-                                                        </Form.Select>
-                                                    </Form.Group>
 
                                                     <Form.Group as={Col}>
-                                                        <Form.Select aria-label="Default select example" name="courseCode" id={courseCode} data-id={idx} value={val.courseCode} onChange={e => onChange(idx, e)} required>
-                                                            <option value=''>-</option>
-                                                            {courses && courses.map(course => (
-                                                                <option value={course.courseCode}>{course.courseCode}</option>
-                                                            ))}
-                                                        </Form.Select>
+                                                        <Form.Control type="text" placeholder="Theology 1" name="courseName" />
                                                     </Form.Group>
 
-                                                    <Form.Group as={Col}>
-                                                        <Form.Control type="text" placeholder="Theology 1" name="courseName" id={courseName} data-id={idx} value={val.courseName} onChange={e => onChange(idx, e)} readOnly />
-                                                    </Form.Group>
 
                                                     <Form.Group as={Col}>
-                                                        <Form.Control type="number" placeholder="3Lec" name="lecUnits" id={lecUnits} data-id={idx} value={val.lecUnits} onChange={e => onChange(idx, e)} readOnly />
-                                                    </Form.Group>
-
-                                                    <Form.Group as={Col}>
-                                                        <Form.Control type="number" placeholder="3Lec" name="labUnits" id={labUnits} data-id={idx} value={val.labUnits} onChange={e => onChange(idx, e)} readOnly />
+                                                        <Form.Control type="number" placeholder="3 units" name="labUnits" />
                                                     </Form.Group>
 
                                                     <Form.Group as={Col}>
@@ -284,10 +264,106 @@ function Form6A() {
                                     )
                                 }
 
+                                <Card.Title style={{ margin: '30px 0 20px 0', color: 'white', fontWeight: 'bold' }}>SPECIAL TERM LOAD   (if special term graduate):</Card.Title>
+
+                                <Row className="mb-3">
+
+                                    <Form.Group as={Col}>
+                                        <Form.Label>Course Name</Form.Label>
+                                    </Form.Group>
+
+                                    <Form.Group as={Col}>
+                                        <Form.Label>Units</Form.Label>
+                                    </Form.Group>
+
+                                </Row>
+
+                                {
+                                    inputFields.map((val, idx) => {
+                                        //set unique id per row
+                                        let status = `status-${idx}`,
+                                            courseCode = `courseCode-${idx}`,
+                                            courseName = `courseName-${idx}`,
+                                            lecUnits = `lecUnits-${idx}`,
+                                            labUnits = `labUnits-${idx}`,
+                                            days = `days-${idx}`,
+                                            time = `time-${idx}`,
+                                            section = `section-${idx}`
+
+                                        return (
+                                            <Fragment>
+                                                <Row className="mb-3" key={val.index}>
+
+                                                    <Form.Group as={Col}>
+                                                        <Form.Control type="text" placeholder="Theology 1" name="courseName" />
+                                                    </Form.Group>
+
+
+                                                    <Form.Group as={Col}>
+                                                        <Form.Control type="number" placeholder="3 units" name="labUnits" />
+                                                    </Form.Group>
+
+                                                    {
+                                                        idx === 0 ? (
+                                                            <Button variant='primary' onClick={() => addRow()} style={{ width: '40px' }}>
+                                                                <i className="fa fa-plus-circle" aria-hidden="true"></i>
+                                                            </Button>
+
+                                                        ) : (
+                                                            <Button variant='danger' onClick={() => deleteRow(idx)} style={{ width: '40px' }}>
+                                                                <i className="fa fa-minus" aria-hidden="true"></i>
+                                                            </Button>
+                                                        )
+                                                    }
+                                                </Row>
+                                            </Fragment>
+                                        )
+                                    }
+                                    )
+                                }
+
+                                <Form.Group as={Row} className="mb-3" controlId="formPlaintextPassword" style={{ margin: '30px 0 20px 0', color: 'white', fontWeight: 'bold' }}>
+                                    <Form.Label column sm="2">
+                                        TENTATIVE DATE OF GRADUATION:
+                                    </Form.Label>
+                                    <Col sm="">
+                                        <Form.Control type="text" placeholder="May 2022" />
+                                    </Col>
+
+                                </Form.Group>
+
                                 <center><Button type='submit' style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}>Generate Form</Button></center>
                             </Form>
                         </Card.Body>
                     </Card>
+
+                    <center> <h3 style={{ fontWeight: 'bold', marginTop: '20px' }}>General Instructions:</h3> </ center>
+                    <Row className="mb-3" style={{ display: 'flex', flexDirection: 'row', margin: '20px 0px 0px 50px' }}>
+                        <ul>
+                            <li>The Overload Form should be printed in triplicate copies.</li>
+                            <ul>
+                                <li>First copy for the Office of the Registrar</li>
+                                <li>Second copy for the Office of the Dean/Department Chair</li>
+                                <li>Third copy for the student</li>
+                            </ul>
+                            <li>Fill out the form legibly with all the required information</li>
+                            <li>Have the approval of the Department Chair and the Dean</li>
+                            <li>Submit the form to the Office of the Registrar for Approval</li>
+                            <li>Once approve you may procced to the Department chair for advising of the approved
+                                overload course.</li>
+                        </ul>
+                        <p>Note: Overload Form</p>
+                        <ul>
+                            <li>As stipulated in the UST Handbook (PPS No. 1012)</li>
+                            <ul>
+                                <li>Graduating student is limited only to six (6) units of overload for the
+                                    Academic Year.</li>
+                                <li>Non-graduating students, upon the endorsement of the Dean, may carry a
+                                    maximum overload of three (3) units in an academic year for the purpose of
+                                    being on a regular track in the succeeding year level.</li>
+                            </ul>
+                        </ul>
+                    </Row>
                 </Container>
             ) : (
                 <PDF title={`Download Add Drop Form`} content={localStorage.getItem('formData')} />
@@ -296,4 +372,4 @@ function Form6A() {
     )
 }
 
-export default Form6A
+export default OverloadForm
