@@ -28,7 +28,7 @@ import {
     INSIDE_DASHBOARD_TRUE
 } from '../../../constants/dashboardConstants'
 
-const Messenger = () => {
+const Messenger = ({ history }) => {
     const dispatch = useDispatch()
     const alert = useAlert();
 
@@ -37,7 +37,9 @@ const Messenger = () => {
     const { messages } = useSelector(state => state.messages)
     const { success, error } = useSelector(state => state.createConvo)
 
-    const [currentChat, setCurrentChat] = useState(null)
+    const [currentChat, setCurrentChat] = useState({
+        members: []
+    })
     const [convo, setConvo] = useState(null)
     const [messageList, setMessageList] = useState([])
     const [newMessage, setNewMessage] = useState('')
@@ -182,15 +184,18 @@ const Messenger = () => {
             senderId: userId
         }
 
+        console.log(conversationDetails)
+
         setConvo(conversationDetails)
-        dispatch(createConversation(convo))
+        dispatch(createConversation(conversationDetails))
         handleClose()
     }
 
     useEffect(() => {
         if (success) {
-            setCurrentChat(convo)
-            alert.success(success)
+            history.push('/messenger')
+            setCurrentChat(success)
+            alert.success('Conversation created')
         }
         if (error) {
             alert.error(error)
@@ -199,7 +204,7 @@ const Messenger = () => {
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, success, convo, error])
+    }, [dispatch, success, convo, error, history])
 
     const displayUsers = o => {
         if (o._id == userId) {
@@ -217,7 +222,6 @@ const Messenger = () => {
             )
         }
     }
-    console.log(currentChat)
 
     return (
         <>
@@ -245,7 +249,7 @@ const Messenger = () => {
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
-                </Button>
+                    </Button>
                 </Modal.Footer>
             </Modal>
 
