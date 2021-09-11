@@ -66,7 +66,7 @@ const FormsList = () => {
                             <td>-</td>
                             <td>Request for Overload</td>
                             <td>Available</td>
-                            <td><Link to='/form-6a'>
+                            <td><Link to='/overload-form'>
                                 <Button variant="primary" href="/form-6a">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Edit
                                 </Button>

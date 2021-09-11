@@ -35,6 +35,7 @@ import SubmitRequest from './components/request/SubmitRequest'
 //forms
 import Form6A from './components/request/forms/Form6A'
 import Form6B from './components/request/forms/Form6B'
+import OverloadForm from './components/request/forms/OverloadForm'
 import PetitionClass from './components/request/forms/PetitionClass'
 import FormsList from './components/request/forms/FormsList'
 
@@ -102,6 +103,7 @@ function App() {
                             <ProtectedRoute path='/form-6a' component={Form6A} exact />
                             <ProtectedRoute path='/form-6b' component={Form6B} exact />
                             <ProtectedRoute path='/petition-classes' component={PetitionClass} exact />
+                            <ProtectedRoute path='/overload-form' component={OverloadForm} exact />
                             <ProtectedRoute path='/submitrequest' component={SubmitRequest} exact />
 
                             <ProtectedRoute path='/messenger' component={Messenger} exact />
