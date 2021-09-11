@@ -84,6 +84,7 @@ exports.createConvo = catchAsyncErrors(async (req, res, next) => {
 
     const newConversation = new Conversation({
         members: [req.body.senderId, req.body.receiverId],
+        receiverName: req.body.receiverName
     })
 
     try {

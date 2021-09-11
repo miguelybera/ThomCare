@@ -7,7 +7,7 @@ import '../online/chatonline.css'
 import Conversation from '../conversations/Conversation'
 import Message from '../message/Message'
 import ChatOnline from '../online/ChatOnline'
-import { sendMessage, getConversations, createConversation } from '../../../actions/chatActions'
+import { sendMessage, getConversations, createConversation, clearErrors } from '../../../actions/chatActions'
 import axios from 'axios'
 import { io } from 'socket.io-client'
 import {
@@ -33,18 +33,17 @@ const Messenger = ({ history }) => {
     const alert = useAlert();
 
     const { user } = useSelector(state => state.auth)
+    const { singleUser } = useSelector(state => state.singleUser)
     const { conversations } = useSelector(state => state.conversations)
     const { messages } = useSelector(state => state.messages)
     const { success, error } = useSelector(state => state.createConvo)
 
-    const [currentChat, setCurrentChat] = useState({
-        members: []
-    })
-    const [convo, setConvo] = useState(null)
+    const [currentChat, setCurrentChat] = useState(null)
     const [messageList, setMessageList] = useState([])
     const [newMessage, setNewMessage] = useState('')
     const [arrivalMessage, setArrivalMessage] = useState('')
     const [onlineUsers, setOnlineUsers] = useState([])
+    const [userName, setUserName] = useState('')
 
     const scrollRef = useRef()
 
@@ -178,15 +177,13 @@ const Messenger = ({ history }) => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const createConvo = (receiverId) => {
+    const createConvo = (receiverId, receiverName) => {
         const conversationDetails = {
             receiverId,
-            senderId: userId
+            senderId: userId,
+            receiverName
         }
 
-        console.log(conversationDetails)
-
-        setConvo(conversationDetails)
         dispatch(createConversation(conversationDetails))
         handleClose()
     }
@@ -195,8 +192,11 @@ const Messenger = ({ history }) => {
         if (success) {
             history.push('/messenger')
             setCurrentChat(success)
+            setUserName(success.receiverName)
+
             alert.success('Conversation created')
         }
+
         if (error) {
             alert.error(error)
         }
@@ -204,7 +204,7 @@ const Messenger = ({ history }) => {
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, success, convo, error, history])
+    }, [dispatch, success, error, history])
 
     const displayUsers = o => {
         if (o._id == userId) {
@@ -212,11 +212,11 @@ const Messenger = ({ history }) => {
         } else {
             return (
                 <>
-                    <div className='chatOnlineFriend' onClick={() => createConvo(o._id)}>
+                    <div className='chatOnlineFriend' onClick={() => createConvo(o._id, o.firstName + ' ' + o.lastName)}>
                         <div className='chatOnlineImgContainer'>
                             <img className='chatOnlineImg' src='https://res.cloudinary.com/exstrial/image/upload/v1627805763/ShopIT/sanake_ibs7sb.jpg' alt='' />
                         </div>
-                        <span className='chatOnlineName'>{o?.firstName}</span>
+                        <span className='chatOnlineName'>{o?.firstName} {o?.lastName}</span>
                     </div>
                 </>
             )
@@ -264,6 +264,7 @@ const Messenger = ({ history }) => {
                             <Fragment>
                                 <div onClick={() => {
                                     setCurrentChat(c)
+                                    setUserName(c.receiverName)
                                 }}>
                                     <Conversation conversation={c} currentUser={user} />
                                 </div>
@@ -275,7 +276,7 @@ const Messenger = ({ history }) => {
                     <div className='chatBoxWrapper'>
                         {
                             currentChat ? (<>
-                                <p>{currentChat.members[1]}</p>
+                                <p>{userName && userName}</p>
                                 <div className='chatBoxTop'>
                                     {messageList && messageList.map(m => (
                                         <>
