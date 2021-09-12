@@ -93,6 +93,8 @@ const ListAvailableRequests = ({ history }) => {
         }
 
         requests.forEach(request => {
+            const typeParam = '3'+request._id
+
             data.rows.push({
                 date: changeDateFormat(request.createdAt),
                 requestType: request.requestType,
@@ -109,9 +111,9 @@ const ListAvailableRequests = ({ history }) => {
                     </p>
                 </Fragment>,
                 actions: <Fragment>
-                    <Link to={`/admin/request/${request._id}`}>
+                    <Link to={`/view/request/${typeParam}`}>
                         <Button variant="primary" className="mr-5" style={{ marginRight: '5px' }}>
-                            <i class="fa fa-pencil" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                            <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
                         </Button>
                     </Link>
                     <Button variant="warning" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {

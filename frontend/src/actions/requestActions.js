@@ -153,7 +153,6 @@ export const getRequests = (role, route) => async (dispatch) => {
 //Get single request (dashboard)
 export const getRequestDetails = (requestId) => async (dispatch) => {
     try {
-        console.log('here')
         dispatch({
             type: REQUEST_DETAILS_REQUEST
         })

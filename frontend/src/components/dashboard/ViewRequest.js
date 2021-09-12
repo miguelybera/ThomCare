@@ -31,6 +31,9 @@ const ViewRequest = ({ history, match }) => {
     }
 
     const requestId = match.params.id
+    const id = requestId.substr(1, requestId.length - 1)
+    const viewType = requestId.substr(0, 1)
+
     const [requestorInfo, setRequestorInfo] = useState({})
     const [notes, setNotes] = useState('')
     const [requestStatus, setRequestStatus] = useState('')
@@ -40,8 +43,8 @@ const ViewRequest = ({ history, match }) => {
     const [remarks, setRemarks] = useState([])
 
     useEffect(() => {
-        if (request && request._id !== requestId) {
-            dispatch(getRequestDetails(requestId))
+        if (request && request._id !== id) {
+            dispatch(getRequestDetails(id))
         } else if (request) {
             setRequestorInfo(request.requestorInfo)
             setRequestStatus(request.requestStatus)
@@ -51,10 +54,10 @@ const ViewRequest = ({ history, match }) => {
             setFileRequirements(request.fileRequirements)
             setRemarks(request.remarks)
         } else {
-            dispatch(getRequestDetails(requestId))
+            dispatch(getRequestDetails(id))
         }
 
-        if(error) {
+        if (error) {
             window.history.back()
             alert.error(error)
         }
@@ -65,7 +68,7 @@ const ViewRequest = ({ history, match }) => {
     }, [dispatch, request, history, error])
 
     const upperCase = (text) => text.toUpperCase()
-    
+
     const setHistory = () => {
         const data = {
             columns: [
@@ -119,7 +122,7 @@ const ViewRequest = ({ history, match }) => {
     return (
         <Fragment>
             <MetaData title={`Tracking ID: ${trackingNumber}`} />
-            <Sidebar/>
+            <Sidebar />
             {!loading ? (
                 <Fragment style={{ marginTop: '30px' }}>
                     <Card style={cardStyle}>
@@ -167,7 +170,22 @@ const ViewRequest = ({ history, match }) => {
                             sortable={false}
                             hover
                         />
-                        <Link to={`/admin/request/${requestId}`}><Button>Update</Button></Link>
+                        {viewType === '1' ? (
+                            <Fragment>
+                                <Link to={`/admin/request/${id}`}><Button>Update</Button></Link>
+                                <Button>Delete</Button>
+                            </Fragment>
+                        ) : ( 
+                            viewType === '3' ? (
+                                <Button>Assign to self</Button>
+                            ) : (
+                                viewType === '4' ? (
+                                    <Button>Delete</Button>
+                                ) : (
+                                    <></>
+                                )
+                            )
+                        )}
                     </Card>
                 </Fragment>
             ) : (

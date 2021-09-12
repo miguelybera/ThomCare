@@ -126,6 +126,8 @@ const ListDeptChairRequests = ({ history }) => {
         }
 
         requestList && requestList.forEach(request => {
+            const typeParam = '1'+request._id
+            
             data.rows.push({
                 date: changeDateFormat(request.createdAt),
                 requestType: request.requestType,
@@ -142,6 +144,11 @@ const ListDeptChairRequests = ({ history }) => {
                     </p>
                 </Fragment>,
                 actions: <Fragment>
+                    <Link to={`/view/request/${typeParam}`}>
+                        <Button variant="primary" className="mr-5" style={{ marginRight: '5px' }}>
+                            <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                        </Button>
+                    </Link>
                     <Link to={`/admin/request/${request._id}`}>
                         <Button variant="primary" className="mr-5" style={{ marginRight: '5px' }}>
                             <i class="fa fa-pencil" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
