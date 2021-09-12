@@ -91,13 +91,41 @@ exports.submitRequest = catchAsyncErrors(async (req, res, next) => {
     })
 })
 
+// Request Tracker => /api/v1/requestTracker
+exports.requestTracker = catchAsyncErrors(async (req, res, next) => {
+    const trackingNumber = req.body.trackingNumber
+    const lastName = req.body.lastName
+    const request = await Request.findOne({ trackingNumber })
+
+    if (!request) { return next(new ErrorHandler(`Request with Tracking Number: (${trackingNumber}) does not exist`)) }
+    if (request.requestorInfo.lastName !== lastName) { return next(new ErrorHandler(`Last name does not match with the request surname`)) }
+
+    res.status(200).json({
+        success: true,
+        request
+    })
+})
+
+// Get single request => /api/v1/request/:requestId
+exports.getSingleRequest = catchAsyncErrors(async (req, res, next) => {
+    const request = await Request.findById(req.params.requestId);
+
+    if (!request) { return next(new ErrorHandler('Request Id does not exist')) }
+
+    res.status(200).json({
+        success: true,
+        request
+    })
+})
+
+
 // Get all user submitted request => /api/v1/myRequests
-exports.myRequests = catchAsyncErrors(async (req, res, next) => {
-    const apiFeatures = new APIFeatures(Request.find({ requestedById: req.user.id }).sort({ createdAt: -1 }), req.query)
+exports.getMyRequests = catchAsyncErrors(async (req, res, next) => {
+    const getRequests = new APIFeatures(Request.find({ requestedById: req.user.id }).sort({ createdAt: -1 }), req.query)
         .searchRequests()
         .filter()
 
-    const requests = await apiFeatures.query
+    const requests = await getRequests.query
 
     res.status(200).json({
         success: true,
@@ -106,7 +134,7 @@ exports.myRequests = catchAsyncErrors(async (req, res, next) => {
 })
 
 // Get all requests involving specific department chair => /api/v1/deptChair/requests
-exports.getAllRequestsDeptChair = catchAsyncErrors(async (req, res, next) => {
+exports.getDeptChairRequests = catchAsyncErrors(async (req, res, next) => {
     let deptCourse = ''
 
     switch (req.user.role) {
@@ -124,19 +152,42 @@ exports.getAllRequestsDeptChair = catchAsyncErrors(async (req, res, next) => {
             return next(new ErrorHandler('Role does not have access to this resource'))
     }
 
-    const apiFeatures = new APIFeatures(Request.find({ course: deptCourse, isTrash: false, requestType: { $nin: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
-    const apiFeaturesPending = new APIFeatures(Request.find({ course: deptCourse, requestStatus: 'Pending', isTrash: false, requestType: { $nin: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
-    const apiFeaturesProcessing = new APIFeatures(Request.find({ course: deptCourse, requestStatus: 'Processing', isTrash: false, requestType: { $nin: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
-    const apiFeaturesApproved = new APIFeatures(Request.find({ course: deptCourse, requestStatus: 'Approved', isTrash: false, requestType: { $nin: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
-    const apiFeaturesDenied = new APIFeatures(Request.find({ course: deptCourse, requestStatus: 'Denied', isTrash: false, requestType: { $nin: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
-    const apiFeaturesCrossEnrollment = new APIFeatures(Request.find({ isTrash: false, requestType: 'Cross Enrollment within CICS' }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
+    const getRequests = new APIFeatures(Request.find({ "requestorInfo.course": deptCourse, isTrash: false, requestType: { $nin: requestTypeOfficeStaff } })
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
 
-    const requests = await apiFeatures.query
-    const pending = await apiFeaturesPending.query
-    const processing = await apiFeaturesProcessing.query
-    const approved = await apiFeaturesApproved.query
-    const denied = await apiFeaturesDenied.query
-    const crossEnrollment = await apiFeaturesCrossEnrollment.query
+    const getRequestsPending = new APIFeatures(Request.find({ "requestorInfo.course": deptCourse, requestStatus: 'Pending', isTrash: false, requestType: { $nin: requestTypeOfficeStaff } })
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
+
+    const getRequestsProcessing = new APIFeatures(Request.find({ "requestorInfo.course": deptCourse, requestStatus: 'Processing', isTrash: false, requestType: { $nin: requestTypeOfficeStaff } })
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
+
+    const getRequestsApproved = new APIFeatures(Request.find({ "requestorInfo.course": deptCourse, requestStatus: 'Approved', isTrash: false, requestType: { $nin: requestTypeOfficeStaff } })
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
+
+    const getRequestsDenied = new APIFeatures(Request.find({ "requestorInfo.course": deptCourse, requestStatus: 'Denied', isTrash: false, requestType: { $nin: requestTypeOfficeStaff } })
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
+
+    const getRequestsCrossEnrollment = new APIFeatures(Request.find({ isTrash: false, requestType: 'Cross Enrollment within CICS' })
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
+
+    const requests = await getRequests.query;
+    const pending = await getRequestsPending.query;
+    const processing = await getRequestsProcessing.query;
+    const approved = await getRequestsApproved.query;
+    const denied = await getRequestsDenied.query;
+    const crossEnrollment = await getRequestsCrossEnrollment.query;
 
     res.status(200).json({
         success: true,
@@ -150,18 +201,37 @@ exports.getAllRequestsDeptChair = catchAsyncErrors(async (req, res, next) => {
 })
 
 // Get all requests cics staff side => /api/v1/cicsAdmin/requests
-exports.getAllRequestsStaff = catchAsyncErrors(async (req, res, next) => {
-    const apiFeatures = new APIFeatures(Request.find().sort({ createdAt: -1 }), req.query).searchRequests().filter()
-    const apiFeaturesPending = new APIFeatures(Request.find({ requestStatus: 'Pending', isTrash: false }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
-    const apiFeaturesProcessing = new APIFeatures(Request.find({ requestStatus: 'Processing', isTrash: false }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
-    const apiFeaturesApproved = new APIFeatures(Request.find({ requestStatus: 'Approved', isTrash: false }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
-    const apiFeaturesDenied = new APIFeatures(Request.find({ requestStatus: 'Denied', isTrash: false }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
+exports.getAllRequests = catchAsyncErrors(async (req, res, next) => {
+    const getRequests = new APIFeatures(Request.find()
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
 
-    const requests = await apiFeatures.query;
-    const pending = await apiFeaturesPending.query;
-    const processing = await apiFeaturesProcessing.query;
-    const approved = await apiFeaturesApproved.query;
-    const denied = await apiFeaturesDenied.query;
+    const getRequestsPending = new APIFeatures(Request.find({ requestStatus: 'Pending', isTrash: false })
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
+
+    const getRequestsProcessing = new APIFeatures(Request.find({ requestStatus: 'Processing', isTrash: false })
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
+
+    const getRequestsApproved = new APIFeatures(Request.find({ requestStatus: 'Approved', isTrash: false })
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
+
+    const getRequestsDenied = new APIFeatures(Request.find({ requestStatus: 'Denied', isTrash: false })
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
+
+    const requests = await getRequests.query;
+    const pending = await getRequestsPending.query;
+    const processing = await getRequestsProcessing.query;
+    const approved = await getRequestsApproved.query;
+    const denied = await getRequestsDenied.query;
 
     res.status(200).json({
         success: true,
@@ -174,18 +244,37 @@ exports.getAllRequestsStaff = catchAsyncErrors(async (req, res, next) => {
 })
 
 // Get requests that are handled by the office only => /api/v1/cicsAdmin/officeRequests
-exports.getAllOfficeRequests = catchAsyncErrors(async (req, res, next) => {
-    const apiFeatures = new APIFeatures(Request.find({ isTrash: false, requestType: { $in: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
-    const apiFeaturesPending = new APIFeatures(Request.find({ requestStatus: 'Pending', isTrash: false, requestType: { $in: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
-    const apiFeaturesProcessing = new APIFeatures(Request.find({ requestStatus: 'Processing', isTrash: false, requestType: { $in: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
-    const apiFeaturesApproved = new APIFeatures(Request.find({ requestStatus: 'Approved', isTrash: false, requestType: { $in: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
-    const apiFeaturesDenied = new APIFeatures(Request.find({ requestStatus: 'Denied', isTrash: false, requestType: { $in: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
+exports.getOfficeRequests = catchAsyncErrors(async (req, res, next) => {
+    const getRequests = new APIFeatures(Request.find({ isTrash: false, requestType: { $in: requestTypeOfficeStaff } })
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
 
-    const requests = await apiFeatures.query;
-    const pending = await apiFeaturesPending.query;
-    const processing = await apiFeaturesProcessing.query;
-    const approved = await apiFeaturesApproved.query;
-    const denied = await apiFeaturesDenied.query;
+    const getRequestsPending = new APIFeatures(Request.find({ requestStatus: 'Pending', isTrash: false, requestType: { $in: requestTypeOfficeStaff } })
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
+
+    const getRequestsProcessing = new APIFeatures(Request.find({ requestStatus: 'Processing', isTrash: false, requestType: { $in: requestTypeOfficeStaff } })
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
+
+    const getRequestsApproved = new APIFeatures(Request.find({ requestStatus: 'Approved', isTrash: false, requestType: { $in: requestTypeOfficeStaff } })
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
+
+    const getRequestsDenied = new APIFeatures(Request.find({ requestStatus: 'Denied', isTrash: false, requestType: { $in: requestTypeOfficeStaff } })
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
+
+    const requests = await getRequests.query;
+    const pending = await getRequestsPending.query;
+    const processing = await getRequestsProcessing.query;
+    const approved = await getRequestsApproved.query;
+    const denied = await getRequestsDenied.query;
 
     res.status(200).json({
         success: true,
@@ -197,17 +286,106 @@ exports.getAllOfficeRequests = catchAsyncErrors(async (req, res, next) => {
     })
 })
 
-// Get single request => /api/v1/request/:requestId
-exports.getSingleRequest = catchAsyncErrors(async (req, res, next) => {
-    const request = await Request.findById(req.params.requestId);
 
-    if (!request) { return next(new ErrorHandler('Request Id does not exist')) }
+// Get unmanaged requests for cics staff => /api/v1/cicsStaff/available/requests
+exports.getAvailableRequests = catchAsyncErrors(async (req, res, next) => {
+    const getRequests = new APIFeatures(Request.find({ isTrash: false, requestType: { $in: requestTypeOfficeStaff }, managedBy: '' })
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
+
+    const requests = await getRequests.query;
 
     res.status(200).json({
         success: true,
-        request
+        requests
     })
+})
 
+// Get requests that are assigned and handled by the office only => /api/v1/cicsAdmin/assigned/requests
+exports.getAssignedRequests = catchAsyncErrors(async (req, res, next) => {
+    const getRequests = new APIFeatures(Request.find({ isTrash: false, requestType: { $in: requestTypeOfficeStaff }, managedBy: req.user.id })
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
+
+    const getRequestsPending = new APIFeatures(Request.find({ requestStatus: 'Pending', isTrash: false, requestType: { $in: requestTypeOfficeStaff }, managedBy: req.user.id })
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
+
+    const getRequestsProcessing = new APIFeatures(Request.find({ requestStatus: 'Processing', isTrash: false, requestType: { $in: requestTypeOfficeStaff }, managedBy: req.user.id })
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
+
+    const getRequestsApproved = new APIFeatures(Request.find({ requestStatus: 'Approved', isTrash: false, requestType: { $in: requestTypeOfficeStaff }, managedBy: req.user.id })
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
+
+    const getRequestsDenied = new APIFeatures(Request.find({ requestStatus: 'Denied', isTrash: false, requestType: { $in: requestTypeOfficeStaff }, managedBy: req.user.id })
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
+
+    const requests = await getRequests.query;
+    const pending = await getRequestsPending.query;
+    const processing = await getRequestsProcessing.query;
+    const approved = await getRequestsApproved.query;
+    const denied = await getRequestsDenied.query;
+
+    res.status(200).json({
+        success: true,
+        requests,
+        pending,
+        processing,
+        approved,
+        denied
+    })
+})
+
+// View trashed requests => /api/v1/deptChair/trash
+exports.getTrashedRequests = catchAsyncErrors(async (req, res, next) => {
+    let deptCourse = ''
+
+    switch (req.user.role) {
+        case 'IT Dept Chair':
+            deptCourse = 'Information Technology'
+            break
+        case 'IS Dept Chair':
+            deptCourse = 'Information Systems'
+            break
+        case 'CS Dept Chair':
+            deptCourse = 'Computer Science'
+            break
+        case 'CICS Staff':
+            deptCourse = 'Office'
+            break
+        case 'Student':
+            return next(new ErrorHandler('Role does not have access to this resource'))
+    }
+
+    let getRequests = ''
+
+    if (deptCourse === 'Office') {
+        getRequests = new APIFeatures(Request.find({ isTrash: true, requestType: { $in: requestTypeOfficeStaff } })
+            .sort({ createdAt: -1 }), req.query)
+            .searchRequests()
+            .filter()
+    } else {
+        getRequests = new APIFeatures(Request.find({ "requestorInfo.course": deptCourse, isTrash: true, requestType: { $nin: requestTypeOfficeStaff } })
+            .sort({ createdAt: -1 }), req.query)
+            .searchRequests()
+            .filter()
+    }
+
+    const requests = await getRequests.query;
+
+    res.status(200).json({
+        success: true,
+        requests
+    })
 })
 
 // Update request   => /api/v1/admin/updateRequest/:requestId
@@ -281,15 +459,15 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
         msg = `& a file has been attached to your request. Please view your request on the website to download the file attachment.`
     }
 
-    const emailData = { 
-        trackingNumber: request.trackingNumber, 
-        requestStatus: req.body.requestStatus, 
+    const emailData = {
+        trackingNumber: request.trackingNumber,
+        requestStatus: req.body.requestStatus,
         msg
     }
 
     try {
         const message = await requestNotification(emailData)
-       
+
         await sendEmail({
             email: rqst.requestorInfo.email,
             subject: `Status update for request tracking number (${rqst.trackingNumber})`,
@@ -304,6 +482,64 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
     } catch (error) {
         return next(new ErrorHandler(error.errMessage, 500))
     }
+})
+
+// Assign a request to self => /api/v1/cicsStaff/assign/request/:requestId
+exports.assignRequestToSelfCICS = catchAsyncErrors(async (req, res, next) => {
+    let request = await Request.findById(req.params.requestId);
+
+    if (!request) { return next(new ErrorHandler(`Request does not exist with this id:(${req.params.requestId})`)) }
+
+    const newRequestData = { managedBy: req.user.id }
+
+    request = await Request.findByIdAndUpdate(req.params.requestId, newRequestData, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false
+    })
+    res.status(200).json({
+        success: true,
+        message: `Request has been assigned to ${req.user.email}`
+    })
+
+})
+
+// Move request to trash or trash to restore => /api/v1/admin/trashRequest/:requestId
+exports.trashRequest = catchAsyncErrors(async (req, res, next) => {
+    let request = await Request.findById(req.params.requestId);
+
+    if (!request) { return next(new ErrorHandler(`Request does not exist with this id:(${req.params.requestId})`)) }
+
+    const newRequestData = { isTrash: req.body.isTrash }
+
+    request = await Request.findByIdAndUpdate(req.params.requestId, newRequestData, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false
+    })
+
+    const auditRequest = await Request.findById(req.params.requestId);
+
+    let actionAudit, statusMessage
+
+    if (req.body.isTrash) {
+        actionAudit = `User account: (${req.user.email}) has moved the request to trash with the tracking number: (${auditRequest.trackingNumber})`
+        statusMessage = "Request has been moved to trash"
+    } else {
+        actionAudit = `User account: (${req.user.email}) has restored the request from trash with the tracking number: (${auditRequest.trackingNumber})`
+        statusMessage = "Request has been restored from trash"
+    }
+
+    const auditLog = await Audit.create({
+        userAudit: req.user.email,
+        requestAudit: auditRequest.trackingNumber,
+        actionAudit
+    })
+
+    res.status(200).json({
+        success: true,
+        message: statusMessage
+    })
 })
 
 // Delete request   => /api/v1/deleteRequest/:requestId
@@ -367,152 +603,5 @@ exports.deleteRequest = catchAsyncErrors(async (req, res, next) => {
     res.status(200).json({
         success: true,
         message: "Request has been deleted"
-    })
-})
-
-// Request Tracker => /api/v1/requestTracker
-exports.requestTracker = catchAsyncErrors(async (req, res, next) => {
-    const trackingNumber = req.body.trackingNumber
-    const lastName = req.body.lastName
-    const request = await Request.findOne({ trackingNumber })
-
-    if (!request) { return next(new ErrorHandler(`Request with Tracking Number: (${trackingNumber}) does not exist`)) }
-    if (request.requestorInfo.lastName !== lastName) { return next(new ErrorHandler(`Last name does not match with the request surname`)) }
-
-    res.status(200).json({
-        success: true,
-        request
-    })
-})
-
-// Move request to trash or trash to restore => /api/v1/admin/trashRequest/:requestId
-exports.trashRequest = catchAsyncErrors(async (req, res, next) => {
-    let request = await Request.findById(req.params.requestId);
-
-    if (!request) { return next(new ErrorHandler(`Request does not exist with this id:(${req.params.requestId})`)) }
-
-    const newRequestData = { isTrash: req.body.isTrash }
-
-    request = await Request.findByIdAndUpdate(req.params.requestId, newRequestData, {
-        new: true,
-        runValidators: true,
-        useFindAndModify: false
-    })
-
-    const auditRequest = await Request.findById(req.params.requestId);
-
-    let actionAudit, statusMessage
-
-    if (req.body.isTrash) {
-        actionAudit = `User account: (${req.user.email}) has moved the request to trash with the tracking number: (${auditRequest.trackingNumber})`
-        statusMessage = "Request has been moved to trash"
-    } else {
-        actionAudit = `User account: (${req.user.email}) has restored the request from trash with the tracking number: (${auditRequest.trackingNumber})`
-        statusMessage = "Request has been restored from trash"
-    }
-
-    const auditLog = await Audit.create({
-        userAudit: req.user.email,
-        requestAudit: auditRequest.trackingNumber,
-        actionAudit
-    })
-
-    res.status(200).json({
-        success: true,
-        message: statusMessage
-    })
-})
-
-// View trashed requests => /api/v1/deptChair/trash
-exports.getTrashedRequests = catchAsyncErrors(async (req, res, next) => {
-    let deptCourse = ''
-
-    switch (req.user.role) {
-        case 'IT Dept Chair':
-            deptCourse = 'Information Technology'
-            break
-        case 'IS Dept Chair':
-            deptCourse = 'Information Systems'
-            break
-        case 'CS Dept Chair':
-            deptCourse = 'Computer Science'
-            break
-        case 'CICS Staff':
-            deptCourse = 'Office'
-            break
-        case 'Student':
-            return next(new ErrorHandler('Role does not have access to this resource'))
-    }
-
-    let apiFeatures = ''
-
-    if (deptCourse === 'Office') {
-        apiFeatures = new APIFeatures(Request.find({ isTrash: true, requestType: { $in: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
-    } else {
-        apiFeatures = new APIFeatures(Request.find({ course: deptCourse, isTrash: true, requestType: { $nin: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
-    }
-
-    const requests = await apiFeatures.query;
-
-    res.status(200).json({
-        success: true,
-        totalRequestCount: requests.length,
-        requests
-    })
-})
-
-// Get unmanaged requests for cics staff => /api/v1/cicsStaff/available/requests
-exports.getAvailableRequests = catchAsyncErrors(async (req, res, next) => {
-    const apiFeatures = new APIFeatures(Request.find({ isTrash: false, requestType: { $in: requestTypeOfficeStaff }, managedBy: '' }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
-
-    const requests = await apiFeatures.query;
-
-    res.status(200).json({
-        success: true,
-        requests
-    })
-})
-
-// Assign a request to self => /api/v1/cicsStaff/assign/request/:requestId
-exports.assignRequestToSelfCICS = catchAsyncErrors(async (req, res, next) => {
-    let request = await Request.findById(req.params.requestId);
-
-    if (!request) { return next(new ErrorHandler(`Request does not exist with this id:(${req.params.requestId})`)) }
-
-    const newRequestData = { managedBy: req.user.id }
-
-    request = await Request.findByIdAndUpdate(req.params.requestId, newRequestData, {
-        new: true,
-        runValidators: true,
-        useFindAndModify: false
-    })
-    res.status(200).json({
-        success: true,
-        message: `Request has been assigned to ${req.user.email}`
-    })
-
-})
-
-// Get requests that are assigned and handled by the office only => /api/v1/cicsAdmin/assigned/requests
-exports.getAllAssignedRequests = catchAsyncErrors(async (req, res, next) => {
-    const apiFeatures = new APIFeatures(Request.find({ isTrash: false, requestType: { $in: requestTypeOfficeStaff }, managedBy: req.user.id }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
-    const apiFeaturesPending = new APIFeatures(Request.find({ requestStatus: 'Pending', isTrash: false, requestType: { $in: requestTypeOfficeStaff }, managedBy: req.user.id }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
-    const apiFeaturesProcessing = new APIFeatures(Request.find({ requestStatus: 'Processing', isTrash: false, requestType: { $in: requestTypeOfficeStaff }, managedBy: req.user.id }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
-    const apiFeaturesApproved = new APIFeatures(Request.find({ requestStatus: 'Approved', isTrash: false, requestType: { $in: requestTypeOfficeStaff }, managedBy: req.user.id }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
-    const apiFeaturesDenied = new APIFeatures(Request.find({ requestStatus: 'Denied', isTrash: false, requestType: { $in: requestTypeOfficeStaff }, managedBy: req.user.id }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
-
-    const requests = await apiFeatures.query;
-    const pending = await apiFeaturesPending.query;
-    const processing = await apiFeaturesProcessing.query;
-    const approved = await apiFeaturesApproved.query;
-    const denied = await apiFeaturesDenied.query;
-
-    res.status(200).json({
-        success: true,
-        requests,
-        pending,
-        processing,
-        approved,
-        denied
     })
 })

@@ -20,8 +20,41 @@ const ListDeptChairRequests = ({ history }) => {
     const alert = useAlert()
     const dispatch = useDispatch()
 
-    const { loading, requests, error } = useSelector(state => state.requests)
+    const { loading, requests, pending, processing, approved, denied, crossEnrollment, error } = useSelector(state => state.requests)
     const { error: updateError, isUpdated } = useSelector(state => state.request)
+
+    const [requestList, setRequestList] = useState([])
+    const [status, setStatus] = useState('Requests')
+
+    useEffect(() => {
+
+        setRequestList([])
+
+        switch (status) {
+            case 'Requests':
+                setRequestList(requests)
+                break
+            case 'Pending':
+                setRequestList(pending)
+                break
+            case 'Processing':
+                setRequestList(processing)
+                break
+            case 'Approved':
+                setRequestList(approved)
+                break
+            case 'Denied':
+                setRequestList(denied)
+                break
+            case 'Cross Enrollment':
+                setRequestList(crossEnrollment)
+                break
+            default:
+                break
+        }
+
+        console.log(status, requestList)
+    }, [status, requests, pending, processing, approved, denied, crossEnrollment])
 
     useEffect(() => {
         dispatch(getRequests('Dept Chair', 'Requests'))
@@ -92,7 +125,7 @@ const ListDeptChairRequests = ({ history }) => {
             rows: []
         }
 
-        requests.forEach(request => {
+        requestList && requestList.forEach(request => {
             data.rows.push({
                 date: changeDateFormat(request.createdAt),
                 requestType: request.requestType,
@@ -136,6 +169,14 @@ const ListDeptChairRequests = ({ history }) => {
                     <Container className="space_inside"></Container>
                     <Container>
                         <h3>My Requests</h3>
+
+                        <Button onClick={() => setStatus('Requests')}>View All</Button>
+                        <Button onClick={() => setStatus('Pending')}>Pending</Button>
+                        <Button onClick={() => setStatus('Processing')}>Processing</Button>
+                        <Button onClick={() => setStatus('Approved')}>Approved</Button>
+                        <Button onClick={() => setStatus('Denied')}>Denied</Button>
+                        <Button onClick={() => setStatus('Cross Enrollment')}>Cross Enrollment</Button>
+
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5

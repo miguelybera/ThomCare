@@ -20,10 +20,42 @@ const ListAllRequests = ({ history }) => {
     const alert = useAlert()
     const dispatch = useDispatch()
 
-    const { loading, requests, error } = useSelector(state => state.requests)
+    const { loading, requests, pending, processing, approved, denied, error } = useSelector(state => state.requests)
+
+    const [requestList, setRequestList] = useState([])
+    const [status, setStatus] = useState('Requests')
+
+    useEffect(() => {
+
+        setRequestList([])
+        
+        switch (status) {
+            case 'Requests':
+                setRequestList(requests)
+                break
+            case 'Pending':
+                setRequestList(pending)
+                break
+            case 'Processing':
+                setRequestList(processing)
+                break
+            case 'Approved':
+                setRequestList(approved)
+                break
+            case 'Denied':
+                setRequestList(denied)
+                break
+            default:
+                break
+        }
+        
+        console.log(status, requestList)
+    }, [status, requests, pending, processing, approved, denied])
 
     useEffect(() => {
         dispatch(getRequests('CICS Staff', 'All'))
+
+        setRequestList(requests && requests)
 
         if (error) {
             alert.error(error)
@@ -73,7 +105,7 @@ const ListAllRequests = ({ history }) => {
             rows: []
         }
 
-        requests.forEach(request => {
+        requestList && requestList.forEach(request => {
             data.rows.push({
                 date: changeDateFormat(request.createdAt),
                 requestType: request.requestType,
@@ -111,7 +143,14 @@ const ListAllRequests = ({ history }) => {
                 <div className="">
                     <Container className="space_inside"></Container>
                     <Container>
-                        <h3>Requests</h3>
+                        <h3>All Requests</h3>
+
+                        <Button onClick={() => setStatus('Requests')}>View All</Button>
+                        <Button onClick={() => setStatus('Pending')}>Pending</Button>
+                        <Button onClick={() => setStatus('Processing')}>Processing</Button>
+                        <Button onClick={() => setStatus('Approved')}>Approved</Button>
+                        <Button onClick={() => setStatus('Denied')}>Denied</Button>
+
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5

@@ -19,9 +19,40 @@ const ListCICSRequests = ({ history }) => {
 
     const alert = useAlert()
     const dispatch = useDispatch()
-
-    const { loading, requests, error } = useSelector(state => state.requests)
+    
     const { error: updateError, isUpdated } = useSelector(state => state.request)
+
+    const { loading, requests, pending, processing, approved, denied, error } = useSelector(state => state.requests)
+
+    const [requestList, setRequestList] = useState([])
+    const [status, setStatus] = useState('Requests')
+
+    useEffect(() => {
+
+        setRequestList([])
+        
+        switch (status) {
+            case 'Requests':
+                setRequestList(requests)
+                break
+            case 'Pending':
+                setRequestList(pending)
+                break
+            case 'Processing':
+                setRequestList(processing)
+                break
+            case 'Approved':
+                setRequestList(approved)
+                break
+            case 'Denied':
+                setRequestList(denied)
+                break
+            default:
+                break
+        }
+        
+        console.log(status, requestList)
+    }, [status, requests, pending, processing, approved, denied])
 
     useEffect(() => {
         dispatch(getRequests('CICS Staff', 'Office'))
@@ -35,7 +66,7 @@ const ListCICSRequests = ({ history }) => {
             alert.error(updateError)
             dispatch(clearErrors())
         }
-        
+
         if (isUpdated) {
             alert.success('Request has been assigned to user.')
             history.push('/admin/cics/available/requests')
@@ -92,7 +123,7 @@ const ListCICSRequests = ({ history }) => {
             rows: []
         }
 
-        requests.forEach(request => {
+        requestList && requestList.forEach(request => {
             data.rows.push({
                 date: changeDateFormat(request.createdAt),
                 requestType: request.requestType,
@@ -114,11 +145,6 @@ const ListCICSRequests = ({ history }) => {
                             <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
                         </Button>
                     </Link>
-                    <Button variant="warning" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
-                        assignRequestHandler(request._id)
-                    }}>
-                        <i class="fa fa-archive" aria-hidden="true" />
-                    </Button>
                 </Fragment>
             })
 
@@ -136,6 +162,13 @@ const ListCICSRequests = ({ history }) => {
                     <Container className="space_inside"></Container>
                     <Container>
                         <h3>CICS Requests</h3>
+                        
+                        <Button onClick={() => setStatus('Requests')}>View All</Button>
+                        <Button onClick={() => setStatus('Pending')}>Pending</Button>
+                        <Button onClick={() => setStatus('Processing')}>Processing</Button>
+                        <Button onClick={() => setStatus('Approved')}>Approved</Button>
+                        <Button onClick={() => setStatus('Denied')}>Denied</Button>
+
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5

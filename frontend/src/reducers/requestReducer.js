@@ -98,19 +98,29 @@ export const saveFormDetailsReducer = (state = { formData: {} }, action) => {
 }
 
 //get ALL requests
-export const getRequestsReducer = (state = { requests: [] }, action) => {
+export const getRequestsReducer = (state = { requests: [], pending: [], processing: [], approved: [], denied: [], crossEnrollment: []}, action) => {
     switch (action.type) {
         case GET_REQUESTS_REQUEST:
             return {
                 ...state,
                 loading: true,
-                requests: []
+                requests: [],
+                pending: [], 
+                processing: [], 
+                approved: [], 
+                denied: [], 
+                crossEnrollment: []
             }
 
         case GET_REQUESTS_SUCCESS:
             return {
                 loading: false,
                 requests: action.payload.requests,
+                pending: action.payload.pending, 
+                processing: action.payload.processing, 
+                approved: action.payload.approved, 
+                denied: action.payload.denied, 
+                crossEnrollment: action.payload.crossEnrollment,
                 success: action.payload.success
             }
 

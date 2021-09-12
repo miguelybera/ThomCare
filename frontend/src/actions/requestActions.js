@@ -35,7 +35,7 @@ export const trackRequest = (userInput) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post(`/api/v1/requestTracker`, userInput, config)
+        const { data } = await axios.post(`/api/v1/tracker`, userInput, config)
 
         dispatch({
             type: REQUEST_DETAILS_SUCCESS,
@@ -74,7 +74,7 @@ export const submitRequest = (request) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post(`/api/v1/submitRequest`, request, config)
+        const { data } = await axios.post(`/api/v1/submit`, request, config)
 
         dispatch({
             type: SUBMIT_REQUEST_SUCCESS,
@@ -102,10 +102,10 @@ export const getRequests = (role, route) => async (dispatch) => {
         if (role === 'Dept Chair') {
             switch (route) {
                 case 'Trash':
-                    link = `/api/v1/deptChair/trash`
+                    link = `/api/v1/admin/requests/trash`
                     break
                 case 'Requests':
-                    link = `/api/v1/deptChair/requests`
+                    link = `/api/v1/admin/deptChair/requests`
                     break
                 default:
                     link = ``
@@ -113,25 +113,25 @@ export const getRequests = (role, route) => async (dispatch) => {
         } else if (role === 'CICS Staff') {
             switch (route) {
                 case 'Office':
-                    link = `/api/v1/cicsAdmin/officeRequests`
+                    link = `/api/v1/admin/cics/office/requests`
                     break
                 case 'Trash':
-                    link = `/api/v1/cicsAdmin/trash`
+                    link = `/api/v1/admin/requests/trash`
                     break
                 case 'Available':
-                    link = `/api/v1/cicsAdmin/available/requests`
+                    link = `/api/v1/admin/cics/available/requests`
                     break
                 case 'All':
-                    link = `/api/v1/cicsAdmin/requests`
+                    link = `/api/v1/admin/cics/all/requests`
                     break
                 case 'Me':
-                    link = `/api/v1/cicsAdmin/assigned/requests`
+                    link = `/api/v1/admin/cics/me/requests`
                     break
                 default:
                     link = ``
             }
         } else { //student
-            link = `/api/v1/myRequests`
+            link = `/api/v1/me/requests`
         }
 
         const { data } = await axios.get(link)
@@ -186,7 +186,7 @@ export const updateRequest = (requestId, request, isTrash) => async (dispatch) =
         let link = ``
 
         if (isTrash) {
-            link = `/api/v1/admin/trashRequest/${requestId}`
+            link = `/api/v1/admin/trash/${requestId}`
             config = {
                 headers: {
                     'Content-Type': 'application/json'
@@ -194,13 +194,14 @@ export const updateRequest = (requestId, request, isTrash) => async (dispatch) =
             }
 
         } else {
-            link = `/api/v1/admin/updateRequest/${requestId}`
+            link = `/api/v1/admin/update/${requestId}`
             config = {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             }
         }
+
         const { data } = await axios.put(link, request, config)
 
         dispatch({
@@ -230,7 +231,7 @@ export const assignRequest = (requestId, request) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.put(`/api/v1/cicsAdmin/assign/request/${requestId}`, request, config)
+        const { data } = await axios.put(`/api/v1/admin/cics/assign/${requestId}`, request, config)
 
         dispatch({
             type: ASSIGN_REQUEST_SUCCESS,
@@ -253,7 +254,7 @@ export const deleteRequest = (requestId) => async (dispatch) => {
             type: DELETE_REQUEST_REQUEST
         })
 
-        const { data } = await axios.delete(`/api/v1/deleteRequest/${requestId}`)
+        const { data } = await axios.delete(`/api/v1/delete/${requestId}`)
 
         dispatch({
             type: DELETE_REQUEST_SUCCESS,

@@ -2,12 +2,12 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { getRequests, updateRequest, assignRequest, clearErrors } from '../../actions/requestActions'
-import { UPDATE_REQUEST_RESET, ASSIGN_REQUEST_RESET } from '../../constants/requestConstants'
+import { getRequests, assignRequest, clearErrors } from '../../actions/requestActions'
+import { ASSIGN_REQUEST_RESET } from '../../constants/requestConstants'
 import Sidebar from '../layout/Sidebar'
 import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
-import { Container, Modal, Button } from 'react-bootstrap'
+import { Container, Button } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import {
     INSIDE_DASHBOARD_TRUE
@@ -23,13 +23,6 @@ const ListAvailableRequests = ({ history }) => {
     const { loading, requests, error } = useSelector(state => state.requests)
     const { error: updateError, isUpdated } = useSelector(state => state.request)
 
-    const [show, setShow] = useState(false);
-    const [updateRequestId, setUpdateRequestId] = useState('');
-    const [isTrash, setIsTrash] = useState(false)
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
     useEffect(() => {
         dispatch(getRequests('CICS Staff', 'Available'))
 
@@ -42,18 +35,8 @@ const ListAvailableRequests = ({ history }) => {
             alert.error(updateError)
             dispatch(clearErrors())
         }
-        
-        if (isUpdated && isTrash) {
-            alert.success('Request has been moved to Trash successfully.')
-            history.push('/admin/cics/available/requests')
-            setIsTrash(!isTrash)
 
-            dispatch({
-                type: UPDATE_REQUEST_RESET
-            })
-        }
-
-        if (isUpdated && !isTrash) {
+        if (isUpdated) {
             alert.success('Request has been assigned to user successfully.')
             history.push('/admin/cics/available/requests')
 
@@ -69,11 +52,6 @@ const ListAvailableRequests = ({ history }) => {
 
     function changeDateFormat(date) {
         return dateFormat(date, "mmm d, yyyy h:MMtt")
-    }
-
-    const updateRequestHandler = (id) => {
-        dispatch(updateRequest(id, {isTrash: true}, true))
-        handleClose()
     }
 
     const assignRequestHandler = (id) => {
@@ -139,13 +117,7 @@ const ListAvailableRequests = ({ history }) => {
                     <Button variant="warning" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
                         assignRequestHandler(request._id)
                     }}>
-                        <i class="fa fa-eye" aria-hidden="true" />
-                    </Button>
-                    <Button variant="danger" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
-                        handleShow()
-                        setUpdateRequestId(request._id)
-                    }}>
-                        <i class="fa fa-trash" aria-hidden="true" />
+                        <i class="fa fa-archive" aria-hidden="true" />
                     </Button>
                 </Fragment>
             })
@@ -157,29 +129,7 @@ const ListAvailableRequests = ({ history }) => {
 
     return (
         <Fragment>
-            <MetaData title={'Requests'} />
-            <Modal
-                show={show}
-                onHide={handleClose}
-                backdrop="static"
-                keyboard={false}
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title>Are you sure you want to delete this request?</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    This change cannot be undone.
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={() => {
-                        updateRequestHandler(updateRequestId)
-                        setIsTrash(!isTrash)
-                    }}>Yes, I'm sure</Button>
-                </Modal.Footer>
-            </Modal>
+            <MetaData title={'Available Requests'} />
             <Sidebar />
             <div className="row">
                 <div className="">

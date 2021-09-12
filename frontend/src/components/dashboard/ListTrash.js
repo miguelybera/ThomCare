@@ -134,6 +134,11 @@ const ListAllRequests = ({ history }) => {
                     </p>
                 </Fragment>,
                 actions: <Fragment>
+                    <Link to={`/view/request/${request._id}`}>
+                        <Button variant="primary" className="mr-5" style={{ marginRight: '5px' }}>
+                            <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                        </Button>
+                    </Link>
                     <Button variant="warning" className="mr-5" style={{ marginRight: '5px' }} onClick={() => { updateRequestHandler(request._id)}}>
                         <i class="fa fa-undo" aria-hidden="true" />
                     </Button>
