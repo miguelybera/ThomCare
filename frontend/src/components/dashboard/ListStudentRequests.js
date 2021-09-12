@@ -2,8 +2,8 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { getRequests, updateRequest, clearErrors } from '../../actions/requestActions'
-import { UPDATE_ANNOUNCEMENT_RESET } from '../../constants/requestConstants'
+import { getRequests, deleteRequest, clearErrors } from '../../actions/requestActions'
+import { DELETE_REQUEST_RESET } from '../../constants/requestConstants'
 import Sidebar from '../layout/Sidebar'
 import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
@@ -21,10 +21,10 @@ const ListStudentRequests = ({ history }) => {
     const dispatch = useDispatch()
 
     const { loading, requests, error } = useSelector(state => state.requests)
-    //const { error: deleteError, isDeleted, isUpdated } = useSelector(state => state.announcement)
+    const { error: deleteError, isDeleted } = useSelector(state => state.request)
 
     const [show, setShow] = useState(false);
-    //const [deleteAnnouncementId, setDeleteAnnouncementId] = useState('');
+    const [requestId, setRequestId] = useState('');
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -37,42 +37,33 @@ const ListStudentRequests = ({ history }) => {
             dispatch(clearErrors())
         }
 
-        // if (deleteError) {
-        //     alert.error(deleteError)
-        //     dispatch(clearErrors())
-        // }
+        if (deleteError) {
+            alert.error(deleteError)
+            dispatch(clearErrors())
+        }
 
-        // if (isDeleted) {
-        //     alert.success('Announcement has been deleted successfully.')
-        //     history.push('/admin/announcements')
+        if (isDeleted) {
+            alert.success('Request has been deleted successfully.')
+            history.push('/me/requests')
 
-        //     dispatch({
-        //         type: DELETE_ANNOUNCEMENT_RESET
-        //     })
-        // }
-
-        // if (isUpdated) {
-        //     alert.success('Announcement has been archived successfully.')
-        //     history.push('/admin/announcements')
-
-        //     dispatch({
-        //         type: ARCHIVE_ANNOUNCEMENT_RESET
-        //     })
-        // }
+            dispatch({
+                type: DELETE_REQUEST_RESET
+            })
+        }
 
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, alert, error])
+    }, [dispatch, alert, error, deleteError, isDeleted])
 
     function changeDateFormat(date) {
         return dateFormat(date, "mmm d, yyyy h:MMtt")
     }
 
-    // const deleteAnnouncementHandler = (id) => {
-    //     dispatch(deleteAnnouncement(id))
-    //     handleClose()
-    // }
+    const deleteRequestHandler = (id) => {
+        dispatch(deleteRequest(id))
+        handleClose()
+    }
 
     const upperCase = (text) => text.toUpperCase()
 
@@ -120,22 +111,18 @@ const ListStudentRequests = ({ history }) => {
                     </p>
                 </Fragment>,
                 actions: <Fragment>
-                    <Link to={`/admin/request/${request._id}`}>
-                        <Button variant="primary" className="mr-5" style={{ marginRight: '5px' }}>
-                            <i class="fa fa-pencil" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
-                        </Button>
-                    </Link>
-                    <Button variant="warning" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
-                        console.log('here')
-                    }}>
-                        <i class="fa fa-archive" aria-hidden="true" />
+                <Link to={`/view/request/${request._id}`}>
+                    <Button variant="primary" className="mr-5" style={{ marginRight: '5px' }}>
+                        <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
                     </Button>
-                    <Button variant="danger" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
-                        handleShow()
-                    }}>
-                        <i class="fa fa-trash" aria-hidden="true" />
-                    </Button>
-                </Fragment>
+                </Link>
+                <Button variant="danger" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
+                    setRequestId(request._id)
+                    handleShow()
+                }}>
+                    <i class="fa fa-trash" aria-hidden="true" />
+                </Button>
+            </Fragment>
             })
 
         })
@@ -153,7 +140,7 @@ const ListStudentRequests = ({ history }) => {
                 keyboard={false}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Are you sure you want to delete this announcement?</Modal.Title>
+                    <Modal.Title>Are you sure you want to delete this request?</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     This change cannot be undone.
@@ -162,7 +149,7 @@ const ListStudentRequests = ({ history }) => {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary">Yes, I'm sure</Button>
+                    <Button variant="primary" onClick={() => deleteRequestHandler(requestId)}>Yes, I'm sure</Button>
                 </Modal.Footer>
             </Modal>
             <Sidebar />
@@ -170,7 +157,7 @@ const ListStudentRequests = ({ history }) => {
                 <div className="">
                     <Container className="space_inside"></Container>
                     <Container>
-                        <h3>Requests</h3>
+                        <h3>My Requests</h3>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5

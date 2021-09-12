@@ -122,7 +122,7 @@ function App() {
                             <ProtectedRoute path='/admin/register' component={RegisterAdmin} exact />
                             <ProtectedRoute path='/admin/cics/requests' component={ListCICSRequests} exact />
                             <ProtectedRoute path='/admin/request/:id' component={UpdateRequest} exact />
-                            <ProtectedRoute path='/admin/view/request/:id' component={ViewRequest} exact />
+                            <ProtectedRoute path='/view/request/:id' component={ViewRequest} exact />
                             <ProtectedRoute path='/admin/deptchair/requests' component={ListDeptChairRequests} exact />
                             <ProtectedRoute path='/admin/all/requests' component={ListAllRequests} exact />
                             <ProtectedRoute path='/me/requests' component={ListStudentRequests} exact />
