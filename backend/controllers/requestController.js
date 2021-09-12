@@ -132,20 +132,20 @@ exports.getAllRequestsDeptChair = catchAsyncErrors(async (req, res, next) => {
     const apiFeaturesCrossEnrollment = new APIFeatures(Request.find({ isTrash: false, requestType: 'Cross Enrollment within CICS' }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
 
     const requests = await apiFeatures.query
-    const pendingRequests = await apiFeaturesPending.query
-    const processingRequests = await apiFeaturesProcessing.query
-    const approvedRequests = await apiFeaturesApproved.query
-    const deniedRequests = await apiFeaturesDenied.query
-    const crossEnrollmentRequests = await apiFeaturesCrossEnrollment.query
+    const pending = await apiFeaturesPending.query
+    const processing = await apiFeaturesProcessing.query
+    const approved = await apiFeaturesApproved.query
+    const denied = await apiFeaturesDenied.query
+    const crossEnrollment = await apiFeaturesCrossEnrollment.query
 
     res.status(200).json({
         success: true,
         requests,
-        pendingRequests,
-        processingRequests,
-        approvedRequests,
-        deniedRequests,
-        crossEnrollmentRequests
+        pending,
+        processing,
+        approved,
+        denied,
+        crossEnrollment
     })
 })
 
@@ -158,19 +158,18 @@ exports.getAllRequestsStaff = catchAsyncErrors(async (req, res, next) => {
     const apiFeaturesDenied = new APIFeatures(Request.find({ requestStatus: 'Denied', isTrash: false }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
 
     const requests = await apiFeatures.query;
-    const pendingRequests = await apiFeaturesPending.query;
-    const processingRequests = await apiFeaturesProcessing.query;
-    const approvedRequests = await apiFeaturesApproved.query;
-    const deniedRequests = await apiFeaturesDenied.query;
+    const pending = await apiFeaturesPending.query;
+    const processing = await apiFeaturesProcessing.query;
+    const approved = await apiFeaturesApproved.query;
+    const denied = await apiFeaturesDenied.query;
 
     res.status(200).json({
         success: true,
         requests,
-        pendingRequests,
-        processingRequests,
-        approvedRequests,
-        deniedRequests
-
+        pending,
+        processing,
+        approved,
+        denied
     })
 })
 
@@ -183,18 +182,18 @@ exports.getAllOfficeRequests = catchAsyncErrors(async (req, res, next) => {
     const apiFeaturesDenied = new APIFeatures(Request.find({ requestStatus: 'Denied', isTrash: false, requestType: { $in: requestTypeOfficeStaff } }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
 
     const requests = await apiFeatures.query;
-    const pendingRequests = await apiFeaturesPending.query;
-    const processingRequests = await apiFeaturesProcessing.query;
-    const approvedRequests = await apiFeaturesApproved.query;
-    const deniedRequests = await apiFeaturesDenied.query;
+    const pending = await apiFeaturesPending.query;
+    const processing = await apiFeaturesProcessing.query;
+    const approved = await apiFeaturesApproved.query;
+    const denied = await apiFeaturesDenied.query;
 
     res.status(200).json({
         success: true,
         requests,
-        pendingRequests,
-        processingRequests,
-        approvedRequests,
-        deniedRequests
+        pending,
+        processing,
+        approved,
+        denied
     })
 })
 
@@ -367,9 +366,8 @@ exports.deleteRequest = catchAsyncErrors(async (req, res, next) => {
 
     res.status(200).json({
         success: true,
-        message: "request has been deleted"
+        message: "Request has been deleted"
     })
-
 })
 
 // Request Tracker => /api/v1/requestTracker
@@ -504,17 +502,17 @@ exports.getAllAssignedRequests = catchAsyncErrors(async (req, res, next) => {
     const apiFeaturesDenied = new APIFeatures(Request.find({ requestStatus: 'Denied', isTrash: false, requestType: { $in: requestTypeOfficeStaff }, managedBy: req.user.id }).sort({ createdAt: -1 }), req.query).searchRequests().filter()
 
     const requests = await apiFeatures.query;
-    const pendingRequests = await apiFeaturesPending.query;
-    const processingRequests = await apiFeaturesProcessing.query;
-    const approvedRequests = await apiFeaturesApproved.query;
-    const deniedRequests = await apiFeaturesDenied.query;
+    const pending = await apiFeaturesPending.query;
+    const processing = await apiFeaturesProcessing.query;
+    const approved = await apiFeaturesApproved.query;
+    const denied = await apiFeaturesDenied.query;
 
     res.status(200).json({
         success: true,
         requests,
-        pendingRequests,
-        processingRequests,
-        approvedRequests,
-        deniedRequests
+        pending,
+        processing,
+        approved,
+        denied
     })
 })

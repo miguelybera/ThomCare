@@ -56,8 +56,7 @@ export const SidebarData = [
         },
         {
             title: 'Announcements',
-            icon: <i class="fa fa-bullhorn" aria-hidden="true"></i>
-            ,
+            icon: <i class="fa fa-bullhorn" aria-hidden="true"></i>,
             iconClosed: <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>,
             iconOpened: <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>,
             subNav: [

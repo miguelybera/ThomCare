@@ -2,8 +2,8 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { getRequests, updateRequest, clearErrors } from '../../actions/requestActions'
-import { UPDATE_REQUEST_RESET } from '../../constants/requestConstants'
+import { getRequests, updateRequest, assignRequest, clearErrors } from '../../actions/requestActions'
+import { UPDATE_REQUEST_RESET, ASSIGN_REQUEST_RESET } from '../../constants/requestConstants'
 import Sidebar from '../layout/Sidebar'
 import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
@@ -25,6 +25,7 @@ const ListAvailableRequests = ({ history }) => {
 
     const [show, setShow] = useState(false);
     const [updateRequestId, setUpdateRequestId] = useState('');
+    const [isTrash, setIsTrash] = useState(false)
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -42,12 +43,22 @@ const ListAvailableRequests = ({ history }) => {
             dispatch(clearErrors())
         }
         
-        if (isUpdated) {
+        if (isUpdated && isTrash) {
             alert.success('Request has been moved to Trash successfully.')
-            history.push('/admin/all/requests')
+            history.push('/admin/cics/available/requests')
+            setIsTrash(!isTrash)
 
             dispatch({
                 type: UPDATE_REQUEST_RESET
+            })
+        }
+
+        if (isUpdated && !isTrash) {
+            alert.success('Request has been assigned to user successfully.')
+            history.push('/admin/cics/available/requests')
+
+            dispatch({
+                type: ASSIGN_REQUEST_RESET
             })
         }
 
@@ -63,6 +74,10 @@ const ListAvailableRequests = ({ history }) => {
     const updateRequestHandler = (id) => {
         dispatch(updateRequest(id, {isTrash: true}, true))
         handleClose()
+    }
+
+    const assignRequestHandler = (id) => {
+        dispatch(assignRequest(id, {}))
     }
 
     const upperCase = (text) => text.toUpperCase()
@@ -122,8 +137,9 @@ const ListAvailableRequests = ({ history }) => {
                         </Button>
                     </Link>
                     <Button variant="warning" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
+                        assignRequestHandler(request._id)
                     }}>
-                        <i class="fa fa-archive" aria-hidden="true" />
+                        <i class="fa fa-eye" aria-hidden="true" />
                     </Button>
                     <Button variant="danger" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
                         handleShow()
@@ -158,7 +174,10 @@ const ListAvailableRequests = ({ history }) => {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={() => updateRequestHandler(updateRequestId)}>Yes, I'm sure</Button>
+                    <Button variant="primary" onClick={() => {
+                        updateRequestHandler(updateRequestId)
+                        setIsTrash(!isTrash)
+                    }}>Yes, I'm sure</Button>
                 </Modal.Footer>
             </Modal>
             <Sidebar />

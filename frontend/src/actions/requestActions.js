@@ -253,7 +253,7 @@ export const deleteRequest = (requestId) => async (dispatch) => {
             type: DELETE_REQUEST_REQUEST
         })
 
-        const { data } = await axios.put(`/api/v1/admin/trashRequest/${requestId}`)
+        const { data } = await axios.delete(`/api/v1/deleteRequest/${requestId}`)
 
         dispatch({
             type: DELETE_REQUEST_SUCCESS,
@@ -263,7 +263,7 @@ export const deleteRequest = (requestId) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: DELETE_REQUEST_FAIL,
-            payload: error.response.data.errMessage
+            payload: error.response.data.message
         }
         )
     }
