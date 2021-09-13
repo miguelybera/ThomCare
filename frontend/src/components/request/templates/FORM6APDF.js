@@ -27,7 +27,7 @@ const FORM6APDF = (props) => {
     const lastName = formData.lastName.split('')
 
     const options = {
-        number: 0.5
+        format: 'legal'
     }
     return (
         <>
@@ -57,7 +57,7 @@ const FORM6APDF = (props) => {
 
                     </div>
                     <div>
-                        <img src="" alt="UST LOGO" width="100" height="100" />
+                        <img src="/images/UST_SEAL.png" alt="UST LOGO" width="60" height="60" />
                     </div>
                 </div>
 
@@ -396,7 +396,7 @@ const FORM6APDF = (props) => {
 
                     </div>
                     <div>
-                        <img src="ust seal.png" alt="UST LOGO" width="100" height="100" />
+                        <img src="/images/UST_SEAL.png" alt="UST LOGO" width="60" height="60" />
                     </div>
                 </div>
 

@@ -1,3 +1,9 @@
+.Post {
+    width: 780px;
+    font-size: 11px;
+    padding: 20px;
+}
+
 .headerform {
     display: grid;
     grid-template-columns: 20% 20% 40% 20%;
