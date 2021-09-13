@@ -7,7 +7,7 @@ import { saveForm } from '../../../actions/requestActions'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
 import { Row, Container, Button, Col, Card, Form } from 'react-bootstrap'
-import PDF from './PDF'
+import FORM6APDF from '../templates/FORM6APDF'
 import {
     INSIDE_DASHBOARD_FALSE
 } from '../../../constants/dashboardConstants'
@@ -77,7 +77,8 @@ function Form6A() {
             addDrop: inputFields
         }
 
-        setSubmitted(true)
+        setSubmitted(!submitted)
+        console.log('here', submitted)
 
         dispatch(saveForm(formData))
     }
@@ -290,7 +291,7 @@ function Form6A() {
                     </Card>
                 </Container>
             ) : (
-                <PDF title={`Download Add Drop Form`} content={localStorage.getItem('formData')} />
+                <FORM6APDF title={`Download Add Drop Form`} content={localStorage.getItem('formData')} />
             )}
         </Fragment>
     )

@@ -106,7 +106,7 @@ const ListAllRequests = ({ history }) => {
         }
 
         requestList && requestList.forEach(request => {
-            const typeParam = '2'+request._id
+            const viewType = '2'+request._id
 
             data.rows.push({
                 date: changeDateFormat(request.createdAt),
@@ -124,7 +124,7 @@ const ListAllRequests = ({ history }) => {
                     </p>
                 </Fragment>,
                 actions: <Fragment>
-                    <Link to={`/view/request/${typeParam}`}>
+                    <Link to={`/view/request/${viewType}`}>
                         <Button variant="primary" className="mr-5" style={{ marginRight: '5px' }}>
                             <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
                         </Button>

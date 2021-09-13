@@ -7,7 +7,7 @@ import { saveForm } from '../../../actions/requestActions'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
 import { Row, Container, Button, Col, Card, Form } from 'react-bootstrap'
-import PDF from './PDF'
+import PDF from '../templates/PDF'
 import {
     INSIDE_DASHBOARD_FALSE
 } from '../../../constants/dashboardConstants'
