@@ -38,8 +38,8 @@ const FormsList = () => {
                             </td>
                         </tr>
                         <tr>
-                            <td>Form 6B</td>
-                            <td>Cross Enrollment (within CICS)</td>
+                            <td>Form 6A / Form 6B</td>
+                            <td>Cross - Enrollment (within CICS) / Cross- Enrollment with other academic unit/s</td>
                             <td>Available</td>
                             <td><Link to='/form-6b'>
                                 <Button variant="primary" href="/form-6b">
@@ -66,20 +66,6 @@ const FormsList = () => {
                         </tr>
                         <tr>
                             <td>-</td>
-                            <td>Crediting of Course/s</td>
-                            <td>Available</td>
-                            <td><Link to='/form-6a'>
-                                <Button variant="primary" href="/form-6a">
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Fill up
-                                </Button>
-                            </Link>
-                                <Button variant="warning"  href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" >
-                                    <i class="fa fa-eye" aria-hidden="true"></i> View
-                                </Button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>-</td>
                             <td>Request for Overload</td>
                             <td>Available</td>
                             <td><Link to='/overload-form'>
@@ -88,32 +74,6 @@ const FormsList = () => {
                                 </Button>
                             </Link>
                                 <Button variant="warning"  href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" >
-                                    <i class="fa fa-eye" aria-hidden="true"></i> View
-                                </Button></td>
-                        </tr>
-                        <tr>
-                            <td>-</td>
-                            <td>Request for Late Enrollment</td>
-                            <td>Available</td>
-                            <td><Link to='/form-6a'>
-                                <Button variant="primary" href="/form-6a">
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Fill up
-                                </Button>
-                            </Link>
-                                <Button variant="warning"  href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" >
-                                    <i class="fa fa-eye" aria-hidden="true"></i> View
-                                </Button></td>
-                        </tr>
-                        <tr>
-                            <td>-</td>
-                            <td>Request for Manual Enrollment</td>
-                            <td>Available</td>
-                            <td><Link to='/form-6a'>
-                                <Button variant="primary" href="/form-6a">
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Fill up
-                                </Button>
-                            </Link>
-                                <Button variant="warning"  href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing">
                                     <i class="fa fa-eye" aria-hidden="true"></i> View
                                 </Button></td>
                         </tr>

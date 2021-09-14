@@ -35,7 +35,7 @@ const FORM6APDF = (props) => {
                 <div className="headerform">
                     <div>
                         UST FORM No. 6A<br />
-                        <span style={{ fontWeight: 'bold' }}>CHANGE /DROP COURSE </span>
+                        <span style={{ fontWeight: 'bold' }}>CHANGE / DROP COURSE </span>
                     </div>
                     <div>
                         <table>

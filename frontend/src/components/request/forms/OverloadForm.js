@@ -7,7 +7,7 @@ import { saveForm } from '../../../actions/requestActions'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
 import { Row, Container, Button, Col, Card, Form } from 'react-bootstrap'
-import PDF from '../templates/PDF'
+import OVERLOADPDF from '../templates/OVERLOADPDF'
 import {
     INSIDE_DASHBOARD_FALSE
 } from '../../../constants/dashboardConstants'
@@ -366,7 +366,7 @@ function OverloadForm() {
                     </Row>
                 </Container>
             ) : (
-                <PDF title={`Download Add Drop Form`} content={localStorage.getItem('formData')} />
+                <OVERLOADPDF title={`Download Overload Form`} content={localStorage.getItem('formData')} />
             )}
         </Fragment>
     )

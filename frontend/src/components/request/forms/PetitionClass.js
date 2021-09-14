@@ -7,7 +7,7 @@ import { saveForm } from '../../../actions/requestActions'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
 import { Row, Container, Button, Col, Card, Form } from 'react-bootstrap'
-import PDF from '../templates/PDF'
+import PETITIONPDF from '../templates/PETITIONPDF'
 import {
     INSIDE_DASHBOARD_FALSE
 } from '../../../constants/dashboardConstants'
@@ -163,15 +163,17 @@ function PetitionClass() {
                                     </Form.Group>
                                 </Row>
 
-                                <Form.Group className="mb-3" controlId="formGridAddress1">
-                                    <Form.Label>Student Number</Form.Label>
-                                    <Form.Control value={user && user.studentNumber} readOnly />
-                                </Form.Group>
+                                <Row className="mb-3">
+                                    <Form.Group as={Col} controlId="formGridAddress1">
+                                        <Form.Label>Student Number</Form.Label>
+                                        <Form.Control value={user && user.studentNumber} readOnly />
+                                    </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="formGridAddress2">
-                                    <Form.Label>Email address</Form.Label>
-                                    <Form.Control type='email' value={user && user.email} readOnly />
-                                </Form.Group>
+                                    <Form.Group as={Col} controlId="formGridAddress2">
+                                        <Form.Label>Email address</Form.Label>
+                                        <Form.Control type='email' value={user && user.email} readOnly />
+                                    </Form.Group>
+                                </Row>
 
                                 <Row className="mb-3">
                                     <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
@@ -205,34 +207,35 @@ function PetitionClass() {
                                             )}
                                         </Form.Select>
                                     </Form.Group>
+
+                                    <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
+                                        <Form.Label>Implementing Curriculum</Form.Label>
+                                        <Form.Control type="text" placeholder="2013/2018/2020" readOnly />
+                                    </Form.Group>
+
                                 </Row>
 
                                 <Row className="mb-3">
                                     <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
                                         <Form.Label>Current Section</Form.Label>
-                                        <Form.Control type='text' value='di ko alam iset hehe' readOnly />
+                                        <Form.Control type='text' placeholder='4ITF' readOnly />
                                     </Form.Group>
-
-                                    <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
-                                        <Form.Label>Implementing Curriculum</Form.Label>
-                                        <Form.Control type='text' value='di ko alam iset hehe' readOnly />
-                                    </Form.Group>
-
+    
                                     <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
                                         <Form.Label>Petition for:</Form.Label>
-                                        <Form.Control type='text' value='di ko alam iset basta course code' />
+                                        <Form.Control type='text' placeholder='Course Code' />
                                     </Form.Group>
                                 </Row>
 
 
 
-                                <center><Button type='submit' style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}>Submit</Button></center>
+                                <center><Button type='submit' style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}>Generate Form</Button></center>
                             </Form>
                         </Card.Body>
                     </Card>
                 </Container>
             ) : (
-                <PDF title={`Download Add Drop Form`} content={localStorage.getItem('formData')} />
+                <PETITIONPDF title={`Download Petition Class Form`} content={localStorage.getItem('formData')} />
             )}
         </Fragment>
     )
