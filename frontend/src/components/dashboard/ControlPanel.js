@@ -139,11 +139,11 @@ const ControlPanel = () => {
                             <Fragment>
                                 <Container fluid style={{backgroundColor: '#F5F7FA'}}>
                                     <Row style={{ display: 'flex', justifyContent: 'center' }}>
-                                        <Col sm><ReportCard requestType={'Requests'} length={requests && requests.length} icon={'pencil'} /></Col>
-                                        <Col sm><ReportCard requestType={'Pending'} length={pending && pending.length} icon={'paper-clip'} /></Col>
-                                        <Col sm><ReportCard requestType={'Processing'} length={processing && processing.length} icon={'paper-plane'} /></Col>
-                                        <Col sm><ReportCard requestType={'Denied'} length={denied && denied.length} icon={'bubble'} /></Col>
-                                        <Col sm><ReportCard requestType={'Approved'} length={approved && approved.length} icon={'home'} /></Col>
+                                        <Col sm><ReportCard requestType={'Requests'} length={requests && requests.length} icon={'fa fa-pencil'} /></Col>
+                                        <Col sm><ReportCard requestType={'Pending'} length={pending && pending.length} icon={'fa fa-paperclip'} /></Col>
+                                        <Col sm><ReportCard requestType={'Processing'} length={processing && processing.length} icon={'fa fa-paper-plane'} /></Col>
+                                        <Col sm><ReportCard requestType={'Denied'} length={denied && denied.length} icon={'fa fa-times-circle'} /></Col>
+                                        <Col sm><ReportCard requestType={'Approved'} length={approved && approved.length} icon={'fa fa-check-circle'} /></Col>
                                     </Row>
                                 </Container>
                             </Fragment>
