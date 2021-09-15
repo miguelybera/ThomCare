@@ -38,6 +38,7 @@ import Form6B from './components/request/forms/Form6B'
 import OverloadForm from './components/request/forms/OverloadForm'
 import PetitionClass from './components/request/forms/PetitionClass'
 import FormsList from './components/request/forms/FormsList'
+import DownloadList from './components/request/forms/DownloadList'
 
 
 //dashboard folder
@@ -100,6 +101,7 @@ function App() {
 
                             {/**needs to be logged in */}
                             <ProtectedRoute path='/forms-list' component={FormsList} exact />
+                            <ProtectedRoute path='/download-forms-list' component={DownloadList} exact />
                             <ProtectedRoute path='/form-6a' component={Form6A} exact />
                             <ProtectedRoute path='/form-6b' component={Form6B} exact />
                             <ProtectedRoute path='/petition-classes' component={PetitionClass} exact />
