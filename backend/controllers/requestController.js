@@ -13,6 +13,9 @@ const requestTypeOfficeStaff = ['Request for Certificate of Grades', 'Request fo
 exports.submitRequest = catchAsyncErrors(async (req, res, next) => {
     const { requestType, yearLevel, section, notes } = req.body
 
+    if(yearLevel == ''){
+        return next(new ErrorHandler('Please enter year level'));
+    }
     const fileRequirements = req.files
 
     if (fileRequirements == null || fileRequirements == '') { return next(new ErrorHandler('Please Attach required file/s')) }
@@ -450,7 +453,8 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
     const auditLog = await Audit.create({
         userAudit: req.user.email,
         requestAudit: request.trackingNumber,
-        actionAudit: `User account: (${req.user.email}) has updated the status of request with the tracking number: (${request.trackingNumber}) \n Current Status: ${req.body.requestStatus}`
+        actionAudit: `User account: (${req.user.email}) has updated the status of request with the tracking number: (${request.trackingNumber}) \n Current Status: ${req.body.requestStatus}`,
+        dateAudit: Date.now()
     })
 
     let msg = ``
@@ -533,7 +537,8 @@ exports.trashRequest = catchAsyncErrors(async (req, res, next) => {
     const auditLog = await Audit.create({
         userAudit: req.user.email,
         requestAudit: auditRequest.trackingNumber,
-        actionAudit
+        actionAudit,
+        dateAudit: Date.now()
     })
 
     res.status(200).json({
@@ -595,7 +600,8 @@ exports.deleteRequest = catchAsyncErrors(async (req, res, next) => {
     const auditLog = await Audit.create({
         userAudit: req.user.email,
         requestAudit: request.trackingNumber,
-        actionAudit: `User account: (${req.user.email}) has deleted the request with the tracking number: (${request.trackingNumber})`
+        actionAudit: `User account: (${req.user.email}) has deleted the request with the tracking number: (${request.trackingNumber})`,
+        dateAudit: Date.now()
     })
 
     await request.remove()

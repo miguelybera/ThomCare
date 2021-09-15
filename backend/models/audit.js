@@ -14,8 +14,7 @@ const auditSchema = new mongoose.Schema({
     },
     dateAudit: {
         type: Date,
-        required: true,
-        default: Date.now()
+        required: true
     }
 })
 module.exports = mongoose.model('Audit', auditSchema)
