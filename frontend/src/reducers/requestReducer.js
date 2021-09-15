@@ -98,13 +98,14 @@ export const saveFormDetailsReducer = (state = { formData: {} }, action) => {
 }
 
 //get ALL requests
-export const getRequestsReducer = (state = { requests: [], pending: [], processing: [], approved: [], denied: [], crossEnrollment: []}, action) => {
+export const getRequestsReducer = (state = { requests: [], recents: [], pending: [], processing: [], approved: [], denied: [], crossEnrollment: []}, action) => {
     switch (action.type) {
         case GET_REQUESTS_REQUEST:
             return {
                 ...state,
                 loading: true,
                 requests: [],
+                recents: [],
                 pending: [], 
                 processing: [], 
                 approved: [], 
@@ -116,6 +117,7 @@ export const getRequestsReducer = (state = { requests: [], pending: [], processi
             return {
                 loading: false,
                 requests: action.payload.requests,
+                recents: action.payload.recents, 
                 pending: action.payload.pending, 
                 processing: action.payload.processing, 
                 approved: action.payload.approved, 

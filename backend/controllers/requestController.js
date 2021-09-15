@@ -8,6 +8,7 @@ const cloudinary = require('cloudinary').v2;
 const requestNotification = require('../config/templates/requestNotification')
 
 const requestTypeOfficeStaff = ['Request for Certificate of Grades', 'Request for Course Description', 'Others'];
+const resPerPage = 5
 
 // Submit new request => /api/v1/submitRequest
 exports.submitRequest = catchAsyncErrors(async (req, res, next) => {
@@ -125,11 +126,18 @@ exports.getMyRequests = catchAsyncErrors(async (req, res, next) => {
         .searchRequests()
         .filter()
 
+    const getRecents = new APIFeatures(Request.find({ requestedById: req.user.id }).sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
+        .pagination(resPerPage)
+
     const requests = await getRequests.query
+    const recents = await getRecents.query
 
     res.status(200).json({
         success: true,
-        requests
+        requests,
+        recents
     })
 })
 
@@ -157,6 +165,12 @@ exports.getDeptChairRequests = catchAsyncErrors(async (req, res, next) => {
         .searchRequests()
         .filter()
 
+    const getRecents = new APIFeatures(Request.find({ "requestorInfo.course": deptCourse, isTrash: false, requestType: { $nin: requestTypeOfficeStaff } })
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
+        .pagination(resPerPage)
+
     const getRequestsPending = new APIFeatures(Request.find({ "requestorInfo.course": deptCourse, requestStatus: 'Pending', isTrash: false, requestType: { $nin: requestTypeOfficeStaff } })
         .sort({ createdAt: -1 }), req.query)
         .searchRequests()
@@ -183,6 +197,7 @@ exports.getDeptChairRequests = catchAsyncErrors(async (req, res, next) => {
         .filter()
 
     const requests = await getRequests.query;
+    const recents = await getRecents.query;
     const pending = await getRequestsPending.query;
     const processing = await getRequestsProcessing.query;
     const approved = await getRequestsApproved.query;
@@ -192,6 +207,7 @@ exports.getDeptChairRequests = catchAsyncErrors(async (req, res, next) => {
     res.status(200).json({
         success: true,
         requests,
+        recents,
         pending,
         processing,
         approved,
@@ -206,6 +222,12 @@ exports.getAllRequests = catchAsyncErrors(async (req, res, next) => {
         .sort({ createdAt: -1 }), req.query)
         .searchRequests()
         .filter()
+
+    const getRecents = new APIFeatures(Request.find()
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
+        .pagination(resPerPage)
 
     const getRequestsPending = new APIFeatures(Request.find({ requestStatus: 'Pending', isTrash: false })
         .sort({ createdAt: -1 }), req.query)
@@ -228,6 +250,7 @@ exports.getAllRequests = catchAsyncErrors(async (req, res, next) => {
         .filter()
 
     const requests = await getRequests.query;
+    const recents = await getRecents.query;
     const pending = await getRequestsPending.query;
     const processing = await getRequestsProcessing.query;
     const approved = await getRequestsApproved.query;
@@ -236,6 +259,7 @@ exports.getAllRequests = catchAsyncErrors(async (req, res, next) => {
     res.status(200).json({
         success: true,
         requests,
+        recents,
         pending,
         processing,
         approved,
