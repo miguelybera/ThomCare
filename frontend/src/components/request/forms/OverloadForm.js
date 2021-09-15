@@ -6,7 +6,7 @@ import { getCourses, clearErrors } from '../../../actions/courseActions'
 import { saveForm } from '../../../actions/requestActions'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
-import { Row, Container, Button, Col, Card, Form } from 'react-bootstrap'
+import { Row, Container, Button, Col, Card, Form, Breadcrumb, Modal } from 'react-bootstrap'
 import OVERLOADPDF from '../templates/OVERLOADPDF'
 import {
     INSIDE_DASHBOARD_FALSE
@@ -118,14 +118,78 @@ function OverloadForm() {
         }
     }
 
+    const title = 'Overload Form'
+
     const [submitted, setSubmitted] = useState(false)
+
+    function ModalDocuments() {
+        const [lgShow, setLgShow] = useState(false);
+        return (
+            <>
+                <Button onClick={() => setLgShow(true)}>General Instructions</Button>
+                <Modal
+                    size="lg"
+                    show={lgShow}
+                    onHide={() => setLgShow(false)}
+                    aria-labelledby="example-modal-sizes-title-lg"
+                    style={{ paddingTop: '40px' }}
+                    centered
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title id="example-modal-sizes-title-lg">
+                            <h3 style={{ fontWeight: 'bold' }}>General Instructions:</h3>
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Row className="mb-3" style={{ display: 'flex', flexDirection: 'row', margin: '20px 0px 0px 50px' }}>
+                            <ul>
+                                <li>The Overload Form should be printed in triplicate copies.</li>
+                                <ul>
+                                    <li>First copy for the Office of the Registrar</li>
+                                    <li>Second copy for the Office of the Dean/Department Chair</li>
+                                    <li>Third copy for the student</li>
+                                </ul>
+                                <li>Fill out the form legibly with all the required information</li>
+                                <li>Have the approval of the Department Chair and the Dean</li>
+                                <li>Submit the form to the Office of the Registrar for Approval</li>
+                                <li>Once approve you may procced to the Department chair for advising of the approved
+                                    overload course.</li>
+                            </ul>
+                            <p>Note: Overload Form</p>
+                            <ul>
+                                <li>As stipulated in the UST Handbook (PPS No. 1012)</li>
+                                <ul>
+                                    <li>Graduating student is limited only to six (6) units of overload for the
+                                        Academic Year.</li>
+                                    <li>Non-graduating students, upon the endorsement of the Dean, may carry a
+                                        maximum overload of three (3) units in an academic year for the purpose of
+                                        being on a regular track in the succeeding year level.</li>
+                                </ul>
+                            </ul>
+                        </Row>
+                    </Modal.Body>
+                </Modal>
+            </>
+        );
+    }
 
     return (
         <Fragment>
-            <MetaData title={'Overload Form'} />
+            <MetaData title={title} />
             {loading ? <Loader /> : !submitted ? (
-                <Container classname="align-me" fluid style={{ paddingBottom: '100px' }}>
+                <Container classname="align-me" fluid style={{ paddingBottom: '100px', marginTop: '30px' }}>
                     <Card style={{ backgroundColor: '#9c0b0b' }}>  {/*, width: '100rem' */}
+                        <Card.Header style={{ backgroundColor: 'white', textColor: '#919191' }}>
+                            <div style={{ display: 'grid', gridTemplateColumns: '86% 14%' }}>
+                                <div>
+                                    <Breadcrumb style={{ display: 'flex', flexDirection: 'column' }}>
+                                        <Breadcrumb.Item><Link to='/forms-list'>Generate Forms</Link></Breadcrumb.Item>
+                                        <Breadcrumb.Item active>{title}</Breadcrumb.Item>
+
+                                    </Breadcrumb></div>
+                                <div><ModalDocuments /></div>
+                            </div>
+                        </Card.Header>
                         <Card.Body>
                             <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold', textAlign: 'center' }}>REQUEST FOR STUDY OVERLOAD FORM (MAKE 3 COPIES)</Card.Title>
                             <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold' }}>Student Information</Card.Title>
@@ -337,33 +401,6 @@ function OverloadForm() {
                         </Card.Body>
                     </Card>
 
-                    <center> <h3 style={{ fontWeight: 'bold', marginTop: '20px' }}>General Instructions:</h3> </ center>
-                    <Row className="mb-3" style={{ display: 'flex', flexDirection: 'row', margin: '20px 0px 0px 50px' }}>
-                        <ul>
-                            <li>The Overload Form should be printed in triplicate copies.</li>
-                            <ul>
-                                <li>First copy for the Office of the Registrar</li>
-                                <li>Second copy for the Office of the Dean/Department Chair</li>
-                                <li>Third copy for the student</li>
-                            </ul>
-                            <li>Fill out the form legibly with all the required information</li>
-                            <li>Have the approval of the Department Chair and the Dean</li>
-                            <li>Submit the form to the Office of the Registrar for Approval</li>
-                            <li>Once approve you may procced to the Department chair for advising of the approved
-                                overload course.</li>
-                        </ul>
-                        <p>Note: Overload Form</p>
-                        <ul>
-                            <li>As stipulated in the UST Handbook (PPS No. 1012)</li>
-                            <ul>
-                                <li>Graduating student is limited only to six (6) units of overload for the
-                                    Academic Year.</li>
-                                <li>Non-graduating students, upon the endorsement of the Dean, may carry a
-                                    maximum overload of three (3) units in an academic year for the purpose of
-                                    being on a regular track in the succeeding year level.</li>
-                            </ul>
-                        </ul>
-                    </Row>
                 </Container>
             ) : (
                 <OVERLOADPDF title={`Download Overload Form`} content={localStorage.getItem('formData')} />

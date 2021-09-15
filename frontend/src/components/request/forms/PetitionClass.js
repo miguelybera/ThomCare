@@ -6,7 +6,7 @@ import { getCourses, clearErrors } from '../../../actions/courseActions'
 import { saveForm } from '../../../actions/requestActions'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
-import { Row, Container, Button, Col, Card, Form } from 'react-bootstrap'
+import { Row, Container, Button, Col, Card, Form, Breadcrumb} from 'react-bootstrap'
 import PETITIONPDF from '../templates/PETITIONPDF'
 import {
     INSIDE_DASHBOARD_FALSE
@@ -135,12 +135,20 @@ function PetitionClass() {
         "Service Management"
     ]
 
+    const title = 'Petition Classes'
+
     return (
         <Fragment>
-            <MetaData title={'Add/Drop Form'} />
+            <MetaData title={title} />
             {loading ? <Loader /> : !submitted ? (
-                <Container classname="align-me" fluid style={{ paddingBottom: '100px' }}>
+                <Container classname="align-me" fluid style={{ paddingBottom: '100px', paddingTop: '40px' }}>
                     <Card style={{ backgroundColor: '#9c0b0b' }}>  {/*, width: '100rem' */}
+                        <Card.Header style={{ backgroundColor: 'white', textColor: '#919191' }}>
+                            <Breadcrumb>
+                                <Breadcrumb.Item><Link to='/forms-list'>Generate Forms</Link></Breadcrumb.Item>
+                                <Breadcrumb.Item active>{title}</Breadcrumb.Item>
+                            </Breadcrumb>
+                        </Card.Header>
                         <Card.Body>
                             <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold', textAlign: 'center' }}>PETITION CLASS FORM</Card.Title>
 
@@ -220,7 +228,7 @@ function PetitionClass() {
                                         <Form.Label>Current Section</Form.Label>
                                         <Form.Control type='text' placeholder='4ITF' readOnly />
                                     </Form.Group>
-    
+
                                     <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
                                         <Form.Label>Petition for:</Form.Label>
                                         <Form.Control type='text' placeholder='Course Code' />
