@@ -130,8 +130,10 @@ export const getRequests = (role, route) => async (dispatch) => {
                 default:
                     link = ``
             }
-        } else { //student
+        } else if (role === 'Student') { //student
             link = `/api/v1/me/requests`
+        } else {
+            link = ``
         }
 
         const { data } = await axios.get(link)
