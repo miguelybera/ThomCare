@@ -13,9 +13,6 @@ const requestTypeOfficeStaff = ['Request for Certificate of Grades', 'Request fo
 exports.submitRequest = catchAsyncErrors(async (req, res, next) => {
     const { requestType, yearLevel, section, notes } = req.body
 
-    if(yearLevel == ''){
-        return next(new ErrorHandler('Please enter year level'));
-    }
     const fileRequirements = req.files
 
     if (fileRequirements == null || fileRequirements == '') { return next(new ErrorHandler('Please Attach required file/s')) }
