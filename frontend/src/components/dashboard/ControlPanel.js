@@ -6,7 +6,7 @@ import { getRequests, updateRequest, clearErrors } from '../../actions/requestAc
 import Sidebar from './../layout/Sidebar'
 import MetaData from './../layout/MetaData'
 import Loader from './../layout/Loader'
-import { Container, Button, Card } from 'react-bootstrap'
+import { Container, Button, Row, Col } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import {
     INSIDE_DASHBOARD_TRUE
@@ -17,10 +17,11 @@ var dateFormat = require('dateformat')
 
 const ControlPanel = () => {
 
-    const { loading, user } = useSelector(state => state.auth)
+    const { user } = useSelector(state => state.auth)
     const { loading: listLoading, error, recents, requests, processing, pending, approved, denied } = useSelector(state => state.requests)
 
     const dispatch = useDispatch()
+    const alert = useAlert()
 
     const role = user && user.role
 
@@ -36,7 +37,7 @@ const ControlPanel = () => {
             dispatch(clearErrors())
         }
 
-    }, [dispatch, error, role])
+    }, [dispatch, alert, error, role])
 
     function changeDateFormat(date) {
         return dateFormat(date, "mmm d, yyyy h:MMtt")
@@ -128,27 +129,25 @@ const ControlPanel = () => {
                         <h1 className="my-4">Control Panel</h1>
                         <Container className="space_inside"></Container>
 
-                        <ReportCard requestType={'Requests'} length={requests && requests.length} />
 
-                        {user.role === 'CICS Staff' ? (
+                        {user.role === 'Student' ? (
                             <Fragment>
-                                <ReportCard requestType={'Pending'} length={pending && pending.length} />
-                                <ReportCard requestType={'Processing'} length={processing && processing.length} />
-                                <ReportCard requestType={'Denied'} length={denied && denied.length} />
-                                <ReportCard requestType={'Approved'} length={approved && approved.length} />
+                                <Container style={{ display: 'flex', justifyContent: 'center' }}>
+                                    <ReportCard requestType={'Requests'} length={requests && requests.length} />
+                                </Container>
                             </Fragment>
                         ) : (
-                            user.role === 'Student' ? (
-                                <Fragment>
-                                </Fragment>
-                            ) : (
-                                <Fragment>
-                                    <ReportCard requestType={'Pending'} length={pending && pending.length} />
-                                    <ReportCard requestType={'Processing'} length={processing && processing.length} />
-                                    <ReportCard requestType={'Denied'} length={denied && denied.length} />
-                                    <ReportCard requestType={'Approved'} length={approved && approved.length} />
-                                </Fragment>
-                            )
+                            <Fragment>
+                                <Container>
+                                    <Row style={{ display: 'flex', justifyContent: 'center' }}>
+                                        <Col sm><ReportCard requestType={'Requests'} length={requests && requests.length} /></Col>
+                                        <Col sm><ReportCard requestType={'Pending'} length={pending && pending.length} /></Col>
+                                        <Col sm><ReportCard requestType={'Processing'} length={processing && processing.length} /></Col>
+                                        <Col sm><ReportCard requestType={'Denied'} length={denied && denied.length} /></Col>
+                                        <Col sm><ReportCard requestType={'Approved'} length={approved && approved.length} /></Col>
+                                    </Row>
+                                </Container>
+                            </Fragment>
                         )}
 
                         <MDBDataTableV5
