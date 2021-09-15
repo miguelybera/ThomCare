@@ -11,6 +11,9 @@ import {
     GET_REQUESTS_REQUEST,
     GET_REQUESTS_SUCCESS,
     GET_REQUESTS_FAIL,
+    GET_RECENT_REQUEST,
+    GET_RECENT_SUCCESS,
+    GET_RECENT_FAIL,
     UPDATE_REQUEST_REQUEST,
     UPDATE_REQUEST_SUCCESS,
     UPDATE_REQUEST_FAIL,
@@ -98,7 +101,7 @@ export const saveFormDetailsReducer = (state = { formData: {} }, action) => {
 }
 
 //get ALL requests
-export const getRequestsReducer = (state = { requests: [], recents: [], pending: [], processing: [], approved: [], denied: [], crossEnrollment: []}, action) => {
+export const getRequestsReducer = (state = { requests: [], recents: [], pending: [], processing: [], approved: [], denied: [], crossEnrollment: [] }, action) => {
     switch (action.type) {
         case GET_REQUESTS_REQUEST:
             return {
@@ -106,10 +109,10 @@ export const getRequestsReducer = (state = { requests: [], recents: [], pending:
                 loading: true,
                 requests: [],
                 recents: [],
-                pending: [], 
-                processing: [], 
-                approved: [], 
-                denied: [], 
+                pending: [],
+                processing: [],
+                approved: [],
+                denied: [],
                 crossEnrollment: []
             }
 
@@ -117,16 +120,51 @@ export const getRequestsReducer = (state = { requests: [], recents: [], pending:
             return {
                 loading: false,
                 requests: action.payload.requests,
-                recents: action.payload.recents, 
-                pending: action.payload.pending, 
-                processing: action.payload.processing, 
-                approved: action.payload.approved, 
-                denied: action.payload.denied, 
+                recents: action.payload.recents,
+                pending: action.payload.pending,
+                processing: action.payload.processing,
+                approved: action.payload.approved,
+                denied: action.payload.denied,
                 crossEnrollment: action.payload.crossEnrollment,
                 success: action.payload.success
             }
 
         case GET_REQUESTS_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+//get recent requests
+export const getRecentReducer = (state = { recents: [] }, action) => {
+    switch (action.type) {
+        case GET_RECENT_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                recents: [],
+            }
+
+        case GET_RECENT_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                recents: action.payload
+            }
+            
+        case GET_RECENT_FAIL:
             return {
                 ...state,
                 loading: false,
