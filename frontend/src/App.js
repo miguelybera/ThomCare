@@ -61,6 +61,8 @@ import ListAvailableRequests from './components/dashboard/ListAvailableRequests'
 import ListMyRequests from './components/dashboard/ListMyRequests'
 import ListTrash from './components/dashboard/ListTrash'
 import ListAuditLog from './components/dashboard/ListAuditLog'
+import ManageForms from './components/dashboard/ManageForms'
+import DownloadableForms from './components/dashboard/DownloadableForms'
 
 //route folder
 import ProtectedRoute from './components/route/ProtectedRoute'
@@ -132,6 +134,8 @@ function App() {
                             <ProtectedRoute path='/admin/cics/available/requests' component={ListAvailableRequests} exact />
                             <ProtectedRoute path='/admin/me/requests' component={ListMyRequests} exact />
                             <ProtectedRoute path='/audit' component={ListAuditLog} exact />
+                            <ProtectedRoute path='/manageforms' component={ManageForms} exact />
+                            <ProtectedRoute path='/downloadable-forms' component={DownloadableForms} exact />
                         </div>
                         {
                             dashboard ? <></> : <Footer />

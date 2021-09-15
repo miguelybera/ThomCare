@@ -81,13 +81,13 @@ const ListAllRequests = () => {
 
     return (
         <Fragment>
-            <MetaData title={'Requests'} />
+            <MetaData title={'Audit Log'} />
             <Sidebar />
             <div className="row">
                 <div className="">
                     <Container className="space_inside"></Container>
                     <Container>
-                        <h3>Requests</h3>
+                        <h3>Audit Log</h3>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5
@@ -96,7 +96,7 @@ const ListAllRequests = () => {
                                     pagingTop
                                     scrollX
                                     entriesOptions={[5, 20, 25]}
-                                    entries={5}
+                                    entries={10}
                                 />
                             </>
                         )}

@@ -261,7 +261,7 @@ const UpdateRequest = ({ history, match }) => {
                                     pagingTop
                                     scrollX
                                     entriesOptions={[5, 20, 25]}
-                                    entries={5}
+                                    entries={10}
                                 />
 
                                 <Row className="mb-3">

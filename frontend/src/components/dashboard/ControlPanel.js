@@ -121,7 +121,7 @@ const ControlPanel = () => {
 
     return (
         <Fragment>
-            <MetaData title={'Announcements'} />
+            <MetaData title={'Control Panel'} />
             <Sidebar />
             {listLoading ? <Loader /> : (
                 <div className="row">
@@ -129,22 +129,21 @@ const ControlPanel = () => {
                         <h1 className="my-4">Control Panel</h1>
                         <Container className="space_inside"></Container>
 
-
                         {user.role === 'Student' ? (
                             <Fragment>
                                 <Container style={{ display: 'flex', justifyContent: 'center' }}>
-                                    <ReportCard requestType={'Requests'} length={requests && requests.length} />
+                                    <ReportCard requestType={'Requests'} length={requests && requests.length} icon={'pencil'} />
                                 </Container>
                             </Fragment>
                         ) : (
                             <Fragment>
-                                <Container>
+                                <Container fluid style={{backgroundColor: '#F5F7FA'}}>
                                     <Row style={{ display: 'flex', justifyContent: 'center' }}>
-                                        <Col sm><ReportCard requestType={'Requests'} length={requests && requests.length} /></Col>
-                                        <Col sm><ReportCard requestType={'Pending'} length={pending && pending.length} /></Col>
-                                        <Col sm><ReportCard requestType={'Processing'} length={processing && processing.length} /></Col>
-                                        <Col sm><ReportCard requestType={'Denied'} length={denied && denied.length} /></Col>
-                                        <Col sm><ReportCard requestType={'Approved'} length={approved && approved.length} /></Col>
+                                        <Col sm><ReportCard requestType={'Requests'} length={requests && requests.length} icon={'pencil'} /></Col>
+                                        <Col sm><ReportCard requestType={'Pending'} length={pending && pending.length} icon={'paper-clip'} /></Col>
+                                        <Col sm><ReportCard requestType={'Processing'} length={processing && processing.length} icon={'paper-plane'} /></Col>
+                                        <Col sm><ReportCard requestType={'Denied'} length={denied && denied.length} icon={'bubble'} /></Col>
+                                        <Col sm><ReportCard requestType={'Approved'} length={approved && approved.length} icon={'home'} /></Col>
                                     </Row>
                                 </Container>
                             </Fragment>
@@ -155,7 +154,6 @@ const ControlPanel = () => {
                             searchTop
                             pagingTop
                             scrollX
-                            entriesOptions={[5, 20, 25]}
                             entries={5}
                         />
 

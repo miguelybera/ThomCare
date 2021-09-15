@@ -166,7 +166,7 @@ const ListArchivedAnnouncements = ({ history }) => {
                                     pagingTop
                                     scrollX
                                     entriesOptions={[5, 20, 25]}
-                                    entries={5}
+                                    entries={10}
                                 />
                             </>
                         )}

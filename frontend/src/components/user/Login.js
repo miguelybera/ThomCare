@@ -27,7 +27,7 @@ const Login = ({ history }) => {
     useEffect(() => {
         if (isAuthenticated) {
             alert.success('Logged in successfully.')
-            history.push('/')
+            history.push('/controlpanel')
         }
 
         if (error) {
