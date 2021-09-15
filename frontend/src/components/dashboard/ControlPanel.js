@@ -6,11 +6,12 @@ import { getRequests, updateRequest, clearErrors } from '../../actions/requestAc
 import Sidebar from './../layout/Sidebar'
 import MetaData from './../layout/MetaData'
 import Loader from './../layout/Loader'
-import { Container, Button } from 'react-bootstrap'
+import { Container, Button, Card } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import {
     INSIDE_DASHBOARD_TRUE
 } from '../../constants/dashboardConstants'
+import ReportCard from './controlpanel/ReportCard'
 
 var dateFormat = require('dateformat')
 
@@ -45,7 +46,7 @@ const ControlPanel = () => {
 
     let link = ''
 
-    if(user.role === 'CICS Staff') {
+    if (user.role === 'CICS Staff') {
         link = '/admin/all/requests'
     } else if (user.role === 'Student') {
         link = '/me/requests'
@@ -126,26 +127,26 @@ const ControlPanel = () => {
                     <div className="">
                         <h1 className="my-4">Control Panel</h1>
                         <Container className="space_inside"></Container>
+
+                        <ReportCard requestType={'Requests'} length={requests && requests.length} />
+
                         {user.role === 'CICS Staff' ? (
                             <Fragment>
-                                <p>Total Requests: {requests && requests.length}</p>
-                                <p>Total processing: {processing && processing.length}</p>
-                                <p>Total pending: {pending && pending.length}</p>
-                                <p>Total denied: {denied && denied.length}</p>
-                                <p>Total approved: {approved && approved.length}</p>
+                                <ReportCard requestType={'Pending'} length={pending && pending.length} />
+                                <ReportCard requestType={'Processing'} length={processing && processing.length} />
+                                <ReportCard requestType={'Denied'} length={denied && denied.length} />
+                                <ReportCard requestType={'Approved'} length={approved && approved.length} />
                             </Fragment>
                         ) : (
                             user.role === 'Student' ? (
                                 <Fragment>
-                                    <p>Total Requests: {requests && requests.length}</p>
                                 </Fragment>
                             ) : (
                                 <Fragment>
-                                    <p>Total Requests: {requests && requests.length}</p>
-                                    <p>Total processing: {processing && processing.length}</p>
-                                    <p>Total pending: {pending && pending.length}</p>
-                                    <p>Total denied: {denied && denied.length}</p>
-                                    <p>Total approved: {approved && approved.length}</p>
+                                    <ReportCard requestType={'Pending'} length={pending && pending.length} />
+                                    <ReportCard requestType={'Processing'} length={processing && processing.length} />
+                                    <ReportCard requestType={'Denied'} length={denied && denied.length} />
+                                    <ReportCard requestType={'Approved'} length={approved && approved.length} />
                                 </Fragment>
                             )
                         )}
