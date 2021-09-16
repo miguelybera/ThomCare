@@ -10,8 +10,8 @@ body{
     background: linear-gradient(45deg,#4099ff,#73b4ff);
 }
 
-.bg-c-green {
-    background: linear-gradient(45deg,#2ed8b6,#59e0c5);
+.bg-c-red {
+    background: linear-gradient(70deg,#ff4a4a,rgb(163, 13, 13));
 }
 
 .bg-c-yellow {
