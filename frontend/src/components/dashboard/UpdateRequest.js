@@ -250,7 +250,7 @@ const UpdateRequest = ({ history, match }) => {
 
                                 <Form.Group className="mb-3" controlId="formGridAddress2">
                                     <Form.Label>Remarks message</Form.Label>
-                                    <Form.Control type="text"value={remarksMessage} name="remarksMessage" onChange={e => setRemarksMessage(e.target.value)} required/>
+                                    <Form.Control type="text"value={remarksMessage} name="remarksMessage" onChange={e => setRemarksMessage(e.target.value)}/>
                                 </Form.Group>
 
                                 <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold' }}>Courses to Add / Drop</Card.Title>
