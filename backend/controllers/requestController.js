@@ -484,7 +484,7 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
 
     let msg = ``
 
-    if (req.files != null || req.files != '') {
+    if (req.files.length > 0) {
         msg = `& a file has been attached to your request. Please view your request on the website to download the file attachment.`
     }
 
