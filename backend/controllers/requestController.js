@@ -27,32 +27,35 @@ exports.submitRequest = catchAsyncErrors(async (req, res, next) => {
         case "Cross Enrollment within CICS":
             trackStart = '2'
             break
-        case "Request for Petition Classes within CICS":
+        case "Cross Enrollment outside CICS":
             trackStart = '3'
             break
-        case "Request for Crediting of Courses":
+        case "Request for Petition Classes within CICS":
             trackStart = '4'
             break
-        case "Request for Overload":
+        case "Request for Crediting of Courses":
             trackStart = '5'
             break
-        case "Request Override":
+        case "Request for Overload":
             trackStart = '6'
             break
-        case "Request for Late Enrollment":
+        case "Request Override":
             trackStart = '7'
             break
-        case "Request for Manual Enrollment":
+        case "Request for Late Enrollment":
             trackStart = '8'
             break
-        case "Request for Course Description":
+        case "Request for Manual Enrollment":
             trackStart = '9'
             break
-        case "Request for Certificate of Grades":
+        case "Request for Course Description":
             trackStart = '10'
             break
-        case "Others":
+        case "Request for Certificate of Grades":
             trackStart = '11'
+            break
+        case "Others":
+            trackStart = '12'
             break
     }
 
@@ -480,7 +483,7 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
 
     let msg = ``
 
-    if (req.files == null || req.files == '') {
+    if (req.files != null || req.files != '') {
         msg = `& a file has been attached to your request. Please view your request on the website to download the file attachment.`
     }
 
@@ -592,7 +595,6 @@ exports.deleteRequest = catchAsyncErrors(async (req, res, next) => {
     }
 
     const rfaArrayLength = []
-    const rfarfa = returningFilesArray
 
     for (let i = 0; i < returningFilesArray.length; i++) {
         rfaArrayLength.push(returningFilesArray[i].length)

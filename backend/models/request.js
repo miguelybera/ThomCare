@@ -13,6 +13,7 @@ const requestSchema = new mongoose.Schema({
             values: [
                 'Adding/Dropping of Course',
                 'Cross Enrollment within CICS',
+                'Cross Enrollment outside CICS',
                 'Request for Petition Classes within CICS',
                 'Request for Crediting of Courses',
                 'Request for Overload',
