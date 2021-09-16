@@ -65,7 +65,7 @@ router.route('/tracker').post(requestTracker);
 router.route('/request/:requestId').get(isAuthenticatedUser, getSingleRequest); // no isAuthenticatedUser because a student can open request details while not signed in because of the tracker
 
 //student
-router.route('/submit').post(isAuthenticatedUser, thomcareUploadStudent.array('fileRequirements', 5), submitRequest);
+router.route('/submit').post(isAuthenticatedUser, thomcareUploadStudent.array('fileRequirements'), submitRequest);
 router.route('/me/requests').get(isAuthenticatedUser, authorizeRoles('Student'), getMyRequests);
 
 //dept chair
@@ -80,7 +80,7 @@ router.route('/admin/cics/me/requests').get(isAuthenticatedUser, authorizeRoles(
 
 //dept chair and cics staff (the trash request can also be used for restoring the request back)
 router.route('/admin/requests/trash').get(isAuthenticatedUser, authorizeRoles('CICS Staff', 'IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getTrashedRequests);
-router.route('/admin/update/:requestId').put(isAuthenticatedUser, thomcareUploadAdmin.array('returningFiles', 5), authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), updateRequest);
+router.route('/admin/update/:requestId').put(isAuthenticatedUser, thomcareUploadAdmin.array('returningFiles'), authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), updateRequest);
 router.route('/admin/trash/:requestId').put(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), trashRequest);
 
 //dept chair, cics staff, student
