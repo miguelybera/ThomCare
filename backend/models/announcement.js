@@ -57,8 +57,7 @@ const announcementSchema = new mongoose.Schema({
         default: 'All'
     },
     createdAt: { //date created of data
-        type: Date,
-        default: Date.now(),
+        type: Date
     },
     archiveDate: {
         type: Date,

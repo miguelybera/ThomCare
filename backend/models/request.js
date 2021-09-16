@@ -100,8 +100,7 @@ const requestSchema = new mongoose.Schema({
         },
     },
     createdAt: {
-        type: Date,
-        default: Date.now()
+        type: Date
     },
     remarks: [{
         dateOfRemark: {

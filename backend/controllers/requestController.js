@@ -87,7 +87,8 @@ exports.submitRequest = catchAsyncErrors(async (req, res, next) => {
         fileRequirements,
         notes,
         requestorInfo,
-        remarks
+        remarks,
+        createdAt: new Date(Date.now())
     })
     res.status(201).json({
         success: true,

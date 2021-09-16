@@ -96,7 +96,8 @@ exports.newAnnouncement = catchAsyncErrors(async (req, res, next) => {
         createdAt: Date.now(),
         fileAttachments,
         announcementType,
-        setExpiry
+        setExpiry,
+        createdAt: new Date(Date.now())
     })
 
     res.status(201).json({
