@@ -10,6 +10,9 @@ import {
     GET_REQUESTS_REQUEST,
     GET_REQUESTS_SUCCESS,
     GET_REQUESTS_FAIL,
+    GET_RECENT_REQUEST,
+    GET_RECENT_SUCCESS,
+    GET_RECENT_FAIL,
     UPDATE_REQUEST_REQUEST,
     UPDATE_REQUEST_SUCCESS,
     UPDATE_REQUEST_FAIL,
@@ -90,7 +93,7 @@ export const submitRequest = (request) => async (dispatch) => {
     }
 }
 
-//get CICS requests
+//get requests
 export const getRequests = (role, route) => async (dispatch) => {
     try {
         dispatch({
@@ -169,6 +172,41 @@ export const getRequestDetails = (requestId) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: REQUEST_DETAILS_FAIL,
+            payload: error.response.data.errMessage
+        }
+        )
+    }
+}
+
+//get recent requests
+export const getRecent = (role) => async (dispatch) => {
+    try {
+        dispatch({
+            type: GET_RECENT_REQUEST
+        })
+
+        let link = ``
+
+        if (role === 'Dept Chair') {
+            link = `/api/v1/admin/deptChair/requests`
+        } else if (role === 'CICS Staff') {
+            link = `/api/v1/admin/cics/all/requests`
+        } else if (role === 'Student') { //student
+            link = `/api/v1/me/requests`
+        } else {
+            link = ``
+        }
+
+        const { data } = await axios.get(link)
+
+        dispatch({
+            type: GET_RECENT_SUCCESS,
+            payload: data.recents
+        })
+    }
+    catch (error) {
+        dispatch({
+            type: GET_REQUESTS_FAIL,
             payload: error.response.data.errMessage
         }
         )

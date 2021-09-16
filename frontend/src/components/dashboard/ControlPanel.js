@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { getRequests, updateRequest, clearErrors } from '../../actions/requestActions'
+import { getRequests, getRecent, clearErrors } from '../../actions/requestActions'
 import Sidebar from './../layout/Sidebar'
 import MetaData from './../layout/MetaData'
 import Loader from './../layout/Loader'
@@ -18,26 +18,33 @@ var dateFormat = require('dateformat')
 const ControlPanel = () => {
 
     const { user } = useSelector(state => state.auth)
-    const { loading: listLoading, error, recents, requests, processing, pending, approved, denied } = useSelector(state => state.requests)
+    const { loading: listLoading, error, requests, processing, pending, approved, denied } = useSelector(state => state.requests)
+    const { loading: recentsLoading, error: recentsError, recents } = useSelector(state => state.recents)
 
     const dispatch = useDispatch()
     const alert = useAlert()
 
     const role = user && user.role
 
+    console.log(recents)
     useEffect(() => {
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
 
         dispatch(getRequests(role, 'All'))
+        dispatch(getRecent(role))
 
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
         }
 
-    }, [dispatch, alert, error, role])
+        if (recentsError) {
+            alert.error(error)
+            dispatch(clearErrors())
+        }
+    }, [dispatch, alert, error, role, recentsError])
 
     function changeDateFormat(date) {
         return dateFormat(date, "mmm d, yyyy h:MMtt")
@@ -127,41 +134,41 @@ const ControlPanel = () => {
                 <div className="row">
                     <div className="">
                         <h1 className="my-4">Control Panel</h1>
-                        <Container className="space_inside"></Container>
-
-                        {user.role === 'Student' ? (
-                            <Fragment>
-                                <Container style={{ display: 'flex', justifyContent: 'center' }}>
-                                    <ReportCard requestType={'Requests'} length={requests && requests.length} icon={'pencil'} />
-                                </Container>
-                            </Fragment>
-                        ) : (
-                            <Fragment>
-                                <Container fluid style={{backgroundColor: '#F5F7FA'}}>
-                                    <Row style={{ display: 'flex', justifyContent: 'center' }}>
+                        <Container fluid>
+                            <Row style={{ display: 'flex', justifyContent: 'center' }}>
+                                {user.role === 'Student' ? (
+                                    <Fragment>
+                                        <Col sm><ReportCard requestType={'Requests'} length={requests && requests.length} icon={'pencil'} /></Col>
+                                    </Fragment>
+                                ) : (
+                                    <Fragment>
                                         <Col sm><ReportCard requestType={'Requests'} length={requests && requests.length} icon={'fa fa-pencil'} /></Col>
                                         <Col sm><ReportCard requestType={'Pending'} length={pending && pending.length} icon={'fa fa-paperclip'} /></Col>
                                         <Col sm><ReportCard requestType={'Processing'} length={processing && processing.length} icon={'fa fa-paper-plane'} /></Col>
                                         <Col sm><ReportCard requestType={'Denied'} length={denied && denied.length} icon={'fa fa-times-circle'} /></Col>
                                         <Col sm><ReportCard requestType={'Approved'} length={approved && approved.length} icon={'fa fa-check-circle'} /></Col>
-                                    </Row>
-                                </Container>
-                            </Fragment>
-                        )}
-
-                        <MDBDataTableV5
-                            data={setRequests()}
-                            searchTop
-                            pagingTop
-                            scrollX
-                            entries={5}
-                        />
-
-                        <Link to={link}>
-                            <Button>
-                                View All Requests
-                            </Button>
-                        </Link>
+                                    </Fragment>
+                                )}
+                            </Row>
+                            <Row>
+                                {recentsLoading ? <Loader /> : (
+                                    <MDBDataTableV5
+                                        data={setRequests()}
+                                        searchTop
+                                        pagingTop
+                                        scrollX
+                                        entries={5}
+                                    />
+                                )}
+                            </Row>
+                            <Row>
+                                <Link to={link}>
+                                    <Button style={{ marginBottom: '20px' }}>
+                                        View All Requests
+                                    </Button>
+                                </Link>
+                            </Row>
+                        </Container>
                     </div>
                 </div>
             )}
