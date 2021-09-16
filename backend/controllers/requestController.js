@@ -112,7 +112,7 @@ exports.getSingleRequest = catchAsyncErrors(async (req, res, next) => {
     const request = await Request.findById(req.params.requestId);
 
     if (!request) { return next(new ErrorHandler('Request Id does not exist')) }
-
+   
     res.status(200).json({
         success: true,
         request
@@ -586,24 +586,23 @@ exports.deleteRequest = catchAsyncErrors(async (req, res, next) => {
     const returningFilesArray = []
 
     for (let i = 0; i < remarksLength; i++) {
-        if (remarksData[i].returningFiles == null || remarksData[i].returningFiles == '') {
-        } else {
+        if (remarksData[i].returningFiles.length != 0) {
             returningFilesArray.push(remarksData[i].returningFiles)
-        }
+        } 
     }
 
     const rfaArrayLength = []
+    const rfarfa = returningFilesArray
 
     for (let i = 0; i < returningFilesArray.length; i++) {
         rfaArrayLength.push(returningFilesArray[i].length)
     }
-
+    
     for (let i = 0; i < returningFilesArray.length; i++) {
         let fileReturned = returningFilesArray[i]
-        for (let y = 0; y < rfaArrayLength.length; y++) {
-            for (let z = 0; z < rfaArrayLength[y]; z++) {
-                arrayIds.push(fileReturned[z].filename)
-            }
+        for (let y = 0; y < fileReturned.length; y++) {
+               arrayIds.push(fileReturned[y].filename)
+            
         }
     }
 
