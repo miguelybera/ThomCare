@@ -162,7 +162,7 @@ const SubmitRequest = ({ history }) => {
                                         </OverlayTrigger>
                                         Attachments: 
                                     </Form.Label>
-                                    <Form.Control type="file" name="fileRequirements" onChange={onChange} required />
+                                    <Form.Control type="file" name="fileRequirements" onChange={onChange} multiple required />
                                 </Form.Group>
                                 <center><Button
                                     type='submit'

@@ -131,15 +131,15 @@ const CreateAnnouncement = ({ history }) => {
                                 <Form onSubmit={submitHandler}>
                                     <Form.Group className="mb-3" controlId="formGridAddress1">
                                         <Form.Label>Title</Form.Label>
-                                        <Form.Control type="text" name="title" value={title} onChange={e => setTitle(e.target.value)} />
+                                        <Form.Control type="text" name="title" value={title} onChange={e => setTitle(e.target.value)} required />
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="formGridAddress1">
                                         <Form.Label>Description</Form.Label>
-                                        <Form.Control as="textarea" rows={10} name="description" value={description} onChange={e => setDescription(e.target.value)} />
+                                        <Form.Control as="textarea" rows={10} name="description" value={description} onChange={e => setDescription(e.target.value)}required/>
                                     </Form.Group>
                                     <Form.Group className="mb-3" controlId="formGridAddress2">
                                         <Form.Label>Year Level</Form.Label>
-                                        <Form.Select aria-label="Default select example" name="yearLevel" value={yearLevel} onChange={e => setYearLevel(e.target.value)}>
+                                        <Form.Select aria-label="Default select example" name="yearLevel" value={yearLevel} onChange={e => setYearLevel(e.target.value)}required>
                                             {levels.map(level => (
                                                 <option value={level}>{level}</option>
                                             ))}
@@ -151,7 +151,7 @@ const CreateAnnouncement = ({ history }) => {
                                             ))}
                                         </Form.Select>
                                         <Form.Label>Track</Form.Label>
-                                        <Form.Select aria-label="Default select example" name="track" value={track} onChange={e => setTrack(e.target.value)} disabled={course === 'All' || yearLevel === 'All' || yearLevel === '1st Year' || yearLevel === '2nd Year' ? true : false}>
+                                        <Form.Select aria-label="Default select example" name="track" value={track} onChange={e => setTrack(e.target.value)} disabled={course === 'All' || yearLevel === 'All' || yearLevel === '1st Year' || yearLevel === '2nd Year' ? true : false} required>
                                             {course === 'Computer Science' ? (
                                                 <Fragment>
                                                     {csTracks.map(track => (
@@ -175,7 +175,7 @@ const CreateAnnouncement = ({ history }) => {
                                             )}
                                         </Form.Select>
                                         <Form.Label>Announcement Type</Form.Label>
-                                        <Form.Select aria-label="Default select example" name="announcementType" value={announcementType} onChange={e => setAnnouncementType(e.target.value)}>
+                                        <Form.Select aria-label="Default select example" name="announcementType" value={announcementType} onChange={e => setAnnouncementType(e.target.value)} required>
                                             <option value='All'>-</option>
                                             <option value="Memorandum">Memorandum</option>
                                             <option value="Enrollment">Enrollment</option>
