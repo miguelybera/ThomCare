@@ -178,7 +178,7 @@ const UpdateRequest = ({ history, match }) => {
                 <Container classname="align-me" fluid style={{ paddingBottom: '100px' }}>
                     <Card style={{ backgroundColor: '#9c0b0b' }}>  {/*, width: '100rem' */}
                         <Card.Body>
-                            <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold', textAlign: 'center' }}>ADD / DROP COURSE FORM</Card.Title>
+                            <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold', textAlign: 'center' }}>{requestType}</Card.Title>
                             <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold' }}>Student Information</Card.Title>
                             <Form style={{ color: 'white' }} onSubmit={submitHandler} >
                                 <Row className="mb-3">
@@ -262,6 +262,7 @@ const UpdateRequest = ({ history, match }) => {
                                     scrollX
                                     entriesOptions={[5, 20, 25]}
                                     entries={10}
+                                    style={{backgroundColor:'white'}}
                                 />
 
                                 <Row className="mb-3">
