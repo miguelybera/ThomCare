@@ -90,7 +90,7 @@ const Messenger = ({ history }) => {
     const socket = useRef()
 
     useEffect(() => {
-        socket.current = io('ws://localhost:8900')
+        socket.current = io('/')
 
         //arrival message
         socket.current.on("getMessage", (data) => {

@@ -1,22 +1,19 @@
-const appfile = require('./app');
-const dotenv = require('dotenv');
+const app = require('./app');
+//const dotenv = require('dotenv');
 const connectDatabase = require('./config/database');
 const cloudinary = require('cloudinary').v2;
 const { connect } = require('mongoose');
-const http = require('http')
-const path = require('path')
-const express = require('express');
-const app = express();
 
 // Handle Uncaught exceptions
 process.on('uncaughtException', err => {
-    console.log(`ERRORL: ${err.message}`);
+    console.log(`ERROR: ${err.message}`);
     console.log('Shutting down server due to uncaught exceptions');
     process.exit(1)
 })
 
 // Setting up config file
 dotenv.config({ path: 'backend/config/config.env' })
+//if(process.env.NODE_ENV !== 'PRODUCTION') require('dotenv').config({ path: 'backend/config/config.env' })
 
 // Connecting to Database
 connectDatabase();
@@ -28,23 +25,26 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 })
 
+const server = app.listen(process.env.PORT, () => {
+    console.log(`Server started on PORT: ${process.env.PORT} in ${process.env.NODE_ENV} mode.`);
+})
 
-// chat function
+//socket
+const socketio = require('socket.io')
+
 var cors = require('cors')
 app.use(cors())
 
-const buildPath = path.join(__dirname + '/../frontend/build')
-
-app.use(express.static(buildPath));
- 
-const portnum = http.createServer(app)
-
-const io = require('socket.io')(portnum, {
+const io = socketio(server, {
     cors: {
-        origin: 'http://localhost:3000',
+        origin: '/',
+        methods: ["GET", "POST"],
+        credentials: true // ip add of frontend
     }
 })
 
+
+//socket code
 let users = []
 
 const addUser = (userId, socketId) => {
@@ -90,9 +90,6 @@ io.on('connection', (socket) => {
     })
 })
 
-const server = appfile.listen(process.env.PORT, () => {
-    console.log(`Server started on PORT: ${process.env.PORT} in ${process.env.NODE_ENV} mode.`);
-})
 
 // Handle Unhandled Promise Rejections
 process.on('unhandledRejection', err => {
