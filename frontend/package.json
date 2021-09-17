@@ -13,6 +13,7 @@
     "dateformat": "^4.5.1",
     "express": "^4.17.1",
     "mdbreact": "^5.1.0",
+    "path": "^0.12.7",
     "react": "^17.0.2",
     "react-alert": "^7.0.3",
     "react-alert-template-basic": "^1.0.2",
