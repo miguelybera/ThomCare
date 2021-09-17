@@ -148,7 +148,7 @@ const SubmitRequest = ({ history }) => {
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="formGridCourse">
                                     <Form.Label>Attachments</Form.Label>
-                                    <Form.Control type="file" name="fileRequirements" onChange={onChange} />
+                                    <Form.Control type="file" name="fileRequirements" onChange={onChange} required/>
                                 </Form.Group>
                                 <center><Button
                                     type='submit'
