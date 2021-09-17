@@ -169,7 +169,8 @@ exports.getSingleAnnouncement = catchAsyncErrors(async (req, res, next) => {
 // Get my announcements /api/v1/me/announcements
 exports.getMyAnnouncements = catchAsyncErrors(async (req, res, next) => {
     const announcementCount = await Announcement.countDocuments({ createdBy: req.user.id })
-    const apiFeatures = new APIFeatures(Announcement.find({ createdBy: req.user.id }).sort({ createdAt: -1 }), req.query).search().filter()
+    const apiFeatures = new APIFeatures(Announcement.find({ createdBy: req.user.id,
+                                                            archiveDate: { $gte: Date.now() }  }).sort({ createdAt: -1 }), req.query).search().filter()
 
     let announcements = await apiFeatures.query
 
