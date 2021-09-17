@@ -5,7 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { submitRequest, clearErrors } from './../../actions/requestActions'
 import { SUBMIT_REQUEST_RESET } from './../../constants/requestConstants'
 import MetaData from './../layout/MetaData'
-import { FloatingLabel, Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
+import { FloatingLabel, Form, Button, Card, Container, Row, Col, Overlay, OverlayTrigger, Tooltip } from 'react-bootstrap'
+
 import {
     INSIDE_DASHBOARD_FALSE
 } from '../../constants/dashboardConstants'
@@ -86,9 +87,9 @@ const SubmitRequest = ({ history }) => {
             <MetaData title={'Submit Request'} />
             <Container fluid>
                 <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
-                    <Card style={{ backgroundColor: "#F5F5F5",width: '30rem', align: 'center',borderTop: '7px solid #9c0b0b', marginBottom: '50px'}}>
+                    <Card style={{ backgroundColor: "#F5F5F5", width: '30rem', align: 'center', borderTop: '7px solid #9c0b0b', marginBottom: '50px' }}>
                         <Card.Body>
-                            <Card.Title style={{ margin: '20px 0 20px 0', fontWeight:"bold" }}>Submit Request</Card.Title>
+                            <Card.Title style={{ margin: '20px 0 20px 0', fontWeight: "bold" }}>Submit Request</Card.Title>
                             <Form onSubmit={submitHandler}>
                                 <Form.Group className="mb-3" controlId="formGridCourse">
                                     <FloatingLabel
@@ -105,12 +106,12 @@ const SubmitRequest = ({ history }) => {
                                     </FloatingLabel>
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="formGridCourse">
-                                    <Form.Label>Year Level</Form.Label>
+                                    <Form.Label>Year Level: </Form.Label>
                                     <Form.Select
                                         className="mb-3"
                                         aria-label="Default select example"
                                         name="yearLevel" value={yearLevel}
-                                        onChange={e => setYearLevel(e.target.value)}required
+                                        onChange={e => setYearLevel(e.target.value)} required
                                     >
                                         <option value=''>-</option>
                                         {levels.map(level => (
@@ -119,7 +120,7 @@ const SubmitRequest = ({ history }) => {
                                     </Form.Select>
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="formGridCourse">
-                                    <Form.Label>Request Type</Form.Label>
+                                    <Form.Label>Request Type: </Form.Label>
                                     <Form.Select
                                         aria-label="Default select example"
                                         name='requestType'
@@ -147,8 +148,21 @@ const SubmitRequest = ({ history }) => {
                                     </FloatingLabel>
                                 </Form.Group>
                                 <Form.Group className="mb-3" controlId="formGridCourse">
-                                    <Form.Label>Attachments</Form.Label>
-                                    <Form.Control type="file" name="fileRequirements" onChange={onChange} required/>
+                                    <Form.Label>
+                                        <OverlayTrigger placement='bottom-start' overlay={<Tooltip id="tooltip-disabled" >Accepted File Formats:
+                                            <ul style={{ textAlign: 'left' }}> $
+                                                <li>PDF</li>
+                                                <li>JPG</li>
+                                                <li>PNG</li>
+                                                <li>Word File</li>
+                                                <li>Excel File</li>
+                                            </ul>        
+                                        </Tooltip >} >
+                                            <span class="fa fa-question-circle" style={{ marginRight: '.3rem' }}/> 
+                                        </OverlayTrigger>
+                                        Attachments: 
+                                    </Form.Label>
+                                    <Form.Control type="file" name="fileRequirements" onChange={onChange} required />
                                 </Form.Group>
                                 <center><Button
                                     type='submit'
