@@ -37,7 +37,7 @@ const Conversations = ({ conversation, currentUser }) => {
             } catch (error) {
                 dispatch({
                     type: USER_DETAILS_FAIL,
-                    payload: error.response.data.errMessage
+                    payload: error.response.data.message
                 })
             }
         }

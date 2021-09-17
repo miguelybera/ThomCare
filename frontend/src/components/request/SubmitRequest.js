@@ -100,7 +100,7 @@ const SubmitRequest = ({ history }) => {
                                             type='text'
                                             name='section'
                                             value={section}
-                                            onChange={e => setSection(e.target.value)}
+                                            onChange={e => setSection(e.target.value)} required
                                         />
                                     </FloatingLabel>
                                 </Form.Group>
@@ -110,9 +110,9 @@ const SubmitRequest = ({ history }) => {
                                         className="mb-3"
                                         aria-label="Default select example"
                                         name="yearLevel" value={yearLevel}
-                                        onChange={e => setYearLevel(e.target.value)}
+                                        onChange={e => setYearLevel(e.target.value)}required
                                     >
-                                        <option>-</option>
+                                        <option value=''>-</option>
                                         {levels.map(level => (
                                             <option value={level}>{level}</option>
                                         ))}
@@ -126,7 +126,7 @@ const SubmitRequest = ({ history }) => {
                                         value={requestType}
                                         onChange={e => setRequestType(e.target.value)}
                                         required>
-                                        <option>-</option>
+                                        <option value=''>-</option>
                                         {requestTypes.map(type => (
                                             <option value={type}>{type}</option>
                                         ))}

@@ -226,7 +226,7 @@ function Form6A() {
                                                 <Row className="mb-3" key={val.index}>
                                                     <Form.Group as={Col}>
                                                         <Form.Select aria-label="Default select example" name="status" id={status} data-id={idx} value={val.status} onChange={e => onChange(idx, e)} required>
-                                                            <option>-</option>
+                                                            <option value=''>-</option>
                                                             <option value="Add">Add</option>
                                                             <option value="Drop">Drop</option>
                                                         </Form.Select>

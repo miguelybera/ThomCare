@@ -94,7 +94,7 @@ export const getAnnouncements = (currentPage, course, yearLevel, track, title) =
     catch (error) {
         dispatch({
             type: ALL_ANNOUNCEMENTS_FAIL,
-            payload: error.response.data.errMessage
+            payload: error.response.data.message
             }
         )
     }
@@ -118,7 +118,7 @@ export const getAnnouncementDetails = (id) => async(dispatch) => {
     catch (error) {
         dispatch({
             type: ANNOUNCEMENT_DETAILS_FAIL,
-            payload: error.response.data.errMessage
+            payload: error.response.data.message
             }
         )
     }
@@ -141,7 +141,7 @@ export const getUser = (id) => async(dispatch) => {
     catch(error){
         dispatch({
             type: USER_DETAILS_FAIL,
-            payload: error.response.data.errMessage
+            payload: error.response.data.message
             }
         )
     }
@@ -164,7 +164,7 @@ export const getAdminAnnouncements = () => async(dispatch) => {
     catch (error) {
         dispatch({
             type: ALL_ADMIN_ANNOUNCEMENTS_FAIL,
-            payload: error.response.data.errMessage
+            payload: error.response.data.message
             }
         )
     }
@@ -187,7 +187,7 @@ export const getMyAnnouncements = () => async(dispatch) => {
     catch (error) {
         dispatch({
             type: MY_ANNOUNCEMENTS_FAIL,
-            payload: error.response.data.errMessage
+            payload: error.response.data.message
             }
         )
     }
@@ -211,7 +211,7 @@ export const getArchivedAnnouncements = () => async(dispatch) => {
         console.log(error)
         dispatch({
             type: ALL_ARCHIVED_ANNOUNCEMENTS_FAIL,
-            payload: error.response.data.errMessage
+            payload: error.response.data.message
             }
         )
     }
@@ -240,7 +240,7 @@ export const createAnnouncement = (announcementData) => async(dispatch) => {
     catch (error) {
         dispatch({
             type: NEW_ANNOUNCEMENT_FAIL,
-            payload: error.response.data.errMessage
+            payload: error.response.data.message
             }
         )
     }

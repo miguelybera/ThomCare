@@ -48,7 +48,7 @@ const VerifyRegistration = ({ history, match }) => {
             } catch (error) {
                 dispatch({
                     type: VERIFY_STUDENT_FAIL,
-                    payload: error.response.data.errMessage
+                    payload: error.response.data.message
                 })
             }
         }

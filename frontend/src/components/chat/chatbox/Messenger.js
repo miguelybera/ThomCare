@@ -79,7 +79,7 @@ const Messenger = ({ history }) => {
             catch (error) {
                 dispatch({
                     type: ALL_USERS_FAIL,
-                    payload: error.response.data.errMessage
+                    payload: error.response.data.message
                 })
             }
         }
@@ -137,7 +137,7 @@ const Messenger = ({ history }) => {
             catch (error) {
                 dispatch({
                     type: ALL_MESSAGES_FAIL,
-                    payload: error.response.data.errMessage
+                    payload: error.response.data.message
                 }
                 )
             }
