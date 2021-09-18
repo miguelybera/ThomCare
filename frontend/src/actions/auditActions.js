@@ -24,7 +24,7 @@ export const getAuditLog = () => async (dispatch) => {
     catch (error) {
         dispatch({
             type: GET_AUDIT_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
         }
         )
     }

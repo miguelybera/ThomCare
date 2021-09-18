@@ -1,7 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { updateProfile, clearErrors } from '../../actions/userActions'
+import { loadUser, updateProfile, clearErrors } from '../../actions/userActions'
 import { UPDATE_PROFILE_RESET } from '../../constants/userConstants'
 import { Form, Card, Button, Container, Row, Col } from 'react-bootstrap'
 import MetaData from '../layout/MetaData'
@@ -14,11 +15,13 @@ import {
 const Profile = () => {
 
     const dispatch = useDispatch()
+    const alert = useAlert()
 
     const { user, error, loading } = useSelector(state => state.auth)
     const { loading: editLoading, isUpdated, error: editError } = useSelector(state => state.user)
 
     const [firstName, setFirstName] = useState('')
+    const [middleName, setMiddleName] = useState('')
     const [lastName, setLastName] = useState('')
     const [studentNumber, setStudentNumber] = useState('')
     const [email, setEmail] = useState('')
@@ -30,8 +33,9 @@ const Profile = () => {
     const upperCase = (text) => text.toUpperCase()
 
     useEffect(() => {
-        setFirstName(upperCase(user.firstName))
-        setLastName(upperCase(user.lastName))
+        setFirstName(user.firstName)
+        setMiddleName(user.middleName)
+        setLastName(user.lastName)
         setStudentNumber(user.studentNumber)
         setEmail(user.email)
         setCourse(user.course)
@@ -40,6 +44,7 @@ const Profile = () => {
     }, [user])
 
     useEffect(() => {
+
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
@@ -52,6 +57,7 @@ const Profile = () => {
 
         if (isUpdated) {
             setEditProfile(!editProfile)
+            dispatch(loadUser())
 
             dispatch({
                 type: UPDATE_PROFILE_RESET
@@ -71,48 +77,74 @@ const Profile = () => {
 
     return (
         <>
-        
+
             <MetaData title={'My Profile'} />
             {/** add here if user.role = 'something' display , else display student profile*/}
             <Sidebar />
             {loading ? (
                 <Loader />
             ) : (
-                
+
                 <Container fluid>
                     <Container className="space_inside"></Container>
                     <Row className='justify-content-md-center' style={{ marginTop: '30px' }}>
-                        <Card style={{ backgroundColor: "#F5F5F5",width: '40rem', align: 'center' }}>
+                        <Card style={{ backgroundColor: "#F5F5F5", width: '40rem', align: 'center' }}>
                             <Card.Body >
-                                <Card.Title style={{ margin: '20px 0 20px 0', fontWeight:"bold" }}>My Profile</Card.Title>
+                                <Card.Title style={{ margin: '20px 0 20px 0', fontWeight: "bold" }}>My Profile</Card.Title>
                                 <Form onSubmit={submitHandler}>
-                                    <Form.Group as={Row} className="mb-3" controlId="formHorizontalName">
+                                    <Form.Group as={Row} className="mb-3">
                                         <Form.Label column sm={2}>
                                             Name
-                                    </Form.Label>
-                                        <Col sm={6}>
-                                            <Form.Control type="text" placeholder="First Name" value={firstName} disabled={editProfile ? false : true} onChange={e => setFirstName(upperCase(e.target.value))} />
-                                        </Col>
+                                        </Form.Label>
                                         <Col sm={4}>
-                                            <Form.Control type="text" placeholder="Last Name" value={lastName} disabled={editProfile ? false : true} onChange={e => setLastName(upperCase(e.target.value))} />
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="First Name"
+                                                value={firstName}
+                                                disabled={editProfile ? false : true}
+                                                onChange={e => setFirstName(upperCase(e.target.value))}
+                                                pattern="([A-zÀ-ž\s]){2,}"
+                                                required
+                                            />
+                                        </Col>
+                                        <Col sm={3}>
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="Middle Name"
+                                                value={middleName}
+                                                disabled={editProfile ? false : true}
+                                                onChange={e => setMiddleName(upperCase(e.target.value))}
+                                                pattern="([A-zÀ-ž\s]){2,}"
+                                            />
+                                        </Col>
+                                        <Col sm={3}>
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="Last Name"
+                                                value={lastName}
+                                                disabled={editProfile ? false : true}
+                                                onChange={e => setLastName(upperCase(e.target.value))}
+                                                pattern="([A-zÀ-ž\s]){2,}"
+                                                required
+                                            />
                                         </Col>
                                     </Form.Group>
 
                                     {role === 'Student' ? (
                                         <>
-                                            <Form.Group as={Row} className="mb-3" controlId="formHorizontalStudentNumber">
+                                            <Form.Group as={Row} className="mb-3">
                                                 <Form.Label column sm={3}>
                                                     Student number
-                                            </Form.Label>
+                                                </Form.Label>
                                                 <Col sm={9}>
                                                     <Form.Control type="text" placeholder="Student number" value={studentNumber} disabled />
                                                 </Col>
                                             </Form.Group>
 
-                                            <Form.Group as={Row} className="mb-3" controlId="formHorizontalCourse">
+                                            <Form.Group as={Row} className="mb-3">
                                                 <Form.Label column sm={2}>
                                                     Course
-                                            </Form.Label>
+                                                </Form.Label>
                                                 <Col sm={10}>
                                                     <Form.Control type="text" placeholder="Course" value={course} disabled />
                                                 </Col>
@@ -120,16 +152,16 @@ const Profile = () => {
                                         </>
                                     ) : (
                                         <>
-                                            <Form.Group as={Row} className="mb-3" controlId="formHorizontalRole">
+                                            <Form.Group as={Row} className="mb-3">
                                                 <Form.Label column sm={3}>
                                                     Role
-                                            </Form.Label>
+                                                </Form.Label>
                                                 <Col sm={9}>
                                                     <Form.Control type="text" placeholder="Role" value={role} disabled />
                                                 </Col>
                                             </Form.Group>
                                         </>)}
-                                    <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+                                    <Form.Group as={Row} className="mb-3">
                                         <Form.Label column sm={3}>
                                             Email address
                                         </Form.Label>
@@ -152,10 +184,20 @@ const Profile = () => {
                                                 )}
                                             </Button></center>
                                         ) : (
-                                            <Fragment>
-                                                <center><Button style={{ marginRight: '5px', marginRight: '20px' }} onClick={() => setEditProfile(!editProfile)}>Edit Profile</Button>
-                                                <Link to='/password/update' style={{ textDecoration: 'none', color: 'white' }}><Button>Change Password</Button></Link></center>
-                                            </Fragment>
+                                            role === 'Student' ? (
+                                                <Fragment>
+                                                    <center>
+                                                        <Link to='/password/update' style={{ textDecoration: 'none', color: 'white' }}><Button>Change Password</Button></Link>
+                                                    </center>
+                                                </Fragment>
+                                            ) : (
+                                                <Fragment>
+                                                    <center>
+                                                        <Button style={{ marginRight: '5px', marginRight: '20px' }} onClick={() => setEditProfile(!editProfile)}>Edit Profile</Button>
+                                                        <Link to='/password/update' style={{ textDecoration: 'none', color: 'white' }}><Button>Change Password</Button></Link>
+                                                    </center>
+                                                </Fragment>
+                                            )
                                         )
                                     }
                                 </Form>
@@ -164,9 +206,9 @@ const Profile = () => {
                     </Row>
                 </Container>
             )}
-           
+
         </>
-        
+
     )
 }
 

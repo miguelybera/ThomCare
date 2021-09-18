@@ -30,7 +30,7 @@ export const getConversations = (id) => async(dispatch) => {
     catch (error) {
         dispatch({
             type: ALL_CONVERSATIONS_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
             }
         )
     }
@@ -59,7 +59,7 @@ export const sendMessage = ( message ) => async (dispatch, getState) => {
     catch (error) {
         dispatch({
             type: SEND_MESSAGE_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
         })
     }
 }
@@ -88,7 +88,7 @@ export const createConversation = (convo) => async(dispatch) => {
     catch (error) {
         dispatch({
             type: CREATE_CONVERSATION_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
             }
         )
     }

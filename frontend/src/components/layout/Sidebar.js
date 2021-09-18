@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
@@ -89,7 +89,7 @@ const Sidebar = () => {
     const [sidebar, setSidebar] = useState(false);
 
     const showSidebar = () => setSidebar(!sidebar);
-
+    
     return (
         <>
             <IconContext.Provider value={{ color: '#red' }}>
@@ -123,13 +123,10 @@ const Sidebar = () => {
 
                         <p >{`${user.role}`} : </p>
                         <p style={{ color: "#9C0B0A" }}>_ </p>
-                        <p > {`${user.firstName}`}</p>
+                        <p > {user.firstName}</p>
 
                     </NavUser>
-
-
                 </Nav>
-
                 <SidebarNav sidebar={sidebar} >
                     <SidebarWrap>
                         <NavIcon to="#">
@@ -161,7 +158,6 @@ const Sidebar = () => {
 
                     </SidebarWrap>
                 </SidebarNav>
-
             </IconContext.Provider>
         </>
     );

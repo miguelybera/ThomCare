@@ -142,7 +142,6 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
 
 // Register a student => /api/v1/registerStudent
 exports.registerStudent = catchAsyncErrors(async (req, res, next) => {
-
     const { firstName, middleName, lastName, studentNumber, course, email, password } = req.body;
 
     //for postman

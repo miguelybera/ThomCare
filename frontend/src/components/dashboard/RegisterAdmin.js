@@ -15,7 +15,7 @@ import {
 
 var dateFormat = require('dateformat')
 
-const UpdateUser = ({ history }) => {
+const RegisterAdmin = ({ history }) => {
 
     const dispatch = useDispatch()
     const alert = useAlert()
@@ -23,6 +23,7 @@ const UpdateUser = ({ history }) => {
     const { error, loading, message, isCreated } = useSelector(state => state.register)
 
     const [firstName, setFirstName] = useState('')
+    const [middleName, setMiddleName] = useState('')
     const [lastName, setLastName] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -36,8 +37,9 @@ const UpdateUser = ({ history }) => {
         e.preventDefault()
 
         const formData = {
-            firstName: upperCase(firstName),
-            lastName: upperCase(lastName),
+            firstName,
+            middleName,
+            lastName,
             email,
             role,
             password,
@@ -85,23 +87,52 @@ const UpdateUser = ({ history }) => {
                                     <Card.Body>
                                         <Card.Title style={{ margin: '50px 0 20px 0' }}>My Profile</Card.Title>
                                         <Form onSubmit={submitHandler}>
-                                            <Form.Group as={Row} className="mb-3" controlId="formHorizontalName">
+                                            <Form.Group as={Row} className="mb-3">
                                                 <Form.Label column sm={2}>
                                                     Name
                                                 </Form.Label>
-                                                <Col sm={6}>
-                                                    <Form.Control type="text" placeholder="First Name" value={upperCase(firstName)} name="firstName" onChange={e => setFirstName(e.target.value)} />
-                                                </Col>
                                                 <Col sm={4}>
-                                                    <Form.Control type="text" placeholder="Last Name" value={upperCase(lastName)} name="lastName" onChange={e => setLastName(e.target.value)} />
+                                                    <Form.Control
+                                                        type="text"
+                                                        placeholder="First Name"
+                                                        value={firstName}
+                                                        onChange={e => setFirstName(upperCase(e.target.value))}
+                                                        pattern="([A-zÀ-ž\s]){2,}"
+                                                        required
+                                                    />
+                                                </Col>
+                                                <Col sm={3}>
+                                                    <Form.Control
+                                                        type="text"
+                                                        placeholder="Middle Name"
+                                                        value={middleName}
+                                                        onChange={e => setMiddleName(upperCase(e.target.value))}
+                                                        pattern="([A-zÀ-ž\s]){2,}"
+                                                    />
+                                                </Col>
+                                                <Col sm={3}>
+                                                    <Form.Control
+                                                        type="text"
+                                                        placeholder="Last Name"
+                                                        value={lastName}
+                                                        onChange={e => setLastName(upperCase(e.target.value))}
+                                                        pattern="([A-zÀ-ž\s]){2,}"
+                                                        required
+                                                    />
                                                 </Col>
                                             </Form.Group>
-                                            <Form.Group as={Row} className="mb-3" controlId="formHorizontalRole">
+                                            <Form.Group as={Row} className="mb-3">
                                                 <Form.Label column sm={3}>
                                                     Role
                                                 </Form.Label>
                                                 <Col sm={9}>
-                                                    <Form.Select aria-label="Default select example" value={role} name="role" onChange={e => setRole(e.target.value)} required>
+                                                    <Form.Select
+                                                        aria-label="Default select example"
+                                                        value={role}
+                                                        name="role"
+                                                        onChange={e => setRole(e.target.value)}
+                                                        required
+                                                    >
                                                         <option value=''>-</option>
                                                         {roles.map(role => (
                                                             <option value={role}>{role}</option>
@@ -109,23 +140,47 @@ const UpdateUser = ({ history }) => {
                                                     </Form.Select>
                                                 </Col>
                                             </Form.Group>
-                                            <Form.Group as={Row} className="mb-3" controlId="formHorizontalEmail">
+                                            <Form.Group as={Row} className="mb-3">
                                                 <Form.Label column sm={3}>
                                                     Email address
                                                 </Form.Label>
                                                 <Col sm={9}>
-                                                    <Form.Control type="email" placeholder="juan.delacruz.iics@ust.edu.ph" pattern="[a-z]{1,}\.[a-z]{1,}@ust\.edu\.ph" value={email} name="email" onChange={e => setEmail(e.target.value)} required />
+                                                    <Form.Control
+                                                        type="email"
+                                                        placeholder="juan.delacruz.iics@ust.edu.ph"
+                                                        pattern="[a-z]{1,}\.[a-z]{1,}@ust\.edu\.ph"
+                                                        value={email}
+                                                        name="email"
+                                                        onChange={e => setEmail(e.target.value)}
+                                                        required
+                                                    />
                                                 </Col>
                                             </Form.Group>
                                             <Row className="mb-3">
-                                                <Form.Group as={Col} controlId="formGridPassword">
+                                                <Form.Group as={Col}>
                                                     <Form.Label>Password</Form.Label>
-                                                    <Form.Control type="password" placeholder="Password" name="password" value={password} onChange={e => setPassword(e.target.value)} required />
+                                                    <Form.Control
+                                                        type="password"
+                                                        placeholder="Password"
+                                                        name="password"
+                                                        value={password}
+                                                        onChange={e => setPassword(e.target.value)}
+                                                        minlength='6'
+                                                        required
+                                                    />
                                                 </Form.Group>
 
-                                                <Form.Group as={Col} controlId="formGridConfirmPassword">
+                                                <Form.Group as={Col}>
                                                     <Form.Label>Confirm Password</Form.Label>
-                                                    <Form.Control type="password" placeholder="Confirm password" name="confirmPassword" value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} required />
+                                                    <Form.Control
+                                                        type="password"
+                                                        placeholder="Password"
+                                                        name="confirmPassword"
+                                                        value={confirmPassword}
+                                                        onChange={e => setConfirmPassword(e.target.value)}
+                                                        minlength='6'
+                                                        required
+                                                    />
                                                 </Form.Group>
                                             </Row>
                                             <Button
@@ -153,4 +208,4 @@ const UpdateUser = ({ history }) => {
     )
 }
 
-export default UpdateUser
+export default RegisterAdmin

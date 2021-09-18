@@ -10,6 +10,10 @@ import {
     INSIDE_DASHBOARD_FALSE
 } from '../../constants/dashboardConstants'
 
+import {
+    REQUEST_DETAILS_RESET
+} from '../../constants/requestConstants'
+
 var dateFormat = require('dateformat')
 
 const cardStyle = {
@@ -42,7 +46,7 @@ const TrackingPageProgress = ({ history, match }) => {
     const [remarks, setRemarks] = useState([])
 
     useEffect(() => {
-        if (request && request.trackingNumber !== tracker) {
+        if (request && request.trackingNumber !== tracker && request.lastName !== surname) {
             dispatch(trackRequest({trackingNumber: tracker, lastName: surname}))
         } else if (request) {
             setRequestorInfo(request.requestorInfo)
@@ -61,7 +65,11 @@ const TrackingPageProgress = ({ history, match }) => {
             alert.error(error)
 
             dispatch(clearErrors())
+            dispatch({
+                type: REQUEST_DETAILS_RESET
+            })
         }
+
         dispatch({
             type: INSIDE_DASHBOARD_FALSE
         })

@@ -23,7 +23,7 @@ export const getCourses = () => async(dispatch) => {
     catch(error){
         dispatch({
             type: GET_COURSES_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
             }
         )
     }

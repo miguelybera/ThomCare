@@ -91,7 +91,7 @@ const CreateAnnouncement = ({ history }) => {
             })
         }
 
-        if(!setExpiry) {
+        if (!setExpiry) {
             setArchiveDate(changeDateFormat(Date.now()))
         }
 
@@ -129,29 +129,61 @@ const CreateAnnouncement = ({ history }) => {
                         <Card>
                             <Card.Body>
                                 <Form onSubmit={submitHandler}>
-                                    <Form.Group className="mb-3" controlId="formGridAddress1">
+                                    <Form.Group className="mb-3">
                                         <Form.Label>Title</Form.Label>
-                                        <Form.Control type="text" name="title" value={title} onChange={e => setTitle(e.target.value)} required />
+                                        <Form.Control
+                                            type="text"
+                                            name="title"
+                                            value={title}
+                                            onChange={e => setTitle(e.target.value)}
+                                            required
+                                        />
                                     </Form.Group>
-                                    <Form.Group className="mb-3" controlId="formGridAddress1">
+                                    <Form.Group className="mb-3">
                                         <Form.Label>Description</Form.Label>
-                                        <Form.Control as="textarea" rows={10} name="description" value={description} onChange={e => setDescription(e.target.value)}required/>
+                                        <Form.Control
+                                            as="textarea"
+                                            rows={10}
+                                            name="description"
+                                            value={description}
+                                            onChange={e => setDescription(e.target.value)}
+                                            required
+                                        />
                                     </Form.Group>
-                                    <Form.Group className="mb-3" controlId="formGridAddress2">
+                                    <Form.Group className="mb-3">
                                         <Form.Label>Year Level</Form.Label>
-                                        <Form.Select aria-label="Default select example" name="yearLevel" value={yearLevel} onChange={e => setYearLevel(e.target.value)}required>
+                                        <Form.Select
+                                            aria-label="Default select example"
+                                            name="yearLevel"
+                                            value={yearLevel}
+                                            onChange={e => setYearLevel(e.target.value)}
+                                            required
+                                        >
                                             {levels.map(level => (
                                                 <option value={level}>{level}</option>
                                             ))}
                                         </Form.Select>
                                         <Form.Label>Course</Form.Label>
-                                        <Form.Select aria-label="Default select example" value={course} name="course" onChange={e => setCourse(e.target.value)} required>
+                                        <Form.Select
+                                            aria-label="Default select example"
+                                            value={course}
+                                            name="course"
+                                            onChange={e => setCourse(e.target.value)}
+                                            required
+                                        >
                                             {programs.map(program => (
                                                 <option value={program}>{program}</option>
                                             ))}
                                         </Form.Select>
                                         <Form.Label>Track</Form.Label>
-                                        <Form.Select aria-label="Default select example" name="track" value={track} onChange={e => setTrack(e.target.value)} disabled={course === 'All' || yearLevel === 'All' || yearLevel === '1st Year' || yearLevel === '2nd Year' ? true : false} required>
+                                        <Form.Select
+                                            aria-label="Default select example"
+                                            name="track"
+                                            value={track}
+                                            onChange={e => setTrack(e.target.value)}
+                                            disabled={course === 'All' || yearLevel === 'All' || yearLevel === '1st Year' || yearLevel === '2nd Year' ? true : false}
+                                            required
+                                        >
                                             {course === 'Computer Science' ? (
                                                 <Fragment>
                                                     {csTracks.map(track => (
@@ -175,22 +207,46 @@ const CreateAnnouncement = ({ history }) => {
                                             )}
                                         </Form.Select>
                                         <Form.Label>Announcement Type</Form.Label>
-                                        <Form.Select aria-label="Default select example" name="announcementType" value={announcementType} onChange={e => setAnnouncementType(e.target.value)} required>
+                                        <Form.Select
+                                            aria-label="Default select example"
+                                            name="announcementType"
+                                            value={announcementType}
+                                            onChange={e => setAnnouncementType(e.target.value)}
+                                            required
+                                        >
                                             <option value='All'>-</option>
                                             <option value="Memorandum">Memorandum</option>
                                             <option value="Enrollment">Enrollment</option>
                                             <option value="Class Suspension">Class Suspension</option>
                                         </Form.Select>
                                     </Form.Group>
-                                    <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                                        <Form.Check type="checkbox" label="Set expiry date" defaultChecked={setExpiry} value={setExpiry} nme="setExpiry" onChange={e => setSetExpiry(!setExpiry)} />
-                                        <Form.Control type="date" name="archiveDate" value={archiveDate} onChange={e => setArchiveDate(e.target.value)} disabled={setExpiry ? false : true} />
+                                    <Form.Group className="mb-3">
+                                        <Form.Check
+                                            type="checkbox"
+                                            label="Set expiry date"
+                                            defaultChecked={setExpiry}
+                                            value={setExpiry}
+                                            name="setExpiry"
+                                            onChange={e => setSetExpiry(!setExpiry)}
+                                        />
+                                        <Form.Control
+                                            type="date"
+                                            name="archiveDate"
+                                            value={archiveDate}
+                                            onChange={e => setArchiveDate(e.target.value)}
+                                            disabled={setExpiry ? false : true}
+                                        />
                                     </Form.Group>
-                                    <Form.Group controlId="formFileMultiple" className="mb-3">
+                                    <Form.Group className="mb-3">
                                         <Form.Label>Attach document(s):</Form.Label>
-                                        <Form.Control type="file" name="file" onChange={onChange} multiple />
+                                        <Form.Control
+                                            type="file"
+                                            name="file"
+                                            onChange={onChange}
+                                            multiple
+                                        />
                                     </Form.Group>
-                                    <Form.Group controlId="formFileMultiple" className="mb-3">
+                                    <Form.Group className="mb-3">
                                         {fileAttachments && (<p>Attachments:</p>)}
                                         <ul>
                                             {fileAttachments && fileAttachments.map(file => (

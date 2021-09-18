@@ -48,7 +48,7 @@ export const trackRequest = (userInput) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: REQUEST_DETAILS_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
         }
         )
     }
@@ -87,7 +87,7 @@ export const submitRequest = (request) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: SUBMIT_REQUEST_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
         }
         )
     }
@@ -149,7 +149,7 @@ export const getRequests = (role, route) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: GET_REQUESTS_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
         }
         )
     }
@@ -172,7 +172,7 @@ export const getRequestDetails = (requestId) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: REQUEST_DETAILS_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
         }
         )
     }
@@ -187,14 +187,12 @@ export const getRecent = (role) => async (dispatch) => {
 
         let link = ``
 
-        if (role === 'Dept Chair') {
-            link = `/api/v1/admin/deptChair/requests`
-        } else if (role === 'CICS Staff') {
+        if (role === 'CICS Staff') {
             link = `/api/v1/admin/cics/all/requests`
         } else if (role === 'Student') { //student
             link = `/api/v1/me/requests`
         } else {
-            link = ``
+            link = `/api/v1/admin/deptChair/requests`
         }
 
         const { data } = await axios.get(link)
@@ -207,7 +205,7 @@ export const getRecent = (role) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: GET_REQUESTS_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
         }
         )
     }
@@ -251,7 +249,7 @@ export const updateRequest = (requestId, request, isTrash) => async (dispatch) =
     catch (error) {
         dispatch({
             type: UPDATE_REQUEST_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
         }
         )
     }
@@ -280,7 +278,7 @@ export const assignRequest = (requestId, request) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: ASSIGN_REQUEST_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
         }
         )
     }
@@ -303,7 +301,7 @@ export const deleteRequest = (requestId) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: DELETE_REQUEST_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
         }
         )
     }

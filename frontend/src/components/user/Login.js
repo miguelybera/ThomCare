@@ -50,11 +50,7 @@ const Login = ({ history }) => {
                         <Card.Body>
                             <Card.Title style={{ margin: '20px 0 20px 0', fontWeight:"bold" }}>Login</Card.Title>
                             <Form onSubmit={submitHandler}>
-                                <FloatingLabel
-                                    controlId="floatingInput"
-                                    label="Email address"
-                                    className="mb-3"
-                                >
+                                <FloatingLabel label="Email address" className="mb-3">
                                     <Form.Control
                                         type='email'
                                         placeholder="juan.delacruz.iics@ust.edu.ph"
@@ -64,7 +60,7 @@ const Login = ({ history }) => {
                                         onChange={e => setEmail(e.target.value)} required
                                     />
                                 </FloatingLabel>
-                                <FloatingLabel controlId="floatingPassword" label="Password">
+                                <FloatingLabel label="Password">
                                     <Form.Control
                                         type="password"
                                         placeholder="Password"

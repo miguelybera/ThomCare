@@ -74,12 +74,12 @@ const UpdateRequest = ({ history, match }) => {
             dispatch(clearErrors())
             window.history.back()
         }
-        
+
         if (isUpdated) {
             dispatch({
                 type: UPDATE_REQUEST_RESET
             })
-            
+
             dispatch({
                 type: REQUEST_DETAILS_RESET
             })
@@ -182,79 +182,84 @@ const UpdateRequest = ({ history, match }) => {
                             <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold' }}>Student Information</Card.Title>
                             <Form style={{ color: 'white' }} onSubmit={submitHandler} >
                                 <Row className="mb-3">
-                                    <Form.Group as={Col} controlId="formGridEmail">
+                                    <Form.Group as={Col}>
                                         <Form.Label>First Name</Form.Label>
                                         <Form.Control type="text" value={requestorInfo.firstName} readOnly />
                                     </Form.Group>
 
-                                    <Form.Group as={Col} controlId="formGridEmail">
+                                    <Form.Group as={Col}>
                                         <Form.Label>Last Name</Form.Label>
                                         <Form.Control type="text" value={requestorInfo.lastName} readOnly />
                                     </Form.Group>
 
-                                    <Form.Group as={Col} controlId="formGridEmail">
+                                    <Form.Group as={Col}>
                                         <Form.Label>Middle Initial</Form.Label>
                                         <Form.Control type="text" placeholder="N/A" value={requestorInfo.middleName} readOnly />
                                     </Form.Group>
                                 </Row>
 
-                                <Form.Group className="mb-3" controlId="formGridAddress1">
+                                <Form.Group className="mb-3">
                                     <Form.Label>Student Number</Form.Label>
                                     <Form.Control value={requestorInfo.studentNumber} readOnly />
                                 </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="formGridAddress2">
+                                <Form.Group className="mb-3">
                                     <Form.Label>Course/Program</Form.Label>
                                     <Form.Control type="text" value={requestorInfo.course} readOnly />
                                 </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="formGridAddress2">
+                                <Form.Group className="mb-3">
                                     <Form.Label>Year Level / Section</Form.Label>
                                     <Form.Control type="text" value={requestorInfo.yearLevel + ' ' + requestorInfo.section} readOnly />
                                 </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="formGridAddress2">
+                                <Form.Group className="mb-3">
                                     <Form.Label>Notes</Form.Label>
                                     <Form.Control type="text" value={notes} readOnly />
-
                                     {fileRequirements && (<p>Attachments:</p>)}
                                     {fileRequirements && fileRequirements.map(file => (
                                         <li><a href={file.path}>{file.originalname}</a></li>
                                     ))}
                                 </Form.Group>
-
                                 <Row className="mb-3">
-                                    <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
+                                    <Form.Group as={Col} className="mb-3">
                                         <Form.Label>Email address</Form.Label>
                                         <Form.Control type='email' value={requestorInfo.email} readOnly />
                                     </Form.Group>
-                                    <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
+                                    <Form.Group as={Col} className="mb-3">
                                         <Form.Label>Status</Form.Label>
-                                        <Form.Select aria-label="Default select example" value={requestStatus} name="requestStatus" onChange={e => setRequestStatus(e.target.value)} required>
+                                        <Form.Select
+                                            aria-label="Default select example"
+                                            value={requestStatus}
+                                            name="requestStatus"
+                                            onChange={e => setRequestStatus(e.target.value)}
+                                            required
+                                        >
                                             <option value=''></option>
                                             {status.map(status => (
                                                 <option value={status}>{status}</option>
                                             ))}
                                         </Form.Select>
                                     </Form.Group>
-                                    <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
+                                    <Form.Group as={Col} className="mb-3">
                                         <Form.Label>Request Type</Form.Label>
                                         <Form.Control type='email' value={requestType} readOnly />
                                     </Form.Group>
-                                    <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
+                                    <Form.Group as={Col} className="mb-3">
                                         <Form.Label>Tracking Number</Form.Label>
                                         <Form.Control type='email' value={trackingNumber} readOnly />
                                     </Form.Group>
                                 </Row>
-
-
-                                <Form.Group className="mb-3" controlId="formGridAddress2">
+                                <Form.Group className="mb-3">
                                     <Form.Label>Remarks message</Form.Label>
-                                    <Form.Control type="text"value={remarksMessage} name="remarksMessage" onChange={e => setRemarksMessage(e.target.value)}/>
+                                    <Form.Control
+                                        type="text"
+                                        value={remarksMessage}
+                                        name="remarksMessage"
+                                        onChange={e => setRemarksMessage(e.target.value)}
+                                    />
                                 </Form.Group>
-
                                 <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold' }}>Courses to Add / Drop</Card.Title>
-
                                 <MDBDataTableV5
                                     data={setHistory()}
                                     searchTop
@@ -262,16 +267,19 @@ const UpdateRequest = ({ history, match }) => {
                                     scrollX
                                     entriesOptions={[5, 20, 25]}
                                     entries={10}
-                                    style={{backgroundColor:'white'}}
+                                    style={{ backgroundColor: 'white' }}
                                 />
-
                                 <Row className="mb-3">
                                     <Form.Group as={Col}>
                                         <Form.Label>Attachments</Form.Label>
-                                        <Form.Control type="file" name="fileRequirements" onChange={onChange} multiple />
+                                        <Form.Control
+                                            type="file"
+                                            name="fileRequirements"
+                                            onChange={onChange}
+                                            multiple
+                                        />
                                     </Form.Group>
-
-                                    <Form.Group controlId="formFileMultiple" className="mb-3">
+                                    <Form.Group className="mb-3">
                                         {returningFiles && (<p>Attachments:</p>)}
                                         <ul>
                                             {returningFiles && returningFiles.map(file => (
@@ -280,7 +288,19 @@ const UpdateRequest = ({ history, match }) => {
                                         </ul>
                                     </Form.Group>
                                 </Row>
-                                <center><Button type='submit' style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }} disabled={loading ? true : false}>Update</Button></center>
+                                <center><Button
+                                    type='submit'
+                                    style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                    disabled={loading ? true : false}
+                                >
+                                    {loading ? (
+                                        <span>
+                                            <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
+                                        </span>
+                                    ) : (
+                                        <span>Update</span>
+                                    )}
+                                </Button></center>
                             </Form>
                         </Card.Body>
                     </Card>

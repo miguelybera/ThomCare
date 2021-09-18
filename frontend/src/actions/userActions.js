@@ -63,7 +63,7 @@ export const login = ( email, password ) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: LOGIN_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
         })
     }
 }
@@ -85,7 +85,7 @@ export const loadUser = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: LOAD_USER_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
         })
     }
 }
@@ -107,7 +107,7 @@ export const getUsers = () => async (dispatch) => {
     catch(error){
         dispatch({
             type: ALL_USERS_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
         })
     }
 }
@@ -129,7 +129,7 @@ export const getUserDetails = (id) => async(dispatch) => {
     catch(error){
         dispatch({
             type: USER_DETAILS_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
             }
         )
     }
@@ -147,7 +147,7 @@ export const logout = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: LOGOUT_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
         })
     }
 }
@@ -188,7 +188,7 @@ export const register = (admin, user) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: REGISTER_USER_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
         })
     }
 }
@@ -227,7 +227,7 @@ export const updatePassword = ( passwords ) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: UPDATE_PASSWORD_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
         })
     }
 }
@@ -257,7 +257,7 @@ export const updateProfile = (userData) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: UPDATE_PROFILE_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
         })
     }
 }
@@ -285,7 +285,7 @@ export const forgotPassword = (email) => async (dispatch) => {
     catch(error){
         dispatch({
             type: FORGOT_PASSWORD_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
         })
     }
 }
@@ -313,7 +313,7 @@ export const resetPassword = ( token, passwords ) => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: NEW_PASSWORD_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
         })
     }
 }
@@ -337,7 +337,7 @@ export const deleteUser = (id) => async(dispatch) => {
     catch(error){
         dispatch({
             type: DELETE_USER_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
             }
         )
     }
@@ -366,7 +366,7 @@ export const updateUser = (id, userData) => async(dispatch) => {
     catch(error){
         dispatch({
             type: UPDATE_USER_FAIL,
-            payload: error.response.data.message
+            payload: error.response.data.errMessage
             }
         )
     }

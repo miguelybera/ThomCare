@@ -5,8 +5,9 @@ import { FloatingLabel, Form, Button, Card, Container, Row } from 'react-bootstr
 import { updatePassword, clearErrors } from './../../actions/userActions'
 import { UPDATE_PASSWORD_RESET } from './../../constants/userConstants'
 import MetaData from './../layout/MetaData'
+import Sidebar from './../layout/Sidebar'
 import {
-    INSIDE_DASHBOARD_FALSE
+    INSIDE_DASHBOARD_TRUE
 } from '../../constants/dashboardConstants'
 
 
@@ -41,55 +42,49 @@ const UpdatePassword = ({ history }) => {
         }
 
         dispatch({
-            type: INSIDE_DASHBOARD_FALSE
+            type: INSIDE_DASHBOARD_TRUE
         })
     }, [dispatch, alert, error, isUpdated, history])
     return (
         <>
             <MetaData title={'Update Password'} />
+            <Sidebar/>
             <Container fluid>
                 <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
                     <Card style={{ backgroundColor: "#F5F5F5",width: '30rem', align: 'center', borderTop: '10px solid #9c0b0b' , marginBottom: '50px'}}>
                         <Card.Body>
                             <Card.Title style={{ margin: '20px 0 20px 0', fontWeight:"bold" }}>Update Password</Card.Title>
                             <Form onSubmit={submitHandler}>
-                                <FloatingLabel
-                                    controlId="floatingInput"
-                                    label="Old Password"
-                                    className="mb-3"
-                                >
+                                <FloatingLabel label="Old Password" className="mb-3">
                                     <Form.Control
                                         type="password"
                                         placeholder="mypassword"
                                         name="oldPassword"
                                         value={oldPassword}
                                         onChange={e => setOldPassword(e.target.value)}
+                                        required
                                     />
                                 </FloatingLabel>
-                                <FloatingLabel
-                                    controlId="floatingInput"
-                                    label="New Password"
-                                    className="mb-3"
-                                >
+                                <FloatingLabel label="New Password" className="mb-3">
                                     <Form.Control
                                         type="password"
                                         placeholder="mypassword"
                                         name="password"
                                         value={password}
                                         onChange={e => setPassword(e.target.value)}
+                                        minlength="6"
+                                        required
                                     />
                                 </FloatingLabel>
-                                <FloatingLabel
-                                    controlId="floatingInput"
-                                    label="Confirm Password"
-                                    className="mb-3"
-                                >
+                                <FloatingLabel label="Confirm new Password" className="mb-3">
                                     <Form.Control
                                         type="password"
                                         placeholder="mypassword"
                                         name="confirmPassword"
                                         value={confirmPassword}
                                         onChange={e => setConfirmPassword(e.target.value)}
+                                        minlength="6"
+                                        required
                                     />
                                 </FloatingLabel>
                                 <center><Button

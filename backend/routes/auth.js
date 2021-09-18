@@ -40,7 +40,7 @@ router.route('/verify/account/:token').post(verifyStudent);
 router.route('/deptChair/users').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getStudentAccounts);
 
 //cics staff
-router.route('/admin/me/update').put(isAuthenticatedUser, authorizeRoles('CICS Staff'), updateProfile);
+router.route('/admin/me/update').put(isAuthenticatedUser, authorizeRoles('CICS Staff', 'IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), updateProfile);
 router.route('/admin/register').post(isAuthenticatedUser, authorizeRoles('CICS Staff'), registerAdmin);
 router.route('/admin/user/:id').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getUser);
 router.route('/admin/users').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getUsers);

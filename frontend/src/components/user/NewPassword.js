@@ -26,7 +26,7 @@ const NewPassword = ({ history, match }) => {
 
     useEffect(() => {
         if (success) {
-            history.push('/password-success')
+            history.push('/login')
             alert.success('Password updated successfully')
             dispatch({
                 type: NEW_PASSWORD_RESET
@@ -55,30 +55,26 @@ const NewPassword = ({ history, match }) => {
                         <Card.Body>
                             <Card.Title style={{ margin: '50px 0 20px 0' }}>Update Password</Card.Title>
                             <Form onSubmit={submitHandler}>
-                                <FloatingLabel
-                                    controlId="floatingInput"
-                                    label="New Password"
-                                    className="mb-3"
-                                >
+                                <FloatingLabel label="New Password" className="mb-3">
                                     <Form.Control
                                         type="password"
                                         placeholder="mypassword"
                                         name="password"
                                         value={password}
                                         onChange={e => setPassword(e.target.value)}
+                                        minlength="6"
+                                        required
                                     />
                                 </FloatingLabel>
-                                <FloatingLabel
-                                    controlId="floatingInput"
-                                    label="Confirm Password"
-                                    className="mb-3"
-                                >
+                                <FloatingLabel label="Confirm new Password" className="mb-3">
                                     <Form.Control
                                         type="password"
                                         placeholder="mypassword"
                                         name="confirmPassword"
                                         value={confirmPassword}
                                         onChange={e => setConfirmPassword(e.target.value)}
+                                        minlength="6"
+                                        required
                                     />
                                 </FloatingLabel>
                                 <Button

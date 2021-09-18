@@ -1,7 +1,7 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useAlert } from 'react-alert'
-import { Link , NavLink } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { Nav, NavDropdown, Navbar, Container, Button } from 'react-bootstrap'
 import { logout } from '../../actions/userActions'
 import '../../App.css'
@@ -51,7 +51,7 @@ const Header = () => {
     const { user } = useSelector(state => state.auth)
 
     let userName = ''
-
+    
     if (user && user.firstName) {
         userName = user.firstName
     }
@@ -65,7 +65,7 @@ const Header = () => {
         <>
             <Fragment>
                 <Styles >
-                    <Navbar style={{backgroundColor: 'white', borderBottom: "7px solid #9c0b0b" }} expand="lg" >
+                    <Navbar style={{ backgroundColor: 'white', borderBottom: "7px solid #9c0b0b" }} expand="lg" >
                         <Container >
                             <img
                                 src="/images/CICS_SEAL.png"
@@ -92,8 +92,8 @@ const Header = () => {
                                             fontWeight: "bold",
                                         }}>
                                         <Nav variant="pills"
-                                        className="image"
-                                            >
+                                            className="image"
+                                        >
                                             <Nav.Link className="image"><Link to='/' activeStyle>Announcements</Link></Nav.Link>
                                             <Nav.Link className="image"><Link to='/forms-list' activeStyle>Generate Form</Link></Nav.Link>
                                             <Nav.Link className="image"><Link to='/download-forms-list' activeStyle>Downloadable Forms</Link></Nav.Link>
@@ -120,12 +120,12 @@ const Header = () => {
                                             fontWeight: "bold",
                                         }}>
                                         <Nav variant="pills"
-                                        className="image"
+                                            className="image"
                                             style={{
                                                 marginLeft: "auto",
                                                 paddingRight: "15px",
                                                 paddingLeft: "15px"
-                                                
+
                                             }}>
                                             <Nav.Link className="image"><Link to='/' activeStyle>Announcements</Link></Nav.Link>
                                             <Nav.Link className="image"><Link to='/forms-list' activeStyle>Generate Form</Link></Nav.Link>

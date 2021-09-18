@@ -25,14 +25,26 @@ const ControlPanel = () => {
     const alert = useAlert()
 
     const role = user && user.role
+    
+    let link = '', reqType = ''
 
-    console.log(recents)
+    if (user.role === 'CICS Staff') {
+        link = '/admin/all/requests'
+        reqType = 'All'
+    } else if (user.role === 'Student') {
+        link = '/me/requests'
+        reqType = 'All'
+    } else {
+        link = '/admin/deptchair/requests'
+        reqType = 'Requests'
+    }
+
     useEffect(() => {
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
 
-        dispatch(getRequests(role, 'All'))
+        dispatch(getRequests(role, reqType))
         dispatch(getRecent(role))
 
         if (error) {
@@ -51,16 +63,6 @@ const ControlPanel = () => {
     }
 
     const upperCase = (text) => text.toUpperCase()
-
-    let link = ''
-
-    if (user.role === 'CICS Staff') {
-        link = '/admin/all/requests'
-    } else if (user.role === 'Student') {
-        link = '/me/requests'
-    } else {
-        link = '/admin/deptchair/requests'
-    }
 
     const setRequests = () => {
         const data = {

@@ -20,6 +20,7 @@ const ForgotPassword = ({ history }) => {
     useEffect(() => {
         if (error) {
             alert.error(error)
+            setEmail('')
             dispatch(clearErrors())
             dispatch({
                 type: FORGOT_PASSWORD_RESET
@@ -54,11 +55,7 @@ const ForgotPassword = ({ history }) => {
                             <Card.Title style={{ margin: '50px 0 20px 0' }}>Forgot Password?</Card.Title>
                             <Card.Text style={{ fontSize: '12px' }}>Enter your registered UST G Suite email address. A reset password link will be sent to your inbox.</Card.Text>
                             <Form onSubmit={submitHandler} encType='application/json' method='post'>
-                                <FloatingLabel
-                                    controlId="floatingInput"
-                                    label="Email address"
-                                    className="mb-3"
-                                >
+                                <FloatingLabel label="Email address" className="mb-3">
                                     <Form.Control
                                         type='email'
                                         placeholder="juan.delacruz.iics@ust.edu.ph"
