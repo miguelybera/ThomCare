@@ -50,7 +50,6 @@ const ListMyRequests = ({ history }) => {
                 break
         }
         
-        console.log(status, requestList)
     }, [status, requests, pending, processing, approved, denied])
 
     useEffect(() => {

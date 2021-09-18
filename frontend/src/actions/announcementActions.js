@@ -203,7 +203,6 @@ export const getArchivedAnnouncements = () => async(dispatch) => {
         })
     }
     catch (error) {
-        console.log(error)
         dispatch({
             type: ALL_ARCHIVED_ANNOUNCEMENTS_FAIL,
             payload: error.response.data.errMessage

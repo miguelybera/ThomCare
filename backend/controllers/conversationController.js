@@ -120,7 +120,6 @@ exports.getBothConvo = catchAsyncErrors(async (req, res, next) => {
             members: { $all: [req.params.firstUserId, req.params.secondUserId] },
         })
 
-        console.log(conversation)
         res.status(200).json({
             success: true,
             conversation

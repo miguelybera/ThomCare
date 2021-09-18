@@ -9,7 +9,6 @@ import axios from 'axios'
 //Get audit log
 export const getAuditLog = () => async (dispatch) => {
     try {
-        console.log('here')
         dispatch({
             type: GET_AUDIT_REQUEST
         })

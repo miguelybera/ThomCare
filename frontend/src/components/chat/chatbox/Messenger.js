@@ -267,7 +267,6 @@ const Messenger = ({ history }) => {
                             <Fragment>
                                 <div onClick={() => {
                                     setCurrentChat(c)
-                                    console.log(c)
                                     setUserName(c.names[0] === name ? c.names[1] : c.names[0])
                                 }}>
                                     <Conversation conversation={c} currentUser={user} />

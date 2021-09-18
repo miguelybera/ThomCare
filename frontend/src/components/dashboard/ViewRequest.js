@@ -92,12 +92,10 @@ const ViewRequest = ({ history, match }) => {
                 setViewType(4)
                 history.push(`/view/request/${viewType}${request._id}`)
             } else if (viewType == 4) {
-                console.log('here', viewType)
                 alert.success('Request has been restored.')
                 setViewType(1)
                 history.push(`/view/request/${viewType}${request._id}`)
             } else if (viewType == 3) {
-                console.log('here', viewType)
                 alert.success('Request has been assigned to user successfully.')
                 setViewType(1)
                 history.push(`/view/request/${viewType}${request._id}`)
@@ -148,7 +146,6 @@ const ViewRequest = ({ history, match }) => {
         handleClose()
     }
 
-    console.log(viewType)
     const setHistory = () => {
         const data = {
             columns: [

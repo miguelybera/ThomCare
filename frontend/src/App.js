@@ -31,7 +31,6 @@ import AnnouncementDetails from './components/announcement/AnnouncementDetails'
 import TrackingPage from './components/request/TrackingPage'
 import TrackingPageProgress from './components/request/TrackingPageProgress'
 import SubmitRequest from './components/request/SubmitRequest'
-import Confirmation from './components/request/Confirmation'
 
 //forms
 import Form6A from './components/request/forms/Form6A'
@@ -110,7 +109,6 @@ function App() {
                             <ProtectedRoute path='/petition-classes' component={PetitionClass} exact />
                             <ProtectedRoute path='/overload-form' component={OverloadForm} exact />
                             <ProtectedRoute path='/submitrequest' component={SubmitRequest} exact />
-                            <ProtectedRoute path='/confirmation/:id' component={Confirmation} exact />
 
                             <ProtectedRoute path='/messenger' component={Messenger} exact />
                             <ProtectedRoute path='/profile' component={Profile} exact />

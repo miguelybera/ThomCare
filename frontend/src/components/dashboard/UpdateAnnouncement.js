@@ -283,7 +283,6 @@ const UpdateAnnouncement = ({ history, match }) => {
                                                 onClick={() => {
                                                     setSetExpiry(!setExpiry)
                                                     setCtr(ctr + 1)
-                                                    console.log(ctr)
                                                 }}
                                             />
                                             <Form.Control

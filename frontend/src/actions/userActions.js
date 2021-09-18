@@ -245,7 +245,6 @@ export const updateProfile = (userData) => async (dispatch) => {
             }
         }
 
-        console.log(userData)
         const { data } = await axios.put(`/api/v1/admin/me/update`, userData, config)
         
         dispatch({

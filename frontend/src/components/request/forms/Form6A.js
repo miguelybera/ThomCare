@@ -42,26 +42,32 @@ function Form6A() {
             labUnits: '',
             days: '',
             time: '',
+            room: '',
             section: ''
         }
     ])
 
+    const [term, setTerm] = useState('')
+    const [year1, setYear1] = useState('')
+    const [year2, setYear2] = useState('')
+
     const onChange = (index, e) => {
         e.preventDefault()
+
         const values = [...inputFields]
 
-        values[index][e.target.name] = e.target.value
+            values[index][e.target.name] = e.target.value
 
-        if (values[index]["courseCode"] !== '') {
-            values[index]["courseName"] = getCourseName(values[index]["courseCode"], "courseName")
-            values[index]["labUnits"] = getCourseName(values[index]["courseCode"], "labUnits")
-            values[index]["lecUnits"] = getCourseName(values[index]["courseCode"], "lecUnits")
-        } else {
-            values[index]["courseName"] = ''
-            values[index]["labUnits"] = ''
-            values[index]["lecUnits"] = ''
-        }
-        setInputFields(values)
+            if (values[index]["courseCode"] !== '') {
+                values[index]["courseName"] = getCourseName(values[index]["courseCode"], "courseName")
+                values[index]["labUnits"] = getCourseName(values[index]["courseCode"], "labUnits")
+                values[index]["lecUnits"] = getCourseName(values[index]["courseCode"], "lecUnits")
+            } else {
+                values[index]["courseName"] = ''
+                values[index]["labUnits"] = ''
+                values[index]["lecUnits"] = ''
+            }
+            setInputFields(values)
     }
 
     const submitHandler = e => {
@@ -74,11 +80,13 @@ function Form6A() {
             studentNumber: user.studentNumber,
             email: user.email,
             course: user.course,
-            addDrop: inputFields
+            addDrop: inputFields,
+            term,
+            year1,
+            year2
         }
 
         setSubmitted(!submitted)
-        console.log('here', submitted)
 
         dispatch(saveForm(formData))
     }
@@ -92,6 +100,7 @@ function Form6A() {
             labUnits: '',
             days: '',
             time: '',
+            room: '',
             section: ''
         }])
     }
@@ -127,9 +136,9 @@ function Form6A() {
         <Fragment>
             <MetaData title={title} />
             {loading ? <Loader /> : !submitted ? (
-                <Container classname="align-me" fluid style={{ paddingBottom: '100px', paddingTop: '40px'}}>
+                <Container classname="align-me" fluid style={{ paddingBottom: '100px', paddingTop: '40px' }}>
                     <Card style={{ backgroundColor: '#9c0b0b' }}>  {/*, width: '100rem' */}
-                        <Card.Header style={{ backgroundColor: 'white', textColor: '#919191'}}>
+                        <Card.Header style={{ backgroundColor: 'white', textColor: '#919191' }}>
                             <Breadcrumb>
                                 <Breadcrumb.Item><Link to='/forms-list'>Generate Forms</Link></Breadcrumb.Item>
                                 <Breadcrumb.Item active>{title}</Breadcrumb.Item>
@@ -140,36 +149,49 @@ function Form6A() {
                             <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold' }}>Student Information</Card.Title>
                             <Form style={{ color: 'white' }} onSubmit={submitHandler} >
                                 <Row className="mb-3">
-                                    <Form.Group as={Col} controlId="formGridEmail">
+                                    <Form.Group as={Col}>
                                         <Form.Label>First Name</Form.Label>
                                         <Form.Control type="text" value={user && user.firstName} readOnly />
                                     </Form.Group>
 
-                                    <Form.Group as={Col} controlId="formGridEmail">
+                                    <Form.Group as={Col}>
                                         <Form.Label>Last Name</Form.Label>
                                         <Form.Control type="text" value={user && user.lastName} readOnly />
                                     </Form.Group>
 
-                                    <Form.Group as={Col} controlId="formGridEmail">
+                                    <Form.Group as={Col}>
                                         <Form.Label>Middle Initial</Form.Label>
                                         <Form.Control type="text" placeholder="S." value={user && user.middleName ? user.middleName : 'N/A'} readOnly />
                                     </Form.Group>
                                 </Row>
 
-                                <Form.Group className="mb-3" controlId="formGridAddress1">
+                                <Form.Group className="mb-3">
                                     <Form.Label>Student Number</Form.Label>
                                     <Form.Control value={user && user.studentNumber} readOnly />
                                 </Form.Group>
 
-                                <Form.Group className="mb-3" controlId="formGridAddress2">
+                                <Form.Group className="mb-3">
                                     <Form.Label>Course/Program</Form.Label>
                                     <Form.Control type="text" value={user && user.course} readOnly />
                                 </Form.Group>
 
                                 <Row className="mb-3">
-                                    <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
+                                    <Form.Group as={Col} className="mb-3">
                                         <Form.Label>Email address</Form.Label>
                                         <Form.Control type='email' value={user && user.email} readOnly />
+                                    </Form.Group>
+                                </Row>
+
+                                <Row className="mb-3">
+                                    <Form.Group as={Col}>
+                                        <Form.Label>Term</Form.Label>
+                                        <Form.Control type="text" value={term} onChange={e => setTerm(e.target.value)} />
+                                    </Form.Group>
+
+                                    <Form.Group as={Col}>
+                                        <Form.Label>Academic Year</Form.Label>
+                                        <Form.Control type="text" placeholder="20xx" value={year1} onChange={e => setYear1(e.target.value)} />
+                                        <Form.Control type="text" placeholder="20xx" value={year2} onChange={e => setYear2(e.target.value)} />
                                     </Form.Group>
                                 </Row>
 
@@ -205,6 +227,10 @@ function Form6A() {
                                     </Form.Group>
 
                                     <Form.Group as={Col}>
+                                        <Form.Label>Room</Form.Label>
+                                    </Form.Group>
+
+                                    <Form.Group as={Col}>
                                         <Form.Label>Section</Form.Label>
                                     </Form.Group>
                                 </Row>
@@ -219,6 +245,7 @@ function Form6A() {
                                             labUnits = `labUnits-${idx}`,
                                             days = `days-${idx}`,
                                             time = `time-${idx}`,
+                                            room = `room-${idx}`,
                                             section = `section-${idx}`
 
                                         return (
@@ -268,6 +295,10 @@ function Form6A() {
 
                                                     <Form.Group as={Col}>
                                                         <Form.Control type="text" placeholder="3:00PM - 5:00PM" name="time" id={time} data-id={idx} value={val.time} onChange={e => onChange(idx, e)} required />
+                                                    </Form.Group>
+
+                                                    <Form.Group as={Col}>
+                                                        <Form.Control type="text" placeholder="Room number" name="room" id={room} data-id={idx} value={val.room} onChange={e => onChange(idx, e)} required />
                                                     </Form.Group>
 
                                                     <Form.Group as={Col}>

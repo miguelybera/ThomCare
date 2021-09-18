@@ -25,6 +25,18 @@ const FORM6APDF = (props) => {
     const firstName = formData.firstName.split('')
     const middleName = formData.middleName.split('')[0]
     const lastName = formData.lastName.split('')
+    //course ID - total units - days - time - room - section
+
+    let toAdd = [], toDrop = []
+
+    formData.addDrop.forEach(x => {
+        if (x.status === 'Add') {
+            toAdd.push(x)
+        } else {
+            toDrop.push(x)
+        }
+    }
+    )
 
     const options = {
         format: 'legal'
@@ -54,7 +66,6 @@ const FORM6APDF = (props) => {
                     <div style={{ textAlign: 'center' }}>
                         <span style={{ fontWeight: 'bold' }}>UNIVERSITY OF SANTO TOMAS</span><br />
                         España St., Manila, Philippines
-
                     </div>
                     <div>
                         <img src="/images/UST_SEAL.png" alt="UST LOGO" width="60" height="60" />
@@ -63,7 +74,7 @@ const FORM6APDF = (props) => {
 
                 <div className="namesabove">
                     <div>Place a comma (,) between last and first names</div>
-                    <div style={{ textAlign: 'right' }}>_________ Term / Special, Academic Year 20 ___ - 20 ___</div>
+                    <div style={{ textAlign: 'right' }}> <b>{formData.term}</b> Term / Special, Academic Year 20<b>{formData.year1}</b> - 20<b>{formData.year2}</b></div>
                 </div>
 
                 <div className="namesform">
@@ -75,42 +86,13 @@ const FORM6APDF = (props) => {
                                         <td>{letter}</td>
                                     ))}
                                     <td>,</td>
-                                    
+
                                     {firstName.map(letter => (
                                         <td>{letter}</td>
                                     ))}
                                     <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    
                                     <td>{middleName}</td>
                                     <td>.</td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -142,94 +124,59 @@ const FORM6APDF = (props) => {
                                         <td>Room</td>
                                         <td>Section</td>
                                     </tr>
-                                    <tr>
-                                        <td>{formData.firstName} {formData.middleName}</td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                    {toDrop.length === 0 ? (
+                                        <Fragment>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </Fragment>
+                                    ) : (
+                                        <Fragment>
+                                            {
+                                                toDrop.map(x => (
+                                                    <tr> {/** course id*/}
+                                                        {x.courseCode.split('').map(y => (
+                                                            <Fragment>
+                                                                <td>{y}</td>
+                                                            </Fragment>
+                                                        ))}
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>{/** end course id*/}
+                                                        <td>{Number(x.lecUnits) + Number(x.labUnits)}</td>{/** units*/}
+                                                        <td>{x.days}</td>{/** days */}
+                                                        <td>{x.time}</td>{/** time*/}
+                                                        <td>{x.room}</td>{/** room*/}
+                                                        <td>{x.section}</td>{/** section*/}
+                                                    </tr>
+                                                ))
+                                            }
+                                        </Fragment>
+                                    )}
                                 </tbody>
                             </table>
                         </div>
@@ -240,9 +187,7 @@ const FORM6APDF = (props) => {
                 <div style={{ fontWeight: 'bold' }}>TO BE ADDED:</div>
                 <center>
                     <div className="addform">
-
                         <div>
-
                             <table style={{ width: '95%' }}>
                                 <tbody>
                                     <tr style={{ fontWeight: 'bold' }}>
@@ -253,94 +198,59 @@ const FORM6APDF = (props) => {
                                         <td>Room</td>
                                         <td>Section</td>
                                     </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                    {toAdd.length === 0 ? (
+                                        <Fragment>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </Fragment>
+                                    ) : (
+                                        <Fragment>
+                                            {
+                                                toAdd.map(x => (
+                                                    <tr> {/** course id*/}
+                                                        {x.courseCode.split('').map(y => (
+                                                            <Fragment>
+                                                                <td>{y}</td>
+                                                            </Fragment>
+                                                        ))}
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>{/** end course id*/}
+                                                        <td>{Number(x.lecUnits) + Number(x.labUnits)}</td>{/** units*/}
+                                                        <td>{x.days}</td>{/** days */}
+                                                        <td>{x.time}</td>{/** time*/}
+                                                        <td>{x.room}</td>{/** room*/}
+                                                        <td>{x.section}</td>{/** section*/}
+                                                    </tr>
+                                                ))
+                                            }
+                                        </Fragment>
+                                    )}
                                 </tbody>
                             </table>
                         </div>
@@ -376,16 +286,9 @@ const FORM6APDF = (props) => {
                                     <td colSpan={10} style={{ textAlign: 'center' }}>STUDENT NO.</td>
                                 </tr>
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    {studentNumber.map(num => (
+                                        <td>{num}</td>
+                                    ))}
                                 </tr>
                             </tbody>
                         </table>
@@ -402,7 +305,7 @@ const FORM6APDF = (props) => {
 
                 <div className="namesabove">
                     <div>Place a comma (,) between last and first names</div>
-                    <div style={{ textAlign: 'right' }}>_________ Term / Special, Academic Year 20 ___ - 20 ___</div>
+                    <div style={{ textAlign: 'right' }}> <b>{formData.term}</b> Term / Special, Academic Year 20<b>{formData.year1}</b> - 20<b>{formData.year2}</b></div>
                 </div>
 
                 <div className="namesform">
@@ -410,37 +313,17 @@ const FORM6APDF = (props) => {
                         <table>
                             <tbody>
                                 <tr>
+                                    {lastName.map(letter => (
+                                        <td>{letter}</td>
+                                    ))}
+                                    <td>,</td>
+
+                                    {firstName.map(letter => (
+                                        <td>{letter}</td>
+                                    ))}
                                     <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{middleName}</td>
+                                    <td>.</td>
                                     <td></td>
                                 </tr>
                             </tbody>
@@ -473,94 +356,59 @@ const FORM6APDF = (props) => {
                                         <td>Room</td>
                                         <td>Section</td>
                                     </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                    {toDrop.length === 0 ? (
+                                        <Fragment>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </Fragment>
+                                    ) : (
+                                        <Fragment>
+                                            {
+                                                toDrop.map(x => (
+                                                    <tr> {/** course id*/}
+                                                        {x.courseCode.split('').map(y => (
+                                                            <Fragment>
+                                                                <td>{y}</td>
+                                                            </Fragment>
+                                                        ))}
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>{/** end course id*/}
+                                                        <td>{Number(x.lecUnits) + Number(x.labUnits)}</td>{/** units*/}
+                                                        <td>{x.days}</td>{/** days */}
+                                                        <td>{x.time}</td>{/** time*/}
+                                                        <td>{x.room}</td>{/** room*/}
+                                                        <td>{x.section}</td>{/** section*/}
+                                                    </tr>
+                                                ))
+                                            }
+                                        </Fragment>
+                                    )}
                                 </tbody>
                             </table>
                         </div>
@@ -571,9 +419,7 @@ const FORM6APDF = (props) => {
                 <div style={{ fontWeight: 'bold' }}>TO BE ADDED:</div>
                 <center>
                     <div className="addform">
-
                         <div>
-
                             <table style={{ width: '95%' }}>
                                 <tbody>
                                     <tr style={{ fontWeight: 'bold' }}>
@@ -584,94 +430,59 @@ const FORM6APDF = (props) => {
                                         <td>Room</td>
                                         <td>Section</td>
                                     </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
+                                    {toAdd.length === 0 ? (
+                                        <Fragment>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </Fragment>
+                                    ) : (
+                                        <Fragment>
+                                            {
+                                                toAdd.map(x => (
+                                                    <tr> {/** course id*/}
+                                                        {x.courseCode.split('').map(y => (
+                                                            <Fragment>
+                                                                <td>{y}</td>
+                                                            </Fragment>
+                                                        ))}
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>
+                                                        <td></td>{/** end course id*/}
+                                                        <td>{Number(x.lecUnits) + Number(x.labUnits)}</td>{/** units*/}
+                                                        <td>{x.days}</td>{/** days */}
+                                                        <td>{x.time}</td>{/** time*/}
+                                                        <td>{x.room}</td>{/** room*/}
+                                                        <td>{x.section}</td>{/** section*/}
+                                                    </tr>
+                                                ))
+                                            }
+                                        </Fragment>
+                                    )}
                                 </tbody>
                             </table>
                         </div>
