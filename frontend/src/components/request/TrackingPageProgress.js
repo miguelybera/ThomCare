@@ -11,7 +11,7 @@ import {
 } from '../../constants/dashboardConstants'
 
 import {
-    REQUEST_DETAILS_RESET
+    TRACK_REQUEST_RESET
 } from '../../constants/requestConstants'
 
 var dateFormat = require('dateformat')
@@ -26,7 +26,7 @@ const TrackingPageProgress = ({ history, match }) => {
     const dispatch = useDispatch()
     const alert = useAlert()
 
-    const { loading, error, request } = useSelector(state => state.requestDetails)
+    const { loading, error, request } = useSelector(state => state.track)
 
     function changeDateFormat(date) {
         return dateFormat(date, "mmm d, yyyy h:MMtt")
@@ -46,6 +46,21 @@ const TrackingPageProgress = ({ history, match }) => {
     const [remarks, setRemarks] = useState([])
 
     useEffect(() => {
+        if (error) {
+            alert.error(error)
+            dispatch(clearErrors())
+            dispatch({
+                type: TRACK_REQUEST_RESET
+            })
+            history.push('/track')
+        }
+
+        dispatch({
+            type: INSIDE_DASHBOARD_FALSE
+        })
+    }, [dispatch, history, request, error])
+
+    useEffect(() => {
         if (request && request.trackingNumber !== tracker && request.lastName !== surname) {
             dispatch(trackRequest({trackingNumber: tracker, lastName: surname}))
         } else if (request) {
@@ -60,21 +75,7 @@ const TrackingPageProgress = ({ history, match }) => {
             dispatch(trackRequest({trackingNumber: tracker, lastName: surname}))
         }
 
-        if (error) {
-            history.push('/track')
-            alert.error(error)
-
-            dispatch(clearErrors())
-            dispatch({
-                type: REQUEST_DETAILS_RESET
-            })
-        }
-
-        dispatch({
-            type: INSIDE_DASHBOARD_FALSE
-        })
-    }, [dispatch, history, request, error, tracker, surname])
-
+    }, [dispatch, request, tracker, surname])
     const setHistory = () => {
         const data = {
             columns: [

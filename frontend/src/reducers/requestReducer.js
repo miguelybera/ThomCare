@@ -3,6 +3,10 @@ import {
     REQUEST_DETAILS_SUCCESS,
     REQUEST_DETAILS_FAIL,
     REQUEST_DETAILS_RESET,
+    TRACK_REQUEST_REQUEST,
+    TRACK_REQUEST_SUCCESS,
+    TRACK_REQUEST_FAIL,
+    TRACK_REQUEST_RESET,
     SAVE_FORM_SUCCESS,
     SUBMIT_REQUEST_REQUEST,
     SUBMIT_REQUEST_SUCCESS,
@@ -29,6 +33,47 @@ import {
     CLEAR_ERRORS
 } from '../constants/requestConstants'
 
+//track request reducer
+export const trackRequestReducer = (state = { request: {} }, action) => {
+    switch (action.type) {
+        case TRACK_REQUEST_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+
+        case TRACK_REQUEST_SUCCESS:
+            return {
+                loading: false,
+                request: action.payload.request,
+                success: action.payload.success
+            }
+
+        case TRACK_REQUEST_FAIL:
+            return {
+                ...state,
+                error: action.payload
+            }
+
+        case TRACK_REQUEST_RESET:
+            return {
+                ...state,
+                success: null,
+                error: null,
+                request: {}
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                loading: false,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
 
 //get single request details
 export const getRequestDetailsReducer = (state = { request: {} }, action) => {

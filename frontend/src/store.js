@@ -27,6 +27,7 @@ import {
 } from './reducers/announcementReducers'
 
 import {
+    trackRequestReducer,
     getRequestDetailsReducer,
     getRequestsReducer,
     getRecentReducer,
@@ -66,6 +67,7 @@ const reducer = combineReducers({
     announcement: announcementReducer, //update or delete announcement
 
     student: studentInfoReducer, //save trackingNumber and surname ? or request details in local storage
+    track: trackRequestReducer,
     requestDetails: getRequestDetailsReducer, //get single request details
     requests: getRequestsReducer, //get all requests
     recents: getRecentReducer,

@@ -4,9 +4,8 @@ const conversationSchema = new mongoose.Schema({
     members: {
         type: Array
     },
-    receiverName: {
-        type: String,
-        required: true
+    names: {
+        type: Array
     }
 }, {
     timestamps: true

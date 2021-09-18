@@ -177,28 +177,31 @@ const Messenger = ({ history }) => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const createConvo = (receiverId, receiverName) => {
+    const createConvo = (receiverId, firstMember, secondMember) => {
         const conversationDetails = {
             receiverId,
             senderId: userId,
-            receiverName
+            firstMember,
+            secondMember
         }
 
         dispatch(createConversation(conversationDetails))
         handleClose()
     }
 
+    const name = user && user.firstName + ' ' + user.lastName
     useEffect(() => {
         if (success) {
             history.push('/messenger')
             setCurrentChat(success)
-            setUserName(success.receiverName)
+            setUserName(success.names[0] === name ? success.names[1] : success.names[0])
 
             alert.success('Conversation created')
         }
 
         if (error) {
             alert.error(error)
+            dispatch(clearErrors())
         }
 
         dispatch({
@@ -212,7 +215,7 @@ const Messenger = ({ history }) => {
         } else {
             return (
                 <>
-                    <div className='chatOnlineFriend' onClick={() => createConvo(o._id, o.firstName + ' ' + o.lastName)}>
+                    <div className='chatOnlineFriend' onClick={() => createConvo(o._id, o.firstName + ' ' + o.lastName, user.firstName + ' ' + user.lastName)}>
                         <div className='chatOnlineImgContainer'>
                             <img className='chatOnlineImg' src='https://res.cloudinary.com/exstrial/image/upload/v1627805763/ShopIT/sanake_ibs7sb.jpg' alt='' />
                         </div>
@@ -264,7 +267,8 @@ const Messenger = ({ history }) => {
                             <Fragment>
                                 <div onClick={() => {
                                     setCurrentChat(c)
-                                    setUserName(c.receiverName)
+                                    console.log(c)
+                                    setUserName(c.names[0] === name ? c.names[1] : c.names[0])
                                 }}>
                                     <Conversation conversation={c} currentUser={user} />
                                 </div>
