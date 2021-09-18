@@ -79,14 +79,12 @@ export const trackRequestReducer = (state = { request: {} }, action) => {
 export const getRequestDetailsReducer = (state = { request: {} }, action) => {
     switch (action.type) {
         case REQUEST_DETAILS_REQUEST:
-        case SUBMIT_REQUEST_REQUEST:
             return {
-                ...state,
                 loading: true
             }
 
+
         case REQUEST_DETAILS_SUCCESS:
-        case SUBMIT_REQUEST_SUCCESS:
             return {
                 loading: false,
                 request: action.payload.request,
@@ -94,9 +92,8 @@ export const getRequestDetailsReducer = (state = { request: {} }, action) => {
             }
 
         case REQUEST_DETAILS_FAIL:
-        case SUBMIT_REQUEST_FAIL:
             return {
-                ...state,
+                loading: false,
                 error: action.payload
             }
 
@@ -107,16 +104,9 @@ export const getRequestDetailsReducer = (state = { request: {} }, action) => {
                 request: {}
             }
 
-        case SUBMIT_REQUEST_RESET:
-            return {
-                ...state,
-                success: null
-            }
-
         case CLEAR_ERRORS:
             return {
                 ...state,
-                loading: false,
                 error: null
             }
 
@@ -126,11 +116,38 @@ export const getRequestDetailsReducer = (state = { request: {} }, action) => {
 }
 
 //save form details
-export const saveFormDetailsReducer = (state = { formData: {} }, action) => {
+export const saveFormDetailsReducer = (state = { formData: {}, request: {} }, action) => {
     switch (action.type) {
         case SAVE_FORM_SUCCESS:
             return {
                 formData: action.payload
+            }
+
+        case SUBMIT_REQUEST_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+
+        case SUBMIT_REQUEST_SUCCESS:
+            return {
+                loading: false,
+                request: action.payload.request,
+                success: action.payload.success
+            }
+
+        case SUBMIT_REQUEST_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+
+        case SUBMIT_REQUEST_RESET:
+            return {
+                ...state,
+                success: null,
+                request: {}
             }
 
         case CLEAR_ERRORS:
@@ -208,7 +225,7 @@ export const getRecentReducer = (state = { recents: [] }, action) => {
                 loading: false,
                 recents: action.payload
             }
-            
+
         case GET_RECENT_FAIL:
             return {
                 ...state,

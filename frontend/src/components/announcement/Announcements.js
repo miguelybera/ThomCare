@@ -103,12 +103,12 @@ const Announcements = () => {
             dispatch(clearErrors())
         }
 
-        dispatch(getAnnouncements(currentPage, course, yearLevel, track, title))
+        dispatch(getAnnouncements(currentPage, course, yearLevel, track, title, annnouncementType))
 
         dispatch({
             type: INSIDE_DASHBOARD_FALSE
         })
-    }, [dispatch, alert, error, currentPage, course, yearLevel, track, title])
+    }, [dispatch, alert, error, currentPage, course, yearLevel, track, title, annnouncementType])
 
     const onChange = e => {
         if (e.target.name === 'course') {

@@ -56,7 +56,7 @@ const Footer = () => {
                     </Col>
                     <Col xs={9}>
                         <p style={{ paddingTop: "20px", paddingBottom: "0px", paddingLeft: "0px", fontSize: "80%" }}>
-                            UST-College of Information and Computing Sciences <br />
+                            Unniversity of Santo Tomas - College of Information and Computing Sciences <br />
                             Blessed Pier Giorgio Frassati Building <br />
 
                             Espana Blvd., Sampaloc, Manila, Philippines 1008 <br />
@@ -68,7 +68,7 @@ const Footer = () => {
                     </Col>
                 </Row>
                 <Row>
-                    <p style={{ textAlign: "center", fontSize: "70%" }}>© COPYRIGHT 2021.ALL RIGHTS RESERVED.</p>
+                    <p style={{ textAlign: "center", fontSize: "70%" }}>© COPYRIGHT 2021. ALL RIGHTS RESERVED.</p>
                 </Row>
             </Style>
         </Fragment>

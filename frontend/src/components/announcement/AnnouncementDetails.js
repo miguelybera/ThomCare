@@ -60,6 +60,7 @@ const AnnouncementDetails = ({ history, match }) => {
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
+            history.push('/')
         }
 
         dispatch({
@@ -75,7 +76,7 @@ const AnnouncementDetails = ({ history, match }) => {
                 }
             })
         }
-    }, [dispatch, alert, error, announcement, announcementId])
+    }, [dispatch, history, alert, error, announcement, announcementId])
 
     useEffect(() => {
         if (createdBy) {

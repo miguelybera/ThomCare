@@ -124,7 +124,7 @@ const ViewRequest = ({ history, match }) => {
             <MetaData title={`Tracking ID: ${trackingNumber}`} />
             <Sidebar />
             {!loading ? (
-                <Fragment style={{ marginTop: '30px' }}>
+                <Fragment>
                     <Card style={cardStyle}>
                         <Card.Body>
                             <Card.Title>Tracking ID#: {trackingNumber}</Card.Title>

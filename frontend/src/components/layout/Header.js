@@ -6,6 +6,7 @@ import { Nav, NavDropdown, Navbar, Container, Button } from 'react-bootstrap'
 import { logout } from '../../actions/userActions'
 import '../../App.css'
 import styled from 'styled-components'
+import { SUBMIT_REQUEST_RESET } from './../../constants/requestConstants'
 
 const Styles = styled.div`
     background-color: white;
@@ -50,12 +51,6 @@ const Header = () => {
 
     const { user } = useSelector(state => state.auth)
 
-    let userName = ''
-    
-    if (user && user.firstName) {
-        userName = user.firstName
-    }
-
     const logoutHandler = () => {
         dispatch(logout())
         alert.success('Logged out successfully')
@@ -97,7 +92,11 @@ const Header = () => {
                                             <Nav.Link className="image"><Link to='/' activeStyle>Announcements</Link></Nav.Link>
                                             <Nav.Link className="image"><Link to='/forms-list' activeStyle>Generate Form</Link></Nav.Link>
                                             <Nav.Link className="image"><Link to='/download-forms-list' activeStyle>Downloadable Forms</Link></Nav.Link>
-                                            <Nav.Link className="image"><Link to='/submitrequest' activeStyle>Submit Request</Link></Nav.Link>
+                                            <Nav.Link className="image"><Link to='/submitrequest' activeStyle onClick={() => {
+                                                dispatch({
+                                                    type: SUBMIT_REQUEST_RESET
+                                                })
+                                            }}>Submit Request</Link></Nav.Link>
                                             <Nav.Link className="image"><Link to='/track' activeStyle>Track my Request</Link></Nav.Link>
                                         </Nav>
 
@@ -129,7 +128,11 @@ const Header = () => {
                                             }}>
                                             <Nav.Link className="image"><Link to='/' activeStyle>Announcements</Link></Nav.Link>
                                             <Nav.Link className="image"><Link to='/forms-list' activeStyle>Generate Form</Link></Nav.Link>
-                                            <Nav.Link className="image"><Link to='/submitrequest' activeStyle>Submit Request</Link></Nav.Link>
+                                            <Nav.Link className="image"><Link to='/submitrequest' activeStyle onClick={() => {
+                                                dispatch({
+                                                    type: SUBMIT_REQUEST_RESET
+                                                })
+                                            }}>Submit Request</Link></Nav.Link>
                                             <Nav.Link className="image"><Link to='/track' activeStyle>Track my Request</Link></Nav.Link>
                                             <Nav.Link className="image"><Link to='/login' activeStyle>Login</Link></Nav.Link>
                                         </Nav>
