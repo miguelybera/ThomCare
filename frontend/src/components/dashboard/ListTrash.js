@@ -118,7 +118,7 @@ const ListAllRequests = ({ history }) => {
         }
 
         requests.forEach(request => {
-            const viewType = '1'+request._id
+            const viewType = '4'+request._id
 
             data.rows.push({
                 date: changeDateFormat(request.createdAt),

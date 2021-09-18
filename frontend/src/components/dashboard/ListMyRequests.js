@@ -124,6 +124,7 @@ const ListMyRequests = ({ history }) => {
 
         requestList && requestList.forEach(request => {
             const viewType = '1'+request._id
+            
             data.rows.push({
                 date: changeDateFormat(request.createdAt),
                 requestType: request.requestType,

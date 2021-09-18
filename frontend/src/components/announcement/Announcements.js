@@ -111,6 +111,7 @@ const Announcements = () => {
     }, [dispatch, alert, error, currentPage, course, yearLevel, track, title, annnouncementType])
 
     const onChange = e => {
+        setCurrentPageNo(1)
         if (e.target.name === 'course') {
             let value = e.target.value
             setFilter({
