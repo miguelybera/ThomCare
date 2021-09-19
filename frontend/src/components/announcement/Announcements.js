@@ -300,7 +300,7 @@ const Announcements = () => {
                                         <br />
                                         <span style={{ fontSize: '12px' }}>Attachments: {announcement.fileAttachments.length} file(s)</span>
                                         <br />
-                                        <span style={{ fontWeight: '300', color: 'gray', fontSize: '12px' }}>Tags: {announcement.yearLevel}, {announcement.course}, {announcement.track}</span>
+                                        <span style={{ fontWeight: '300', color: 'gray', fontSize: '12px' }}>Tags: {announcement.yearLevel}, {announcement.course}, {announcement.track}, {announcement.annnouncementType}</span>
                                     </Card.Text>
                                 </Card.Body>
                             </Card>

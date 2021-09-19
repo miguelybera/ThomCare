@@ -90,16 +90,15 @@ const Header = () => {
                                             className="image"
                                         >
                                             <Nav.Link className="image"><Link to='/' activeStyle>Announcements</Link></Nav.Link>
-                                            <Nav.Link className="image"><Link to='/forms-list' activeStyle>Generate Form</Link></Nav.Link>
-                                            <Nav.Link className="image"><Link to='/download-forms-list' activeStyle>Downloadable Forms</Link></Nav.Link>
-                                            <Nav.Link className="image"><Link to='/submitrequest' activeStyle onClick={() => {
+                                            <Nav.Link className="image"><Link to='/forms/list' activeStyle>Generate Form</Link></Nav.Link>
+                                            <Nav.Link className="image"><Link to='/download/forms/list' activeStyle>Downloadable Forms</Link></Nav.Link>
+                                            <Nav.Link className="image"><Link to='/submit/request' activeStyle onClick={() => {
                                                 dispatch({
                                                     type: SUBMIT_REQUEST_RESET
                                                 })
                                             }}>Submit Request</Link></Nav.Link>
                                             <Nav.Link className="image"><Link to='/track' activeStyle>Track my Request</Link></Nav.Link>
                                         </Nav>
-
                                         <Drop>
                                             <NavDropdown title={`${user.firstName}`} id="basic-nav-dropdown">
                                                 <NavDropdown.Item><Link to='/controlpanel'>Control Panel</Link></NavDropdown.Item>
@@ -127,8 +126,9 @@ const Header = () => {
 
                                             }}>
                                             <Nav.Link className="image"><Link to='/' activeStyle>Announcements</Link></Nav.Link>
-                                            <Nav.Link className="image"><Link to='/forms-list' activeStyle>Generate Form</Link></Nav.Link>
-                                            <Nav.Link className="image"><Link to='/submitrequest' activeStyle onClick={() => {
+                                            <Nav.Link className="image"><Link to='/forms/list' activeStyle>Generate Form</Link></Nav.Link>
+                                            <Nav.Link className="image"><Link to='/download/forms/list' activeStyle>Downloadable Forms</Link></Nav.Link>
+                                            <Nav.Link className="image"><Link to='/submit/request' activeStyle onClick={() => {
                                                 dispatch({
                                                     type: SUBMIT_REQUEST_RESET
                                                 })

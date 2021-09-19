@@ -183,7 +183,7 @@ function OverloadForm() {
                             <div style={{ display: 'grid', gridTemplateColumns: '86% 14%' }}>
                                 <div>
                                     <Breadcrumb style={{ display: 'flex', flexDirection: 'column' }}>
-                                        <Breadcrumb.Item><Link to='/forms-list'>Generate Forms</Link></Breadcrumb.Item>
+                                        <Breadcrumb.Item><Link to='/forms/list'>Generate Forms</Link></Breadcrumb.Item>
                                         <Breadcrumb.Item active>{title}</Breadcrumb.Item>
 
                                     </Breadcrumb></div>

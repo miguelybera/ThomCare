@@ -56,7 +56,7 @@ const ControlPanel = () => {
             alert.error(error)
             dispatch(clearErrors())
         }
-    }, [dispatch, alert, error, role, recentsError])
+    }, [dispatch, alert, error, role, reqType, recentsError])
 
     function changeDateFormat(date) {
         return dateFormat(date, "mmm d, yyyy h:MMtt")

@@ -145,7 +145,7 @@ function PetitionClass() {
                     <Card style={{ backgroundColor: '#9c0b0b' }}>  {/*, width: '100rem' */}
                         <Card.Header style={{ backgroundColor: 'white', textColor: '#919191' }}>
                             <Breadcrumb>
-                                <Breadcrumb.Item><Link to='/forms-list'>Generate Forms</Link></Breadcrumb.Item>
+                                <Breadcrumb.Item><Link to='/forms/list'>Generate Forms</Link></Breadcrumb.Item>
                                 <Breadcrumb.Item active>{title}</Breadcrumb.Item>
                             </Breadcrumb>
                         </Card.Header>

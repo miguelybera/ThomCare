@@ -27,12 +27,12 @@ const FormsList = () => {
                             <td>Adding/Dropping of course</td>
                             <td>Available</td>
                             <td>
-                                <Link to='/form-6a'>
-                                    <Button variant="primary" href="/form-6a">
+                                <Link to='/forms/form-6a'>
+                                    <Button variant="primary" href="/forms/form-6a">
                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Fill out
                                     </Button>
                                 </Link>
-                                <Button variant="warning"  href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" >
+                                <Button variant="warning"  href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" target="_blank">
                                     <i class="fa fa-eye" aria-hidden="true"></i> View
                                 </Button>
                             </td>
@@ -41,13 +41,13 @@ const FormsList = () => {
                             <td>Form 6A / Form 6B</td>
                             <td>Cross - Enrollment (within CICS) / Cross- Enrollment with other academic unit/s</td>
                             <td>Available</td>
-                            <td><Link to='/form-6b'>
-                                <Button variant="primary" href="/form-6b">
+                            <td><Link to='/forms/form-6b'>
+                                <Button variant="primary" href="/forms/form-6b">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Fill out
                                 </Button>
 
                             </Link>
-                                <Button variant="warning"  href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" >
+                                <Button variant="warning"  href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" target="_blank">
                                     <i class="fa fa-eye" aria-hidden="true"></i> View
                                 </Button></td>
                         </tr>
@@ -55,12 +55,12 @@ const FormsList = () => {
                             <td>-</td>
                             <td>CICS Petition Classes</td>
                             <td>Available</td>
-                            <td><Link to='/petition-classes'>
-                                <Button variant="primary" href="/petition-classes">
+                            <td><Link to='/forms/petition-classes'>
+                                <Button variant="primary" href="/forms/petition-classes">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Fill out
                                 </Button>
                             </Link>
-                                <Button variant="warning"  href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" >
+                                <Button variant="warning"  href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" target="_blank">
                                     <i class="fa fa-eye" aria-hidden="true"></i> View
                                 </Button></td>
                         </tr>
@@ -68,12 +68,12 @@ const FormsList = () => {
                             <td>-</td>
                             <td>Request for Overload</td>
                             <td>Available</td>
-                            <td><Link to='/overload-form'>
-                                <Button variant="primary" href="/form-6a">
+                            <td><Link to='/forms/overload-form'>
+                                <Button variant="primary" href="/forms/form-6a">
                                     <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Fill out
                                 </Button>
                             </Link>
-                                <Button variant="warning"  href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" >
+                                <Button variant="warning"  href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" target="_blank">
                                     <i class="fa fa-eye" aria-hidden="true"></i> View
                                 </Button></td>
                         </tr>

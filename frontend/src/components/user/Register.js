@@ -27,7 +27,7 @@ const Register = ({ history }) => {
 
     const submitHandler = e => {
         dispatch(saveStudentInfo({ firstName, middleName, lastName, studentNumber, email, course, password, confirmPassword }))
-        history.push('/confirmregister')
+        history.push('/confirm/register')
     }
 
     const upperCase = (text) => text.toUpperCase()

@@ -96,19 +96,19 @@ function App() {
                             <Route path='/password/reset/:token' component={NewPassword} exact />
                             <Route path='/verify/account/:token' component={VerifyRegistration} exact />
                             <Route path='/register' component={Register} exact />
-                            <Route path='/confirmregister' component={ConfirmRegister} exact />
+                            <Route path='/confirm/register' component={ConfirmRegister} exact />
 
                             <Route path='/track' component={TrackingPage} exact />
                             <Route path='/track/:trackingNumber/:lastName' component={TrackingPageProgress} exact />
 
                             {/**needs to be logged in */}
-                            <ProtectedRoute path='/forms-list' component={FormsList} exact />
-                            <ProtectedRoute path='/download-forms-list' component={DownloadList} exact />
-                            <ProtectedRoute path='/form-6a' component={Form6A} exact />
-                            <ProtectedRoute path='/form-6b' component={Form6B} exact />
-                            <ProtectedRoute path='/petition-classes' component={PetitionClass} exact />
-                            <ProtectedRoute path='/overload-form' component={OverloadForm} exact />
-                            <ProtectedRoute path='/submitrequest' component={SubmitRequest} exact />
+                            <ProtectedRoute path='/forms/list' component={FormsList} exact />
+                            <ProtectedRoute path='/download/forms/list' component={DownloadList} exact />
+                            <ProtectedRoute path='/forms/form-6a' component={Form6A} exact />
+                            <ProtectedRoute path='/forms/form-6b' component={Form6B} exact />
+                            <ProtectedRoute path='/forms/petition-classes' component={PetitionClass} exact />
+                            <ProtectedRoute path='/forms/overload-form' component={OverloadForm} exact />
+                            <ProtectedRoute path='/submit/request' component={SubmitRequest} exact />
 
                             <ProtectedRoute path='/messenger' component={Messenger} exact />
                             <ProtectedRoute path='/profile' component={Profile} exact />

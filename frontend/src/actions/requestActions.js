@@ -105,18 +105,7 @@ export const getRequests = (role, route) => async (dispatch) => {
 
         let link = ``
 
-        if (role === 'Dept Chair') {
-            switch (route) {
-                case 'Trash':
-                    link = `/api/v1/admin/requests/trash`
-                    break
-                case 'Requests':
-                    link = `/api/v1/admin/deptChair/requests`
-                    break
-                default:
-                    link = ``
-            }
-        } else if (role === 'CICS Staff') {
+        if (role === 'CICS Staff') {
             switch (route) {
                 case 'Office':
                     link = `/api/v1/admin/cics/office/requests`
@@ -139,7 +128,16 @@ export const getRequests = (role, route) => async (dispatch) => {
         } else if (role === 'Student') { //student
             link = `/api/v1/me/requests`
         } else {
-            link = ``
+            switch (route) {
+                case 'Trash':
+                    link = `/api/v1/admin/requests/trash`
+                    break
+                case 'Requests':
+                    link = `/api/v1/admin/deptChair/requests`
+                    break
+                default:
+                    link = ``
+            }
         }
 
         const { data } = await axios.get(link)

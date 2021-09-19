@@ -50,6 +50,55 @@ import {
     CLEAR_ERRORS
 } from '../constants/userConstants'
 
+/**
+ * 1. open localhost from new browser
+ * 2. log in to an account (gran)
+ * 3. check redux store: auth.user = gran
+ * 4. log out
+ * 5. check redux store: auth.user = null
+ * 5. log in to another account (miguel)
+ * 6. check redux store: auth.user = miguel
+ * 7. go to generate form page
+ * 8. click View
+ * 9. click Back to return to thomcare site (refreshes page, load_user is fired again)
+ * 10. check redux store: auth.user = miguel
+ * 11. log out
+ * 12. check redux store: auth.user = null
+ * 13. log in to another account (abby)
+ * 14. check redux store: auth.user = abby
+ * 15. go to generate form page
+ * 16. click View
+ * 17. click Back to return to thomcare site (refreshes page, load_user is fired again)
+ * 18. check redux store: auth.user = miguel
+ * 19. log out
+ * 20. check redux store: auth.user = null
+ * 21. log in to another account (abby CICS staff)
+ * 22. check redux store: auth.user = abby cics 
+ * 23. go to generate form page
+ * 24. click View
+ * 25. click Back to return to thomcare site (refreshes page, load_user is fired again)
+ * 26. check redux store: auth.user = miguel
+ * 27. refresh page
+ * 28. check redux store: auth.user = abby cics
+ * 29. log out
+ * 30. check redux store: auth.user = null
+ * 31. log in to another account (gran)
+ * 32. go to generate form page
+ * 33. click View
+ * 34. click Back to return to thomcare site (refreshes page, load_user is fired again)
+ * 35. check redux store: auth.user = abby cics
+ * 
+ * hypothesis:
+ * - the latest user account before refreshing the page is 
+ * - retained even if user logs out and logs in to another user account.
+ * - scenario: A logs in, refreshes page, logs out. B logs in (without refreshing page)
+ * - and clicks a link that refreshes the page (same tab), the current user will be A, not B.
+ * - scenario 2: A logs in, refreshes page, logs out. B logs in (without refreshing page)
+ * - and opens a link in the new tab. B refreshes current tab and A is logged in. However,
+ * - in that new tab a new page opens and B enters the website link to go back to the website.
+ * - B is the current user in Tab2. In Tab1 (original tab), A is logged in but if it is refreshed,
+ * - current user will now be B. 
+ */
 //login, logout, and get currently logged in
 export const authReducer = (state = { user: {} }, action) => {
     switch (action.type) {
