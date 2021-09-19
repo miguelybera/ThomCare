@@ -11,9 +11,8 @@ import { SUBMIT_REQUEST_RESET } from './../../constants/requestConstants'
 const Styles = styled.div`
     background-color: white;
 
-  a, .navbar-nav .nav-link {
+    a, .navbar-nav .nav-link {
     color: black;
-    
     text-decoration: none;
     font-weight: bold;
     text-align:center;
@@ -27,13 +26,10 @@ const Styles = styled.div`
     }
 
     &:hover{
-      
       text-align:center;
       display: inline-block;
-      border-radius: 10px;
-      
+      border-radius: 10px
     }
-   
   }
 `;
 
@@ -75,8 +71,24 @@ const Header = () => {
                                 paddingBottom: "0px",
                                 paddingLeft: "10px"
                             }}>
-                                <p style={{ fontFamily: "MuktaMalar", fontWeight: "bold", fontSize: "70%", paddingTop: "5px", marginBottom: "0px" }}>College of Information and Computing Sciences</p>
-                                <h1 style={{ fontSize: "150%", marginTop: "0px", paddingTop: "0px", borderTop: "10px" }}>ThomCare</h1></Navbar.Brand>
+                                <p style={{
+                                    fontFamily: "MuktaMalar",
+                                    fontWeight: "bold",
+                                    fontSize: "70%",
+                                    paddingTop: "5px",
+                                    marginBottom: "0px"
+                                }}>
+                                    College of Information and Computing Sciences
+                                </p>
+                                <h1 style={{
+                                    fontSize: "150%",
+                                    marginTop: "0px",
+                                    paddingTop: "0px",
+                                    borderTop: "10px"
+                                }}>
+                                    ThomCare
+                                </h1>
+                            </Navbar.Brand>
                             <Navbar.Toggle aria-controls="basic-navbar-nav" />
                             {user ? (
                                 <>
