@@ -78,22 +78,22 @@ const ListAllRequests = ({ history }) => {
                 {
                     label: 'Date',
                     field: 'date',
-                    width: 100
+                    width: 150
                 },
                 {
                     label: 'Request Type',
                     field: 'requestType',
-                    width: 150
+                    width: 180
                 },
                 {
                     label: 'Requested by',
                     field: 'name',
-                    width: 300
+                    width: 230
                 },
                 {
                     label: 'Status',
                     field: 'requestStatus',
-                    width: 180
+                    width: 150
                 },
                 {
                     label: 'Actions',
@@ -124,7 +124,7 @@ const ListAllRequests = ({ history }) => {
                 </Fragment>,
                 actions: <Fragment>
                     <Link to={`/view/request/${viewType}`}>
-                        <Button variant="primary" className="mr-5" style={{ marginRight: '5px' }}>
+                        <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
                             <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
                         </Button>
                     </Link>
@@ -146,11 +146,11 @@ const ListAllRequests = ({ history }) => {
                     <Container>
                         <h3>All Requests</h3>
 
-                        <Button onClick={() => setStatus('Requests')}>View All</Button>
-                        <Button onClick={() => setStatus('Pending')}>Pending</Button>
-                        <Button onClick={() => setStatus('Processing')}>Processing</Button>
-                        <Button onClick={() => setStatus('Approved')}>Approved</Button>
-                        <Button onClick={() => setStatus('Denied')}>Denied</Button>
+                        <Button style={{margin: '10px'}} onClick={() => setStatus('Requests')}>View All</Button>
+                        <Button style={{margin: '10px'}} onClick={() => setStatus('Pending')}>Pending</Button>
+                        <Button style={{margin: '10px'}} onClick={() => setStatus('Processing')}>Processing</Button>
+                        <Button style={{margin: '10px'}} onClick={() => setStatus('Approved')}>Approved</Button>
+                        <Button style={{margin: '10px'}} onClick={() => setStatus('Denied')}>Denied</Button>
 
                         {loading ? <Loader /> : (
                             <>

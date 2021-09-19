@@ -7,7 +7,7 @@ import MetaData from './../layout/MetaData'
 import Loader from './../layout/Loader'
 import Sidebar from './../layout/Sidebar'
 import { MDBDataTableV5 } from 'mdbreact'
-import { Card, Button, Modal } from 'react-bootstrap'
+import { Card, Button, Modal, Row, Col } from 'react-bootstrap'
 import {
     INSIDE_DASHBOARD_TRUE
 } from '../../constants/dashboardConstants'
@@ -16,12 +16,11 @@ import {
     UPDATE_REQUEST_RESET,
     DELETE_REQUEST_RESET
 } from '../../constants/requestConstants'
-import { assign } from 'nodemailer/lib/shared'
 
 var dateFormat = require('dateformat')
 
 const cardStyle = {
-    marginTop: '30px',
+    marginTop: '90px',
     marginBottom: '40px',
     borderWidth: '0'
 }
@@ -91,19 +90,24 @@ const ViewRequest = ({ history, match }) => {
                 alert.success('Request has been moved to Trash.')
                 setViewType(4)
                 history.push(`/view/request/${viewType}${request._id}`)
+                dispatch({
+                    type: UPDATE_REQUEST_RESET
+                })
             } else if (viewType == 4) {
                 alert.success('Request has been restored.')
                 setViewType(1)
                 history.push(`/view/request/${viewType}${request._id}`)
+                dispatch({
+                    type: UPDATE_REQUEST_RESET
+                })
             } else if (viewType == 3) {
                 alert.success('Request has been assigned to user successfully.')
                 setViewType(1)
                 history.push(`/view/request/${viewType}${request._id}`)
+                dispatch({
+                    type: ASSIGN_REQUEST_RESET
+                })
             }
-
-            dispatch({
-                type: UPDATE_REQUEST_RESET
-            })
             dispatch(getRequestDetails(id))
         }
 
@@ -223,7 +227,7 @@ const ViewRequest = ({ history, match }) => {
                 <Fragment>
                     <Card style={cardStyle}>
                         <Card.Body>
-                            <Card.Title>Tracking ID#: {trackingNumber}</Card.Title>
+                            <Card.Title><b>Tracking ID#: </b>{trackingNumber}</Card.Title>
                             <Card.Text><b>Name:</b> {requestorInfo.lastName}, {requestorInfo.firstName}</Card.Text>
                             <Card.Text><b>Current status:</b> <font color={
                                 !request ? '' : (
@@ -241,7 +245,7 @@ const ViewRequest = ({ history, match }) => {
                             <Card.Text><b>Year Level/Section:</b> {requestorInfo.yearLevel} {requestorInfo.section}</Card.Text>
                             <Card.Text><b>Notes:</b> {notes}</Card.Text>
                             <Card.Text>
-                                Attachments:
+                                <b>Attachments:</b>
                                 <ul>
                                     {fileRequirements && fileRequirements.map(file => (
                                         <li><a href={file.path}>{file.originalname}</a></li>
@@ -266,35 +270,61 @@ const ViewRequest = ({ history, match }) => {
                             sortable={false}
                             hover
                         />
-
+                    </Card>
+                    <center>
                         {viewType == 1 ? (
                             <Fragment>
-                                <Link to={`/admin/request/${id}`}><Button>Update</Button></Link>
-                                <Button onClick={() => {
-                                    updateRequestHandler(id, true)
-                                }}>Delete</Button>
+                                <Link to={`/admin/request/${id}`}>
+                                    <Button
+                                        style={{ width: '5rem', margin: '10px' }}
+                                    >
+                                        Update
+                                    </Button>
+                                </Link>
+                                <Button
+                                    style={{ width: '5rem', margin: '10px' }} onClick={() => {
+                                        updateRequestHandler(id, true)
+                                    }}>
+                                    Delete
+                                </Button>
                             </Fragment>
                         ) : (
                             viewType == 2 ? (
                                 <Fragment>
-                                    <Button onClick={() => {
-                                        handleShow()
-                                    }}>Delete</Button>
+                                    <Button
+                                        style={{ width: '5rem', margin: '10px' }}
+                                        onClick={() => {
+                                            handleShow()
+                                        }}>
+                                        Delete
+                                    </Button>
                                 </Fragment>
                             ) : (
                                 viewType == 3 ? (
-                                    <Button onClick={() => {
-                                        assignRequestHandler(id)
-                                    }}>Assign to self</Button>
+                                    <Button
+                                        style={{ width: '8rem', margin: '10px' }}
+                                        onClick={() => {
+                                            assignRequestHandler(id)
+                                        }}>
+                                        Assign to self
+                                    </Button>
                                 ) : (
                                     viewType == 4 ? (
                                         <Fragment>
-                                            <Button onClick={() => {
-                                                updateRequestHandler(id, false)
-                                            }}>Restore</Button>
-                                            <Button onClick={() => {
-                                                handleShow()
-                                            }}>Delete</Button>
+                                            <Button
+                                                style={{ width: '5rem', margin: '10px' }}
+                                                onClick={() => {
+                                                    updateRequestHandler(id, false)
+                                                }}>
+                                                Restore
+                                            </Button>
+                                            <Button
+                                                style={{ width: '5rem', margin: '10px' }}
+                                                onClick={() => {
+                                                    handleShow()
+                                                }}>
+                                                Delete
+                                            </Button>
                                         </Fragment>
                                     ) : (
                                         <></>
@@ -302,7 +332,7 @@ const ViewRequest = ({ history, match }) => {
                                 )
                             )
                         )}
-                    </Card>
+                    </center>
                 </Fragment>
             ) : (
                 <Loader />

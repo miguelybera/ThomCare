@@ -119,7 +119,6 @@ const UpdateUser = ({ history, match }) => {
                 <div className="">
                     <Container className="space_inside"></Container>
                     <Container fluid>
-                        <h3>Update User</h3>
                         {userLoading ? (
                             <Loader />
                         ) : (
@@ -127,7 +126,7 @@ const UpdateUser = ({ history, match }) => {
                                 <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
                                     <Card style={{ width: '40rem', align: 'center' }}>
                                         <Card.Body>
-                                            <Card.Title style={{ margin: '50px 0 20px 0' }}>My Profile</Card.Title>
+                                            <Card.Title style={{ margin: '50px 0 20px 0' }}>Update User</Card.Title>
                                             <Form onSubmit={submitHandler}>
                                                 <Form.Group as={Row} className="mb-3">
                                                     <Form.Label column sm={2}>

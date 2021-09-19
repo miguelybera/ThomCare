@@ -72,7 +72,7 @@ const Profile = () => {
     const submitHandler = e => {
         e.preventDefault()
 
-        dispatch(updateProfile({ firstName, lastName }))
+        dispatch(updateProfile({ firstName, middleName, lastName }))
     }
 
     return (

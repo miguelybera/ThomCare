@@ -72,12 +72,12 @@ const ListArchivedAnnouncements = ({ history }) => {
                 {
                     label: 'Date',
                     field: 'date',
-                    width: 100
+                    width: 150
                 },
                 {
                     label: 'Title',
                     field: 'title',
-                    width: 150
+                    width: 180
                 },
                 {
                     label: 'Description',
@@ -92,7 +92,7 @@ const ListArchivedAnnouncements = ({ history }) => {
                 {
                     label: 'Actions',
                     field: 'actions',
-                    width: 100
+                    width: 150
                 }
             ],
             rows: []
@@ -108,15 +108,16 @@ const ListArchivedAnnouncements = ({ history }) => {
                         <p style={{ margin: '0' }}><b>Year Level: </b>{announcement.yearLevel}</p>
                         <p style={{ margin: '0' }}><b>Course: </b>{announcement.course}</p>
                         <p style={{ margin: '0' }}><b>Track: </b>{announcement.track}</p>
+                        <p style={{ margin: '0' }}><b>Announcement Type: </b>{announcement.announcementType}</p>
                     </span>
                 </Fragment>,
                 actions: <Fragment>
                     <Link to={`/admin/announcement/${announcement._id}`}>
-                        <Button variant="primary" className="mr-5" style={{ marginRight: '5px' }}>
+                        <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
                             <i class="fa fa-pencil" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
                         </Button>
                     </Link>
-                    <Button variant="danger" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
+                    <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
                         handleShow()
                         setDeleteAnnouncementId(announcement._id)
                     }}>

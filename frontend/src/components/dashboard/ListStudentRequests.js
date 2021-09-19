@@ -74,17 +74,17 @@ const ListStudentRequests = ({ history }) => {
                 {
                     label: 'Date',
                     field: 'date',
-                    width: 100
+                    width: 150
                 },
                 {
                     label: 'Request Type',
                     field: 'requestType',
-                    width: 150
+                    width: 180
                 },
                 {
                     label: 'Status',
                     field: 'requestStatus',
-                    width: 180
+                    width: 150
                 },
                 {
                     label: 'Actions',
@@ -114,11 +114,11 @@ const ListStudentRequests = ({ history }) => {
                 </Fragment>,
                 actions: <Fragment>
                 <Link to={`/view/request/${viewType}`}>
-                    <Button variant="primary" className="mr-5" style={{ marginRight: '5px' }}>
+                    <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
                         <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
                     </Button>
                 </Link>
-                <Button variant="danger" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
+                <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
                     setRequestId(request._id)
                     handleShow()
                 }}>

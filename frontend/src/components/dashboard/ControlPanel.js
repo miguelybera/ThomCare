@@ -75,12 +75,12 @@ const ControlPanel = () => {
                 {
                     label: 'Request Type',
                     field: 'requestType',
-                    width: 150
+                    width: 200
                 },
                 {
                     label: 'Requested by',
                     field: 'name',
-                    width: 300
+                    width: 250
                 },
                 {
                     label: 'Status',
@@ -116,7 +116,7 @@ const ControlPanel = () => {
                 </Fragment>,
                 actions: <Fragment>
                     <Link to={`/view/request/${viewType}`}>
-                        <Button variant="primary" className="mr-5" style={{ marginRight: '5px' }}>
+                        <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
                             <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
                         </Button>
                     </Link>
@@ -135,24 +135,25 @@ const ControlPanel = () => {
             {listLoading ? <Loader /> : (
                 <div className="row">
                     <div className="">
-                        <h1 className="my-4">Control Panel</h1>
+                        <h1 style={{margin: '50px 0'}}>Control Panel</h1>
                         <Container fluid>
                             <Row style={{ display: 'flex', justifyContent: 'center' }}>
                                 {user.role === 'Student' ? (
                                     <Fragment>
-                                        <Col sm><ReportCard requestType={'Requests'} length={requests && requests.length} icon={'pencil'} /></Col>
+                                        <Col sm><ReportCard requestType={'Requests'} length={requests && requests.length} icon={'pencil'} color={'red'}/></Col>
                                     </Fragment>
                                 ) : (
                                     <Fragment>
-                                        <Col sm><ReportCard requestType={'Requests'} length={requests && requests.length} icon={'fa fa-pencil'} /></Col>
-                                        <Col sm><ReportCard requestType={'Pending'} length={pending && pending.length} icon={'fa fa-paperclip'} /></Col>
-                                        <Col sm><ReportCard requestType={'Processing'} length={processing && processing.length} icon={'fa fa-paper-plane'} /></Col>
-                                        <Col sm><ReportCard requestType={'Denied'} length={denied && denied.length} icon={'fa fa-times-circle'} /></Col>
-                                        <Col sm><ReportCard requestType={'Approved'} length={approved && approved.length} icon={'fa fa-check-circle'} /></Col>
+                                        <Col sm><ReportCard requestType={'Requests'} length={requests && requests.length} icon={'pencil'} color={'red'}/></Col>
+                                        <Col sm><ReportCard requestType={'Pending'} length={pending && pending.length} icon={'paperclip'} color={'blue'}/></Col>
+                                        <Col sm><ReportCard requestType={'Processing'} length={processing && processing.length} icon={'spinner'} color={'yellow'}/></Col>
+                                        <Col sm><ReportCard requestType={'Denied'} length={denied && denied.length} icon={'times-circle'} color={'blue'}/></Col>
+                                        <Col sm><ReportCard requestType={'Approved'} length={approved && approved.length} icon={'check-circle'} color={'red'}/></Col>
                                     </Fragment>
                                 )}
                             </Row>
                             <Row>
+                                <h3>Latest submissions</h3>
                                 {recentsLoading ? <Loader /> : (
                                     <MDBDataTableV5
                                         data={setRequests()}

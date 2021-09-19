@@ -25,6 +25,7 @@ export const getCoursesReducer = (state = { courses: [] }, action) => {
         case GET_COURSES_FAIL:
             return {
                 ...state,
+                loading: false,
                 error: action.payload
             }
 

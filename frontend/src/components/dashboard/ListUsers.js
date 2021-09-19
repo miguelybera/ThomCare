@@ -82,7 +82,7 @@ const ListUsers = ({ history }) => {
                 {
                     label: 'Actions',
                     field: 'actions',
-                    width: 100
+                    width: 150
                 }
             ],
             rows: []
@@ -97,7 +97,7 @@ const ListUsers = ({ history }) => {
                     {(user._id === currentUser._id) ? (
                         <span>
                             <Link to={`/profile`}>
-                                <Button variant="primary" className="mr-5" style={{ marginRight: '5px' }}>
+                                <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
                                     <i class="fa fa-pencil" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
                                 </Button>
                             </Link>
@@ -105,14 +105,14 @@ const ListUsers = ({ history }) => {
                     ) : (
                         <span>
                             <Link to={`/admin/user/${user._id}`}>
-                                <Button variant="primary" className="mr-5" style={{ marginRight: '5px' }}>
+                                <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
                                     <i class="fa fa-pencil" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
                                 </Button>
                             </Link>
                         </span>
                     )
                     }
-                    <Button variant="danger" className="mr-5" disabled={user._id === currentUser._id ? true : false} style={{ marginRight: '5px' }} onClick={() => {
+                    <Button variant="danger" className="mr-5" disabled={user._id === currentUser._id ? true : false} style={{ margin: '5px' }} onClick={() => {
                         handleShow()
                         setDeleteUserId(user._id)
                     }}>

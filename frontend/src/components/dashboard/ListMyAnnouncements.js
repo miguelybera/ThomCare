@@ -121,16 +121,16 @@ const ListMyAnnoucements = ({ history }) => {
                 </Fragment>,
                 actions: <Fragment>
                     <Link to={`/admin/announcement/${announcement._id}`}>
-                        <Button variant="primary" className="mr-5" style={{ marginRight: '5px' }}>
+                        <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
                             <i class="fa fa-pencil" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
                         </Button>
                     </Link>
-                    <Button variant="warning" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
+                    <Button variant="warning" className="mr-5" style={{ margin: '5px' }} onClick={() => {
                         dispatch(archiveAnnouncement(announcement._id))
                     }}>
                         <i class="fa fa-archive" aria-hidden="true" />
                     </Button>
-                    <Button variant="danger" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
+                    <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
                         handleShow()
                         setDeleteAnnouncementId(announcement._id)
                     }}>

@@ -66,22 +66,22 @@ const ListAvailableRequests = ({ history }) => {
                 {
                     label: 'Date',
                     field: 'date',
-                    width: 100
+                    width: 150
                 },
                 {
                     label: 'Request Type',
                     field: 'requestType',
-                    width: 150
+                    width: 180
                 },
                 {
                     label: 'Requested by',
                     field: 'name',
-                    width: 300
+                    width: 230
                 },
                 {
                     label: 'Status',
                     field: 'requestStatus',
-                    width: 180
+                    width: 150
                 },
                 {
                     label: 'Actions',
@@ -112,11 +112,11 @@ const ListAvailableRequests = ({ history }) => {
                 </Fragment>,
                 actions: <Fragment>
                     <Link to={`/view/request/${viewType}`}>
-                        <Button variant="primary" className="mr-5" style={{ marginRight: '5px' }}>
+                        <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
                             <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
                         </Button>
                     </Link>
-                    <Button variant="warning" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
+                    <Button variant="warning" className="mr-5" style={{ margin: '5px' }} onClick={() => {
                         assignRequestHandler(request._id)
                     }}>
                         <i class="fa fa-archive" aria-hidden="true" />

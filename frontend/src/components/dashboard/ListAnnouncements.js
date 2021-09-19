@@ -81,12 +81,12 @@ const ListAnnouncements = ({ history }) => {
                 {
                     label: 'Date',
                     field: 'date',
-                    width: 100
+                    width: 150
                 },
                 {
                     label: 'Title',
                     field: 'title',
-                    width: 150
+                    width: 180
                 },
                 {
                     label: 'Description',
@@ -96,11 +96,6 @@ const ListAnnouncements = ({ history }) => {
                 {
                     label: 'Tags',
                     field: 'tags',
-                    width: 180
-                },
-                {
-                    label: 'Actions',
-                    field: 'actions',
                     width: 150
                 }
             ],
@@ -117,25 +112,8 @@ const ListAnnouncements = ({ history }) => {
                         <p style={{ margin: '0' }}><b>Year Level: </b>{announcement.yearLevel}</p>
                         <p style={{ margin: '0' }}><b>Course: </b>{announcement.course}</p>
                         <p style={{ margin: '0' }}><b>Track: </b>{announcement.track}</p>
+                        <p style={{ margin: '0' }}><b>Announcement Type: </b>{announcement.announcementType}</p>
                     </span>
-                </Fragment>,
-                actions: <Fragment>
-                    <Link to={`/admin/announcement/${announcement._id}`}>
-                        <Button variant="primary" className="mr-5" style={{ marginRight: '5px' }}>
-                            <i class="fa fa-pencil" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
-                        </Button>
-                    </Link>
-                    <Button variant="warning" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
-                        dispatch(archiveAnnouncement(announcement._id))
-                    }}>
-                        <i class="fa fa-archive" aria-hidden="true" />
-                    </Button>
-                    <Button variant="danger" className="mr-5" style={{ marginRight: '5px' }} onClick={() => {
-                        handleShow()
-                        setDeleteAnnouncementId(announcement._id)
-                    }}>
-                        <i class="fa fa-trash" aria-hidden="true" />
-                    </Button>
                 </Fragment>
             })
 
