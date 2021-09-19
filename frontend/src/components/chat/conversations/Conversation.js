@@ -15,7 +15,7 @@ const Conversations = ({ conversation, currentUser }) => {
     const dispatch = useDispatch()
 
     const [friend, setFriend] = useState(null)
-    const imglink = 'https://res.cloudinary.com/exstrial/image/upload/v1627805763/ShopIT/sanake_ibs7sb.jpg'
+    const imglink = 'https://res.cloudinary.com/dwcxehcui/image/upload/v1632063359/logo/default_w0escb.png'
 
     useEffect(() => {
         const receiver = conversation.members.find(m => m !== currentUser._id)

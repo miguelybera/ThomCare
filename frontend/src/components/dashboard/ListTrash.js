@@ -101,7 +101,7 @@ const ListAllRequests = ({ history }) => {
                 {
                     label: 'Requested by',
                     field: 'name',
-                    width: 230
+                    width: 200
                 },
                 {
                     label: 'Status',
@@ -111,7 +111,7 @@ const ListAllRequests = ({ history }) => {
                 {
                     label: 'Actions',
                     field: 'actions',
-                    width: 150
+                    width: 180
                 }
             ],
             rows: []

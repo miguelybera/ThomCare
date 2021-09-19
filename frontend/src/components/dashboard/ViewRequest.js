@@ -276,12 +276,14 @@ const ViewRequest = ({ history, match }) => {
                             <Fragment>
                                 <Link to={`/admin/request/${id}`}>
                                     <Button
+                                        variant="primary"
                                         style={{ width: '5rem', margin: '10px' }}
                                     >
                                         Update
                                     </Button>
                                 </Link>
                                 <Button
+                                    variant="danger"
                                     style={{ width: '5rem', margin: '10px' }} onClick={() => {
                                         updateRequestHandler(id, true)
                                     }}>
@@ -292,6 +294,7 @@ const ViewRequest = ({ history, match }) => {
                             viewType == 2 ? (
                                 <Fragment>
                                     <Button
+                                        variant="danger"
                                         style={{ width: '5rem', margin: '10px' }}
                                         onClick={() => {
                                             handleShow()
@@ -302,6 +305,7 @@ const ViewRequest = ({ history, match }) => {
                             ) : (
                                 viewType == 3 ? (
                                     <Button
+                                        variant="warning"
                                         style={{ width: '8rem', margin: '10px' }}
                                         onClick={() => {
                                             assignRequestHandler(id)
@@ -312,6 +316,7 @@ const ViewRequest = ({ history, match }) => {
                                     viewType == 4 ? (
                                         <Fragment>
                                             <Button
+                                                variant="warning"
                                                 style={{ width: '5rem', margin: '10px' }}
                                                 onClick={() => {
                                                     updateRequestHandler(id, false)
@@ -319,6 +324,7 @@ const ViewRequest = ({ history, match }) => {
                                                 Restore
                                             </Button>
                                             <Button
+                                                variant="danger"
                                                 style={{ width: '5rem', margin: '10px' }}
                                                 onClick={() => {
                                                     handleShow()

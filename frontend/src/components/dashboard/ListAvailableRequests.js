@@ -119,7 +119,7 @@ const ListAvailableRequests = ({ history }) => {
                     <Button variant="warning" className="mr-5" style={{ margin: '5px' }} onClick={() => {
                         assignRequestHandler(request._id)
                     }}>
-                        <i class="fa fa-archive" aria-hidden="true" />
+                        <i class="fa fa-user" aria-hidden="true" />
                     </Button>
                 </Fragment>
             })

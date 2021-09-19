@@ -209,6 +209,8 @@ const Messenger = ({ history }) => {
         })
     }, [dispatch, success, error, history])
 
+    const imglink = 'https://res.cloudinary.com/dwcxehcui/image/upload/v1632063359/logo/default_w0escb.png'
+
     const displayUsers = o => {
         if (o._id == userId) {
 
@@ -217,7 +219,7 @@ const Messenger = ({ history }) => {
                 <>
                     <div className='chatOnlineFriend' onClick={() => createConvo(o._id, o.firstName + ' ' + o.lastName, user.firstName + ' ' + user.lastName)}>
                         <div className='chatOnlineImgContainer'>
-                            <img className='chatOnlineImg' src='https://res.cloudinary.com/exstrial/image/upload/v1627805763/ShopIT/sanake_ibs7sb.jpg' alt='' />
+                            <img className='chatOnlineImg' src={imglink} alt='' />
                         </div>
                         <span className='chatOnlineName'>{o?.firstName} {o?.lastName}</span>
                     </div>
@@ -266,6 +268,7 @@ const Messenger = ({ history }) => {
                         {conversations.map((c) => (
                             <Fragment>
                                 <div onClick={() => {
+                                    console.log(c)
                                     setCurrentChat(c)
                                     setUserName(c.names[0] === name ? c.names[1] : c.names[0])
                                 }}>

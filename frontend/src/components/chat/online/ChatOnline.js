@@ -17,6 +17,8 @@ const ChatOnline = ({ onlineUsers, currentUser, setCurrentChat }) => {
 
     const dispatch = useDispatch()
 
+    const imglink = 'https://res.cloudinary.com/dwcxehcui/image/upload/v1632063359/logo/default_w0escb.png'
+
     useEffect(() => {
         const getFriends = async () => {
             try {
@@ -86,7 +88,7 @@ const ChatOnline = ({ onlineUsers, currentUser, setCurrentChat }) => {
                     <>
                         <div className='chatOnlineFriend' onClick={() => openConversation(o)}>
                             <div className='chatOnlineImgContainer'>
-                                <img className='chatOnlineImg' src='https://res.cloudinary.com/exstrial/image/upload/v1627805763/ShopIT/sanake_ibs7sb.jpg' alt='' />
+                                <img className='chatOnlineImg' src={imglink} alt='' />
                                 <div className='chatOnlineBadge'></div>
                             </div>
                             <span className='chatOnlineName'>{o?.firstName}</span>

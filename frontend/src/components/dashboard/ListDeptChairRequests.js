@@ -149,7 +149,7 @@ const ListDeptChairRequests = ({ history }) => {
                         </Button>
                     </Link>
                     <Link to={`/admin/request/${request._id}`}>
-                        <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
+                        <Button variant="warning" className="mr-5" style={{ margin: '5px' }}>
                             <i class="fa fa-pencil" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
                         </Button>
                     </Link>
