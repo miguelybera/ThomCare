@@ -49,10 +49,10 @@ const TrackingPageProgress = ({ history, match }) => {
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
+            history.push('/track')
             dispatch({
                 type: TRACK_REQUEST_RESET
             })
-            history.push('/track')
         }
 
         dispatch({

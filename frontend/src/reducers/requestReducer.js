@@ -52,6 +52,7 @@ export const trackRequestReducer = (state = { request: {} }, action) => {
         case TRACK_REQUEST_FAIL:
             return {
                 ...state,
+                loading: false,
                 error: action.payload
             }
 
