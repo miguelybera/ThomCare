@@ -54,39 +54,40 @@ const TrackingPage = ({ history }) => {
                     <Card style={{ backgroundColor: "#F5F5F5", width: '30rem', align: 'center', borderTop: '7px solid #9c0b0b', marginBottom: '50px' }}>
                         <Card.Body>
                             <Card.Title style={{ margin: '20px 0 20px 0', fontWeight: "bold" }}>Track my Request</Card.Title>
-                            <FloatingLabel
-                                label="Tracking ID"
-                                className="mb-3"
-                            >
-                                <Form.Control
-                                    type="text"
-                                    placeholder="ABC123"
-                                    name="trackingNumber"
-                                    value={trackingNumber}
-                                    onChange={onChange}
-                                    required
-                                />
-                            </FloatingLabel>
-
-                            <FloatingLabel label="Surname">
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Surname"
-                                    name="lastName"
-                                    value={lastName}
-                                    onChange={onChange}
-                                    required
-                                />
-                            </FloatingLabel>
-                            <center>
-                                <Button
-                                    type='submit'
-                                    style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
-                                    onClick={submitHandler}
+                            <Form onSubmit={submitHandler}>
+                                <FloatingLabel
+                                    label="Tracking ID"
+                                    className="mb-3"
                                 >
-                                    Track
-                                </Button>
-                            </center>
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="ABC123"
+                                        name="trackingNumber"
+                                        value={trackingNumber}
+                                        onChange={onChange}
+                                        required
+                                    />
+                                </FloatingLabel>
+
+                                <FloatingLabel label="Surname">
+                                    <Form.Control
+                                        type="text"
+                                        placeholder="Surname"
+                                        name="lastName"
+                                        value={lastName}
+                                        onChange={onChange}
+                                        required
+                                    />
+                                </FloatingLabel>
+                                <center>
+                                    <Button
+                                        type='submit'
+                                        style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                    >
+                                        Track
+                                    </Button>
+                                </center>
+                            </Form>
                         </Card.Body>
                     </Card>
                 </Row>
