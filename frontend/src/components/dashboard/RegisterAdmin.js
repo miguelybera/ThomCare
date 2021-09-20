@@ -148,7 +148,7 @@ const RegisterAdmin = ({ history }) => {
                                                     <Form.Control
                                                         type="email"
                                                         placeholder="juan.delacruz.iics@ust.edu.ph"
-                                                        pattern="[a-z]{1,}\.[a-z]{1,}@ust\.edu\.ph"
+                                                        pattern="[a-z.]{1,}@ust\.edu\.ph"
                                                         value={email}
                                                         name="email"
                                                         onChange={e => setEmail(e.target.value)}
