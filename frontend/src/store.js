@@ -21,8 +21,10 @@ import {
 
 import {
     getAnnouncementsReducer,
+    getAnnouncementTypeReducer,
     getAnnouncementDetailsReducer,
     newAnnouncementReducer,
+    newAnnouncementTypeReducer,
     announcementReducer
 } from './reducers/announcementReducers'
 
@@ -62,8 +64,10 @@ const reducer = combineReducers({
     forgotPassword: forgotPasswordReducer, //for forgot password and set new password
 
     announcements: getAnnouncementsReducer, //get all announcements
+    announcementType: getAnnouncementTypeReducer, //get announcement type list
     announcementDetails: getAnnouncementDetailsReducer, //get single announcement details
     newAnnouncement: newAnnouncementReducer, //create new announcement
+    newAnnouncementType: newAnnouncementTypeReducer, //create new announcement type
     announcement: announcementReducer, //update or delete announcement
 
     student: studentInfoReducer, //save trackingNumber and surname ? or request details in local storage

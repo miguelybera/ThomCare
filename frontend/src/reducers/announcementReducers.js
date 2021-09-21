@@ -9,6 +9,9 @@ import {
     ANNOUNCEMENT_DETAILS_SUCCESS,
     ANNOUNCEMENT_DETAILS_FAIL,
     ANNOUNCEMENT_DETAILS_RESET,
+    ANNOUNCEMENT_TYPE_REQUEST,
+    ANNOUNCEMENT_TYPE_SUCCESS,
+    ANNOUNCEMENT_TYPE_FAIL,
     ALL_ADMIN_ANNOUNCEMENTS_REQUEST,
     ALL_ADMIN_ANNOUNCEMENTS_SUCCESS,
     ALL_ADMIN_ANNOUNCEMENTS_FAIL,
@@ -31,25 +34,69 @@ import {
     DELETE_ANNOUNCEMENT_SUCCESS,
     DELETE_ANNOUNCEMENT_FAIL,
     DELETE_ANNOUNCEMENT_RESET,
+    NEW_ANNOUNCEMENT_TYPE_REQUEST,
+    NEW_ANNOUNCEMENT_TYPE_SUCCESS,
+    NEW_ANNOUNCEMENT_TYPE_FAIL,
+    NEW_ANNOUNCEMENT_TYPE_RESET,
+    DELETE_ANNOUNCEMENT_TYPE_REQUEST,
+    DELETE_ANNOUNCEMENT_TYPE_SUCCESS,
+    DELETE_ANNOUNCEMENT_TYPE_FAIL,
+    DELETE_ANNOUNCEMENT_TYPE_RESET,
     CLEAR_ERRORS
 } from '../constants/announcementConstants'
 
+//get list of announcement type
+export const getAnnouncementTypeReducer = (state = { announcementTypes: [] }, action) => {
+    switch (action.type) {
+        case ANNOUNCEMENT_TYPE_REQUEST:
+            return {
+                loading: true,
+                announcementTypes: []
+            }
+
+        case ANNOUNCEMENT_TYPE_SUCCESS:
+            return {
+                loading: false,
+                announcementTypes: action.payload.announcementTypes,
+                success: action.payload.success
+            }
+
+        case ANNOUNCEMENT_TYPE_FAIL:
+            return {
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
 //get list of announcements
-export const getAnnouncementsReducer = (state = { announcements: [] }, action) => {
+export const getAnnouncementsReducer = (state = { announcements: [], announcementTypes: [] }, action) => {
     switch (action.type) {
         case ALL_ANNOUNCEMENTS_REQUEST:
         case MY_ANNOUNCEMENTS_REQUEST:
         case ALL_ADMIN_ANNOUNCEMENTS_REQUEST:
         case ALL_ARCHIVED_ANNOUNCEMENTS_REQUEST:
+        case ANNOUNCEMENT_TYPE_REQUEST:
             return {
                 loading: true,
-                announcements: []
+                announcements: [],
+                announcementTypes: []
             }
 
         case ALL_ANNOUNCEMENTS_SUCCESS:
         case MY_ANNOUNCEMENTS_SUCCESS:
         case ALL_ADMIN_ANNOUNCEMENTS_SUCCESS:
         case ALL_ARCHIVED_ANNOUNCEMENTS_SUCCESS:
+        case ANNOUNCEMENT_TYPE_SUCCESS:
             return {
                 loading: false,
                 announcements: action.payload.announcements,
@@ -62,6 +109,7 @@ export const getAnnouncementsReducer = (state = { announcements: [] }, action) =
         case MY_ANNOUNCEMENTS_FAIL:
         case ALL_ADMIN_ANNOUNCEMENTS_FAIL:
         case ALL_ARCHIVED_ANNOUNCEMENTS_FAIL:
+        case ANNOUNCEMENT_TYPE_FAIL:
             return {
                 loading: false,
                 error: action.payload
@@ -157,6 +205,47 @@ export const newAnnouncementReducer = (state = { announcement: {} }, action) => 
     }
 }
 
+//create new announcement
+export const newAnnouncementTypeReducer = (state = { announcementType: {} }, action) => {
+    switch (action.type) {
+        case NEW_ANNOUNCEMENT_TYPE_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+
+        case NEW_ANNOUNCEMENT_TYPE_SUCCESS:
+            return {
+                loading: false,
+                success: action.payload.success,
+                announcementType: action.payload.announcementType
+            }
+
+        case NEW_ANNOUNCEMENT_TYPE_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+
+        case NEW_ANNOUNCEMENT_TYPE_RESET:
+            return {
+                ...state,
+                loading: false,
+                success: false
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
 //update and delete announcement
 export const announcementReducer = (state = {}, action) => {
     switch (action.type) {
@@ -164,12 +253,14 @@ export const announcementReducer = (state = {}, action) => {
         case DELETE_ANNOUNCEMENT_REQUEST:
         case UPDATE_ANNOUNCEMENT_REQUEST:
         case ARCHIVE_ANNOUNCEMENT_REQUEST:
+        case DELETE_ANNOUNCEMENT_TYPE_REQUEST:
             return {
                 ...state,
                 loading: true
             }
 
         case DELETE_ANNOUNCEMENT_SUCCESS:
+        case DELETE_ANNOUNCEMENT_TYPE_SUCCESS:
             return {
                 ...state,
                 loading: false,
@@ -187,6 +278,7 @@ export const announcementReducer = (state = {}, action) => {
         case DELETE_ANNOUNCEMENT_FAIL:
         case UPDATE_ANNOUNCEMENT_FAIL:
         case ARCHIVE_ANNOUNCEMENT_FAIL:
+        case DELETE_ANNOUNCEMENT_TYPE_FAIL:
             return {
                 ...state,
                 error: action.payload,
@@ -194,6 +286,7 @@ export const announcementReducer = (state = {}, action) => {
             }
 
         case DELETE_ANNOUNCEMENT_RESET:
+        case DELETE_ANNOUNCEMENT_TYPE_RESET:
             return {
                 ...state,
                 isDeleted: false,

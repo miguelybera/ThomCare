@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import Pagination from 'react-js-pagination'
-import { getAnnouncements, clearErrors } from './../../actions/announcementActions'
+import { getAnnouncements, getAnnouncementType, clearErrors } from './../../actions/announcementActions'
 import MetaData from './../layout/MetaData'
 import Loader from './../layout/Loader'
 import '../../App.css'
@@ -46,6 +46,7 @@ const Announcements = () => {
     const dispatch = useDispatch()
 
     const { loading, announcements, error, announcementCount, resPerPage, filteredAnnouncementsCount } = useSelector(state => state.announcements)
+    const { loading: announcementTypeLoading, announcementTypes, error: announcementType, success } = useSelector(state => state.announcementType)
 
     const [currentPage, setCurrentPage] = useState(1)
 
@@ -104,6 +105,7 @@ const Announcements = () => {
         }
 
         dispatch(getAnnouncements(currentPage, course, yearLevel, track, title, annnouncementType))
+        dispatch(getAnnouncementType())
 
         dispatch({
             type: INSIDE_DASHBOARD_FALSE
@@ -256,9 +258,9 @@ const Announcements = () => {
                                     onChange={onChange}
                                 >
                                     <option value=''>Announcement Type</option>
-                                    <option value="Memorandum">Memorandum</option>
-                                    <option value="Enrollment">Enrollment</option>
-                                    <option value="Class Suspension">Class Suspension</option>
+                                    {announcementTypes && announcementTypes.map(type => (
+                                        <option value={type.announcementCategory}>{type.announcementCategory}</option>
+                                    ))}
                                 </Form.Select>
                             </Form.Group>
                         </Col>

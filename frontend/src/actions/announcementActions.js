@@ -6,6 +6,9 @@ import {
     MY_ANNOUNCEMENTS_REQUEST,
     MY_ANNOUNCEMENTS_SUCCESS,
     MY_ANNOUNCEMENTS_FAIL,
+    ANNOUNCEMENT_TYPE_REQUEST,
+    ANNOUNCEMENT_TYPE_SUCCESS,
+    ANNOUNCEMENT_TYPE_FAIL,
     ANNOUNCEMENT_DETAILS_REQUEST,
     ANNOUNCEMENT_DETAILS_SUCCESS,
     ANNOUNCEMENT_DETAILS_FAIL,
@@ -27,6 +30,14 @@ import {
     DELETE_ANNOUNCEMENT_REQUEST,
     DELETE_ANNOUNCEMENT_SUCCESS,
     DELETE_ANNOUNCEMENT_FAIL,
+    NEW_ANNOUNCEMENT_TYPE_REQUEST,
+    NEW_ANNOUNCEMENT_TYPE_SUCCESS,
+    NEW_ANNOUNCEMENT_TYPE_FAIL,
+    NEW_ANNOUNCEMENT_TYPE_RESET,
+    DELETE_ANNOUNCEMENT_TYPE_REQUEST,
+    DELETE_ANNOUNCEMENT_TYPE_SUCCESS,
+    DELETE_ANNOUNCEMENT_TYPE_FAIL,
+    DELETE_ANNOUNCEMENT_TYPE_RESET,
     CLEAR_ERRORS
 } from '../constants/announcementConstants'
 
@@ -36,40 +47,6 @@ import {
     USER_DETAILS_FAIL
 } from '../constants/userConstants'
 
-function filter(currentPage, course, yearLevel, track, title, announcementType) {
-    let link = `/api/v1/announcements?page=${currentPage}`
-    
-    if (course) {
-        if (yearLevel) {
-            if (track) {
-                if (title) {
-        
-                } else if (announcementType) {
-            
-                }
-            } else if (title) {
-        
-            } else if (announcementType) {
-        
-            }
-        } else if (track) {
-            
-        } else if (title) {
-    
-        } else if (announcementType) {
-    
-        }
-    } else if (yearLevel) {
-
-    } else if (track) {
-        
-    } else if (title) {
-
-    } else if (announcementType) {
-
-    }
-    return link
-}
 //get all announcements
 export const getAnnouncements = (currentPage, course, yearLevel, track, title, announcementType) => async(dispatch) => {
     try {
@@ -95,6 +72,28 @@ export const getAnnouncements = (currentPage, course, yearLevel, track, title, a
     }
 }
 
+//get announcement type list
+export const getAnnouncementType = () => async(dispatch) => {
+    try {
+        dispatch({
+            type: ANNOUNCEMENT_TYPE_REQUEST
+        })
+
+        const { data }= await axios.get(`/api/v1/announcementTypes`)
+
+        dispatch({
+            type: ANNOUNCEMENT_TYPE_SUCCESS,
+            payload: data
+        })
+    }
+    catch (error) {
+        dispatch({
+            type: ANNOUNCEMENT_TYPE_FAIL,
+            payload: error.response.data.errMessage
+            }
+        )
+    }
+}
 
 //get all announcements
 export const getAnnouncementDetails = (id) => async(dispatch) => {
@@ -240,6 +239,35 @@ export const createAnnouncement = (announcementData) => async(dispatch) => {
     }
 }
 
+//create new announcement
+export const createAnnouncementType = (announcementType) => async(dispatch) => {
+    try {
+        dispatch({
+            type: NEW_ANNOUNCEMENT_TYPE_REQUEST
+        })
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+        
+        const { data }= await axios.post(`/api/v1/admin/createAnnouncementType`, {announcementType}, config)
+
+        dispatch({
+            type: NEW_ANNOUNCEMENT_TYPE_SUCCESS,
+            payload: data
+        })
+    }
+    catch (error) {
+        dispatch({
+            type: NEW_ANNOUNCEMENT_TYPE_FAIL,
+            payload: error.response.data.errMessage
+            }
+        )
+    }
+}
+
 // Delete announcement (ADMIN)
 export const deleteAnnouncement = (id) => async(dispatch) => {
     try{
@@ -279,7 +307,6 @@ export const updateAnnouncement = (id, announcementData) => async(dispatch) => {
 
         const { data } = await axios.put(`/api/v1/admin/announcement/${id}`, announcementData, config)
 
-        
         dispatch({
             type: UPDATE_ANNOUNCEMENT_SUCCESS,
             payload: data.success
@@ -298,7 +325,7 @@ export const updateAnnouncement = (id, announcementData) => async(dispatch) => {
 export const archiveAnnouncement = (id) => async(dispatch) => {
     try{
         dispatch({
-            type: UPDATE_ANNOUNCEMENT_REQUEST
+            type: ARCHIVE_ANNOUNCEMENT_REQUEST
         })
 
         const config = {
@@ -311,13 +338,13 @@ export const archiveAnnouncement = (id) => async(dispatch) => {
 
         
         dispatch({
-            type: UPDATE_ANNOUNCEMENT_SUCCESS,
+            type: ARCHIVE_ANNOUNCEMENT_SUCCESS,
             payload: data.success
         })
     }
     catch(error){
         dispatch({
-            type: UPDATE_ANNOUNCEMENT_FAIL,
+            type: ARCHIVE_ANNOUNCEMENT_FAIL,
             payload: error.response.data.errMessage
             }
         )
