@@ -2,8 +2,8 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { getMyAnnouncements, deleteAnnouncement, archiveAnnouncement, clearErrors } from './../../actions/announcementActions'
-import { ARCHIVE_ANNOUNCEMENT_RESET, DELETE_ANNOUNCEMENT_RESET } from './../../constants/announcementConstants'
+import { getAnnouncementType, deleteAnnouncementType, clearErrors } from './../../actions/announcementActions'
+import { DELETE_ANNOUNCEMENT_TYPE_RESET } from './../../constants/announcementConstants'
 import Sidebar from './../layout/Sidebar'
 import MetaData from './../layout/MetaData'
 import Loader from './../layout/Loader'
@@ -15,13 +15,13 @@ import {
 
 var dateFormat = require('dateformat')
 
-const ListMyAnnoucements = ({ history }) => {
+const ListAnnouncementType = ({ history }) => {
 
     const alert = useAlert()
     const dispatch = useDispatch()
 
-    const { loading, announcements, error } = useSelector(state => state.announcements)
-    const { error: deleteError, isDeleted, isUpdated } = useSelector(state => state.announcement)
+    const { loading, announcementTypes, error, success } = useSelector(state => state.announcementType)
+    const { error: deleteError, isDeleted } = useSelector(state => state.announcement)
 
     const [show, setShow] = useState(false);
     const [deleteAnnouncementId, setDeleteAnnouncementId] = useState('');
@@ -30,7 +30,7 @@ const ListMyAnnoucements = ({ history }) => {
     const handleShow = () => setShow(true);
 
     useEffect(() => {
-        dispatch(getMyAnnouncements())
+        dispatch(getAnnouncementType())
 
         if (error) {
             alert.error(error)
@@ -43,59 +43,30 @@ const ListMyAnnoucements = ({ history }) => {
         }
 
         if (isDeleted) {
-            alert.success('Announcement has been deleted successfully.')
-            history.push('/admin/me/announcements')
+            alert.success('Announcement type has been deleted successfully.')
+            history.push('/admin/announcementTypes')
 
             dispatch({
-                type: DELETE_ANNOUNCEMENT_RESET
-            })
-        }
-
-        if (isUpdated) {
-            alert.success('Announcement has been archived successfully.')
-            history.push('/admin/me/announcements')
-
-            dispatch({
-                type: ARCHIVE_ANNOUNCEMENT_RESET
+                type: DELETE_ANNOUNCEMENT_TYPE_RESET
             })
         }
 
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, alert, error, isDeleted, isUpdated, deleteError])
+    }, [dispatch, alert, error, isDeleted, deleteError])
 
-    function changeDateFormat(date) {
-        return dateFormat(date, "mmm d, yyyy h:MMtt")
-    }
-
-    const deleteAnnouncementHandler = (id) => {
-        dispatch(deleteAnnouncement(id))
+    const deleteAnnouncementTypeHandler = (id) => {
+        dispatch(deleteAnnouncementType(id))
         handleClose()
     }
 
-    const setAnnouncements = () => {
-
+    const setAnnouncementType = () => {
         const data = {
             columns: [
                 {
-                    label: 'Date',
-                    field: 'date',
-                    width: 100
-                },
-                {
-                    label: 'Title',
-                    field: 'title',
-                    width: 150
-                },
-                {
-                    label: 'Description',
-                    field: 'description',
-                    width: 300
-                },
-                {
-                    label: 'Tags',
-                    field: 'tags',
+                    label: 'Announcement Category',
+                    field: 'announcementCategory',
                     width: 180
                 },
                 {
@@ -107,30 +78,10 @@ const ListMyAnnoucements = ({ history }) => {
             rows: []
         }
 
-        announcements && announcements.forEach(announcement => {
+        announcementTypes && announcementTypes.forEach(announcement => {
             data.rows.push({
-                date: changeDateFormat(announcement.createdAt),
-                title: announcement.title,
-                description: announcement.description,
-                tags: <Fragment>
-                    <span>
-                        <p style={{ margin: '0' }}><b>Year Level: </b>{announcement.yearLevel}</p>
-                        <p style={{ margin: '0' }}><b>Course: </b>{announcement.course}</p>
-                        <p style={{ margin: '0' }}><b>Track: </b>{announcement.track}</p>
-                        <p style={{ margin: '0' }}><b>Announcement Type: </b>{announcement.announcementType}</p>
-                    </span>
-                </Fragment>,
+                announcementCategory: announcement.announcementCategory,
                 actions: <Fragment>
-                    <Link to={`/admin/announcement/${announcement._id}`}>
-                        <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
-                            <i class="fa fa-pencil" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
-                        </Button>
-                    </Link>
-                    <Button variant="warning" className="mr-5" style={{ margin: '5px' }} onClick={() => {
-                        dispatch(archiveAnnouncement(announcement._id))
-                    }}>
-                        <i class="fa fa-archive" aria-hidden="true" />
-                    </Button>
                     <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
                         handleShow()
                         setDeleteAnnouncementId(announcement._id)
@@ -164,7 +115,7 @@ const ListMyAnnoucements = ({ history }) => {
                     <Button variant="secondary" onClick={handleClose}>
                         Close
                     </Button>
-                    <Button variant="primary" onClick={() => deleteAnnouncementHandler(deleteAnnouncementId)}>Yes, I'm sure</Button>
+                    <Button variant="primary" onClick={() => deleteAnnouncementTypeHandler(deleteAnnouncementId)}>Yes, I'm sure</Button>
                 </Modal.Footer>
             </Modal>
             <Sidebar />
@@ -173,11 +124,10 @@ const ListMyAnnoucements = ({ history }) => {
                     <Container className="space_inside"></Container>
                     <Container>
                         <h3>Announcements</h3>
-                        <Button variant="primary"><Link to='/admin/new/announcement' style={{ textDecoration: 'none', color: 'white' }}>Create announcement</Link></Button>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5
-                                    data={setAnnouncements()}
+                                    data={setAnnouncementType()}
                                     searchTop
                                     pagingTop
                                     scrollX
@@ -193,4 +143,4 @@ const ListMyAnnoucements = ({ history }) => {
     )
 }
 
-export default ListMyAnnoucements
+export default ListAnnouncementType

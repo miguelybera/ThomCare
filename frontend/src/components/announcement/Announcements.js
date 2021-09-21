@@ -88,15 +88,15 @@ const Announcements = () => {
         course: '',
         yearLevel: '',
         track: '',
-        annnouncementType: '',
+        announcementType: '',
         title: ''
     })
 
-    if (filter.course !== '' || filter.yearLevel !== '' || filter.track !== '' || filter.annnouncementType !== '' || filter.title !== '') {
+    if (filter.course !== '' || filter.yearLevel !== '' || filter.track !== '' || filter.announcementType !== '' || filter.title !== '') {
         count = filteredAnnouncementsCount
     }
 
-    const { course, yearLevel, track, annnouncementType, title } = filter
+    const { course, yearLevel, track, announcementType, title } = filter
 
     useEffect(() => {
         if (error) {
@@ -109,13 +109,13 @@ const Announcements = () => {
             dispatch(clearErrors())
         }
         
-        dispatch(getAnnouncements(currentPage, course, yearLevel, track, title, annnouncementType))
+        dispatch(getAnnouncements(currentPage, course, yearLevel, track, title, announcementType))
         dispatch(getAnnouncementType())
 
         dispatch({
             type: INSIDE_DASHBOARD_FALSE
         })
-    }, [dispatch, alert, error, announcementTypeError, currentPage, course, yearLevel, track, title, annnouncementType])
+    }, [dispatch, alert, error, announcementTypeError, currentPage, course, yearLevel, track, title, announcementType])
 
     const onChange = e => {
         setCurrentPageNo(1)
@@ -258,8 +258,8 @@ const Announcements = () => {
                                     aria-label="AnnouncementType"
                                     size="sm"
                                     style={dropdown}
-                                    name="annnouncementType"
-                                    value={annnouncementType}
+                                    name="announcementType"
+                                    value={announcementType}
                                     onChange={onChange}
                                 >
                                     <option value=''>Announcement Type</option>
@@ -307,7 +307,7 @@ const Announcements = () => {
                                         <br />
                                         <span style={{ fontSize: '12px' }}>Attachments: {announcement.fileAttachments.length} file(s)</span>
                                         <br />
-                                        <span style={{ fontWeight: '300', color: 'gray', fontSize: '12px' }}>Tags: {announcement.yearLevel}, {announcement.course}, {announcement.track}, {announcement.annnouncementType}</span>
+                                        <span style={{ fontWeight: '300', color: 'gray', fontSize: '12px' }}>Tags: {announcement.yearLevel}, {announcement.course}, {announcement.track}, {announcement.announcementType}</span>
                                     </Card.Text>
                                 </Card.Body>
                             </Card>

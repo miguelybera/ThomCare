@@ -44,6 +44,7 @@ import DownloadList from './components/request/forms/DownloadList'
 //dashboard folder
 import ControlPanel from './components/dashboard/ControlPanel'
 import ListAnnouncements from './components/dashboard/ListAnnouncements'
+import ListAnnouncementType from './components/dashboard/ListAnnouncementType'
 import ListMyAnnouncements from './components/dashboard/ListMyAnnouncements'
 import CreateAnnouncement from './components/dashboard/CreateAnnouncement'
 import UpdateAnnouncement from './components/dashboard/UpdateAnnouncement'
@@ -117,6 +118,7 @@ function App() {
                             {/*control panel*/}
                             <ProtectedRoute path='/controlpanel' component={ControlPanel} exact />
                             <ProtectedRoute path='/admin/announcements' component={ListAnnouncements} exact />
+                            <ProtectedRoute path='/admin/announcementTypes' component={ListAnnouncementType} exact />
                             <ProtectedRoute path='/admin/me/announcements' component={ListMyAnnouncements} exact />
                             <ProtectedRoute path='/admin/new/announcement' component={CreateAnnouncement} exact />
                             <ProtectedRoute path='/admin/announcement/:id' component={UpdateAnnouncement} exact />

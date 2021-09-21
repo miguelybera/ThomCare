@@ -79,6 +79,11 @@ export const SidebarData = [
                     title: 'Archived Announcements',
                     path: '/admin/archives/announcements',
                     icon: <i class="fa fa-archive" aria-hidden="true"></i>
+                },
+                {
+                    title: 'Announcement Types',
+                    path: '/admin/announcementTypes',
+                    icon: <i class="fa fa-archive" aria-hidden="true"></i>
                 }
             ]
         },
@@ -157,6 +162,11 @@ export const SidebarData = [
                 {
                     title: 'Archived Announcements',
                     path: '/admin/archives/announcements',
+                    icon: <i class="fa fa-archive" aria-hidden="true"></i>
+                },
+                {
+                    title: 'Announcement Types',
+                    path: '/admin/announcementTypes',
                     icon: <i class="fa fa-archive" aria-hidden="true"></i>
                 }
             ]

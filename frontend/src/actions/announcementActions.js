@@ -292,6 +292,30 @@ export const deleteAnnouncement = (id) => async (dispatch) => {
     }
 }
 
+// Delete announcement (ADMIN)
+export const deleteAnnouncementType = (id) => async (dispatch) => {
+    try {
+        dispatch({
+            type: DELETE_ANNOUNCEMENT_TYPE_REQUEST
+        })
+
+        const { data } = await axios.delete(`/api/v1/admin/announcementType/${id}`)
+
+        dispatch({
+            type: DELETE_ANNOUNCEMENT_TYPE_SUCCESS,
+            payload: data.success
+        })
+    }
+
+    catch (error) {
+        dispatch({
+            type: DELETE_ANNOUNCEMENT_TYPE_FAIL,
+            payload: error.response.data.errMessage
+        }
+        )
+    }
+}
+
 // Update announcement (ADMIN)
 export const updateAnnouncement = (id, announcementData) => async (dispatch) => {
     try {

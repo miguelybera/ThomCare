@@ -2,12 +2,11 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { getAdminAnnouncements, deleteAnnouncement, archiveAnnouncement, clearErrors } from './../../actions/announcementActions'
-import { ARCHIVE_ANNOUNCEMENT_RESET, DELETE_ANNOUNCEMENT_RESET } from './../../constants/announcementConstants'
+import { getAdminAnnouncements, clearErrors } from './../../actions/announcementActions'
 import Sidebar from './../layout/Sidebar'
 import MetaData from './../layout/MetaData'
 import Loader from './../layout/Loader'
-import { Container, Modal, Button } from 'react-bootstrap'
+import { Container, Button } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import {
     INSIDE_DASHBOARD_TRUE
@@ -21,13 +20,6 @@ const ListAnnouncements = ({ history }) => {
     const dispatch = useDispatch()
 
     const { loading, announcements, error } = useSelector(state => state.announcements)
-    const { error: deleteError, isDeleted, isUpdated } = useSelector(state => state.announcement)
-
-    const [show, setShow] = useState(false);
-    const [deleteAnnouncementId, setDeleteAnnouncementId] = useState('');
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
 
     useEffect(() => {
         dispatch(getAdminAnnouncements('Not me'))
@@ -37,41 +29,13 @@ const ListAnnouncements = ({ history }) => {
             dispatch(clearErrors())
         }
 
-        if (deleteError) {
-            alert.error(deleteError)
-            dispatch(clearErrors())
-        }
-
-        if (isDeleted) {
-            alert.success('Announcement has been deleted successfully.')
-            history.push('/admin/announcements')
-
-            dispatch({
-                type: DELETE_ANNOUNCEMENT_RESET
-            })
-        }
-
-        if (isUpdated) {
-            alert.success('Announcement has been archived successfully.')
-            history.push('/admin/announcements')
-
-            dispatch({
-                type: ARCHIVE_ANNOUNCEMENT_RESET
-            })
-        }
-
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, alert, error, isDeleted, isUpdated, deleteError])
+    }, [dispatch, alert, error])
 
     function changeDateFormat(date) {
         return dateFormat(date, "mmm d, yyyy h:MMtt")
-    }
-
-    const deleteAnnouncementHandler = (id) => {
-        dispatch(deleteAnnouncement(id))
-        handleClose()
     }
 
     const setAnnouncements = () => {
@@ -125,25 +89,6 @@ const ListAnnouncements = ({ history }) => {
     return (
         <Fragment>
             <MetaData title={'Announcements'} />
-            <Modal
-                show={show}
-                onHide={handleClose}
-                backdrop="static"
-                keyboard={false}
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title>Are you sure you want to delete this announcement?</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    This change cannot be undone.
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                    <Button variant="primary" onClick={() => deleteAnnouncementHandler(deleteAnnouncementId)}>Yes, I'm sure</Button>
-                </Modal.Footer>
-            </Modal>
             <Sidebar />
             <div className="row">
                 <div className="">
