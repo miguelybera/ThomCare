@@ -54,14 +54,16 @@ const SubmitRequest = () => {
             setFileRequirements(oldArray => [...oldArray, file])
         })
     }
-    const levels = ['1st Year', '2nd Year', '3rd Year', '4th Year']
+    const levels = ['1st Year', '2nd Year', '3rd Year', '4th Year', 'Alumni']
 
     const requestTypes = [
         'Adding/Dropping of Course',
         'Cross Enrollment within CICS',
+        'Cross Enrollment outside CICS',
         'Request for Petition Classes within CICS',
         'Request for Crediting of Courses',
         'Request for Overload',
+        'Request to Override',
         'Request for Late Enrollment',
         'Request for Manual Enrollment',
         'Request for Course Description',
