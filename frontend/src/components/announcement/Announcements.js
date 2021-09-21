@@ -46,7 +46,7 @@ const Announcements = () => {
     const dispatch = useDispatch()
 
     const { loading, announcements, error, announcementCount, resPerPage, filteredAnnouncementsCount } = useSelector(state => state.announcements)
-    const { loading: announcementTypeLoading, announcementTypes, error: announcementType, success } = useSelector(state => state.announcementType)
+    const { loading: announcementTypeLoading, announcementTypes, error: announcementTypeError, success } = useSelector(state => state.announcementType)
 
     const [currentPage, setCurrentPage] = useState(1)
 
@@ -104,13 +104,18 @@ const Announcements = () => {
             dispatch(clearErrors())
         }
 
+        if (announcementTypeError) {
+            alert.error(error)
+            dispatch(clearErrors())
+        }
+        
         dispatch(getAnnouncements(currentPage, course, yearLevel, track, title, annnouncementType))
         dispatch(getAnnouncementType())
 
         dispatch({
             type: INSIDE_DASHBOARD_FALSE
         })
-    }, [dispatch, alert, error, currentPage, course, yearLevel, track, title, annnouncementType])
+    }, [dispatch, alert, error, announcementTypeError, currentPage, course, yearLevel, track, title, annnouncementType])
 
     const onChange = e => {
         setCurrentPageNo(1)

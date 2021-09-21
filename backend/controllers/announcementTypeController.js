@@ -3,7 +3,6 @@ const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const APIFeatures = require('../utils/apiFeatures');
 
-
 //create announcement type  => /api/v1/admin/createAnnouncementType
 exports.createAnnouncementType = catchAsyncErrors(async (req, res, next) => {
     const announcementCategory = req.body.announcementCategory

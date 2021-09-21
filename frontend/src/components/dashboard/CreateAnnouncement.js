@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
 import Sidebar from '../layout/Sidebar'
 import MetaData from '../layout/MetaData'
-import { NEW_ANNOUNCEMENT_RESET } from '../../constants/announcementConstants'
-import { createAnnouncement, clearErrors } from '../../actions/announcementActions'
+import { NEW_ANNOUNCEMENT_RESET, NEW_ANNOUNCEMENT_TYPE_RESET } from '../../constants/announcementConstants'
+import { createAnnouncement, createAnnouncementType, getAnnouncementType, clearErrors } from '../../actions/announcementActions'
 import {
     INSIDE_DASHBOARD_TRUE
 } from '../../constants/dashboardConstants'
@@ -20,6 +20,7 @@ const CreateAnnouncement = ({ history }) => {
     const alert = useAlert()
 
     const { loading, error, success } = useSelector(state => state.newAnnouncement)
+    const { loading: announcementTypeLoading, announcementTypes, error: announcementTypeError } = useSelector(state => state.announcementType)
 
     const changeDateFormat = (date) => dateFormat(date, "yyyy-mm-dd")
 
@@ -29,10 +30,10 @@ const CreateAnnouncement = ({ history }) => {
     const [course, setCourse] = useState('All')
     const [track, setTrack] = useState('All')
     const [announcementType, setAnnouncementType] = useState('All')
+    const [announcementCategory, setAnnouncementCategory] = useState('')
     const [archiveDate, setArchiveDate] = useState(changeDateFormat(Date.now()))
     const [setExpiry, setSetExpiry] = useState(false)
     const [fileAttachments, setFileAttachments] = useState([])
-
 
     const levels = ['All', '1st Year', '2nd Year', '3rd Year', '4th Year']
     const programs = ['All', 'Computer Science', 'Information Systems', 'Information Technology']
@@ -67,9 +68,17 @@ const CreateAnnouncement = ({ history }) => {
         formData.set('yearLevel', yearLevel)
         formData.set('course', course)
         formData.set('track', track)
-        formData.set('announcementType', announcementType)
+
+        if (announcementType == 'Others') {
+            formData.set('announcementType', announcementCategory)
+            dispatch(createAnnouncementType(announcementCategory))
+        } else {
+            formData.set('announcementType', announcementType)
+        }
+
         formData.set('archiveDate', changeDateFormat(archiveDate))
         formData.set('setExpiry', setExpiry)
+
         fileAttachments.forEach(file => {
             formData.append('fileAttachments', file)
         })
@@ -78,8 +87,15 @@ const CreateAnnouncement = ({ history }) => {
     }
 
     useEffect(() => {
+        dispatch(getAnnouncementType())
+
         if (error) {
             alert.error()
+            dispatch(clearErrors())
+        }
+
+        if (announcementTypeError) {
+            alert.error(error)
             dispatch(clearErrors())
         }
 
@@ -88,6 +104,9 @@ const CreateAnnouncement = ({ history }) => {
             alert.success('Announcement created successfully.')
             dispatch({
                 type: NEW_ANNOUNCEMENT_RESET
+            })
+            dispatch({
+                type: NEW_ANNOUNCEMENT_TYPE_RESET
             })
         }
 
@@ -104,7 +123,11 @@ const CreateAnnouncement = ({ history }) => {
         if (yearLevel === '1st Year' || yearLevel === '2nd Year' || yearLevel === 'All') {
             setTrack('All')
         }
-    }, [track, yearLevel])
+
+        if (announcementType !== 'Others') {
+            setAnnouncementCategory('')
+        }
+    }, [track, yearLevel, announcementType])
 
     const onChange = e => {
         const files = Array.from(e.target.files)
@@ -214,11 +237,20 @@ const CreateAnnouncement = ({ history }) => {
                                             onChange={e => setAnnouncementType(e.target.value)}
                                             required
                                         >
-                                            <option value='All'>-</option>
-                                            <option value="Memorandum">Memorandum</option>
-                                            <option value="Enrollment">Enrollment</option>
-                                            <option value="Class Suspension">Class Suspension</option>
+                                            <option value='All'>All</option>
+                                            {announcementTypes && announcementTypes.map(type => (
+                                                <option value={type.announcementCategory}>{type.announcementCategory}</option>
+                                            ))}
+                                            <option value='Others'>Others</option>
                                         </Form.Select>
+                                        <Form.Label>Other announcement type</Form.Label>
+                                        <Form.Control
+                                            type="text"
+                                            name="announcementCategory"
+                                            value={announcementCategory}
+                                            onChange={e => setAnnouncementCategory(e.target.value)}
+                                            disabled={announcementType !== 'Others' ? true : false}
+                                        />
                                     </Form.Group>
                                     <Form.Group className="mb-3">
                                         <Form.Check

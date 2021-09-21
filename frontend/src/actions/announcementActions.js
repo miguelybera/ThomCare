@@ -48,7 +48,7 @@ import {
 } from '../constants/userConstants'
 
 //get all announcements
-export const getAnnouncements = (currentPage, course, yearLevel, track, title, announcementType) => async(dispatch) => {
+export const getAnnouncements = (currentPage, course, yearLevel, track, title, announcementType) => async (dispatch) => {
     try {
         dispatch({
             type: ALL_ANNOUNCEMENTS_REQUEST
@@ -67,19 +67,19 @@ export const getAnnouncements = (currentPage, course, yearLevel, track, title, a
         dispatch({
             type: ALL_ANNOUNCEMENTS_FAIL,
             payload: error.response.data.errMessage
-            }
+        }
         )
     }
 }
 
 //get announcement type list
-export const getAnnouncementType = () => async(dispatch) => {
+export const getAnnouncementType = () => async (dispatch) => {
     try {
         dispatch({
             type: ANNOUNCEMENT_TYPE_REQUEST
         })
 
-        const { data }= await axios.get(`/api/v1/announcementTypes`)
+        const { data } = await axios.get(`/api/v1/announcementTypes`)
 
         dispatch({
             type: ANNOUNCEMENT_TYPE_SUCCESS,
@@ -90,19 +90,18 @@ export const getAnnouncementType = () => async(dispatch) => {
         dispatch({
             type: ANNOUNCEMENT_TYPE_FAIL,
             payload: error.response.data.errMessage
-            }
-        )
+        })
     }
 }
 
 //get all announcements
-export const getAnnouncementDetails = (id) => async(dispatch) => {
+export const getAnnouncementDetails = (id) => async (dispatch) => {
     try {
         dispatch({
             type: ANNOUNCEMENT_DETAILS_REQUEST
         })
 
-        const { data }= await axios.get(`/api/v1/announcement/${id}`)
+        const { data } = await axios.get(`/api/v1/announcement/${id}`)
 
         dispatch({
             type: ANNOUNCEMENT_DETAILS_SUCCESS,
@@ -113,18 +112,18 @@ export const getAnnouncementDetails = (id) => async(dispatch) => {
         dispatch({
             type: ANNOUNCEMENT_DETAILS_FAIL,
             payload: error.response.data.errMessage
-            }
+        }
         )
     }
 }
 
 //Get admin name
-export const getUser = (id) => async(dispatch) => {
-    try{
+export const getUser = (id) => async (dispatch) => {
+    try {
         dispatch({
             type: USER_DETAILS_REQUEST
         })
-        
+
         const { data } = await axios.get(`/api/v1/announcement/user/${id}`)
 
         dispatch({
@@ -132,17 +131,17 @@ export const getUser = (id) => async(dispatch) => {
             payload: data.singleUser
         })
     }
-    catch(error){
+    catch (error) {
         dispatch({
             type: USER_DETAILS_FAIL,
             payload: error.response.data.errMessage
-            }
+        }
         )
     }
 }
 
 //get all announcements
-export const getAdminAnnouncements = () => async(dispatch) => {
+export const getAdminAnnouncements = () => async (dispatch) => {
     try {
         dispatch({
             type: ALL_ADMIN_ANNOUNCEMENTS_REQUEST
@@ -159,13 +158,13 @@ export const getAdminAnnouncements = () => async(dispatch) => {
         dispatch({
             type: ALL_ADMIN_ANNOUNCEMENTS_FAIL,
             payload: error.response.data.errMessage
-            }
+        }
         )
     }
 }
 
 //get my announcements
-export const getMyAnnouncements = () => async(dispatch) => {
+export const getMyAnnouncements = () => async (dispatch) => {
     try {
         dispatch({
             type: MY_ANNOUNCEMENTS_REQUEST
@@ -182,13 +181,13 @@ export const getMyAnnouncements = () => async(dispatch) => {
         dispatch({
             type: MY_ANNOUNCEMENTS_FAIL,
             payload: error.response.data.errMessage
-            }
+        }
         )
     }
 }
 
 //get all ARCHIVED announcements
-export const getArchivedAnnouncements = () => async(dispatch) => {
+export const getArchivedAnnouncements = () => async (dispatch) => {
     try {
         dispatch({
             type: ALL_ARCHIVED_ANNOUNCEMENTS_REQUEST
@@ -205,13 +204,13 @@ export const getArchivedAnnouncements = () => async(dispatch) => {
         dispatch({
             type: ALL_ARCHIVED_ANNOUNCEMENTS_FAIL,
             payload: error.response.data.errMessage
-            }
+        }
         )
     }
 }
 
 //create new announcement
-export const createAnnouncement = (announcementData) => async(dispatch) => {
+export const createAnnouncement = (announcementData) => async (dispatch) => {
     try {
         dispatch({
             type: NEW_ANNOUNCEMENT_REQUEST
@@ -222,8 +221,8 @@ export const createAnnouncement = (announcementData) => async(dispatch) => {
                 'Content-Type': 'application/json'
             }
         }
-        
-        const { data }= await axios.post(`/api/v1/admin/new/announcement`, announcementData, config)
+
+        const { data } = await axios.post(`/api/v1/admin/new/announcement`, announcementData, config)
 
         dispatch({
             type: NEW_ANNOUNCEMENT_SUCCESS,
@@ -234,13 +233,13 @@ export const createAnnouncement = (announcementData) => async(dispatch) => {
         dispatch({
             type: NEW_ANNOUNCEMENT_FAIL,
             payload: error.response.data.errMessage
-            }
+        }
         )
     }
 }
 
 //create new announcement
-export const createAnnouncementType = (announcementType) => async(dispatch) => {
+export const createAnnouncementType = (announcementCategory) => async (dispatch) => {
     try {
         dispatch({
             type: NEW_ANNOUNCEMENT_TYPE_REQUEST
@@ -251,8 +250,9 @@ export const createAnnouncementType = (announcementType) => async(dispatch) => {
                 'Content-Type': 'application/json'
             }
         }
-        
-        const { data }= await axios.post(`/api/v1/admin/createAnnouncementType`, {announcementType}, config)
+
+        console.log(announcementCategory)
+        const { data } = await axios.post(`/api/v1/admin/createAnnouncementType`, { announcementCategory }, config)
 
         dispatch({
             type: NEW_ANNOUNCEMENT_TYPE_SUCCESS,
@@ -262,15 +262,15 @@ export const createAnnouncementType = (announcementType) => async(dispatch) => {
     catch (error) {
         dispatch({
             type: NEW_ANNOUNCEMENT_TYPE_FAIL,
-            payload: error.response.data.errMessage
-            }
+            payload: error.response.data.message
+        }
         )
     }
 }
 
 // Delete announcement (ADMIN)
-export const deleteAnnouncement = (id) => async(dispatch) => {
-    try{
+export const deleteAnnouncement = (id) => async (dispatch) => {
+    try {
         dispatch({
             type: DELETE_ANNOUNCEMENT_REQUEST
         })
@@ -282,19 +282,19 @@ export const deleteAnnouncement = (id) => async(dispatch) => {
             payload: data.success
         })
     }
-    
-    catch(error){
+
+    catch (error) {
         dispatch({
             type: DELETE_ANNOUNCEMENT_FAIL,
             payload: error.response.data.errMessage
-            }
+        }
         )
     }
 }
 
 // Update announcement (ADMIN)
-export const updateAnnouncement = (id, announcementData) => async(dispatch) => {
-    try{
+export const updateAnnouncement = (id, announcementData) => async (dispatch) => {
+    try {
         dispatch({
             type: UPDATE_ANNOUNCEMENT_REQUEST
         })
@@ -312,18 +312,18 @@ export const updateAnnouncement = (id, announcementData) => async(dispatch) => {
             payload: data.success
         })
     }
-    catch(error){
+    catch (error) {
         dispatch({
             type: UPDATE_ANNOUNCEMENT_FAIL,
             payload: error.response.data.errMessage
-            }
+        }
         )
     }
 }
 
 // Update announcement (ADMIN)
-export const archiveAnnouncement = (id) => async(dispatch) => {
-    try{
+export const archiveAnnouncement = (id) => async (dispatch) => {
+    try {
         dispatch({
             type: ARCHIVE_ANNOUNCEMENT_REQUEST
         })
@@ -336,24 +336,24 @@ export const archiveAnnouncement = (id) => async(dispatch) => {
 
         const { data } = await axios.put(`/api/v1/admin/archiveAnnouncement/${id}`, {}, config)
 
-        
+
         dispatch({
             type: ARCHIVE_ANNOUNCEMENT_SUCCESS,
             payload: data.success
         })
     }
-    catch(error){
+    catch (error) {
         dispatch({
             type: ARCHIVE_ANNOUNCEMENT_FAIL,
             payload: error.response.data.errMessage
-            }
+        }
         )
     }
 }
 
 
 //clear errors
-export const clearErrors = () => async(dispatch) => {
+export const clearErrors = () => async (dispatch) => {
     dispatch({
         type: CLEAR_ERRORS
     })

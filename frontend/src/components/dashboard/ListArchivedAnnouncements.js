@@ -98,7 +98,7 @@ const ListArchivedAnnouncements = ({ history }) => {
             rows: []
         }
 
-        announcements.forEach(announcement => {
+        announcements && announcements.forEach(announcement => {
             data.rows.push({
                 date: changeDateFormat(announcement.createdAt),
                 title: announcement.title,

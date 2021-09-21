@@ -6,8 +6,8 @@ import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
 import Sidebar from '../layout/Sidebar'
 import MetaData from '../layout/MetaData'
 import Loader from '../layout/Loader'
-import { ANNOUNCEMENT_DETAILS_RESET, UPDATE_ANNOUNCEMENT_RESET } from '../../constants/announcementConstants'
-import { getAnnouncementDetails, updateAnnouncement, clearErrors } from '../../actions/announcementActions'
+import { ANNOUNCEMENT_DETAILS_RESET, NEW_ANNOUNCEMENT_TYPE_RESET, UPDATE_ANNOUNCEMENT_RESET } from '../../constants/announcementConstants'
+import { getAnnouncementDetails, createAnnouncementType, updateAnnouncement, clearErrors } from '../../actions/announcementActions'
 import {
     INSIDE_DASHBOARD_TRUE
 } from '../../constants/dashboardConstants'
@@ -23,6 +23,7 @@ const UpdateAnnouncement = ({ history, match }) => {
 
     const { loading: announcementLoading, error, announcement } = useSelector(state => state.announcementDetails)
     const { loading, error: updateError, isUpdated } = useSelector(state => state.announcement)
+    const { loading: announcementTypeLoading, announcementTypes, error: announcementTypeError } = useSelector(state => state.announcementType)
 
     const changeDateFormat = (date) => dateFormat(date, "yyyy-mm-dd")
 
@@ -32,6 +33,7 @@ const UpdateAnnouncement = ({ history, match }) => {
     const [course, setCourse] = useState('')
     const [track, setTrack] = useState('')
     const [announcementType, setAnnouncementType] = useState('')
+    const [announcementCategory, setAnnouncementCategory] = useState('')
     const [archiveDate, setArchiveDate] = useState('')
     const [setExpiry, setSetExpiry] = useState()
     const [fileAttachments, setFileAttachments] = useState([])
@@ -75,13 +77,16 @@ const UpdateAnnouncement = ({ history, match }) => {
         formData.set('yearLevel', yearLevel)
         formData.set('course', course)
         formData.set('track', track)
-        formData.set('announcementType', announcementType)
-        if (!setExpiry) {
-            formData.set('archiveDate', '3000-01-01')
+
+        if (announcementType == 'Others') {
+            formData.set('announcementType', announcementCategory)
+            dispatch(createAnnouncementType(announcementCategory))
         } else {
-            formData.set('archiveDate', changeDateFormat(archiveDate))
+            formData.set('announcementType', announcementType)
         }
+
         formData.set('setExpiry', setExpiry)
+        formData.set('archiveDate', changeDateFormat(archiveDate))
 
         fileAttachments.forEach(file => {
             formData.append('fileAttachments', file)
@@ -132,6 +137,10 @@ const UpdateAnnouncement = ({ history, match }) => {
         if (isUpdated) {
             dispatch({
                 type: UPDATE_ANNOUNCEMENT_RESET
+            })
+
+            dispatch({
+                type: NEW_ANNOUNCEMENT_TYPE_RESET
             })
 
             dispatch({
@@ -266,12 +275,22 @@ const UpdateAnnouncement = ({ history, match }) => {
                                                 name="announcementType"
                                                 value={announcementType}
                                                 onChange={e => setAnnouncementType(e.target.value)}
+                                                required
                                             >
-                                                <option value='All'>-</option>
-                                                <option value="Memorandum">Memorandum</option>
-                                                <option value="Enrollment">Enrollment</option>
-                                                <option value="Class Suspension">Class Suspension</option>
+                                                <option value='All'>All</option>
+                                                {announcementTypes && announcementTypes.map(type => (
+                                                    <option value={type.announcementCategory}>{type.announcementCategory}</option>
+                                                ))}
+                                                <option value='Others'>Others</option>
                                             </Form.Select>
+                                            <Form.Label>Other announcement type</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                name="announcementCategory"
+                                                value={announcementCategory}
+                                                onChange={e => setAnnouncementCategory(e.target.value)}
+                                                disabled={announcementType !== 'Others' ? true : false}
+                                            />
                                         </Form.Group>
                                         <Form.Group className="mb-3">
                                             <Form.Check

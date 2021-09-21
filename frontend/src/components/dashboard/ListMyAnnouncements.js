@@ -117,6 +117,7 @@ const ListMyAnnoucements = ({ history }) => {
                         <p style={{ margin: '0' }}><b>Year Level: </b>{announcement.yearLevel}</p>
                         <p style={{ margin: '0' }}><b>Course: </b>{announcement.course}</p>
                         <p style={{ margin: '0' }}><b>Track: </b>{announcement.track}</p>
+                        <p style={{ margin: '0' }}><b>Announcement Type: </b>{announcement.announcementType}</p>
                     </span>
                 </Fragment>,
                 actions: <Fragment>
