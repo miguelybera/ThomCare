@@ -44,6 +44,7 @@ const UpdateUser = ({ history, match }) => {
         if (role === 'Student') {
             formData = {
                 firstName: upperCase(firstName),
+                middleName: upperCase(middleName),
                 lastName: upperCase(lastName),
                 studentNumber,
                 course,
@@ -52,6 +53,7 @@ const UpdateUser = ({ history, match }) => {
         } else {
             formData = {
                 firstName,
+                middleName: upperCase(middleName),
                 lastName,
                 role
             }
