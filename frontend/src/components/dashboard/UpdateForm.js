@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getFormDetails, updateForm, clearErrors } from './../../actions/formActions'
 import { UPDATE_FORM_RESET } from './../../constants/formConstants'
 import MetaData from './../layout/MetaData'
+import Loader from './../layout/Loader'
 import Sidebar from './../layout/Sidebar'
 import { FloatingLabel, Form, Button, Card, Container, Row, Col, Overlay, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import {
@@ -27,30 +28,6 @@ const UpdateForm = ({ history, match }) => {
     const [description, setDescription] = useState()
     const [attachments, setAttachments] = useState([])
     const [oldAttachments, setOldAttachments] = useState([])
-
-    const submitHandler = e => {
-        e.preventDefault()
-
-        const formData = new FormData()
-        attachments.forEach(file => {
-            formData.append('attachments', file)
-        })
-        formData.set('title', title)
-        formData.set('description', description)
-
-        dispatch(updateForm(formData))
-    }
-
-    const onChange = e => {
-        const files = Array.from(e.target.files)
-
-        setOldAttachments([])
-        setAttachments([])
-
-        files.forEach(file => {
-            setAttachments(oldArray => [...oldArray, file])
-        })
-    }
 
     const formId = match.params.id
 
@@ -87,13 +64,39 @@ const UpdateForm = ({ history, match }) => {
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, history, alert, isUpdated, updateError, error, formId])
+    }, [dispatch, history, alert, isUpdated, updateError, error, form, formId])
+
+    const submitHandler = e => {
+        e.preventDefault()
+
+        const formData = new FormData()
+        formData.set('title', title)
+        formData.set('description', description)
+        
+        attachments.forEach(file => {
+            formData.append('attachments', file)
+        })
+
+        dispatch(updateForm(formData))
+    }
+
+    const onChange = e => {
+        const files = Array.from(e.target.files)
+
+        setOldAttachments([])
+        setAttachments([])
+
+        files.forEach(file => {
+            setAttachments(oldArray => [...oldArray, file])
+        })
+    }
 
     return (
         <>
             <MetaData title={'Update Form'} />
             <Sidebar />
-            <Container fluid>
+            {loading ? <Loader/> : (
+                <Container fluid>
                 <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
                     <Card style={{ backgroundColor: "#F5F5F5", width: '30rem', align: 'center', borderTop: '7px solid #9c0b0b', marginBottom: '50px' }}>
                         <Card.Body>
@@ -158,7 +161,7 @@ const UpdateForm = ({ history, match }) => {
                                         style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
                                         disabled={loading ? true : false}
                                     >
-                                        {loading ? (
+                                        {updateLoading ? (
                                             <span>
                                                 <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
                                             </span>
@@ -172,6 +175,7 @@ const UpdateForm = ({ history, match }) => {
                     </Card>
                 </Row>
             </Container>
+            )}
         </>
     )
 }

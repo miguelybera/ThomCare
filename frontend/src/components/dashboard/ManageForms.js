@@ -57,7 +57,7 @@ const ManageForms = ({ history, match }) => {
             <Sidebar />
 
             <Container fluid style={{ padding: "50px" }}>
-                <h3><b>Downloadable Forms</b></h3>
+                <h3><b>Manage Forms</b></h3>
                 <Row xs={1} md={2} className="g-4" >
                     {loading ? <Loader /> : (
                         <Fragment>
