@@ -6,6 +6,7 @@ import Pdf from "react-to-pdf";
 import {
     INSIDE_DASHBOARD_FALSE
 } from '../../../constants/dashboardConstants'
+import { Button } from 'react-bootstrap'
 import './css/form6a.css'
 
 const ref = React.createRef();
@@ -14,6 +15,7 @@ const FORM6APDF = (props) => {
     const dispatch = useDispatch();
 
     const { formData } = useSelector(state => state.form)
+    const { user } = useSelector(state => state.auth)
 
     useEffect(() => {
         dispatch({
@@ -22,28 +24,35 @@ const FORM6APDF = (props) => {
     }, [dispatch])
 
     const studentNumber = formData.studentNumber.split('')
-    const firstName = formData.firstName.split('')
-    const middleName = formData.middleName.split('')[0]
-    const lastName = formData.lastName.split('')
-    //course ID - total units - days - time - room - section
+    const name = formData.lastName + ', ' + formData.firstName + ' ' + formData.middleName[0] + '.'
+    const course = user.course
 
     let toAdd = [], toDrop = []
+
+    let newTotalUnits = 0
 
     formData.addDrop.forEach(x => {
         if (x.status === 'Add') {
             toAdd.push(x)
+            newTotalUnits += (Number(x.lecUnits) + Number(x.labUnits))
         } else {
             toDrop.push(x)
+            newTotalUnits -= (Number(x.lecUnits) + Number(x.labUnits))
         }
-    }
-    )
+
+    })
 
     const options = {
         format: 'legal'
     }
+
     return (
         <>
-            <div className="Post" ref={ref}>
+            <span style={{ margin: '10px' }}>
+                <h4>Preview of accomplished form.</h4>
+                <h6>Click 'Save as PDF' button below to download the form.</h6>
+            </span>
+            <div className="Post" ref={ref} style={{ border: '1px solid black ' }}>
                 <div className="headerform">
                     <div>
                         UST FORM No. 6A<br />
@@ -79,25 +88,22 @@ const FORM6APDF = (props) => {
 
                 <div className="namesform">
                     <div>
-                        <table>
+                        <table style={{ width: '100%' }}>
                             <tbody>
                                 <tr>
-                                    {lastName.map(letter => (
-                                        <td>{letter}</td>
-                                    ))}
-                                    <td>,</td>
-
-                                    {firstName.map(letter => (
-                                        <td>{letter}</td>
-                                    ))}
-                                    <td></td>
-                                    <td>{middleName}</td>
-                                    <td>.</td>
+                                    <td>{name}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <div>
+                        <table style={{ width: '100%' }}>
+                            <tbody>
+                                <tr>
+                                    <td>{course}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -111,9 +117,7 @@ const FORM6APDF = (props) => {
                 <div style={{ fontWeight: 'bold' }}>TO BE DISCONTINUED:</div>
                 <center>
                     <div className="dropform">
-
                         <div>
-
                             <table style={{ width: '95%' }}>
                                 <tbody>
                                     <tr style={{ fontWeight: 'bold' }}>
@@ -153,26 +157,16 @@ const FORM6APDF = (props) => {
                                         <Fragment>
                                             {
                                                 toDrop.map(x => (
-                                                    <tr> {/** course id*/}
-                                                        {x.courseCode.split('').map(y => (
-                                                            <Fragment>
-                                                                <td>{y}</td>
-                                                            </Fragment>
-                                                        ))}
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>{/** end course id*/}
-                                                        <td>{Number(x.lecUnits) + Number(x.labUnits)}</td>{/** units*/}
-                                                        <td>{x.days}</td>{/** days */}
-                                                        <td>{x.time}</td>{/** time*/}
-                                                        <td>{x.room}</td>{/** room*/}
-                                                        <td>{x.section}</td>{/** section*/}
-                                                    </tr>
+                                                    <Fragment>
+                                                        <tr>
+                                                            <td colSpan={15}>{x.courseCode} - {x.courseName}</td>
+                                                            <td>{Number(x.lecUnits) + Number(x.labUnits)}</td>{/** units*/}
+                                                            <td>{x.days}</td>{/** days */}
+                                                            <td>{x.time}</td>{/** time*/}
+                                                            <td>{x.room}</td>{/** room*/}
+                                                            <td>{x.section}</td>{/** section*/}
+                                                        </tr>
+                                                    </Fragment>
                                                 ))
                                             }
                                         </Fragment>
@@ -182,7 +176,6 @@ const FORM6APDF = (props) => {
                         </div>
                     </div>
                 </center>
-
                 <br />
                 <div style={{ fontWeight: 'bold' }}>TO BE ADDED:</div>
                 <center>
@@ -227,26 +220,16 @@ const FORM6APDF = (props) => {
                                         <Fragment>
                                             {
                                                 toAdd.map(x => (
-                                                    <tr> {/** course id*/}
-                                                        {x.courseCode.split('').map(y => (
-                                                            <Fragment>
-                                                                <td>{y}</td>
-                                                            </Fragment>
-                                                        ))}
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>{/** end course id*/}
-                                                        <td>{Number(x.lecUnits) + Number(x.labUnits)}</td>{/** units*/}
-                                                        <td>{x.days}</td>{/** days */}
-                                                        <td>{x.time}</td>{/** time*/}
-                                                        <td>{x.room}</td>{/** room*/}
-                                                        <td>{x.section}</td>{/** section*/}
-                                                    </tr>
+                                                    <Fragment>
+                                                        <tr>
+                                                            <td colSpan={15}>{x.courseCode} - {x.courseName}</td>
+                                                            <td>{Number(x.lecUnits) + Number(x.labUnits)}</td>{/** units*/}
+                                                            <td>{x.days}</td>{/** days */}
+                                                            <td>{x.time}</td>{/** time*/}
+                                                            <td>{x.room}</td>{/** room*/}
+                                                            <td>{x.section}</td>{/** section*/}
+                                                        </tr>
+                                                    </Fragment>
                                                 ))
                                             }
                                         </Fragment>
@@ -257,7 +240,7 @@ const FORM6APDF = (props) => {
                     </div>
                 </center>
 
-                <center>NEW TOTAL UNITS</center>
+                <center>NEW TOTAL UNITS: {newTotalUnits}</center>
 
                 <div className="signatories" style={{ textAlign: 'center', fontWeight: 'bold' }}>
                     <div>Dean or Representative</div>
@@ -308,28 +291,25 @@ const FORM6APDF = (props) => {
                     <div style={{ textAlign: 'right' }}> <b>{formData.term}</b> Term / Special, Academic Year 20<b>{formData.year1}</b> - 20<b>{formData.year2}</b></div>
                 </div>
 
+
                 <div className="namesform">
                     <div>
-                        <table>
+                        <table style={{ width: '100%' }}>
                             <tbody>
                                 <tr>
-                                    {lastName.map(letter => (
-                                        <td>{letter}</td>
-                                    ))}
-                                    <td>,</td>
-
-                                    {firstName.map(letter => (
-                                        <td>{letter}</td>
-                                    ))}
-                                    <td></td>
-                                    <td>{middleName}</td>
-                                    <td>.</td>
-                                    <td></td>
+                                    <td>{name}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <div>
+                        <table style={{ width: '100%' }}>
+                            <tbody>
+                                <tr>
+                                    <td>{course}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
@@ -385,26 +365,16 @@ const FORM6APDF = (props) => {
                                         <Fragment>
                                             {
                                                 toDrop.map(x => (
-                                                    <tr> {/** course id*/}
-                                                        {x.courseCode.split('').map(y => (
-                                                            <Fragment>
-                                                                <td>{y}</td>
-                                                            </Fragment>
-                                                        ))}
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>{/** end course id*/}
-                                                        <td>{Number(x.lecUnits) + Number(x.labUnits)}</td>{/** units*/}
-                                                        <td>{x.days}</td>{/** days */}
-                                                        <td>{x.time}</td>{/** time*/}
-                                                        <td>{x.room}</td>{/** room*/}
-                                                        <td>{x.section}</td>{/** section*/}
-                                                    </tr>
+                                                    <Fragment>
+                                                        <tr>
+                                                            <td colSpan={15}>{x.courseCode} - {x.courseName}</td>
+                                                            <td>{Number(x.lecUnits) + Number(x.labUnits)}</td>{/** units*/}
+                                                            <td>{x.days}</td>{/** days */}
+                                                            <td>{x.time}</td>{/** time*/}
+                                                            <td>{x.room}</td>{/** room*/}
+                                                            <td>{x.section}</td>{/** section*/}
+                                                        </tr>
+                                                    </Fragment>
                                                 ))
                                             }
                                         </Fragment>
@@ -459,26 +429,16 @@ const FORM6APDF = (props) => {
                                         <Fragment>
                                             {
                                                 toAdd.map(x => (
-                                                    <tr> {/** course id*/}
-                                                        {x.courseCode.split('').map(y => (
-                                                            <Fragment>
-                                                                <td>{y}</td>
-                                                            </Fragment>
-                                                        ))}
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>{/** end course id*/}
-                                                        <td>{Number(x.lecUnits) + Number(x.labUnits)}</td>{/** units*/}
-                                                        <td>{x.days}</td>{/** days */}
-                                                        <td>{x.time}</td>{/** time*/}
-                                                        <td>{x.room}</td>{/** room*/}
-                                                        <td>{x.section}</td>{/** section*/}
-                                                    </tr>
+                                                    <Fragment>
+                                                        <tr>
+                                                            <td colSpan={15}>{x.courseCode} - {x.courseName}</td>
+                                                            <td>{Number(x.lecUnits) + Number(x.labUnits)}</td>{/** units*/}
+                                                            <td>{x.days}</td>{/** days */}
+                                                            <td>{x.time}</td>{/** time*/}
+                                                            <td>{x.room}</td>{/** room*/}
+                                                            <td>{x.section}</td>{/** section*/}
+                                                        </tr>
+                                                    </Fragment>
                                                 ))
                                             }
                                         </Fragment>
@@ -489,7 +449,7 @@ const FORM6APDF = (props) => {
                     </div>
                 </center>
 
-                <center>NEW TOTAL UNITS</center>
+                <center>NEW TOTAL UNITS: {newTotalUnits}</center>
 
                 <div className="signatories" style={{ textAlign: 'center', fontWeight: 'bold' }}>
                     <div>Dean or Representative</div>
@@ -506,8 +466,13 @@ const FORM6APDF = (props) => {
                     </div>
                 </center>
             </div>
+
             <Pdf targetRef={ref} filename="addDropForm.pdf" options={options}>
-                {({ toPdf }) => <button onClick={toPdf}>Capture as PDF</button>}
+                {({ toPdf }) =>
+                    <center>
+                        <Button onClick={toPdf} style={{ margin: '10px' }}>Save as PDF</Button>
+                    </center>
+                }
             </Pdf>
         </>
     );

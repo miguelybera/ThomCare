@@ -6,10 +6,11 @@ import Pdf from "react-to-pdf";
 import {
     INSIDE_DASHBOARD_FALSE
 } from '../../../constants/dashboardConstants'
+import { Button } from 'react-bootstrap'
 
 const ref = React.createRef();
 
-const PDF = (props) => {
+const FORM6BPDF = (props) => {
     const dispatch = useDispatch();
 
     const { formData } = useSelector(state => state.form)
@@ -22,6 +23,9 @@ const PDF = (props) => {
 
     return (
         <>
+            <span style={{ margin: '10px' }}>
+                <h4>Preview of accomplished form. Click 'Save as PDF' to download the form.</h4>
+            </span>
             <div className="Post" ref={ref}>
                 <h1>{props.title}</h1>
                 <h6>Cross-Enrollment Form</h6>
@@ -44,10 +48,14 @@ const PDF = (props) => {
                 ))}
             </div>
             <Pdf targetRef={ref} filename="addDropForm.pdf">
-                {({ toPdf }) => <button onClick={toPdf}>Capture as PDF</button>}
+                {({ toPdf }) =>
+                    <center>
+                        <Button onClick={toPdf} style={{ margin: '10px' }}>Save as PDF</Button>
+                    </center>
+                }
             </Pdf>
         </>
     );
 }
 
-export default PDF
+export default FORM6BPDF

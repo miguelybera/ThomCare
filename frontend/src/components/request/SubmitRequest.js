@@ -107,38 +107,40 @@ const SubmitRequest = () => {
                             <Card.Body>
                                 <Card.Title style={{ margin: '20px 0 20px 0', fontWeight: "bold" }}>Submit Request</Card.Title>
                                 <Form onSubmit={submitHandler}>
-                                    <Form.Group className="mb-3">
-                                        <FloatingLabel
-                                            label="Section"
-                                            className="mb-3"
-                                        >
-                                            <Form.Control
-                                                type='text'
-                                                placeholder="A"
-                                                name='section'
-                                                value={section}
-                                                onChange={e => setSection(upperCase(e.target.value))}
-                                                pattern="([A-z]){1}"
-                                                maxlength="1"
-                                                required
-                                            />
-                                        </FloatingLabel>
-                                    </Form.Group>
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Year Level: </Form.Label>
-                                        <Form.Select
-                                            className="mb-3"
-                                            aria-label="Default select example"
-                                            name="yearLevel" value={yearLevel}
-                                            onChange={e => setYearLevel(e.target.value)}
-                                            required
-                                        >
-                                            <option value=''>-</option>
-                                            {levels.map(level => (
-                                                <option value={level}>{level}</option>
-                                            ))}
-                                        </Form.Select>
-                                    </Form.Group>
+                                    <Row>
+                                        <Col xs={12} sm={12} md={6}>
+                                            <Form.Group className="mb-3">
+                                                <Form.Label>Year Level: </Form.Label>
+                                                <Form.Select
+                                                    className="mb-3"
+                                                    aria-label="Default select example"
+                                                    name="yearLevel" value={yearLevel}
+                                                    onChange={e => setYearLevel(e.target.value)}
+                                                    required
+                                                >
+                                                    <option value=''>-</option>
+                                                    {levels.map(level => (
+                                                        <option value={level}>{level}</option>
+                                                    ))}
+                                                </Form.Select>
+                                            </Form.Group>
+                                        </Col>
+                                        <Col xs={12} sm={12} md={6}>
+                                            <Form.Group className="mb-3">
+                                                <Form.Label>Section: </Form.Label>
+                                                <Form.Control
+                                                    type='text'
+                                                    placeholder="Section"
+                                                    name='section'
+                                                    value={section}
+                                                    onChange={e => setSection(upperCase(e.target.value))}
+                                                    pattern="([A-z]){1}"
+                                                    maxlength="1"
+                                                    required
+                                                />
+                                            </Form.Group>
+                                        </Col>
+                                    </Row>
                                     <Form.Group className="mb-3">
                                         <Form.Label>Request Type: </Form.Label>
                                         <Form.Select
@@ -186,6 +188,13 @@ const SubmitRequest = () => {
                                             </OverlayTrigger>
                                         </Form.Label>
                                         <Form.Control type="file" name="fileRequirements" onChange={onChange} multiple required />
+                                        <ul>
+                                            {fileRequirements && fileRequirements.map(file => (
+                                                <Fragment>
+                                                    <li>{file.name}</li>
+                                                </Fragment>
+                                            ))}
+                                        </ul>
                                     </Form.Group>
                                     <center>
                                         <Button

@@ -12,6 +12,9 @@ import {
     INSIDE_DASHBOARD_FALSE
 } from '../../../constants/dashboardConstants'
 
+const addDropStyle = {
+    marginBottom: '5px'
+}
 
 function Form6A({ history }) {
     const alert = useAlert()
@@ -151,71 +154,68 @@ function Form6A({ history }) {
                             <Card.Title style={{ margin: '10px 0 20px 0', color: '#9c0b0b', fontWeight: 'bold' }}>Student Information</Card.Title>
                             <Form style={{ color: 'black' }} onSubmit={submitHandler} >
                                 <Row className="mb-3">
-                                    <Form.Group as={Col}>
+                                    <Form.Group as={Col} xs={12} sm={12} md={4}>
                                         <Form.Label>First Name</Form.Label>
                                         <Form.Control type="text" value={user && user.firstName} readOnly />
                                     </Form.Group>
 
-                                    <Form.Group as={Col}>
+                                    <Form.Group as={Col} xs={12} sm={6} md={4}>
                                         <Form.Label>Middle Initial</Form.Label>
                                         <Form.Control type="text" placeholder="S." value={user && user.middleName ? user.middleName[0] : 'N/A'} readOnly />
                                     </Form.Group>
 
-                                    <Form.Group as={Col}>
+                                    <Form.Group as={Col} xs={12} sm={6} md={4}>
                                         <Form.Label>Last Name</Form.Label>
                                         <Form.Control type="text" value={user && user.lastName} readOnly />
                                     </Form.Group>
                                 </Row>
-
                                 <Row className="mb-3">
-                                    <Form.Group as={Col}>
+                                    <Form.Group as={Col} xs={12} sm={6} md={6} lg={4}>
                                         <Form.Label>Student Number</Form.Label>
                                         <Form.Control value={user && user.studentNumber} readOnly />
                                     </Form.Group>
 
-                                    <Form.Group as={Col}>
+                                    <Form.Group as={Col} xs={12} sm={6} md={6} lg={4}>
                                         <Form.Label>Course/Program</Form.Label>
                                         <Form.Control type="text" value={user && user.course} readOnly />
                                     </Form.Group>
 
-                                    <Row as={Col}>
-                                        <Form.Group as={Col} className="mb-3">
-                                            <Form.Label>Email address</Form.Label>
-                                            <Form.Control type='email' value={user && user.email} readOnly />
-                                        </Form.Group>
-                                    </Row>
+                                    <Form.Group as={Col} xs={12} sm={12} md={12} lg={4}>
+                                        <Form.Label>Email address</Form.Label>
+                                        <Form.Control type='email' value={user && user.email} readOnly />
+                                    </Form.Group>
                                 </Row>
                                 <Row className="mb-3">
-                                    <Form.Group as={Col}>
+                                    <Form.Group as={Col} xs={12} sm={12} md={6}>
                                         <Form.Label>Term</Form.Label>
                                         <Form.Control type="text" placeholder="1st" value={term} onChange={e => setTerm(e.target.value)} required />
                                     </Form.Group>
 
                                     <Row as={Col}>
                                         <Row>
-                                            <Form.Group as={Col}>
+                                            <Form.Group as={Col} xs={12}>
                                                 <Form.Label>Academic Year </Form.Label>
                                             </Form.Group>
                                         </Row>
 
                                         <Row>
-                                            <Col xs={1}>
+                                            <Col xs={1} sm={2}>
                                                 <Form.Label>20</Form.Label>
                                             </Col>
-                                            <Col xs={2}>
+                                            <Col xs={5} sm={4}>
                                                 <Form.Control type="text" placeholder="xx" pattern="[0-9]{2}" value={year1} onChange={e => setYear1(e.target.value)} required />
                                             </Col>
-                                            <Col xs={1}>
+                                            <Col xs={1} sm={2}>
                                                 <Form.Label>-20</Form.Label>
                                             </Col>
-                                            <Col xs={2}>
+                                            <Col xs={5} sm={4}>
                                                 <Form.Control type="text" placeholder="xx" pattern="[0-9]{2}" value={year2} onChange={e => setYear2(e.target.value)} required />
                                             </Col>
                                         </Row>
                                     </Row>
                                 </Row>
 
-                                <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold' }}>Courses to Add / Drop</Card.Title>
+                                <Card.Title style={{ margin: '5px 0 20px 0', color: 'black', fontWeight: 'bold' }}>Courses to Add / Drop</Card.Title>
                                 {
                                     inputFields.map((val, idx) => {
                                         //set unique id per row
@@ -231,104 +231,67 @@ function Form6A({ history }) {
 
                                         return (
                                             <Fragment key={val.index}>
-
-                                                <Row style={{ fontWeight: 'bold' }}>
-                                                    <Col xs={2}>
-                                                        <Form.Label>Add/Drop</Form.Label>
-                                                    </Col>
-                                                    <Col xs={2}>
-                                                        <Form.Label>Course ID</Form.Label>
-                                                    </Col>
-                                                    <Col xs={4}>
-                                                        <Form.Label>Course Name</Form.Label>
-                                                    </Col>
-                                                    <Col xs={2}>
-                                                        <Form.Label>Lec Units</Form.Label>
-                                                    </Col>
-                                                    <Col xs={2}>
-                                                        <Form.Label>Lab Units</Form.Label>
-                                                    </Col>
-                                                </Row>
-                                                <Row className="mb-2" >
-                                                    <Col xs={2}>
+                                                <p>Courses to add/drop #{idx+1}</p>
+                                                <Row style={{marginBottom: '10px'}}>
+                                                    <Col xs={12} md={3} lg={2} style={addDropStyle}>
                                                         <Form.Select aria-label="Default select example" name="status" id={status} data-id={idx} value={val.status} onChange={e => onChange(idx, e)} required>
-                                                            <option value=''>-</option>
+                                                            <option value=''>Add/Drop</option>
                                                             <option value="Add">Add</option>
                                                             <option value="Drop">Drop</option>
                                                         </Form.Select>
                                                     </Col>
-                                                    <Col xs={2}>
+                                                    <Col xs={12} md={9} lg={2} style={addDropStyle}>
                                                         <Form.Select aria-label="Default select example" name="courseCode" id={courseCode} data-id={idx} value={val.courseCode} onChange={e => onChange(idx, e)} required>
-                                                            <option value=''>-</option>
+                                                            <option value=''>Course Code</option>
                                                             {courses && courses.map(course => (
                                                                 <option value={course.courseCode}>{course.courseCode}</option>
                                                             ))}
                                                         </Form.Select>
                                                     </Col>
-                                                    <Col xs={4}>
-                                                        <Form.Control type="text" placeholder="Theology 1" name="courseName" id={courseName} data-id={idx} value={val.courseName} onChange={e => onChange(idx, e)} readOnly />
+                                                    <Col xs={12} lg={4} style={addDropStyle}>
+                                                        <Form.Control type="text" placeholder="Course Name" name="courseName" id={courseName} data-id={idx} value={val.courseName} onChange={e => onChange(idx, e)} readOnly />
                                                     </Col>
-                                                    <Col xs={2}>
-                                                        <Form.Control type="number" placeholder="3Lec" name="lecUnits" id={lecUnits} data-id={idx} value={val.lecUnits} onChange={e => onChange(idx, e)} readOnly />
+                                                    <Col xs={12} sm={6} lg={2} style={addDropStyle}>
+                                                        <Form.Control type="number" placeholder="Lec Units" name="lecUnits" id={lecUnits} data-id={idx} value={val.lecUnits} onChange={e => onChange(idx, e)} readOnly />
                                                     </Col>
-                                                    <Col xs={2}>
-                                                        <Form.Control type="number" placeholder="3Lec" name="labUnits" id={labUnits} data-id={idx} value={val.labUnits} onChange={e => onChange(idx, e)} readOnly />
+                                                    <Col xs={12} sm={6} lg={2} style={addDropStyle}>
+                                                        <Form.Control type="number" placeholder="Lab Units" name="labUnits" id={labUnits} data-id={idx} value={val.labUnits} onChange={e => onChange(idx, e)} readOnly />
                                                     </Col>
-                                                </Row>
-                                                <Row className="mb-3" >
-                                                    <Row style={{ fontWeight: 'bold' }}>
-                                                        <Col xs={2}>
-                                                            <Form.Label>Days</Form.Label>
-                                                        </Col>
-                                                        <Col xs={3}>
-                                                            <Form.Label>Time</Form.Label>
-                                                        </Col>
-                                                        <Col xs={3}>
-                                                            <Form.Label>Room</Form.Label>
-                                                        </Col>
-                                                        <Col xs={3}>
-                                                            <Form.Label>Section</Form.Label>
-                                                        </Col>
-                                                        <Col xs={1}>
-                                                            <Form.Label>+/-</Form.Label>
-                                                        </Col>
-                                                    </Row>
-                                                    <Row className="mb-3">
-                                                        <Col xs={2}>
-                                                            <Form.Select aria-label="Default select example" placeholder='M' name="days" id={days} data-id={idx} value={val.days} onChange={e => onChange(idx, e)} required >
-                                                                <option value=''>-</option>
-                                                                <option value='M'>M</option>
-                                                                <option value='T'>T</option>
-                                                                <option value='W'>W</option>
-                                                                <option value='Th'>Th</option>
-                                                                <option value='F'>F</option>
-                                                                <option value='S'>S</option>
-                                                                <option value='Su'>Su</option>
-                                                            </Form.Select>
-                                                        </Col>
-                                                        <Col xs={3}><Form.Control type="text" placeholder="3:00PM - 5:00PM" name="time" id={time} data-id={idx} value={val.time} onChange={e => onChange(idx, e)} required />
-                                                        </Col>
-                                                        <Col xs={3}>
-                                                            <Form.Control type="text" placeholder="Room number" name="room" id={room} data-id={idx} value={val.room} onChange={e => onChange(idx, e)} required />
-                                                        </Col>
-                                                        <Col xs={3}>
-                                                            <Form.Control type="text" placeholder="4ITF" name="section" id={section} data-id={idx} value={val.section} onChange={e => onChange(idx, e)} required />
-                                                        </Col>
-                                                        <Col xs={1} style={{ textAlign: 'right' }}>
-                                                            {
-                                                                idx === 0 ? (
-                                                                    <Button variant='primary' onClick={() => addRow()} style={{ width: '40px' }}>
-                                                                        <i className="fa fa-plus-circle" aria-hidden="true"></i>
-                                                                    </Button>
+                                                    <Col xs={12} sm={6} lg={3} style={addDropStyle}>
+                                                        <Form.Select aria-label="Default select example" placeholder='M' name="days" id={days} data-id={idx} value={val.days} onChange={e => onChange(idx, e)} required >
+                                                            <option value=''>Days</option>
+                                                            <option value='M'>M</option>
+                                                            <option value='T'>T</option>
+                                                            <option value='W'>W</option>
+                                                            <option value='Th'>Th</option>
+                                                            <option value='F'>F</option>
+                                                            <option value='S'>S</option>
+                                                            <option value='Su'>Su</option>
+                                                        </Form.Select>
+                                                    </Col>
+                                                    <Col xs={12} sm={6} lg={3} style={addDropStyle}>
+                                                        <Form.Control type="text" placeholder="Time" name="time" id={time} data-id={idx} value={val.time} onChange={e => onChange(idx, e)} required />
+                                                    </Col>
+                                                    <Col xs={12} sm={5} lg={2} style={addDropStyle}>
+                                                        <Form.Control type="text" placeholder="Room number" name="room" id={room} data-id={idx} value={val.room} onChange={e => onChange(idx, e)} required />
+                                                    </Col>
+                                                    <Col xs={10} sm={5} lg={3} style={addDropStyle}>
+                                                        <Form.Control type="text" placeholder="Section" name="section" id={section} data-id={idx} value={val.section} onChange={e => onChange(idx, e)} required />
+                                                    </Col>
+                                                    <Col xs={2} lg={1} style={{ textAlign: 'right', marginBottom: '5px' }}>
+                                                        {
+                                                            idx === 0 ? (
+                                                                <Button variant='primary' onClick={() => addRow()} style={{ width: '40px' }}>
+                                                                    <i className="fa fa-plus-circle" aria-hidden="true"></i>
+                                                                </Button>
 
-                                                                ) : (
-                                                                    <Button variant='danger' onClick={() => deleteRow(idx)} style={{ width: '40px' }}>
-                                                                        <i className="fa fa-minus" aria-hidden="true"></i>
-                                                                    </Button>
-                                                                )
-                                                            }
-                                                        </Col>
-                                                    </Row>
+                                                            ) : (
+                                                                <Button variant='danger' onClick={() => deleteRow(idx)} style={{ width: '40px' }}>
+                                                                    <i className="fa fa-minus" aria-hidden="true"></i>
+                                                                </Button>
+                                                            )
+                                                        }
+                                                    </Col>
                                                 </Row>
                                             </Fragment>
                                         )
@@ -343,8 +306,9 @@ function Form6A({ history }) {
                 </Container>
             ) : (
                 <FORM6APDF title={`Download Add Drop Form`} content={localStorage.getItem('formData')} />
-            )}
-        </Fragment>
+            )
+            }
+        </Fragment >
     )
 }
 

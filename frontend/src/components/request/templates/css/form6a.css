@@ -1,6 +1,6 @@
 .Post {
-    width: 780px;
-    font-size: 11px;
+    width: 817px;
+    font-size: 12px;
     padding: 20px;
 }
 
@@ -48,7 +48,7 @@
 
 .namesform {
     display: grid;
-    grid-template-columns: 85% 15%;
+    grid-template-columns: 80% 20%;
 }
 
 .namesform>div {
