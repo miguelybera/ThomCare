@@ -49,6 +49,14 @@ import {
     auditLogsReducer
 } from './reducers/auditReducers'
 
+import {
+    createFormReducer,
+    formsReducer,
+    formDetailsReducer,
+    formReducer
+} from './reducers/formReducers'
+
+
 const reducer = combineReducers({
     auth: authReducer, //get currently logged in, for login and logout
     users: getUsersReducer, //get all users
@@ -75,16 +83,19 @@ const reducer = combineReducers({
     requestDetails: getRequestDetailsReducer, //get single request details
     requests: getRequestsReducer, //get all requests
     recents: getRecentReducer,
-    form: saveFormDetailsReducer,
+    saveForm: saveFormDetailsReducer,
     request: requestReducer,
 
     courses: getCoursesReducer, //get single request details
     audits: auditLogsReducer, //get all audits
 
+    form: formReducer, // update delete form
+    forms: formsReducer, // get all forms
+    formDetails: formDetailsReducer, // get single form
+    newForm: createFormReducer, // create new form
+
     dashboard: dashboardReducer //check if inside dashboard,
 })
-
-
 
 let initialState = {
     student: {

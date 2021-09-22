@@ -1,15 +1,15 @@
 const mongoose = require('mongoose')
 
 const formSchema = new mongoose.Schema({
-    formName: {
+    title: {
         type: String,
         required: [true, 'Please enter the form name']
     },
-    formDescription: {
+    description: {
         type: String,
         default: ''
     },
-    formFiles: {
+    attachments: {
         type: Array,
         required: [true, 'Please attach form/s']
     },
@@ -21,7 +21,6 @@ const formSchema = new mongoose.Schema({
         type: String,
         required: true
     }
-
 }, {
     timestamps: true
 })

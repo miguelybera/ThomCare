@@ -29,9 +29,9 @@ const thomcareUpload = multer({
 })
 
 // Admin
-router.route('/admin/new/form').post(isAuthenticatedUser, thomcareUpload.array('formFiles'), authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), createForm);
-router.route('/form/:formId').put(isAuthenticatedUser, thomcareUpload.array('formFiles'), authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), updateForm)
-router.route('/form/:formId').delete(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), deleteForm)
+router.route('/admin/new/form').post(isAuthenticatedUser, thomcareUpload.array('attachments'), authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), createForm);
+router.route('/admin/form/:formId').put(isAuthenticatedUser, thomcareUpload.array('attachments'), authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), updateForm)
+router.route('/admin/form/:formId').delete(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), deleteForm)
 
 //All
 router.route('/forms').get(isAuthenticatedUser, getAllForms);

@@ -20,7 +20,7 @@ const SubmitRequest = () => {
     const alert = useAlert()
     const dispatch = useDispatch()
 
-    const { loading, success, error, request } = useSelector(state => state.form)
+    const { loading, success, error, request } = useSelector(state => state.saveForm)
 
     const submitHandler = e => {
         e.preventDefault()
@@ -37,7 +37,7 @@ const SubmitRequest = () => {
         dispatch(submitRequest(formData))
     }
 
-    const [fileRequirements, setFileRequirements] = useState()
+    const [fileRequirements, setFileRequirements] = useState([])
     const [section, setSection] = useState()
     const [yearLevel, setYearLevel] = useState()
     const [requestType, setRequestType] = useState()
@@ -77,7 +77,7 @@ const SubmitRequest = () => {
 
             setRequestType('')
             setNotes('')
-            setFileRequirements('')
+            setFileRequirements([])
             setSection('')
             setYearLevel('')
         }

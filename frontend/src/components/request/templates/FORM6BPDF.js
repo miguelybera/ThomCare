@@ -13,7 +13,7 @@ const ref = React.createRef();
 const FORM6BPDF = (props) => {
     const dispatch = useDispatch();
 
-    const { formData } = useSelector(state => state.form)
+    const { formData } = useSelector(state => state.saveForm)
 
     useEffect(() => {
         dispatch({

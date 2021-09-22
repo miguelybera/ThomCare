@@ -89,7 +89,7 @@ export const SidebarData = [
         },
         {
             title: 'Forms',
-            path: '/manageforms',
+            path: '/admin/manageforms',
             icon: <i class="fa fa-home" aria-hidden="true"></i>
         },
         {
@@ -173,7 +173,7 @@ export const SidebarData = [
         },
         {
             title: 'Forms',
-            path: '/manageforms',
+            path: '/admin/manageforms',
             icon: <i class="fa fa-home" aria-hidden="true"></i>
         },
         {

@@ -7,15 +7,15 @@ const cloudinary = require('cloudinary').v2;
 
 // Create or upload a new form => /api/v1/admin/new/form
 exports.createForm = catchAsyncErrors(async (req, res, next) => {
-    const { formName, formDescription } = req.body
-    const formFiles = req.files
+    const { title, description } = req.body
+    const attachments = req.files
     const createdBy = req.user.firstName + ' ' + req.user.middleName + ' ' + req.user.lastName
     const updatedBy = req.user.firstName + ' ' + req.user.middleName + ' ' + req.user.lastName
 
     const form = await Form.create({
-        formName,
-        formDescription,
-        formFiles,
+        title,
+        description,
+        attachments,
         createdBy,
         updatedBy
     })
@@ -59,19 +59,19 @@ exports.updateForm = catchAsyncErrors(async (req, res, next) => {
 
     let newFormName, newFormFiles, newFormDescription
 
-    if (req.body.formName == null || req.body.formName == '') {
-        newFormName = form.formName
+    if (req.body.title == null || req.body.title == '') {
+        newFormName = form.title
     } else {
-        newFormName = req.body.formName
+        newFormName = req.body.title
     }
 
-    if (req.body.formDescription == null || req.body.formDescription == '') {
-        newFormDescription = form.formDescription
+    if (req.body.description == null || req.body.description == '') {
+        newFormDescription = form.description
     } else {
-        newFormDescription = req.body.formDescription
+        newFormDescription = req.body.description
     }
 
-    const filesAttached = form.formFiles
+    const filesAttached = form.attachments
     const fileLength = filesAttached.length
     let arrayIds = []
 
@@ -80,7 +80,7 @@ exports.updateForm = catchAsyncErrors(async (req, res, next) => {
     }
 
     if (req.files == null || req.files == '') {
-        newFormFiles = form.formFiles
+        newFormFiles = form.attachments
     } else {
         if (arrayIds.length != 0) {
             for (let x = 0; x < arrayIds.length; x++) {
@@ -92,9 +92,9 @@ exports.updateForm = catchAsyncErrors(async (req, res, next) => {
     }
 
     let newFormsData = {
-        formName: newFormName,
-        formDescription: newFormDescription,
-        formFiles: newFormFiles,
+        title: newFormName,
+        description: newFormDescription,
+        attachments: newFormFiles,
         updatedBy: req.user.firstName + ' ' + req.user.middleName + ' ' + req.user.lastName,
     }
 
@@ -118,7 +118,7 @@ exports.deleteForm = catchAsyncErrors(async (req, res, next) => {
 
     if (!form) { return next(new ErrorHandler('Form Id does not exist')) }
 
-    const filesAttached = form.formFiles
+    const filesAttached = form.attachments
     const fileLength = filesAttached.length
     let arrayIds = []
 

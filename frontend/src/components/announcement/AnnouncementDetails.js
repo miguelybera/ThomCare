@@ -121,7 +121,7 @@ const AnnouncementDetails = ({ history, match }) => {
                             <ul>
                                 {files && files.map(file => (
                                     <Fragment>
-                                        <li><a href={file.path}>{file.originalname} <i class="fa fa-download" aria-hidden="true"></i></a> Size: {file.size / 1000} Kb</li>
+                                        <li><a href={file.path} target="_blank" rel="noreferrer">{file.originalname} <i class="fa fa-download" aria-hidden="true"></i></a> Size: {file.size / 1000} Kb</li>
                                     </Fragment>
                                 ))}
                             </ul>
