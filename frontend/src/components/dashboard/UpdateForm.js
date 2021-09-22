@@ -77,7 +77,7 @@ const UpdateForm = ({ history, match }) => {
             formData.append('attachments', file)
         })
 
-        dispatch(updateForm(formData))
+        dispatch(updateForm(formId, formData))
     }
 
     const onChange = e => {
