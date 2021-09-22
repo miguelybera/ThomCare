@@ -1,14 +1,39 @@
-import React, { Fragment } from 'react'
-import { Link } from 'react-router-dom'
+import React, { Fragment, useState, useEffect } from 'react'
+import { useAlert } from 'react-alert'
+import { useDispatch, useSelector } from 'react-redux'
+import MetaData from './../../layout/MetaData'
+import Loader from './../../layout/Loader'
+import Sidebar from './../../layout/Sidebar'
+import {
+    INSIDE_DASHBOARD_FALSE
+} from '../../../constants/dashboardConstants'
+import { getForms, clearErrors } from './../../../actions/formActions'
 import { Table, Row, InputGroup, FormControl, Container, Button } from 'react-bootstrap'
 
-
 const DownloadList = () => {
+    const dispatch = useDispatch()
+    const alert = useAlert()
+
+    const { loading, error, forms } = useSelector(state => state.forms)
+
+    useEffect(() => {
+        dispatch(getForms())
+
+        if (error) {
+            alert.error(error)
+            dispatch(clearErrors())
+        }
+
+        dispatch({
+            type: INSIDE_DASHBOARD_FALSE
+        })
+    }, [dispatch, error, alert])
+
     return (
         <Fragment>
             <Container>
                 <div id="rectangle" >
-                    <h3>FORMS</h3>
+                    <h3>DOWNLOADABLE FORMS</h3>
                 </div>
             </Container>
             <Container fluid style={{ paddingTop: '38px' }}>
@@ -16,49 +41,21 @@ const DownloadList = () => {
                     <thead>
                         <tr style={{ textAlign: 'center' }}>
                             <th>Document Name</th>
-                            <th>Availability</th>
+                            <th>Description</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody style={{ textAlign: 'center' }}>
-
-                        <tr>
-                            <td>Request for Crediting of Courses</td>
-                            <td>Available</td>
-                            <td><Link to='/form-6b'>
-                                <Button variant="primary" style={{margin: '5px'}}>
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Download
-                                </Button>
-
-                            </Link>
-                                <Button variant="warning" href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" >
-                                    <i class="fa fa-eye" aria-hidden="true"></i> View
+                        {forms && forms.map(form => (
+                            <tr>
+                                <td>{form.title}</td>
+                                <td>{form.description}</td>
+                                <td>
+                                    <Button variant="primary" href={form.attachments[0].path} >
+                                        <i class="fa fa-eye" aria-hidden="true"></i> View/Download
                                 </Button></td>
-                        </tr>
-                        <tr>
-                            <td>Request for Late Enrollment</td>
-                            <td>Available</td>
-                            <td><Link to='/petition-classes'>
-                                <Button variant="primary" style={{margin: '5px'}}>
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Download
-                                </Button>
-                            </Link>
-                                <Button variant="warning" href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" >
-                                    <i class="fa fa-eye" aria-hidden="true"></i> View
-                                </Button></td>
-                        </tr>
-                        <tr>
-                            <td>Request for Manual Enrollment</td>
-                            <td>Available</td>
-                            <td><Link to='/overload-form'>
-                                <Button variant="primary" style={{margin: '5px'}}>
-                                    <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Download
-                                </Button>
-                            </Link>
-                                <Button variant="warning" href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" >
-                                    <i class="fa fa-eye" aria-hidden="true"></i> View
-                                </Button></td>
-                        </tr>
+                            </tr>
+                        ))}
                     </tbody>
                 </Table>
             </Container>
