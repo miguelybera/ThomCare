@@ -66,7 +66,6 @@ import ListForms from './components/dashboard/ListForms'
 import ManageForms from './components/dashboard/ManageForms'
 import CreateForm from './components/dashboard/CreateForm'
 import UpdateForm from './components/dashboard/UpdateForm'
-import DownloadableForms from './components/dashboard/DownloadableForms'
 
 //route folder
 import ProtectedRoute from './components/route/ProtectedRoute'

@@ -104,18 +104,21 @@ const Announcements = () => {
             dispatch(clearErrors())
         }
 
-        if (announcementTypeError) {
-            alert.error(error)
-            dispatch(clearErrors())
-        }
-        
         dispatch(getAnnouncements(currentPage, course, yearLevel, track, title, announcementType))
-        dispatch(getAnnouncementType())
 
         dispatch({
             type: INSIDE_DASHBOARD_FALSE
         })
-    }, [dispatch, alert, error, announcementTypeError, currentPage, course, yearLevel, track, title, announcementType])
+    }, [dispatch, alert, error, currentPage, course, yearLevel, track, title, announcementType])
+
+    useEffect(() => {
+        dispatch(getAnnouncementType())
+
+        if (announcementTypeError) {
+            alert.error(error)
+            dispatch(clearErrors())
+        }
+    }, [dispatch, alert, announcementTypeError])
 
     const onChange = e => {
         setCurrentPageNo(1)
@@ -291,7 +294,7 @@ const Announcements = () => {
             </Container>
             <br />
 
-            {loading ? <Loader /> : (
+            {loading && announcementTypeLoading ? <Loader /> : (
                 <Row xs={1} md={2} className="g-4">
                     {announcements && (announcements.length !== 0) ? announcements.map(announcement => (
                         <Col>
@@ -313,9 +316,11 @@ const Announcements = () => {
                             </Card>
                         </Col>
                     )) : (
-                        <Col>
-                            <h3 style={{ margin: '10px 0' }}>No announcements found.</h3>
-                        </Col>
+                        loading ? <Loader /> : (
+                            <Col>
+                                <h3 style={{ margin: '10px 0' }}>No announcements found.</h3>
+                            </Col>
+                        )
                     )}
                 </Row>
             )}
