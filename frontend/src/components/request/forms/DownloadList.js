@@ -51,7 +51,7 @@ const DownloadList = () => {
                                 <td>{form.title}</td>
                                 <td>{form.description}</td>
                                 <td>
-                                    <Button variant="primary" href={form.attachments[0].path} target="_blank">
+                                    <Button variant="primary" href={form.attachments[0].path} target="_blank" rel="noreferrer">
                                         <i class="fa fa-eye" aria-hidden="true"></i> View/Download
                                 </Button></td>
                             </tr>
