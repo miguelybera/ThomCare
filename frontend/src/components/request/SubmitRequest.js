@@ -229,7 +229,7 @@ const SubmitRequest = () => {
                                     Attachments:
                                     <ul>
                                         {request?.fileRequirements.map(file => (
-                                            <li><a href={file.path}>{file.originalname}</a></li>
+                                            <li><a href={file.path} target="_blank">{file.originalname}</a></li>
                                         ))}
                                     </ul>
                                 </Card.Text>

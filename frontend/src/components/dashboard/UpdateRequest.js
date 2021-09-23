@@ -218,7 +218,7 @@ const UpdateRequest = ({ history, match }) => {
                                     <Form.Control type="text" value={notes} readOnly />
                                     {fileRequirements && (<p>Attachments:</p>)}
                                     {fileRequirements && fileRequirements.map(file => (
-                                        <li><a href={file.path}>{file.originalname}</a></li>
+                                        <li><a href={file.path} target="_blank">{file.originalname}</a></li>
                                     ))}
                                 </Form.Group>
                                 <Row className="mb-3">

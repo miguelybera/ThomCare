@@ -115,7 +115,7 @@ const TrackingPageProgress = ({ history, match }) => {
                     <p>{remark.remarksMessage}</p>
                     <ul>
                         {remark.returningFiles && remark.returningFiles.map(file => (
-                            <li><a href={file.path}>{file.originalname}</a></li>
+                            <li><a href={file.path} target="_blank">{file.originalname}</a></li>
                         ))}
                     </ul>
                     <p style={{ fontSize: '12px', color: 'gray', paddingTop: '10px' }}>By: {remark.userUpdated}</p>
@@ -154,7 +154,7 @@ const TrackingPageProgress = ({ history, match }) => {
                                 Attachments:
                                 <ul>
                                     {fileRequirements && fileRequirements.map(file => (
-                                        <li><a href={file.path}>{file.originalname}</a></li>
+                                        <li><a href={file.path} target="_blank">{file.originalname}</a></li>
                                     ))}
                                 </ul>
                             </Card.Text>
