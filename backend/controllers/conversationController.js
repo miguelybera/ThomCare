@@ -49,7 +49,6 @@ exports.getConversations = catchAsyncErrors(async (req, res, next) => {
     } catch (err) {
         return next(new ErrorHandler(err))
     }
-
 })
 
 // Get single conversation => /conversation/:conversationId
@@ -80,17 +79,26 @@ exports.createConvo = catchAsyncErrors(async (req, res, next) => {
         members: { $all: [req.body.receiverId, req.body.senderId] },
     })
 
-    if (existingConversation) { return next(new ErrorHandler(`Conversation exists`)) }
-
     const newConversation = new Conversation({
         members: [req.body.senderId, req.body.receiverId],
         names: [req.body.firstMember, req.body.secondMember]
     })
 
     try {
-        const savedConversation = await newConversation.save()
+        let conversation = {}, message = ''
 
-        res.status(200).json(savedConversation);
+        if (existingConversation) {
+            conversation = existingConversation
+            message = null
+        } else {
+            conversation = await newConversation.save()
+            message = 'Conversation created'
+        }
+
+        res.status(200).json({
+            conversation,
+            message
+        });
     } catch (err) {
         res.status(500).json(err)
     }
@@ -99,12 +107,15 @@ exports.createConvo = catchAsyncErrors(async (req, res, next) => {
 //get conv of user
 exports.getConvo = catchAsyncErrors(async (req, res, next) => {
     try {
-        const conversations = await Conversation.find({
-            members: { $in: [req.params.userId] },
-        })
+        const apiFeatures = new APIFeatures(Conversation.find({members: { $in: [req.user.id] }}), req.query)
+        .searchUser()
+        .filter()
+
+        const conversations = await apiFeatures.query
 
         res.status(201).json({
             success: true,
+            length: conversations.length,
             conversations
         })
 

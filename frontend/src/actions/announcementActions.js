@@ -249,7 +249,6 @@ export const createAnnouncementType = (announcementCategory) => async (dispatch)
             }
         }
 
-        console.log(announcementCategory)
         const { data } = await axios.post(`/api/v1/admin/createAnnouncementType`, { announcementCategory }, config)
 
         dispatch({

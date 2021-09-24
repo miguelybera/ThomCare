@@ -8,6 +8,7 @@ router.route('/createConversation').post(isAuthenticatedUser, createConversation
 router.route('/conversations').get(isAuthenticatedUser, getConversations);
 router.route('/conversation/:conversationId').get(isAuthenticatedUser, getSingleConversation);
 
+//ito yugn ginagamit
 //from github
 router.route('/createConvo').post(isAuthenticatedUser, createConvo);
 router.route('/convo/:userId').get(isAuthenticatedUser, getConvo);

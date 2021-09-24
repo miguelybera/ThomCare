@@ -13,14 +13,13 @@ import {
 } from '../constants/chatConstants'
 
 //get all conversations
-export const getConversations = (id) => async(dispatch) => {
-
+export const getConversations = (id, name) => async(dispatch) => {
     try {
         dispatch({
             type: ALL_CONVERSATIONS_REQUEST
         })
 
-        const { data } = await axios.get(`/api/v1/convo/${id}`)
+        const { data } = await axios.get(`/api/v1/convo/${id}?${name ? `keyword=${name}` : ``}`)
 
         dispatch({
             type: ALL_CONVERSATIONS_SUCCESS,

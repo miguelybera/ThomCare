@@ -22,6 +22,7 @@ import {
 import { Modal, Button } from 'react-bootstrap'
 import MetaData from '../../../layout/MetaData'
 import Sidebar from '../../../layout/Sidebar'
+import Loader from '../../../layout/Loader'
 import { INSIDE_DASHBOARD_TRUE } from '../../../../constants/dashboardConstants'
 
 const Messenger = ({ history }) => {
@@ -29,8 +30,8 @@ const Messenger = ({ history }) => {
     const alert = useAlert();
 
     const { user } = useSelector(state => state.auth)
-    const { conversations } = useSelector(state => state.conversations)
-    const { success, error } = useSelector(state => state.createConvo)
+    const { loading, conversations } = useSelector(state => state.conversations)
+    const { conversation, message: convMessage, error } = useSelector(state => state.createConvo)
 
     const [currentChat, setCurrentChat] = useState(null)
     const [messageList, setMessageList] = useState([])
@@ -38,6 +39,7 @@ const Messenger = ({ history }) => {
     const [arrivalMessage, setArrivalMessage] = useState('')
     const [onlineUsers, setOnlineUsers] = useState([])
     const [userName, setUserName] = useState('')
+    const [search, setSearch] = useState('')
 
     const scrollRef = useRef()
 
@@ -111,8 +113,12 @@ const Messenger = ({ history }) => {
     }, [])
     //sockets end
 
+    const [clicked, setClicked] = useState(0)
+    const searchButton = () => {
+        setClicked(clicked + 1)
+    }
     useEffect(() => {
-        dispatch(getConversations(userId))
+        dispatch(getConversations(userId, search))
 
         const getMessages = async (id) => {
             try {
@@ -136,8 +142,9 @@ const Messenger = ({ history }) => {
                 )
             }
         }
+
         getMessages(currentChatId)
-    }, [dispatch, user, currentChat])
+    }, [dispatch, user, currentChat, clicked])
 
     useEffect(() => {
         scrollRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -185,12 +192,14 @@ const Messenger = ({ history }) => {
 
     const name = user && user.firstName + ' ' + user.lastName
     useEffect(() => {
-        if (success) {
+        if (conversation) {
             history.push('/messenger')
-            setCurrentChat(success)
-            setUserName(success.names[0] === name ? success.names[1] : success.names[0])
+            setCurrentChat(conversation)
+            setUserName(conversation.names[0] === name ? conversation.names[1] : conversation.names[0])
 
-            alert.success('Conversation created')
+            if (convMessage) {
+                alert.success(convMessage)
+            }
         }
 
         if (error) {
@@ -201,7 +210,7 @@ const Messenger = ({ history }) => {
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, success, error, history])
+    }, [dispatch, history, conversation, error])
 
     const imglink = 'https://res.cloudinary.com/dwcxehcui/image/upload/v1632063359/logo/default_w0escb.png'
 
@@ -255,21 +264,29 @@ const Messenger = ({ history }) => {
             <div className='messenger'>
                 <div className='chatMenu'>
                     <div className='chatMenuWrapper'>
-                        <input placeholder='Search for friends' className='chatMenuInput' />
+                        <input
+                            placeholder='Search for friends'
+                            className='chatMenuInput'
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                        />
+                        <Button onClick={() => searchButton()}>Search</Button>
                         <Button variant="primary" onClick={handleShow}>
                             + New message
                         </Button>
-                        {conversations.map((c) => (
-                            <Fragment>
-                                <div onClick={() => {
-                                    console.log(c)
-                                    setCurrentChat(c)
-                                    setUserName(c.names[0] === name ? c.names[1] : c.names[0])
-                                }}>
-                                    <Conversation conversation={c} currentUser={user} />
-                                </div>
-                            </Fragment>
-                        ))}
+                        {loading ? <Loader /> : (
+                            conversations.map((c) => (
+                                <Fragment>
+                                    <div onClick={() => {
+                                        setSearch('')
+                                        setCurrentChat(c)
+                                        setUserName(c.names[0] === name ? c.names[1] : c.names[0])
+                                    }}>
+                                        <Conversation conversation={c} currentUser={user} />
+                                    </div>
+                                </Fragment>
+                            ))
+                        )}
                     </div>
                 </div>
                 <div className='chatBox'>

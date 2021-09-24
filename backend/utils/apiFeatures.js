@@ -44,11 +44,19 @@ class APIFeatures {
         this.query = this.query.find({ ...keyword });
         return this;
     }
+    searchUser() {
+        const keyword = this.queryStr.keyword ? {
+            names: {
+                $regex: this.queryStr.keyword,
+                $options: 'i'
+            }
+        } : {}
 
+        this.query = this.query.find({ ...keyword });
+        return this;
+    }
     filter() {
-
         const queryCopy = { ...this.queryStr };
-
 
         // Removing fields from the query string
         const removeFields = ['keyword', 'limit', 'page']

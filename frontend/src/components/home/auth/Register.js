@@ -34,7 +34,6 @@ const Register = ({ history }) => {
     const onChange = e => {
         e.preventDefault()
 
-        console.log(e.target.name, e.target.value)
         setUser({
             ...user,
             [e.target.name]: e.target.name === 'firstName' || e.target.name === 'lastName' ? upperCase(e.target.value) : e.target.value
@@ -42,7 +41,6 @@ const Register = ({ history }) => {
     }
 
     const submitHandler = e => {
-        console.log(firstName, middleName, lastName)
         dispatch(saveStudentInfo({ firstName, middleName, lastName, studentNumber, email, course, password, confirmPassword }))
         history.push('/confirm/register')
     }
