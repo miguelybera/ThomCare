@@ -303,11 +303,6 @@ const Messenger = ({ history }) => {
                         }
                     </div>
                 </div>
-                <div className='chatOnline'>
-                    <div className='chatOnlineWrapper'>
-                        <ChatOnline onlineUsers={onlineUsers} currentUser={userId} setCurrentChat={setCurrentChat} />
-                    </div>
-                </div>
             </div>
 
         </>
