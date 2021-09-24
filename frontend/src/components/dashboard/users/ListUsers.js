@@ -86,9 +86,17 @@ const ListUsers = ({ history }) => {
         }
 
         users.forEach(user => {
+            const middleName = user.middleName ? user.middleName.split(' ') : ''
+
+            let middleInitial = ''
+
+            middleName && middleName.forEach(x => {
+                middleInitial += x[0]
+            })
+            
             data.rows.push({
                 role: user.role,
-                name: `${user.firstName} ${user.lastName}`,
+                name: `${user.firstName} ${middleInitial} ${user.lastName}`,
                 email: user.email,
                 actions: <Fragment>
                     {(user._id === currentUser._id) ? (

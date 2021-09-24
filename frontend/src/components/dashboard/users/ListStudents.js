@@ -61,14 +61,14 @@ const ListStudents = ({ history }) => {
         const data = {
             columns: [
                 {
-                    label: 'Role',
-                    field: 'role',
-                    width: 100
+                    label: 'Student Number',
+                    field: 'studentNumber',
+                    width: 150
                 },
                 {
                     label: 'Name',
                     field: 'name',
-                    width: 150
+                    width: 200
                 },
                 {
                     label: 'Email',
@@ -85,10 +85,18 @@ const ListStudents = ({ history }) => {
         }
 
         users.forEach(user => {
+            const middleName = user.middleName ? user.middleName.split(' ') : ''
+
+            let middleInitial = ''
+
+            middleName && middleName.forEach(x => {
+                middleInitial += x[0]
+            })
+            
             data.rows.push({
-                role: user.role,
-                name: `${user.firstName} ${user.lastName}`,
+                name: `${user.firstName} ${middleInitial} ${user.lastName}`,
                 email: user.email,
+                studentNumber: user.studentNumber,
                 actions: <Fragment>
                     <Link to={`/admin/user/${user._id}`}>
                         <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
@@ -110,7 +118,7 @@ const ListStudents = ({ history }) => {
 
     return (
         <Fragment>
-            <MetaData title={'All Users'} />
+            <MetaData title={'All Students'} />
             <Modal
                 show={show}
                 onHide={handleClose}

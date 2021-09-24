@@ -84,7 +84,9 @@ const Profile = () => {
                     <Row className='justify-content-md-center' style={{ marginTop: '30px' }}>
                         <Card style={{ backgroundColor: "#F5F5F5", width: '40rem', align: 'center' }}>
                             <Card.Body >
-                                <Card.Title style={{ margin: '20px 0 20px 0', fontWeight: "bold" }}>My Profile</Card.Title>
+                                <Card.Title style={{ margin: '20px 0 20px 0', fontWeight: "bold" }}>
+                                    {editProfile ? 'Edit My Profile' : 'My Profile'}
+                                </Card.Title>
                                 <Form onSubmit={submitHandler}>
                                     <Form.Group as={Row} className="mb-3">
                                         <Form.Label column sm={2}>
