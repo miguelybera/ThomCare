@@ -2,21 +2,15 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
+import { getAnnouncementDetails, getAnnouncementType, createAnnouncementType, updateAnnouncement, clearErrors } from '../../../actions/announcementActions'
+import { ANNOUNCEMENT_DETAILS_RESET, NEW_ANNOUNCEMENT_TYPE_RESET, UPDATE_ANNOUNCEMENT_RESET } from '../../../constants/announcementConstants'
+import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
-import { ANNOUNCEMENT_DETAILS_RESET, NEW_ANNOUNCEMENT_TYPE_RESET, UPDATE_ANNOUNCEMENT_RESET } from '../../../constants/announcementConstants'
-import { getAnnouncementDetails, getAnnouncementType, createAnnouncementType, updateAnnouncement, clearErrors } from '../../../actions/announcementActions'
-import {
-    INSIDE_DASHBOARD_TRUE
-} from '../../../constants/dashboardConstants'
-
-// <Card.Title style={{margin: '50px 0 20px 0'}}>Register an account</Card.Title>
-
 var dateFormat = require('dateformat')
 
 const UpdateAnnouncement = ({ history, match }) => {
-
     const dispatch = useDispatch()
     const alert = useAlert()
 
@@ -40,63 +34,17 @@ const UpdateAnnouncement = ({ history, match }) => {
     const [ctr, setCtr] = useState(0)
 
     const levels = ['All', '1st Year', '2nd Year', '3rd Year', '4th Year']
-
     const programs = ['All', 'Computer Science', 'Information Systems', 'Information Technology']
-
-    const csTracks = [
-        "All",
-        "Core Computer Science",
-        "Game Development",
-        "Data Science"
-    ]
-
-    const itTracks = [
-        "All",
-        "Network and Security",
-        "Web and Mobile App Development",
-        "IT Automation"
-    ]
-
-    const isTracks = [
-        "All",
-        "Business Analytics",
-        "Service Management"
-    ]
-
-    const submitHandler = e => {
-        e.preventDefault()
-
-        const formData = new FormData()
-
-        formData.set('title', title)
-        formData.set('description', description)
-        formData.set('yearLevel', yearLevel)
-        formData.set('course', course)
-        formData.set('track', track)
-
-        if (announcementType === 'Others') {
-            formData.set('announcementType', announcementCategory)
-            dispatch(createAnnouncementType(announcementCategory))
-        } else {
-            formData.set('announcementType', announcementType)
-        }
-
-        formData.set('setExpiry', setExpiry)
-        formData.set('archiveDate', changeDateFormat(archiveDate))
-
-        fileAttachments.forEach(file => {
-            formData.append('fileAttachments', file)
-        })
-
-        dispatch(updateAnnouncement(announcement._id, formData))
-    }
+    const csTracks = ["All", "Core Computer Science", "Game Development", "Data Science"]
+    const itTracks = ["All", "Network and Security", "Web and Mobile App Development", "IT Automation"]
+    const isTracks = ["All", "Business Analytics", "Service Management"]
 
     const announcementId = match.params.id
 
     useEffect(() => {
         dispatch(getAnnouncementType())
 
-        if(announcementTypeError) {
+        if (announcementTypeError) {
             alert.error(announcementTypeError)
             dispatch(clearErrors())
         }
@@ -175,6 +123,34 @@ const UpdateAnnouncement = ({ history, match }) => {
         })
     }
 
+    const submitHandler = e => {
+        e.preventDefault()
+
+        const formData = new FormData()
+
+        formData.set('title', title)
+        formData.set('description', description)
+        formData.set('yearLevel', yearLevel)
+        formData.set('course', course)
+        formData.set('track', track)
+
+        if (announcementType === 'Others') {
+            formData.set('announcementType', announcementCategory)
+            dispatch(createAnnouncementType(announcementCategory))
+        } else {
+            formData.set('announcementType', announcementType)
+        }
+
+        formData.set('setExpiry', setExpiry)
+        formData.set('archiveDate', changeDateFormat(archiveDate))
+
+        fileAttachments.forEach(file => {
+            formData.append('fileAttachments', file)
+        })
+
+        dispatch(updateAnnouncement(announcement._id, formData))
+    }
+    
     return (
         <Fragment>
             <MetaData title={'Update Announcement'} />

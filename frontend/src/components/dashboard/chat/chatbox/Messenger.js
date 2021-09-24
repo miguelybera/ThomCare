@@ -22,9 +22,7 @@ import {
 import { Modal, Button } from 'react-bootstrap'
 import MetaData from '../../../layout/MetaData'
 import Sidebar from '../../../layout/Sidebar'
-import {
-    INSIDE_DASHBOARD_TRUE
-} from '../../../../constants/dashboardConstants'
+import { INSIDE_DASHBOARD_TRUE } from '../../../../constants/dashboardConstants'
 
 const Messenger = ({ history }) => {
     const dispatch = useDispatch()

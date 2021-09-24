@@ -2,26 +2,23 @@ import React, { Fragment, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
+import { Container, Button, Row, Col } from 'react-bootstrap'
+import { MDBDataTableV5 } from 'mdbreact'
 import { getRequests, getRecent, clearErrors } from '../../../actions/requestActions'
+import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
-import { Container, Button, Row, Col } from 'react-bootstrap'
-import { MDBDataTableV5 } from 'mdbreact'
-import {
-    INSIDE_DASHBOARD_TRUE
-} from '../../../constants/dashboardConstants'
 import ReportCard from './ReportCard'
-
 var dateFormat = require('dateformat')
 
 const ControlPanel = () => {
+    const dispatch = useDispatch()
+    const alert = useAlert()
+
     const { user } = useSelector(state => state.auth)
     const { loading: listLoading, error, requests, processing, pending, approved, denied } = useSelector(state => state.requests)
     const { loading: recentsLoading, error: recentsError, recents } = useSelector(state => state.recents)
-
-    const dispatch = useDispatch()
-    const alert = useAlert()
 
     const role = user && user.role
     
@@ -41,6 +38,9 @@ const ControlPanel = () => {
         viewType = '1'
     }
 
+    const changeDateFormat = (date) => dateFormat(date, "yyyy-mm-dd")
+    const upperCase = (text) => text.toUpperCase()
+
     useEffect(() => {
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
@@ -59,12 +59,6 @@ const ControlPanel = () => {
             dispatch(clearErrors())
         }
     }, [dispatch, alert, error, role, reqType, recentsError])
-
-    function changeDateFormat(date) {
-        return dateFormat(date, "mmm d, yyyy h:MMtt")
-    }
-
-    const upperCase = (text) => text.toUpperCase()
 
     const setRequests = () => {
         const data = {

@@ -2,16 +2,13 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
+import { Form, FormControl, Card, Row, Col, Container } from 'react-bootstrap'
 import Pagination from 'react-js-pagination'
 import { getAnnouncements, getAnnouncementType, clearErrors } from './../../../actions/announcementActions'
 import MetaData from './../../layout/MetaData'
 import Loader from './../../layout/Loader'
+import { INSIDE_DASHBOARD_FALSE } from '../../../constants/dashboardConstants'
 import '../../../App.css'
-import { Form, FormControl, Card, Row, Col, Container } from 'react-bootstrap'
-import {
-    INSIDE_DASHBOARD_FALSE
-} from '../../../constants/dashboardConstants'
-
 var dateFormat = require('dateformat')
 
 const dropdown = {
@@ -29,40 +26,11 @@ const Announcements = () => {
 
     const [currentPage, setCurrentPage] = useState(1)
 
-    const tracks = [
-        'Core Computer Science',
-        'Game Development',
-        'Data Science',
-        'Network and Security',
-        'Web and Mobile App Development',
-        'IT Automation',
-        'Business Analytics',
-        'Service Management'
-    ]
-
-    const csTracks = [
-        'Core Computer Science',
-        'Game Development',
-        'Data Science'
-    ]
-
-    const itTracks = [
-        'Network and Security',
-        'Web and Mobile App Development',
-        'IT Automation'
-    ]
-
-    const isTracks = [
-        'Business Analytics',
-        'Service Management'
-    ]
-
-    function setCurrentPageNo(pageNumber) {
-        setCurrentPage(pageNumber)
-    }
-
-    let count = announcementCount
-
+    const tracks = ['Core Computer Science', 'Game Development', 'Data Science', 'Network and Security', 'Web and Mobile App Development', 'IT Automation', 'Business Analytics', 'Service Management']
+    const csTracks = ['Core Computer Science', 'Game Development', 'Data Science']
+    const itTracks = ['Network and Security', 'Web and Mobile App Development', 'IT Automation']
+    const isTracks = ['Business Analytics', 'Service Management']
+    
     const [filter, setFilter] = useState({
         course: '',
         yearLevel: '',
@@ -71,17 +39,36 @@ const Announcements = () => {
         title: ''
     })
 
+    const { course, yearLevel, track, announcementType, title } = filter
+
+    let count = announcementCount
+
     if (filter.course !== '' || filter.yearLevel !== '' || filter.track !== '' || filter.announcementType !== '' || filter.title !== '') {
         count = filteredAnnouncementsCount
     }
+    
+    const changeDateFormat = date => dateFormat(date, "dddd mmm d, yyyy h:MMtt")
 
-    const { course, yearLevel, track, announcementType, title } = filter
+    function setCurrentPageNo(pageNumber) {
+        setCurrentPage(pageNumber)
+    }
+
+    function shortenDescription(description) {
+        let y = description.split(' ')
+        let z = description.split(' ').slice(0, 50).join(' ')
+
+        if (y.length > 50) {
+            z = z + '...'
+        }
+
+        return z
+    }
 
     useEffect(() => {
         dispatch(getAnnouncementType())
 
         if (announcementTypeError) {
-            alert.error(error)
+            alert.error(announcementTypeError)
             dispatch(clearErrors())
         }
     }, [dispatch, alert, announcementTypeError])
@@ -125,21 +112,6 @@ const Announcements = () => {
                 [e.target.name]: e.target.value
             })
         }
-    }
-
-    function changeDateFormat(date) {
-        return dateFormat(date, "dddd mmm d, yyyy h:MMtt")
-    }
-
-    function shortenDescription(description) {
-        let y = description.split(' ')
-        let z = description.split(' ').slice(0, 50).join(' ')
-
-        if (y.length > 50) {
-            z = z + '...'
-        }
-
-        return z
     }
 
     return (

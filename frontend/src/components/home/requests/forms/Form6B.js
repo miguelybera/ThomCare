@@ -8,9 +8,7 @@ import MetaData from '../../../layout/MetaData'
 import Loader from '../../../layout/Loader'
 import { Row, Container, Button, Col, Card, Form, Breadcrumb } from 'react-bootstrap'
 import FORM6BPDF from '../templates/FORM6BPDF'
-import {
-    INSIDE_DASHBOARD_FALSE
-} from '../../../../constants/dashboardConstants'
+import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
 
 function Form6B() {
     const alert = useAlert()

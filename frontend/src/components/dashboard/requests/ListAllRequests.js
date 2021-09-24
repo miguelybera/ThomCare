@@ -2,16 +2,13 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
+import { Container, Button } from 'react-bootstrap'
+import { MDBDataTableV5 } from 'mdbreact'
 import { getRequests, clearErrors } from '../../../actions/requestActions'
+import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
-import { Container, Button } from 'react-bootstrap'
-import { MDBDataTableV5 } from 'mdbreact'
-import {
-    INSIDE_DASHBOARD_TRUE
-} from '../../../constants/dashboardConstants'
-
 var dateFormat = require('dateformat')
 
 const ListAllRequests = ({ history }) => {
@@ -24,8 +21,10 @@ const ListAllRequests = ({ history }) => {
     const [requestList, setRequestList] = useState([])
     const [status, setStatus] = useState('Requests')
 
+    const changeDateFormat = (date) => dateFormat(date, "mmm d, yyyy h:MMtt")
+    const upperCase = (text) => text.toUpperCase()
+    
     useEffect(() => {
-
         setRequestList([])
         
         switch (status) {
@@ -64,12 +63,6 @@ const ListAllRequests = ({ history }) => {
             type: INSIDE_DASHBOARD_TRUE
         })
     }, [dispatch, history, alert, error])
-
-    function changeDateFormat(date) {
-        return dateFormat(date, "mmm d, yyyy h:MMtt")
-    }
-
-    const upperCase = (text) => text.toUpperCase()
 
     const setRequests = () => {
         const data = {

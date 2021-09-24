@@ -1,13 +1,11 @@
 import React, { Fragment, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
+import { Button, Card, Container } from 'react-bootstrap'
 import { register, clearErrors } from '../../../actions/userActions'
 import { REGISTER_USER_RESET } from '../../../constants/userConstants'
-import { Button, Card, Container } from 'react-bootstrap'
+import { INSIDE_DASHBOARD_FALSE } from '../../../constants/dashboardConstants'
 import MetaData from '../../layout/MetaData'
-import {
-    INSIDE_DASHBOARD_FALSE
-} from '../../../constants/dashboardConstants'
 
 const ConfirmRegister = ({ history }) => {
     const alert = useAlert()
@@ -16,10 +14,8 @@ const ConfirmRegister = ({ history }) => {
     const { error, loading, message, isCreated } = useSelector(state => state.register)
     const { studentInfo } = useSelector(state => state.student)
 
-    const submitHandler = (e) => {
-        e.preventDefault()
-
-        dispatch(register(false, studentInfo))
+    const goBack = () => {
+        history.push('/register')
     }
 
     useEffect(() => {
@@ -41,10 +37,12 @@ const ConfirmRegister = ({ history }) => {
             type: INSIDE_DASHBOARD_FALSE
         })
 
-    }, [dispatch, alert, error, message, history, isCreated])
+    }, [dispatch, history, alert, error, message, isCreated])
 
-    const goBack = () => {
-        history.push('/register')
+    const submitHandler = (e) => {
+        e.preventDefault()
+
+        dispatch(register(false, studentInfo))
     }
 
     return (

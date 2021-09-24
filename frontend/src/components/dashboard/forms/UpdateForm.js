@@ -1,15 +1,13 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
+import { FloatingLabel, Form, Button, Card, Container, Row, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { getFormDetails, updateForm, clearErrors } from './../../../actions/formActions'
 import { UPDATE_FORM_RESET } from './../../../constants/formConstants'
+import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import MetaData from './../../layout/MetaData'
 import Loader from './../../layout/Loader'
 import Sidebar from './../../layout/Sidebar'
-import { FloatingLabel, Form, Button, Card, Container, Row, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import {
-    INSIDE_DASHBOARD_TRUE
-} from '../../../constants/dashboardConstants'
 
 const UpdateForm = ({ history, match }) => {
     const alert = useAlert()
@@ -60,6 +58,17 @@ const UpdateForm = ({ history, match }) => {
         })
     }, [dispatch, history, alert, isUpdated, updateError, error, form, formId])
 
+    const onChange = e => {
+        const files = Array.from(e.target.files)
+
+        setOldAttachments([])
+        setAttachments([])
+
+        files.forEach(file => {
+            setAttachments(oldArray => [...oldArray, file])
+        })
+    }
+
     const submitHandler = e => {
         e.preventDefault()
 
@@ -72,17 +81,6 @@ const UpdateForm = ({ history, match }) => {
         })
 
         dispatch(updateForm(formId, formData))
-    }
-
-    const onChange = e => {
-        const files = Array.from(e.target.files)
-
-        setOldAttachments([])
-        setAttachments([])
-
-        files.forEach(file => {
-            setAttachments(oldArray => [...oldArray, file])
-        })
     }
 
     return (

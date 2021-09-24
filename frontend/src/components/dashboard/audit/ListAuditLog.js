@@ -1,24 +1,22 @@
 import React, { Fragment, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
+import { Container } from 'react-bootstrap'
+import { MDBDataTableV5 } from 'mdbreact'
 import { getAuditLog, clearErrors } from '../../../actions/auditActions'
+import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
-import { Container } from 'react-bootstrap'
-import { MDBDataTableV5 } from 'mdbreact'
-import {
-    INSIDE_DASHBOARD_TRUE
-} from '../../../constants/dashboardConstants'
-
 var dateFormat = require('dateformat')
 
 const ListAllRequests = () => {
-
     const alert = useAlert()
     const dispatch = useDispatch()
 
     const { loading, audits, error } = useSelector(state => state.audits)
+
+    const changeDateFormat = (date) => dateFormat(date, "yyyy-mm-dd")
 
     useEffect(() => {
         dispatch(getAuditLog())
@@ -32,10 +30,6 @@ const ListAllRequests = () => {
             type: INSIDE_DASHBOARD_TRUE
         })
     }, [dispatch, alert, error])
-
-    function changeDateFormat(date) {
-        return dateFormat(date, "mmm d, yyyy h:MMtt")
-    }
 
     const setAudits = () => {
         const data = {

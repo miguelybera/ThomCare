@@ -1,18 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Card, Container, Row } from 'react-bootstrap'
-import axios from 'axios'
+import { VERIFY_STUDENT_REQUEST, VERIFY_STUDENT_SUCCESS, VERIFY_STUDENT_FAIL, VERIFY_STUDENT_RESET } from './../../../constants/userConstants'
+import { INSIDE_DASHBOARD_FALSE } from '../../../constants/dashboardConstants'
 import MetaData from './../../layout/MetaData'
 import Loader from './../../layout/Loader'
-import {
-    VERIFY_STUDENT_REQUEST,
-    VERIFY_STUDENT_SUCCESS,
-    VERIFY_STUDENT_FAIL,
-    VERIFY_STUDENT_RESET
-} from './../../../constants/userConstants'
-import {
-    INSIDE_DASHBOARD_FALSE
-} from '../../../constants/dashboardConstants'
+import axios from 'axios'
 
 const VerifyRegistration = ({ history, match }) => {
     const dispatch = useDispatch()
@@ -74,7 +67,7 @@ const VerifyRegistration = ({ history, match }) => {
 
     return (
         <>
-            <MetaData title={'Registration successful'} />
+            <MetaData title={message ? 'Registration successful' : 'Registration error'} />
             <Container fluid>
                 <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
                     <Card style={{ width: '30rem', align: 'center' }}>

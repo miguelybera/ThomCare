@@ -2,21 +2,17 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
+import { Container, Modal, Button } from 'react-bootstrap'
+import { MDBDataTableV5 } from 'mdbreact'
 import { getRequests, deleteRequest, clearErrors } from '../../../actions/requestActions'
 import { DELETE_REQUEST_RESET } from '../../../constants/requestConstants'
+import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
-import { Container, Modal, Button } from 'react-bootstrap'
-import { MDBDataTableV5 } from 'mdbreact'
-import {
-    INSIDE_DASHBOARD_TRUE
-} from '../../../constants/dashboardConstants'
-
 var dateFormat = require('dateformat')
 
 const ListStudentRequests = ({ history }) => {
-
     const alert = useAlert()
     const dispatch = useDispatch()
 
@@ -28,6 +24,9 @@ const ListStudentRequests = ({ history }) => {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    
+    const changeDateFormat = (date) => dateFormat(date, "mmm d, yyyy h:MMtt")
+    const upperCase = (text) => text.toUpperCase()
 
     useEffect(() => {
         dispatch(getRequests('Student', ''))
@@ -54,19 +53,12 @@ const ListStudentRequests = ({ history }) => {
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, alert, error, deleteError, isDeleted])
-
-    function changeDateFormat(date) {
-        return dateFormat(date, "mmm d, yyyy h:MMtt")
-    }
+    }, [dispatch, history, alert, error, deleteError, isDeleted])
 
     const deleteRequestHandler = (id) => {
         dispatch(deleteRequest(id))
         handleClose()
     }
-
-    const upperCase = (text) => text.toUpperCase()
-
 
     const setRequests = () => {
         const data = {

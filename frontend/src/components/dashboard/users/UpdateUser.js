@@ -2,17 +2,14 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
+import { getUserDetails, updateUser, clearErrors } from '../../../actions/userActions'
+import { UPDATE_USER_RESET } from '../../../constants/userConstants'
+import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
-import { UPDATE_USER_RESET } from '../../../constants/userConstants'
-import { getUserDetails, updateUser, clearErrors } from '../../../actions/userActions'
-import {
-    INSIDE_DASHBOARD_TRUE
-} from '../../../constants/dashboardConstants'
 
 const UpdateUser = ({ history, match }) => {
-
     const dispatch = useDispatch()
     const alert = useAlert()
 
@@ -30,35 +27,9 @@ const UpdateUser = ({ history, match }) => {
     const programs = ['Computer Science', 'Information Systems', 'Information Technology']
     const roles = ['CICS Staff', 'IT Dept Chair', 'IS Dept Chair', 'CS Dept Chair']
 
-    const upperCase = (text) => text.toUpperCase()
-
-    const submitHandler = e => {
-        e.preventDefault()
-
-        let formData = ''
-        if (role === 'Student') {
-            formData = {
-                firstName: upperCase(firstName),
-                middleName: upperCase(middleName),
-                lastName: upperCase(lastName),
-                studentNumber,
-                course,
-                role
-            }
-        } else {
-            formData = {
-                firstName,
-                middleName: upperCase(middleName),
-                lastName,
-                role
-            }
-        }
-
-        dispatch(updateUser(singleUser._id, formData))
-    }
-
     const userId = match.params.id
 
+    const upperCase = (text) => text.toUpperCase()
 
     useEffect(() => {
         if (singleUser && singleUser._id !== userId) {
@@ -106,7 +77,31 @@ const UpdateUser = ({ history, match }) => {
             type: INSIDE_DASHBOARD_TRUE
         })
     }, [dispatch, error, alert, isUpdated, updateError, singleUser, userId, history])
+    
+    const submitHandler = e => {
+        e.preventDefault()
 
+        let formData = ''
+        if (role === 'Student') {
+            formData = {
+                firstName: upperCase(firstName),
+                middleName: upperCase(middleName),
+                lastName: upperCase(lastName),
+                studentNumber,
+                course,
+                role
+            }
+        } else {
+            formData = {
+                firstName,
+                middleName: upperCase(middleName),
+                lastName,
+                role
+            }
+        }
+
+        dispatch(updateUser(singleUser._id, formData))
+    }
 
     return (
         <Fragment>

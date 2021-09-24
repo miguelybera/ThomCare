@@ -2,21 +2,17 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
+import { Container, Modal, Button } from 'react-bootstrap'
+import { MDBDataTableV5 } from 'mdbreact'
 import { getMyAnnouncements, deleteAnnouncement, archiveAnnouncement, clearErrors } from '../../../actions/announcementActions'
 import { ARCHIVE_ANNOUNCEMENT_RESET, DELETE_ANNOUNCEMENT_RESET } from '../../../constants/announcementConstants'
+import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
-import { Container, Modal, Button } from 'react-bootstrap'
-import { MDBDataTableV5 } from 'mdbreact'
-import {
-    INSIDE_DASHBOARD_TRUE
-} from '../../../constants/dashboardConstants'
-
 var dateFormat = require('dateformat')
 
 const ListMyAnnoucements = ({ history }) => {
-
     const alert = useAlert()
     const dispatch = useDispatch()
 
@@ -63,11 +59,9 @@ const ListMyAnnoucements = ({ history }) => {
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, alert, error, isDeleted, isUpdated, deleteError])
+    }, [dispatch, history, alert, error, isDeleted, isUpdated, deleteError])
 
-    function changeDateFormat(date) {
-        return dateFormat(date, "mmm d, yyyy h:MMtt")
-    }
+    const changeDateFormat = (date) => dateFormat(date, "mmm d, yyyy h:MMtt")
 
     const deleteAnnouncementHandler = (id) => {
         dispatch(deleteAnnouncement(id))

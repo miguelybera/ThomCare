@@ -1,15 +1,12 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
+import { FloatingLabel, Form, Button, Card, Container, Row, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { createForm, clearErrors } from '../../../actions/formActions'
 import { NEW_FORM_RESET } from '../../../constants/formConstants'
+import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import MetaData from '../../layout/MetaData'
 import Sidebar from '../../layout/Sidebar'
-import { FloatingLabel, Form, Button, Card, Container, Row, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import {
-    INSIDE_DASHBOARD_TRUE
-} from '../../../constants/dashboardConstants'
-
 
 const CreateForm = ({ history }) => {
     const alert = useAlert()
@@ -20,29 +17,6 @@ const CreateForm = ({ history }) => {
     const [title, setTitle] = useState()
     const [description, setDescription] = useState()
     const [attachments, setAttachments] = useState([])
-
-    const submitHandler = e => {
-        e.preventDefault()
-
-        const formData = new FormData()
-        attachments.forEach(file => {
-            formData.append('attachments', file)
-        })
-        formData.set('title', title)
-        formData.set('description', description)
-
-        dispatch(createForm(formData))
-    }
-
-    const onChange = e => {
-        const files = Array.from(e.target.files)
-
-        setAttachments([])
-
-        files.forEach(file => {
-            setAttachments(oldArray => [...oldArray, file])
-        })
-    }
 
     useEffect(() => {
         if (success) {
@@ -64,6 +38,29 @@ const CreateForm = ({ history }) => {
         })
     }, [dispatch, history, alert, success, error])
 
+    const onChange = e => {
+        const files = Array.from(e.target.files)
+
+        setAttachments([])
+
+        files.forEach(file => {
+            setAttachments(oldArray => [...oldArray, file])
+        })
+    }
+
+    const submitHandler = e => {
+        e.preventDefault()
+
+        const formData = new FormData()
+        attachments.forEach(file => {
+            formData.append('attachments', file)
+        })
+        formData.set('title', title)
+        formData.set('description', description)
+
+        dispatch(createForm(formData))
+    }
+    
     return (
         <>
             <MetaData title={'New Form'} />

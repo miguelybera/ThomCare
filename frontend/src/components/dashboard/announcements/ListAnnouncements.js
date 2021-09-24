@@ -2,24 +2,21 @@ import React, { Fragment, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
+import { Container, Button } from 'react-bootstrap'
+import { MDBDataTableV5 } from 'mdbreact'
 import { getAdminAnnouncements, clearErrors } from '../../../actions/announcementActions'
+import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
-import { Container, Button } from 'react-bootstrap'
-import { MDBDataTableV5 } from 'mdbreact'
-import {
-    INSIDE_DASHBOARD_TRUE
-} from '../../../constants/dashboardConstants'
-
 var dateFormat = require('dateformat')
 
-const ListAnnouncements = ({ history }) => {
-
+const ListAnnouncements = () => {
     const alert = useAlert()
     const dispatch = useDispatch()
 
     const { loading, announcements, error } = useSelector(state => state.announcements)
+    const changeDateFormat = date => dateFormat(date, "mmm d, yyyy h:MMtt")
 
     useEffect(() => {
         dispatch(getAdminAnnouncements('Not me'))
@@ -34,12 +31,7 @@ const ListAnnouncements = ({ history }) => {
         })
     }, [dispatch, alert, error])
 
-    function changeDateFormat(date) {
-        return dateFormat(date, "mmm d, yyyy h:MMtt")
-    }
-
     const setAnnouncements = () => {
-
         const data = {
             columns: [
                 {
@@ -80,9 +72,7 @@ const ListAnnouncements = ({ history }) => {
                     </span>
                 </Fragment>
             })
-
         })
-
         return data
     }
 
@@ -95,7 +85,11 @@ const ListAnnouncements = ({ history }) => {
                     <Container className="space_inside"></Container>
                     <Container>
                         <h3>Announcements</h3>
-                        <Button variant="primary"><Link to='/admin/new/announcement' style={{ textDecoration: 'none', color: 'white' }}>Create announcement</Link></Button>
+                        <Button variant="primary">
+                            <Link to='/admin/new/announcement' style={{ textDecoration: 'none', color: 'white' }}>
+                                Create announcement
+                            </Link>
+                        </Button>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5

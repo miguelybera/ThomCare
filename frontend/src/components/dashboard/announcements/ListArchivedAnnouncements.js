@@ -2,21 +2,17 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
+import { Container, Modal, Button } from 'react-bootstrap'
+import { MDBDataTableV5 } from 'mdbreact'
 import { getArchivedAnnouncements, deleteAnnouncement, clearErrors } from '../../../actions/announcementActions'
 import { DELETE_ANNOUNCEMENT_RESET } from '../../../constants/announcementConstants'
+import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
-import { Container, Modal, Button } from 'react-bootstrap'
-import { MDBDataTableV5 } from 'mdbreact'
-import {
-    INSIDE_DASHBOARD_TRUE
-} from '../../../constants/dashboardConstants'
-
 var dateFormat = require('dateformat')
 
 const ListArchivedAnnouncements = ({ history }) => {
-
     const alert = useAlert()
     const dispatch = useDispatch()
 
@@ -54,11 +50,9 @@ const ListArchivedAnnouncements = ({ history }) => {
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, alert, error, isDeleted, deleteError])
+    }, [dispatch, history, alert, error, isDeleted, deleteError])
 
-    function changeDateFormat(date) {
-        return dateFormat(date, "mmm d, yyyy h:MMtt")
-    }
+    const changeDateFormat = (date) => dateFormat(date, "mmm d, yyyy h:MMtt")
 
     const deleteAnnouncementHandler = (id) => {
         dispatch(deleteAnnouncement(id))
@@ -145,11 +139,11 @@ const ListArchivedAnnouncements = ({ history }) => {
                 </Modal.Header>
                 <Modal.Body>
                     This change cannot be undone.
-                        </Modal.Body>
+                </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
                         Close
-                            </Button>
+                    </Button>
                     <Button variant="primary" onClick={() => deleteAnnouncementHandler(deleteAnnouncementId)}>Yes, I'm sure</Button>
                 </Modal.Footer>
             </Modal>

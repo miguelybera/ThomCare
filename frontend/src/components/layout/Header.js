@@ -3,10 +3,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { useAlert } from 'react-alert'
 import { Link } from 'react-router-dom'
 import { Nav, NavDropdown, Navbar, Container } from 'react-bootstrap'
-import { logout } from '../../actions/userActions'
-import '../../App.css'
 import styled from 'styled-components'
+import { logout } from '../../actions/userActions'
 import { SUBMIT_REQUEST_RESET } from './../../constants/requestConstants'
+import '../../App.css'
 
 const Styles = styled.div`
     background-color: white;
@@ -30,13 +30,12 @@ const Styles = styled.div`
       display: inline-block;
       border-radius: 10px
     }
-  }`;
+}`;
 
 const Drop = styled.div` 
-  a, .navbar-nav .nav-link  {
-  border-radius: 105px;
-  color: black;
-  
+    a, .navbar-nav .nav-link  {
+    border-radius: 105px;
+    color: black;
 }`;
 
 const Header = () => {

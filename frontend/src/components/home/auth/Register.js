@@ -2,10 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
 import { saveStudentInfo } from '../../../actions/userActions'
+import { INSIDE_DASHBOARD_FALSE } from '../../../constants/dashboardConstants'
 import MetaData from '../../layout/MetaData'
-import {
-    INSIDE_DASHBOARD_FALSE
-} from '../../../constants/dashboardConstants'
 
 const Register = ({ history }) => {
     const dispatch = useDispatch()
@@ -25,14 +23,14 @@ const Register = ({ history }) => {
 
     const { firstName, middleName, lastName, email, studentNumber, course, password, confirmPassword } = user
 
-    const submitHandler = e => {
-        console.log(firstName, middleName, lastName)
-        dispatch(saveStudentInfo({ firstName, middleName, lastName, studentNumber, email, course, password, confirmPassword }))
-        history.push('/confirm/register')
-    }
-
     const upperCase = (text) => text.toUpperCase()
 
+    useEffect(() => {
+        dispatch({
+            type: INSIDE_DASHBOARD_FALSE
+        })
+    }, [dispatch])
+    
     const onChange = e => {
         e.preventDefault()
 
@@ -43,11 +41,12 @@ const Register = ({ history }) => {
         })
     }
 
-    useEffect(() => {
-        dispatch({
-            type: INSIDE_DASHBOARD_FALSE
-        })
-    }, [dispatch])
+    const submitHandler = e => {
+        console.log(firstName, middleName, lastName)
+        dispatch(saveStudentInfo({ firstName, middleName, lastName, studentNumber, email, course, password, confirmPassword }))
+        history.push('/confirm/register')
+    }
+    
     return (
         <>
             <MetaData title={'Register'} />

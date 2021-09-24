@@ -4,10 +4,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FloatingLabel, Form, Button, Card, Container, Row } from 'react-bootstrap'
 import { resetPassword, clearErrors } from './../../../actions/userActions'
 import { NEW_PASSWORD_RESET } from './../../../constants/userConstants'
+import { INSIDE_DASHBOARD_FALSE } from '../../../constants/dashboardConstants'
 import MetaData from './../../layout/MetaData'
-import {
-    INSIDE_DASHBOARD_FALSE
-} from '../../../constants/dashboardConstants'
 
 const NewPassword = ({ history, match }) => {
     const alert = useAlert()
@@ -17,12 +15,6 @@ const NewPassword = ({ history, match }) => {
 
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-
-    const submitHandler = e => {
-        e.preventDefault()
-
-        dispatch(resetPassword(match.params.token, { password, confirmPassword }))
-    }
 
     useEffect(() => {
         if (success) {
@@ -46,6 +38,12 @@ const NewPassword = ({ history, match }) => {
         })
     }, [dispatch, alert, error, success, history])
 
+    const submitHandler = e => {
+        e.preventDefault()
+
+        dispatch(resetPassword(match.params.token, { password, confirmPassword }))
+    }
+    
     return (
         <>
             <MetaData title={'New Password'} />

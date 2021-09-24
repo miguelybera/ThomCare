@@ -1,19 +1,13 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import MetaData from './../../layout/MetaData'
-import Loader from './../../layout/Loader'
+import { Card } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { trackRequest, clearErrors } from './../../../actions/requestActions'
-import { Card } from 'react-bootstrap'
-import {
-    INSIDE_DASHBOARD_FALSE
-} from '../../../constants/dashboardConstants'
-
-import {
-    TRACK_REQUEST_RESET
-} from '../../../constants/requestConstants'
-
+import { INSIDE_DASHBOARD_FALSE } from '../../../constants/dashboardConstants'
+import { TRACK_REQUEST_RESET } from '../../../constants/requestConstants'
+import MetaData from './../../layout/MetaData'
+import Loader from './../../layout/Loader'
 var dateFormat = require('dateformat')
 
 const cardStyle = {
@@ -28,15 +22,6 @@ const TrackingPageProgress = ({ history, match }) => {
 
     const { loading, error, request } = useSelector(state => state.track)
 
-    function changeDateFormat(date) {
-        return dateFormat(date, "mmm d, yyyy h:MMtt")
-    }
-
-    const upperCase = (text) => text.toUpperCase()
-
-    const tracker = match.params.trackingNumber
-    const surname = match.params.lastName
-
     const [requestorInfo, setRequestorInfo] = useState({})
     const [notes, setNotes] = useState('')
     const [requestStatus, setRequestStatus] = useState('')
@@ -44,6 +29,12 @@ const TrackingPageProgress = ({ history, match }) => {
     const [trackingNumber, setTrackingNumber] = useState('')
     const [fileRequirements, setFileRequirements] = useState([])
     const [remarks, setRemarks] = useState([])
+
+    const tracker = match.params.trackingNumber
+    const surname = match.params.lastName
+
+    const changeDateFormat = date => dateFormat(date, "mmm d, yyyy h:MMtt")
+    const upperCase = (text) => text.toUpperCase()
 
     useEffect(() => {
         if (error) {
@@ -58,11 +49,11 @@ const TrackingPageProgress = ({ history, match }) => {
         dispatch({
             type: INSIDE_DASHBOARD_FALSE
         })
-    }, [dispatch, history, request, error])
+    }, [dispatch, history, alert, error, request])
 
     useEffect(() => {
         if (request && request.trackingNumber !== tracker && request.lastName !== surname) {
-            dispatch(trackRequest({trackingNumber: tracker, lastName: surname}))
+            dispatch(trackRequest({ trackingNumber: tracker, lastName: surname }))
         } else if (request) {
             setRequestorInfo(request.requestorInfo)
             setRequestStatus(request.requestStatus)
@@ -72,10 +63,11 @@ const TrackingPageProgress = ({ history, match }) => {
             setFileRequirements(request.fileRequirements)
             setRemarks(request.remarks)
         } else {
-            dispatch(trackRequest({trackingNumber: tracker, lastName: surname}))
+            dispatch(trackRequest({ trackingNumber: tracker, lastName: surname }))
         }
 
     }, [dispatch, request, tracker, surname])
+
     const setHistory = () => {
         const data = {
             columns: [
@@ -115,7 +107,7 @@ const TrackingPageProgress = ({ history, match }) => {
                     <p>{remark.remarksMessage}</p>
                     <ul>
                         {remark.returningFiles && remark.returningFiles.map(file => (
-                            <li><a href={file.path} target="_blank"  rel="noreferrer">{file.originalname}</a></li>
+                            <li><a href={file.path} target="_blank" rel="noreferrer">{file.originalname}</a></li>
                         ))}
                     </ul>
                     <p style={{ fontSize: '12px', color: 'gray', paddingTop: '10px' }}>By: {remark.userUpdated}</p>
@@ -123,6 +115,7 @@ const TrackingPageProgress = ({ history, match }) => {
 
             })
         })
+
         return data
     }
 

@@ -8,9 +8,7 @@ import MetaData from '../../../layout/MetaData'
 import Loader from '../../../layout/Loader'
 import { Row, Container, Button, Col, Card, Form, Breadcrumb } from 'react-bootstrap'
 import PETITIONPDF from '../templates/PETITIONPDF'
-import {
-    INSIDE_DASHBOARD_FALSE
-} from '../../../../constants/dashboardConstants'
+import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
 
 function PetitionClass() {
     const alert = useAlert()

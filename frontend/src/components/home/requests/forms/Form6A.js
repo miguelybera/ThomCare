@@ -2,15 +2,13 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
+import { Row, Container, Button, Col, Card, Form, Breadcrumb } from 'react-bootstrap'
 import { getCourses, clearErrors } from '../../../../actions/courseActions'
 import { saveForm } from '../../../../actions/requestActions'
+import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
 import MetaData from '../../../layout/MetaData'
 import Loader from '../../../layout/Loader'
-import { Row, Container, Button, Col, Card, Form, Breadcrumb } from 'react-bootstrap'
 import FORM6APDF from '../templates/FORM6APDF'
-import {
-    INSIDE_DASHBOARD_FALSE
-} from '../../../../constants/dashboardConstants'
 
 const addDropStyle = {
     marginBottom: '5px'
@@ -23,21 +21,6 @@ function Form6A({ history }) {
     const { courses, error, loading } = useSelector(state => state.courses)
     const { user } = useSelector(state => state.auth)
 
-    useEffect(() => {
-        dispatch(getCourses())
-
-        if (error) {
-            alert.error(error)
-            dispatch(clearErrors())
-            history.push('/forms/list')
-        }
-
-        dispatch({
-            type: INSIDE_DASHBOARD_FALSE
-        })
-    }, [dispatch, alert, error, history])
-
-    //new 
     const [inputFields, setInputFields] = useState([
         {
             status: '',
@@ -56,6 +39,60 @@ function Form6A({ history }) {
     const [year1, setYear1] = useState('')
     const [year2, setYear2] = useState('')
 
+    const [submitted, setSubmitted] = useState(false)
+    const title = 'Add/Drop Course Form'
+    
+    const addRow = () => {
+        setInputFields([...inputFields, {
+            status: '',
+            courseCode: '',
+            courseName: '',
+            lecUnits: '',
+            labUnits: '',
+            days: '',
+            time: '',
+            room: '',
+            section: ''
+        }])
+    }
+
+    const deleteRow = (index) => {
+        const values = [...inputFields]
+
+        values.splice(index, 1)
+
+        setInputFields(values)
+    }
+
+    const getCourseName = (code, field) => {
+        const val = courses.find(course => course.courseCode === code)
+
+        switch (field) {
+            case "courseName":
+                return val.courseName
+            case "lecUnits":
+                return val.lecUnits
+            case "labUnits":
+                return val.labUnits
+            default:
+                return
+        }
+    }
+
+    useEffect(() => {
+        dispatch(getCourses())
+
+        if (error) {
+            alert.error(error)
+            dispatch(clearErrors())
+            history.push('/forms/list')
+        }
+
+        dispatch({
+            type: INSIDE_DASHBOARD_FALSE
+        })
+    }, [dispatch, alert, error, history])
+    
     const onChange = (index, e) => {
         e.preventDefault()
 
@@ -95,47 +132,6 @@ function Form6A({ history }) {
 
         dispatch(saveForm(formData))
     }
-
-    const addRow = () => {
-        setInputFields([...inputFields, {
-            status: '',
-            courseCode: '',
-            courseName: '',
-            lecUnits: '',
-            labUnits: '',
-            days: '',
-            time: '',
-            room: '',
-            section: ''
-        }])
-    }
-
-    const deleteRow = (index) => {
-        const values = [...inputFields]
-
-        values.splice(index, 1)
-
-        setInputFields(values)
-    }
-
-    const getCourseName = (code, field) => {
-        const val = courses.find(course => course.courseCode === code)
-
-        switch (field) {
-            case "courseName":
-                return val.courseName
-            case "lecUnits":
-                return val.lecUnits
-            case "labUnits":
-                return val.labUnits
-            default:
-                return
-        }
-    }
-
-    const title = 'Add/Drop Course Form'
-
-    const [submitted, setSubmitted] = useState(false)
 
     return (
         <Fragment>

@@ -2,16 +2,13 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
+import { register, clearErrors } from '../../../actions/userActions'
+import { REGISTER_USER_RESET } from '../../../constants/userConstants'
+import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
-import { REGISTER_USER_RESET } from '../../../constants/userConstants'
-import { register, clearErrors } from '../../../actions/userActions'
-import {
-    INSIDE_DASHBOARD_TRUE
-} from '../../../constants/dashboardConstants'
 
 const RegisterAdmin = ({ history }) => {
-
     const dispatch = useDispatch()
     const alert = useAlert()
 
@@ -26,21 +23,6 @@ const RegisterAdmin = ({ history }) => {
     const [role, setRole] = useState('')
 
     const roles = ['CICS Staff', 'IT Dept Chair', 'IS Dept Chair', 'CS Dept Chair']
-
-    const submitHandler = e => {
-        e.preventDefault()
-
-        const formData = {
-            firstName,
-            middleName,
-            lastName,
-            email,
-            role,
-            password,
-            confirmPassword
-        }
-        dispatch(register(true, formData))
-    }
 
     const upperCase = (text) => text.toUpperCase()
 
@@ -62,8 +44,23 @@ const RegisterAdmin = ({ history }) => {
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, alert, error, message, history, isCreated])
+    }, [dispatch, history, alert, error, message, isCreated])
 
+    const submitHandler = e => {
+        e.preventDefault()
+
+        const formData = {
+            firstName,
+            middleName,
+            lastName,
+            email,
+            role,
+            password,
+            confirmPassword
+        }
+        dispatch(register(true, formData))
+    }
+    
     return (
         <Fragment>
             <MetaData title={'Register User'} />

@@ -3,9 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import Pdf from "react-to-pdf";
-import {
-    INSIDE_DASHBOARD_FALSE
-} from '../../../../constants/dashboardConstants'
+import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
 import { Button } from 'react-bootstrap'
 import './css/form6a.css'
 

@@ -2,19 +2,16 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
+import { Container, Modal, Button } from 'react-bootstrap'
+import { MDBDataTableV5 } from 'mdbreact'
 import { getUsers, deleteUser, clearErrors } from '../../../actions/userActions'
 import { DELETE_USER_RESET } from '../../../constants/userConstants'
+import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
-import { Container, Modal, Button } from 'react-bootstrap'
-import { MDBDataTableV5 } from 'mdbreact'
-import {
-    INSIDE_DASHBOARD_TRUE
-} from '../../../constants/dashboardConstants'
 
 const ListUsers = ({ history }) => {
-
     const alert = useAlert()
     const dispatch = useDispatch()
 
@@ -53,7 +50,7 @@ const ListUsers = ({ history }) => {
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, alert, error, isDeleted, deleteError])
+    }, [dispatch, history, alert, error, isDeleted, deleteError])
 
     const deleteUserHandler = (id) => {
         dispatch(deleteUser(id))

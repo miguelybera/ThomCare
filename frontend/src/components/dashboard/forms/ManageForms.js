@@ -2,15 +2,13 @@ import React, { Fragment, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
+import { Card, Button, Container, Row, Col } from 'react-bootstrap'
+import { getForms, deleteForm, clearErrors } from './../../../actions/formActions'
+import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
+import { DELETE_FORM_RESET } from './../../../constants/formConstants'
 import MetaData from './../../layout/MetaData'
 import Loader from './../../layout/Loader'
 import Sidebar from './../../layout/Sidebar'
-import { Card, Button, Container, Row, Col } from 'react-bootstrap'
-import {
-    INSIDE_DASHBOARD_TRUE
-} from '../../../constants/dashboardConstants'
-import { getForms, deleteForm, clearErrors } from './../../../actions/formActions'
-import { DELETE_FORM_RESET } from './../../../constants/formConstants'
 
 const ManageForms = ({ history, match }) => {
     const dispatch = useDispatch()

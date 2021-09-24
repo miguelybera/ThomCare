@@ -2,21 +2,14 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
+import { MDBDataTableV5 } from 'mdbreact'
+import { Card, Button, Modal } from 'react-bootstrap'
 import { getRequestDetails, updateRequest, deleteRequest, assignRequest, clearErrors } from '../../../actions/requestActions'
+import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
+import { ASSIGN_REQUEST_RESET, UPDATE_REQUEST_RESET, DELETE_REQUEST_RESET } from '../../../constants/requestConstants'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
 import Sidebar from '../../layout/Sidebar'
-import { MDBDataTableV5 } from 'mdbreact'
-import { Card, Button, Modal } from 'react-bootstrap'
-import {
-    INSIDE_DASHBOARD_TRUE
-} from '../../../constants/dashboardConstants'
-import {
-    ASSIGN_REQUEST_RESET,
-    UPDATE_REQUEST_RESET,
-    DELETE_REQUEST_RESET
-} from '../../../constants/requestConstants'
-
 var dateFormat = require('dateformat')
 
 const cardStyle = {
@@ -32,14 +25,6 @@ const ViewRequest = ({ history, match }) => {
     const { loading, error, request } = useSelector(state => state.requestDetails)
     const { error: updateError, isUpdated, isDeleted } = useSelector(state => state.request)
 
-    function changeDateFormat(date) {
-        return dateFormat(date, "mmm d, yyyy h:MMtt")
-    }
-
-    const requestId = match.params.id
-    const id = requestId.substr(1, requestId.length - 1)
-    const [viewType, setViewType] = useState(requestId.substr(0, 1))
-
     const [requestorInfo, setRequestorInfo] = useState({})
     const [notes, setNotes] = useState('')
     const [requestStatus, setRequestStatus] = useState('')
@@ -47,6 +32,18 @@ const ViewRequest = ({ history, match }) => {
     const [trackingNumber, setTrackingNumber] = useState('')
     const [fileRequirements, setFileRequirements] = useState([])
     const [remarks, setRemarks] = useState([])
+
+    const requestId = match.params.id
+    const id = requestId.substr(1, requestId.length - 1)
+    const [viewType, setViewType] = useState(requestId.substr(0, 1))
+
+    const [show, setShow] = useState(false);
+
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
+    const changeDateFormat = (date) => dateFormat(date, "mmm d, yyyy h:MMtt")
+    const upperCase = (text) => text.toUpperCase()
 
     useEffect(() => {
         if (request && request._id !== id) {
@@ -93,7 +90,7 @@ const ViewRequest = ({ history, match }) => {
                 dispatch({
                     type: UPDATE_REQUEST_RESET
                 })
-            } else if (Number(viewType) ===  4) {
+            } else if (Number(viewType) === 4) {
                 alert.success('Request has been restored.')
                 setViewType(1)
                 history.push(`/view/request/${viewType}${request._id}`)
@@ -129,13 +126,6 @@ const ViewRequest = ({ history, match }) => {
             type: INSIDE_DASHBOARD_TRUE
         })
     }, [dispatch, history, alert, error, updateError, isUpdated, isDeleted, viewType])
-
-    const [show, setShow] = useState(false);
-
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
-
-    const upperCase = (text) => text.toUpperCase()
 
     const updateRequestHandler = (id, del) => {
         dispatch(updateRequest(id, { isTrash: del }, true))

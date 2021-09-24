@@ -1,12 +1,12 @@
 import React, { Fragment, useState } from 'react'
-import styled from 'styled-components'
-import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import * as FaIcons from 'react-icons/fa'
 import * as AiIcons from 'react-icons/ai'
-import { SidebarData } from './SidebarData'
-import SubMenu from './SubMenu'
 import { IconContext } from 'react-icons/lib'
+import styled from 'styled-components'
+import SubMenu from './SubMenu'
+import { SidebarData } from './SidebarData'
 
 const Nav = styled.div`
     background: #9C0B0A;
@@ -22,8 +22,7 @@ const Nav = styled.div`
     position: absolute;
     top: 0px;
     z-index:10;
-    border-bottom: 7px #750908 solid;
-`;
+    border-bottom: 7px #750908 solid;`;
 
 const NavIcon = styled(Link)`
     margin-left: 1rem;
@@ -78,13 +77,12 @@ const SidebarWrap = styled.div`
     width: 100%;`;
 
 const Sidebar = () => {
-
     const { user } = useSelector(state => state.auth)
 
     const [sidebar, setSidebar] = useState(false);
 
     const showSidebar = () => setSidebar(!sidebar);
-    
+
     return (
         <>
             <IconContext.Provider value={{ color: '#red' }}>
@@ -150,7 +148,6 @@ const Sidebar = () => {
                                 )
                             )
                         }
-
                     </SidebarWrap>
                 </SidebarNav>
             </IconContext.Provider>

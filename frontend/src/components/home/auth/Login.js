@@ -2,12 +2,10 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { login, clearErrors } from './../../../actions/userActions'
-import MetaData from './../../layout/MetaData'
 import { FloatingLabel, Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
-import {
-    INSIDE_DASHBOARD_FALSE
-} from '../../../constants/dashboardConstants'
+import { login, clearErrors } from './../../../actions/userActions'
+import { INSIDE_DASHBOARD_FALSE } from '../../../constants/dashboardConstants'
+import MetaData from './../../layout/MetaData'
 
 const Login = ({ history }) => {
     const alert = useAlert()
@@ -17,12 +15,6 @@ const Login = ({ history }) => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-
-    const submitHandler = e => {
-        e.preventDefault()
-
-        dispatch(login(email, password))
-    }
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -40,10 +32,15 @@ const Login = ({ history }) => {
         })
     }, [dispatch, alert, isAuthenticated, error, history])
 
+    const submitHandler = e => {
+        e.preventDefault()
+
+        dispatch(login(email, password))
+    }
+
     return (
         <Fragment >
             <MetaData title={'Login'} />
-            
             <Container fluid >
                 <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
                     <Card style={{ backgroundColor: "#F5F5F5", width: '30rem', align: 'center',borderTop: '7px solid #9c0b0b', marginBottom: '50px'}}>

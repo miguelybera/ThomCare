@@ -2,17 +2,12 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
+import { createAnnouncement, createAnnouncementType, getAnnouncementType, clearErrors } from '../../../actions/announcementActions'
+import { NEW_ANNOUNCEMENT_RESET, NEW_ANNOUNCEMENT_TYPE_RESET } from '../../../constants/announcementConstants'
+import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
-import { NEW_ANNOUNCEMENT_RESET, NEW_ANNOUNCEMENT_TYPE_RESET } from '../../../constants/announcementConstants'
-import { createAnnouncement, createAnnouncementType, getAnnouncementType, clearErrors } from '../../../actions/announcementActions'
-import {
-    INSIDE_DASHBOARD_TRUE
-} from '../../../constants/dashboardConstants'
-
-// <Card.Title style={{margin: '50px 0 20px 0'}}>Register an account</Card.Title>
-// hello testing 
 var dateFormat = require('dateformat')
 
 const CreateAnnouncement = ({ history }) => {
@@ -21,8 +16,6 @@ const CreateAnnouncement = ({ history }) => {
 
     const { loading, error, success } = useSelector(state => state.newAnnouncement)
     const { loading: announcementTypeLoading, announcementTypes, error: announcementTypeError } = useSelector(state => state.announcementType)
-
-    const changeDateFormat = (date) => dateFormat(date, "yyyy-mm-dd")
 
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
@@ -38,53 +31,11 @@ const CreateAnnouncement = ({ history }) => {
     const levels = ['All', '1st Year', '2nd Year', '3rd Year', '4th Year']
     const programs = ['All', 'Computer Science', 'Information Systems', 'Information Technology']
 
-    const csTracks = [
-        "All",
-        "Core Computer Science",
-        "Game Development",
-        "Data Science"
-    ]
+    const csTracks = ["All", "Core Computer Science", "Game Development", "Data Science"]
+    const itTracks = ["All", "Network and Security", "Web and Mobile App Development", "IT Automation"]
+    const isTracks = ["All", "Business Analytics", "Service Management"]
 
-    const itTracks = [
-        "All",
-        "Network and Security",
-        "Web and Mobile App Development",
-        "IT Automation"
-    ]
-
-    const isTracks = [
-        "All",
-        "Business Analytics",
-        "Service Management"
-    ]
-
-    const submitHandler = e => {
-        e.preventDefault()
-
-        const formData = new FormData()
-
-        formData.set('title', title)
-        formData.set('description', description)
-        formData.set('yearLevel', yearLevel)
-        formData.set('course', course)
-        formData.set('track', track)
-
-        if (announcementType === 'Others') {
-            formData.set('announcementType', announcementCategory)
-            dispatch(createAnnouncementType(announcementCategory))
-        } else {
-            formData.set('announcementType', announcementType)
-        }
-
-        formData.set('archiveDate', changeDateFormat(archiveDate))
-        formData.set('setExpiry', setExpiry)
-
-        fileAttachments.forEach(file => {
-            formData.append('fileAttachments', file)
-        })
-
-        dispatch(createAnnouncement(formData))
-    }
+    const changeDateFormat = (date) => dateFormat(date, "yyyy-mm-dd")
 
     useEffect(() => {
         dispatch(getAnnouncementType())
@@ -117,7 +68,7 @@ const CreateAnnouncement = ({ history }) => {
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, alert, success, error, setExpiry])
+    }, [dispatch, history, alert, success, error, announcementTypeError, setExpiry])
 
     useEffect(() => {
         if (yearLevel === '1st Year' || yearLevel === '2nd Year' || yearLevel === 'All') {
@@ -137,6 +88,34 @@ const CreateAnnouncement = ({ history }) => {
         files.forEach(file => {
             setFileAttachments(oldArray => [...oldArray, file])
         })
+    }
+
+    const submitHandler = e => {
+        e.preventDefault()
+
+        const formData = new FormData()
+
+        formData.set('title', title)
+        formData.set('description', description)
+        formData.set('yearLevel', yearLevel)
+        formData.set('course', course)
+        formData.set('track', track)
+
+        if (announcementType === 'Others') {
+            formData.set('announcementType', announcementCategory)
+            dispatch(createAnnouncementType(announcementCategory))
+        } else {
+            formData.set('announcementType', announcementType)
+        }
+
+        formData.set('archiveDate', changeDateFormat(archiveDate))
+        formData.set('setExpiry', setExpiry)
+
+        fileAttachments.forEach(file => {
+            formData.append('fileAttachments', file)
+        })
+
+        dispatch(createAnnouncement(formData))
     }
 
     return (
@@ -332,7 +311,7 @@ const CreateAnnouncement = ({ history }) => {
                     )}
                 </div>
             </div>
-        </Fragment >
+        </Fragment>
     )
 }
 

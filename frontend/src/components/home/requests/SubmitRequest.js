@@ -1,13 +1,11 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
+import { FloatingLabel, Form, Button, Card, Container, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { submitRequest, clearErrors } from './../../../actions/requestActions'
 import { SUBMIT_REQUEST_RESET } from './../../../constants/requestConstants'
+import { INSIDE_DASHBOARD_FALSE } from '../../../constants/dashboardConstants'
 import MetaData from './../../layout/MetaData'
-import { FloatingLabel, Form, Button, Card, Container, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap'
-import {
-    INSIDE_DASHBOARD_FALSE
-} from '../../../constants/dashboardConstants'
 
 const cardStyle = {
     marginTop: '30px',
@@ -21,40 +19,13 @@ const SubmitRequest = () => {
 
     const { loading, success, error, request } = useSelector(state => state.saveForm)
 
-    const submitHandler = e => {
-        e.preventDefault()
-
-        const formData = new FormData()
-        fileRequirements.forEach(file => {
-            formData.append('fileRequirements', file)
-        })
-        formData.set('section', section)
-        formData.set('yearLevel', yearLevel)
-        formData.set('notes', notes)
-        formData.set('requestType', requestType)
-
-        dispatch(submitRequest(formData))
-    }
-
     const [fileRequirements, setFileRequirements] = useState([])
     const [section, setSection] = useState()
     const [yearLevel, setYearLevel] = useState()
     const [requestType, setRequestType] = useState()
     const [notes, setNotes] = useState()
 
-    const upperCase = (text) => text.toUpperCase()
-
-    const onChange = e => {
-        const files = Array.from(e.target.files)
-
-        setFileRequirements([])
-
-        files.forEach(file => {
-            setFileRequirements(oldArray => [...oldArray, file])
-        })
-    }
     const levels = ['1st Year', '2nd Year', '3rd Year', '4th Year', 'Alumni']
-
     const requestTypes = [
         'Adding/Dropping of Course',
         'Cross Enrollment within CICS',
@@ -69,6 +40,14 @@ const SubmitRequest = () => {
         'Request for Certificate of Grades',
         'Others'
     ]
+
+    const upperCase = (text) => text.toUpperCase()
+    
+    const reset = () => {
+        dispatch({
+            type: SUBMIT_REQUEST_RESET
+        })
+    }
 
     useEffect(() => {
         if (success) {
@@ -91,11 +70,31 @@ const SubmitRequest = () => {
         })
     }, [dispatch, alert, success, error])
 
-    const reset = () => {
-        dispatch({
-            type: SUBMIT_REQUEST_RESET
+    const onChange = e => {
+        const files = Array.from(e.target.files)
+
+        setFileRequirements([])
+
+        files.forEach(file => {
+            setFileRequirements(oldArray => [...oldArray, file])
         })
     }
+
+    const submitHandler = e => {
+        e.preventDefault()
+
+        const formData = new FormData()
+        fileRequirements.forEach(file => {
+            formData.append('fileRequirements', file)
+        })
+        formData.set('section', section)
+        formData.set('yearLevel', yearLevel)
+        formData.set('notes', notes)
+        formData.set('requestType', requestType)
+
+        dispatch(submitRequest(formData))
+    }
+
     return (
         <>
             <MetaData title={'Submit Request'} />

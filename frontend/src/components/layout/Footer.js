@@ -1,19 +1,18 @@
 import React, { Fragment } from 'react'
 import { Row, Col } from 'react-bootstrap'
-import '../../App.css'
 import styled from 'styled-components'
+import '../../App.css'
 
 const Style = styled.div`
-z-index: 1;
-margin-top: auto;
-width: 100%;
-background-color: #9c0b0b;
-color: white;
-bottom: 0;
-right: 0;
-left:0;
-position: relative;
-`;
+    z-index: 1;
+    margin-top: auto;
+    width: 100%;
+    background-color: #9c0b0b;
+    color: white;
+    bottom: 0;
+    right: 0;
+    left:0;
+    position: relative;`;
 
 const Footer = () => {
     return (

@@ -1,19 +1,16 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
+import { Container, Modal, Button } from 'react-bootstrap'
+import { MDBDataTableV5 } from 'mdbreact'
 import { getAnnouncementType, deleteAnnouncementType, clearErrors } from './../../../actions/announcementActions'
 import { DELETE_ANNOUNCEMENT_TYPE_RESET } from './../../../constants/announcementConstants'
+import {INSIDE_DASHBOARD_TRUE} from '../../../constants/dashboardConstants'
 import Sidebar from './../../layout/Sidebar'
 import MetaData from './../../layout/MetaData'
 import Loader from './../../layout/Loader'
-import { Container, Modal, Button } from 'react-bootstrap'
-import { MDBDataTableV5 } from 'mdbreact'
-import {
-    INSIDE_DASHBOARD_TRUE
-} from '../../../constants/dashboardConstants'
 
 const ListAnnouncementType = ({ history }) => {
-
     const alert = useAlert()
     const dispatch = useDispatch()
 
@@ -51,7 +48,7 @@ const ListAnnouncementType = ({ history }) => {
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, alert, error, isDeleted, deleteError])
+    }, [dispatch, history, alert, error, isDeleted, deleteError])
 
     const deleteAnnouncementTypeHandler = (id) => {
         dispatch(deleteAnnouncementType(id))

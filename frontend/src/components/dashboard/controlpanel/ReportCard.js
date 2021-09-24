@@ -2,7 +2,8 @@ import React, { Fragment } from 'react'
 import './styles.css'
 
 const ReportCard = ({ requestType, length, icon, color }) => {
-    return (<Fragment >
+    return (
+    <Fragment >
         <div class={`card bg-c-${color} order-card`}>
             <div class="card-block">
                 <h6 class="m-b-20">{requestType}</h6>

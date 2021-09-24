@@ -1,21 +1,19 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
+import { FloatingLabel, Form, Button, Card, Container, Row } from 'react-bootstrap'
 import { forgotPassword, clearErrors } from '../../../actions/userActions'
 import { FORGOT_PASSWORD_RESET } from '../../../constants/userConstants'
-import { FloatingLabel, Form, Button, Card, Container, Row } from 'react-bootstrap'
+import { INSIDE_DASHBOARD_FALSE } from '../../../constants/dashboardConstants'
 import MetaData from '../../layout/MetaData'
-import {
-    INSIDE_DASHBOARD_FALSE
-} from '../../../constants/dashboardConstants'
 
 const ForgotPassword = ({ history }) => {
-    const alert = useAlert();
-    const dispatch = useDispatch();
-
-    const [email, setEmail] = useState('')
+    const alert = useAlert()
+    const dispatch = useDispatch()
 
     const { error, message, loading } = useSelector(state => state.forgotPassword)
+
+    const [email, setEmail] = useState('')
 
     useEffect(() => {
         if (error) {
@@ -38,7 +36,7 @@ const ForgotPassword = ({ history }) => {
         dispatch({
             type: INSIDE_DASHBOARD_FALSE
         })
-    }, [dispatch, alert, error, message, history])
+    }, [dispatch, history, alert, error, message])
 
     const submitHandler = (e) => {
         e.preventDefault();

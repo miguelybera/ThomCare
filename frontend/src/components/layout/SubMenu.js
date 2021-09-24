@@ -2,8 +2,8 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch } from 'react-redux'
-import styled from 'styled-components'
 import { logout } from '../../actions/userActions'
+import styled from 'styled-components'
 
 const SidebarLink = styled(Link)`
     display:flex;
@@ -44,13 +44,12 @@ const DropdownLink = styled(Link)`
     }`;
 
 const SubMenu = ({ item }) => {
+    const dispatch = useDispatch()
+    const alert = useAlert()
 
     const [subnav, setSubnav] = useState(false);
 
     const showSubnav = () => setSubnav(!subnav);
-
-    const dispatch = useDispatch()
-    const alert = useAlert()
 
     const logoutHandler = () => {
         dispatch(logout())

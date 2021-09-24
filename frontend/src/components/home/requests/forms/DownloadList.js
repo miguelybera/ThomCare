@@ -1,13 +1,11 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
+import { Table, Container, Button } from 'react-bootstrap'
+import { getForms, clearErrors } from './../../../../actions/formActions'
+import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
 import MetaData from './../../../layout/MetaData'
 import Loader from './../../../layout/Loader'
-import {
-    INSIDE_DASHBOARD_FALSE
-} from '../../../../constants/dashboardConstants'
-import { getForms, clearErrors } from './../../../../actions/formActions'
-import { Table, Container, Button } from 'react-bootstrap'
 
 const DownloadList = () => {
     const dispatch = useDispatch()

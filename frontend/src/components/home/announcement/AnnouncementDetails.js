@@ -4,12 +4,9 @@ import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { Card, Breadcrumb } from 'react-bootstrap'
 import { getAnnouncementDetails, getUser, clearErrors } from './../../../actions/announcementActions'
+import { INSIDE_DASHBOARD_FALSE } from '../../../constants/dashboardConstants'
 import MetaData from './../../layout/MetaData'
 import Loader from './../../layout/Loader'
-import {
-    INSIDE_DASHBOARD_FALSE
-} from '../../../constants/dashboardConstants'
-
 var dateFormat = require('dateformat')
 
 const cardStyle = {
@@ -27,8 +24,6 @@ const AnnouncementDetails = ({ history, match }) => {
     const { loading, announcement, error } = useSelector(state => state.announcementDetails)
     const { singleUser, error: userError } = useSelector(state => state.singleUser)
 
-    const announcementId = match.params.id
-
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [yearLevel, setYearLevel] = useState('')
@@ -39,6 +34,11 @@ const AnnouncementDetails = ({ history, match }) => {
     const [fileAttachments, setFileAttachments] = useState([])
     const [files, setFiles] = useState([])
     const [images, setImages] = useState([])
+
+    const announcementId = match.params.id
+
+    const changeDateFormat = (date) => dateFormat(date, "ddd, mmm d, yyyy h:MMtt")
+    const upperCase = (name) => name.toUpperCase()
 
     useEffect(() => {
         if (announcement && announcement._id !== announcementId) {
@@ -75,7 +75,7 @@ const AnnouncementDetails = ({ history, match }) => {
                 }
             })
         }
-    }, [dispatch, history, alert, error, announcement, announcementId])
+    }, [dispatch, history, alert, error, announcement, announcementId, fileAttachments])
 
     useEffect(() => {
         if (createdBy) {
@@ -87,14 +87,11 @@ const AnnouncementDetails = ({ history, match }) => {
             dispatch(clearErrors())
         }
 
-    }, [dispatch, alert, error, createdBy])
-
-    const changeDateFormat = (date) => dateFormat(date, "ddd, mmm d, yyyy h:MMtt")
-    const upperCase = (name) => name.toUpperCase()
+    }, [dispatch, alert, userError, createdBy])
 
     return (
         <>
-            <MetaData title={`Announcements`} />
+            <MetaData title={title} />
             {loading ? <Loader /> : (
                 <Card style={cardStyle}>
                     <Card.Header>

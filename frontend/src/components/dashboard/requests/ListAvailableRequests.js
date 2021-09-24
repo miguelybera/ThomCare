@@ -2,27 +2,26 @@ import React, { Fragment, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
+import { Container, Button } from 'react-bootstrap'
+import { MDBDataTableV5 } from 'mdbreact'
 import { getRequests, assignRequest, clearErrors } from '../../../actions/requestActions'
 import { ASSIGN_REQUEST_RESET } from '../../../constants/requestConstants'
+import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
-import { Container, Button } from 'react-bootstrap'
-import { MDBDataTableV5 } from 'mdbreact'
-import {
-    INSIDE_DASHBOARD_TRUE
-} from '../../../constants/dashboardConstants'
-
 var dateFormat = require('dateformat')
 
 const ListAvailableRequests = ({ history }) => {
-
     const alert = useAlert()
     const dispatch = useDispatch()
 
     const { loading, requests, error } = useSelector(state => state.requests)
     const { error: updateError, isUpdated } = useSelector(state => state.request)
 
+    const changeDateFormat = (date) => dateFormat(date, "mmm d, yyyy h:MMtt")
+    const upperCase = (text) => text.toUpperCase()
+    
     useEffect(() => {
         dispatch(getRequests('CICS Staff', 'Available'))
 
@@ -50,15 +49,9 @@ const ListAvailableRequests = ({ history }) => {
         })
     }, [dispatch, history, alert, error, updateError, isUpdated])
 
-    function changeDateFormat(date) {
-        return dateFormat(date, "mmm d, yyyy h:MMtt")
-    }
-
     const assignRequestHandler = (id) => {
         dispatch(assignRequest(id, {}))
     }
-
-    const upperCase = (text) => text.toUpperCase()
 
     const setRequests = () => {
         const data = {

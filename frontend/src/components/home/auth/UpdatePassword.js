@@ -4,11 +4,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { FloatingLabel, Form, Button, Card, Container, Row } from 'react-bootstrap'
 import { updatePassword, clearErrors } from './../../../actions/userActions'
 import { UPDATE_PASSWORD_RESET } from './../../../constants/userConstants'
+import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import MetaData from './../../layout/MetaData'
 import Sidebar from './../../layout/Sidebar'
-import {
-    INSIDE_DASHBOARD_TRUE
-} from '../../../constants/dashboardConstants'
 
 const UpdatePassword = ({ history }) => {
     const alert = useAlert()
@@ -19,12 +17,6 @@ const UpdatePassword = ({ history }) => {
     const [oldPassword, setOldPassword] = useState('')
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
-
-    const submitHandler = e => {
-        e.preventDefault()
-
-        dispatch(updatePassword({ oldPassword, password, confirmPassword }))
-    }
 
     useEffect(() => {
         if (isUpdated) {
@@ -43,7 +35,14 @@ const UpdatePassword = ({ history }) => {
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, alert, error, isUpdated, history])
+    }, [dispatch, history, alert, error, isUpdated])
+    
+    const submitHandler = e => {
+        e.preventDefault()
+
+        dispatch(updatePassword({ oldPassword, password, confirmPassword }))
+    }
+
     return (
         <>
             <MetaData title={'Update Password'} />

@@ -2,21 +2,17 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
+import { Container, Modal, Button } from 'react-bootstrap'
+import { MDBDataTableV5 } from 'mdbreact'
 import { getRequests, updateRequest, deleteRequest, clearErrors } from '../../../actions/requestActions'
 import { UPDATE_REQUEST_RESET, DELETE_REQUEST_RESET } from '../../../constants/requestConstants'
+import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
-import { Container, Modal, Button } from 'react-bootstrap'
-import { MDBDataTableV5 } from 'mdbreact'
-import {
-    INSIDE_DASHBOARD_TRUE
-} from '../../../constants/dashboardConstants'
-
 var dateFormat = require('dateformat')
 
 const ListAllRequests = ({ history }) => {
-
     const alert = useAlert()
     const dispatch = useDispatch()
 
@@ -29,6 +25,9 @@ const ListAllRequests = ({ history }) => {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const changeDateFormat = (date) => dateFormat(date, "mmm d, yyyy h:MMtt")
+    const upperCase = (text) => text.toUpperCase()
 
     useEffect(() => {
         if (user.role === 'CICS Staff') {
@@ -67,13 +66,7 @@ const ListAllRequests = ({ history }) => {
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, alert, error, isUpdated, isDeleted, history, deleteError])
-
-    function changeDateFormat(date) {
-        return dateFormat(date, "mmm d, yyyy h:MMtt")
-    }
-
-    const upperCase = (text) => text.toUpperCase()
+    }, [dispatch, history, alert, error, isUpdated, isDeleted, deleteError, user.role])
 
     const deleteRequestHandler = (id) => {
         dispatch(deleteRequest(id))

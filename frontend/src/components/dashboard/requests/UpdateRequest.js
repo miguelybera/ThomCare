@@ -1,17 +1,14 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
+import { Row, Container, Button, Col, Card, Form } from 'react-bootstrap'
+import { MDBDataTableV5 } from 'mdbreact'
 import { getRequestDetails, updateRequest, clearErrors } from '../../../actions/requestActions'
 import { REQUEST_DETAILS_RESET, UPDATE_REQUEST_RESET } from '../../../constants/requestConstants'
+import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
 import Sidebar from '../../layout/Sidebar'
-import { Row, Container, Button, Col, Card, Form } from 'react-bootstrap'
-import { MDBDataTableV5 } from 'mdbreact'
-import {
-    INSIDE_DASHBOARD_TRUE
-} from '../../../constants/dashboardConstants'
-
 var dateFormat = require('dateformat')
 
 const UpdateRequest = ({ history, match }) => {
@@ -20,8 +17,6 @@ const UpdateRequest = ({ history, match }) => {
 
     const { loading: requestLoading, error, request } = useSelector(state => state.requestDetails)
     const { loading, error: updateError, isUpdated } = useSelector(state => state.request)
-
-    const requestId = match.params.id
 
     const [requestorInfo, setRequestorInfo] = useState({})
     const [notes, setNotes] = useState('')
@@ -33,26 +28,12 @@ const UpdateRequest = ({ history, match }) => {
     const [remarks, setRemarks] = useState([])
     const [remarksMessage, setRemarksMessage] = useState([])
 
-    const status = [
-        "Pending",
-        "Processing",
-        "Denied",
-        "Approved"
-    ]
+    const status = ["Pending", "Processing", "Denied", "Approved"]
 
-    const submitHandler = e => {
-        e.preventDefault()
+    const requestId = match.params.id
 
-        const formData = new FormData()
-        formData.set('requestStatus', requestStatus)
-        formData.set('remarksMessage', remarksMessage)
-
-        returningFiles.forEach(file => {
-            formData.append('returningFiles', file)
-        })
-
-        dispatch(updateRequest(requestId, formData, false))
-    }
+    const changeDateFormat = (date) => dateFormat(date, "mmm d, yyyy h:MMtt")
+    const upperCase = (text) => text.toUpperCase()
 
     useEffect(() => {
         if (request && request._id !== requestId) {
@@ -107,11 +88,19 @@ const UpdateRequest = ({ history, match }) => {
         })
     }
 
-    function changeDateFormat(date) {
-        return dateFormat(date, "mmm d, yyyy h:MMtt")
-    }
+    const submitHandler = e => {
+        e.preventDefault()
 
-    const upperCase = (text) => text.toUpperCase()
+        const formData = new FormData()
+        formData.set('requestStatus', requestStatus)
+        formData.set('remarksMessage', remarksMessage)
+
+        returningFiles.forEach(file => {
+            formData.append('returningFiles', file)
+        })
+
+        dispatch(updateRequest(requestId, formData, false))
+    }
 
     const setHistory = () => {
         const data = {

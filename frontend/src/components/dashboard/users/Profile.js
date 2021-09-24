@@ -2,18 +2,15 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
+import { Form, Card, Button, Container, Row, Col } from 'react-bootstrap'
 import { loadUser, updateProfile, clearErrors } from '../../../actions/userActions'
 import { UPDATE_PROFILE_RESET } from '../../../constants/userConstants'
-import { Form, Card, Button, Container, Row, Col } from 'react-bootstrap'
+import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
 import Sidebar from '../../layout/Sidebar'
-import {
-    INSIDE_DASHBOARD_TRUE
-} from '../../../constants/dashboardConstants'
 
 const Profile = () => {
-
     const dispatch = useDispatch()
     const alert = useAlert()
 
@@ -44,7 +41,6 @@ const Profile = () => {
     }, [user])
 
     useEffect(() => {
-
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
@@ -77,9 +73,7 @@ const Profile = () => {
 
     return (
         <>
-
             <MetaData title={'My Profile'} />
-            {/** add here if user.role = 'something' display , else display student profile*/}
             <Sidebar />
             {loading ? (
                 <Loader />

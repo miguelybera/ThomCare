@@ -1,13 +1,9 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import MetaData from './../../layout/MetaData'
 import { Card, Container, Row, FloatingLabel, Form, Button } from 'react-bootstrap'
-import {
-    INSIDE_DASHBOARD_FALSE
-} from '../../../constants/dashboardConstants'
-import {
-    TRACK_REQUEST_RESET
-} from '../../../constants/requestConstants'
+import { INSIDE_DASHBOARD_FALSE } from '../../../constants/dashboardConstants'
+import { TRACK_REQUEST_RESET } from '../../../constants/requestConstants'
+import MetaData from './../../layout/MetaData'
 
 const TrackingPage = ({ history }) => {
     const dispatch = useDispatch()
@@ -19,19 +15,13 @@ const TrackingPage = ({ history }) => {
 
     const { trackingNumber, lastName } = userInfo
 
-    const submitHandler = e => {
-        dispatch({
-            type: TRACK_REQUEST_RESET
-        })
-        history.push(`/track/${userInfo.trackingNumber}/${userInfo.lastName}`)
-    }
+    const upperCase = (text) => text.toUpperCase()
 
     useEffect(() => {
         dispatch({
             type: INSIDE_DASHBOARD_FALSE
         })
     }, [dispatch])
-
 
     const onChange = e => {
         e.preventDefault()
@@ -42,7 +32,12 @@ const TrackingPage = ({ history }) => {
         })
     }
 
-    const upperCase = (text) => text.toUpperCase()
+    const submitHandler = e => {
+        dispatch({
+            type: TRACK_REQUEST_RESET
+        })
+        history.push(`/track/${userInfo.trackingNumber}/${userInfo.lastName}`)
+    }
 
     return (
         <Fragment>
