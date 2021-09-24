@@ -1,14 +1,12 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useState } from 'react'
 import styled from 'styled-components'
-import { useAlert } from 'react-alert'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import * as FaIcons from 'react-icons/fa'
 import * as AiIcons from 'react-icons/ai'
 import { SidebarData } from './SidebarData'
 import SubMenu from './SubMenu'
 import { IconContext } from 'react-icons/lib'
-import { Container, Row } from 'react-bootstrap'
 
 const Nav = styled.div`
     background: #9C0B0A;
@@ -75,9 +73,6 @@ const SidebarNav = styled.nav`
     transition: 130ms;
     z-index:1000;
     overflow-y: auto;`;
-
-const SidebarText = styled.div`
-    font-size: 20px;`;
 
 const SidebarWrap = styled.div`
     width: 100%;`;

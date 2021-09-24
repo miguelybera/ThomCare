@@ -7,65 +7,66 @@ import './App.css';
 //layout folder
 import Header from './components/layout/Header'
 import ScrollToTop from './components/layout/ScrollToTop'
-import Loader from './components/layout/Loader'
 import Footer from './components/layout/Footer'
 
 //user folder
-import Login from './components/user/Login'
-import Register from './components/user/Register'
-import ConfirmRegister from './components/user/ConfirmRegister'
-import ForgotPassword from './components/user/ForgotPassword'
-import Profile from './components/user/Profile'
-import UpdatePassword from './components/user/UpdatePassword'
-import NewPassword from './components/user/NewPassword'
-import VerifyRegistration from './components/user/VerifyRegistration'
+import Login from './components/home/auth/Login'
+import Register from './components/home/auth/Register'
+import ConfirmRegister from './components/home/auth/ConfirmRegister'
+import ForgotPassword from './components/home/auth/ForgotPassword'
+import UpdatePassword from './components/home/auth/UpdatePassword'
+import NewPassword from './components/home/auth/NewPassword'
+import VerifyRegistration from './components/home/auth/VerifyRegistration'
 
 //chat folder
-import Messenger from './components/chat/chatbox/Messenger'
+import Messenger from './components/dashboard/chat/chatbox/Messenger'
 
 //announcement folder
-import Announcements from './components/announcement/Announcements'
-import AnnouncementDetails from './components/announcement/AnnouncementDetails'
+import Announcements from './components/home/announcement/Announcements'
+import AnnouncementDetails from './components/home/announcement/AnnouncementDetails'
 
 //request folder
-import TrackingPage from './components/request/TrackingPage'
-import TrackingPageProgress from './components/request/TrackingPageProgress'
-import SubmitRequest from './components/request/SubmitRequest'
+import TrackingPage from './components/home/requests/TrackingPage'
+import TrackingPageProgress from './components/home/requests/TrackingPageProgress'
+import SubmitRequest from './components/home/requests/SubmitRequest'
 
 //forms
-import Form6A from './components/request/forms/Form6A'
-import Form6B from './components/request/forms/Form6B'
-import OverloadForm from './components/request/forms/OverloadForm'
-import PetitionClass from './components/request/forms/PetitionClass'
-import FormsList from './components/request/forms/FormsList'
-import DownloadList from './components/request/forms/DownloadList'
-
+import Form6A from './components/home/requests/forms/Form6A'
+import Form6B from './components/home/requests/forms/Form6B'
+import OverloadForm from './components/home/requests/forms/OverloadForm'
+import PetitionClass from './components/home/requests/forms/PetitionClass'
+import FormsList from './components/home/requests/forms/FormsList'
+import DownloadList from './components/home/requests/forms/DownloadList'
 
 //dashboard folder
-import ControlPanel from './components/dashboard/ControlPanel'
-import ListAnnouncements from './components/dashboard/ListAnnouncements'
-import ListAnnouncementType from './components/dashboard/ListAnnouncementType'
-import ListMyAnnouncements from './components/dashboard/ListMyAnnouncements'
-import CreateAnnouncement from './components/dashboard/CreateAnnouncement'
-import UpdateAnnouncement from './components/dashboard/UpdateAnnouncement'
-import ListArchivedAnnouncements from './components/dashboard/ListArchivedAnnouncements'
-import ListUsers from './components/dashboard/ListUsers'
-import UpdateUser from './components/dashboard/UpdateUser'
-import RegisterAdmin from './components/dashboard/RegisterAdmin'
-import UpdateRequest from './components/dashboard/UpdateRequest'
-import ViewRequest from './components/dashboard/ViewRequest'
-import ListCICSRequests from './components/dashboard/ListCICSRequests'
-import ListDeptChairRequests from './components/dashboard/ListDeptChairRequests'
-import ListAllRequests from './components/dashboard/ListAllRequests'
-import ListStudentRequests from './components/dashboard/ListStudentRequests'
-import ListAvailableRequests from './components/dashboard/ListAvailableRequests'
-import ListMyRequests from './components/dashboard/ListMyRequests'
-import ListTrash from './components/dashboard/ListTrash'
-import ListAuditLog from './components/dashboard/ListAuditLog'
-import ListForms from './components/dashboard/ListForms'
-import ManageForms from './components/dashboard/ManageForms'
-import CreateForm from './components/dashboard/CreateForm'
-import UpdateForm from './components/dashboard/UpdateForm'
+import ControlPanel from './components/dashboard/controlpanel/ControlPanel'
+import ListAnnouncements from './components/dashboard/announcements/ListAnnouncements'
+import ListAnnouncementType from './components/dashboard/announcements/ListAnnouncementType'
+import ListMyAnnouncements from './components/dashboard/announcements/ListMyAnnouncements'
+import CreateAnnouncement from './components/dashboard/announcements/CreateAnnouncement'
+import UpdateAnnouncement from './components/dashboard/announcements/UpdateAnnouncement'
+import ListArchivedAnnouncements from './components/dashboard/announcements/ListArchivedAnnouncements'
+
+import ListUsers from './components/dashboard/users/ListUsers'
+import UpdateUser from './components/dashboard/users/UpdateUser'
+import RegisterAdmin from './components/dashboard/users/RegisterAdmin'
+import Profile from './components/dashboard/users/Profile'
+
+import UpdateRequest from './components/dashboard/requests/UpdateRequest'
+import ViewRequest from './components/dashboard/requests/ViewRequest'
+import ListCICSRequests from './components/dashboard/requests/ListCICSRequests'
+import ListDeptChairRequests from './components/dashboard/requests/ListDeptChairRequests'
+import ListAllRequests from './components/dashboard/requests/ListAllRequests'
+import ListStudentRequests from './components/dashboard/requests/ListStudentRequests'
+import ListAvailableRequests from './components/dashboard/requests/ListAvailableRequests'
+import ListMyRequests from './components/dashboard/requests/ListMyRequests'
+import ListTrash from './components/dashboard/requests/ListTrash'
+
+import ListAuditLog from './components/dashboard/audit/ListAuditLog'
+import ListForms from './components/dashboard/forms/ListForms'
+import ManageForms from './components/dashboard/forms/ManageForms'
+import CreateForm from './components/dashboard/forms/CreateForm'
+import UpdateForm from './components/dashboard/forms/UpdateForm'
 
 //route folder
 import ProtectedRoute from './components/route/ProtectedRoute'
@@ -74,7 +75,6 @@ import { loadUser } from './actions/userActions'
 
 
 function App() {
-    const { isAuthenticated, loading } = useSelector(state => state.auth)
     const { dashboard } = useSelector(state => state.dashboard)
 
     useEffect(() => {

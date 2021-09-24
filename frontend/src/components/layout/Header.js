@@ -1,8 +1,8 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useAlert } from 'react-alert'
-import { Link, NavLink } from 'react-router-dom'
-import { Nav, NavDropdown, Navbar, Container, Button } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
+import { Nav, NavDropdown, Navbar, Container } from 'react-bootstrap'
 import { logout } from '../../actions/userActions'
 import '../../App.css'
 import styled from 'styled-components'
@@ -30,16 +30,14 @@ const Styles = styled.div`
       display: inline-block;
       border-radius: 10px
     }
-  }
-`;
+  }`;
 
 const Drop = styled.div` 
   a, .navbar-nav .nav-link  {
   border-radius: 105px;
   color: black;
   
-}
-`;
+}`;
 
 const Header = () => {
     const dispatch = useDispatch()
