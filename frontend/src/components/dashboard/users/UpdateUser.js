@@ -14,6 +14,7 @@ const UpdateUser = ({ history, match }) => {
     const alert = useAlert()
 
     const { loading: userLoading, error, singleUser } = useSelector(state => state.singleUser)
+    const { user } = useSelector(state => state.auth)
     const { loading, error: updateError, isUpdated } = useSelector(state => state.user)
 
     const [firstName, setFirstName] = useState('')
@@ -64,7 +65,11 @@ const UpdateUser = ({ history, match }) => {
         }
 
         if (isUpdated) {
-            history.push('/admin/users')
+            if (user.role !== 'CICS Staff') {
+                history.push('/admin/deptchair/students')
+            } else {
+                history.push('/admin/users')
+            }
             dispatch(getUserDetails(userId))
             alert.success('User updated successfully.')
 
@@ -76,8 +81,8 @@ const UpdateUser = ({ history, match }) => {
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, error, alert, isUpdated, updateError, singleUser, userId, history])
-    
+    }, [dispatch, history, alert, error, isUpdated, updateError, singleUser, userId])
+
     const submitHandler = e => {
         e.preventDefault()
 

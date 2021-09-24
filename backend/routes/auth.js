@@ -32,6 +32,11 @@ router.route('/chat/user/:id').get(isAuthenticatedUser, getUser);
 router.route('/chat/users').get(isAuthenticatedUser, getChatAccounts);
 router.route('/announcement/user/:id').get(getUser);
 
+router.route('/admin/me/update').put(isAuthenticatedUser, authorizeRoles('CICS Staff', 'IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), updateProfile);
+router.route('/admin/user/:id').get(isAuthenticatedUser, authorizeRoles('CICS Staff', 'IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getUser);
+router.route('/admin/user/:id').put(isAuthenticatedUser, authorizeRoles('CICS Staff', 'IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), updateUser);
+router.route('/admin/user/:id').delete(isAuthenticatedUser, authorizeRoles('CICS Staff', 'IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), deleteUser);
+
 //student
 router.route('/registerStudent').post(registerStudent);
 router.route('/verify/account/:token').post(verifyStudent);
@@ -40,11 +45,7 @@ router.route('/verify/account/:token').post(verifyStudent);
 router.route('/deptChair/users').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getStudentAccounts);
 
 //cics staff
-router.route('/admin/me/update').put(isAuthenticatedUser, authorizeRoles('CICS Staff', 'IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), updateProfile);
 router.route('/admin/register').post(isAuthenticatedUser, authorizeRoles('CICS Staff'), registerAdmin);
-router.route('/admin/user/:id').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getUser);
 router.route('/admin/users').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getUsers);
-router.route('/admin/user/:id').put(isAuthenticatedUser, authorizeRoles('CICS Staff'), updateUser);
-router.route('/admin/user/:id').delete(isAuthenticatedUser, authorizeRoles('CICS Staff'), deleteUser);
 
 module.exports = router;

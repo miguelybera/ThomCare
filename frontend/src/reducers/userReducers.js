@@ -18,6 +18,9 @@ import {
     ALL_USERS_REQUEST,
     ALL_USERS_SUCCESS,
     ALL_USERS_FAIL,
+    ALL_STUDENTS_REQUEST,
+    ALL_STUDENTS_SUCCESS,
+    ALL_STUDENTS_FAIL,
     USER_DETAILS_REQUEST,
     USER_DETAILS_SUCCESS,
     USER_DETAILS_FAIL,
@@ -164,18 +167,21 @@ export const authReducer = (state = { user: {} }, action) => {
 export const getUsersReducer = (state = { users: [] }, action) => {
     switch (action.type) {
         case ALL_USERS_REQUEST:
+        case ALL_STUDENTS_REQUEST:
             return {
                 loading: true,
                 users: []
             }
 
         case ALL_USERS_SUCCESS:
+        case ALL_STUDENTS_SUCCESS:
             return {
                 loading: false,
                 users: action.payload.users
             }
 
         case ALL_USERS_FAIL:
+        case ALL_STUDENTS_FAIL:
             return {
                 loading: false,
                 error: action.payload
@@ -406,7 +412,7 @@ export const forgotPasswordReducer = (state = {}, action) => {
             return {
                 loading: false
             }
-            
+
         case NEW_PASSWORD_RESET:
             return {
                 ...state,

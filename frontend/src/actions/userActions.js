@@ -3,23 +3,26 @@ import {
     LOGIN_REQUEST,
     LOGIN_SUCCESS,
     LOGIN_FAIL,
+    LOGOUT_SUCCESS,
+    LOGOUT_FAIL,
     LOAD_USER_REQUEST,
     LOAD_USER_SUCCESS,
     LOAD_USER_FAIL,
+    FORGOT_PASSWORD_REQUEST,
+    FORGOT_PASSWORD_SUCCESS,
+    FORGOT_PASSWORD_FAIL,
+    ALL_USERS_REQUEST,
+    ALL_USERS_SUCCESS,
+    ALL_USERS_FAIL,
+    ALL_STUDENTS_REQUEST,
+    ALL_STUDENTS_SUCCESS,
+    ALL_STUDENTS_FAIL,
     UPDATE_PROFILE_REQUEST,
     UPDATE_PROFILE_SUCCESS,
     UPDATE_PROFILE_FAIL,
     UPDATE_PASSWORD_REQUEST,
     UPDATE_PASSWORD_SUCCESS,
     UPDATE_PASSWORD_FAIL,
-    FORGOT_PASSWORD_REQUEST,
-    FORGOT_PASSWORD_SUCCESS,
-    FORGOT_PASSWORD_FAIL,
-    LOGOUT_SUCCESS,
-    LOGOUT_FAIL,
-    ALL_USERS_REQUEST,
-    ALL_USERS_SUCCESS,
-    ALL_USERS_FAIL,
     USER_DETAILS_REQUEST,
     USER_DETAILS_SUCCESS,
     USER_DETAILS_FAIL,
@@ -68,6 +71,23 @@ export const login = ( email, password ) => async (dispatch) => {
     }
 }
 
+// Logout user
+export const logout = () => async (dispatch) => {
+    try {
+        await axios.get('/api/v1/logout')
+
+        dispatch({
+            type: LOGOUT_SUCCESS
+        })
+
+    } catch (error) {
+        dispatch({
+            type: LOGOUT_FAIL,
+            payload: error.response.data.errMessage
+        })
+    }
+}
+
 // Load user
 export const loadUser = () => async (dispatch) => {
     try {
@@ -85,6 +105,62 @@ export const loadUser = () => async (dispatch) => {
     } catch (error) {
         dispatch({
             type: LOAD_USER_FAIL,
+            payload: error.response.data.errMessage
+        })
+    }
+}
+
+//forgot password
+export const forgotPassword = (email) => async (dispatch) => {
+    try{
+
+        dispatch({ type: FORGOT_PASSWORD_REQUEST})
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const { data } = await axios.post('api/v1/password/forgot', {email}, config)
+
+        dispatch({
+            type: FORGOT_PASSWORD_SUCCESS,
+            payload: data.message
+        })
+
+    }
+    catch(error){
+        dispatch({
+            type: FORGOT_PASSWORD_FAIL,
+            payload: error.response.data.errMessage
+        })
+    }
+}
+
+//reset password
+export const resetPassword = ( token, passwords ) => async (dispatch) => {
+    try {
+        dispatch ({
+            type: NEW_PASSWORD_REQUEST
+        })
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const { data } = await axios.put(`/api/v1/password/reset/${token}`, passwords, config)
+
+        dispatch({
+            type: NEW_PASSWORD_SUCCESS,
+            payload: data.success
+        })
+
+    } catch (error) {
+        dispatch({
+            type: NEW_PASSWORD_FAIL,
             payload: error.response.data.errMessage
         })
     }
@@ -112,6 +188,28 @@ export const getUsers = () => async (dispatch) => {
     }
 }
 
+//get all students
+export const getStudents = () => async (dispatch) => {
+    try{
+        dispatch({
+            type: ALL_STUDENTS_REQUEST
+        })
+
+        const { data } = await axios.get('/api/v1/deptChair/users')
+
+        dispatch({
+            type: ALL_STUDENTS_SUCCESS,
+            payload: data
+        })
+    }
+    catch(error){
+        dispatch({
+            type: ALL_STUDENTS_FAIL,
+            payload: error.response.data.errMessage
+        })
+    }
+}
+
 //Get single user
 export const getUserDetails = (id) => async(dispatch) => {
     try{
@@ -132,23 +230,6 @@ export const getUserDetails = (id) => async(dispatch) => {
             payload: error.response.data.errMessage
             }
         )
-    }
-}
-
-// Logout user
-export const logout = () => async (dispatch) => {
-    try {
-        await axios.get('/api/v1/logout')
-
-        dispatch({
-            type: LOGOUT_SUCCESS
-        })
-
-    } catch (error) {
-        dispatch({
-            type: LOGOUT_FAIL,
-            payload: error.response.data.errMessage
-        })
     }
 }
 
@@ -192,7 +273,6 @@ export const register = (admin, user) => async (dispatch) => {
         })
     }
 }
-
 
 // save student info to local storage
 export const saveStudentInfo = (data) => async (dispatch) => {
@@ -260,63 +340,6 @@ export const updateProfile = (userData) => async (dispatch) => {
         })
     }
 }
-
-//forgot password
-export const forgotPassword = (email) => async (dispatch) => {
-    try{
-
-        dispatch({ type: FORGOT_PASSWORD_REQUEST})
-
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
-
-        const { data } = await axios.post('api/v1/password/forgot', {email}, config)
-
-        dispatch({
-            type: FORGOT_PASSWORD_SUCCESS,
-            payload: data.message
-        })
-
-    }
-    catch(error){
-        dispatch({
-            type: FORGOT_PASSWORD_FAIL,
-            payload: error.response.data.errMessage
-        })
-    }
-}
-
-//reset password
-export const resetPassword = ( token, passwords ) => async (dispatch) => {
-    try {
-        dispatch ({
-            type: NEW_PASSWORD_REQUEST
-        })
-
-        const config = {
-            headers: {
-                'Content-Type': 'application/json'
-            }
-        }
-
-        const { data } = await axios.put(`/api/v1/password/reset/${token}`, passwords, config)
-
-        dispatch({
-            type: NEW_PASSWORD_SUCCESS,
-            payload: data.success
-        })
-
-    } catch (error) {
-        dispatch({
-            type: NEW_PASSWORD_FAIL,
-            payload: error.response.data.errMessage
-        })
-    }
-}
-
 
 // Delete user
 export const deleteUser = (id) => async(dispatch) => {
