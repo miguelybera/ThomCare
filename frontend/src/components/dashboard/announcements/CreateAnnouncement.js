@@ -17,6 +17,8 @@ const CreateAnnouncement = ({ history }) => {
     const { loading, error, success } = useSelector(state => state.newAnnouncement)
     const { loading: announcementTypeLoading, announcementTypes, error: announcementTypeError } = useSelector(state => state.announcementType)
 
+    const changeDateFormat = (date) => dateFormat(date, "yyyy-mm-dd")
+
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [yearLevel, setYearLevel] = useState('All')
@@ -34,8 +36,6 @@ const CreateAnnouncement = ({ history }) => {
     const csTracks = ["All", "Core Computer Science", "Game Development", "Data Science"]
     const itTracks = ["All", "Network and Security", "Web and Mobile App Development", "IT Automation"]
     const isTracks = ["All", "Business Analytics", "Service Management"]
-
-    const changeDateFormat = (date) => dateFormat(date, "yyyy-mm-dd")
 
     useEffect(() => {
         dispatch(getAnnouncementType())
@@ -75,7 +75,7 @@ const CreateAnnouncement = ({ history }) => {
             setTrack('All')
         }
 
-        if (announcementType !== 'Others') {
+        if (announcementType !== 'Add new') {
             setAnnouncementCategory('')
         }
     }, [track, yearLevel, announcementType])
@@ -101,7 +101,7 @@ const CreateAnnouncement = ({ history }) => {
         formData.set('course', course)
         formData.set('track', track)
 
-        if (announcementType === 'Others') {
+        if (announcementType === 'Add new') {
             formData.set('announcementType', announcementCategory)
             dispatch(createAnnouncementType(announcementCategory))
         } else {
@@ -120,13 +120,14 @@ const CreateAnnouncement = ({ history }) => {
 
     return (
         <Fragment>
-            <MetaData title={'New Announcement'} />
+            <MetaData title={'Add new Announcement'} />
             <Sidebar />
             <div className="row">
                 <div className="">
+                    <Container className="space_inside"></Container>
                     {announcementTypeLoading ? <Loader /> : (
                         <Container fluid>
-                            <h3>New Announcement</h3>
+                            <h3>Add New Announcement</h3>
                             <Card>
                                 <Card.Body>
                                     <Form onSubmit={submitHandler}>
@@ -236,17 +237,17 @@ const CreateAnnouncement = ({ history }) => {
                                                         {announcementTypes && announcementTypes.map(type => (
                                                             <option value={type.announcementCategory}>{type.announcementCategory}</option>
                                                         ))}
-                                                        <option value='Others'>Others</option>
+                                                        <option value='Add new'>Add new...</option>
                                                     </Form.Select>
                                                 </Form.Group>
-                                                <Form.Group className={announcementType !== 'Others' ? `mb-3 d-none` : `mb-3`}>
+                                                <Form.Group className={announcementType !== 'Add new' ? `mb-3 d-none` : `mb-3`}>
                                                     <Form.Control
                                                         type="text"
                                                         name="announcementCategory"
                                                         value={announcementCategory}
-                                                        placeholder="New announcement category"
+                                                        placeholder="Add new announcement category"
                                                         onChange={e => setAnnouncementCategory(e.target.value)}
-                                                        disabled={announcementType !== 'Others' ? true : false}
+                                                        disabled={announcementType !== 'Add new' ? true : false}
                                                     />
                                                 </Form.Group>
                                             </Col>
@@ -292,18 +293,20 @@ const CreateAnnouncement = ({ history }) => {
                                                 </Form.Group>
                                             </Col>
                                         </Row>
-                                        <Button
-                                            type='submit'
-                                            style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
-                                            disabled={loading ? true : false}>
-                                            {loading ? (
-                                                <span>
-                                                    <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
-                                                </span>
-                                            ) : (
-                                                <span>Create</span>
-                                            )}
-                                        </Button>
+                                        <center>
+                                            <Button
+                                                type='submit'
+                                                style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                                disabled={loading ? true : false}>
+                                                {loading ? (
+                                                    <span>
+                                                        <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
+                                                    </span>
+                                                ) : (
+                                                    <span>Create</span>
+                                                )}
+                                            </Button>
+                                        </center>
                                     </Form>
                                 </Card.Body>
                             </Card>

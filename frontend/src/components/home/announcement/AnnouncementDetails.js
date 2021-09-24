@@ -75,7 +75,7 @@ const AnnouncementDetails = ({ history, match }) => {
                 }
             })
         }
-    }, [dispatch, history, alert, error, announcement, announcementId, fileAttachments])
+    }, [dispatch, history, alert, error, announcement, announcementId])
 
     useEffect(() => {
         if (createdBy) {

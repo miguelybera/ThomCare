@@ -41,7 +41,7 @@ function Form6A({ history }) {
 
     const [submitted, setSubmitted] = useState(false)
     const title = 'Add/Drop Course Form'
-    
+
     const addRow = () => {
         setInputFields([...inputFields, {
             status: '',
@@ -92,7 +92,7 @@ function Form6A({ history }) {
             type: INSIDE_DASHBOARD_FALSE
         })
     }, [dispatch, alert, error, history])
-    
+
     const onChange = (index, e) => {
         e.preventDefault()
 
@@ -227,8 +227,8 @@ function Form6A({ history }) {
 
                                         return (
                                             <Fragment key={val.index}>
-                                                <p>Courses to add/drop #{idx+1}</p>
-                                                <Row style={{marginBottom: '10px'}}>
+                                                <p>Courses to add/drop #{idx + 1}</p>
+                                                <Row style={{ marginBottom: '10px' }}>
                                                     <Col xs={12} md={3} lg={2} style={addDropStyle}>
                                                         <Form.Select aria-label="Default select example" name="status" id={status} data-id={idx} value={val.status} onChange={e => onChange(idx, e)} required>
                                                             <option value=''>Add/Drop</option>
@@ -236,7 +236,7 @@ function Form6A({ history }) {
                                                             <option value="Drop">Drop</option>
                                                         </Form.Select>
                                                     </Col>
-                                                    <Col xs={12} md={9} lg={2} style={addDropStyle}>
+                                                    <Col xs={12} md={4} lg={2} style={addDropStyle}>
                                                         <Form.Select aria-label="Default select example" name="courseCode" id={courseCode} data-id={idx} value={val.courseCode} onChange={e => onChange(idx, e)} required>
                                                             <option value=''>Course Code</option>
                                                             {courses && courses.map(course => (
@@ -244,16 +244,16 @@ function Form6A({ history }) {
                                                             ))}
                                                         </Form.Select>
                                                     </Col>
-                                                    <Col xs={12} lg={4} style={addDropStyle}>
+                                                    <Col xs={12} md={5} lg={4} style={addDropStyle}>
                                                         <Form.Control type="text" placeholder="Course Name" name="courseName" id={courseName} data-id={idx} value={val.courseName} onChange={e => onChange(idx, e)} readOnly />
                                                     </Col>
-                                                    <Col xs={12} sm={6} lg={2} style={addDropStyle}>
+                                                    <Col xs={12} sm={6} md={2} lg={2} style={addDropStyle}>
                                                         <Form.Control type="number" placeholder="Lec Units" name="lecUnits" id={lecUnits} data-id={idx} value={val.lecUnits} onChange={e => onChange(idx, e)} readOnly />
                                                     </Col>
-                                                    <Col xs={12} sm={6} lg={2} style={addDropStyle}>
+                                                    <Col xs={12} sm={6} md={2} lg={2} style={addDropStyle}>
                                                         <Form.Control type="number" placeholder="Lab Units" name="labUnits" id={labUnits} data-id={idx} value={val.labUnits} onChange={e => onChange(idx, e)} readOnly />
                                                     </Col>
-                                                    <Col xs={12} sm={6} lg={3} style={addDropStyle}>
+                                                    <Col xs={12} sm={6} md={3} lg={3} style={addDropStyle}>
                                                         <Form.Select aria-label="Default select example" placeholder='M' name="days" id={days} data-id={idx} value={val.days} onChange={e => onChange(idx, e)} required >
                                                             <option value=''>Days</option>
                                                             <option value='M'>M</option>
@@ -265,16 +265,16 @@ function Form6A({ history }) {
                                                             <option value='Su'>Su</option>
                                                         </Form.Select>
                                                     </Col>
-                                                    <Col xs={12} sm={6} lg={3} style={addDropStyle}>
+                                                    <Col xs={12} sm={6} md={5} lg={3} style={addDropStyle}>
                                                         <Form.Control type="text" placeholder="Time" name="time" id={time} data-id={idx} value={val.time} onChange={e => onChange(idx, e)} required />
                                                     </Col>
-                                                    <Col xs={12} sm={5} lg={2} style={addDropStyle}>
+                                                    <Col xs={12} sm={4} md={4} lg={2} style={addDropStyle}>
                                                         <Form.Control type="text" placeholder="Room number" name="room" id={room} data-id={idx} value={val.room} onChange={e => onChange(idx, e)} required />
                                                     </Col>
-                                                    <Col xs={10} sm={5} lg={3} style={addDropStyle}>
+                                                    <Col xs={8} sm={4} md={5} lg={2} style={addDropStyle}>
                                                         <Form.Control type="text" placeholder="Section" name="section" id={section} data-id={idx} value={val.section} onChange={e => onChange(idx, e)} required />
                                                     </Col>
-                                                    <Col xs={2} lg={1} style={{ textAlign: 'right', marginBottom: '5px' }}>
+                                                    <Col xs={4} sm={4} md={3} lg={2} style={{ textAlign: 'right', marginBottom: '5px' }}>
                                                         {
                                                             idx === 0 ? (
                                                                 <Button variant='primary' onClick={() => addRow()} style={{ width: '40px' }}>
@@ -282,9 +282,14 @@ function Form6A({ history }) {
                                                                 </Button>
 
                                                             ) : (
-                                                                <Button variant='danger' onClick={() => deleteRow(idx)} style={{ width: '40px' }}>
-                                                                    <i className="fa fa-minus" aria-hidden="true"></i>
-                                                                </Button>
+                                                                <Fragment>
+                                                                    <Button variant='primary' onClick={() => addRow()} style={{ width: '40px', marginLeft: '5px' }}>
+                                                                        <i className="fa fa-plus-circle" aria-hidden="true"></i>
+                                                                    </Button>
+                                                                    <Button variant='danger' onClick={() => deleteRow(idx)} style={{ width: '40px', marginLeft: '5px' }}>
+                                                                        <i className="fa fa-minus" aria-hidden="true"></i>
+                                                                    </Button>
+                                                                </Fragment>
                                                             )
                                                         }
                                                     </Col>

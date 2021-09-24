@@ -42,7 +42,7 @@ const SubmitRequest = () => {
     ]
 
     const upperCase = (text) => text.toUpperCase()
-    
+
     const reset = () => {
         dispatch({
             type: SUBMIT_REQUEST_RESET
@@ -155,17 +155,15 @@ const SubmitRequest = () => {
                                         </Form.Select>
                                     </Form.Group>
                                     <Form.Group className="mb-3">
-                                        <FloatingLabel
-                                            label="Notes"
-                                            className="mb-3"
-                                        >
-                                            <Form.Control
-                                                type='text'
-                                                name='notes'
-                                                value={notes}
-                                                onChange={e => setNotes(e.target.value)}
-                                            />
-                                        </FloatingLabel>
+                                        <Form.Label>Notes: </Form.Label>
+                                        <Form.Control
+                                            as="textarea"
+                                            placeholder="(Optional)"
+                                            rows={4}
+                                            name='notes'
+                                            value={notes}
+                                            onChange={e => setNotes(e.target.value)}
+                                        />
                                     </Form.Group>
                                     <Form.Group className="mb-3">
                                         <Form.Label>

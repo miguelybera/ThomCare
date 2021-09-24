@@ -134,7 +134,7 @@ const UpdateAnnouncement = ({ history, match }) => {
         formData.set('course', course)
         formData.set('track', track)
 
-        if (announcementType === 'Others') {
+        if (announcementType === 'Add new') {
             formData.set('announcementType', announcementCategory)
             dispatch(createAnnouncementType(announcementCategory))
         } else {
@@ -150,13 +150,14 @@ const UpdateAnnouncement = ({ history, match }) => {
 
         dispatch(updateAnnouncement(announcement._id, formData))
     }
-    
+
     return (
         <Fragment>
             <MetaData title={'Update Announcement'} />
             <Sidebar />
             <div className="row">
                 <div className="">
+                    <Container className="space_inside"></Container>
                     {announcementTypeLoading ? <Loader /> : (
                         <Container fluid>
                             <h3>Update Announcement</h3>
@@ -266,17 +267,17 @@ const UpdateAnnouncement = ({ history, match }) => {
                                                             {announcementTypes && announcementTypes.map(type => (
                                                                 <option value={type.announcementCategory}>{type.announcementCategory}</option>
                                                             ))}
-                                                            <option value='Others'>Others</option>
+                                                            <option value='Add new'>Add new...</option>
                                                         </Form.Select>
                                                     </Form.Group>
-                                                    <Form.Group className={announcementType !== 'Others' ? `mb-3 d-none` : `mb-3`}>
+                                                    <Form.Group className={announcementType !== 'Add new' ? `mb-3 d-none` : `mb-3`}>
                                                         <Form.Control
                                                             type="text"
                                                             name="announcementCategory"
                                                             value={announcementCategory}
-                                                            placeholder="New announcement category"
+                                                            placeholder="Add new announcement category"
                                                             onChange={e => setAnnouncementCategory(e.target.value)}
-                                                            disabled={announcementType !== 'Others' ? true : false}
+                                                            disabled={announcementType !== 'Add new' ? true : false}
                                                         />
                                                     </Form.Group>
                                                 </Col>
@@ -333,18 +334,20 @@ const UpdateAnnouncement = ({ history, match }) => {
                                                     </Form.Group>
                                                 </Col>
                                             </Row>
-                                            <Button
-                                                type='submit'
-                                                style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
-                                                disabled={loading ? true : false}>
-                                                {loading ? (
-                                                    <span>
-                                                        <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
-                                                    </span>
-                                                ) : (
-                                                    <span>Update</span>
-                                                )}
-                                            </Button>
+                                            <center>
+                                                <Button
+                                                    type='submit'
+                                                    style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                                    disabled={loading ? true : false}>
+                                                    {loading ? (
+                                                        <span>
+                                                            <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
+                                                        </span>
+                                                    ) : (
+                                                        <span>Update</span>
+                                                    )}
+                                                </Button>
+                                            </center>
                                         </Form>
                                     </Card.Body>
                                 </Card>
