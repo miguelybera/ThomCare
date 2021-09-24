@@ -26,7 +26,7 @@ const AnnouncementDetails = ({ history, match }) => {
     const dispatch = useDispatch()
 
     const { loading, announcement, error } = useSelector(state => state.announcementDetails)
-    const { singleUser } = useSelector(state => state.singleUser)
+    const { singleUser, error: userError } = useSelector(state => state.singleUser)
 
     const announcementId = match.params.id
 
@@ -83,12 +83,12 @@ const AnnouncementDetails = ({ history, match }) => {
             dispatch(getUser(createdBy))
         }
 
-        if (error) {
-            alert.error(error)
+        if (userError) {
+            alert.error(userError)
             dispatch(clearErrors())
         }
 
-    }, [dispatch, alert, error, createdBy, announcement, announcementId])
+    }, [dispatch, alert, error, createdBy])
 
     const changeDateFormat = (date) => dateFormat(date, "ddd, mmm d, yyyy h:MMtt")
     const upperCase = (name) => name.toUpperCase()

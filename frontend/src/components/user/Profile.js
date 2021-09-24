@@ -96,7 +96,7 @@ const Profile = () => {
                                         <Form.Label column sm={2}>
                                             Name
                                         </Form.Label>
-                                        <Col sm={4}>
+                                        <Col md={4} style={{ marginTop: '5px' }}>
                                             <Form.Control
                                                 type="text"
                                                 placeholder="First Name"
@@ -107,17 +107,17 @@ const Profile = () => {
                                                 required
                                             />
                                         </Col>
-                                        <Col sm={3}>
+                                        <Col md={3} style={{ marginTop: '5px' }}>
                                             <Form.Control
                                                 type="text"
-                                                placeholder="Middle Name"
+                                                placeholder="Middle Name (Optional)"
                                                 value={middleName}
                                                 disabled={editProfile ? false : true}
                                                 onChange={e => setMiddleName(upperCase(e.target.value))}
                                                 pattern="([A-zÀ-ž\s]){2,}"
                                             />
                                         </Col>
-                                        <Col sm={3}>
+                                        <Col md={3} style={{ marginTop: '5px' }}>
                                             <Form.Control
                                                 type="text"
                                                 placeholder="Last Name"
@@ -171,18 +171,20 @@ const Profile = () => {
                                     </Form.Group>
                                     {
                                         editProfile ? (
-                                            <center><Button
-                                                type='submit'
-                                                style={{ marginTop: '10px', marginRight: '5px', borderRadius: '50px', width: '10rem' }}
-                                                disabled={editLoading ? true : false}>
-                                                {editLoading ? (
-                                                    <span>
-                                                        <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
-                                                    </span>
-                                                ) : (
-                                                    <span>Save</span>
-                                                )}
-                                            </Button></center>
+                                            <center>
+                                                <Button
+                                                    type='submit'
+                                                    style={{ marginTop: '10px', marginRight: '5px', borderRadius: '50px', width: '10rem' }}
+                                                    disabled={editLoading ? true : false}>
+                                                    {editLoading ? (
+                                                        <span>
+                                                            <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
+                                                        </span>
+                                                    ) : (
+                                                        <span>Save</span>
+                                                    )}
+                                                </Button>
+                                            </center>
                                         ) : (
                                             role === 'Student' ? (
                                                 <Fragment>

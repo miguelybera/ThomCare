@@ -26,17 +26,20 @@ const ControlPanel = () => {
 
     const role = user && user.role
     
-    let link = '', reqType = ''
+    let link = '', reqType = '', viewType = ''
 
     if (user.role === 'CICS Staff') {
         link = '/admin/all/requests'
         reqType = 'All'
+        viewType = '5'
     } else if (user.role === 'Student') {
         link = '/me/requests'
         reqType = 'All'
+        viewType = '2'
     } else {
         link = '/admin/deptchair/requests'
         reqType = 'Requests'
+        viewType = '1'
     }
 
     useEffect(() => {
@@ -97,7 +100,7 @@ const ControlPanel = () => {
         }
 
         recents.forEach(request => {
-            const viewType = '2' + request._id
+            const reqLink = viewType + request._id
 
             data.rows.push({
                 date: changeDateFormat(request.createdAt),
@@ -115,7 +118,7 @@ const ControlPanel = () => {
                     </p>
                 </Fragment>,
                 actions: <Fragment>
-                    <Link to={`/view/request/${viewType}`}>
+                    <Link to={`/view/request/${reqLink}`}>
                         <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
                             <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
                         </Button>

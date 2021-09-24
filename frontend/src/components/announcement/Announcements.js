@@ -38,7 +38,11 @@ const Cards = styled.div`
     position: absolute;
     z-index: 1;`;
 
-const dropdown = { border: "2px solid black", borderRadius: "20px", margin: '5px 0' }
+const dropdown = {
+    border: "2px solid black",
+    borderRadius: "20px",
+    margin: '5px 0'
+}
 
 const Announcements = () => {
 
@@ -46,7 +50,7 @@ const Announcements = () => {
     const dispatch = useDispatch()
 
     const { loading, announcements, error, announcementCount, resPerPage, filteredAnnouncementsCount } = useSelector(state => state.announcements)
-    const { loading: announcementTypeLoading, announcementTypes, error: announcementTypeError, success } = useSelector(state => state.announcementType)
+    const { loading: announcementTypeLoading, error: announcementTypeError, announcementTypes } = useSelector(state => state.announcementType)
 
     const [currentPage, setCurrentPage] = useState(1)
 
@@ -99,19 +103,6 @@ const Announcements = () => {
     const { course, yearLevel, track, announcementType, title } = filter
 
     useEffect(() => {
-        if (error) {
-            alert.error(error)
-            dispatch(clearErrors())
-        }
-
-        dispatch(getAnnouncements(currentPage, course, yearLevel, track, title, announcementType))
-
-        dispatch({
-            type: INSIDE_DASHBOARD_FALSE
-        })
-    }, [dispatch, alert, error, currentPage, course, yearLevel, track, title, announcementType])
-
-    useEffect(() => {
         dispatch(getAnnouncementType())
 
         if (announcementTypeError) {
@@ -119,6 +110,19 @@ const Announcements = () => {
             dispatch(clearErrors())
         }
     }, [dispatch, alert, announcementTypeError])
+
+    useEffect(() => {
+        dispatch(getAnnouncements(currentPage, course, yearLevel, track, title, announcementType))
+
+        if (error) {
+            alert.error(error)
+            dispatch(clearErrors())
+        }
+
+        dispatch({
+            type: INSIDE_DASHBOARD_FALSE
+        })
+    }, [dispatch, alert, error, currentPage, course, yearLevel, track, title, announcementType])
 
     const onChange = e => {
         setCurrentPageNo(1)
@@ -294,7 +298,7 @@ const Announcements = () => {
             </Container>
             <br />
 
-            {loading && announcementTypeLoading ? <Loader /> : (
+            {loading || announcementTypeLoading ? <Loader /> : (
                 <Row xs={1} md={2} className="g-4">
                     {announcements && (announcements.length !== 0) ? announcements.map(announcement => (
                         <Col>
@@ -316,11 +320,9 @@ const Announcements = () => {
                             </Card>
                         </Col>
                     )) : (
-                        loading ? <Loader /> : (
-                            <Col>
-                                <h3 style={{ margin: '10px 0' }}>No announcements found.</h3>
-                            </Col>
-                        )
+                        <Col>
+                            <h3 style={{ margin: '10px 0' }}>No announcements found.</h3>
+                        </Col>
                     )}
                 </Row>
             )}

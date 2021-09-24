@@ -50,12 +50,14 @@ export const getAnnouncementTypeReducer = (state = { announcementTypes: [] }, ac
     switch (action.type) {
         case ANNOUNCEMENT_TYPE_REQUEST:
             return {
+                ...state,
                 loading: true,
                 announcementTypes: []
             }
 
         case ANNOUNCEMENT_TYPE_SUCCESS:
             return {
+                ...state,
                 loading: false,
                 announcementTypes: action.payload.announcementTypes,
                 success: action.payload.success
@@ -63,6 +65,7 @@ export const getAnnouncementTypeReducer = (state = { announcementTypes: [] }, ac
 
         case ANNOUNCEMENT_TYPE_FAIL:
             return {
+                ...state,
                 loading: false,
                 error: action.payload
             }
@@ -85,7 +88,6 @@ export const getAnnouncementsReducer = (state = { announcements: [], announcemen
         case MY_ANNOUNCEMENTS_REQUEST:
         case ALL_ADMIN_ANNOUNCEMENTS_REQUEST:
         case ALL_ARCHIVED_ANNOUNCEMENTS_REQUEST:
-        case ANNOUNCEMENT_TYPE_REQUEST:
             return {
                 loading: true,
                 announcements: [],
@@ -96,7 +98,6 @@ export const getAnnouncementsReducer = (state = { announcements: [], announcemen
         case MY_ANNOUNCEMENTS_SUCCESS:
         case ALL_ADMIN_ANNOUNCEMENTS_SUCCESS:
         case ALL_ARCHIVED_ANNOUNCEMENTS_SUCCESS:
-        case ANNOUNCEMENT_TYPE_SUCCESS:
             return {
                 loading: false,
                 announcements: action.payload.announcements,
@@ -109,7 +110,6 @@ export const getAnnouncementsReducer = (state = { announcements: [], announcemen
         case MY_ANNOUNCEMENTS_FAIL:
         case ALL_ADMIN_ANNOUNCEMENTS_FAIL:
         case ALL_ARCHIVED_ANNOUNCEMENTS_FAIL:
-        case ANNOUNCEMENT_TYPE_FAIL:
             return {
                 loading: false,
                 error: action.payload

@@ -26,6 +26,7 @@ const Register = ({ history }) => {
     const { firstName, middleName, lastName, email, studentNumber, course, password, confirmPassword } = user
 
     const submitHandler = e => {
+        console.log(firstName, middleName, lastName)
         dispatch(saveStudentInfo({ firstName, middleName, lastName, studentNumber, email, course, password, confirmPassword }))
         history.push('/confirm/register')
     }
@@ -35,6 +36,7 @@ const Register = ({ history }) => {
     const onChange = e => {
         e.preventDefault()
 
+        console.log(e.target.name, e.target.value)
         setUser({
             ...user,
             [e.target.name]: e.target.name === 'firstName' || e.target.name === 'lastName' ? upperCase(e.target.value) : e.target.value
@@ -67,34 +69,35 @@ const Register = ({ history }) => {
                         <Card.Title style={{ margin: '50px 0 20px 0' }}>Register an account</Card.Title>
                         <Form method='post' onSubmit={submitHandler} encType='application/json'>
                             <Row className="mb-3">
-                                <Form.Group as={Col}>
+                                <Form.Group as={Col} md={5} style={{ marginTop: '5px' }}>
                                     <Form.Label>First Name</Form.Label>
                                     <Form.Control
                                         type="text"
                                         placeholder="First Name"
+                                        name="firstName"
                                         value={firstName}
                                         onChange={onChange}
                                         pattern="([A-zÀ-ž\s]){2,}"
                                         required
                                     />
                                 </Form.Group>
-
-                                <Form.Group as={Col}>
+                                <Form.Group as={Col} md={3} style={{ marginTop: '5px' }}>
                                     <Form.Label>Middle Name</Form.Label>
                                     <Form.Control
                                         type="text"
-                                        placeholder="Middle Name"
+                                        placeholder="(Optional)"
+                                        name="middleName"
                                         value={middleName}
                                         onChange={onChange}
                                         pattern="([A-zÀ-ž\s]){2,}"
                                     />
                                 </Form.Group>
-
-                                <Form.Group as={Col}>
+                                <Form.Group as={Col} md={4} style={{ marginTop: '5px' }}>
                                     <Form.Label>Last Name</Form.Label>
                                     <Form.Control
                                         type="text"
                                         placeholder="Last Name"
+                                        name="lastName"
                                         value={lastName}
                                         onChange={onChange}
                                         pattern="([A-zÀ-ž\s]){2,}"
@@ -102,37 +105,50 @@ const Register = ({ history }) => {
                                     />
                                 </Form.Group>
                             </Row>
-
-                            <Form.Group className="mb-3">
-                                <Form.Label>Student Number</Form.Label>
-                                <Form.Control placeholder="20xxxxxxxx" name="studentNumber" pattern="20[0-9]{8}" value={studentNumber} onChange={onChange} required />
-                            </Form.Group>
-
-                            <Form.Group className="mb-3">
-                                <Form.Label>Course/Program</Form.Label>
-                                <Form.Select aria-label="Default select example" name="course" value={course} onChange={onChange} required>
-                                    <option>-</option>
-                                    <option value="Computer Science">Computer Science</option>
-                                    <option value="Information Systems">Information Systems</option>
-                                    <option value="Information Technology">Information Technology</option>
-                                </Form.Select>
-                            </Form.Group>
-
-                            <Form.Group className="mb-3">
-                                <Form.Label>Email address</Form.Label>
-                                <Form.Control
-                                    type='email'
-                                    placeholder="juan.delacruz.iics@ust.edu.ph"
-                                    pattern="[a-z]{1,}\.[a-z]{1,}\.(iics|cics)@ust\.edu\.ph"
-                                    name="email"
-                                    value={email}
-                                    onChange={onChange}
-                                    required
-                                />
-                            </Form.Group>
-
                             <Row className="mb-3">
-                                <Form.Group as={Col}>
+                                <Form.Group className="mb-3" as={Col} md={6}>
+                                    <Form.Label>Student Number</Form.Label>
+                                    <Form.Control
+                                        placeholder="20xxxxxxxx"
+                                        name="studentNumber"
+                                        pattern="20[0-9]{8}"
+                                        value={studentNumber}
+                                        onChange={onChange}
+                                        required
+                                    />
+                                </Form.Group>
+                                <Form.Group className="mb-3" as={Col} md={6}>
+                                    <Form.Label>Course/Program</Form.Label>
+                                    <Form.Select
+                                        aria-label="Default select example"
+                                        name="course"
+                                        value={course}
+                                        onChange={onChange}
+                                        required
+                                    >
+                                        <option>-</option>
+                                        <option value="Computer Science">Computer Science</option>
+                                        <option value="Information Systems">Information Systems</option>
+                                        <option value="Information Technology">Information Technology</option>
+                                    </Form.Select>
+                                </Form.Group>
+                            </Row>
+                            <Row>
+                                <Form.Group className="mb-3" as={Col}>
+                                    <Form.Label>Email address</Form.Label>
+                                    <Form.Control
+                                        type='email'
+                                        placeholder="juan.delacruz.iics@ust.edu.ph"
+                                        pattern="[a-z]{1,}\.[a-z]{1,}\.(iics|cics)@ust\.edu\.ph"
+                                        name="email"
+                                        value={email}
+                                        onChange={onChange}
+                                        required
+                                    />
+                                </Form.Group>
+                            </Row>
+                            <Row className="mb-3">
+                                <Form.Group as={Col} md={6} style={{ marginTop: '5px' }}>
                                     <Form.Label>Password</Form.Label>
                                     <Form.Control
                                         type="password"
@@ -144,8 +160,7 @@ const Register = ({ history }) => {
                                         required
                                     />
                                 </Form.Group>
-
-                                <Form.Group as={Col}>
+                                <Form.Group as={Col} md={6} style={{ marginTop: '5px' }}>
                                     <Form.Label>Confirm Password</Form.Label>
                                     <Form.Control
                                         type="password"
@@ -158,8 +173,14 @@ const Register = ({ history }) => {
                                     />
                                 </Form.Group>
                             </Row>
-
-                            <Button type='submit' style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}>Next</Button>
+                            <center>
+                                <Button
+                                    type='submit'
+                                    style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                >
+                                    Next
+                                </Button>
+                            </center>
                         </Form>
                     </Card.Body>
                 </Card>

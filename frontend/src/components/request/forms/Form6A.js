@@ -81,7 +81,7 @@ function Form6A({ history }) {
         const formData = {
             firstName: user.firstName,
             lastName: user.lastName,
-            middleName: user.middleName ? user.middleName : 'N/A',
+            middleName: user.middleName,
             studentNumber: user.studentNumber,
             email: user.email,
             course: user.course,
@@ -161,7 +161,7 @@ function Form6A({ history }) {
 
                                     <Form.Group as={Col} xs={12} sm={6} md={4}>
                                         <Form.Label>Middle Initial</Form.Label>
-                                        <Form.Control type="text" placeholder="S." value={user && user.middleName ? user.middleName[0] : 'N/A'} readOnly />
+                                        <Form.Control type="text" placeholder="(Optional)" value={user && user.middleName ? user.middleName[0] : ''} readOnly />
                                     </Form.Group>
 
                                     <Form.Group as={Col} xs={12} sm={6} md={4}>

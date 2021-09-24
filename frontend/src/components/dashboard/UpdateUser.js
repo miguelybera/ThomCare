@@ -134,7 +134,7 @@ const UpdateUser = ({ history, match }) => {
                                                     <Form.Label column sm={2}>
                                                         Name
                                                     </Form.Label>
-                                                    <Col sm={4}>
+                                                    <Col md={4} style={{ marginTop: '5px' }}>
                                                         <Form.Control
                                                             type="text"
                                                             placeholder="First Name"
@@ -144,16 +144,16 @@ const UpdateUser = ({ history, match }) => {
                                                             required
                                                         />
                                                     </Col>
-                                                    <Col sm={3}>
+                                                    <Col md={3} style={{ marginTop: '5px' }}>
                                                         <Form.Control
                                                             type="text"
-                                                            placeholder="Middle Name"
+                                                            placeholder="Middle Name (Optional)"
                                                             value={middleName}
                                                             onChange={e => setMiddleName(upperCase(e.target.value))}
                                                             pattern="([A-zÀ-ž\s]){2,}"
                                                         />
                                                     </Col>
-                                                    <Col sm={3}>
+                                                    <Col md={3} style={{ marginTop: '5px' }}>
                                                         <Form.Control
                                                             type="text"
                                                             placeholder="Last Name"
@@ -183,10 +183,10 @@ const UpdateUser = ({ history, match }) => {
                                                         </Form.Group>
 
                                                         <Form.Group as={Row} className="mb-3">
-                                                            <Form.Label column sm={2}>
+                                                            <Form.Label column sm={3}>
                                                                 Course
                                                             </Form.Label>
-                                                            <Col sm={10}>
+                                                            <Col sm={9}>
                                                                 <Form.Select
                                                                     aria-label="Default select example"
                                                                     value={course}
@@ -248,18 +248,20 @@ const UpdateUser = ({ history, match }) => {
                                                         />
                                                     </Col>
                                                 </Form.Group>
-                                                <Button
-                                                    type='submit'
-                                                    style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
-                                                    disabled={loading ? true : false}>
-                                                    {loading ? (
-                                                        <span>
-                                                            <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
-                                                        </span>
-                                                    ) : (
-                                                        <span>Update</span>
-                                                    )}
-                                                </Button>
+                                                <center>
+                                                    <Button
+                                                        type='submit'
+                                                        style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                                        disabled={loading ? true : false}>
+                                                        {loading ? (
+                                                            <span>
+                                                                <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
+                                                            </span>
+                                                        ) : (
+                                                            <span>Update</span>
+                                                        )}
+                                                    </Button>
+                                                </center>
                                             </Form>
                                         </Card.Body>
                                     </Card>

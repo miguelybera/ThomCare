@@ -4,11 +4,11 @@ import { Button, Card, Container, Row } from 'react-bootstrap'
 import axios from 'axios'
 import MetaData from './../layout/MetaData'
 import Loader from './../layout/Loader'
-import { 
+import {
     VERIFY_STUDENT_REQUEST,
     VERIFY_STUDENT_SUCCESS,
     VERIFY_STUDENT_FAIL,
-    VERIFY_STUDENT_RESET 
+    VERIFY_STUDENT_RESET
 } from './../../constants/userConstants'
 import {
     INSIDE_DASHBOARD_FALSE
@@ -24,7 +24,7 @@ const VerifyRegistration = ({ history, match }) => {
     const token = match.params.token
 
     const goToLogin = () => history.push('/login')
-    
+
     useEffect(() => {
         const verify = async () => {
             try {
@@ -102,12 +102,14 @@ const VerifyRegistration = ({ history, match }) => {
                                                 type='submit'
                                                 style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
                                                 onClick={goToLogin}
-                                            >Log in</Button>
+                                            >
+                                                Log in
+                                            </Button>
                                         </Card.Body>
                                     </>
                                 ) : (
                                     <>
-                                    <div class="progress">
+                                        <div class="progress">
                                             <div
                                                 class="progress-bar"
                                                 role="progressbar"

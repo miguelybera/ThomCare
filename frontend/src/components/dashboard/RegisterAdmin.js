@@ -72,7 +72,7 @@ const RegisterAdmin = ({ history }) => {
 
     return (
         <Fragment>
-            <MetaData title={'Update User'} />
+            <MetaData title={'Register User'} />
             <Sidebar />
             <div className="row">
 
@@ -85,13 +85,12 @@ const RegisterAdmin = ({ history }) => {
                             <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
                                 <Card style={{ width: '40rem', align: 'center' }}>
                                     <Card.Body>
-                                        <Card.Title style={{ margin: '50px 0 20px 0' }}>My Profile</Card.Title>
                                         <Form onSubmit={submitHandler}>
                                             <Form.Group as={Row} className="mb-3">
                                                 <Form.Label column sm={2}>
                                                     Name
                                                 </Form.Label>
-                                                <Col sm={4}>
+                                                <Col md={4} style={{ marginTop: '5px' }}>
                                                     <Form.Control
                                                         type="text"
                                                         placeholder="First Name"
@@ -101,16 +100,16 @@ const RegisterAdmin = ({ history }) => {
                                                         required
                                                     />
                                                 </Col>
-                                                <Col sm={3}>
+                                                <Col md={3} style={{ marginTop: '5px' }}>
                                                     <Form.Control
                                                         type="text"
-                                                        placeholder="Middle Name"
+                                                        placeholder="Middle Name (Optional)"
                                                         value={middleName}
                                                         onChange={e => setMiddleName(upperCase(e.target.value))}
                                                         pattern="([A-zÀ-ž\s]){2,}"
                                                     />
                                                 </Col>
-                                                <Col sm={3}>
+                                                <Col md={3} style={{ marginTop: '5px' }}>
                                                     <Form.Control
                                                         type="text"
                                                         placeholder="Last Name"
@@ -157,7 +156,7 @@ const RegisterAdmin = ({ history }) => {
                                                 </Col>
                                             </Form.Group>
                                             <Row className="mb-3">
-                                                <Form.Group as={Col}>
+                                                <Form.Group as={Col} md={6}>
                                                     <Form.Label>Password</Form.Label>
                                                     <Form.Control
                                                         type="password"
@@ -170,7 +169,7 @@ const RegisterAdmin = ({ history }) => {
                                                     />
                                                 </Form.Group>
 
-                                                <Form.Group as={Col}>
+                                                <Form.Group as={Col} md={6}>
                                                     <Form.Label>Confirm Password</Form.Label>
                                                     <Form.Control
                                                         type="password"
@@ -183,18 +182,20 @@ const RegisterAdmin = ({ history }) => {
                                                     />
                                                 </Form.Group>
                                             </Row>
-                                            <Button
-                                                type='submit'
-                                                style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
-                                                disabled={loading ? true : false}>
-                                                {loading ? (
-                                                    <span>
-                                                        <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
-                                                    </span>
-                                                ) : (
-                                                    <span>Register</span>
-                                                )}
-                                            </Button>
+                                            <center>
+                                                <Button
+                                                    type='submit'
+                                                    style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                                    disabled={loading ? true : false}>
+                                                    {loading ? (
+                                                        <span>
+                                                            <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
+                                                        </span>
+                                                    ) : (
+                                                        <span>Register</span>
+                                                    )}
+                                                </Button>
+                                            </center>
                                         </Form>
                                     </Card.Body>
                                 </Card>

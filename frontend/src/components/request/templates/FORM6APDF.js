@@ -24,7 +24,8 @@ const FORM6APDF = (props) => {
     }, [dispatch])
 
     const studentNumber = formData.studentNumber.split('')
-    const name = formData.lastName + ', ' + formData.firstName + ' ' + formData.middleName[0] + '.'
+    const middleInitial = formData.middleName ? formData.middleName[0] + '.' : ''
+    const name = formData.lastName + ', ' + formData.firstName + ' ' + middleInitial
     const course = user.course
 
     let toAdd = [], toDrop = []
