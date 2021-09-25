@@ -39,9 +39,14 @@ function Form6B() {
             labUnits: '',
             days: '',
             time: '',
+            room: '',
             section: ''
         }
     ])
+
+    const [term, setTerm] = useState('')
+    const [year1, setYear1] = useState('')
+    const [year2, setYear2] = useState('')
 
     const onChange = (index, e) => {
         e.preventDefault()
@@ -71,7 +76,10 @@ function Form6B() {
             studentNumber: user.studentNumber,
             email: user.email,
             course: user.course,
-            addDrop: inputFields
+            addDrop: inputFields,
+            term,
+            year1,
+            year2
         }
 
         setSubmitted(true)
@@ -88,6 +96,7 @@ function Form6B() {
             labUnits: '',
             days: '',
             time: '',
+            room: '',
             section: ''
         }])
     }
@@ -122,7 +131,7 @@ function Form6B() {
             <MetaData title={title} />
             {loading ? <Loader /> : !submitted ? (
                 <Container classname="align-me" fluid style={{ paddingBottom: '100px', paddingTop: '40px' }}>
-                    <Card style={{ backgroundColor: '#9c0b0b' }}>  {/*, width: '100rem' */}
+                    <Card style={{ backgroundColor: '#fff', width: '90%' }}>  {/*, width: '100rem' */}
                         <Card.Header style={{ backgroundColor: 'white', textColor: '#919191' }}>
                             <Breadcrumb>
                                 <Breadcrumb.Item><Link to='/forms/list'>Generate Forms</Link></Breadcrumb.Item>
@@ -130,41 +139,70 @@ function Form6B() {
                             </Breadcrumb>
                         </Card.Header>
                         <Card.Body>
-                            <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold', textAlign: 'center' }}>CROSS ENROLLMENT FORM</Card.Title>
-                            <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold' }}>Student Information</Card.Title>
-                            <Form style={{ color: 'white' }} onSubmit={submitHandler} >
+                            <Card.Title style={{ margin: '10px 0 20px 0', color: '#9c0b0b', fontWeight: 'bold', textAlign: 'center' }}>CROSS ENROLLMENT (WITHIN CICS) FORM</Card.Title>
+                            <Card.Title style={{ margin: '10px 0 20px 0', color: '#9c0b0b', fontWeight: 'bold' }}>Student Information</Card.Title>
+                            <Form style={{ color: 'black' }} onSubmit={submitHandler} >
                                 <Row className="mb-3">
-                                    <Form.Group as={Col} controlId="formGridEmail">
+                                    <Form.Group as={Col} xs={12} sm={12} md={4}>
                                         <Form.Label>First Name</Form.Label>
                                         <Form.Control type="text" value={user && user.firstName} readOnly />
                                     </Form.Group>
 
-                                    <Form.Group as={Col} controlId="formGridEmail">
+                                    <Form.Group as={Col} xs={12} sm={6} md={4}>
+                                        <Form.Label>Middle Initial</Form.Label>
+                                        <Form.Control type="text" placeholder="(Optional)" value={user && user.middleName ? user.middleName[0] : ''} readOnly />
+                                    </Form.Group>
+
+                                    <Form.Group as={Col}xs={12} sm={6} md={4}>
                                         <Form.Label>Last Name</Form.Label>
                                         <Form.Control type="text" value={user && user.lastName} readOnly />
                                     </Form.Group>
-
-                                    <Form.Group as={Col} controlId="formGridEmail">
-                                        <Form.Label>Middle Initial</Form.Label>
-                                        <Form.Control type="text" placeholder="S." value={user && user.middleName ? user.middleName : 'N/A'} readOnly />
-                                    </Form.Group>
                                 </Row>
 
-                                <Form.Group className="mb-3" controlId="formGridAddress1">
-                                    <Form.Label>Student Number</Form.Label>
-                                    <Form.Control value={user && user.studentNumber} readOnly />
-                                </Form.Group>
-
-                                <Form.Group className="mb-3" controlId="formGridAddress2">
-                                    <Form.Label>Course/Program</Form.Label>
-                                    <Form.Control type="text" value={user && user.course} readOnly />
-                                </Form.Group>
-
                                 <Row className="mb-3">
-                                    <Form.Group as={Col} className="mb-3" controlId="formGridAddress1">
+                                    <Form.Group as={Col} xs={12} sm={6} md={6} lg={4}>
+                                        <Form.Label>Student Number</Form.Label>
+                                        <Form.Control value={user && user.studentNumber} readOnly />
+                                    </Form.Group>
+
+                                    <Form.Group as={Col} xs={12} sm={6} md={6} lg={4}>
+                                        <Form.Label>Course/Program</Form.Label>
+                                        <Form.Control type="text" value={user && user.course} readOnly />
+                                    </Form.Group>
+
+                                    <Form.Group as={Col} xs={12} sm={12} md={12} lg={4}>
                                         <Form.Label>Email address</Form.Label>
                                         <Form.Control type='email' value={user && user.email} readOnly />
                                     </Form.Group>
+                                </Row>
+                                <Row className="mb-3">
+                                    <Form.Group as={Col} xs={12} sm={12} md={6}>
+                                        <Form.Label>Term</Form.Label>
+                                        <Form.Control type="text" placeholder="1st" value={term} onChange={e => setTerm(e.target.value)} required />
+                                    </Form.Group>
+
+                                    <Row as={Col}>
+                                        <Row>
+                                            <Form.Group as={Col} xs={12}>
+                                                <Form.Label>Academic Year </Form.Label>
+                                            </Form.Group>
+                                        </Row>
+
+                                        <Row>
+                                            <Col xs={1} sm={2}>
+                                                <Form.Label>20</Form.Label>
+                                            </Col>
+                                            <Col xs={5} sm={4}>
+                                                <Form.Control type="text" placeholder="xx" pattern="[0-9]{2}" value={year1} onChange={e => setYear1(e.target.value)} required />
+                                            </Col>
+                                            <Col xs={1} sm={2}>
+                                                <Form.Label>-20</Form.Label>
+                                            </Col>
+                                            <Col xs={5} sm={4}>
+                                                <Form.Control type="text" placeholder="xx" pattern="[0-9]{2}" value={year2} onChange={e => setYear2(e.target.value)} required />
+                                            </Col>
+                                        </Row>
+                                    </Row>
                                 </Row>
 
                                 <Card.Title style={{ margin: '10px 0 20px 0', color: 'white', fontWeight: 'bold' }}>Courses to Add / Drop</Card.Title>
@@ -199,6 +237,10 @@ function Form6B() {
                                     </Form.Group>
 
                                     <Form.Group as={Col}>
+                                        <Form.Label>Room</Form.Label>
+                                    </Form.Group>
+
+                                    <Form.Group as={Col}>
                                         <Form.Label>Section</Form.Label>
                                     </Form.Group>
                                 </Row>
@@ -213,6 +255,7 @@ function Form6B() {
                                             labUnits = `labUnits-${idx}`,
                                             days = `days-${idx}`,
                                             time = `time-${idx}`,
+                                            room = `room-${idx}`,
                                             section = `section-${idx}`
 
                                         return (
@@ -263,8 +306,11 @@ function Form6B() {
                                                     <Form.Group as={Col}>
                                                         <Form.Control type="text" placeholder="3:00PM - 5:00PM" name="time" id={time} data-id={idx} value={val.time} onChange={e => onChange(idx, e)} required />
                                                     </Form.Group>
-
                                                     <Form.Group as={Col}>
+                                                        <Form.Control type="text" placeholder="Room number" name="room" id={room} data-id={idx} value={val.room} onChange={e => onChange(idx, e)} required />
+                                                    </Form.Group>
+
+                                                    <Form.Group as={Col}> 
                                                         <Form.Control type="text" placeholder="4ITF" name="section" id={section} data-id={idx} value={val.section} onChange={e => onChange(idx, e)} required />
                                                     </Form.Group>
 
