@@ -117,11 +117,6 @@ export const SidebarData = [
             iconOpened: <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>,
             subNav: [
                 {
-                    title: 'Register Student',
-                    path: '/admin/deptchair/register/student',
-                    icon: <i class="fa fa-list-ul" aria-hidden="true"></i>
-                },
-                {
                     title: 'View Students',
                     path: '/admin/deptchair/students',
                     icon: <i class="fa fa-trash" aria-hidden="true"></i>
