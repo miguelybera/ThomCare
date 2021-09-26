@@ -132,7 +132,7 @@ const SubmitRequest = () => {
                                                     name='section'
                                                     value={section}
                                                     onChange={e => setSection(upperCase(e.target.value))}
-                                                    pattern="([A-z]){1}"
+                                                    pattern="([A-Za-z]){1}"
                                                     maxlength="1"
                                                     required
                                                 />
