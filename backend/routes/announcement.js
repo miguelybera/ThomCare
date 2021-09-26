@@ -37,7 +37,7 @@ const announcementUpload = multer({
     fileFilter: function (req, file, cb) {
         const ext = path.extname(file.originalname)
         if (!fileMimeTypes.includes(file.mimetype)) {
-            return cb(new ErrorHandler('File type not supported', 500))
+            return cb(new Error('File type not supported'))
         } else {
             cb(null, true)
         }

@@ -138,16 +138,16 @@ function Form6A({ history }) {
             <MetaData title={title} />
             {loading ? <Loader /> : !submitted ? (
                 <Container classname="align-me" fluid style={{ paddingBottom: '100px', paddingTop: '40px' }}>
-                    <Card style={{ backgroundColor: '#fff', width: '90%' }}>  {/*, width: '100rem', backgroundColor: '#9c0b0b' */}
-                        <Card.Header style={{ backgroundColor: 'white', textColor: '#919191' }}>
+                    <Card style={{ backgroundColor: '#fff', width: '100%' }}>  {/*, width: '100rem', backgroundColor: '#9c0b0b' */}
+                        <Card.Header style={{ backgroundColor: 'white', textColor: '#919191'}}>
                             <Breadcrumb>
                                 <Breadcrumb.Item><Link to='/forms/list'>Generate Forms</Link></Breadcrumb.Item>
                                 <Breadcrumb.Item active>{title}</Breadcrumb.Item>
                             </Breadcrumb>
                         </Card.Header>
-                        <Card.Body>
+                        <Card.Body style={{ paddingTop: '0px'}} >
                             <Card.Title style={{ margin: '10px 0 20px 0', color: '#9c0b0b', fontWeight: 'bold', textAlign: 'center' }}>ADD / DROP COURSE FORM</Card.Title>
-                            <Card.Title style={{ margin: '10px 0 20px 0', color: '#9c0b0b', fontWeight: 'bold' }}>Student Information</Card.Title>
+                            <Card.Title style={{ margin: '10px 0 20px 0', color: 'black', fontWeight: 'bold' }}>Student Information</Card.Title>
                             <Form style={{ color: 'black' }} onSubmit={submitHandler} >
                                 <Row className="mb-3">
                                     <Form.Group as={Col} xs={12} sm={12} md={4}>
@@ -181,7 +181,7 @@ function Form6A({ history }) {
                                         <Form.Control type='email' value={user && user.email} readOnly />
                                     </Form.Group>
                                 </Row>
-                                <Row className="mb-3">
+                                <Row className="mb-3" style={{paddingBottom:'30px'}}>
                                     <Form.Group as={Col} xs={12} sm={12} md={6}>
                                         <Form.Label>Term</Form.Label>
                                         <Form.Control type="text" placeholder="1st" value={term} onChange={e => setTerm(e.target.value)} required />
@@ -211,7 +211,15 @@ function Form6A({ history }) {
                                     </Row>
                                 </Row>
 
-                                <Card.Title style={{ margin: '5px 0 20px 0', color: 'black', fontWeight: 'bold' }}>Courses to Add / Drop</Card.Title>
+                                <Card.Title 
+                                style={{ margin: '5px 0 20px 0',
+                                         color: 'black', 
+                                         fontWeight: 'bold',
+                                         borderTop: '1px solid black',
+                                         paddingTop: '20px'
+                                         
+                                        }}>Courses to Add / Drop:
+                                </Card.Title>
                                 {
                                     inputFields.map((val, idx) => {
                                         //set unique id per row
@@ -229,10 +237,12 @@ function Form6A({ history }) {
                                             <Fragment key={val.index}>
                                                 <p>Courses to add/drop #{idx + 1}</p>
                                                 <Row style={{ marginBottom: '10px' }}>
-                                                    <Col xs={12} md={3} lg={2} style={addDropStyle}>
+                                                    
+                                                    <Col xs={12} md={3} lg={2} style={addDropStyle}  >
                                                         <FloatingLabel
                                                             label="Add/Drop"
-                                                        >
+                                                            
+                                                        > 
                                                             <Form.Select aria-label="Default select example" name="status" id={status} data-id={idx} value={val.status} onChange={e => onChange(idx, e)} required>
                                                                 <option value=''>Add/Drop</option>
                                                                 <option value="Add">Add</option>
@@ -310,6 +320,7 @@ function Form6A({ history }) {
                                                             <Form.Control type="text" placeholder="Section" name="section" id={section} data-id={idx} value={val.section} onChange={e => onChange(idx, e)} required />
                                                         </FloatingLabel>
                                                     </Col>
+                                                    
                                                     <Col xs={4} sm={4} md={3} lg={2} style={{ textAlign: 'right', marginBottom: '5px' }}>
                                                         {
                                                             idx === 0 ? (
@@ -329,6 +340,7 @@ function Form6A({ history }) {
                                                             )
                                                         }
                                                     </Col>
+                                                    
                                                 </Row>
                                             </Fragment>
                                         )

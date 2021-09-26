@@ -71,7 +71,7 @@ const UpdateRequest = ({ history, match }) => {
         }
 
         if (updateError) {
-            alert.error(error)
+            alert.error(updateError)
             dispatch(clearErrors())
         }
 
