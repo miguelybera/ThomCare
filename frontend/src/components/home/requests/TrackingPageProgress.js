@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Card } from 'react-bootstrap'
+import { Card, Row, Form, Col, ListGroup, ListGroupItem } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { trackRequest, clearErrors } from './../../../actions/requestActions'
 import { INSIDE_DASHBOARD_FALSE } from '../../../constants/dashboardConstants'
@@ -85,11 +85,16 @@ const TrackingPageProgress = ({ history, match }) => {
                     label: 'Remarks',
                     field: 'remarksMessage',
                     width: 300
+                },
+                {
+                    label: 'Files',
+                    field: 'returningFiles',
+                    width: 300
                 }
             ],
             rows: []
         }
-        remarks.forEach(remark => {
+        remarks && remarks.forEach(remark => {
             data.rows.push({
                 dateOfRemark: changeDateFormat(remark.dateOfRemark),
                 updatedStatus: <Fragment>
@@ -105,17 +110,24 @@ const TrackingPageProgress = ({ history, match }) => {
                 </Fragment>,
                 remarksMessage: <Fragment>
                     <p>{remark.remarksMessage}</p>
-                    <ul>
+                    <p style={{ fontSize: '12px', color: 'gray', paddingTop: '10px' }}>By: {upperCase(remark.userUpdated)}</p>
+                </Fragment>,
+                returningFiles: <Fragment>
+                    <ListGroup variant="flush">
                         {remark.returningFiles && remark.returningFiles.map(file => (
-                            <li><a href={file.path} target="_blank" rel="noreferrer">{file.originalname}</a></li>
+                            <ListGroupItem>
+                                <a href={file.path} target="_blank" rel="noreferrer">
+                                    <button className="btn btn-primary py-1 px-2 ml-2">
+                                        <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                                    </button>
+                                </a> {file.originalname} <font size="1rem">{Number(file.size / 1000000).toFixed(2)} MB</font>
+                            </ListGroupItem>
                         ))}
-                    </ul>
-                    <p style={{ fontSize: '12px', color: 'gray', paddingTop: '10px' }}>By: {remark.userUpdated}</p>
+                    </ListGroup>
                 </Fragment>
 
             })
         })
-
         return data
     }
 
@@ -126,49 +138,98 @@ const TrackingPageProgress = ({ history, match }) => {
                 <Fragment style={{ marginTop: '30px' }}>
                     <Card style={cardStyle}>
                         <Card.Body>
-                            <Card.Title>Tracking ID#: {trackingNumber}</Card.Title>
-                            <Card.Text><b>Name:</b> {requestorInfo.lastName}, {requestorInfo.firstName}</Card.Text>
-                            <Card.Text><b>Current status:</b> <font color={
-                                !request ? '' : (
-                                    (requestStatus === 'Pending' ? 'blue' : (
-                                        requestStatus === 'Processing' ? '#ffcc00' : (
-                                            requestStatus === 'Denied' ? 'red' : 'green'
-                                        )
-                                    ))
-                                )
-                            }>{upperCase(requestStatus)}</font></Card.Text>
-                            <Card.Text><b>Request Type:</b> {requestType}</Card.Text>
-                            <Card.Text><b>Student number:</b> {requestorInfo.studentNumber}</Card.Text>
-                            <Card.Text><b>Email:</b> {requestorInfo.email}</Card.Text>
-                            <Card.Text><b>Course:</b> {requestorInfo.course}</Card.Text>
-                            <Card.Text><b>Year Level/Section:</b> {requestorInfo.yearLevel} {requestorInfo.section}</Card.Text>
-                            <Card.Text><b>Notes:</b> {notes}</Card.Text>
+
+                            <Card.Title style={{ margin: '10px 0 20px 0', color: '#9c0b0b', fontWeight: 'bold' }}>
+                                {requestType} <br />
+                                Tracking #: {trackingNumber} - {requestorInfo.lastName} <br />
+                            </Card.Title>
                             <Card.Text>
-                                Attachments:
-                                <ul>
-                                    {fileRequirements && fileRequirements.map(file => (
-                                        <li><a href={file.path} target="_blank" rel="noreferrer">{file.originalname}</a></li>
-                                    ))}
-                                </ul>
+                                <b>Current status:</b> <font color={
+                                    !request ? '' : (
+                                        (requestStatus === 'Pending' ? 'blue' : (
+                                            requestStatus === 'Processing' ? '#ffcc00' : (
+                                                requestStatus === 'Denied' ? 'red' : 'green'
+                                            )
+                                        ))
+                                    )
+                                }>
+                                    {upperCase(requestStatus)}
+                                </font>
                             </Card.Text>
+                            <Row>
+                                <Form.Group as={Col} className="mb-3" xs={12} sm={12} md={4}>
+                                    <Form.Label>First Name</Form.Label>
+                                    <Form.Control type="text" value={requestorInfo.firstName} readOnly />
+                                </Form.Group>
+
+                                <Form.Group as={Col} className="mb-3" xs={12} sm={6} md={4}>
+                                    <Form.Label>Middle Name</Form.Label>
+                                    <Form.Control type="text" placeholder="N/A" value={requestorInfo.middleName} readOnly />
+                                </Form.Group>
+
+                                <Form.Group as={Col} className="mb-3" xs={12} sm={6} md={4}>
+                                    <Form.Label>Last Name</Form.Label>
+                                    <Form.Control type="text" value={requestorInfo.lastName} readOnly />
+                                </Form.Group>
+                            </Row>
+                            <Row>
+                                <Form.Group as={Col} className="mb-3" xs={12} sm={4} md={6} lg={4}>
+                                    <Form.Label>Student Number</Form.Label>
+                                    <Form.Control value={requestorInfo.studentNumber} readOnly />
+                                </Form.Group>
+
+                                <Form.Group as={Col} className="mb-3" xs={12} sm={8} md={6} lg={4}>
+                                    <Form.Label>Year/Section/Course/Program</Form.Label>
+                                    <Form.Control type="text" value={requestorInfo.yearLevel + ' ' + requestorInfo.section + ' - ' + requestorInfo.course} readOnly />
+                                </Form.Group>
+
+                                <Form.Group as={Col} className="mb-3" xs={12} sm={12} md={12} lg={4}>
+                                    <Form.Label>Email Address</Form.Label>
+                                    <Form.Control type="text" value={requestorInfo.email} readOnly />
+                                </Form.Group>
+                            </Row>
+
+                            <Row>
+                                <Form.Group as={Col} className="mb-3" xs={12} md={3}>
+                                    <Form.Label>Tracking Number</Form.Label>
+                                    <Form.Control type='text' value={trackingNumber} readOnly />
+                                </Form.Group>
+                                <Form.Group as={Col} className="mb-3" xs={12} md={4}>
+                                    <Form.Label>Request Type</Form.Label>
+                                    <Form.Control type='text' value={requestType} readOnly />
+                                </Form.Group>
+                                <Form.Group as={Col} className="mb-3" xs={12} md={5}>
+                                    <Form.Label>Request Notes</Form.Label>
+                                    <Form.Control as="textarea" rows={2} value={notes && notes ? notes : "N/A"} readOnly />
+                                </Form.Group>
+                            </Row>
+                            <Row>
+                                <Form.Group as={Col} className="mb-3" xs={12} md={6}>
+                                    <Form.Label>Request attachments</Form.Label>
+                                    <ListGroup variant="flush">
+                                        {fileRequirements && fileRequirements.map(file => (
+                                            <ListGroupItem>
+                                                {file.originalname} <font size="1rem">{Number(file.size / 1000000).toFixed(2)} MB</font> <a href={file.path} target="_blank" rel="noreferrer">
+                                                    <button className="btn btn-primary py-1 px-2 ml-2">
+                                                        <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                                                    </button>
+                                                </a>
+                                            </ListGroupItem>
+                                        ))}
+                                    </ListGroup>
+                                </Form.Group>
+                            </Row>
+                            <Card.Title style={{ margin: '10px 0 20px 0', color: '#9c0b0b', fontWeight: 'bold' }}>Request History</Card.Title>
+                            <MDBDataTableV5
+                                data={setHistory()}
+                                searchTop
+                                pagingTop
+                                scrollX
+                                entriesOptions={[5, 20, 25]}
+                                entries={10}
+                                style={{ backgroundColor: 'white' }}
+                            />
                         </Card.Body>
-                    </Card>
-                    <Card style={{
-                        marginTop: '30px',
-                        marginBottom: '40px',
-                        borderWidth: '0',
-                        width: '90%',
-                        marginLeft: 'auto',
-                        marginRight: 'auto'
-                    }}>
-                        <MDBDataTableV5
-                            data={setHistory()}
-                            scrollX
-                            searching={false}
-                            paging={false}
-                            sortable={false}
-                            hover
-                        />
                     </Card>
                 </Fragment>
             ) : (

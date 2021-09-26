@@ -117,7 +117,7 @@ const ListAnnouncementType = ({ history }) => {
                 <div className="">
                     <Container className="space_inside"></Container>
                     <Container>
-                        <h3>Announcements</h3>
+                        <h3>Announcement Types</h3>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5

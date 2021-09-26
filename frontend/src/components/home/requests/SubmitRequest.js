@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
-import { Form, Button, Card, Container, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Form, Button, Card, Container, Row, Col, OverlayTrigger, Tooltip, ListGroup, ListGroupItem } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { submitRequest, clearErrors } from './../../../actions/requestActions'
 import { SUBMIT_REQUEST_RESET } from './../../../constants/requestConstants'
@@ -184,13 +184,15 @@ const SubmitRequest = () => {
                                             </OverlayTrigger>
                                         </Form.Label>
                                         <Form.Control type="file" name="fileRequirements" onChange={onChange} multiple required />
-                                        <ul>
-                                            {fileRequirements && fileRequirements.map(file => (
-                                                <Fragment>
-                                                    <li>{file.name}</li>
-                                                </Fragment>
+                                    </Form.Group>
+                                    <Form.Group className="mb-3">
+                                        <ListGroup>
+                                            {fileRequirements.map((file, idx) => (
+                                                <ListGroupItem>
+                                                    File {idx + 1}: {file.name}
+                                                </ListGroupItem>
                                             ))}
-                                        </ul>
+                                        </ListGroup>
                                     </Form.Group>
                                     <center>
                                         <Button
@@ -223,11 +225,17 @@ const SubmitRequest = () => {
                                 <Card.Text><b>Notes:</b> {request?.notes}</Card.Text>
                                 <Card.Text>
                                     Attachments:
-                                    <ul>
-                                        {request?.fileRequirements.map(file => (
-                                            <li><a href={file.path} target="_blank" rel="noreferrer">{file.originalname}</a></li>
+                                    <ListGroup>
+                                        {request?.fileRequirements.map((file, idx) => (
+                                            <ListGroupItem>
+                                                {file.originalname} <font size="1rem">{Number(file.size / 1000000).toFixed(2)} MB</font> <a href={file.path} target="_blank" rel="noreferrer">
+                                                    <button className="btn btn-primary py-1 px-2 ml-2">
+                                                        <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                                                    </button>
+                                                </a>
+                                            </ListGroupItem>
                                         ))}
-                                    </ul>
+                                    </ListGroup>
                                 </Card.Text>
                                 <Card.Text>
                                     <Button onClick={() => reset()}>Submit Request Again</Button>

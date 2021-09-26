@@ -88,11 +88,6 @@ export const SidebarData = [
             ]
         },
         {
-            title: 'Forms',
-            path: '/admin/manageforms',
-            icon: <i class="fa fa-home" aria-hidden="true"></i>
-        },
-        {
             title: 'Requests',
             icon: <i class="fa fa-file" aria-hidden="true"></i>,
             iconClosed: <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>,
@@ -111,21 +106,26 @@ export const SidebarData = [
             ]
         },
         {
-            title: 'Courses',
-            path: '/admin/courses',
-            icon: <i class="fa fa-home" aria-hidden="true"></i>
-        },
-        {
-            title: 'Student Accounts',
+            title: 'Others',
             icon: <i class="fa fa-users" aria-hidden="true"></i>,
             iconClosed: <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>,
             iconOpened: <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>,
             subNav: [
                 {
-                    title: 'View Students',
+                    title: 'Courses',
+                    path: '/admin/courses',
+                    icon: <i class="fa fa-home" aria-hidden="true"></i>
+                },
+                {
+                    title: 'Forms',
+                    path: '/admin/manageforms',
+                    icon: <i class="fa fa-home" aria-hidden="true"></i>
+                },
+                {
+                    title: 'Students',
                     path: '/admin/deptchair/students',
                     icon: <i class="fa fa-trash" aria-hidden="true"></i>
-                }
+                },
             ]
         },
         {
@@ -190,11 +190,6 @@ export const SidebarData = [
             ]
         },
         {
-            title: 'Forms',
-            path: '/admin/manageforms',
-            icon: <i class="fa fa-home" aria-hidden="true"></i>
-        },
-        {
             title: 'Requests',
             icon: <i class="fa fa-file" aria-hidden="true"></i>,
             iconClosed: <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>,
@@ -228,25 +223,30 @@ export const SidebarData = [
             ]
         },
         {
-            title: 'Courses',
-            path: '/admin/courses',
-            icon: <i class="fa fa-home" aria-hidden="true"></i>
-        },
-        {
-            title: 'Users',
+            title: 'Others',
             icon: <i class="fa fa-user" aria-hidden="true"></i>,
             iconClosed: <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>,
             iconOpened: <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>,
             subNav: [
                 {
+                    title: 'Courses',
+                    path: '/admin/courses',
+                    icon: <i class="fa fa-home" aria-hidden="true"></i>
+                },
+                {
+                    title: 'Forms',
+                    path: '/admin/manageforms',
+                    icon: <i class="fa fa-home" aria-hidden="true"></i>
+                },
+                {
+                    title: 'User accounts',
+                    path: '/admin/users',
+                    icon: <i class="fa fa-list-ul" aria-hidden="true"></i>
+                },
+                {
                     title: 'Register User',
                     path: '/admin/register',
                     icon: <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                },
-                {
-                    title: 'View Users',
-                    path: '/admin/users',
-                    icon: <i class="fa fa-list-ul" aria-hidden="true"></i>
                 }
             ]
         },

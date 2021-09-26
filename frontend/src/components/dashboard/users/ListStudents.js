@@ -144,7 +144,7 @@ const ListStudents = ({ history }) => {
                 <div className="">
                     <Container className="space_inside"></Container>
                     <Container>
-                        <h3>Users</h3>
+                        <h3>Student Accounts</h3>
                         {loading ? <Loader /> : (
                             <MDBDataTableV5
                                 data={setUsers()}

@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
+import { Form, Button, Card, Container, Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap'
 import { createAnnouncement, createAnnouncementType, getAnnouncementType, clearErrors } from '../../../actions/announcementActions'
 import { NEW_ANNOUNCEMENT_RESET, NEW_ANNOUNCEMENT_TYPE_RESET } from '../../../constants/announcementConstants'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
@@ -284,12 +284,15 @@ const CreateAnnouncement = ({ history }) => {
                                                 </Form.Group>
                                             </Col>
                                             <Col xs={12} sm={12} md={12} lg={4} xl={4}>
+                                                <Form.Label className={fileAttachments.length !== 0 ? `` : `d-none`}>Attachment(s):</Form.Label>
                                                 <Form.Group className="mb-3 mt-2">
-                                                    <ul>
-                                                        {fileAttachments && fileAttachments.map(file => (
-                                                            <li>{file.name}</li>
+                                                    <ListGroup>
+                                                        {fileAttachments && fileAttachments.map((file, idx) => (
+                                                            <ListGroupItem>
+                                                                File {idx+1}: {file.name}
+                                                            </ListGroupItem>
                                                         ))}
-                                                    </ul>
+                                                    </ListGroup>
                                                 </Form.Group>
                                             </Col>
                                         </Row>

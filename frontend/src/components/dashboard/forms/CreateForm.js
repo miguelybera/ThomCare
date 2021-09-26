@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { FloatingLabel, Form, Button, Card, Container, Row, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { FloatingLabel, Form, Button, Card, Container, Row, OverlayTrigger, Tooltip, ListGroup, ListGroupItem } from 'react-bootstrap'
 import { createForm, clearErrors } from '../../../actions/formActions'
 import { NEW_FORM_RESET } from '../../../constants/formConstants'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
@@ -60,7 +60,7 @@ const CreateForm = ({ history }) => {
 
         dispatch(createForm(formData))
     }
-    
+
     return (
         <>
             <MetaData title={'New Form'} />
@@ -77,11 +77,11 @@ const CreateForm = ({ history }) => {
                                         className="mb-3"
                                     >
                                         <Form.Control
-                                        type='text'
-                                        name='title'
-                                        value={title}
-                                        onChange={e => setTitle(e.target.value)}
-                                        required
+                                            type='text'
+                                            name='title'
+                                            value={title}
+                                            onChange={e => setTitle(e.target.value)}
+                                            required
                                         />
                                     </FloatingLabel>
                                 </Form.Group>
@@ -118,6 +118,15 @@ const CreateForm = ({ history }) => {
                                         </OverlayTrigger>
                                     </Form.Label>
                                     <Form.Control type="file" name="attachments" onChange={onChange} required />
+                                </Form.Group>
+                                <Form.Group className="mb-3">
+                                    <ListGroup>
+                                        {attachments.map((file, idx) => (
+                                            <ListGroupItem>
+                                                File {idx + 1}: {file.name}
+                                            </ListGroupItem>
+                                        ))}
+                                    </ListGroup>
                                 </Form.Group>
                                 <center>
                                     <Button

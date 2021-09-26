@@ -13,10 +13,9 @@ const resPerPage = 5
 // Submit new request => /api/v1/submitRequest
 exports.submitRequest = catchAsyncErrors(async (req, res, next) => {
     const { requestType, yearLevel, section, notes } = req.body
-
     const fileRequirements = req.files
 
-    if (fileRequirements == null || fileRequirements == '') { return next(new ErrorHandler('Please Attach required file/s')) }
+    if (fileRequirements == null || fileRequirements == '') { return next(new ErrorHandler('Please attach file requirement(s)')) }
 
     let trackStart = ''
 
@@ -66,8 +65,8 @@ exports.submitRequest = catchAsyncErrors(async (req, res, next) => {
     let remarks = {
         dateOfRemark: new Date(Date.now()),
         updatedStatus: 'Pending',
-        userUpdated: ' ',
-        remarksMessage: ' '
+        userUpdated: 'Student',
+        remarksMessage: 'Request submitted.'
     }
 
     let requestorInfo = {
@@ -85,7 +84,7 @@ exports.submitRequest = catchAsyncErrors(async (req, res, next) => {
         requestedById,
         trackingNumber,
         fileRequirements,
-        notes,
+        notes: notes === 'undefined' ? 'N/A' : notes,
         requestorInfo,
         remarks,
         createdAt: new Date(Date.now())

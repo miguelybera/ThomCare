@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
+import { Form, Button, Card, Container, Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap'
 import { getAnnouncementDetails, getAnnouncementType, createAnnouncementType, updateAnnouncement, clearErrors } from '../../../actions/announcementActions'
 import { ANNOUNCEMENT_DETAILS_RESET, NEW_ANNOUNCEMENT_TYPE_RESET, UPDATE_ANNOUNCEMENT_RESET } from '../../../constants/announcementConstants'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
@@ -318,19 +318,26 @@ const UpdateAnnouncement = ({ history, match }) => {
                                                 </Col>
                                                 <Col xs={12} sm={12} md={12} lg={4} xl={4}>
                                                     <Form.Group className="mb-3">
-                                                        <ul>
+                                                        <Form.Label className={oldAttachments.length !== 0 || fileAttachments.length !== 0 ? `` : `d-none`}>Attachment(s):</Form.Label>
+                                                        <ListGroup>
                                                             {oldAttachments && oldAttachments.map(file => (
                                                                 <Fragment>
-                                                                    <li><a href={file.path} target="_blank" rel="noreferrer">{file.originalname} <i class="fa fa-download" aria-hidden="true"></i></a> Size: {file.size / 1000} Kb</li>
+                                                                    <ListGroupItem>
+                                                                        {file.originalname} <font size="1rem">{Number(file.size / 1000000).toFixed(2)} MB</font> <a href={file.path} target="_blank" rel="noreferrer">
+                                                                            <button className="btn btn-primary py-1 px-2 ml-2">
+                                                                                <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                                                                            </button>
+                                                                        </a>
+                                                                    </ListGroupItem>
                                                                 </Fragment>
                                                             ))}
 
                                                             {fileAttachments && fileAttachments.map(file => (
-                                                                <Fragment>
-                                                                    <li>{file.name} Size: {file.size / 1000} Kb</li>
-                                                                </Fragment>
+                                                                <ListGroupItem>
+                                                                    {file.name}
+                                                                </ListGroupItem>
                                                             ))}
-                                                        </ul>
+                                                        </ListGroup>
                                                     </Form.Group>
                                                 </Col>
                                             </Row>
