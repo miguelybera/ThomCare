@@ -32,8 +32,6 @@ const Messenger = ({ history }) => {
     const [newMessage, setNewMessage] = useState('')
     const [arrivalMessage, setArrivalMessage] = useState('')
     const [conversationList, setConversationList] = useState([])
-    const [arrivalConversationList, setArrivalConversationList] = useState([])
-    const [arrivalConversation, setArrivalConversation] = useState()
     const [onlineUsers, setOnlineUsers] = useState([])
     const [userName, setUserName] = useState('')
     const [search, setSearch] = useState('')
