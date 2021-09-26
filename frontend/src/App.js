@@ -55,6 +55,11 @@ import ListAuditLog from './components/dashboard/audit/ListAuditLog'
 //dashboard/chat folder
 import Messenger from './components/dashboard/chat/chatbox/Messenger'
 
+//dashboard/courses folder
+import ListCourses from './components/dashboard/courses/ListCourses'
+import CreateCourse from './components/dashboard/courses/CreateCourse'
+import UpdateCourse from './components/dashboard/courses/UpdateCourse'
+
 //dashboard/controlpanel folder
 import ControlPanel from './components/dashboard/controlpanel/ControlPanel'
 
@@ -171,6 +176,11 @@ function App() {
                                 {/**CICS STAFF ROUTES */}
 
                                 {/**DEPT CHAIR & CICS STAFF ROUTES */}
+                                    {/**COURSES */}
+                                        <ProtectedRoute path='/admin/courses' component={ListCourses} exact />
+                                        <ProtectedRoute path='/admin/new/course' component={CreateCourse} exact />
+                                        <ProtectedRoute path='/admin/course/:id' component={UpdateCourse} exact />
+                                        
                                     {/*FORMS */}
                                         <ProtectedRoute path='/admin/manageforms' component={ManageForms} exact />
                                         <ProtectedRoute path='/admin/new/form' component={CreateForm} exact />

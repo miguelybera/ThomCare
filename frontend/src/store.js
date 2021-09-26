@@ -38,7 +38,10 @@ import {
 } from './reducers/requestReducer'
 
 import {
-    getCoursesReducer
+    newCourseReducer,
+    getCoursesReducer,
+    getCourseDetailsReducer,
+    courseReducer
 } from './reducers/courseReducers'
 
 import {
@@ -86,7 +89,10 @@ const reducer = combineReducers({
     saveForm: saveFormDetailsReducer,
     request: requestReducer,
 
-    courses: getCoursesReducer, //get single request details
+    courses: getCoursesReducer, //get all courses details
+    course: courseReducer, // update delete course
+    courseDetails: getCourseDetailsReducer, // get course details
+    newCourse: newCourseReducer, // update delete course
     audits: auditLogsReducer, //get all audits
 
     form: formReducer, // update delete form

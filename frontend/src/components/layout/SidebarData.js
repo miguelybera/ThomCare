@@ -111,6 +111,11 @@ export const SidebarData = [
             ]
         },
         {
+            title: 'Courses',
+            path: '/admin/courses',
+            icon: <i class="fa fa-home" aria-hidden="true"></i>
+        },
+        {
             title: 'Student Accounts',
             icon: <i class="fa fa-users" aria-hidden="true"></i>,
             iconClosed: <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>,
@@ -221,6 +226,11 @@ export const SidebarData = [
                     icon: <i class="fa fa-trash" aria-hidden="true"></i>
                 }
             ]
+        },
+        {
+            title: 'Courses',
+            path: '/admin/courses',
+            icon: <i class="fa fa-home" aria-hidden="true"></i>
         },
         {
             title: 'Users',
