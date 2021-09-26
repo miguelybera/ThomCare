@@ -107,9 +107,9 @@ exports.createConvo = catchAsyncErrors(async (req, res, next) => {
 //get conv of user
 exports.getConvo = catchAsyncErrors(async (req, res, next) => {
     try {
-        const apiFeatures = new APIFeatures(Conversation.find({members: { $in: [req.user.id] }}), req.query)
-        .searchUser()
-        .filter()
+        const apiFeatures = new APIFeatures(Conversation.find({ members: { $in: [req.user.id] } }).sort({ updatedAt: -1 }), req.query)
+            .searchUser()
+            .filter()
 
         const conversations = await apiFeatures.query
 

@@ -26,7 +26,8 @@ exports.createMessage = catchAsyncErrors(async (req, res, next) => {
 
     try {
         const savedMessage = await newMessage.save()
-        
+
+
         res.status(201).json({
             success: true,
             savedMessage
@@ -70,6 +71,18 @@ exports.addMessage = catchAsyncErrors(async (req, res, next) => {
 
     try {
         const savedMessage = await newMessage.save()
+
+        const conversation = await Conversation.findByIdAndUpdate(req.body.conversationId, {
+            updatedAt: new Date(Date.now())
+        }, {
+            new: true,
+            runValidators: true,
+            useFindAndModify: false
+        })
+
+        //add conversation model
+        //set updatedAt : new Date.now()
+
         res.status(200).json(savedMessage)
     } catch (err) {
         return next(new ErrorHandler(err))

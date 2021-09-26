@@ -73,6 +73,7 @@ export const conversationReducer = (state = { conversations: [] }, action) => {
         case ALL_CONVERSATIONS_SUCCESS:
             return {
                 loading: false,
+                success: action.payload.success,
                 conversations: action.payload.conversations
             }
 
@@ -80,6 +81,7 @@ export const conversationReducer = (state = { conversations: [] }, action) => {
             return {
                 ...state,
                 loading: false,
+                success: null,
                 error: action.payload
             }
 
