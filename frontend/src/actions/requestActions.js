@@ -52,8 +52,7 @@ export const trackRequest = (userInput) => async (dispatch) => {
         dispatch({
             type: TRACK_REQUEST_FAIL,
             payload: error.response.data.errMessage
-        }
-        )
+        })
     }
 }
 
@@ -91,8 +90,7 @@ export const submitRequest = (request) => async (dispatch) => {
         dispatch({
             type: SUBMIT_REQUEST_FAIL,
             payload: error.response.data.errMessage
-        }
-        )
+        })
     }
 }
 
@@ -151,8 +149,7 @@ export const getRequests = (role, route) => async (dispatch) => {
         dispatch({
             type: GET_REQUESTS_FAIL,
             payload: error.response.data.errMessage
-        }
-        )
+        })
     }
 }
 
@@ -174,8 +171,7 @@ export const getRequestDetails = (requestId) => async (dispatch) => {
         dispatch({
             type: REQUEST_DETAILS_FAIL,
             payload: error.response.data.errMessage
-        }
-        )
+        })
     }
 }
 
@@ -207,8 +203,7 @@ export const getRecent = (role) => async (dispatch) => {
         dispatch({
             type: GET_RECENT_FAIL,
             payload: error.response.data.errMessage
-        }
-        )
+        })
     }
 }
 
@@ -251,8 +246,7 @@ export const updateRequest = (requestId, request, isTrash) => async (dispatch) =
         dispatch({
             type: UPDATE_REQUEST_FAIL,
             payload: error.response.data.errMessage
-        }
-        )
+        })
     }
 }
 
@@ -280,8 +274,7 @@ export const assignRequest = (requestId, request) => async (dispatch) => {
         dispatch({
             type: ASSIGN_REQUEST_FAIL,
             payload: error.response.data.errMessage
-        }
-        )
+        })
     }
 }
 
@@ -303,8 +296,7 @@ export const deleteRequest = (requestId) => async (dispatch) => {
         dispatch({
             type: DELETE_REQUEST_FAIL,
             payload: error.response.data.errMessage
-        }
-        )
+        })
     }
 }
 

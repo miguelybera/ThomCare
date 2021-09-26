@@ -120,14 +120,14 @@ const CreateAnnouncement = ({ history }) => {
 
     return (
         <Fragment>
-            <MetaData title={'Add new Announcement'} />
+            <MetaData title={'New Announcement'} />
             <Sidebar />
             <div className="row">
                 <div className="">
                     <Container className="space_inside"></Container>
                     {announcementTypeLoading ? <Loader /> : (
                         <Container fluid>
-                            <h3>Add New Announcement</h3>
+                            <h3>New Announcement</h3>
                             <Card>
                                 <Card.Body>
                                     <Form onSubmit={submitHandler}>

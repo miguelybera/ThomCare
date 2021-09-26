@@ -36,8 +36,7 @@ export const getForms = () => async (dispatch) => {
         dispatch({
             type: ALL_FORMS_FAIL,
             payload: error.response.data.errMessage
-        }
-        )
+        })
     }
 }
 
@@ -59,8 +58,7 @@ export const getFormDetails = (id) => async (dispatch) => {
         dispatch({
             type: FORM_DETAILS_FAIL,
             payload: error.response.data.errMessage
-        }
-        )
+        })
     }
 }
 
@@ -88,8 +86,7 @@ export const createForm = (formData) => async (dispatch) => {
         dispatch({
             type: NEW_FORM_FAIL,
             payload: error.response.data.errMessage
-        }
-        )
+        })
     }
 }
 
@@ -117,8 +114,7 @@ export const updateForm = (id, formData) => async (dispatch) => {
         dispatch({
             type: UPDATE_FORM_FAIL,
             payload: error.response.data.errMessage
-        }
-        )
+        })
     }
 }
 
@@ -141,8 +137,7 @@ export const deleteForm = (id) => async (dispatch) => {
         dispatch({
             type: DELETE_FORM_FAIL,
             payload: error.response.data.errMessage
-        }
-        )
+        })
     }
 }
 //clear errors

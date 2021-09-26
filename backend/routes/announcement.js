@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const path = require('path')
 const multer = require('multer')
+const ErrorHandler = require('../utils/errorHandler');
 const fileMimeTypes = [
     'image/jpeg',
     'image/png',
@@ -36,7 +37,7 @@ const announcementUpload = multer({
     fileFilter: function (req, file, cb) {
         const ext = path.extname(file.originalname)
         if (!fileMimeTypes.includes(file.mimetype)) {
-            return cb(new Error('File type not supported'))
+            return cb(new ErrorHandler('File type not supported', 500))
         } else {
             cb(null, true)
         }

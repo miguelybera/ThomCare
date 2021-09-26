@@ -65,8 +65,7 @@ export const getAnnouncements = (currentPage, course, yearLevel, track, title, a
         dispatch({
             type: ALL_ANNOUNCEMENTS_FAIL,
             payload: error.response.data.errMessage
-        }
-        )
+        })
     }
 }
 
@@ -110,8 +109,7 @@ export const getAnnouncementDetails = (id) => async (dispatch) => {
         dispatch({
             type: ANNOUNCEMENT_DETAILS_FAIL,
             payload: error.response.data.errMessage
-        }
-        )
+        })
     }
 }
 
@@ -133,8 +131,7 @@ export const getUser = (id) => async (dispatch) => {
         dispatch({
             type: USER_DETAILS_FAIL,
             payload: error.response.data.errMessage
-        }
-        )
+        })
     }
 }
 
@@ -156,8 +153,7 @@ export const getAdminAnnouncements = () => async (dispatch) => {
         dispatch({
             type: ALL_ADMIN_ANNOUNCEMENTS_FAIL,
             payload: error.response.data.errMessage
-        }
-        )
+        })
     }
 }
 
@@ -179,8 +175,7 @@ export const getMyAnnouncements = () => async (dispatch) => {
         dispatch({
             type: MY_ANNOUNCEMENTS_FAIL,
             payload: error.response.data.errMessage
-        }
-        )
+        })
     }
 }
 
@@ -202,8 +197,7 @@ export const getArchivedAnnouncements = () => async (dispatch) => {
         dispatch({
             type: ALL_ARCHIVED_ANNOUNCEMENTS_FAIL,
             payload: error.response.data.errMessage
-        }
-        )
+        })
     }
 }
 
@@ -231,8 +225,7 @@ export const createAnnouncement = (announcementData) => async (dispatch) => {
         dispatch({
             type: NEW_ANNOUNCEMENT_FAIL,
             payload: error.response.data.errMessage
-        }
-        )
+        })
     }
 }
 
@@ -260,8 +253,7 @@ export const createAnnouncementType = (announcementCategory) => async (dispatch)
         dispatch({
             type: NEW_ANNOUNCEMENT_TYPE_FAIL,
             payload: error.response.data.message
-        }
-        )
+        })
     }
 }
 
@@ -284,8 +276,7 @@ export const deleteAnnouncement = (id) => async (dispatch) => {
         dispatch({
             type: DELETE_ANNOUNCEMENT_FAIL,
             payload: error.response.data.errMessage
-        }
-        )
+        })
     }
 }
 
@@ -308,8 +299,7 @@ export const deleteAnnouncementType = (id) => async (dispatch) => {
         dispatch({
             type: DELETE_ANNOUNCEMENT_TYPE_FAIL,
             payload: error.response.data.errMessage
-        }
-        )
+        })
     }
 }
 
@@ -337,8 +327,7 @@ export const updateAnnouncement = (id, announcementData) => async (dispatch) => 
         dispatch({
             type: UPDATE_ANNOUNCEMENT_FAIL,
             payload: error.response.data.errMessage
-        }
-        )
+        })
     }
 }
 
@@ -367,8 +356,7 @@ export const archiveAnnouncement = (id) => async (dispatch) => {
         dispatch({
             type: ARCHIVE_ANNOUNCEMENT_FAIL,
             payload: error.response.data.errMessage
-        }
-        )
+        })
     }
 }
 

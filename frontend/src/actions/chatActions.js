@@ -13,7 +13,7 @@ import {
 } from '../constants/chatConstants'
 
 //get all conversations
-export const getConversations = (id, name) => async(dispatch) => {
+export const getConversations = (id, name) => async (dispatch) => {
     try {
         dispatch({
             type: ALL_CONVERSATIONS_REQUEST
@@ -30,13 +30,12 @@ export const getConversations = (id, name) => async(dispatch) => {
         dispatch({
             type: ALL_CONVERSATIONS_FAIL,
             payload: error.response.data.errMessage
-            }
-        )
+        })
     }
 }
 
 //send message
-export const sendMessage = ( message ) => async (dispatch, getState) => {
+export const sendMessage = (message) => async (dispatch, getState) => {
     try {
         dispatch({
             type: SEND_MESSAGE_REQUEST
@@ -64,7 +63,7 @@ export const sendMessage = ( message ) => async (dispatch, getState) => {
 }
 
 //create new conversation
-export const createConversation = (convo) => async(dispatch) => {
+export const createConversation = (convo) => async (dispatch) => {
 
     try {
         dispatch({
@@ -88,13 +87,12 @@ export const createConversation = (convo) => async(dispatch) => {
         dispatch({
             type: CREATE_CONVERSATION_FAIL,
             payload: error.response.data.errMessage
-            }
-        )
+        })
     }
 }
 
 //clear errors
-export const clearErrors = () => async(dispatch) => {
+export const clearErrors = () => async (dispatch) => {
     dispatch({
         type: CLEAR_ERRORS
     })
