@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux'
 import { loadUser } from './actions/userActions'
 import store from './store'
 import './App.css';
+import "@fortawesome/fontawesome-free/css/all.min.css"
 
 //layout folder
 import ScrollToTop from './components/layout/ScrollToTop'
@@ -94,7 +95,6 @@ function App() {
 
     useEffect(() => {
         store.dispatch(loadUser())
-
     }, [])
 
     return (

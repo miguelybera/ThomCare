@@ -60,7 +60,7 @@ export const login = (email, password) => async (dispatch) => {
 
         dispatch({
             type: LOGIN_SUCCESS,
-            payload: data.user
+            payload: data
         })
 
     } catch (error) {
@@ -77,7 +77,8 @@ export const logout = () => async (dispatch) => {
         await axios.get('/api/v1/logout')
 
         dispatch({
-            type: LOGOUT_SUCCESS
+            type: LOGOUT_SUCCESS,
+            payload: null
         })
 
     } catch (error) {
@@ -101,7 +102,6 @@ export const loadUser = () => async (dispatch) => {
             type: LOAD_USER_SUCCESS,
             payload: data.user
         })
-
     } catch (error) {
         dispatch({
             type: LOAD_USER_FAIL,

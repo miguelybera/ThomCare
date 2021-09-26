@@ -114,7 +114,7 @@ const Header = () => {
                                                 <NavDropdown.Item><Link to='/profile'>My Profile</Link></NavDropdown.Item>
                                                 <NavDropdown.Item><Link to='/messenger'>Messenger</Link></NavDropdown.Item>
                                                 <NavDropdown.Divider />
-                                                <NavDropdown.Item style={{ color: 'red' }}><span onClick={() => logoutHandler()}>Log out</span></NavDropdown.Item>
+                                                <NavDropdown.Item style={{ color: 'red' }}><Link to='/' onClick={() => logoutHandler()}>Log out</Link></NavDropdown.Item>
                                             </NavDropdown>
                                         </Drop>
                                     </Navbar.Collapse>
@@ -143,7 +143,7 @@ const Header = () => {
                                                 })
                                             }}>Submit Request</Link></Nav.Link>
                                             <Nav.Link className="image"><Link to='/track' activeStyle>Track my Request</Link></Nav.Link>
-                                            <Nav.Link className="image"><Link to='/login' activeStyle>Login</Link></Nav.Link>
+                                            <Nav.Link className="image" href="/login">Login</Nav.Link>
                                         </Nav>
                                     </Navbar.Collapse>
                                 </>
