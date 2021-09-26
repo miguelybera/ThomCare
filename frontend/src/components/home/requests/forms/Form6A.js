@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Row, Container, Button, Col, Card, Form, Breadcrumb } from 'react-bootstrap'
+import { FloatingLabel, Row, Container, Button, Col, Card, Form, Breadcrumb } from 'react-bootstrap'
 import { getCourses, clearErrors } from '../../../../actions/courseActions'
 import { saveForm } from '../../../../actions/requestActions'
 import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
@@ -230,49 +230,85 @@ function Form6A({ history }) {
                                                 <p>Courses to add/drop #{idx + 1}</p>
                                                 <Row style={{ marginBottom: '10px' }}>
                                                     <Col xs={12} md={3} lg={2} style={addDropStyle}>
-                                                        <Form.Select aria-label="Default select example" name="status" id={status} data-id={idx} value={val.status} onChange={e => onChange(idx, e)} required>
-                                                            <option value=''>Add/Drop</option>
-                                                            <option value="Add">Add</option>
-                                                            <option value="Drop">Drop</option>
-                                                        </Form.Select>
+                                                        <FloatingLabel
+                                                            label="Add/Drop"
+                                                        >
+                                                            <Form.Select aria-label="Default select example" name="status" id={status} data-id={idx} value={val.status} onChange={e => onChange(idx, e)} required>
+                                                                <option value=''>Add/Drop</option>
+                                                                <option value="Add">Add</option>
+                                                                <option value="Drop">Drop</option>
+                                                            </Form.Select>
+                                                        </FloatingLabel>
                                                     </Col>
                                                     <Col xs={12} md={4} lg={2} style={addDropStyle}>
-                                                        <Form.Select aria-label="Default select example" name="courseCode" id={courseCode} data-id={idx} value={val.courseCode} onChange={e => onChange(idx, e)} required>
-                                                            <option value=''>Course Code</option>
-                                                            {courses && courses.map(course => (
-                                                                <option value={course.courseCode}>{course.courseCode}</option>
-                                                            ))}
-                                                        </Form.Select>
+                                                        <FloatingLabel
+                                                            label="Course Code"
+                                                        >
+                                                            <Form.Select aria-label="Default select example" name="courseCode" id={courseCode} data-id={idx} value={val.courseCode} onChange={e => onChange(idx, e)} required>
+                                                                <option value=''>Course Code</option>
+                                                                {courses && courses.map(course => (
+                                                                    <option value={course.courseCode}>{course.courseCode}</option>
+                                                                ))}
+                                                            </Form.Select>
+                                                        </FloatingLabel>
                                                     </Col>
                                                     <Col xs={12} md={5} lg={4} style={addDropStyle}>
-                                                        <Form.Control type="text" placeholder="Course Name" name="courseName" id={courseName} data-id={idx} value={val.courseName} onChange={e => onChange(idx, e)} readOnly />
+                                                        <FloatingLabel
+                                                            label="Course Name"
+                                                        >
+                                                            <Form.Control type="text" placeholder="Course Name" name="courseName" id={courseName} data-id={idx} value={val.courseName} onChange={e => onChange(idx, e)} readOnly />
+                                                        </FloatingLabel>
                                                     </Col>
                                                     <Col xs={12} sm={6} md={2} lg={2} style={addDropStyle}>
-                                                        <Form.Control type="number" placeholder="Lec Units" name="lecUnits" id={lecUnits} data-id={idx} value={val.lecUnits} onChange={e => onChange(idx, e)} readOnly />
+                                                        <FloatingLabel
+                                                            label="Lec Units"
+                                                        >
+                                                            <Form.Control type="number" placeholder="Lec Units" name="lecUnits" id={lecUnits} data-id={idx} value={val.lecUnits} onChange={e => onChange(idx, e)} readOnly />
+                                                        </FloatingLabel>
                                                     </Col>
                                                     <Col xs={12} sm={6} md={2} lg={2} style={addDropStyle}>
-                                                        <Form.Control type="number" placeholder="Lab Units" name="labUnits" id={labUnits} data-id={idx} value={val.labUnits} onChange={e => onChange(idx, e)} readOnly />
+                                                        <FloatingLabel
+                                                            label="Lab Units"
+                                                        >
+                                                            <Form.Control type="number" placeholder="Lab Units" name="labUnits" id={labUnits} data-id={idx} value={val.labUnits} onChange={e => onChange(idx, e)} readOnly />
+                                                        </FloatingLabel>
                                                     </Col>
                                                     <Col xs={12} sm={6} md={3} lg={3} style={addDropStyle}>
-                                                        <Form.Select aria-label="Default select example" placeholder='M' name="days" id={days} data-id={idx} value={val.days} onChange={e => onChange(idx, e)} required >
-                                                            <option value=''>Days</option>
-                                                            <option value='M'>M</option>
-                                                            <option value='T'>T</option>
-                                                            <option value='W'>W</option>
-                                                            <option value='Th'>Th</option>
-                                                            <option value='F'>F</option>
-                                                            <option value='S'>S</option>
-                                                            <option value='Su'>Su</option>
-                                                        </Form.Select>
+                                                        <FloatingLabel
+                                                            label="Days"
+                                                        >
+                                                            <Form.Select aria-label="Default select example" placeholder='M' name="days" id={days} data-id={idx} value={val.days} onChange={e => onChange(idx, e)} required >
+                                                                <option value=''>Days</option>
+                                                                <option value='M'>M</option>
+                                                                <option value='T'>T</option>
+                                                                <option value='W'>W</option>
+                                                                <option value='Th'>Th</option>
+                                                                <option value='F'>F</option>
+                                                                <option value='S'>S</option>
+                                                                <option value='Su'>Su</option>
+                                                            </Form.Select>
+                                                        </FloatingLabel>
                                                     </Col>
                                                     <Col xs={12} sm={6} md={5} lg={3} style={addDropStyle}>
-                                                        <Form.Control type="text" placeholder="Time" name="time" id={time} data-id={idx} value={val.time} onChange={e => onChange(idx, e)} required />
+                                                        <FloatingLabel
+                                                            label="Time"
+                                                        >
+                                                            <Form.Control type="text" placeholder="Time" name="time" id={time} data-id={idx} value={val.time} onChange={e => onChange(idx, e)} required />
+                                                        </FloatingLabel>
                                                     </Col>
                                                     <Col xs={12} sm={4} md={4} lg={2} style={addDropStyle}>
-                                                        <Form.Control type="text" placeholder="Room number" name="room" id={room} data-id={idx} value={val.room} onChange={e => onChange(idx, e)} required />
+                                                        <FloatingLabel
+                                                            label="Room Number"
+                                                        >
+                                                            <Form.Control type="text" placeholder="Room number" name="room" id={room} data-id={idx} value={val.room} onChange={e => onChange(idx, e)} required />
+                                                        </FloatingLabel>
                                                     </Col>
                                                     <Col xs={8} sm={4} md={5} lg={2} style={addDropStyle}>
-                                                        <Form.Control type="text" placeholder="Section" name="section" id={section} data-id={idx} value={val.section} onChange={e => onChange(idx, e)} required />
+                                                        <FloatingLabel
+                                                            label="Section"
+                                                        >
+                                                            <Form.Control type="text" placeholder="Section" name="section" id={section} data-id={idx} value={val.section} onChange={e => onChange(idx, e)} required />
+                                                        </FloatingLabel>
                                                     </Col>
                                                     <Col xs={4} sm={4} md={3} lg={2} style={{ textAlign: 'right', marginBottom: '5px' }}>
                                                         {

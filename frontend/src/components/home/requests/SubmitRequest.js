@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
-import { FloatingLabel, Form, Button, Card, Container, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap'
+import { Form, Button, Card, Container, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { submitRequest, clearErrors } from './../../../actions/requestActions'
 import { SUBMIT_REQUEST_RESET } from './../../../constants/requestConstants'
