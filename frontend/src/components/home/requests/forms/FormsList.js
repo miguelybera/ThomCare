@@ -49,7 +49,7 @@ const FormsList = () => {
                                 </Button></td>
                         </tr>
                         <tr>
-                            <td>-</td>
+                            <td>Petition Form</td>
                             <td>CICS Petition Classes</td>
                             <td>
                                 <Link to='/forms/petition-classes'>
@@ -62,7 +62,7 @@ const FormsList = () => {
                                 </Button></td>
                         </tr>
                         <tr>
-                            <td>-</td>
+                            <td>Overload Form</td>
                             <td>Request for Overload</td>
                             <td>
                                 <Link to='/forms/overload-form'>
