@@ -124,9 +124,7 @@ const Announcements = () => {
                 <Container className="space"></Container>
                 <Form >
                     <Row >
-                        <Col md="auto" style={{ paddingTop: "5px" }}><h7>Filters:</h7>
-                        </Col>
-                        <Col md="auto">
+                        <Col xs={12} md={4} lg={2}>
                             <Form.Group>
                                 <Form.Select
                                     aria-label="Course"
@@ -144,7 +142,7 @@ const Announcements = () => {
                                 </Form.Select>
                             </Form.Group>
                         </Col>
-                        <Col md="auto">
+                        <Col xs={12} md={4} lg={2}>
                             <Form.Group>
                                 <Form.Select
                                     aria-label="YearLevel"
@@ -161,9 +159,8 @@ const Announcements = () => {
                                 </Form.Select>
                             </Form.Group>
                         </Col>
-                        <Col md="auto">
+                        <Col xs={12} md={4} lg={3}>
                             <Form.Group>
-
                                 <Form.Select
                                     aria-label="tracks"
                                     size="sm"
@@ -206,7 +203,7 @@ const Announcements = () => {
                                 </Form.Select>
                             </Form.Group>
                         </Col>
-                        <Col md="auto">
+                        <Col xs={12} md={6} lg={3}>
                             <Form.Group>
                                 <Form.Select
                                     aria-label="AnnouncementType"
@@ -223,8 +220,8 @@ const Announcements = () => {
                                 </Form.Select>
                             </Form.Group>
                         </Col>
-                        <Col >
-                            <Form.Group sm >
+                        <Col xs={12} md={6} lg={2}>
+                            <Form.Group sm>
                                 <FormControl
                                     type="search"
                                     placeholder="Search by title"

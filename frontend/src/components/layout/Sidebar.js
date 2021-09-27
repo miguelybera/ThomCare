@@ -1,11 +1,12 @@
 import React, { Fragment, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import * as FaIcons from 'react-icons/fa'
 import * as AiIcons from 'react-icons/ai'
 import { IconContext } from 'react-icons/lib'
 import styled from 'styled-components'
 import SubMenu from './SubMenu'
+import { logout } from '../../actions/userActions'
 import { SidebarData } from './SidebarData'
 
 const Nav = styled.div`
@@ -76,12 +77,19 @@ const SidebarNav = styled.nav`
 const SidebarWrap = styled.div`
     width: 100%;`;
 
-const Sidebar = () => {
+const Sidebar = ({ history }) => {
+    const dispatch = useDispatch()
+
     const { user } = useSelector(state => state.auth)
 
     const [sidebar, setSidebar] = useState(false);
 
     const showSidebar = () => setSidebar(!sidebar);
+
+    const logoutHandler = () => {
+        dispatch(logout())
+        window.location.reload(true)
+    }
 
     return (
         <>
@@ -112,7 +120,7 @@ const Sidebar = () => {
                             paddingLeft: "6px",
                         }}>ThomCare Control Panel</p>
                     </NavTitle>
-                    <NavUser >
+                    <NavUser onClick={logoutHandler}>
 
                         <p >{`${user.role}`} : </p>
                         <p style={{ color: "#9C0B0A" }}>_ </p>
@@ -125,29 +133,27 @@ const Sidebar = () => {
                         <NavIcon to="#">
                             <AiIcons.AiOutlineClose onClick={showSidebar} />
                         </NavIcon>
-                        {
-                            user.role === 'Student' ? (
+                        {user.role === 'Student' ? (
+                            <Fragment>
+                                {SidebarData[0].map((item, index) => {
+                                    return <SubMenu item={item} key={index} />;
+                                })}
+                            </Fragment>
+                        ) : (
+                            user.role === 'CICS Staff' ? (
                                 <Fragment>
-                                    {SidebarData[0].map((item, index) => {
+                                    {SidebarData[2].map((item, index) => {
                                         return <SubMenu item={item} key={index} />;
                                     })}
                                 </Fragment>
                             ) : (
-                                user.role === 'CICS Staff' ? (
-                                    <Fragment>
-                                        {SidebarData[2].map((item, index) => {
-                                            return <SubMenu item={item} key={index} />;
-                                        })}
-                                    </Fragment>
-                                ) : (
-                                    <Fragment>
-                                        {SidebarData[1].map((item, index) => {
-                                            return <SubMenu item={item} key={index} />;
-                                        })}
-                                    </Fragment>
-                                )
+                                <Fragment>
+                                    {SidebarData[1].map((item, index) => {
+                                        return <SubMenu item={item} key={index} />;
+                                    })}
+                                </Fragment>
                             )
-                        }
+                        )}
                     </SidebarWrap>
                 </SidebarNav>
             </IconContext.Provider>

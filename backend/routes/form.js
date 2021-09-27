@@ -34,7 +34,7 @@ router.route('/admin/form/:formId').put(isAuthenticatedUser, thomcareUpload.arra
 router.route('/admin/form/:formId').delete(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), deleteForm)
 
 //All
-router.route('/forms').get(isAuthenticatedUser, getAllForms);
+router.route('/forms').get(getAllForms);
 router.route('/form/:formId').get(isAuthenticatedUser, getSingleForm);
 
 module.exports = router;

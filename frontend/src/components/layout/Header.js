@@ -114,9 +114,9 @@ const Header = ({ history }) => {
                                                 <NavDropdown.Item><Link to='/messenger'>Messenger</Link></NavDropdown.Item>
                                                 <NavDropdown.Divider />
                                                 <NavDropdown.Item style={{ color: 'red' }}>
-                                                    <span onClick={() => logoutHandler()}>
+                                                    <Link to='/' onClick={logoutHandler}>
                                                         Log out
-                                                    </span>
+                                                    </Link>
                                                 </NavDropdown.Item>
                                             </NavDropdown>
                                         </Drop>
@@ -138,13 +138,7 @@ const Header = ({ history }) => {
 
                                             }}>
                                             <Nav.Link className="image"><Link to='/' activeStyle>Announcements</Link></Nav.Link>
-                                            <Nav.Link className="image"><Link to='/forms/list' activeStyle>Generate Form</Link></Nav.Link>
                                             <Nav.Link className="image"><Link to='/download/forms/list' activeStyle>Downloadable Forms</Link></Nav.Link>
-                                            <Nav.Link className="image"><Link to='/submit/request' activeStyle onClick={() => {
-                                                dispatch({
-                                                    type: SUBMIT_REQUEST_RESET
-                                                })
-                                            }}>Submit Request</Link></Nav.Link>
                                             <Nav.Link className="image"><Link to='/track' activeStyle>Track my Request</Link></Nav.Link>
                                             <Nav.Link className="image" href="/login">Login</Nav.Link>
                                         </Nav>

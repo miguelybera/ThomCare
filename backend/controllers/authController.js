@@ -222,7 +222,7 @@ exports.verifyStudent = catchAsyncErrors(async (req, res, next) => {
 exports.getUserProfile = catchAsyncErrors(async (req, res, next) => {
     const user = await User.findById(req.user.id)
 
-    console.log('Current user: ', user.firstName + ' ' + user.lastName)
+    console.log('Current user:', user.firstName)
 
     res.status(200).json({
         success: true,

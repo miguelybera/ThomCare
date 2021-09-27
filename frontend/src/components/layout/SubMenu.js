@@ -59,7 +59,7 @@ const SubMenu = ({ item, history }) => {
         <>
             {item.title === 'Log out' ?
                 <Fragment>
-                    <SidebarLink onClick={(() => logoutHandler())}>
+                    <SidebarLink onClick={logoutHandler}>
                         <div>
                             {item.icon}
                             <SidebarLabel>{item.title}</SidebarLabel>

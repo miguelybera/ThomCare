@@ -125,7 +125,7 @@ function App() {
                                 {/**FORMS ROUTES */}
                                     <ProtectedRoute path='/submit/request' component={SubmitRequest} exact />
                                     <ProtectedRoute path='/forms/list' component={FormsList} exact />
-                                    <ProtectedRoute path='/download/forms/list' component={DownloadList} exact />
+                                    <Route path='/download/forms/list' component={DownloadList} exact />
                                     <ProtectedRoute path='/forms/form-6a' component={Form6A} exact />
                                     <ProtectedRoute path='/forms/form-6b' component={Form6B} exact />
                                     <ProtectedRoute path='/forms/petition-classes' component={PetitionClass} exact />
