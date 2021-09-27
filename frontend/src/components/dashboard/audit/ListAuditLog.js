@@ -16,7 +16,7 @@ const ListAllRequests = () => {
 
     const { loading, audits, error } = useSelector(state => state.audits)
 
-    const changeDateFormat = (date) => dateFormat(date, "yyyy-mm-dd")
+    const changeDateFormat = (date) => dateFormat(date, "ddd, mmm d, yyyy h:MMtt")
 
     useEffect(() => {
         dispatch(getAuditLog())

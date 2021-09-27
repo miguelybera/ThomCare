@@ -57,6 +57,7 @@ exports.login = catchAsyncErrors(async (req, res, next) => {
 
     if (!isPasswordMatched) { return next(new ErrorHandler('Invalid Email or Password', 401)); }
 
+    console.log(`Log in from ${user.firstName} ${user.lastName}`)
     sendToken(user, 200, res)
 })
 
@@ -66,6 +67,8 @@ exports.logout = catchAsyncErrors(async (req, res, next) => {
         expires: new Date(Date.now()),
         httpOnly: true
     })
+
+    console.log('User logged out.')
 
     res.status(200).json({
         success: true,
@@ -189,7 +192,7 @@ exports.verifyStudent = catchAsyncErrors(async (req, res, next) => {
     const token = req.params.token
 
     if (token) {
-        jwt.verify(token, process.env.ACCOUNT_TOKEN, function (err, decodedToken) {
+        jwt.verify(token, process.env.ACCOUNT_TOKEN, function (err, decfdedToken) {
             if (err) { return next(new ErrorHandler('Token is invalid or expired')) }
             const { firstName, middleName, lastName, studentNumber, course, email, password } = decodedToken
 
@@ -218,6 +221,8 @@ exports.verifyStudent = catchAsyncErrors(async (req, res, next) => {
 // Get currently logged in user details => /api/v1/me
 exports.getUserProfile = catchAsyncErrors(async (req, res, next) => {
     const user = await User.findById(req.user.id)
+
+    console.log('Current user: ', user.firstName + ' ' + user.lastName)
 
     res.status(200).json({
         success: true,

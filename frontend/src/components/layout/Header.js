@@ -38,7 +38,7 @@ const Drop = styled.div`
     color: black;
 }`;
 
-const Header = () => {
+const Header = ({ history }) => {
     const dispatch = useDispatch()
     const alert = useAlert()
 
@@ -46,6 +46,7 @@ const Header = () => {
 
     const logoutHandler = () => {
         dispatch(logout())
+        window.location.reload(true);
         alert.success('Logged out successfully')
     }
 

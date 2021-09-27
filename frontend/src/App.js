@@ -94,6 +94,7 @@ function App() {
     const { dashboard } = useSelector(state => state.dashboard)
 
     useEffect(() => {
+        console.log('dispatching loadUser from App.js')
         store.dispatch(loadUser())
     }, [])
 
