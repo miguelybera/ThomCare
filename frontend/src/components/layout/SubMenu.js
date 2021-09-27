@@ -45,7 +45,6 @@ const DropdownLink = styled(Link)`
 
 const SubMenu = ({ item, history }) => {
     const dispatch = useDispatch()
-    const alert = useAlert()
 
     const [subnav, setSubnav] = useState(false);
 
@@ -53,25 +52,17 @@ const SubMenu = ({ item, history }) => {
 
     const logoutHandler = () => {
         dispatch(logout())
-        window.location.reload(true);
-        alert.success('Logged out successfully')
+        // window.location.reload(true);
     }
 
     return (
         <>
             {item.title === 'Log out' ?
                 <Fragment>
-                    <SidebarLink href={item.path} onClick={(() => logoutHandler())}>
+                    <SidebarLink onClick={(() => logoutHandler())}>
                         <div>
                             {item.icon}
                             <SidebarLabel>{item.title}</SidebarLabel>
-                        </div>
-                        <div>
-                            {item.subNav && subnav
-                                ? item.iconOpened
-                                : item.subNav
-                                    ? item.iconClosed
-                                    : null}
                         </div>
                     </SidebarLink>
                 </Fragment> :

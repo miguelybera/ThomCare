@@ -46,8 +46,6 @@ const Header = ({ history }) => {
 
     const logoutHandler = () => {
         dispatch(logout())
-        window.location.reload(true);
-        alert.success('Logged out successfully')
     }
 
     return (
@@ -115,7 +113,11 @@ const Header = ({ history }) => {
                                                 <NavDropdown.Item><Link to='/profile'>My Profile</Link></NavDropdown.Item>
                                                 <NavDropdown.Item><Link to='/messenger'>Messenger</Link></NavDropdown.Item>
                                                 <NavDropdown.Divider />
-                                                <NavDropdown.Item style={{ color: 'red' }}><Link to='/' onClick={() => logoutHandler()}>Log out</Link></NavDropdown.Item>
+                                                <NavDropdown.Item style={{ color: 'red' }}>
+                                                    <span onClick={() => logoutHandler()}>
+                                                        Log out
+                                                    </span>
+                                                </NavDropdown.Item>
                                             </NavDropdown>
                                         </Drop>
                                     </Navbar.Collapse>
