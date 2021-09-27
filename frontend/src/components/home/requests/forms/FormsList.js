@@ -23,7 +23,7 @@ const FormsList = () => {
                     <tbody style={{ textAlign: 'center' }}>
                         <tr>
                             <td>Form 6A</td>
-                            <td>Adding/Dropping of course</td>
+                            <td>Adding/Dropping of course / Cross - Enrollment (within CICS) </td>
                             <td>
                                 <Link to='/forms/form-6a'>
                                     <Button variant="primary" style={{ margin: '5px' }}>
@@ -36,8 +36,8 @@ const FormsList = () => {
                             </td>
                         </tr>
                         <tr>
-                            <td>Form 6A / Form 6B</td>
-                            <td>Cross - Enrollment (within CICS) / Cross- Enrollment with other academic unit/s</td>
+                            <td>Form 6B</td>
+                            <td>Cross- Enrollment with other academic unit/s</td>
                             <td>
                                 <Link to='/forms/form-6b'>
                                     <Button variant="primary" style={{ margin: '5px' }}>
