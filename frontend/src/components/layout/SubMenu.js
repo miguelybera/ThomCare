@@ -43,8 +43,9 @@ const DropdownLink = styled(Link)`
         text-decoration: none;
     }`;
 
-const SubMenu = ({ item, history }) => {
+const SubMenu = ({ item }) => {
     const dispatch = useDispatch()
+    const alert = useAlert()
 
     const [subnav, setSubnav] = useState(false);
 
@@ -52,6 +53,7 @@ const SubMenu = ({ item, history }) => {
 
     const logoutHandler = () => {
         dispatch(logout())
+        alert.success('Logged out successfully.')
         // window.location.reload(true);
     }
 
@@ -59,7 +61,7 @@ const SubMenu = ({ item, history }) => {
         <>
             {item.title === 'Log out' ?
                 <Fragment>
-                    <SidebarLink onClick={logoutHandler}>
+                    <SidebarLink to='/' onClick={logoutHandler}>
                         <div>
                             {item.icon}
                             <SidebarLabel>{item.title}</SidebarLabel>

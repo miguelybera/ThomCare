@@ -1,12 +1,11 @@
 import React, { Fragment, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import * as FaIcons from 'react-icons/fa'
 import * as AiIcons from 'react-icons/ai'
 import { IconContext } from 'react-icons/lib'
 import styled from 'styled-components'
 import SubMenu from './SubMenu'
-import { logout } from '../../actions/userActions'
 import { SidebarData } from './SidebarData'
 
 const Nav = styled.div`
@@ -77,19 +76,12 @@ const SidebarNav = styled.nav`
 const SidebarWrap = styled.div`
     width: 100%;`;
 
-const Sidebar = ({ history }) => {
-    const dispatch = useDispatch()
-
+const Sidebar = () => {
     const { user } = useSelector(state => state.auth)
 
     const [sidebar, setSidebar] = useState(false);
 
     const showSidebar = () => setSidebar(!sidebar);
-
-    const logoutHandler = () => {
-        dispatch(logout())
-        window.location.reload(true)
-    }
 
     return (
         <>
@@ -105,11 +97,9 @@ const Sidebar = ({ history }) => {
                             width="26"
                             height="29"
                             paddingRight="0px"
-
                             alt="CICS Seal" />
 
                         <p style={{
-
                             color: "white",
                             fontFamily: "AveriaBold",
                             paddingTop: "17px",
@@ -120,12 +110,10 @@ const Sidebar = ({ history }) => {
                             paddingLeft: "6px",
                         }}>ThomCare Control Panel</p>
                     </NavTitle>
-                    <NavUser onClick={logoutHandler}>
-
-                        <p >{`${user.role}`} : </p>
+                    <NavUser>
+                        <p > {user.role}:</p>
                         <p style={{ color: "#9C0B0A" }}>_ </p>
                         <p > {user.firstName}</p>
-
                     </NavUser>
                 </Nav>
                 <SidebarNav sidebar={sidebar} >

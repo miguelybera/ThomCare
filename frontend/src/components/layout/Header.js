@@ -38,7 +38,7 @@ const Drop = styled.div`
     color: black;
 }`;
 
-const Header = ({ history }) => {
+const Header = () => {
     const dispatch = useDispatch()
     const alert = useAlert()
 
@@ -140,13 +140,7 @@ const Header = ({ history }) => {
 
                                                 }}>
                                                 <Nav.Link className="image"><Link to='/' activeStyle>Announcements</Link></Nav.Link>
-                                                <Nav.Link className="image"><Link to='/forms/list' activeStyle>Generate Form</Link></Nav.Link>
                                                 <Nav.Link className="image"><Link to='/download/forms/list' activeStyle>Downloadable Forms</Link></Nav.Link>
-                                                <Nav.Link className="image"><Link to='/submit/request' activeStyle onClick={() => {
-                                                    dispatch({
-                                                        type: SUBMIT_REQUEST_RESET
-                                                    })
-                                                }}>Submit Request</Link></Nav.Link>
                                                 <Nav.Link className="image"><Link to='/track' activeStyle>Track my Request</Link></Nav.Link>
                                                 <Nav.Link className="image" href="/login">Login</Nav.Link>
                                             </Nav>
