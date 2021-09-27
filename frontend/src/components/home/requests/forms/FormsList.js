@@ -30,7 +30,7 @@ const FormsList = () => {
                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Fill out
                                     </Button>
                                 </Link>
-                                <Button variant="warning" href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" style={{ margin: '5px' }}>
+                                <Button variant="warning" href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" target="_blank" rel="noreferrer" style={{ margin: '5px' }}>
                                     <i class="fa fa-eye" aria-hidden="true"></i> View
                                 </Button>
                             </td>
@@ -44,7 +44,7 @@ const FormsList = () => {
                                         <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Fill out
                                     </Button>
                                 </Link>
-                                <Button variant="warning" href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" style={{ margin: '5px' }}>
+                                <Button variant="warning" href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" target="_blank" rel="noreferrer" style={{ margin: '5px' }}>
                                     <i class="fa fa-eye" aria-hidden="true"></i> View
                                 </Button></td>
                         </tr>
