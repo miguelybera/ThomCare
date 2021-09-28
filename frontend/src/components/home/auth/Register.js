@@ -9,8 +9,6 @@ import ConfirmRegister from './ConfirmRegister'
 const Register = ({ history }) => {
     const dispatch = useDispatch()
 
-    const { studentInfo } = useSelector(state => state.student)
-
     const [user, setUser] = useState({
         firstName: studentInfo ? studentInfo.firstName : '',
         middleName: studentInfo ? studentInfo.middleName : '',

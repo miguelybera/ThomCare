@@ -73,7 +73,7 @@ const ConfirmRegister = ({ history, studentInfo, submitted, setSubmitted }) => {
                                     Kindly confirm your student information below.
                                     Once submitted, you will not be able to update your profile (Contact your administrator to request for a profile update).
                                 </Card.Subtitle>
-                                <Card.Text><b>Name:</b> {studentInfo.firstName} {studentInfo.lastName}</Card.Text>
+                                <Card.Text><b>Name:</b> {studentInfo.firstName}{studentInfo.middleName ? ' ' + studentInfo.middleName + ' ' : ' '}{studentInfo.lastName}</Card.Text>
                                 <Card.Text><b>Student Number:</b> {studentInfo.studentNumber}</Card.Text>
                                 <Card.Text><b>Course:</b> {studentInfo.course}</Card.Text>
                                 <Card.Text><b>Email:</b> {studentInfo.email}</Card.Text>
