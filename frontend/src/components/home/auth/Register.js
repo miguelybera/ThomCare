@@ -10,14 +10,14 @@ const Register = ({ history }) => {
     const dispatch = useDispatch()
 
     const [user, setUser] = useState({
-        firstName: studentInfo ? studentInfo.firstName : '',
-        middleName: studentInfo ? studentInfo.middleName : '',
-        lastName: studentInfo ? studentInfo.lastName : '',
-        studentNumber: studentInfo ? studentInfo.studentNumber : '',
-        email: studentInfo ? studentInfo.email : '',
-        course: studentInfo ? studentInfo.course : '',
-        password: studentInfo ? studentInfo.password : '',
-        confirmPassword: studentInfo ? studentInfo.confirmPassword : ''
+        firstName: '',
+        middleName: '',
+        lastName: '',
+        studentNumber: '',
+        email: '',
+        course: '',
+        password: '',
+        confirmPassword: ''
     })
 
     const [submitted, setSubmitted] = useState(false)
