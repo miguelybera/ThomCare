@@ -192,7 +192,7 @@ exports.verifyStudent = catchAsyncErrors(async (req, res, next) => {
     const token = req.params.token
 
     if (token) {
-        jwt.verify(token, process.env.ACCOUNT_TOKEN, function (err, decfdedToken) {
+        jwt.verify(token, process.env.ACCOUNT_TOKEN, function (err, decodedToken) {
             if (err) { return next(new ErrorHandler('Token is invalid or expired')) }
             const { firstName, middleName, lastName, studentNumber, course, email, password } = decodedToken
 
