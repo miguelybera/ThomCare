@@ -68,6 +68,18 @@ exports.logout = catchAsyncErrors(async (req, res, next) => {
         httpOnly: true
     })
 
+    // res.setHeader(
+    //     "Set-Cookie",
+    //     cookie.serialize("token", "", {
+    //       httpOnly: true,
+    //       secure: process.env.NODE_ENV !== "development",
+    //       expires: new Date(0),
+    //       sameSite: "strict",
+    //       path: "/",
+    //     })
+    //   );
+
+    // res.clearCookie('token')
     console.log('User logged out.')
 
     res.status(200).json({
@@ -340,12 +352,12 @@ exports.getStudentAccounts = catchAsyncErrors(async (req, res, next) => {
 // Get all admin accounts=> /api/v1/chat/adminUsers
 exports.getChatAccounts = catchAsyncErrors(async (req, res, next) => {
     let users
-    if(req.user.role == 'Student'){
+    if (req.user.role == 'Student') {
         users = await User.find({ role: { $ne: 'Student' } })
-    }else{
-         users = await User.find()
+    } else {
+        users = await User.find()
     }
-     
+
 
     res.status(200).json({
         success: true,

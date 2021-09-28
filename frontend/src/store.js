@@ -103,12 +103,16 @@ const reducer = combineReducers({
     dashboard: dashboardReducer //check if inside dashboard,
 })
 
+const rootReducer = (state, action) => {
+    if (action.type === 'LOGOUT_SUCCESS') {
+        return reducer(undefined, action)
+    }
+    return reducer(state, action)
+}
+
 let initialState = {
     student: {
         studentInfo: localStorage.getItem('studentInfo') ? JSON.parse(localStorage.getItem('studentInfo')) : {}
-    },
-    request: {
-        request: localStorage.getItem('trackData') ? JSON.parse(localStorage.getItem('trackData')) : {}
     }
 } //contains all the data we want to put in this state just before loading the application
 
