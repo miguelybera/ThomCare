@@ -84,7 +84,7 @@ const reducer = combineReducers({
     requestDetails: getRequestDetailsReducer, //get single request details
     requests: getRequestsReducer, //get all requests
     recents: getRecentReducer,
-    saveForm: submitRequestReducer,
+    submitRequest: submitRequestReducer,
     request: requestReducer,
 
     courses: getCoursesReducer, //get all courses details
@@ -100,13 +100,6 @@ const reducer = combineReducers({
 
     dashboard: dashboardReducer //check if inside dashboard,
 })
-
-const rootReducer = (state, action) => {
-    if (action.type === 'LOGOUT_SUCCESS') {
-        return reducer(undefined, action)
-    }
-    return reducer(state, action)
-}
 
 let initialState = {} //contains all the data we want to put in this state just before loading the application
 

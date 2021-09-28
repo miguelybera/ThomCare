@@ -10,7 +10,7 @@ const ref = React.createRef();
 const PDF = (props) => {
     const dispatch = useDispatch();
 
-    const { formData } = useSelector(state => state.saveForm)
+    const { formData } = useSelector(state => state.submitRequest)
 
     useEffect(() => {
         dispatch({

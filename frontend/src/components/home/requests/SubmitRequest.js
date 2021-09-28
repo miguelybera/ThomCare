@@ -17,7 +17,7 @@ const SubmitRequest = () => {
     const alert = useAlert()
     const dispatch = useDispatch()
 
-    const { loading, success, error, request } = useSelector(state => state.saveForm)
+    const { loading, success, error, request } = useSelector(state => state.submitRequest)
 
     const [fileRequirements, setFileRequirements] = useState([])
     const [section, setSection] = useState()

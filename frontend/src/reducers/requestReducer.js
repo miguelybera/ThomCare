@@ -117,7 +117,7 @@ export const getRequestDetailsReducer = (state = { request: {} }, action) => {
 }
 
 //save form details
-export const submitRequestReducer = (state = { formData: {}, request: {} }, action) => {
+export const submitRequestReducer = (state = { request: {} }, action) => {
     switch (action.type) {
         case SUBMIT_REQUEST_REQUEST:
             return {
