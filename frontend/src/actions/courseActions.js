@@ -35,7 +35,7 @@ export const getCourses = () => async (dispatch) => {
     catch (error) {
         dispatch({
             type: GET_COURSES_FAIL,
-            payload: error.response.data.errMessage
+            payload: error.response.data.message
         })
     }
 }
@@ -57,7 +57,7 @@ export const getCourseDetails = (id) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: COURSE_DETAILS_FAIL,
-            payload: error.response.data.errMessage
+            payload: error.response.data.message
         })
     }
 }
@@ -86,7 +86,7 @@ export const createCourse = (courseData) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: NEW_COURSE_FAIL,
-            payload: error.response.data.errMessage
+            payload: error.response.data.message
         })
     }
 }
@@ -114,7 +114,7 @@ export const updateCourse = (id, courseData) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: UPDATE_COURSE_FAIL,
-            payload: error.response.data.errMessage
+            payload: error.response.data.message
         })
     }
 }
@@ -136,7 +136,7 @@ export const deleteCourse = (id) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: DELETE_COURSE_FAIL,
-            payload: error.response.data.errMessage
+            payload: error.response.data.message
         })
     }
 }

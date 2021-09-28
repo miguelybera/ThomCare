@@ -509,7 +509,7 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
         })
 
     } catch (error) {
-        return next(new ErrorHandler(error.errMessage, 500))
+        return next(new ErrorHandler(error.message, 500))
     }
 })
 

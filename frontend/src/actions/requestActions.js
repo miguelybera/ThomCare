@@ -51,7 +51,7 @@ export const trackRequest = (userInput) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: TRACK_REQUEST_FAIL,
-            payload: error.response.data.errMessage
+            payload: error.response.data.message
         })
     }
 }
@@ -79,7 +79,7 @@ export const submitRequest = (request) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: SUBMIT_REQUEST_FAIL,
-            payload: error.response.data.errMessage
+            payload: error.response.data.message
         })
     }
 }
@@ -138,7 +138,7 @@ export const getRequests = (role, route) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: GET_REQUESTS_FAIL,
-            payload: error.response.data.errMessage
+            payload: error.response.data.message
         })
     }
 }
@@ -160,7 +160,7 @@ export const getRequestDetails = (requestId) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: REQUEST_DETAILS_FAIL,
-            payload: error.response.data.errMessage
+            payload: error.response.data.message
         })
     }
 }
@@ -192,7 +192,7 @@ export const getRecent = (role) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: GET_RECENT_FAIL,
-            payload: error.response.data.errMessage
+            payload: error.response.data.message
         })
     }
 }
@@ -235,7 +235,7 @@ export const updateRequest = (requestId, request, isTrash) => async (dispatch) =
     catch (error) {
         dispatch({
             type: UPDATE_REQUEST_FAIL,
-            payload: error.response.data.errMessage
+            payload: error.response.data.message
         })
     }
 }
@@ -263,7 +263,7 @@ export const assignRequest = (requestId, request) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: ASSIGN_REQUEST_FAIL,
-            payload: error.response.data.errMessage
+            payload: error.response.data.message
         })
     }
 }
@@ -285,7 +285,7 @@ export const deleteRequest = (requestId) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: DELETE_REQUEST_FAIL,
-            payload: error.response.data.errMessage
+            payload: error.response.data.message
         })
     }
 }

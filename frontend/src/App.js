@@ -102,9 +102,10 @@ function App() {
         <Router>
             <div className="App">
                 <ScrollToTop>
-                    {loading ? <Loader /> : (
+                    {!loading && !dashboard && (
+                        <Header/>
+                    )}
                     <Fragment>
-                        { dashboard ? <></> : <Header /> }
                         <div className='container container-fluid'>
                             {/**HOME ROUTES */}
                                 {/**ANNOUNCEMENT ROUTES */}
@@ -198,8 +199,9 @@ function App() {
                                 {/**DEPT CHAIR & CICS STAFF ROUTES */}
                             {/**CONTROL PANEL ROUTES */}
                         </div>
-                        { dashboard ? <></> : <Footer /> }
                     </Fragment>
+                    {!loading && !dashboard && (
+                        <Footer/>
                     )}
                 </ScrollToTop>
             </div>

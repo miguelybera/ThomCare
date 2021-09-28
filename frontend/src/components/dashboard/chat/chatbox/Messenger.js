@@ -99,7 +99,7 @@ const Messenger = ({ history }) => {
             catch (error) {
                 dispatch({
                     type: ALL_CONVERSATIONS_FAIL,
-                    payload: error.response.data.errMessage
+                    payload: error.response.data.message
                 }
                 )
             }
