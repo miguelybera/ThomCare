@@ -57,7 +57,6 @@ exports.login = catchAsyncErrors(async (req, res, next) => {
 
     if (!isPasswordMatched) { return next(new ErrorHandler('Invalid Email or Password', 401)); }
 
-    console.log(`Log in from ${user.firstName}`)
     sendToken(user, 200, res)
 })
 
@@ -80,7 +79,6 @@ exports.logout = catchAsyncErrors(async (req, res, next) => {
     //   );
 
     // res.clearCookie('token')
-    console.log('User logged out.')
 
     res.status(200).json({
         success: true,
@@ -233,8 +231,6 @@ exports.verifyStudent = catchAsyncErrors(async (req, res, next) => {
 // Get currently logged in user details => /api/v1/me
 exports.getUserProfile = catchAsyncErrors(async (req, res, next) => {
     const user = await User.findById(req.user.id)
-
-    console.log('Current user:', user.firstName)
 
     res.status(200).json({
         success: true,

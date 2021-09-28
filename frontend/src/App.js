@@ -22,7 +22,6 @@ import AnnouncementDetails from './components/home/announcement/AnnouncementDeta
 //home/auth folder
 import Login from './components/home/auth/Login'
 import Register from './components/home/auth/Register'
-import ConfirmRegister from './components/home/auth/ConfirmRegister'
 import ForgotPassword from './components/home/auth/ForgotPassword'
 import NewPassword from './components/home/auth/NewPassword'
 import UpdatePassword from './components/home/auth/UpdatePassword'
@@ -40,7 +39,6 @@ import PetitionClass from './components/home/requests/forms/PetitionClass'
 import SubmitRequest from './components/home/requests/SubmitRequest'
 import TrackingPage from './components/home/requests/TrackingPage'
 import TrackingPageProgress from './components/home/requests/TrackingPageProgress'
-
 
 //dashboard/announcements folder
 import ListAnnouncements from './components/dashboard/announcements/ListAnnouncements'
@@ -102,7 +100,7 @@ function App() {
         <Router>
             <div className="App">
                 <ScrollToTop>
-                    {!loading && !dashboard && (
+                    {!dashboard && (
                         <Header/>
                     )}
                     <Fragment>
@@ -112,6 +110,7 @@ function App() {
                                     <Route path='/' component={Announcements} exact />
                                     <Route path='/announcement/:id' component={AnnouncementDetails} exact />
 
+                                {/**TRACK REQUEST ROUTES */}
                                     <Route path='/track' component={TrackingPage} exact />
                                     <Route path='/track/:trackingNumber/:lastName' component={TrackingPageProgress} exact />
 
@@ -120,7 +119,6 @@ function App() {
                                     <Route path='/forgotpassword' component={ForgotPassword} exact />
                                     <Route path='/password/reset/:token' component={NewPassword} exact />
                                     <Route path='/register' component={Register} exact />
-                                    <Route path='/confirm/register' component={ConfirmRegister} exact />
                                     <Route path='/verify/account/:token' component={VerifyRegistration} exact />
 
                                 {/**FORMS ROUTES */}
@@ -200,7 +198,7 @@ function App() {
                             {/**CONTROL PANEL ROUTES */}
                         </div>
                     </Fragment>
-                    {!loading && !dashboard && (
+                    {!dashboard && (
                         <Footer/>
                     )}
                 </ScrollToTop>
