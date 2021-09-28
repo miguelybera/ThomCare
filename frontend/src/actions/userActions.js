@@ -32,8 +32,6 @@ import {
     DELETE_USER_REQUEST,
     DELETE_USER_SUCCESS,
     DELETE_USER_FAIL,
-    SAVE_STUDENT_INFO,
-    RESET_STUDENT_INFO,
     REGISTER_USER_REQUEST,
     REGISTER_USER_SUCCESS,
     REGISTER_USER_FAIL,
@@ -270,28 +268,12 @@ export const register = (admin, user) => async (dispatch) => {
             type: REGISTER_USER_SUCCESS,
             payload: data.message
         })
-
-        dispatch({
-            type: RESET_STUDENT_INFO
-        })
-
-        localStorage.setItem('studentInfo', JSON.stringify({}))
     } catch (error) {
         dispatch({
             type: REGISTER_USER_FAIL,
             payload: error.response.data.errMessage
         })
     }
-}
-
-// save student info to local storage
-export const saveStudentInfo = (data) => async (dispatch) => {
-    dispatch({
-        type: SAVE_STUDENT_INFO,
-        payload: data
-    })
-
-    localStorage.setItem('studentInfo', JSON.stringify(data))
 }
 
 // Update user password
@@ -342,7 +324,6 @@ export const updateProfile = (userData) => async (dispatch) => {
             payload: data.success
         })
 
-        localStorage.setItem('studentInfo', JSON.stringify({}))
     } catch (error) {
         dispatch({
             type: UPDATE_PROFILE_FAIL,

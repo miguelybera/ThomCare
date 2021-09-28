@@ -56,16 +56,6 @@ export const trackRequest = (userInput) => async (dispatch) => {
     }
 }
 
-//save form details
-export const saveForm = (formData) => async (dispatch) => {
-    localStorage.setItem('formData', JSON.stringify(formData))
-
-    dispatch({
-        type: SAVE_FORM_SUCCESS,
-        payload: formData
-    })
-}
-
 //Submit request
 export const submitRequest = (request) => async (dispatch) => {
     try {

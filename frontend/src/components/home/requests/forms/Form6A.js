@@ -4,7 +4,6 @@ import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { FloatingLabel, Row, Container, Button, Col, Card, Form, Breadcrumb } from 'react-bootstrap'
 import { getCourses, clearErrors } from '../../../../actions/courseActions'
-import { saveForm } from '../../../../actions/requestActions'
 import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
 import MetaData from '../../../layout/MetaData'
 import Loader from '../../../layout/Loader'
@@ -21,6 +20,12 @@ function Form6A({ history }) {
     const { courses, error, loading } = useSelector(state => state.courses)
     const { user } = useSelector(state => state.auth)
 
+    const [term, setTerm] = useState('')
+    const [year1, setYear1] = useState('')
+    const [year2, setYear2] = useState('')
+
+    const [studentInfo, setStudentInfo] = useState({})
+    
     const [inputFields, setInputFields] = useState([
         {
             status: '',
@@ -34,10 +39,6 @@ function Form6A({ history }) {
             section: ''
         }
     ])
-
-    const [term, setTerm] = useState('')
-    const [year1, setYear1] = useState('')
-    const [year2, setYear2] = useState('')
 
     const [submitted, setSubmitted] = useState(false)
     const title = 'Add/Drop Course Form'
@@ -115,22 +116,20 @@ function Form6A({ history }) {
     const submitHandler = e => {
         e.preventDefault()
 
-        const formData = {
+        setStudentInfo({
             firstName: user.firstName,
+            middleName: user.middleName ? user.middleName[0] : '',
             lastName: user.lastName,
-            middleName: user.middleName,
-            studentNumber: user.studentNumber,
             email: user.email,
+            studentNumber: user.studentNumber,
             course: user.course,
             addDrop: inputFields,
             term,
             year1,
             year2
-        }
+        })
 
         setSubmitted(!submitted)
-
-        dispatch(saveForm(formData))
     }
 
     return (
@@ -139,13 +138,13 @@ function Form6A({ history }) {
             {loading ? <Loader /> : !submitted ? (
                 <Container classname="align-me" fluid style={{ paddingBottom: '100px', paddingTop: '40px' }}>
                     <Card style={{ backgroundColor: '#fff', width: '100%' }}>  {/*, width: '100rem', backgroundColor: '#9c0b0b' */}
-                        <Card.Header style={{ backgroundColor: 'white', textColor: '#919191'}}>
+                        <Card.Header style={{ backgroundColor: 'white', textColor: '#919191' }}>
                             <Breadcrumb>
                                 <Breadcrumb.Item><Link to='/forms/list'>Generate Forms</Link></Breadcrumb.Item>
                                 <Breadcrumb.Item active>{title}</Breadcrumb.Item>
                             </Breadcrumb>
                         </Card.Header>
-                        <Card.Body style={{ paddingTop: '0px'}} >
+                        <Card.Body style={{ paddingTop: '0px' }} >
                             <Card.Title style={{ margin: '10px 0 20px 0', color: '#9c0b0b', fontWeight: 'bold', textAlign: 'center' }}>ADD / DROP COURSE FORM</Card.Title>
                             <Card.Title style={{ margin: '10px 0 20px 0', color: 'black', fontWeight: 'bold' }}>Student Information</Card.Title>
                             <Form style={{ color: 'black' }} onSubmit={submitHandler} >
@@ -181,7 +180,7 @@ function Form6A({ history }) {
                                         <Form.Control type='email' value={user && user.email} readOnly />
                                     </Form.Group>
                                 </Row>
-                                <Row className="mb-3" style={{paddingBottom:'30px'}}>
+                                <Row className="mb-3" style={{ paddingBottom: '30px' }}>
                                     <Form.Group as={Col} xs={12} sm={12} md={6}>
                                         <Form.Label>Term</Form.Label>
                                         <Form.Control type="text" placeholder="1st" value={term} onChange={e => setTerm(e.target.value)} required />
@@ -211,14 +210,15 @@ function Form6A({ history }) {
                                     </Row>
                                 </Row>
 
-                                <Card.Title 
-                                style={{ margin: '5px 0 20px 0',
-                                         color: 'black', 
-                                         fontWeight: 'bold',
-                                         borderTop: '1px solid black',
-                                         paddingTop: '20px'
-                                         
-                                        }}>Courses to Add / Drop:
+                                <Card.Title
+                                    style={{
+                                        margin: '5px 0 20px 0',
+                                        color: 'black',
+                                        fontWeight: 'bold',
+                                        borderTop: '1px solid black',
+                                        paddingTop: '20px'
+
+                                    }}>Courses to Add / Drop:
                                 </Card.Title>
                                 {
                                     inputFields.map((val, idx) => {
@@ -237,12 +237,12 @@ function Form6A({ history }) {
                                             <Fragment key={val.index}>
                                                 <p>Courses to add/drop #{idx + 1}</p>
                                                 <Row style={{ marginBottom: '10px' }}>
-                                                    
+
                                                     <Col xs={12} md={3} lg={2} style={addDropStyle}  >
                                                         <FloatingLabel
                                                             label="Add/Drop"
-                                                            
-                                                        > 
+
+                                                        >
                                                             <Form.Select aria-label="Default select example" name="status" id={status} data-id={idx} value={val.status} onChange={e => onChange(idx, e)} required>
                                                                 <option value=''>Add/Drop</option>
                                                                 <option value="Add">Add</option>
@@ -320,7 +320,7 @@ function Form6A({ history }) {
                                                             <Form.Control type="text" placeholder="Section" name="section" id={section} data-id={idx} value={val.section} onChange={e => onChange(idx, e)} required />
                                                         </FloatingLabel>
                                                     </Col>
-                                                    
+
                                                     <Col xs={4} sm={4} md={3} lg={2} style={{ textAlign: 'right', marginBottom: '5px' }}>
                                                         {
                                                             idx === 0 ? (
@@ -340,7 +340,7 @@ function Form6A({ history }) {
                                                             )
                                                         }
                                                     </Col>
-                                                    
+
                                                 </Row>
                                             </Fragment>
                                         )
@@ -354,9 +354,8 @@ function Form6A({ history }) {
                     </Card>
                 </Container>
             ) : (
-                <FORM6APDF title={`Download Add Drop Form`} content={localStorage.getItem('formData')} />
-            )
-            }
+                <FORM6APDF title={`Download Add Drop Form`} studentInfo={studentInfo} submitted={submitted} setSubmitted={setSubmitted}/>
+            )}
         </Fragment >
     )
 }

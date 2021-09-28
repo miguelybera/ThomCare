@@ -8,7 +8,6 @@ import {
     userDetailsReducer,
     registerReducer,
     forgotPasswordReducer,
-    studentInfoReducer,
     userReducer
 } from './reducers/userReducers'
 
@@ -33,7 +32,7 @@ import {
     getRequestDetailsReducer,
     getRequestsReducer,
     getRecentReducer,
-    saveFormDetailsReducer,
+    submitRequestReducer,
     requestReducer
 } from './reducers/requestReducer'
 
@@ -81,12 +80,11 @@ const reducer = combineReducers({
     newAnnouncementType: newAnnouncementTypeReducer, //create new announcement type
     announcement: announcementReducer, //update or delete announcement
 
-    student: studentInfoReducer, //save trackingNumber and surname ? or request details in local storage
     track: trackRequestReducer,
     requestDetails: getRequestDetailsReducer, //get single request details
     requests: getRequestsReducer, //get all requests
     recents: getRecentReducer,
-    saveForm: saveFormDetailsReducer,
+    saveForm: submitRequestReducer,
     request: requestReducer,
 
     courses: getCoursesReducer, //get all courses details
@@ -110,11 +108,7 @@ const rootReducer = (state, action) => {
     return reducer(state, action)
 }
 
-let initialState = {
-    student: {
-        studentInfo: localStorage.getItem('studentInfo') ? JSON.parse(localStorage.getItem('studentInfo')) : {}
-    }
-} //contains all the data we want to put in this state just before loading the application
+let initialState = {} //contains all the data we want to put in this state just before loading the application
 
 //clear the store
 const middleware = [thunk]

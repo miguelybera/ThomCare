@@ -28,7 +28,7 @@ const TrackingPage = ({ history }) => {
 
         setUserInfo({
             ...userInfo,
-            [e.target.name]: upperCase(e.target.value)
+            [e.target.name]: upperCase(e.target.value).trim()
         })
     }
 
@@ -56,7 +56,7 @@ const TrackingPage = ({ history }) => {
                                         type="text"
                                         placeholder="ABC123"
                                         name="trackingNumber"
-                                        value={trackingNumber}
+                                        value={trackingNumber.trim()}
                                         onChange={onChange}
                                         required
                                     />
@@ -67,7 +67,7 @@ const TrackingPage = ({ history }) => {
                                         type="text"
                                         placeholder="Surname"
                                         name="lastName"
-                                        value={lastName}
+                                        value={lastName.trim()}
                                         onChange={onChange}
                                         required
                                     />

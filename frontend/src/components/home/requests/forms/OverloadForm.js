@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCourses, clearErrors } from '../../../../actions/courseActions'
-import { saveForm } from '../../../../actions/requestActions'
 import MetaData from '../../../layout/MetaData'
 import Loader from '../../../layout/Loader'
 import { FloatingLabel, Row, Container, Button, Col, Card, Form, Modal, Breadcrumb } from 'react-bootstrap'
@@ -20,6 +19,9 @@ function OverloadForm() {
 
     const { courses, success, error, loading } = useSelector(state => state.courses)
     const { user } = useSelector(state => state.auth)
+    
+    const [studentInfo, setStudentInfo] = useState({})
+    const [submitted, setSubmitted] = useState(false)
 
     useEffect(() => {
         dispatch(getCourses())
@@ -62,20 +64,20 @@ function OverloadForm() {
             values[index]["courseName"] = getCourseName(values[index]["courseCode"], "courseName")
             values[index]["labUnits"] = getCourseName(values[index]["courseCode"], "labUnits")
             values[index]["lecUnits"] = getCourseName(values[index]["courseCode"], "lecUnits")
-            
-           
+
+
         } else {
             values[index]["courseName"] = ''
             values[index]["labUnits"] = ''
             values[index]["lecUnits"] = ''
-            
-            
+
+
         }
         /*cheska*/
         if (values[index]["courseCodeSpecialTerm"] !== '') {
-        values[index]["courseNameSpecialTerm"] = getCourseName2(values[index]["courseCodeSpecialTerm"], "courseNameSpecialTerm")
-        values[index]["labUnitsSpecialTerm"] = getCourseName2(values[index]["courseCodeSpecialTerm"], "labUnitsSpecialTerm")
-        values[index]["lecUnitsSpecialTerm"] = getCourseName2(values[index]["courseCodeSpecialTerm"], "lecUnitsSpecialTerm")
+            values[index]["courseNameSpecialTerm"] = getCourseName2(values[index]["courseCodeSpecialTerm"], "courseNameSpecialTerm")
+            values[index]["labUnitsSpecialTerm"] = getCourseName2(values[index]["courseCodeSpecialTerm"], "labUnitsSpecialTerm")
+            values[index]["lecUnitsSpecialTerm"] = getCourseName2(values[index]["courseCodeSpecialTerm"], "lecUnitsSpecialTerm")
         } else {
             values[index]["courseNameSpecialTerm"] = ''
             values[index]["labUnitsSpecialTerm"] = ''
@@ -89,18 +91,17 @@ function OverloadForm() {
     const submitHandler = e => {
         e.preventDefault()
 
-        const formData = {
+        setStudentInfo({
             firstName: user.firstName,
             lastName: user.lastName,
             middleName: user.middleName ? user.middleName : 'N/A',
             studentNumber: user.studentNumber,
             email: user.email,
-            course: user.course
-        }
+            course: user.course,
+            addDrop: inputFields
+        })
 
-        setSubmitted(true)
-
-        dispatch(saveForm(formData))
+        setSubmitted(!submitted)
     }
 
     const addRow = () => {
@@ -118,7 +119,7 @@ function OverloadForm() {
             lecUnitsSpecialTerm: '',
             labUnitsSpecialTerm: '',
             /* */
-            
+
         }])
     }
 
@@ -130,7 +131,7 @@ function OverloadForm() {
         setInputFields(values)
     }
 
-    const getCourseName = (code, field) => { 
+    const getCourseName = (code, field) => {
         const val = courses.find(course => course.courseCode === code)
 
         switch (field) {
@@ -140,7 +141,7 @@ function OverloadForm() {
                 return val.lecUnits
             case "labUnits":
                 return val.labUnits
-            
+
             default:
                 return
         }
@@ -149,25 +150,20 @@ function OverloadForm() {
     const getCourseName2 = (code, field) => {
         const val2 = courses.find(course => course.courseCode === code)
         switch (field) {
-            
+
             case "courseNameSpecialTerm":
                 return val2.courseNameSpecialTerm
             case "lecUnitsSpecialTerm":
                 return val2.lecUnitsSpecialTerm
             case "labUnitsSpecialTerm":
                 return val2.labUnitsSpecialTerm
-            
+
             default:
                 return
         }
-        
-
-
     }
 
     const title = 'Overload Form'
-
-    const [submitted, setSubmitted] = useState(false)
 
     function ModalDocuments() {
         const [lgShow, setLgShow] = useState(false);
@@ -234,9 +230,9 @@ function OverloadForm() {
                                         <Breadcrumb.Item active>{title}</Breadcrumb.Item>
                                     </Breadcrumb></div>
                                 <div><ModalDocuments /></div>
-                            </div> 
+                            </div>
                         </Card.Header>
-                        <Card.Body style={{ paddingTop: '0px'}}>
+                        <Card.Body style={{ paddingTop: '0px' }}>
                             <Card.Title style={{ margin: '10px 0 20px 0', color: '#9c0b0b', fontWeight: 'bold', textAlign: 'center' }}>REQUEST FOR STUDY OVERLOAD FORM (MAKE 3 COPIES)</Card.Title>
                             <Card.Title style={{ margin: '10px 0 20px 0', fontWeight: 'bold' }}>Student Information</Card.Title>
                             <Form onSubmit={submitHandler} >
@@ -273,8 +269,8 @@ function OverloadForm() {
                                     </Form.Group>
                                 </Row>
 
-                                <Row style={{paddingBottom:'20px'}}>
-                                
+                                <Row style={{ paddingBottom: '20px' }}>
+
 
                                     <Form.Group as={Col} lg={2}>
                                         <Form.Label>Curriculum Year</Form.Label>
@@ -288,10 +284,11 @@ function OverloadForm() {
                                 </Row>
 
                                 <Card.Title
-                                style={{ margin: '10px 0 20px 0',
-                                         color: 'black',
-                                         fontWeight: 'bold'
-                                         }}>Load Requested For Approval:
+                                    style={{
+                                        margin: '10px 0 20px 0',
+                                        color: 'black',
+                                        fontWeight: 'bold'
+                                    }}>Load Requested For Approval:
                                 </Card.Title>
 
                                 {/*<Row className="mb-3">
@@ -329,10 +326,10 @@ function OverloadForm() {
                                         return (
                                             <Fragment key={val.index}>
                                                 <Row>
-                                                <Col style={{paddingTop: '13px'}}>
-                                                <p>#{idx + 1}</p>
-                                                </Col>
-                                                <Col xs={4} sm={4} md={3} lg={2} style={{ textAlign: 'right', marginBottom: '5px' }}>
+                                                    <Col style={{ paddingTop: '13px' }}>
+                                                        <p>#{idx + 1}</p>
+                                                    </Col>
+                                                    <Col xs={4} sm={4} md={3} lg={2} style={{ textAlign: 'right', marginBottom: '5px' }}>
                                                         {
                                                             idx === 0 ? (
                                                                 <Button variant='primary' onClick={() => addRow()} style={{ width: '40px' }}>
@@ -354,7 +351,7 @@ function OverloadForm() {
                                                 </Row>
                                                 <Row>
 
-                                                <Col xs={12} md={4} lg={2} style={addDropStyle}>
+                                                    <Col xs={12} md={4} lg={2} style={addDropStyle}>
                                                         <FloatingLabel
                                                             label="Course Code"
                                                         >
@@ -419,7 +416,7 @@ function OverloadForm() {
 
                                 <Card.Title style={{ margin: '30px 0 20px 0', color: 'black', fontWeight: 'bold' }}>SPECIAL TERM LOAD   (if special term graduate):</Card.Title>
 
-                                
+
                                 {
                                     inputFields.map((val, idx) => {
                                         //set unique id per row
@@ -435,28 +432,28 @@ function OverloadForm() {
                                         return (
                                             <Fragment>
                                                 <Row>
-                                                <Col style={{paddingTop: '13px'}}>
-                                                <p>#{idx + 1}</p>
-                                                </Col>
-                                                <Col xs={4} sm={4} md={3} lg={2} style={{ textAlign: 'right', marginBottom: '5px' }}>
-                                                {
-                                                        idx === 0 ? (
-                                                            <Button variant='primary' onClick={() => addRow()} style={{ width: '40px' }}>
-                                                                <i className="fa fa-plus-circle" aria-hidden="true"></i>
-                                                            </Button>
-
-                                                        ) : (
-                                                            <Button variant='danger' onClick={() => deleteRow(idx)} style={{ width: '40px' }}>
-                                                                <i className="fa fa-minus" aria-hidden="true"></i>
-                                                            </Button>
-                                                        )
-                                                    }
+                                                    <Col style={{ paddingTop: '13px' }}>
+                                                        <p>#{idx + 1}</p>
                                                     </Col>
-                                                    </Row>
-                                                <Row className="mb-3" key={val.index}>
-                                                
+                                                    <Col xs={4} sm={4} md={3} lg={2} style={{ textAlign: 'right', marginBottom: '5px' }}>
+                                                        {
+                                                            idx === 0 ? (
+                                                                <Button variant='primary' onClick={() => addRow()} style={{ width: '40px' }}>
+                                                                    <i className="fa fa-plus-circle" aria-hidden="true"></i>
+                                                                </Button>
 
-                                                <Col xs={12} md={4} lg={2} style={addDropStyle}>
+                                                            ) : (
+                                                                <Button variant='danger' onClick={() => deleteRow(idx)} style={{ width: '40px' }}>
+                                                                    <i className="fa fa-minus" aria-hidden="true"></i>
+                                                                </Button>
+                                                            )
+                                                        }
+                                                    </Col>
+                                                </Row>
+                                                <Row className="mb-3" key={val.index}>
+
+
+                                                    <Col xs={12} md={4} lg={2} style={addDropStyle}>
                                                         <FloatingLabel
                                                             label="Course Code"
                                                         >
@@ -513,7 +510,7 @@ function OverloadForm() {
 
                 </Container>
             ) : (
-                <OVERLOADPDF title={`Download Overload Form`} content={localStorage.getItem('formData')} />
+                <OVERLOADPDF title={`Download Overload Form`} studentInfo={studentInfo} submitted={submitted} setSubmitted={setSubmitted} />
             )}
         </Fragment>
     )

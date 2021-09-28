@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCourses, clearErrors } from '../../../../actions/courseActions'
-import { saveForm } from '../../../../actions/requestActions'
 import MetaData from '../../../layout/MetaData'
 import Loader from '../../../layout/Loader'
 import { FloatingLabel, Row, Container, Button, Col, Card, Form, Breadcrumb } from 'react-bootstrap'
@@ -18,22 +17,15 @@ function Form6B() {
     const alert = useAlert()
     const dispatch = useDispatch()
 
-    const { courses, success, error, loading } = useSelector(state => state.courses)
+    const { courses, error, loading } = useSelector(state => state.courses)
     const { user } = useSelector(state => state.auth)
 
-    useEffect(() => {
-        dispatch(getCourses())
+    const [term, setTerm] = useState('')
+    const [year1, setYear1] = useState('')
+    const [year2, setYear2] = useState('')
+    const [submitted, setSubmitted] = useState(false)
+    const [studentInfo, setStudentInfo] = useState({})
 
-        if (error) {
-            alert.error(error)
-            dispatch(clearErrors())
-        }
-        dispatch({
-            type: INSIDE_DASHBOARD_FALSE
-        })
-    }, [dispatch, alert, error])
-
-    //new 
     const [inputFields, setInputFields] = useState([
         {
             status: '',
@@ -48,48 +40,19 @@ function Form6B() {
         }
     ])
 
-    const [term, setTerm] = useState('')
-    const [year1, setYear1] = useState('')
-    const [year2, setYear2] = useState('')
+    const title = 'Cross-Enrollment Form'
 
-    const onChange = (index, e) => {
-        e.preventDefault()
-        const values = [...inputFields]
+    useEffect(() => {
+        dispatch(getCourses())
 
-        values[index][e.target.name] = e.target.value
-
-        if (values[index]["courseCode"] !== '') {
-            values[index]["courseName"] = getCourseName(values[index]["courseCode"], "courseName")
-            values[index]["labUnits"] = getCourseName(values[index]["courseCode"], "labUnits")
-            values[index]["lecUnits"] = getCourseName(values[index]["courseCode"], "lecUnits")
-        } else {
-            values[index]["courseName"] = ''
-            values[index]["labUnits"] = ''
-            values[index]["lecUnits"] = ''
+        if (error) {
+            alert.error(error)
+            dispatch(clearErrors())
         }
-        setInputFields(values)
-    }
-
-    const submitHandler = e => {
-        e.preventDefault()
-
-        const formData = {
-            firstName: user.firstName,
-            lastName: user.lastName,
-            middleName: user.middleName ? user.middleName : 'N/A',
-            studentNumber: user.studentNumber,
-            email: user.email,
-            course: user.course,
-            addDrop: inputFields,
-            term,
-            year1,
-            year2
-        }
-
-        setSubmitted(true)
-
-        dispatch(saveForm(formData))
-    }
+        dispatch({
+            type: INSIDE_DASHBOARD_FALSE
+        })
+    }, [dispatch, alert, error])
 
     const addRow = () => {
         setInputFields([...inputFields, {
@@ -123,12 +86,47 @@ function Form6B() {
                 return val.lecUnits
             case "labUnits":
                 return val.labUnits
+            default:
+                return
         }
     }
 
-    const title = 'Cross-Enrollment Form'
+    const onChange = (index, e) => {
+        e.preventDefault()
+        const values = [...inputFields]
 
-    const [submitted, setSubmitted] = useState(false)
+        values[index][e.target.name] = e.target.value
+
+        if (values[index]["courseCode"] !== '') {
+            values[index]["courseName"] = getCourseName(values[index]["courseCode"], "courseName")
+            values[index]["labUnits"] = getCourseName(values[index]["courseCode"], "labUnits")
+            values[index]["lecUnits"] = getCourseName(values[index]["courseCode"], "lecUnits")
+        } else {
+            values[index]["courseName"] = ''
+            values[index]["labUnits"] = ''
+            values[index]["lecUnits"] = ''
+        }
+        setInputFields(values)
+    }
+
+    const submitHandler = e => {
+        e.preventDefault()
+
+        setStudentInfo({
+            firstName: user.firstName,
+            lastName: user.lastName,
+            middleName: user.middleName ? user.middleName : 'N/A',
+            studentNumber: user.studentNumber,
+            email: user.email,
+            course: user.course,
+            addDrop: inputFields,
+            term,
+            year1,
+            year2
+        })
+
+        setSubmitted(!submitted)
+    }
 
     return (
         <Fragment>
@@ -359,7 +357,7 @@ function Form6B() {
                     </Card>
                 </Container>
             ) : (
-                <FORM6BPDF title={`Download Cross-Enrollment Form`} content={localStorage.getItem('formData')} />
+                <FORM6BPDF title={`Download Cross-Enrollment Form`} content={studentInfo} submitted={submitted} setSubmitted={setSubmitted}/>
             )}
         </Fragment>
     )

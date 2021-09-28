@@ -1,6 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
-import { useAlert } from 'react-alert'
+import React, { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import Pdf from "react-to-pdf";
 import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
@@ -9,10 +7,9 @@ import './css/form6a.css'
 
 const ref = React.createRef();
 
-const FORM6APDF = (props) => {
+const FORM6APDF = ({ studentInfo, submitted, setSubmitted }) => {
     const dispatch = useDispatch();
 
-    const { formData } = useSelector(state => state.saveForm)
     const { user } = useSelector(state => state.auth)
 
     useEffect(() => {
@@ -21,16 +18,14 @@ const FORM6APDF = (props) => {
         })
     }, [dispatch])
 
-    const studentNumber = formData.studentNumber.split('')
-    const middleInitial = formData.middleName ? formData.middleName[0] + '.' : ''
-    const name = formData.lastName + ', ' + formData.firstName + ' ' + middleInitial
+    const studentNumber = studentInfo.studentNumber.split('')
+    const middleInitial = studentInfo.middleName ? studentInfo.middleName[0] + '.' : ''
+    const name = studentInfo.lastName + ', ' + studentInfo.firstName + ' ' + middleInitial
     const course = user.course
 
-    let toAdd = [], toDrop = []
+    let toAdd = [], toDrop = [], newTotalUnits = 0
 
-    let newTotalUnits = 0
-
-    formData.addDrop.forEach(x => {
+    studentInfo.addDrop.forEach(x => {
         if (x.status === 'Add') {
             toAdd.push(x)
             newTotalUnits += (Number(x.lecUnits) + Number(x.labUnits))
@@ -44,6 +39,8 @@ const FORM6APDF = (props) => {
     const options = {
         format: 'legal'
     }
+
+    const goBack = () => setSubmitted(!submitted)
 
     return (
         <>
@@ -82,7 +79,7 @@ const FORM6APDF = (props) => {
 
                 <div className="namesabove">
                     <div>Place a comma (,) between last and first names</div>
-                    <div style={{ textAlign: 'right' }}> <b>{formData.term}</b> Term / Special, Academic Year 20<b>{formData.year1}</b> - 20<b>{formData.year2}</b></div>
+                    <div style={{ textAlign: 'right' }}> <b>{studentInfo.term}</b> Term / Special, Academic Year 20<b>{studentInfo.year1}</b> - 20<b>{studentInfo.year2}</b></div>
                 </div>
 
                 <div className="namesform">
@@ -287,7 +284,7 @@ const FORM6APDF = (props) => {
 
                 <div className="namesabove">
                     <div>Place a comma (,) between last and first names</div>
-                    <div style={{ textAlign: 'right' }}> <b>{formData.term}</b> Term / Special, Academic Year 20<b>{formData.year1}</b> - 20<b>{formData.year2}</b></div>
+                    <div style={{ textAlign: 'right' }}> <b>{studentInfo.term}</b> Term / Special, Academic Year 20<b>{studentInfo.year1}</b> - 20<b>{studentInfo.year2}</b></div>
                 </div>
 
 
@@ -470,6 +467,7 @@ const FORM6APDF = (props) => {
                 {({ toPdf }) =>
                     <center>
                         <Button onClick={toPdf} style={{ margin: '10px' }}>Save as PDF</Button>
+                        <Button onClick={goBack} style={{ margin: '10px' }}>Back</Button>
                     </center>
                 }
             </Pdf>

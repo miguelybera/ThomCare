@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { getCourses, clearErrors } from '../../../../actions/courseActions'
-import { saveForm } from '../../../../actions/requestActions'
 import MetaData from '../../../layout/MetaData'
 import Loader from '../../../layout/Loader'
 import { Row, Container, Button, Col, Card, Form, Breadcrumb } from 'react-bootstrap'
@@ -14,8 +13,10 @@ function PetitionClass() {
     const alert = useAlert()
     const dispatch = useDispatch()
 
-    const { courses, success, error, loading } = useSelector(state => state.courses)
+    const { courses, error, loading } = useSelector(state => state.courses)
     const { user } = useSelector(state => state.auth)
+
+    const [studentInfo, setStudentInfo] = useState({})
 
     useEffect(() => {
         dispatch(getCourses())
@@ -64,7 +65,7 @@ function PetitionClass() {
     const submitHandler = e => {
         e.preventDefault()
 
-        const formData = {
+        setStudentInfo({
             firstName: user.firstName,
             lastName: user.lastName,
             middleName: user.middleName ? user.middleName : 'N/A',
@@ -72,11 +73,9 @@ function PetitionClass() {
             email: user.email,
             course: user.course,
             addDrop: inputFields
-        }
+        })
 
-        setSubmitted(true)
-
-        dispatch(saveForm(formData))
+        setSubmitted(!submitted)
     }
 
     const addRow = () => {
@@ -110,6 +109,8 @@ function PetitionClass() {
                 return val.lecUnits
             case "labUnits":
                 return val.labUnits
+            default:
+                return
         }
     }
 
@@ -240,7 +241,7 @@ function PetitionClass() {
                     </Card>
                 </Container>
             ) : (
-                <PETITIONPDF title={`Download Petition Class Form`} content={localStorage.getItem('formData')} />
+                <PETITIONPDF title={`Download Petition Class Form`} studentInfo={studentInfo} submitted={submitted} setSubmitted={setSubmitted} />
             )}
         </Fragment>
     )

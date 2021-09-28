@@ -1,4 +1,5 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { Button, Card, Container } from 'react-bootstrap'
@@ -7,16 +8,15 @@ import { REGISTER_USER_RESET } from '../../../constants/userConstants'
 import { INSIDE_DASHBOARD_FALSE } from '../../../constants/dashboardConstants'
 import MetaData from '../../layout/MetaData'
 
-const ConfirmRegister = ({ history }) => {
+const ConfirmRegister = ({ history, studentInfo, submitted, setSubmitted }) => {
     const alert = useAlert()
     const dispatch = useDispatch()
 
     const { error, loading, message, isCreated } = useSelector(state => state.register)
-    const { studentInfo } = useSelector(state => state.student)
 
-    const goBack = () => {
-        history.push('/register')
-    }
+    const [success, setSuccess] = useState(false)
+
+    const goBack = () => setSubmitted(!submitted)
 
     useEffect(() => {
         if (error) {
@@ -26,7 +26,7 @@ const ConfirmRegister = ({ history }) => {
 
         if (isCreated) {
             alert.success(message)
-            history.push('/')
+            setSuccess(!success)
 
             dispatch({
                 type: REGISTER_USER_RESET
@@ -37,7 +37,7 @@ const ConfirmRegister = ({ history }) => {
             type: INSIDE_DASHBOARD_FALSE
         })
 
-    }, [dispatch, history, alert, error, message, isCreated])
+    }, [dispatch, history, alert, error, message, isCreated, success])
 
     const submitHandler = (e) => {
         e.preventDefault()
@@ -48,59 +48,71 @@ const ConfirmRegister = ({ history }) => {
     return (
         <>
             <MetaData title={'Confirm Student Information'} />
-            <Container fluid>
-                <div class="progress">
-                    <div
-                        class="progress-bar"
-                        role="progressbar"
-                        style={{ width: '90%' }}
-                        aria-valuenow='90'
-                        aria-valuemin="0"
-                        aria-valuemax="100"
-                    >
-                        90%
-                    </div>
-                </div>
-                <Card style={{ width: '30rem', marginTop: '40px' }}>
-                    <Card.Body>
-                        <Card.Title style={{ textAlign: 'center' }}>Confirm Student Information</Card.Title>
-                        <Card.Subtitle
-                            className="text-muted"
-                            style={{ fontSize: '12px', textAlign: 'center', marginBottom: '20px' }}
-                        >
-                            Kindly confirm your student information below.
-                            Once submitted, you will not be able to update your profile (Contact your administrator to request for a profile update).
-                        </Card.Subtitle>
-                        <Card.Text><b>Name:</b> {studentInfo.firstName} {studentInfo.lastName}</Card.Text>
-                        <Card.Text><b>Student Number:</b> {studentInfo.studentNumber}</Card.Text>
-                        <Card.Text><b>Course:</b> {studentInfo.course}</Card.Text>
-                        <Card.Text><b>Email:</b> {studentInfo.email}</Card.Text>
-                        <center>
-                            <Button
-                                variant='danger'
-                                onClick={goBack}
-                                style={{ marginRight: '5px', marginTop: '10px' }}
-                                disabled={loading ? true : false}
+            {!success ? (
+                <Fragment>
+                    <Container fluid>
+                        <div class="progress">
+                            <div
+                                class="progress-bar"
+                                role="progressbar"
+                                style={{ width: '90%' }}
+                                aria-valuenow='90'
+                                aria-valuemin="0"
+                                aria-valuemax="100"
                             >
-                                Back
-                            </Button>
-                            <Button
-                                onClick={submitHandler}
-                                style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
-                                disabled={loading ? true : false}>
-                                {loading ? (
-                                    <span>
-                                        <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
-                                    </span>
-                                ) : (
-                                    <span>Register</span>
-                                )}
-                            </Button>
-                        </center>
-                    </Card.Body>
-                </Card>
-
-            </Container>
+                                90%
+                            </div>
+                        </div>
+                        <Card style={{ width: '30rem', marginTop: '40px' }}>
+                            <Card.Body>
+                                <Card.Title style={{ textAlign: 'center' }}>Confirm Student Information</Card.Title>
+                                <Card.Subtitle
+                                    className="text-muted"
+                                    style={{ fontSize: '12px', textAlign: 'center', marginBottom: '20px' }}
+                                >
+                                    Kindly confirm your student information below.
+                                    Once submitted, you will not be able to update your profile (Contact your administrator to request for a profile update).
+                                </Card.Subtitle>
+                                <Card.Text><b>Name:</b> {studentInfo.firstName} {studentInfo.lastName}</Card.Text>
+                                <Card.Text><b>Student Number:</b> {studentInfo.studentNumber}</Card.Text>
+                                <Card.Text><b>Course:</b> {studentInfo.course}</Card.Text>
+                                <Card.Text><b>Email:</b> {studentInfo.email}</Card.Text>
+                                <center>
+                                    <Button
+                                        variant='danger'
+                                        onClick={goBack}
+                                        style={{ marginRight: '5px', marginTop: '10px' }}
+                                        disabled={loading ? true : false}
+                                    >
+                                        Back
+                                    </Button>
+                                    <Button
+                                        onClick={submitHandler}
+                                        style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                        disabled={loading ? true : false}>
+                                        {loading ? (
+                                            <span>
+                                                <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
+                                            </span>
+                                        ) : (
+                                            <span>Register</span>
+                                        )}
+                                    </Button>
+                                </center>
+                            </Card.Body>
+                        </Card>
+                    </Container>
+                </Fragment>
+            ) : (
+                <Fragment>
+                    <h1>Registration sent. Check your email to verify your registration.</h1>
+                    <Link to='/'>
+                        <Button>
+                            Go to home
+                        </Button>
+                    </Link>
+                </Fragment>
+            )}
         </>
     )
 }

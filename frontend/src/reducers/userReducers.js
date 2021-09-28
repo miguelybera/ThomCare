@@ -32,8 +32,6 @@ import {
     DELETE_USER_SUCCESS,
     DELETE_USER_FAIL,
     DELETE_USER_RESET,
-    SAVE_STUDENT_INFO,
-    RESET_STUDENT_INFO,
     REGISTER_USER_REQUEST,
     REGISTER_USER_SUCCESS,
     REGISTER_USER_FAIL,
@@ -264,8 +262,7 @@ export const registerReducer = (state = {}, action) => {
         case VERIFY_STUDENT_RESET:
             return {
                 ...state,
-                isCreated: false,
-                studentInfo: {}
+                isCreated: false
             }
 
         case CLEAR_ERRORS:
@@ -334,34 +331,6 @@ export const userReducer = (state = {}, action) => {
                 isUpdated: false,
                 loading: false
             }
-
-        case CLEAR_ERRORS:
-            return {
-                ...state,
-                error: null
-            }
-
-        default:
-            return state
-    }
-}
-
-//save student info to local storage
-export const studentInfoReducer = (state = { studentInfo: {} }, action) => {
-    switch (action.type) {
-        case SAVE_STUDENT_INFO: {
-            return {
-                ...state,
-                studentInfo: action.payload
-            }
-        }
-
-        case RESET_STUDENT_INFO: {
-            return {
-                ...state,
-                studentInfo: null
-            }
-        }
 
         case CLEAR_ERRORS:
             return {
