@@ -51,7 +51,7 @@ const Login = ({ history }) => {
                                     <Form.Control
                                         type='email'
                                         placeholder="juan.delacruz.iics@ust.edu.ph"
-                                        pattern="[a-z]{1,}\.[a-z]{1,}\.(iics|cics)@ust\.edu\.ph"
+                                        pattern="[a-z.]{1,}@ust\.edu\.ph"
                                         name="email"
                                         value={email}
                                         onChange={e => setEmail(e.target.value)} required
