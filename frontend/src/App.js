@@ -88,11 +88,9 @@ import UpdateUser from './components/dashboard/users/UpdateUser'
 
 
 function App() {
-    const { loading } = useSelector(state => state.auth)
     const { dashboard } = useSelector(state => state.dashboard)
 
     useEffect(() => {
-        console.log('dispatching loadUser from App.js')
         store.dispatch(loadUser())
     }, [])
 

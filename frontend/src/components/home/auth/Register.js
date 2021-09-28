@@ -44,7 +44,6 @@ const Register = ({ history }) => {
     }
 
     const submitHandler = e => {
-        console.log(user)
         setSubmitted(!submitted)
     }
 

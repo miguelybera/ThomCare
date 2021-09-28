@@ -75,7 +75,6 @@ export const createCourse = (courseData) => async (dispatch) => {
             }
         }
 
-        console.log(courseData)
         const { data } = await axios.post(`/api/v1/admin/new/course`, courseData, config)
 
         dispatch({
