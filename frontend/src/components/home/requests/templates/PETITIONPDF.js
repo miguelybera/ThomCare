@@ -4,6 +4,7 @@ import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import Pdf from "react-to-pdf";
 import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
+import './css/petition.css'
 
 const ref = React.createRef();
 

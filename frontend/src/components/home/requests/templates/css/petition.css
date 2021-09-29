@@ -1,0 +1,129 @@
+.Post {
+    width: 817px;
+    font-size: 12px;
+    padding: 20px;
+}
+
+.headerform {
+    display: grid;
+    grid-template-columns: 20% 20% 40% 20%;
+}
+
+.headerform>div {
+    background: white;
+    padding: 1em;
+}
+
+.headerform>div:nth-child(odd) {
+    background: white;
+}
+
+.namesabove {
+    display: grid;
+    grid-template-columns: 50% 50%;
+}
+
+.namesabove>div {
+    background: white;
+    padding: 1em;
+}
+
+.namesabove>div:nth-child(odd) {
+    background: white;
+}
+
+.namesbelow {
+    display: grid;
+    grid-template-columns: 30% 30% 15% 25%;
+}
+
+.namesbelow>div {
+    background: white;
+    padding: 1em;
+}
+
+.namesbelow>div:nth-child(odd) {
+    background: white;
+}
+
+.namesform {
+    display: grid;
+    grid-template-columns: 80% 20%;
+}
+
+.namesform>div {
+    background: white;
+    padding: 1em;
+}
+
+.namesform>div:nth-child(odd) {
+    background: white;
+}
+
+.dropform {
+    display: grid;
+    grid-template-columns: 100%;
+}
+
+.dropform>div {
+    background: white;
+    padding: 1em;
+}
+
+.dropform>div:nth-child(odd) {
+    background: white;
+}
+
+.addform {
+    display: grid;
+    grid-template-columns: 100%;
+}
+
+.addform>div {
+    background: white;
+    padding: 1em;
+}
+
+.addform>div:nth-child(odd) {
+    background: white;
+}
+
+.signatories {
+    display: grid;
+    grid-template-columns: 33% 34% 33%;
+}
+
+.signatories>div {
+    background: white;
+    padding: 1em;
+}
+
+.signatories>div:nth-child(odd) {
+    background: white;
+}
+
+table,
+td,
+th {
+    border: 1px solid #595959;
+    border-collapse: collapse;
+}
+
+td,
+th {
+    padding: 3px;
+    width: 30px;
+    height: 25px;
+}
+
+th {
+    background: #f0e6cc;
+}
+
+.even {
+    background: #fbf8f0;
+}
+
+.odd {
+    background: #fefcf9;
+}
