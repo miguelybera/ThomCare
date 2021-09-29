@@ -101,27 +101,20 @@ const Header = () => {
                                     <Nav.Link className="image"><Link to='/track' activeStyle>Track my Request</Link></Nav.Link>
                                     <Nav.Link className={user ? "d-none image" : "image"} href="/login">Login</Nav.Link>
                                 </Nav>
-                                {loading ? <Fragment></Fragment>
-                                    : (
-                                        user ? (
-                                            <>
-                                                <Drop>
-                                                    <NavDropdown title={`${user.firstName}`} id="basic-nav-dropdown">
-                                                        <NavDropdown.Item><Link to='/controlpanel'>Control Panel</Link></NavDropdown.Item>
-                                                        <NavDropdown.Item><Link to='/profile'>My Profile</Link></NavDropdown.Item>
-                                                        <NavDropdown.Item><Link to='/messenger'>Messenger</Link></NavDropdown.Item>
-                                                        <NavDropdown.Divider />
-                                                        <NavDropdown.Item style={{ color: 'red' }}>
-                                                            <Link to='/' onClick={logoutHandler}>
-                                                                Log out
-                                                        </Link>
-                                                        </NavDropdown.Item>
-                                                    </NavDropdown>
-                                                </Drop>
-                                            </>) : (
-                                                <></>
-                                        )
-                                    )}
+                                {!loading && user && 
+                                    <Drop>
+                                        <NavDropdown title={`${user.firstName}`} id="basic-nav-dropdown">
+                                            <NavDropdown.Item><Link to='/controlpanel'>Control Panel</Link></NavDropdown.Item>
+                                            <NavDropdown.Item><Link to='/profile'>My Profile</Link></NavDropdown.Item>
+                                            <NavDropdown.Item><Link to='/messenger'>Messenger</Link></NavDropdown.Item>
+                                            <NavDropdown.Divider />
+                                            <NavDropdown.Item style={{ color: 'red' }}>
+                                                <Link to='/' onClick={logoutHandler}>
+                                                    Log out
+                                                </Link>
+                                            </NavDropdown.Item>
+                                        </NavDropdown>
+                                    </Drop>}
                             </Navbar.Collapse>
                         </Container>
                     </Navbar>
