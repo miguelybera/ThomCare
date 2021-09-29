@@ -15,10 +15,10 @@ const Styles = styled.div`
     color: black;
     text-decoration: none;
     font-weight: bold;
-    text-align:center;
+    text-align: center;
     paddingTop: 0px;
     paddingBottom: 0px;
-    width:fit-content;
+    width: fit-content;
     
     &:active{ 
       background-color:#294b32;
@@ -52,8 +52,8 @@ const Header = () => {
     return (
         <>
             <Fragment>
-                <Styles >
-                    <Navbar style={{ backgroundColor: 'white', borderBottom: "7px solid #9c0b0b" }} expand="lg" >
+                <Styles>
+                    <Navbar style={{ backgroundColor: 'white', borderBottom: "7px solid #9c0b0b" }} expand="lg">
                         <Container >
                             <img
                                 src="/images/CICS_SEAL.png"
@@ -87,67 +87,42 @@ const Header = () => {
                                 </h1>
                             </Navbar.Brand>
                             <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                            {loading ? <Fragment></Fragment> : (
-                                user ? (
-                                    <>
-                                        <Navbar.Collapse id="responsive-navbar-nav"
-                                            style={{
-                                                float: "right",
-                                                fontSize: "85%",
-                                                fontWeight: "bold",
-                                            }}>
-                                            <Nav variant="pills"
-                                                className="image"
-                                            >
-                                                <Nav.Link className="image"><Link to='/' activeStyle>Announcements</Link></Nav.Link>
-                                                <Nav.Link className="image"><Link to='/forms/list' activeStyle>Generate Form</Link></Nav.Link>
-                                                <Nav.Link className="image"><Link to='/download/forms/list' activeStyle>Downloadable Forms</Link></Nav.Link>
-                                                <Nav.Link className="image"><Link to='/submit/request' activeStyle onClick={() => {
-                                                    dispatch({
-                                                        type: SUBMIT_REQUEST_RESET
-                                                    })
-                                                }}>Submit Request</Link></Nav.Link>
-                                                <Nav.Link className="image"><Link to='/track' activeStyle>Track my Request</Link></Nav.Link>
-                                            </Nav>
-                                            <Drop>
-                                                <NavDropdown title={`${user.firstName}`} id="basic-nav-dropdown">
-                                                    <NavDropdown.Item><Link to='/controlpanel'>Control Panel</Link></NavDropdown.Item>
-                                                    <NavDropdown.Item><Link to='/profile'>My Profile</Link></NavDropdown.Item>
-                                                    <NavDropdown.Item><Link to='/messenger'>Messenger</Link></NavDropdown.Item>
-                                                    <NavDropdown.Divider />
-                                                    <NavDropdown.Item style={{ color: 'red' }}>
-                                                        <Link to='/' onClick={logoutHandler}>
-                                                            Log out
+                            <Navbar.Collapse id="responsive-navbar-nav"
+                                style={{
+                                    float: "right",
+                                    fontSize: "85%",
+                                    fontWeight: "bold",
+                                }}>
+                                <Nav variant="pills" className="image">
+                                    <Nav.Link className="image"><Link to='/' activeStyle>Announcements</Link></Nav.Link>
+                                    <Nav.Link className={user ? "image" : "d-none image"}><Link to='/forms/list' activeStyle>Generate Form</Link></Nav.Link>
+                                    <Nav.Link className="image"><Link to='/download/forms/list' activeStyle>Downloadable Forms</Link></Nav.Link>
+                                    <Nav.Link className={user ? "image" : "d-none image"}><Link to='/submit/request' activeStyle onClick={() => {dispatch({ type: SUBMIT_REQUEST_RESET })}}>Submit Request</Link></Nav.Link>
+                                    <Nav.Link className="image"><Link to='/track' activeStyle>Track my Request</Link></Nav.Link>
+                                    <Nav.Link className={user ? "d-none image" : "image"} href="/login">Login</Nav.Link>
+                                </Nav>
+                                {loading ? <Fragment></Fragment>
+                                    : (
+                                        user ? (
+                                            <>
+                                                <Drop>
+                                                    <NavDropdown title={`${user.firstName}`} id="basic-nav-dropdown">
+                                                        <NavDropdown.Item><Link to='/controlpanel'>Control Panel</Link></NavDropdown.Item>
+                                                        <NavDropdown.Item><Link to='/profile'>My Profile</Link></NavDropdown.Item>
+                                                        <NavDropdown.Item><Link to='/messenger'>Messenger</Link></NavDropdown.Item>
+                                                        <NavDropdown.Divider />
+                                                        <NavDropdown.Item style={{ color: 'red' }}>
+                                                            <Link to='/' onClick={logoutHandler}>
+                                                                Log out
                                                         </Link>
-                                                    </NavDropdown.Item>
-                                                </NavDropdown>
-                                            </Drop>
-                                        </Navbar.Collapse>
-                                    </>) : (
-                                    <>
-                                        <Navbar.Collapse id="responsive-navbar-nav"
-                                            style={{
-                                                float: "right",
-                                                fontSize: "85%",
-                                                fontWeight: "bold",
-                                            }}>
-                                            <Nav variant="pills"
-                                                className="image"
-                                                style={{
-                                                    marginLeft: "auto",
-                                                    paddingRight: "15px",
-                                                    paddingLeft: "15px"
-
-                                                }}>
-                                                <Nav.Link className="image"><Link to='/' activeStyle>Announcements</Link></Nav.Link>
-                                                <Nav.Link className="image"><Link to='/download/forms/list' activeStyle>Downloadable Forms</Link></Nav.Link>
-                                                <Nav.Link className="image"><Link to='/track' activeStyle>Track my Request</Link></Nav.Link>
-                                                <Nav.Link className="image" href="/login">Login</Nav.Link>
-                                            </Nav>
-                                        </Navbar.Collapse>
-                                    </>
-                                )
-                            )}
+                                                        </NavDropdown.Item>
+                                                    </NavDropdown>
+                                                </Drop>
+                                            </>) : (
+                                                <></>
+                                        )
+                                    )}
+                            </Navbar.Collapse>
                         </Container>
                     </Navbar>
                 </Styles>

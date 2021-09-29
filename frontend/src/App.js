@@ -88,6 +88,7 @@ import UpdateUser from './components/dashboard/users/UpdateUser'
 
 
 function App() {
+    const { loading } = useSelector(state => state.auth)
     const { dashboard } = useSelector(state => state.dashboard)
 
     useEffect(() => {
@@ -98,107 +99,104 @@ function App() {
         <Router>
             <div className="App">
                 <ScrollToTop>
-                    {!dashboard && (
-                        <Header/>
-                    )}
-                    <Fragment>
-                        <div className='container container-fluid'>
-                            {/**HOME ROUTES */}
-                                {/**ANNOUNCEMENT ROUTES */}
-                                    <Route path='/' component={Announcements} exact />
-                                    <Route path='/announcement/:id' component={AnnouncementDetails} exact />
+                    {!loading &&
+                        <Fragment>     
+                            {!dashboard && (<Header/>)}
+                            <div className='container container-fluid'>
+                                {/**HOME ROUTES */}
+                                    {/**ANNOUNCEMENT ROUTES */}
+                                        <Route path='/' component={Announcements} exact />
+                                        <Route path='/announcement/:id' component={AnnouncementDetails} exact />
 
-                                {/**TRACK REQUEST ROUTES */}
-                                    <Route path='/track' component={TrackingPage} exact />
-                                    <Route path='/track/:trackingNumber/:lastName' component={TrackingPageProgress} exact />
+                                    {/**TRACK REQUEST ROUTES */}
+                                        <Route path='/track' component={TrackingPage} exact />
+                                        <Route path='/track/:trackingNumber/:lastName' component={TrackingPageProgress} exact />
 
-                                {/**AUTH ROUTES */}
-                                    <Route path='/login' component={Login} exact />
-                                    <Route path='/forgotpassword' component={ForgotPassword} exact />
-                                    <Route path='/password/reset/:token' component={NewPassword} exact />
-                                    <Route path='/register' component={Register} exact />
-                                    <Route path='/verify/account/:token' component={VerifyRegistration} exact />
+                                    {/**AUTH ROUTES */}
+                                        <Route path='/login' component={Login} exact />
+                                        <Route path='/forgotpassword' component={ForgotPassword} exact />
+                                        <Route path='/password/reset/:token' component={NewPassword} exact />
+                                        <Route path='/register' component={Register} exact />
+                                        <Route path='/verify/account/:token' component={VerifyRegistration} exact />
 
-                                {/**FORMS ROUTES */}
-                                    <ProtectedRoute path='/submit/request' component={SubmitRequest} exact />
-                                    <ProtectedRoute path='/forms/list' component={FormsList} exact />
-                                    <Route path='/download/forms/list' component={DownloadList} exact />
-                                    <ProtectedRoute path='/forms/form-6a' component={Form6A} exact />
-                                    <ProtectedRoute path='/forms/form-6b' component={Form6B} exact />
-                                    <ProtectedRoute path='/forms/petition-classes' component={PetitionClass} exact />
-                                    <ProtectedRoute path='/forms/overload-form' component={OverloadForm} exact />
-                            {/**HOME ROUTES */}
+                                    {/**FORMS ROUTES */}
+                                        <ProtectedRoute path='/submit/request' component={SubmitRequest} exact />
+                                        <ProtectedRoute path='/forms/list' component={FormsList} exact />
+                                        <Route path='/download/forms/list' component={DownloadList} exact />
+                                        <ProtectedRoute path='/forms/form-6a' component={Form6A} exact />
+                                        <ProtectedRoute path='/forms/form-6b' component={Form6B} exact />
+                                        <ProtectedRoute path='/forms/petition-classes' component={PetitionClass} exact />
+                                        <ProtectedRoute path='/forms/overload-form' component={OverloadForm} exact />
+                                {/**HOME ROUTES */}
 
-                            {/**CONTROL PANEL ROUTES */}
-                                {/**ALL USERS ROUTES */}
-                                    {/**CONTROL PANEL */}
-                                    <ProtectedRoute path='/controlpanel' component={ControlPanel} exact />
+                                {/**CONTROL PANEL ROUTES */}
+                                    {/**ALL USERS ROUTES */}
+                                        {/**CONTROL PANEL */}
+                                        <ProtectedRoute path='/controlpanel' component={ControlPanel} exact />
 
-                                    {/**PROFILE */}
-                                    <ProtectedRoute path='/profile' component={Profile} exact />
-                                    <ProtectedRoute path='/password/update' component={UpdatePassword} exact />
+                                        {/**PROFILE */}
+                                        <ProtectedRoute path='/profile' component={Profile} exact />
+                                        <ProtectedRoute path='/password/update' component={UpdatePassword} exact />
 
-                                    {/**MESSENGER */}
-                                    <ProtectedRoute path='/messenger' component={Messenger} exact />
+                                        {/**MESSENGER */}
+                                        <ProtectedRoute path='/messenger' component={Messenger} exact />
 
-                                    {/**REQUESTS */}
-                                    <ProtectedRoute path='/admin/requests/trash' component={ListTrash} exact />
-                                    <ProtectedRoute path='/view/request/:id' component={ViewRequest} exact />
-                                    <ProtectedRoute path='/admin/request/:id' component={UpdateRequest} exact />
-                                {/**ALL USERS ROUTES */}
+                                        {/**REQUESTS */}
+                                        <ProtectedRoute path='/admin/requests/trash' component={ListTrash} exact />
+                                        <ProtectedRoute path='/view/request/:id' component={ViewRequest} exact />
+                                        <ProtectedRoute path='/admin/request/:id' component={UpdateRequest} exact />
+                                    {/**ALL USERS ROUTES */}
 
-                                {/**DEPT CHAIR ROUTES */}
-                                    {/**REQUESTS */}
-                                    <ProtectedRoute path='/admin/deptchair/requests' component={ListDeptChairRequests} exact />
-                                    {/**USERS */}
-                                    <ProtectedRoute path='/admin/deptchair/students' component={ListStudents} exact />
-                                {/**DEPT CHAIR ROUTES */}
+                                    {/**DEPT CHAIR ROUTES */}
+                                        {/**REQUESTS */}
+                                        <ProtectedRoute path='/admin/deptchair/requests' component={ListDeptChairRequests} exact />
+                                        {/**USERS */}
+                                        <ProtectedRoute path='/admin/deptchair/students' component={ListStudents} exact />
+                                    {/**DEPT CHAIR ROUTES */}
 
-                                {/**STUDENT ROUTES */}
-                                    {/**REQUESTS */}
-                                        <ProtectedRoute path='/me/requests' component={ListStudentRequests} exact />
-                                    {/**FORMS */}
-                                        <ProtectedRoute path='/downloadable-forms' component={ListForms} exact />
-                                {/**STUDENT ROUTES */}
+                                    {/**STUDENT ROUTES */}
+                                        {/**REQUESTS */}
+                                            <ProtectedRoute path='/me/requests' component={ListStudentRequests} exact />
+                                        {/**FORMS */}
+                                            <ProtectedRoute path='/downloadable-forms' component={ListForms} exact />
+                                    {/**STUDENT ROUTES */}
 
-                                {/**CICS STAFF ROUTES */}
-                                    {/**REQUESTS */}
-                                        <ProtectedRoute path='/admin/all/requests' component={ListAllRequests} exact />
-                                        <ProtectedRoute path='/admin/cics/requests' component={ListCICSRequests} exact />
-                                        <ProtectedRoute path='/admin/cics/available/requests' component={ListAvailableRequests} exact />
-                                        <ProtectedRoute path='/admin/me/requests' component={ListMyRequests} exact />
-                                    {/**USERS */}
-                                        <ProtectedRoute path='/admin/users' component={ListUsers} exact />
-                                        <ProtectedRoute path='/admin/register' component={RegisterAdmin} exact />
-                                        <ProtectedRoute path='/admin/user/:id' component={UpdateUser} exact />
-                                {/**CICS STAFF ROUTES */}
+                                    {/**CICS STAFF ROUTES */}
+                                        {/**REQUESTS */}
+                                            <ProtectedRoute path='/admin/all/requests' component={ListAllRequests} exact />
+                                            <ProtectedRoute path='/admin/cics/requests' component={ListCICSRequests} exact />
+                                            <ProtectedRoute path='/admin/cics/available/requests' component={ListAvailableRequests} exact />
+                                            <ProtectedRoute path='/admin/me/requests' component={ListMyRequests} exact />
+                                        {/**USERS */}
+                                            <ProtectedRoute path='/admin/users' component={ListUsers} exact />
+                                            <ProtectedRoute path='/admin/register' component={RegisterAdmin} exact />
+                                            <ProtectedRoute path='/admin/user/:id' component={UpdateUser} exact />
+                                    {/**CICS STAFF ROUTES */}
 
-                                {/**DEPT CHAIR & CICS STAFF ROUTES */}
-                                    {/**COURSES */}
-                                        <ProtectedRoute path='/admin/courses' component={ListCourses} exact />
-                                        <ProtectedRoute path='/admin/new/course' component={CreateCourse} exact />
-                                        <ProtectedRoute path='/admin/course/:id' component={UpdateCourse} exact />
-                                        
-                                    {/*FORMS */}
-                                        <ProtectedRoute path='/admin/manageforms' component={ManageForms} exact />
-                                        <ProtectedRoute path='/admin/new/form' component={CreateForm} exact />
-                                        <ProtectedRoute path='/admin/form/:id' component={UpdateForm} exact />
-                                    {/**ANNOUNCEMENTS */}
-                                        <ProtectedRoute path='/admin/announcements' component={ListAnnouncements} exact />
-                                        <ProtectedRoute path='/admin/me/announcements' component={ListMyAnnouncements} exact />
-                                        <ProtectedRoute path='/admin/archives/announcements' component={ListArchivedAnnouncements} exact />
-                                        <ProtectedRoute path='/admin/announcementTypes' component={ListAnnouncementType} exact />
-                                        <ProtectedRoute path='/admin/new/announcement' component={CreateAnnouncement} exact />
-                                        <ProtectedRoute path='/admin/announcement/:id' component={UpdateAnnouncement} exact />
-                                    {/**AUDIT */}
-                                        <ProtectedRoute path='/audit' component={ListAuditLog} exact />
-                                {/**DEPT CHAIR & CICS STAFF ROUTES */}
-                            {/**CONTROL PANEL ROUTES */}
-                        </div>
-                    </Fragment>
-                    {!dashboard && (
-                        <Footer/>
-                    )}
+                                    {/**DEPT CHAIR & CICS STAFF ROUTES */}
+                                        {/**COURSES */}
+                                            <ProtectedRoute path='/admin/courses' component={ListCourses} exact />
+                                            <ProtectedRoute path='/admin/new/course' component={CreateCourse} exact />
+                                            <ProtectedRoute path='/admin/course/:id' component={UpdateCourse} exact />
+                                            
+                                        {/*FORMS */}
+                                            <ProtectedRoute path='/admin/manageforms' component={ManageForms} exact />
+                                            <ProtectedRoute path='/admin/new/form' component={CreateForm} exact />
+                                            <ProtectedRoute path='/admin/form/:id' component={UpdateForm} exact />
+                                        {/**ANNOUNCEMENTS */}
+                                            <ProtectedRoute path='/admin/announcements' component={ListAnnouncements} exact />
+                                            <ProtectedRoute path='/admin/me/announcements' component={ListMyAnnouncements} exact />
+                                            <ProtectedRoute path='/admin/archives/announcements' component={ListArchivedAnnouncements} exact />
+                                            <ProtectedRoute path='/admin/announcementTypes' component={ListAnnouncementType} exact />
+                                            <ProtectedRoute path='/admin/new/announcement' component={CreateAnnouncement} exact />
+                                            <ProtectedRoute path='/admin/announcement/:id' component={UpdateAnnouncement} exact />
+                                        {/**AUDIT */}
+                                            <ProtectedRoute path='/audit' component={ListAuditLog} exact />
+                                    {/**DEPT CHAIR & CICS STAFF ROUTES */}
+                                {/**CONTROL PANEL ROUTES */}
+                            </div>
+                            {!dashboard && (<Footer/>)}
+                    </Fragment>}
                 </ScrollToTop>
             </div>
         </Router>
