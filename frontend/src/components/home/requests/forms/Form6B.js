@@ -119,7 +119,7 @@ function Form6B() {
             studentNumber: user.studentNumber,
             email: user.email,
             course: user.course,
-            addDrop: inputFields,
+            crossDrop: inputFields,
             term,
             year1,
             year2
@@ -355,9 +355,9 @@ function Form6B() {
                             </Form>
                         </Card.Body>
                     </Card>
-                </Container>
+                </Container> 
             ) : (
-                <FORM6BPDF title={`Download Cross-Enrollment Form`} content={studentInfo} submitted={submitted} setSubmitted={setSubmitted}/>
+                <FORM6BPDF title={`Download Cross-Enrollment Form`} /*content={studentInfo}*/ studentInfo={studentInfo} submitted={submitted} setSubmitted={setSubmitted}/>
             )}
         </Fragment>
     )

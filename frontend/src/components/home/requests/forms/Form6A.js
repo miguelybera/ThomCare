@@ -10,7 +10,7 @@ import Loader from '../../../layout/Loader'
 import FORM6APDF from '../templates/FORM6APDF'
 
 const addDropStyle = {
-    marginBottom: '5px'
+    marginBottom: '5px' 
 }
 
 function Form6A({ history }) {

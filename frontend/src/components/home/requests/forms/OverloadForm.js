@@ -11,7 +11,7 @@ import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants
 
 const addDropStyle = {
     marginBottom: '5px'
-}
+} 
 
 function OverloadForm() {
     const alert = useAlert()
@@ -98,7 +98,9 @@ function OverloadForm() {
             studentNumber: user.studentNumber,
             email: user.email,
             course: user.course,
-            addDrop: inputFields
+            requested: inputFields,
+            special: inputFields
+            
         })
 
         setSubmitted(!submitted)
@@ -152,12 +154,12 @@ function OverloadForm() {
         switch (field) {
 
             case "courseNameSpecialTerm":
-                return val2.courseNameSpecialTerm
+                return val2.courseName
             case "lecUnitsSpecialTerm":
-                return val2.lecUnitsSpecialTerm
+                return val2.lecUnits
             case "labUnitsSpecialTerm":
-                return val2.labUnitsSpecialTerm
-
+                return val2.labUnits
+            
             default:
                 return
         }
@@ -319,7 +321,7 @@ function OverloadForm() {
                                         let status = `status-${idx}`,
                                             courseCode = `courseCode-${idx}`,
                                             courseName = `courseName-${idx}`,
-                                            lecUnits = `lecUnits-${idx}`,
+                                            lecUnits = `lecUnits-${idx}`, 
                                             labUnits = `labUnits-${idx}`,
                                             days = `days-${idx}`,
                                             time = `time-${idx}`
@@ -345,23 +347,27 @@ function OverloadForm() {
                                                                         <i className="fa fa-minus" aria-hidden="true"></i>
                                                                     </Button>
                                                                 </Fragment>
-                                                            )
+                                                            ) 
                                                         }
                                                     </Col>
                                                 </Row>
                                                 <Row>
 
-                                                    <Col xs={12} md={4} lg={2} style={addDropStyle}>
+                                                    <Col xs={12} md={4} lg={2} style={addDropStyle} >
+                                                        
                                                         <FloatingLabel
                                                             label="Course Code"
                                                         >
-                                                            <Form.Select aria-label="Default select example" name="courseCode" id={courseCode} data-id={idx} value={val.courseCode} onChange={e => onChange(idx, e)} required>
-                                                                <option value=''>Course Code</option>
+                                                            
+                                                            <Form.Select  aria-label="Default select example" name="courseCode" id={courseCode} data-id={idx} value={val.courseCode && val.status} onChange={e => onChange(idx, e)} required>
+                                                                <option value='requested'>Course Code</option>
                                                                 {courses && courses.map(course => (
                                                                     <option value={course.courseCode}>{course.courseCode}</option>
                                                                 ))}
                                                             </Form.Select>
+                                                            
                                                         </FloatingLabel>
+                                                        
                                                     </Col>
                                                     <Col xs={12} md={5} lg={6} style={addDropStyle}>
                                                         <FloatingLabel
@@ -416,7 +422,6 @@ function OverloadForm() {
 
                                 <Card.Title style={{ margin: '30px 0 20px 0', color: 'black', fontWeight: 'bold' }}>SPECIAL TERM LOAD   (if special term graduate):</Card.Title>
 
-
                                 {
                                     inputFields.map((val, idx) => {
                                         //set unique id per row
@@ -454,16 +459,18 @@ function OverloadForm() {
 
 
                                                     <Col xs={12} md={4} lg={2} style={addDropStyle}>
+                                                    
                                                         <FloatingLabel
                                                             label="Course Code"
                                                         >
-                                                            <Form.Select aria-label="Default select example" name="courseCodeSpecialTerm" id={courseCodeSpecialTerm} data-id={idx} value={val.courseCodeSpecialTerm} onChange={e => onChange(idx, e)} required>
-                                                                <option value=''>Course Code</option>
+                                                            <Form.Select aria-label="Default select example" name="courseCodeSpecialTerm" id={courseCodeSpecialTerm} data-id={idx} value={val.courseCodeSpecialTerm && val.status} onChange={e => onChange(idx, e)} required>
+                                                                <option value='special'>Course Code</option>
                                                                 {courses && courses.map(course => (
                                                                     <option value={course.courseCode}>{course.courseCode}</option>
                                                                 ))}
                                                             </Form.Select>
                                                         </FloatingLabel>
+                                                        
                                                     </Col>
                                                     <Col xs={12} md={5} lg={6} style={addDropStyle}>
                                                         <FloatingLabel
