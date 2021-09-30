@@ -4,102 +4,113 @@
     padding: 20px;
 }
 
-.headerform {
+.firstrow {
     display: grid;
-    grid-template-columns: 20% 20% 40% 20%;
+    grid-template-columns: 70% 30%;
+    margin-left: 70px;
+    margin-right: 70px;
 }
 
-.headerform>div {
+.firstrow>div {
     background: white;
     padding: 1em;
 }
 
-.headerform>div:nth-child(odd) {
+.firstrow>div:nth-child(odd) {
     background: white;
 }
 
-.namesabove {
+.secondrow {
     display: grid;
-    grid-template-columns: 50% 50%;
+    grid-template-columns: 46% 27% 27%;
+    margin-left: 70px;
+    margin-right: 70px;
 }
 
-.namesabove>div {
+.secondrow>div {
     background: white;
     padding: 1em;
 }
 
-.namesabove>div:nth-child(odd) {
+.secondrow>div:nth-child(odd) {
     background: white;
 }
 
-.namesbelow {
+.tablerow{
     display: grid;
-    grid-template-columns: 30% 30% 15% 25%;
+    grid-template-columns: 70% 30%;
+    margin-left: 110px;
 }
 
-.namesbelow>div {
-    background: white;
-    padding: 1em;
-}
-
-.namesbelow>div:nth-child(odd) {
-    background: white;
-}
-
-.namesform {
-    display: grid;
-    grid-template-columns: 80% 20%;
-}
-
-.namesform>div {
-    background: white;
-    padding: 1em;
-}
-
-.namesform>div:nth-child(odd) {
-    background: white;
-}
-
-.dropform {
+.loadrow {
     display: grid;
     grid-template-columns: 100%;
+    margin-left: 70px;
+    margin-right: 70px;
 }
-
-.dropform>div {
-    background: white;
-    padding: 1em;
-}
-
-.dropform>div:nth-child(odd) {
-    background: white;
-}
-
-.addform {
+.inforow {
     display: grid;
     grid-template-columns: 100%;
+    margin-left: 70px;
+    margin-right: 70px;
 }
-
-.addform>div {
-    background: white;
-    padding: 1em;
-}
-
-.addform>div:nth-child(odd) {
-    background: white;
-}
-
-.signatories {
+.specialrow {
     display: grid;
-    grid-template-columns: 33% 34% 33%;
+    grid-template-columns: 100%;
+    margin-left: 70px;
+    margin-right: 70px;
+}
+.specialinfo {
+    display: grid;
+    grid-template-columns: 100%;
+    margin-left: 70px;
+    margin-right: 70px;
 }
 
-.signatories>div {
-    background: white;
-    padding: 1em;
+.tentativerow{
+    display: grid;
+    grid-template-columns: 100%;
+    margin-left: 70px;
+    margin-right: 70px;
+    margin-top: 20px;
+    margin-bottom: 10px;
 }
 
-.signatories>div:nth-child(odd) {
-    background: white;
+.signaturerow{
+    display: grid;
+    grid-template-columns: 75% 25%;
+    margin-right: 70px;
+}
+
+.sig {
+    border-collapse: collapse;
+    border: none;
+}
+
+.reccomendrow{
+    display: grid;
+    grid-template-columns: 100;
+    margin-left: 70px;
+    margin-bottom: 20px;
+}
+
+.deanrow {
+    display: grid;
+    grid-template-columns: 40% 20% 20% 20%;
+    margin-left: 70px;
+    margin-bottom: 20px; 
+}
+.totalrow {
+    display: grid;
+    grid-template-columns: 40% 20% 20% 20%;
+    margin-left: 70px;
+    margin-bottom: 20px; 
+}
+.daterow {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    margin-left: 70px;
+    margin-bottom: 20px; 
 }
 
 table,
