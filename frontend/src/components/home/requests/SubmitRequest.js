@@ -38,6 +38,8 @@ const SubmitRequest = () => {
         'Request for Manual Enrollment',
         'Request for Course Description',
         'Request for Certificate of Grades',
+        'Request for Leave of Absence',
+        'Submission of Admission Memo',
         'Others'
     ]
 
