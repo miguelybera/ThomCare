@@ -27,7 +27,7 @@ const FORM6BPDF = ({ studentInfo, submitted, setSubmitted }) => {
     let toCross = [], toDrop = [], newTotalUnits = 0
 
     studentInfo.crossDrop.forEach(x => {
-        if (x.status === 'Cross') {
+        if (x.status === 'Cross-enroll') {
             toCross.push(x)
             newTotalUnits += (Number(x.lecUnits) + Number(x.labUnits))
         } else {
