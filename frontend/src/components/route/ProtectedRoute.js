@@ -32,18 +32,6 @@ const ProtectedRoute = ({ forStudents, forAdmins, forCICS, forDeptChairs, compon
                             return <Redirect to='/controlpanel'/>
                         }
 
-                        // if(forAdmins === true && (user.role !== 'admin' && user.role !== 'superadmin')) {
-                        //     return <Redirect to='/' />
-                        // }
-
-                        // if(isAdmin === true && user.role !== 'admin') {
-                        //     return <Redirect to='/admin/dashboard' />
-                        // }
-
-                        // if(isSuperAdmin === true && (user.role === 'admin' && user.role !== 'superadmin')) {
-                        //     return <Redirect to='/admin/dashboard' />
-                        // }
-
                         return <Component {...props} />
                     }}
                 />

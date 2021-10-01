@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Form, FormControl, Card, Row, Col, Container } from 'react-bootstrap'
+import { Form, FormControl, Card, Row, Col, Container, Button } from 'react-bootstrap'
 import Pagination from 'react-js-pagination'
 import { getAnnouncements, getAnnouncementType, clearErrors } from './../../../actions/announcementActions'
 import MetaData from './../../layout/MetaData'
@@ -25,12 +25,7 @@ const Announcements = () => {
     const { loading: announcementTypeLoading, error: announcementTypeError, announcementTypes } = useSelector(state => state.announcementType)
 
     const [currentPage, setCurrentPage] = useState(1)
-
-    const tracks = ['Core Computer Science', 'Game Development', 'Data Science', 'Network and Security', 'Web and Mobile App Development', 'IT Automation', 'Business Analytics', 'Service Management']
-    const csTracks = ['Core Computer Science', 'Game Development', 'Data Science']
-    const itTracks = ['Network and Security', 'Web and Mobile App Development', 'IT Automation']
-    const isTracks = ['Business Analytics', 'Service Management']
-    
+    const [searchButton, setSearchButton] = useState(1)
     const [filter, setFilter] = useState({
         course: '',
         yearLevel: '',
@@ -40,6 +35,12 @@ const Announcements = () => {
     })
 
     const { course, yearLevel, track, announcementType, title } = filter
+
+    const tracks = ['Core Computer Science', 'Game Development', 'Data Science', 'Network and Security', 'Web and Mobile App Development', 'IT Automation', 'Business Analytics', 'Service Management']
+    const csTracks = ['Core Computer Science', 'Game Development', 'Data Science']
+    const itTracks = ['Network and Security', 'Web and Mobile App Development', 'IT Automation']
+    const isTracks = ['Business Analytics', 'Service Management']
+    
 
     let count = announcementCount
 
@@ -84,7 +85,17 @@ const Announcements = () => {
         dispatch({
             type: INSIDE_DASHBOARD_FALSE
         })
-    }, [dispatch, alert, error, currentPage, course, yearLevel, track, title, announcementType])
+    }, [dispatch, alert, error, currentPage])
+
+    useEffect(() => {
+        dispatch(getAnnouncements(currentPage, course, yearLevel, track, title, announcementType))
+
+        if (error) {
+            alert.error(error)
+            dispatch(clearErrors())
+        }
+
+    }, [dispatch, alert, error, searchButton])
 
     const onChange = e => {
         setCurrentPageNo(1)
@@ -114,6 +125,12 @@ const Announcements = () => {
         }
     }
 
+    const searchHandler = e => {
+        e.preventDefault()
+
+        setSearchButton(searchButton+1)
+    }
+
     return (
         <Fragment>
             <MetaData title={`Announcements`} />
@@ -122,7 +139,7 @@ const Announcements = () => {
                     <h3>ANNOUNCEMENTS</h3>
                 </div>
                 <Container className="space"></Container>
-                <Form >
+                <Form onSubmit={searchHandler}>
                     <Row >
                         <Col xs={12} md={4} lg={2}>
                             <Form.Group>
@@ -159,7 +176,7 @@ const Announcements = () => {
                                 </Form.Select>
                             </Form.Group>
                         </Col>
-                        <Col xs={12} md={4} lg={3}>
+                        <Col xs={12} md={4} lg={2}>
                             <Form.Group>
                                 <Form.Select
                                     aria-label="tracks"
@@ -203,7 +220,7 @@ const Announcements = () => {
                                 </Form.Select>
                             </Form.Group>
                         </Col>
-                        <Col xs={12} md={6} lg={3}>
+                        <Col xs={12} md={4} lg={2}>
                             <Form.Group>
                                 <Form.Select
                                     aria-label="AnnouncementType"
@@ -220,7 +237,7 @@ const Announcements = () => {
                                 </Form.Select>
                             </Form.Group>
                         </Col>
-                        <Col xs={12} md={6} lg={2}>
+                        <Col xs={12} md={4} lg={2}>
                             <Form.Group sm>
                                 <FormControl
                                     type="search"
@@ -235,6 +252,26 @@ const Announcements = () => {
                                     right="0px"
                                     style={dropdown}
                                 />
+                            </Form.Group>
+                        </Col>
+                        <Col xs={12} md={4} lg={2}>
+                            <Form.Group sm>
+                                <center>
+                                    <Button type='submit' style={{margin: '5px'}}>Submit</Button>
+                                    <Button
+                                        type='submit'
+                                        onClick={() => {
+                                            setFilter({
+                                                course: '',
+                                                yearLevel: '',
+                                                track: '',
+                                                announcementType: '',
+                                                title: ''
+                                            })
+                                        }}
+                                        style={{margin: '5px'}}
+                                    >Reset</Button>
+                                </center>
                             </Form.Group>
                         </Col>
                     </Row>

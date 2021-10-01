@@ -100,7 +100,7 @@ const ListStudents = ({ history }) => {
                 actions: <Fragment>
                     <Link to={`/admin/user/${user._id}`}>
                         <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
-                            <i class="fa fa-pencil" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                            <i class="fa fa-edit" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
                         </Button>
                     </Link>
                     <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {

@@ -63,7 +63,7 @@ export const SidebarData = [
                 {
                     title: 'Create Announcement',
                     path: '/admin/new/announcement',
-                    icon: <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    icon: <i class="fa fa-edit-square-o" aria-hidden="true"></i>
                 },
                 {
                     title: 'Announcements',
@@ -165,7 +165,7 @@ export const SidebarData = [
                 {
                     title: 'Create Announcement',
                     path: '/admin/new/announcement',
-                    icon: <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                    icon: <i class="fa fa-edit-square-o" aria-hidden="true"></i>
                 },
                 {
                     title: 'Announcements',

@@ -27,7 +27,7 @@ const FormsList = () => {
                             <td>
                                 <Link to='/forms/form-6a'>
                                     <Button variant="primary" style={{ margin: '5px' }}>
-                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Fill out
+                                        <i class="fa fa-edit-square-o" aria-hidden="true"></i> Fill out
                                     </Button>
                                 </Link>
                                 <Button variant="warning" href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" target="_blank" rel="noreferrer" style={{ margin: '5px' }}>
@@ -41,7 +41,7 @@ const FormsList = () => {
                             <td>
                                 <Link to='/forms/form-6b'>
                                     <Button variant="primary" style={{ margin: '5px' }}>
-                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Fill out
+                                        <i class="fa fa-edit-square-o" aria-hidden="true"></i> Fill out
                                     </Button>
                                 </Link>
                                 <Button variant="warning" href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" target="_blank" rel="noreferrer" style={{ margin: '5px' }}>
@@ -55,7 +55,7 @@ const FormsList = () => {
                             <td>
                                 <Link to='/forms/overload-form'>
                                     <Button variant="primary" style={{ margin: '5px' }}>
-                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i> Fill out
+                                        <i class="fa fa-edit-square-o" aria-hidden="true"></i> Fill out
                                     </Button>
                                 </Link>
                                 <Button variant="warning" href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" target="_blank" rel="noreferrer" style={{ margin: '5px' }}>
