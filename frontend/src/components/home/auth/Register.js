@@ -37,7 +37,7 @@ const Register = ({ history }) => {
 
         setUser({
             ...user,
-            [e.target.name]: e.target.name === 'firstName' || e.target.name === 'lastName' ? upperCase(e.target.value) : e.target.value
+            [e.target.name]: e.target.name === 'firstName' || e.target.name === 'middleName' || e.target.name === 'lastName' ? upperCase(e.target.value) : e.target.value
         })
     }
 

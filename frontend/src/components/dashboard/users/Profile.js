@@ -106,7 +106,7 @@ const Profile = () => {
                                         <Col md={3} style={{ marginTop: '5px' }}>
                                             <Form.Control
                                                 type="text"
-                                                placeholder="Middle Name (Optional)"
+                                                placeholder="(Optional) Middle Name"
                                                 value={middleName}
                                                 disabled={editProfile ? false : true}
                                                 onChange={e => setMiddleName(upperCase(e.target.value))}

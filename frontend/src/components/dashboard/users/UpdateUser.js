@@ -142,7 +142,7 @@ const UpdateUser = ({ history, match }) => {
                                                     <Col md={3} style={{ marginTop: '5px' }}>
                                                         <Form.Control
                                                             type="text"
-                                                            placeholder="Middle Name (Optional)"
+                                                            placeholder="(Optional) Middle Name"
                                                             value={middleName}
                                                             onChange={e => setMiddleName(upperCase(e.target.value))}
                                                             pattern="([A-zÀ-ž\s]){2,}"
