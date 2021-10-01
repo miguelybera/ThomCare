@@ -43,7 +43,13 @@ const SubmitRequest = () => {
         'Others'
     ]
 
+    let alphabet = []
+
     const upperCase = (text) => text.toUpperCase()
+
+    for (let i = 0; i < 26; i++) {
+        alphabet.push(upperCase((i+10).toString(36)))
+    }
 
     const reset = () => {
         dispatch({
@@ -97,8 +103,6 @@ const SubmitRequest = () => {
         dispatch(submitRequest(formData))
     }
 
-    const sectionSel = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
-
     return (
         <>
             <MetaData title={'Submit Request'} />
@@ -131,16 +135,18 @@ const SubmitRequest = () => {
                                             <Form.Group className="mb-3">
                                                 <Form.Label>Section: </Form.Label>
                                                 <Form.Select
-                                            aria-label="Default select example"
-                                            name='section'
-                                            value={sectionSel}
-                                            required
-                                        >
-                                            <option value=''>-</option>
-                                            {sectionSel.map(type => (
-                                                <option value={type}>{type}</option>
-                                            ))}
-                                        </Form.Select>
+                                                    aria-label="Default select example"
+                                                    name='section'
+                                                    value={section}
+                                                    onChange={e => setSection(e.target.value)}
+                                                    required
+                                                >
+                                                    <option value=''>-</option>
+                                                    <option value='Alumni'>Alumni</option>
+                                                    {alphabet.map(letter => (
+                                                        <option value={letter}>{letter}</option>
+                                                    ))}
+                                                </Form.Select>
                                             </Form.Group>
                                         </Col>
                                     </Row>

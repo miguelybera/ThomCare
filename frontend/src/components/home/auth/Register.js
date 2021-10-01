@@ -1,7 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
-import { saveStudentInfo } from '../../../actions/userActions'
 import { INSIDE_DASHBOARD_FALSE } from '../../../constants/dashboardConstants'
 import MetaData from '../../layout/MetaData'
 import ConfirmRegister from './ConfirmRegister'
@@ -9,6 +8,7 @@ import ConfirmRegister from './ConfirmRegister'
 const Register = ({ history }) => {
     const dispatch = useDispatch()
 
+    const [submitted, setSubmitted] = useState(false)
     const [user, setUser] = useState({
         firstName: '',
         middleName: '',
@@ -19,9 +19,7 @@ const Register = ({ history }) => {
         password: '',
         confirmPassword: ''
     })
-
-    const [submitted, setSubmitted] = useState(false)
-
+    
     const { firstName, middleName, lastName, email, studentNumber, course, password, confirmPassword } = user
 
     const upperCase = (text) => text.toUpperCase()
