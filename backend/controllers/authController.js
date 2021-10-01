@@ -110,7 +110,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
         })
         res.status(200).json({
             success: true,
-            message: `Email is now sent to ${user.email} please check your inbox or spam`
+            message: `Email is now sent \n please check your inbox or spam`
         })
 
     } catch (error) {
@@ -189,7 +189,7 @@ exports.registerStudent = catchAsyncErrors(async (req, res, next) => {
 
         res.status(200).json({
             success: true,
-            message: `Account verification link is now sent to ${email} please check your inbox or spam`
+            message: `Account verification link is now sent \n please check your inbox or spam`
         })
 
     } catch (error) {
