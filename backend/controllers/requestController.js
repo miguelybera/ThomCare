@@ -107,9 +107,9 @@ exports.requestTracker = catchAsyncErrors(async (req, res, next) => {
     const lastName = req.body.lastName
     const request = await Request.findOne({ trackingNumber })
     
-    if (!request) { return next(new ErrorHandler(`Request with Tracking Number: (${trackingNumber}) does not exist`)) }
+    if (!request) { return next(new ErrorHandler(`Request does not exist`)) }
     
-    if (request.requestorInfo.lastName !== lastName) { return next(new ErrorHandler(`Last name does not match with the request surname`)) }
+    if (request.requestorInfo.lastName !== lastName) { return next(new ErrorHandler(`Tracking number and surname do not match.`)) }
 
     res.status(200).json({
         success: true,
@@ -466,7 +466,7 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
         returningFiles: req.files
     }
 
-    let withFiles = ` and attached ${req.files.length} file(s)`
+    let withFiles = ` and ${req.files.length} file attachment(s)`
 
     if (req.files == null || req.files == '') {
         remarksData = {

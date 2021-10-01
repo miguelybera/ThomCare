@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Audit = require('../models/audit');
 const ErrorHandler = require('../utils/errorHandler');
 const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
 const sendToken = require('../utils/jwtToken');
@@ -17,7 +18,7 @@ exports.registerAdmin = catchAsyncErrors(async (req, res, next) => {
 
     if (req.body.password !== req.body.confirmPassword) { return next(new ErrorHandler('Password does not match')) }
 
-    if ((req.body.email.substr(-10) !== "ust.edu.ph")) { return next(new ErrorHandler('UST G Suite accounts are only allowed')) } // will change to ust.edu.ph only after development
+    if ((req.body.email.substr(-10) !== "ust.edu.ph")) { return next(new ErrorHandler('UST GSuite accounts are only allowed')) } // will change to ust.edu.ph only after development
 
     const checkUser = await User.findOne({ email })
     if (checkUser) { return next(new ErrorHandler('Email account already exists', 404)); }
@@ -33,9 +34,18 @@ exports.registerAdmin = catchAsyncErrors(async (req, res, next) => {
         role
     })
 
+    const userName = req.user.firstName + ' ' + req.user.lastName
+
+    await Audit.create({
+        name: "User creation",
+        eventInfo: `User (${firstName} ${lastName}) created.`,
+        user: userName,
+        dateAudit: Date.now()
+    })
+
     res.status(201).json({
         success: true,
-        message: "User has been registered",
+        message: "User created successfully",
         user
     })
 })
@@ -110,7 +120,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
         })
         res.status(200).json({
             success: true,
-            message: `Email is now sent \n please check your inbox or spam`
+            message: `Email sent.\nKindly check your inbox or spam.`
         })
 
     } catch (error) {
@@ -165,7 +175,7 @@ exports.registerStudent = catchAsyncErrors(async (req, res, next) => {
     if ((course !== 'Computer Science') && (course !== 'Information Technology') && (course !== 'Information Systems')) { return next(new ErrorHandler('Please enter the correct course')) }
     if ((email == null) || (email == '')) { return next(new ErrorHandler('Please enter email')) }
     if ((password == null) || (password == '')) { return next(new ErrorHandler('Please enter password')) }
-    if (!(req.body.email.substr(-15) == "iics@ust.edu.ph" || req.body.email.substr(-15) == "cics@ust.edu.ph")) { return next(new ErrorHandler('UST G Suite accounts are only allowed')) }
+    if (!(req.body.email.substr(-15) == "iics@ust.edu.ph" || req.body.email.substr(-15) == "cics@ust.edu.ph")) { return next(new ErrorHandler('UST GSuite accounts are only allowed')) }
 
     const user = await User.findOne({ email });
 
@@ -298,6 +308,15 @@ exports.updateUser = catchAsyncErrors(async (req, res, next) => {
         useFindAndModify: false
     })
 
+    const userName = req.user.firstName + ' ' + req.user.lastName
+
+    await Audit.create({
+        name: "User update",
+        eventInfo: `User (${firstName} ${lastName}) updated.`,
+        user: userName,
+        dateAudit: Date.now()
+    })
+
     res.status(200).json({
         success: true,
         user
@@ -311,6 +330,15 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
     if (!user) { return next(new ErrorHandler(`User not found with this id:(${req.params.id})`)) }
 
     await user.remove();
+
+    const userName = req.user.firstName + ' ' + req.user.lastName
+
+    await Audit.create({
+        name: "User deletion",
+        eventInfo: `User (${firstName} ${lastName}) deleted.`,
+        user: userName,
+        dateAudit: Date.now()
+    })
 
     res.status(200).json({
         success: true,

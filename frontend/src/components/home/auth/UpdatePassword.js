@@ -85,18 +85,20 @@ const UpdatePassword = ({ history }) => {
                                         required
                                     />
                                 </FloatingLabel>
-                                <center><Button
-                                    type='submit'
-                                    style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
-                                    disabled={loading ? true : false}>
-                                    {loading ? (
-                                        <span>
-                                            <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
-                                        </span>
-                                    ) : (
-                                        <span>Update Password</span>
-                                    )}
-                                </Button></center>
+                                <center>
+                                    <Button
+                                        type='submit'
+                                        style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                        disabled={loading ? true : false}>
+                                        {loading ? (
+                                            <span>
+                                                <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
+                                            </span>
+                                        ) : (
+                                            <span>Update Password</span>
+                                        )}
+                                    </Button>
+                                </center>
                             </Form>
                         </Card.Body>
                     </Card>

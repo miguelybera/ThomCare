@@ -40,11 +40,6 @@ const ListAllRequests = () => {
                     width: 150
                 },
                 {
-                    label: 'User',
-                    field: 'user',
-                    width: 150
-                },
-                {
                     label: 'Event Name',
                     field: 'name',
                     width: 150
@@ -53,6 +48,11 @@ const ListAllRequests = () => {
                     label: 'Event Info',
                     field: 'eventInfo',
                     width: 300
+                },
+                {
+                    label: 'User',
+                    field: 'user',
+                    width: 150
                 }
             ],
             rows: []

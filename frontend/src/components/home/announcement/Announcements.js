@@ -18,7 +18,7 @@ const dropdown = {
     margin: '5px 0'
 }
 
-const Announcements = () => {
+const Announcements = ({ history }) => {
     const alert = useAlert()
     const dispatch = useDispatch()
 
@@ -78,6 +78,14 @@ const Announcements = () => {
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
+
+            setFilter({
+                course: '',
+                yearLevel: '',
+                track: '',
+                announcementType: '',
+                title: ''
+            })
         }
 
         dispatch({
@@ -91,6 +99,8 @@ const Announcements = () => {
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
+
+            history.push('/error')
         }
 
     }, [dispatch, alert, error, searchButton])

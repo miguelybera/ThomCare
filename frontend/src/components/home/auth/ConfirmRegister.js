@@ -25,7 +25,6 @@ const ConfirmRegister = ({ history, studentInfo, submitted, setSubmitted }) => {
         }
 
         if (isCreated) {
-            alert.success(message)
             setSuccess(!success)
 
             dispatch({
