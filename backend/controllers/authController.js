@@ -329,13 +329,15 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
 
     if (!user) { return next(new ErrorHandler(`User not found with this id:(${req.params.id})`)) }
 
+    const deletedUser = user.firstName + ' ' + user.lastName
+
     await user.remove();
 
     const userName = req.user.firstName + ' ' + req.user.lastName
 
     await Audit.create({
         name: "User deletion",
-        eventInfo: `User (${firstName} ${lastName}) deleted.`,
+        eventInfo: `User (${deletedUser}) deleted.`,
         user: userName,
         dateAudit: Date.now()
     })
