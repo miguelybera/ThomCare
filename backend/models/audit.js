@@ -1,14 +1,14 @@
 const mongoose = require('mongoose')
 const auditSchema = new mongoose.Schema({
-    userAudit: {
+    name: {
         type: String,
         required: true
     },
-    requestAudit: {
+    eventInfo: {
         type: String,
         required: true
     },
-    actionAudit: {
+    user: {
         type: String,
         required: true
     },

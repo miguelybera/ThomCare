@@ -113,7 +113,8 @@ const UpdateForm = ({ history, match }) => {
                                             className="mb-3"
                                         >
                                             <Form.Control
-                                                type='text'
+                                                as="textarea"
+                                                rows={5}
                                                 name='description'
                                                 value={description}
                                                 onChange={e => setDescription(e.target.value)}

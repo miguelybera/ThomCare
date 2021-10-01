@@ -2,6 +2,7 @@ import React, { Fragment, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { Card, Button, Container, Row, Col } from 'react-bootstrap'
+import { Markup } from 'interweave'
 import { getForms, clearErrors } from './../../../actions/formActions'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import MetaData from './../../layout/MetaData'
@@ -42,7 +43,7 @@ const ListForms = () => {
                                         <Card.Body>
                                             <Card.Title>{form.title}</Card.Title>
                                             <Card.Text>
-                                                {form.description}
+                                                <Markup content={form.description}/>
                                             </Card.Text>
                                             <a href={form.attachments && form.attachments[0].path} target="_blank" rel="noreferrer">
                                                 <Button style={{ margin: '5px' }}>Download</Button>

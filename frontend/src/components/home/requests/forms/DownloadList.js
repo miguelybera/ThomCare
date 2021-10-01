@@ -1,7 +1,8 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { Table, Container, Button } from 'react-bootstrap'
+import { Markup } from 'interweave'
 import { getForms, clearErrors } from './../../../../actions/formActions'
 import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
 import MetaData from './../../../layout/MetaData'
@@ -28,13 +29,13 @@ const DownloadList = () => {
 
     return (
         <Fragment>
-            <MetaData title={`Downloadble Forms`}/>
+            <MetaData title={`Downloadable Forms`}/>
             <Container>
                 <div id="rectangle" >
                     <h3>DOWNLOADABLE FORMS</h3>
                 </div>
             </Container>
-            <Container fluid style={{ paddingTop: '38px' }}>
+            {loading ? <Loader/> : <Container fluid style={{ paddingTop: '38px', marginBottom: '50px' }}>
                 <Table bordered hover size="sm" style={{ paddingTop: '100px', marginTop: '50px', justifyContent: 'center' }}>
                     <thead>
                         <tr style={{ textAlign: 'center' }}>
@@ -47,7 +48,7 @@ const DownloadList = () => {
                         {forms && forms.map(form => (
                             <tr>
                                 <td>{form.title}</td>
-                                <td>{form.description}</td>
+                                <td><Markup content={form.description}/></td>
                                 <td>
                                     <Button variant="primary" href={form.attachments[0].path} target="_blank" rel="noreferrer">
                                         <i class="fa fa-eye" aria-hidden="true"></i> View/Download
@@ -56,8 +57,7 @@ const DownloadList = () => {
                         ))}
                     </tbody>
                 </Table>
-            </Container>
-            <Container className="space"></Container>
+            </Container>}
         </Fragment>
     )
 }

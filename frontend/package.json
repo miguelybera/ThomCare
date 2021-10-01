@@ -10,6 +10,7 @@
     "bootstrap": "^5.0.2",
     "dateformat": "^4.5.1",
     "font-awesome": "^4.7.0",
+    "interweave": "^12.8.0",
     "mdbreact": "^5.1.0",
     "react": "^17.0.2",
     "react-alert": "^7.0.3",

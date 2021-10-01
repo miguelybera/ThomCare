@@ -466,6 +466,8 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
         returningFiles: req.files
     }
 
+    let withFiles = ` and attached ${req.files.length} file(s)`
+
     if (req.files == null || req.files == '') {
         remarksData = {
             dateOfRemark: new Date(Date.now()),
@@ -473,6 +475,8 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
             userUpdated: req.user.firstName + ' ' + req.user.middleName + ' ' + req.user.lastName,
             remarksMessage
         }
+
+        withFiles = ``
     }
 
     Request.findOneAndUpdate(
@@ -481,10 +485,17 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
         { useFindAndModify: false }
     ).exec()
 
-    const auditLog = await Audit.create({
-        userAudit: req.user.email,
-        requestAudit: request.trackingNumber,
-        actionAudit: `User account: (${req.user.email}) has updated the status of request with the tracking number: (${request.trackingNumber}) \n Current Status: ${req.body.requestStatus}`,
+    const userName = req.user.firstName + ' ' + req.user.lastName
+
+    let eventInfo = `Updated request with tracking number: ${request.trackingNumber} with status of ${req.body.requestStatus}${withFiles}`
+
+    if (remarksMessage) {
+        eventInfo = `Updated request with tracking number: ${request.trackingNumber} with status of ${req.body.requestStatus}${withFiles} with remarks of: ${remarksMessage}`
+    }
+    await Audit.create({
+        name: `Request update`,
+        eventInfo,
+        user: userName,
         dateAudit: Date.now()
     })
 
@@ -532,6 +543,16 @@ exports.assignRequestToSelfCICS = catchAsyncErrors(async (req, res, next) => {
         runValidators: true,
         useFindAndModify: false
     })
+
+    const userName = req.user.firstName + ' ' + req.user.lastName
+
+    await Audit.create({
+        name: "Request assignment",
+        eventInfo: `Request with tracking number: ${req.body.trackingNumber} was assigned to user ${req.user.id}`,
+        user: userName,
+        dateAudit: Date.now()
+    })
+
     res.status(200).json({
         success: true,
         message: `Request has been assigned to ${req.user.email}`
@@ -553,22 +574,24 @@ exports.trashRequest = catchAsyncErrors(async (req, res, next) => {
         useFindAndModify: false
     })
 
-    const auditRequest = await Request.findById(req.params.requestId);
-
-    let actionAudit, statusMessage
+    let actionAudit, statusMessage, eventName
 
     if (req.body.isTrash) {
-        actionAudit = `User account: (${req.user.email}) has moved the request to trash with the tracking number: (${auditRequest.trackingNumber})`
+        actionAudit = `Request with tracking number: ${request.trackingNumber} was moved to Trash.`
         statusMessage = "Request has been moved to trash"
+        eventName = `Trashed request`
     } else {
-        actionAudit = `User account: (${req.user.email}) has restored the request from trash with the tracking number: (${auditRequest.trackingNumber})`
+        actionAudit = `Request with tracking number: ${request.trackingNumber} was restored from Trash.`
         statusMessage = "Request has been restored from trash"
+        eventName = 'Restored request'
     }
 
-    const auditLog = await Audit.create({
-        userAudit: req.user.email,
-        requestAudit: auditRequest.trackingNumber,
-        actionAudit,
+    const userName = req.user.firstName + ' ' + req.user.lastName
+
+    await Audit.create({
+        name: eventName,
+        eventInfo: actionAudit,
+        user: userName,
         dateAudit: Date.now()
     })
 
@@ -626,10 +649,12 @@ exports.deleteRequest = catchAsyncErrors(async (req, res, next) => {
         }
     }
 
-    const auditLog = await Audit.create({
-        userAudit: req.user.email,
-        requestAudit: request.trackingNumber,
-        actionAudit: `User account: (${req.user.email}) has deleted the request with the tracking number: (${request.trackingNumber})`,
+    const userName = req.user.firstName + ' ' + req.user.lastName
+
+    await Audit.create({
+        name: "Request permanent deletion",
+        eventInfo: `Permanently deleted request with tracking number: ${request.trackingNumber}.`,
+        user: userName,
         dateAudit: Date.now()
     })
 

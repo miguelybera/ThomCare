@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { Card, Breadcrumb, ListGroup, ListGroupItem } from 'react-bootstrap'
+import { Markup } from 'interweave'
 import { getAnnouncementDetails, getUser, clearErrors } from './../../../actions/announcementActions'
 import { INSIDE_DASHBOARD_FALSE } from '../../../constants/dashboardConstants'
 import MetaData from './../../layout/MetaData'
@@ -14,7 +15,6 @@ const cardStyle = {
     width: '75%',
     align: 'center',
     border: 'solid 0.69px gray'
-
 }
 
 const AnnouncementDetails = ({ history, match }) => {
@@ -29,6 +29,7 @@ const AnnouncementDetails = ({ history, match }) => {
     const [yearLevel, setYearLevel] = useState('')
     const [course, setCourse] = useState('')
     const [track, setTrack] = useState('')
+    const [announcementType, setAnnouncementType] = useState('')
     const [createdAt, setCreatedAt] = useState('')
     const [createdBy, setCreatedBy] = useState('')
     const [fileAttachments, setFileAttachments] = useState([])
@@ -47,14 +48,13 @@ const AnnouncementDetails = ({ history, match }) => {
             setYearLevel(announcement.yearLevel)
             setCourse(announcement.course)
             setTrack(announcement.track)
+            setAnnouncementType(announcement.announcementType)
             setCreatedBy(announcement.createdBy)
             setCreatedAt(announcement.createdAt)
             setFileAttachments(announcement.fileAttachments)
         } else {
             dispatch(getAnnouncementDetails(announcementId))
         }
-
-        // dispatch(getAnnouncementDetails(announcementId))
 
         if (error) {
             alert.error(error)
@@ -67,29 +67,6 @@ const AnnouncementDetails = ({ history, match }) => {
         })
 
     }, [dispatch, history, alert, error, announcement, announcementId])
-
-    // useEffect(() => {
-    //     if (announcement) {
-    //         setTitle(announcement.title)
-    //         setDescription(announcement.description)
-    //         setYearLevel(announcement.yearLevel)
-    //         setCourse(announcement.course)
-    //         setTrack(announcement.track)
-    //         setCreatedBy(announcement.createdBy)
-    //         setCreatedAt(announcement.createdAt)
-    //         setFileAttachments(announcement.fileAttachments)
-    //     }
-
-    //     if (fileAttachments) {
-    //         fileAttachments.forEach(file => {
-    //             if (file.mimetype.includes('image/')) {
-    //                 setImages(prev => [...prev, file])
-    //             } else {
-    //                 setFiles(prev => [...prev, file])
-    //             }
-    //         })
-    //     }
-    // }, [announcement, announcementId])
 
     useEffect(() => {
         if (createdBy) {
@@ -117,7 +94,7 @@ const AnnouncementDetails = ({ history, match }) => {
                     <Card.Body>
                         <Card.Title>{title}</Card.Title>
                         <Card.Text style={{ fontWeight: 'lighter', color: 'gray', fontSize: '12px' }}>Posted on: {changeDateFormat(createdAt)}</Card.Text>
-                        <Card.Text style={{ paddingBottom: '45px' }}>{description}</Card.Text>
+                        <Card.Text style={{ paddingBottom: '45px' }}><Markup content={description}/></Card.Text>
                         <Card.Text>
                             {fileAttachments.length !== 0 && (<p>Attachments:</p>)}
                             <ListGroup variant="flush">
@@ -144,7 +121,15 @@ const AnnouncementDetails = ({ history, match }) => {
                             </ListGroup>
                         </Card.Text>
                         <Card.Text style={{ fontWeight: '600', color: 'gray', fontSize: '12px' }}>Posted by: {singleUser && upperCase(singleUser.firstName + ' ' + singleUser.lastName)}</Card.Text>
-                        <Card.Text style={{ fontSize: '10px', color: 'gray' }}>Tags: {yearLevel}, {course}, {track}</Card.Text>
+                        <Card.Text style={{ fontSize: '10px', color: 'gray' }}>
+                            <span style={{ fontWeight: '300', color: 'gray', fontSize: '12px' }}>Year Level: {yearLevel}</span>
+                            <br />
+                            <span style={{ fontWeight: '300', color: 'gray', fontSize: '12px' }}>Course: {course}</span>
+                            <br />
+                            <span style={{ fontWeight: '300', color: 'gray', fontSize: '12px' }}>Track: {track}</span>
+                            <br />
+                            <span style={{ fontWeight: '300', color: 'gray', fontSize: '12px' }}>Announcement Type: {announcementType}</span>
+                        </Card.Text>
                     </Card.Body>
                 </Card>
             )}

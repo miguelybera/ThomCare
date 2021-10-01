@@ -16,7 +16,7 @@ const ListAllRequests = () => {
 
     const { loading, audits, error } = useSelector(state => state.audits)
 
-    const changeDateFormat = (date) => dateFormat(date, "ddd, mmm d, yyyy h:MMtt")
+    const changeDateFormat = (date) => dateFormat(date, "yyyy-mm-dd h:MMtt")
 
     useEffect(() => {
         dispatch(getAuditLog())
@@ -37,22 +37,22 @@ const ListAllRequests = () => {
                 {
                     label: 'Date',
                     field: 'dateAudit',
-                    width: 100
-                },
-                {
-                    label: 'User Audit',
-                    field: 'userAudit',
                     width: 150
                 },
                 {
-                    label: 'Request Audit',
-                    field: 'requestAudit',
-                    width: 300
+                    label: 'User',
+                    field: 'user',
+                    width: 150
                 },
                 {
-                    label: 'Action Audit',
-                    field: 'actionAudit',
-                    width: 180
+                    label: 'Event Name',
+                    field: 'name',
+                    width: 150
+                },
+                {
+                    label: 'Event Info',
+                    field: 'eventInfo',
+                    width: 300
                 }
             ],
             rows: []
@@ -61,9 +61,9 @@ const ListAllRequests = () => {
         audits.forEach(audit => {
             data.rows.push({
                 dateAudit: changeDateFormat(audit.dateAudit),
-                userAudit: audit.userAudit,
-                requestAudit: audit.requestAudit,
-                actionAudit: audit.actionAudit
+                eventInfo: audit.eventInfo,
+                user: audit.user,
+                name: audit.name
             })
         })
 

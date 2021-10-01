@@ -4,6 +4,7 @@ import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { Container, Button } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
+import { Markup } from 'interweave'
 import { getAdminAnnouncements, clearErrors } from '../../../actions/announcementActions'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Sidebar from '../../layout/Sidebar'
@@ -17,6 +18,17 @@ const ListAnnouncements = () => {
 
     const { loading, announcements, error } = useSelector(state => state.announcements)
     const changeDateFormat = date => dateFormat(date, "mmm d, yyyy h:MMtt")
+
+    const shortenDescription = (description) => {
+        let y = description.split(' ')
+        let z = description.split(' ').slice(0, 50).join(' ')
+
+        if (y.length > 50) {
+            z = z + '...'
+        }
+
+        return z
+    }
 
     useEffect(() => {
         dispatch(getAdminAnnouncements('Not me'))
@@ -62,7 +74,7 @@ const ListAnnouncements = () => {
             data.rows.push({
                 date: changeDateFormat(announcement.createdAt),
                 title: announcement.title,
-                description: announcement.description,
+                description: <Fragment><Markup content={shortenDescription(announcement.description)}/></Fragment>,
                 tags: <Fragment>
                     <span>
                         <p style={{ margin: '0' }}><b>Year Level: </b>{announcement.yearLevel}</p>

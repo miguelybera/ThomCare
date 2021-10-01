@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, FormControl, Card, Row, Col, Container, Button } from 'react-bootstrap'
+import { Markup } from 'interweave'
 import Pagination from 'react-js-pagination'
 import { getAnnouncements, getAnnouncementType, clearErrors } from './../../../actions/announcementActions'
 import MetaData from './../../layout/MetaData'
@@ -41,7 +42,6 @@ const Announcements = () => {
     const itTracks = ['Network and Security', 'Web and Mobile App Development', 'IT Automation']
     const isTracks = ['Business Analytics', 'Service Management']
     
-
     let count = announcementCount
 
     if (filter.course !== '' || filter.yearLevel !== '' || filter.track !== '' || filter.announcementType !== '' || filter.title !== '') {
@@ -50,11 +50,9 @@ const Announcements = () => {
     
     const changeDateFormat = date => dateFormat(date, "dddd mmm d, yyyy h:MMtt")
 
-    function setCurrentPageNo(pageNumber) {
-        setCurrentPage(pageNumber)
-    }
+    const setCurrentPageNo = (pageNumber) => { setCurrentPage(pageNumber) }
 
-    function shortenDescription(description) {
+    const shortenDescription = (description) => {
         let y = description.split(' ')
         let z = description.split(' ').slice(0, 50).join(' ')
 
@@ -287,15 +285,20 @@ const Announcements = () => {
                                 <Card.Body>
                                     <Card.Header style={{ background: '#F5F5F5', fontWeight: '600' }}>{announcement.title}</Card.Header>
                                     <Card.Text style={{ marginLeft: '15px' }}>
-                                        <span style={{ fontWeight: '500', color: 'gray', fontSize: '12px' }}>{changeDateFormat(announcement.createdAt)}</span>
+                                        <span style={{ fontWeight: '300', color: 'gray', fontSize: '12px' }}>{changeDateFormat(announcement.createdAt)}</span>
                                         <br />
-                                        <span style={{ fontSize: '14px' }}>{shortenDescription(announcement.description)}</span>
+                                        <span style={{ fontWeight: '500', fontSize: '14px' }}><Markup content={shortenDescription(announcement.description)}/> <Link to={`/announcement/${announcement._id}`}>Read More &#xbb;</Link></span>
                                         <br /><br />
-                                        <span style={{ fontSize: '12px' }}><Link to={`/announcement/${announcement._id}`}>Read More &#xbb;</Link></span>
+                                        <span style={{ fontSize: '12px', color: 'gray' }}>Attachments: {announcement.fileAttachments.length} file(s)</span>
+                                    </Card.Text>
+                                    <Card.Text style={{ fontSize: '10px', color: 'gray', marginLeft: '15px' }}>
+                                        <span>Year Level: {announcement.yearLevel}</span>
                                         <br />
-                                        <span style={{ fontSize: '12px' }}>Attachments: {announcement.fileAttachments.length} file(s)</span>
+                                        <span>Course: {announcement.course}</span>
                                         <br />
-                                        <span style={{ fontWeight: '300', color: 'gray', fontSize: '12px' }}>Tags: {announcement.yearLevel}, {announcement.course}, {announcement.track}, {announcement.announcementType}</span>
+                                        <span>Track: {announcement.track}</span>
+                                        <br />
+                                        <span>Announcement Type: {announcement.announcementType}</span>
                                     </Card.Text>
                                 </Card.Body>
                             </Card>

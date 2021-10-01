@@ -4,6 +4,7 @@ import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { Container, Modal, Button } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
+import { Markup } from 'interweave'
 import { getMyAnnouncements, deleteAnnouncement, archiveAnnouncement, clearErrors } from '../../../actions/announcementActions'
 import { ARCHIVE_ANNOUNCEMENT_RESET, DELETE_ANNOUNCEMENT_RESET } from '../../../constants/announcementConstants'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
@@ -24,6 +25,17 @@ const ListMyAnnoucements = ({ history }) => {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+
+    const shortenDescription = (description) => {
+        let y = description.split(' ')
+        let z = description.split(' ').slice(0, 50).join(' ')
+
+        if (y.length > 50) {
+            z = z + '...'
+        }
+
+        return z
+    }
 
     useEffect(() => {
         dispatch(getMyAnnouncements())
@@ -105,7 +117,7 @@ const ListMyAnnoucements = ({ history }) => {
             data.rows.push({
                 date: changeDateFormat(announcement.createdAt),
                 title: announcement.title,
-                description: announcement.description,
+                description: <Fragment><Markup content={shortenDescription(announcement.description)}/></Fragment>,
                 tags: <Fragment>
                     <span>
                         <p style={{ margin: '0' }}><b>Year Level: </b>{announcement.yearLevel}</p>
