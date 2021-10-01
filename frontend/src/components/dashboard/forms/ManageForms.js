@@ -56,42 +56,52 @@ const ManageForms = ({ history, match }) => {
                             <Link to='/admin/new/form'>
                                 <Col>
                                     <Card style={{ border: 0, marginTop: 60 }}>
-                                        <Card.Img variant="top" src="https://res.cloudinary.com/exstrial/image/upload/v1629294796/ShopIT/add_button_aatbcn.png" />
+
                                         <Card.Title class="text-primary" style={{ textAlign: 'center' }}>Upload New Form</Card.Title>
                                         <Card.Body>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                            </Link>
+                                            <center> 
+                                            <span style={{
+                                                height: "100px",
+                                                width: "100px",
+                                                backgroundColor: "#0D6EFD",
+                                                borderRadius: "50%",
+                                                display: "inline-block"}}>
+                                                    
+                                                </span>
+                                                </center>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                        </Link>
                             {forms && forms.map(form => (
 
-                                <Col>
-                                    <Card style={{ marginTop: '60px' }}>
-                                        <Card.Body>
-                                            <Card.Title>{form.title}</Card.Title>
-                                            <Card.Text>
-                                                {form.description}
-                                            </Card.Text>
-                                            <a href={form.attachments && form.attachments[0].path} target="_blank" rel="noreferrer">
-                                                <Button style={{ margin: '5px' }}>Download</Button>
-                                            </a>
-                                            <Link to={`/admin/form/${form._id}`}>
-                                                <Button style={{ margin: '5px' }}>
-                                                    Update
-                                                </Button>
-                                            </Link>
-                                            <Button style={{ margin: '5px' }} onClick={() => deleteFormHandler(form._id)}>
-                                                Delete
+                            <Col>
+                                <Card style={{ marginTop: '60px' }}>
+                                    <Card.Body>
+                                        <Card.Title>{form.title}</Card.Title>
+                                        <Card.Text>
+                                            {form.description}
+                                        </Card.Text>
+                                        <a href={form.attachments && form.attachments[0].path} target="_blank" rel="noreferrer">
+                                            <Button style={{ margin: '5px' }}>Download</Button>
+                                        </a>
+                                        <Link to={`/admin/form/${form._id}`}>
+                                            <Button style={{ margin: '5px' }}>
+                                                Update
                                             </Button>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                            ))}
-                        </Fragment>
+                                        </Link>
+                                        <Button style={{ margin: '5px' }} onClick={() => deleteFormHandler(form._id)}>
+                                            Delete
+                                        </Button>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                        ))}
+                </Fragment>
                     )}
-                </Row>
-            </Container>
-        </Fragment>
+            </Row>
+        </Container>
+        </Fragment >
     )
 }
 

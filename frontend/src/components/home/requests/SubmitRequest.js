@@ -97,6 +97,8 @@ const SubmitRequest = () => {
         dispatch(submitRequest(formData))
     }
 
+    const sectionSel = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
+
     return (
         <>
             <MetaData title={'Submit Request'} />
@@ -128,16 +130,17 @@ const SubmitRequest = () => {
                                         <Col xs={12} sm={12} md={6}>
                                             <Form.Group className="mb-3">
                                                 <Form.Label>Section: </Form.Label>
-                                                <Form.Control
-                                                    type='text'
-                                                    placeholder="Section"
-                                                    name='section'
-                                                    value={section}
-                                                    onChange={e => setSection(upperCase(e.target.value))}
-                                                    pattern="([A-Za-z]){1}"
-                                                    maxlength="1"
-                                                    required
-                                                />
+                                                <Form.Select
+                                            aria-label="Default select example"
+                                            name='section'
+                                            value={sectionSel}
+                                            required
+                                        >
+                                            <option value=''>-</option>
+                                            {sectionSel.map(type => (
+                                                <option value={type}>{type}</option>
+                                            ))}
+                                        </Form.Select>
                                             </Form.Group>
                                         </Col>
                                     </Row>

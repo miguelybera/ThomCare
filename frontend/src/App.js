@@ -33,7 +33,7 @@ import DownloadList from './components/home/requests/forms/DownloadList'
 import Form6A from './components/home/requests/forms/Form6A'
 import Form6B from './components/home/requests/forms/Form6B'
 import OverloadForm from './components/home/requests/forms/OverloadForm'
-import PetitionClass from './components/home/requests/forms/PetitionClass'
+
 
 //home/requests folder
 import SubmitRequest from './components/home/requests/SubmitRequest'
@@ -125,7 +125,6 @@ function App() {
                                         <Route path='/download/forms/list' component={DownloadList} exact />
                                         <ProtectedRoute path='/forms/form-6a' component={Form6A} exact />
                                         <ProtectedRoute path='/forms/form-6b' component={Form6B} exact />
-                                        <ProtectedRoute path='/forms/petition-classes' component={PetitionClass} exact />
                                         <ProtectedRoute path='/forms/overload-form' component={OverloadForm} exact />
                                 {/**HOME ROUTES */}
 

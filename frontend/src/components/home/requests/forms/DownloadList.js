@@ -35,7 +35,7 @@ const DownloadList = () => {
                 </div>
             </Container>
             <Container fluid style={{ paddingTop: '38px' }}>
-                <Table bordered striped hover size="sm" style={{ paddingTop: '100px', marginTop: '50px', justifyContent: 'center' }}>
+                <Table bordered hover size="sm" style={{ paddingTop: '100px', marginTop: '50px', justifyContent: 'center' }}>
                     <thead>
                         <tr style={{ textAlign: 'center' }}>
                             <th>Document Name</th>

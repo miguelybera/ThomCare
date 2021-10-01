@@ -1,0 +1,140 @@
+.Post {
+    width: 817px;
+    font-size: 12px;
+    padding: 20px;
+}
+
+.firstrow {
+    display: grid;
+    grid-template-columns: 70% 30%;
+    margin-left: 70px;
+    margin-right: 70px;
+}
+
+.firstrow>div {
+    background: white;
+    padding: 1em;
+}
+
+.firstrow>div:nth-child(odd) {
+    background: white;
+}
+
+.secondrow {
+    display: grid;
+    grid-template-columns: 46% 27% 27%;
+    margin-left: 70px;
+    margin-right: 70px;
+}
+
+.secondrow>div {
+    background: white;
+    padding: 1em;
+}
+
+.secondrow>div:nth-child(odd) {
+    background: white;
+}
+
+.tablerow{
+    display: grid;
+    grid-template-columns: 70% 30%;
+    margin-left: 110px;
+}
+
+.loadrow {
+    display: grid;
+    grid-template-columns: 100%;
+    margin-left: 70px;
+    margin-right: 70px;
+}
+.inforow {
+    display: grid;
+    grid-template-columns: 100%;
+    margin-left: 70px;
+    margin-right: 70px;
+}
+.specialrow {
+    display: grid;
+    grid-template-columns: 100%;
+    margin-left: 70px;
+    margin-right: 70px;
+}
+.specialinfo {
+    display: grid;
+    grid-template-columns: 100%;
+    margin-left: 70px;
+    margin-right: 70px;
+}
+
+.tentativerow{
+    display: grid;
+    grid-template-columns: 100%;
+    margin-left: 70px;
+    margin-right: 70px;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.signaturerow{
+    display: grid;
+    grid-template-columns: 75% 25%;
+    margin-right: 70px;
+}
+
+.sig {
+    border-collapse: collapse;
+    border: none;
+}
+
+.reccomendrow{
+    display: grid;
+    grid-template-columns: 100;
+    margin-left: 70px;
+    margin-bottom: 20px;
+}
+
+.deanrow {
+    display: grid;
+    grid-template-columns: 40% 20% 20% 20%;
+    margin-left: 70px;
+    margin-bottom: 20px; 
+}
+.totalrow {
+    display: grid;
+    grid-template-columns: 40% 20% 20% 20%;
+    margin-left: 70px;
+    margin-bottom: 20px; 
+}
+.daterow {
+    display: grid;
+    grid-template-columns: 60% 40%;
+    margin-left: 70px;
+    margin-bottom: 20px; 
+}
+
+table,
+td,
+th {
+    border: 1px solid #595959;
+    border-collapse: collapse;
+}
+
+td,
+th {
+    padding: 3px;
+    width: 30px;
+    height: 25px;
+}
+
+th {
+    background: #f0e6cc;
+}
+
+.even {
+    background: #fbf8f0;
+}
+
+.odd {
+    background: #fefcf9;
+}
