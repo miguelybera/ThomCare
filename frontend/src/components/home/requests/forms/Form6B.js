@@ -179,7 +179,7 @@ function Form6B() {
                                 </Row>
                                 <Row className="mb-3" style={{paddingBottom:'30px'}}>
                                     <Form.Group as={Col} xs={12} sm={12} md={6}>
-                                        <Form.Label>Term</Form.Label>
+                                        <Form.Label>Term/Special</Form.Label>
                                         <Form.Control type="text" placeholder="1st" value={term} onChange={e => setTerm(e.target.value)} required />
                                     </Form.Group>
 
@@ -266,7 +266,7 @@ function Form6B() {
                                                         > 
                                                             <Form.Select aria-label="Default select example" name="status" id={status} data-id={idx} value={val.status} onChange={e => onChange(idx, e)} required>
                                                                 <option value=''>Cross-enroll/Drop</option>
-                                                                <option value="Add">Cross-enroll</option>
+                                                                <option value="Cross">Cross-enroll</option>
                                                                 <option value="Drop">Drop</option>
                                                             </Form.Select>
                                                         </FloatingLabel>
