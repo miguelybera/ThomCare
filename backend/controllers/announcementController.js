@@ -110,7 +110,7 @@ exports.newAnnouncement = catchAsyncErrors(async (req, res, next) => {
 exports.getHomepageAnnouncements = catchAsyncErrors(async (req, res, next) => {
     const resPerPage = 10
     const announcementCount = await Announcement.countDocuments({ archiveDate: { $gte: Date.now() } })
-    const apiFeatures = new APIFeatures(Announcement.find({ archiveDate: { $gte: Date.now() } }).sort({ createdAt: -1 }), req.query).searchDate().filter().pagination(resPerPage)
+    const apiFeatures = new APIFeatures(Announcement.find({ archiveDate: { $gte: Date.now() } }).sort({ createdAt: -1 }), req.query).search().filter().pagination(resPerPage)
 
     // !for finding date "$gte": new Date("2014-08-01"), "$lt": new Date("2014-08-02")
     

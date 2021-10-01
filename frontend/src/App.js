@@ -14,6 +14,7 @@ import Footer from './components/layout/Footer'
 
 //route folder
 import ProtectedRoute from './components/route/ProtectedRoute'
+import ErrorPage from './components/route/ErrorPage'
 
 //home/announcement folder
 import Announcements from './components/home/announcement/Announcements'
@@ -104,6 +105,9 @@ function App() {
                             {!dashboard && (<Header/>)}
                             <div className='container container-fluid'>
                                 {/**HOME ROUTES */}
+                                    {/**ERROR ROUTE */}
+                                    <Route path='/error' component={ErrorPage} exact />
+
                                     {/**ANNOUNCEMENT ROUTES */}
                                         <Route path='/' component={Announcements} exact />
                                         <Route path='/announcement/:id' component={AnnouncementDetails} exact />

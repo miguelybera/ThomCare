@@ -12,7 +12,7 @@ import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
 var dateFormat = require('dateformat')
 
-const ListAnnouncements = () => {
+const ListAnnouncements = ({ history }) => {
     const alert = useAlert()
     const dispatch = useDispatch()
 
@@ -36,12 +36,14 @@ const ListAnnouncements = () => {
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
+
+            history.push('/error')
         }
 
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, alert, error])
+    }, [dispatch, history, alert, error])
 
     const setAnnouncements = () => {
         const data = {

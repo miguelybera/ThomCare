@@ -43,11 +43,15 @@ const CreateAnnouncement = ({ history }) => {
         if (error) {
             alert.error()
             dispatch(clearErrors())
+            
+            history.push('/error')
         }
 
         if (announcementTypeError) {
             alert.error(error)
             dispatch(clearErrors())
+            
+            history.push('/error')
         }
 
         if (success) {

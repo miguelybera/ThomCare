@@ -69,8 +69,25 @@ const Announcements = ({ history }) => {
         if (announcementTypeError) {
             alert.error(announcementTypeError)
             dispatch(clearErrors())
+
+            history.push('/error')
         }
-    }, [dispatch, alert, announcementTypeError])
+    }, [dispatch, history, alert, announcementTypeError])
+
+    useEffect(() => {
+        dispatch(getAnnouncements(currentPage, course, yearLevel, track, title, announcementType))
+
+        if (error) {
+            alert.error(error)
+            dispatch(clearErrors())
+
+            history.push('/error')
+        }
+
+        dispatch({
+            type: INSIDE_DASHBOARD_FALSE
+        })
+    }, [dispatch, history, alert, error, currentPage])
 
     useEffect(() => {
         dispatch(getAnnouncements(currentPage, course, yearLevel, track, title, announcementType))
@@ -86,24 +103,11 @@ const Announcements = ({ history }) => {
                 announcementType: '',
                 title: ''
             })
-        }
-
-        dispatch({
-            type: INSIDE_DASHBOARD_FALSE
-        })
-    }, [dispatch, alert, error, currentPage])
-
-    useEffect(() => {
-        dispatch(getAnnouncements(currentPage, course, yearLevel, track, title, announcementType))
-
-        if (error) {
-            alert.error(error)
-            dispatch(clearErrors())
-
+            
             history.push('/error')
         }
 
-    }, [dispatch, alert, error, searchButton])
+    }, [dispatch, history, alert, error, searchButton])
 
     const onChange = e => {
         setCurrentPageNo(1)

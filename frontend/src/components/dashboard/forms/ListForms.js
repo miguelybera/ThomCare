@@ -9,7 +9,7 @@ import MetaData from './../../layout/MetaData'
 import Loader from './../../layout/Loader'
 import Sidebar from './../../layout/Sidebar'
 
-const ListForms = () => {
+const ListForms = ({ history }) => {
     const dispatch = useDispatch()
     const alert = useAlert()
 
@@ -21,12 +21,14 @@ const ListForms = () => {
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
+
+            history.push('/error')
         }
 
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, error, alert])
+    }, [dispatch, history, error, alert])
 
     return (
         <Fragment>

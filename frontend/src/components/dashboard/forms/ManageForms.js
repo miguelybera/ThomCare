@@ -24,6 +24,8 @@ const ManageForms = ({ history, match }) => {
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
+
+            history.push('/error')
         }
 
         if (isDeleted) {

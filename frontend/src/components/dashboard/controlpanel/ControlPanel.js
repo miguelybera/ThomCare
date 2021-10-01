@@ -1,4 +1,5 @@
 import React, { Fragment, useEffect } from 'react'
+import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
@@ -12,7 +13,13 @@ import Loader from '../../layout/Loader'
 import ReportCard from './ReportCard'
 var dateFormat = require('dateformat')
 
-const ControlPanel = () => {
+const data = [
+    {name: 'Page A', uv: 400},
+    {name: 'Page B', uv: 300},
+    {name: 'Page C', uv: 200}
+];
+
+const ControlPanel = ({ history }) => {
     const dispatch = useDispatch()
     const alert = useAlert()
 
@@ -52,13 +59,17 @@ const ControlPanel = () => {
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
+
+            history.push('/error')
         }
 
         if (recentsError) {
             alert.error(error)
             dispatch(clearErrors())
+
+            history.push('/error')
         }
-    }, [dispatch, alert, error, role, reqType, recentsError])
+    }, [dispatch, history, alert, error, role, reqType, recentsError])
 
     const setRequests = () => {
         const data = {
@@ -134,6 +145,14 @@ const ControlPanel = () => {
                         <h1 style={{margin: '50px 0'}}>Control Panel</h1>
                         <Container fluid>
                             <Row style={{ display: 'flex', justifyContent: 'center' }}>
+                            
+                                {/* <LineChart width={600} height={300} data={data}>
+                                    <Line type="monotone" dataKey="uv" stroke="#8884d8" />
+                                    <CartesianGrid stroke="#ccc" />
+                                    <XAxis dataKey="name" />
+                                    <YAxis />
+                                </LineChart> */}
+
                                 {user.role === 'Student' ? (
                                     <Fragment>
                                         <Col sm><ReportCard requestType={'Requests'} length={requests && requests.length} icon={'edit'} color={'red'}/></Col>

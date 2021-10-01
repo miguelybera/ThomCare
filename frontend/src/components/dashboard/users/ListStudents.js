@@ -30,6 +30,8 @@ const ListStudents = ({ history }) => {
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
+
+            history.push('/error')
         }
 
         if (deleteError) {

@@ -57,6 +57,8 @@ const ListAllRequests = ({ history }) => {
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
+
+            history.push('/error')
         }
 
         dispatch({

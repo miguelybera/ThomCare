@@ -47,8 +47,10 @@ const UpdateAnnouncement = ({ history, match }) => {
         if (announcementTypeError) {
             alert.error(announcementTypeError)
             dispatch(clearErrors())
+            
+            history.push('/error')
         }
-    }, [dispatch, alert, announcementTypeError])
+    }, [dispatch, history, alert, announcementTypeError])
 
     useEffect(() => {
         if (announcement && announcement._id !== announcementId) {
@@ -70,6 +72,8 @@ const UpdateAnnouncement = ({ history, match }) => {
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
+            
+            history.push('/error')
         }
 
         if (updateError) {
@@ -99,7 +103,6 @@ const UpdateAnnouncement = ({ history, match }) => {
     }, [dispatch, error, alert, isUpdated, updateError, announcement, announcementId, history])
 
     useEffect(() => {
-
         if (!setExpiry && ctr > 0) {
             setArchiveDate(changeDateFormat(Date.now()))
         }
