@@ -99,6 +99,7 @@ const CreateCourse = ({ history }) => {
                                             type='text'
                                             name='lecUnits'
                                             value={lecUnits}
+                                            pattern="[0-9]{1}"
                                             onChange={e => setLecUnits(e.target.value)}
                                             required
                                         />
@@ -112,6 +113,7 @@ const CreateCourse = ({ history }) => {
                                         <Form.Control
                                             type='text'
                                             name='labUnits'
+                                            pattern="[0-9]{1}"
                                             value={labUnits}
                                             onChange={e => setLabUnits(e.target.value)}
                                             required
