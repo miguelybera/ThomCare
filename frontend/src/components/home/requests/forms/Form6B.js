@@ -153,7 +153,7 @@ function Form6B({history}) {
                             </Breadcrumb>
                         </Card.Header>
                         <Card.Body>
-                            <Card.Title style={{ margin: '10px 0 20px 0', color: '#9c0b0b', fontWeight: 'bold', textAlign: 'center' }}>CROSS ENROLLMENT (WITHIN CICS) FORM</Card.Title>
+                            <Card.Title style={{ margin: '10px 0 20px 0', color: '#9c0b0b', fontWeight: 'bold', textAlign: 'center' }}>FORM 6B</Card.Title>
                             <Card.Title style={{ margin: '10px 0 20px 0', color: 'black', fontWeight: 'bold' }}>Student Information</Card.Title>
                             <Form style={{ color: 'black' }} onSubmit={submitHandler} >
                                 <Row className="mb-3">
