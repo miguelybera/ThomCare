@@ -13,6 +13,7 @@ const OVERLOADPDF = ({ studentInfo, submitted, setSubmitted }) => {
 
     const { user } = useSelector(state => state.auth)
 
+
     useEffect(() => {
         dispatch({
             type: INSIDE_DASHBOARD_FALSE
@@ -23,6 +24,8 @@ const OVERLOADPDF = ({ studentInfo, submitted, setSubmitted }) => {
     const middleInitial = studentInfo.middleName ? studentInfo.middleName[0] + '.' : ''
     const name = studentInfo.lastName + ', ' + studentInfo.firstName + ' ' + middleInitial
     const course = user.course
+
+
 
     /*
     let toAdd = [], toDrop = [], newTotalUnits = 0
@@ -45,6 +48,8 @@ const OVERLOADPDF = ({ studentInfo, submitted, setSubmitted }) => {
 
     const goBack = () => setSubmitted(!submitted)
 
+
+    console.log(studentInfo)
     return (
         <>
             <div style={{ fontFamily: 'MuktaMalar' }}>
@@ -73,8 +78,8 @@ const OVERLOADPDF = ({ studentInfo, submitted, setSubmitted }) => {
 
                     <div className="secondrow">
                         <div>Program: {course}</div>
-                        <div>CURRICULUM YEAR:</div>
-                        <div>TERM:</div>
+                        <div>CURRICULUM YEAR: {studentInfo.curriculum}</div>
+                        <div>TERM: {studentInfo.term} </div>
 
                     </div>
 
@@ -84,7 +89,7 @@ const OVERLOADPDF = ({ studentInfo, submitted, setSubmitted }) => {
                             <tbody>
                                 <tr>
                                     <td>Full-Time Student</td>
-                                    <td></td>
+                                    <td style={{textAlign: 'center'}}>{studentInfo.fullTime}</td>
                                     <td>Total Number of Units Earned</td>
                                     <td></td>
                                     <td>Does the program require Bar or Board Examination?</td>
@@ -131,72 +136,25 @@ const OVERLOADPDF = ({ studentInfo, submitted, setSubmitted }) => {
                     <div className="inforow">
                         <table>
                             <tbody>
-                                <tr >
+                                <tr style={{ textAlign: 'center' }}>
                                     <td>COURSES</td>
                                     <td>UNITS</td>
                                     <td>TIME</td>
                                     <td>DAYS</td>
                                 </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                {studentInfo.requested && studentInfo.requested.map(x => {
+
+                                    const total = Number(x.lecUnits) + Number(x.labUnits)
+                                    return (
+                                        <tr>
+                                            <td>{x.courseName}</td>
+                                            <td>{total}</td>
+                                            <td>{x.days}</td>
+                                            <td>{x.time}</td>
+                                        </tr>
+                                    )
+                                })}
+
                             </tbody>
                         </table>
                     </div>
@@ -212,28 +170,24 @@ const OVERLOADPDF = ({ studentInfo, submitted, setSubmitted }) => {
                                     <td>COURSES</td>
                                     <td>UNITS</td>
                                 </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
+                                {studentInfo.special && studentInfo.special.map(x => {
+
+                                    const total = Number(x.lecUnits) + Number(x.labUnits)
+                                    return (
+                                        <tr>
+                                            <td>{x.courseName}</td>
+                                            <td>{total}</td>
+                                            
+                                        </tr>
+                                    )
+                                })}
+                                
                             </tbody>
                         </table>
                     </div>
 
                     <div className="tentativerow">
-                        TENTATIVE DATE OF GRADUATION:
+                        TENTATIVE DATE OF GRADUATION: {studentInfo.tentative}
                     </div>
 
 
@@ -242,14 +196,14 @@ const OVERLOADPDF = ({ studentInfo, submitted, setSubmitted }) => {
                     </div>
 
                     <div className="deanrow">
-                        <div>Dean</div>
+                        <div>_________________________________________________________________________</div>
                         <div></div>
-                        <div>Approved</div>
-                        <div>Disapproved</div>
+                        <div>Approved<input type="checkbox" disabled="true" style={{marginLeft:"10px", height:"15px", width:"15px"}}></input></div>
+                        <div>Disapproved<input type="checkbox" disabled="true" style={{marginLeft:"10px", height:"15px", width:"15px"}}></input></div>
                     </div>
 
                     <div className="deanrow">
-                        <div></div>
+                        <div style={{ textAlign: 'center' }}>Dean</div>
                         <div></div>
                         <div>Total Units</div>
                         <div></div>

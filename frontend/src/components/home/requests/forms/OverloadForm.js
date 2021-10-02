@@ -22,6 +22,7 @@ function OverloadForm() {
     
     const [studentInfo, setStudentInfo] = useState({})
     const [submitted, setSubmitted] = useState(false)
+    const [fullTime, setFullTime] = useState()
 
     useEffect(() => {
         dispatch(getCourses())
@@ -45,18 +46,30 @@ function OverloadForm() {
             labUnits: '',
             days: '',
             time: '',
-
-            /*cheska*/
-            courseCodeSpecialTerm: '',
-            courseNameSpecialTerm: '',
-            lecUnitsSpecialTerm: '',
-            labUnitsSpecialTerm: ''
         }
     ])
 
-    const onChange = (index, e) => {
+    const [inputFields2, setInputFields2] = useState([
+        {
+            courseCode: '',
+            courseName: '',
+            lecUnits: '',
+            labUnits: '',
+
+        }
+    ])
+
+    const [tentative, setTentative] = useState('')
+    const [curriculum, setCurriculum] = useState('')
+    const [term, setTerm] = useState('')
+    
+
+    const onChange = (num, index, e) => {
+
+        
         e.preventDefault()
-        const values = [...inputFields]
+
+        const values = num === 1 ?  [...inputFields] : [...inputFields2]
 
         values[index][e.target.name] = e.target.value
 
@@ -73,19 +86,13 @@ function OverloadForm() {
 
 
         }
-        /*cheska*/
-        if (values[index]["courseCodeSpecialTerm"] !== '') {
-            values[index]["courseNameSpecialTerm"] = getCourseName2(values[index]["courseCodeSpecialTerm"], "courseNameSpecialTerm")
-            values[index]["labUnitsSpecialTerm"] = getCourseName2(values[index]["courseCodeSpecialTerm"], "labUnitsSpecialTerm")
-            values[index]["lecUnitsSpecialTerm"] = getCourseName2(values[index]["courseCodeSpecialTerm"], "lecUnitsSpecialTerm")
-        } else {
-            values[index]["courseNameSpecialTerm"] = ''
-            values[index]["labUnitsSpecialTerm"] = ''
-            values[index]["lecUnitsSpecialTerm"] = ''
+
+        if(num==1){
+            setInputFields(values)
+        }else{
+            setInputFields2(values)
         }
-
-
-        setInputFields(values)
+        
     }
 
     const submitHandler = e => {
@@ -99,38 +106,53 @@ function OverloadForm() {
             email: user.email,
             course: user.course,
             requested: inputFields,
-            special: inputFields
+            special: inputFields2,
+            tentative,
+            curriculum,
+            term,
+            fullTime: fullTime ? 'Yes' : 'No'
             
         })
+
+        console.log(studentInfo)
 
         setSubmitted(!submitted)
     }
 
     const addRow = () => {
         setInputFields([...inputFields, {
-            status: '',
             courseCode: '',
             courseName: '',
             lecUnits: '',
             labUnits: '',
             days: '',
             time: '',
-            /*cheska*/
-            courseCodeSpecialTerm: '',
-            courseNameSpecialTerm: '',
-            lecUnitsSpecialTerm: '',
-            labUnitsSpecialTerm: '',
-            /* */
+            
+
+        }])
+    }
+    const addRow2 = () => {
+        setInputFields2([...inputFields2, {
+            courseCode: '',
+            courseName: '',
+            lecUnits: '',
+            labUnits: '',
 
         }])
     }
 
-    const deleteRow = (index) => {
-        const values = [...inputFields]
+    const deleteRow = (num, index) => {
 
+        const values = num === 1 ?  [...inputFields] : [...inputFields2]
+ 
         values.splice(index, 1)
 
-        setInputFields(values)
+        if(num === 1) {
+            setInputFields(values)
+        }
+        else{
+            setInputFields2(values)
+        }
     }
 
     const getCourseName = (code, field) => {
@@ -144,22 +166,6 @@ function OverloadForm() {
             case "labUnits":
                 return val.labUnits
 
-            default:
-                return
-        }
-    }
-    /*cheska*/
-    const getCourseName2 = (code, field) => {
-        const val2 = courses.find(course => course.courseCode === code)
-        switch (field) {
-
-            case "courseNameSpecialTerm":
-                return val2.courseName
-            case "lecUnitsSpecialTerm":
-                return val2.lecUnits
-            case "labUnitsSpecialTerm":
-                return val2.labUnits
-            
             default:
                 return
         }
@@ -275,13 +281,17 @@ function OverloadForm() {
 
 
                                     <Form.Group as={Col} lg={2}>
+                                        <Form.Check type="checkbox" label="Full Time" onChange={e => setFullTime(!fullTime)}/>
+                                    </Form.Group>
+
+                                    <Form.Group as={Col} lg={2}>
                                         <Form.Label>Curriculum Year</Form.Label>
-                                        <Form.Control type='text' placeholder="2021" />
+                                        <Form.Control type='text' placeholder="2021" value={curriculum} onChange={e => setCurriculum(e.target.value)}/>
                                     </Form.Group>
 
                                     <Form.Group as={Col} lg={2} controlId="formGridAddress1">
                                         <Form.Label>Term</Form.Label>
-                                        <Form.Control type='text' placeholder="2021 - 2022" />
+                                        <Form.Control type='text' placeholder="2021 - 2022" value={term} onChange={e => setTerm(e.target.value)} />
                                     </Form.Group>
                                 </Row>
 
@@ -343,7 +353,7 @@ function OverloadForm() {
                                                                     <Button variant='primary' onClick={() => addRow()} style={{ width: '40px', marginLeft: '5px' }}>
                                                                         <i className="fa fa-plus-circle" aria-hidden="true"></i>
                                                                     </Button>
-                                                                    <Button variant='danger' onClick={() => deleteRow(idx)} style={{ width: '40px', marginLeft: '5px' }}>
+                                                                    <Button variant='danger' onClick={() => deleteRow(1,idx)} style={{ width: '40px', marginLeft: '5px' }}>
                                                                         <i className="fa fa-minus" aria-hidden="true"></i>
                                                                     </Button>
                                                                 </Fragment>
@@ -359,7 +369,7 @@ function OverloadForm() {
                                                             label="Course Code"
                                                         >
                                                             
-                                                            <Form.Select  aria-label="Default select example" name="courseCode" id={courseCode} data-id={idx} value={val.courseCode && val.status} onChange={e => onChange(idx, e)} required>
+                                                            <Form.Select  aria-label="Default select example" name="courseCode" id={courseCode} data-id={idx} value={val.courseCode && val.status} onChange={e => onChange(1, idx, e)} required>
                                                                 <option value='requested'>Course Code</option>
                                                                 {courses && courses.map(course => (
                                                                     <option value={course.courseCode}>{course.courseCode}</option>
@@ -373,28 +383,28 @@ function OverloadForm() {
                                                         <FloatingLabel
                                                             label="Course Name"
                                                         >
-                                                            <Form.Control type="text" placeholder="Course Name" name="courseName" id={courseName} data-id={idx} value={val.courseName} onChange={e => onChange(idx, e)} readOnly />
+                                                            <Form.Control type="text" placeholder="Course Name" name="courseName" id={courseName} data-id={idx} value={val.courseName} onChange={e => onChange(1, idx, e)} readOnly />
                                                         </FloatingLabel>
                                                     </Col>
                                                     <Col xs={12} sm={6} md={2} lg={2} style={addDropStyle}>
                                                         <FloatingLabel
                                                             label="Lec Units"
                                                         >
-                                                            <Form.Control type="number" placeholder="Lec Units" name="lecUnits" id={lecUnits} data-id={idx} value={val.lecUnits} onChange={e => onChange(idx, e)} readOnly />
+                                                            <Form.Control type="number" placeholder="Lec Units" name="lecUnits" id={lecUnits} data-id={idx} value={val.lecUnits} onChange={e => onChange(1, idx, e)} readOnly />
                                                         </FloatingLabel>
                                                     </Col>
                                                     <Col xs={12} sm={6} md={2} lg={2} style={addDropStyle}>
                                                         <FloatingLabel
                                                             label="Lab Units"
                                                         >
-                                                            <Form.Control type="number" placeholder="Lab Units" name="labUnits" id={labUnits} data-id={idx} value={val.labUnits} onChange={e => onChange(idx, e)} readOnly />
+                                                            <Form.Control type="number" placeholder="Lab Units" name="labUnits" id={labUnits} data-id={idx} value={val.labUnits} onChange={e => onChange(1, idx, e)} readOnly />
                                                         </FloatingLabel>
                                                     </Col>
                                                     <Col xs={12} sm={6} md={3} lg={2} style={addDropStyle}>
                                                         <FloatingLabel
                                                             label="Days"
                                                         >
-                                                            <Form.Select aria-label="Default select example" placeholder='M' name="days" id={days} data-id={idx} value={val.days} onChange={e => onChange(idx, e)} required >
+                                                            <Form.Select aria-label="Default select example" placeholder='M' name="days" id={days} data-id={idx} value={val.days} onChange={e => onChange(1, idx, e)} required >
                                                                 <option value=''>Days</option>
                                                                 <option value='M'>M</option>
                                                                 <option value='T'>T</option>
@@ -410,7 +420,7 @@ function OverloadForm() {
                                                         <FloatingLabel
                                                             label="Time"
                                                         >
-                                                            <Form.Control type="text" placeholder="Time" name="time" id={time} data-id={idx} value={val.time} onChange={e => onChange(idx, e)} required />
+                                                            <Form.Control type="text" placeholder="Time" name="time" id={time} data-id={idx} value={val.time} onChange={e => onChange(1, idx, e)} required />
                                                         </FloatingLabel>
                                                     </Col>
                                                 </Row>
@@ -423,16 +433,13 @@ function OverloadForm() {
                                 <Card.Title style={{ margin: '30px 0 20px 0', color: 'black', fontWeight: 'bold' }}>SPECIAL TERM LOAD   (if special term graduate):</Card.Title>
 
                                 {
-                                    inputFields.map((val, idx) => {
+                                    inputFields2.map((val, idx) => {
                                         //set unique id per row
-                                        let status = `status-${idx}`,
-                                            courseCodeSpecialTerm = `courseCode-${idx}`,
-                                            courseNameSpecialTerm = `courseName-${idx}`,
-                                            lecUnitsSpecialTerm = `lecUnits-${idx}`,
-                                            labUnitsSpecialTerm = `labUnits-${idx}`,
-                                            days = `days-${idx}`,
-                                            time = `time-${idx}`,
-                                            section = `section-${idx}`
+                                        let courseCode = `courseCode-${idx}`,
+                                            courseName = `courseName-${idx}`,
+                                            lecUnits = `lecUnits-${idx}`,
+                                            labUnits = `labUnits-${idx}`
+                                            
 
                                         return (
                                             <Fragment>
@@ -443,12 +450,12 @@ function OverloadForm() {
                                                     <Col xs={4} sm={4} md={3} lg={2} style={{ textAlign: 'right', marginBottom: '5px' }}>
                                                         {
                                                             idx === 0 ? (
-                                                                <Button variant='primary' onClick={() => addRow()} style={{ width: '40px' }}>
+                                                                <Button variant='primary' onClick={() => addRow2()} style={{ width: '40px' }}>
                                                                     <i className="fa fa-plus-circle" aria-hidden="true"></i>
                                                                 </Button>
 
                                                             ) : (
-                                                                <Button variant='danger' onClick={() => deleteRow(idx)} style={{ width: '40px' }}>
+                                                                <Button variant='danger' onClick={() => deleteRow(2,idx)} style={{ width: '40px' }}>
                                                                     <i className="fa fa-minus" aria-hidden="true"></i>
                                                                 </Button>
                                                             )
@@ -463,7 +470,7 @@ function OverloadForm() {
                                                         <FloatingLabel
                                                             label="Course Code"
                                                         >
-                                                            <Form.Select aria-label="Default select example" name="courseCodeSpecialTerm" id={courseCodeSpecialTerm} data-id={idx} value={val.courseCodeSpecialTerm && val.status} onChange={e => onChange(idx, e)} required>
+                                                            <Form.Select aria-label="Default select example" name="courseCode" id={courseCode} data-id={idx} value={val.courseCode && val.status} onChange={e => onChange(2, idx, e)} required>
                                                                 <option value='special'>Course Code</option>
                                                                 {courses && courses.map(course => (
                                                                     <option value={course.courseCode}>{course.courseCode}</option>
@@ -476,21 +483,21 @@ function OverloadForm() {
                                                         <FloatingLabel
                                                             label="Course Name"
                                                         >
-                                                            <Form.Control type="text" placeholder="Course Name" name="courseNameSpecialTerm" id={courseNameSpecialTerm} data-id={idx} value={val.courseNameSpecialTerm} onChange={e => onChange(idx, e)} readOnly />
+                                                            <Form.Control type="text" placeholder="Course Name" name="courseName" id={courseName} data-id={idx} value={val.courseName} onChange={e => onChange(2, idx, e)} readOnly />
                                                         </FloatingLabel>
                                                     </Col>
                                                     <Col xs={12} sm={6} md={2} lg={2} style={addDropStyle}>
                                                         <FloatingLabel
                                                             label="Lec Units"
                                                         >
-                                                            <Form.Control type="number" placeholder="Lec Units" name="lecUnitsSpecialTerm" id={lecUnitsSpecialTerm} data-id={idx} value={val.lecUnitsSpecialTerm} onChange={e => onChange(idx, e)} readOnly />
+                                                            <Form.Control type="number" placeholder="Lec Units" name="lecUnits" id={lecUnits} data-id={idx} value={val.lecUnits} onChange={e => onChange(2, idx, e)} readOnly />
                                                         </FloatingLabel>
                                                     </Col>
                                                     <Col xs={12} sm={6} md={2} lg={2} style={addDropStyle}>
                                                         <FloatingLabel
                                                             label="Lab Units"
                                                         >
-                                                            <Form.Control type="number" placeholder="Lab Units" name="labUnitsSpecialTerm" id={labUnitsSpecialTerm} data-id={idx} value={val.labUnitsSpecialTerm} onChange={e => onChange(idx, e)} readOnly />
+                                                            <Form.Control type="number" placeholder="Lab Units" name="labUnits" id={labUnits} data-id={idx} value={val.labUnits} onChange={e => onChange(2, idx, e)} readOnly />
                                                         </FloatingLabel>
                                                     </Col>
                                                 </Row>
@@ -505,7 +512,7 @@ function OverloadForm() {
                                         TENTATIVE DATE OF GRADUATION:
                                     </Form.Label>
                                     <Col sm="">
-                                        <Form.Control type="text" placeholder="May 2022" />
+                                        <Form.Control type="text" placeholder="May 2022" value={tentative} onChange={e => setTentative(e.target.value)} />
                                     </Col>
 
                                 </Form.Group>
