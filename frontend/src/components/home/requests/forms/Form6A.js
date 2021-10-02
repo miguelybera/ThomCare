@@ -26,22 +26,19 @@ function Form6A({ history }) {
     const [submitted, setSubmitted] = useState(false)
     const [middleInitial, setMiddleInitial] = useState('')
     const [studentInfo, setStudentInfo] = useState({})
-    const [inputFields, setInputFields] = useState([
-        {
-            status: '',
-            courseCode: '',
-            courseName: '',
-            lecUnits: '',
-            labUnits: '',
-            days: '',
-            time: '',
-            room: '',
-            section: ''
-        }
-    ])
+    const [inputFields, setInputFields] = useState([{
+        status: '',
+        courseCode: '',
+        courseName: '',
+        lecUnits: '',
+        labUnits: '',
+        days: '',
+        time: '',
+        room: '',
+        section: ''
+    }])
 
-    const title = 'Add/Drop Course Form'
-
+    const title = 'Form 6A - Add/Drop Course Form'
 
     const addRow = () => {
         setInputFields([...inputFields, {
@@ -156,7 +153,7 @@ function Form6A({ history }) {
                             </Breadcrumb>
                         </Card.Header>
                         <Card.Body style={{ paddingTop: '0px' }} >
-                            <Card.Title style={{ margin: '10px 0 20px 0', color: '#9c0b0b', fontWeight: 'bold', textAlign: 'center' }}>FORM 6A</Card.Title>
+                            <Card.Title style={{ margin: '10px 0 20px 0', color: '#9c0b0b', fontWeight: 'bold', textAlign: 'center' }}>{title}</Card.Title>
                             <Card.Title style={{ margin: '10px 0 20px 0', color: 'black', fontWeight: 'bold' }}>Student Information</Card.Title>
                             <Form style={{ color: 'black' }} onSubmit={submitHandler} >
                                 <Row className="mb-3">

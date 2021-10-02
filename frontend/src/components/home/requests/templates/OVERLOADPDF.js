@@ -13,7 +13,6 @@ const OVERLOADPDF = ({ studentInfo, submitted, setSubmitted }) => {
 
     const { user } = useSelector(state => state.auth)
 
-
     useEffect(() => {
         dispatch({
             type: INSIDE_DASHBOARD_FALSE
@@ -25,29 +24,11 @@ const OVERLOADPDF = ({ studentInfo, submitted, setSubmitted }) => {
     const name = studentInfo.lastName + ', ' + studentInfo.firstName + ' ' + middleInitial
     const course = user.course
 
-
-
-    /*
-    let toAdd = [], toDrop = [], newTotalUnits = 0
-
-    studentInfo.addDrop.forEach(x => {
-        if (x.status === 'Add') {
-            toAdd.push(x)
-            newTotalUnits += (Number(x.lecUnits) + Number(x.labUnits))
-        } else {
-            toDrop.push(x)
-            newTotalUnits -= (Number(x.lecUnits) + Number(x.labUnits))
-        }
-
-    })
-    */
-
     const options = {
         format: 'legal'
     }
 
     const goBack = () => setSubmitted(!submitted)
-
 
     console.log(studentInfo)
     return (
@@ -142,9 +123,9 @@ const OVERLOADPDF = ({ studentInfo, submitted, setSubmitted }) => {
                                     <td>TIME</td>
                                     <td>DAYS</td>
                                 </tr>
-                                {studentInfo.requested && studentInfo.requested.map(x => {
-
+                                {studentInfo.overload && studentInfo.overload.map(x => {
                                     const total = Number(x.lecUnits) + Number(x.labUnits)
+                                    
                                     return (
                                         <tr>
                                             <td>{x.courseName}</td>
@@ -154,7 +135,6 @@ const OVERLOADPDF = ({ studentInfo, submitted, setSubmitted }) => {
                                         </tr>
                                     )
                                 })}
-
                             </tbody>
                         </table>
                     </div>
@@ -170,18 +150,15 @@ const OVERLOADPDF = ({ studentInfo, submitted, setSubmitted }) => {
                                     <td>COURSES</td>
                                     <td>UNITS</td>
                                 </tr>
-                                {studentInfo.special && studentInfo.special.map(x => {
-
+                                {studentInfo.specialTerm && studentInfo.specialTerm.map(x => {
                                     const total = Number(x.lecUnits) + Number(x.labUnits)
                                     return (
                                         <tr>
                                             <td>{x.courseName}</td>
                                             <td>{total}</td>
-                                            
                                         </tr>
                                     )
                                 })}
-                                
                             </tbody>
                         </table>
                     </div>

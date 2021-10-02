@@ -26,21 +26,19 @@ function Form6B({history}) {
     const [submitted, setSubmitted] = useState(false)
     const [studentInfo, setStudentInfo] = useState({})
     const [middleInitial, setMiddleInitial] = useState('')
-    const [inputFields, setInputFields] = useState([
-        {
-            status: '',
-            courseCode: '',
-            courseName: '',
-            lecUnits: '',
-            labUnits: '',
-            days: '',
-            time: '',
-            room: '',
-            section: ''
-        }
-    ])
+    const [inputFields, setInputFields] = useState([{
+        status: '',
+        courseCode: '',
+        courseName: '',
+        lecUnits: '',
+        labUnits: '',
+        days: '',
+        time: '',
+        room: '',
+        section: ''
+    }])
 
-    const title = 'Cross-Enrollment Form'
+    const title = 'Form 6B - Cross-Enrollment Form'
 
     const getMiddleInitial = (name) => {
         const middleName = name ? name.split(' ') : ''
@@ -98,6 +96,7 @@ function Form6B({history}) {
             dispatch(clearErrors())
             history.push('/forms/list')
         }
+
         dispatch({
             type: INSIDE_DASHBOARD_FALSE
         })
@@ -153,7 +152,7 @@ function Form6B({history}) {
                             </Breadcrumb>
                         </Card.Header>
                         <Card.Body>
-                            <Card.Title style={{ margin: '10px 0 20px 0', color: '#9c0b0b', fontWeight: 'bold', textAlign: 'center' }}>FORM 6B</Card.Title>
+                            <Card.Title style={{ margin: '10px 0 20px 0', color: '#9c0b0b', fontWeight: 'bold', textAlign: 'center' }}>{title}</Card.Title>
                             <Card.Title style={{ margin: '10px 0 20px 0', color: 'black', fontWeight: 'bold' }}>Student Information</Card.Title>
                             <Form style={{ color: 'black' }} onSubmit={submitHandler} >
                                 <Row className="mb-3">
