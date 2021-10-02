@@ -124,12 +124,12 @@ function App() {
                                         <Route path='/verify/account/:token' component={VerifyRegistration} exact />
 
                                     {/**FORMS ROUTES */}
-                                        <ProtectedRoute path='/submit/request' forStudents={true} component={SubmitRequest} exact />
-                                        <ProtectedRoute path='/forms/list' forStudents={true} component={FormsList} exact />
+                                        <ProtectedRoute path='/submit/request' component={SubmitRequest} exact />
+                                        <ProtectedRoute path='/forms/list' component={FormsList} exact />
                                         <Route path='/download/forms/list' component={DownloadList} exact />
-                                        <ProtectedRoute path='/forms/form-6a' forStudents={true} component={Form6A} exact />
-                                        <ProtectedRoute path='/forms/form-6b' forStudents={true} component={Form6B} exact />
-                                        <ProtectedRoute path='/forms/overload-form' forStudents={true} component={OverloadForm} exact />
+                                        <ProtectedRoute path='/forms/form-6a' component={Form6A} exact />
+                                        <ProtectedRoute path='/forms/form-6b' component={Form6B} exact />
+                                        <ProtectedRoute path='/forms/overload-form' component={OverloadForm} exact />
                                 {/**HOME ROUTES */}
 
                                 {/**CONTROL PANEL ROUTES */}

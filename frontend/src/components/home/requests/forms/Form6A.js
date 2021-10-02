@@ -335,7 +335,7 @@ function Form6A({ history }) {
                                         </Fragment>
                                     )})
                                 }
-                                <center><Button type='submit' style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}>Generate Form</Button></center>
+                                <center><Button type='submit' style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }} disabled={user.role !== 'Student' ? true : false}>Generate Form</Button></center>
                             </Form>
                         </Card.Body>
                     </Card>

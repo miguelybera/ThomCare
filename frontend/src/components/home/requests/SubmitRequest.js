@@ -18,6 +18,7 @@ const SubmitRequest = () => {
     const dispatch = useDispatch()
 
     const { loading, success, error, request } = useSelector(state => state.submitRequest)
+    const { user } = useSelector(state => state.auth)
 
     const [fileRequirements, setFileRequirements] = useState([])
     const [section, setSection] = useState()
@@ -209,7 +210,7 @@ const SubmitRequest = () => {
                                         <Button
                                             type='submit'
                                             style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
-                                            disabled={loading ? true : false}
+                                            disabled={loading || user.role !== 'Student' ? true : false}
                                         >
                                             {loading ? (
                                                 <span>

@@ -49,21 +49,22 @@ const ConfirmRegister = ({ history, studentInfo, submitted, setSubmitted }) => {
             <MetaData title={'Confirm Student Information'} />
             {!success ? (
                 <Fragment>
+                    <Container className="space"></Container>
                     <Container fluid>
-                        <div class="progress">
-                            <div
-                                class="progress-bar"
-                                role="progressbar"
-                                style={{ width: '90%' }}
-                                aria-valuenow='90'
-                                aria-valuemin="0"
-                                aria-valuemax="100"
-                            >
-                                90%
-                            </div>
-                        </div>
-                        <Card style={{ width: '30rem', marginTop: '40px' }}>
+                        <Card style={{ maxWidth: '30rem', marginTop: '40px', margin: 'auto' }}>
                             <Card.Body>
+                                <div class="progress">
+                                    <div
+                                        class="progress-bar"
+                                        role="progressbar"
+                                        style={{ width: '90%' }}
+                                        aria-valuenow='90'
+                                        aria-valuemin="0"
+                                        aria-valuemax="100"
+                                    >
+                                        90%
+                                    </div>
+                                </div>
                                 <Card.Title style={{ textAlign: 'center' }}>Confirm Student Information</Card.Title>
                                 <Card.Subtitle
                                     className="text-muted"
@@ -80,7 +81,7 @@ const ConfirmRegister = ({ history, studentInfo, submitted, setSubmitted }) => {
                                     <Button
                                         variant='danger'
                                         onClick={goBack}
-                                        style={{ marginRight: '5px', marginTop: '10px' }}
+                                        style={{ marginRight: '5px', marginTop: '10px', borderRadius: '50px', width: '10rem' }}
                                         disabled={loading ? true : false}
                                     >
                                         Back
