@@ -2,12 +2,13 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
+import { FloatingLabel, Row, Container, Button, Col, Card, Form, Modal, Breadcrumb } from 'react-bootstrap'
+import TimePicker from 'react-time-picker'
 import { getCourses, clearErrors } from '../../../../actions/courseActions'
+import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
 import MetaData from '../../../layout/MetaData'
 import Loader from '../../../layout/Loader'
-import { FloatingLabel, Row, Container, Button, Col, Card, Form, Modal, Breadcrumb } from 'react-bootstrap'
 import OVERLOADPDF from '../templates/OVERLOADPDF'
-import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
 
 const addDropStyle = {
     marginBottom: '5px'
@@ -34,7 +35,8 @@ function OverloadForm({ history }) {
         lecUnits: '',
         labUnits: '',
         days: '',
-        time: ''
+        startTime: '',
+        endTime: ''
     }])
     const [specialTerm, setSpecialTerm] = useState([{
         courseCode: '',
@@ -70,51 +72,6 @@ function OverloadForm({ history }) {
         })
     }, [dispatch, history, alert, error, user])
     
-    const onChange = (num, index, e) => {
-        e.preventDefault()
-
-        const values = num === 1 ?  [...overload] : [...specialTerm]
-
-        values[index][e.target.name] = e.target.value
-
-        if (values[index]["courseCode"] !== '') {
-            values[index]["courseName"] = getCourseName(values[index]["courseCode"], "courseName")
-            values[index]["labUnits"] = getCourseName(values[index]["courseCode"], "labUnits")
-            values[index]["lecUnits"] = getCourseName(values[index]["courseCode"], "lecUnits")
-        } else {
-            values[index]["courseName"] = ''
-            values[index]["labUnits"] = ''
-            values[index]["lecUnits"] = ''
-        }
-
-        if(num === 1){
-            setOverload(values)
-        } else {
-            setSpecialTerm(values)
-        }
-    }
-
-    const submitHandler = e => {
-        e.preventDefault()
-
-        setStudentInfo({
-            firstName: user.firstName,
-            lastName: user.lastName,
-            middleName: user.middleName ? user.middleName : 'N/A',
-            studentNumber: user.studentNumber,
-            email: user.email,
-            course: user.course,
-            overload,
-            specialTerm,
-            tentative,
-            curriculum,
-            term,
-            fullTime: fullTime ? 'Yes' : 'No'
-        })
-
-        setSubmitted(!submitted)
-    }
-
     const addRow = (num) => {
         if(num === 1) {
             setOverload([...overload, {
@@ -123,7 +80,8 @@ function OverloadForm({ history }) {
                 lecUnits: '',
                 labUnits: '',
                 days: '',
-                time: ''
+                startTime: '',
+                endTime: ''
             }])
         } else {
             setSpecialTerm([...specialTerm, {
@@ -160,6 +118,79 @@ function OverloadForm({ history }) {
             default:
                 return
         }
+    }
+
+    const onChange = (num, index, e) => {
+        e.preventDefault()
+
+        const values = num === 1 ?  [...overload] : [...specialTerm]
+
+        values[index][e.target.name] = e.target.value
+
+        if (values[index]["courseCode"] !== '') {
+            values[index]["courseName"] = getCourseName(values[index]["courseCode"], "courseName")
+            values[index]["labUnits"] = getCourseName(values[index]["courseCode"], "labUnits")
+            values[index]["lecUnits"] = getCourseName(values[index]["courseCode"], "lecUnits")
+        } else {
+            values[index]["courseName"] = ''
+            values[index]["labUnits"] = ''
+            values[index]["lecUnits"] = ''
+        }
+
+        if(num === 1){
+            setOverload(values)
+        } else {
+            setSpecialTerm(values)
+        }
+    }
+
+    const onTimeChange = (index, name, value) => {
+        const values = [...overload]
+        let aa = 'AM', time=''
+
+        let hr = value.substring(0,2)
+
+        if(Number(hr) > 12) {
+            aa = 'PM'
+            time = hr - 12 + value.substring(2,5) + aa
+            values[index][name] = time
+        } else if (Number(hr) === 12) {
+            aa = 'PM'
+            time = value + aa
+            values[index][name] = time
+        } else {
+            aa = 'AM'
+
+            if(Number(hr) === 0) {
+                time = '12' + value.substring(2,5) + aa
+            } else {
+                time = value + aa
+            }
+            values[index][name] = time
+        }
+
+        setOverload(values)
+    }
+
+    const submitHandler = e => {
+        e.preventDefault()
+
+        setStudentInfo({
+            firstName: user.firstName,
+            lastName: user.lastName,
+            middleName: user.middleName ? user.middleName : 'N/A',
+            studentNumber: user.studentNumber,
+            email: user.email,
+            course: user.course,
+            overload,
+            specialTerm,
+            tentative,
+            curriculum,
+            term,
+            fullTime: fullTime ? 'Yes' : 'No'
+        })
+
+        setSubmitted(!submitted)
     }
 
     function ModalDocuments() {
@@ -235,15 +266,15 @@ function OverloadForm({ history }) {
                             <Card.Title style={{ margin: '10px 0 20px 0', fontWeight: 'bold' }}>Student Information</Card.Title>
                             <Form onSubmit={submitHandler} >
                                 <Row className="mb-3">
-                                    <Form.Group as={Col} controlId="formGridEmail">
+                                    <Form.Group as={Col} xs={12} md={5} controlId="formGridEmail">
                                         <Form.Label>First Name</Form.Label>
                                         <Form.Control type="text" value={user && user.firstName} readOnly />
                                     </Form.Group>
-                                    <Form.Group as={Col} controlId="formGridEmail">
+                                    <Form.Group as={Col} xs={12} md={3} controlId="formGridEmail">
                                         <Form.Label>Middle Initial</Form.Label>
                                         <Form.Control type="text" placeholder="(Optional)" value={middleInitial} readOnly />
                                     </Form.Group>
-                                    <Form.Group as={Col} controlId="formGridEmail">
+                                    <Form.Group as={Col} xs={12} md={4} controlId="formGridEmail">
                                         <Form.Label>Last Name</Form.Label>
                                         <Form.Control type="text" value={user && user.lastName} readOnly />
                                     </Form.Group>
@@ -291,7 +322,8 @@ function OverloadForm({ history }) {
                                         lecUnits = `lecUnits-${idx}`, 
                                         labUnits = `labUnits-${idx}`,
                                         days = `days-${idx}`,
-                                        time = `time-${idx}`
+                                        startTime = `startTime-${idx}`,
+                                        endTime = `endTime-${idx}`
 
                                     return (
                                         <Fragment key={val.index}>
@@ -343,7 +375,7 @@ function OverloadForm({ history }) {
                                                         <Form.Control type="number" placeholder="Lab Units" name="labUnits" id={labUnits} data-id={idx} value={val.labUnits} onChange={e => onChange(1, idx, e)} readOnly />
                                                     </FloatingLabel>
                                                 </Col>
-                                                <Col xs={12} sm={6} md={3} style={addDropStyle}>
+                                                <Col xs={12} sm={6} md={2} style={addDropStyle}>
                                                     <FloatingLabel label="Days">
                                                         <Form.Select aria-label="Default select example" placeholder='M' name="days" id={days} data-id={idx} value={val.days} onChange={e => onChange(1, idx, e)} required >
                                                             <option value=''>Days</option>
@@ -357,10 +389,60 @@ function OverloadForm({ history }) {
                                                         </Form.Select>
                                                     </FloatingLabel>
                                                 </Col>
-                                                <Col xs={12} sm={6} md={3} style={addDropStyle}>
-                                                    <FloatingLabel label="Time">
-                                                        <Form.Control type="text" placeholder="Time" name="time" id={time} data-id={idx} value={val.time} onChange={e => onChange(1, idx, e)} required />
-                                                    </FloatingLabel>
+                                                <Col xs={12} sm={6} md={4} style={addDropStyle}>
+                                                    <Row className="mt-3">
+                                                        <Form.Group as={Col} xs={6}>
+                                                            <Form.Label>Start Time</Form.Label>
+                                                            <TimePicker
+                                                                disableClock
+                                                                name="startTime"
+                                                                id={startTime}
+                                                                data-id={idx}
+                                                                value={val.startTime}
+                                                                onChange={value =>  {
+
+                                                                    // ? value === null if and only if AM/PM is selected
+                                                                    // ? value = jsonobject & null when selected but time is not complete
+                                                                    // ? value is time when complete
+
+                                                                    if (value !== null) {
+                                                                        if (value.isDefaultPrevented && value.isDefaultPrevented.name === "functionThatReturnsFalse") {
+                                                                        
+                                                                        } else {
+                                                                            if (value) {
+                                                                                onTimeChange(idx, "startTime", value)
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }}
+                                                            />
+                                                        </Form.Group>
+                                                        <Form.Group as={Col} xs={6}>
+                                                            <Form.Label>End Time</Form.Label>
+                                                            <TimePicker
+                                                                disableClock
+                                                                name="endTime"
+                                                                id={endTime}
+                                                                data-id={idx}
+                                                                value={val.endTime}
+                                                                onChange={value =>  {
+                                                                    // ? value === null if and only if AM/PM is selected
+                                                                    // ? value = jsonobject & null when selected but time is not complete
+                                                                    // ? value is time when complete
+
+                                                                    if (value !== null) {
+                                                                        if (value.isDefaultPrevented && value.isDefaultPrevented.name === "functionThatReturnsFalse") {
+                                                                        
+                                                                        } else {
+                                                                            if (value) {
+                                                                                onTimeChange(idx, "endTime", value)
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }}
+                                                            />
+                                                        </Form.Group>
+                                                    </Row>
                                                 </Col>
                                             </Row>
                                         </Fragment>
@@ -438,7 +520,7 @@ function OverloadForm({ history }) {
                                         </Form.Label>
                                     </Col>
                                     <Col xs={12} md={6} style={addDropStyle}>
-                                        <Form.Control type="text" placeholder="May 2022" value={tentative} onChange={e => setTentative(e.target.value)} />
+                                        <Form.Control type="text" placeholder="May 2022" value={tentative} onChange={e => setTentative(e.target.value)} required/>
                                     </Col>
                                 </Row>
                                 <center>

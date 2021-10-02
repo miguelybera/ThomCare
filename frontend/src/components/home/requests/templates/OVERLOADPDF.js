@@ -130,8 +130,8 @@ const OVERLOADPDF = ({ studentInfo, submitted, setSubmitted }) => {
                                         <tr>
                                             <td>{x.courseName}</td>
                                             <td>{total}</td>
+                                            <td>{x.startTime} - {x.endTime}</td>
                                             <td>{x.days}</td>
-                                            <td>{x.time}</td>
                                         </tr>
                                     )
                                 })}

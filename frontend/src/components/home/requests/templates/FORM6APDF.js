@@ -160,7 +160,7 @@ const FORM6APDF = ({ studentInfo, submitted, setSubmitted }) => {
                                                             <td colSpan={15}>{x.courseCode} - {x.courseName}</td>
                                                             <td>{Number(x.lecUnits) + Number(x.labUnits)}</td>{/** units*/}
                                                             <td>{x.days}</td>{/** days */}
-                                                            <td style={{width: '120px'}}  >{x.time}</td>{/** time*/}
+                                                            <td style={{width: '120px'}}  >{x.startTime} - {x.endTime}</td>{/** time*/}
                                                             <td>{x.room}</td>{/** room*/}
                                                             <td>{x.section}</td>{/** section*/}
                                                         </tr>
@@ -223,7 +223,7 @@ const FORM6APDF = ({ studentInfo, submitted, setSubmitted }) => {
                                                             <td colSpan={15} style={{marginRight:'100px'}}>{x.courseCode} - {x.courseName}</td>
                                                             <td >{Number(x.lecUnits) + Number(x.labUnits)}</td>{/** units*/}
                                                             <td >{x.days}</td>{/** days */}
-                                                            <td style={{width: '120px'}}>{x.time}</td>{/** time*/}
+                                                            <td style={{width: '120px'}}  >{x.startTime} - {x.endTime}</td>{/** time*/}
                                                             <td >{x.room}</td>{/** room*/}
                                                             <td >{x.section}</td>{/** section*/}
                                                         </tr>
@@ -375,7 +375,7 @@ const FORM6APDF = ({ studentInfo, submitted, setSubmitted }) => {
                                                             <td colSpan={15}>{x.courseCode} - {x.courseName}</td>
                                                             <td>{Number(x.lecUnits) + Number(x.labUnits)}</td>{/** units*/}
                                                             <td>{x.days}</td>{/** days */}
-                                                            <td style={{width: '120px'}}>{x.time}</td>{/** time*/}
+                                                            <td style={{width: '120px'}}  >{x.startTime} - {x.endTime}</td>{/** time*/}
                                                             <td>{x.room}</td>{/** room*/}
                                                             <td>{x.section}</td>{/** section*/}
                                                         </tr>
@@ -439,7 +439,7 @@ const FORM6APDF = ({ studentInfo, submitted, setSubmitted }) => {
                                                             <td colSpan={15}>{x.courseCode} - {x.courseName}</td>
                                                             <td>{Number(x.lecUnits) + Number(x.labUnits)}</td>{/** units*/}
                                                             <td>{x.days}</td>{/** days */}
-                                                            <td style={{width: '120px'}}>{x.time}</td>{/** time*/}
+                                                            <td style={{width: '120px'}}  >{x.startTime} - {x.endTime}</td>{/** time*/}
                                                             <td>{x.room}</td>{/** room*/}
                                                             <td>{x.section}</td>{/** section*/}
                                                         </tr>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { FloatingLabel, Row, Container, Button, Col, Card, Form, Breadcrumb } from 'react-bootstrap'
+import TimePicker from 'react-time-picker'
 import { getCourses, clearErrors } from '../../../../actions/courseActions'
 import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
 import MetaData from '../../../layout/MetaData'
@@ -33,7 +34,8 @@ function Form6A({ history }) {
         lecUnits: '',
         labUnits: '',
         days: '',
-        time: '',
+        startTime: '',
+        endTime: '',
         room: '',
         section: ''
     }])
@@ -48,7 +50,8 @@ function Form6A({ history }) {
             lecUnits: '',
             labUnits: '',
             days: '',
-            time: '',
+            startTime: '',
+            endTime: '',
             room: '',
             section: ''
         }])
@@ -121,6 +124,34 @@ function Form6A({ history }) {
         setInputFields(values)
     }
 
+    const onTimeChange = (index, name, value) => {
+        const values = [...inputFields]
+        let aa = 'AM', time=''
+
+        let hr = value.substring(0,2)
+
+        if(Number(hr) > 12) {
+            aa = 'PM'
+            time = hr - 12 + value.substring(2,5) + aa
+            values[index][name] = time
+        } else if (Number(hr) === 12) {
+            aa = 'PM'
+            time = value + aa
+            values[index][name] = time
+        } else {
+            aa = 'AM'
+
+            if(Number(hr) === 0) {
+                time = '12' + value.substring(2,5) + aa
+            } else {
+                time = value + aa
+            }
+            values[index][name] = time
+        }
+
+        setInputFields(values)
+    }
+
     const submitHandler = e => {
         e.preventDefault()
 
@@ -157,17 +188,17 @@ function Form6A({ history }) {
                             <Card.Title style={{ margin: '10px 0 20px 0', color: 'black', fontWeight: 'bold' }}>Student Information</Card.Title>
                             <Form style={{ color: 'black' }} onSubmit={submitHandler} >
                                 <Row className="mb-3">
-                                    <Form.Group as={Col} xs={12} sm={6} md={6} lg={2}>
-                                        <Form.Label>Student Number</Form.Label>
-                                        <Form.Control value={user && user.studentNumber} readOnly />
+                                    <Form.Group as={Col} xs={12} md={5} controlId="formGridEmail">
+                                        <Form.Label>First Name</Form.Label>
+                                        <Form.Control type="text" value={user && user.firstName} readOnly />
                                     </Form.Group>
-                                    <Form.Group as={Col} xs={12} sm={6} md={6} lg={4}>
-                                        <Form.Label>Course/Program</Form.Label>
-                                        <Form.Control type="text" value={user && user.course} readOnly />
+                                    <Form.Group as={Col} xs={12} md={3} controlId="formGridEmail">
+                                        <Form.Label>Middle Initial</Form.Label>
+                                        <Form.Control type="text" placeholder="(Optional)" value={middleInitial} readOnly />
                                     </Form.Group>
-                                    <Form.Group as={Col} xs={12} sm={12} md={12} lg={6}>
-                                        <Form.Label>Email address</Form.Label>
-                                        <Form.Control type='email' value={user && user.email} readOnly />
+                                    <Form.Group as={Col} xs={12} md={4} controlId="formGridEmail">
+                                        <Form.Label>Last Name</Form.Label>
+                                        <Form.Control type="text" value={user && user.lastName} readOnly />
                                     </Form.Group>
                                 </Row>
                                 <Row className="mb-3">
@@ -196,16 +227,16 @@ function Form6A({ history }) {
                                             </Form.Group>
                                         </Row>
                                         <Row>
-                                            <Col xs={1} sm={2}>
+                                            <Col xs={2}>
                                                 <Form.Label>20</Form.Label>
                                             </Col>
-                                            <Col xs={5} sm={4}>
+                                            <Col xs={2}>
                                                 <Form.Control type="text" placeholder="xx" pattern="[0-9]{2}" value={year1} onChange={e => setYear1(e.target.value)} required />
                                             </Col>
-                                            <Col xs={1} sm={2}>
-                                                <Form.Label>-20</Form.Label>
+                                            <Col xs={2}>
+                                                <Form.Label>- 20</Form.Label>
                                             </Col>
-                                            <Col xs={5} sm={4}>
+                                            <Col xs={2}>
                                                 <Form.Control type="text" placeholder="xx" pattern="[0-9]{2}" value={year2} onChange={e => setYear2(e.target.value)} required />
                                             </Col>
                                         </Row>
@@ -230,7 +261,8 @@ function Form6A({ history }) {
                                         lecUnits = `lecUnits-${idx}`,
                                         labUnits = `labUnits-${idx}`,
                                         days = `days-${idx}`,
-                                        time = `time-${idx}`,
+                                        startTime = `startTime-${idx}`,
+                                        endTime = `endTime-${idx}`,
                                         room = `room-${idx}`,
                                         section = `section-${idx}`
 
@@ -307,17 +339,67 @@ function Form6A({ history }) {
                                                         </Form.Select>
                                                     </FloatingLabel>
                                                 </Col>
-                                                <Col xs={6} sm={6} md={4} lg={3} style={addDropStyle}>
-                                                    <FloatingLabel label="Time">
-                                                        <Form.Control type="text" placeholder="Time" name="time" id={time} data-id={idx} value={val.time} onChange={e => onChange(idx, e)} required />
-                                                    </FloatingLabel>
+                                                <Col xs={6} sm={6} md={4} lg={5} style={addDropStyle}>
+                                                    <Row className="mt-3">
+                                                        <Form.Group as={Col} xs={6}>
+                                                            <Form.Label>Start Time</Form.Label>
+                                                            <TimePicker
+                                                                disableClock
+                                                                name="startTime"
+                                                                id={startTime}
+                                                                data-id={idx}
+                                                                value={val.startTime}
+                                                                onChange={value =>  {
+
+                                                                    // ? value === null if and only if AM/PM is selected
+                                                                    // ? value = jsonobject & null when selected but time is not complete
+                                                                    // ? value is time when complete
+
+                                                                    if (value !== null) {
+                                                                        if (value.isDefaultPrevented && value.isDefaultPrevented.name === "functionThatReturnsFalse") {
+                                                                        
+                                                                        } else {
+                                                                            if (value) {
+                                                                                onTimeChange(idx, "startTime", value)
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }}
+                                                            />
+                                                        </Form.Group>
+                                                        <Form.Group as={Col} xs={6}>
+                                                            <Form.Label>End Time</Form.Label>
+                                                            <TimePicker
+                                                                disableClock
+                                                                name="endTime"
+                                                                id={endTime}
+                                                                data-id={idx}
+                                                                value={val.endTime}
+                                                                onChange={value =>  {
+                                                                    // ? value === null if and only if AM/PM is selected
+                                                                    // ? value = jsonobject & null when selected but time is not complete
+                                                                    // ? value is time when complete
+
+                                                                    if (value !== null) {
+                                                                        if (value.isDefaultPrevented && value.isDefaultPrevented.name === "functionThatReturnsFalse") {
+                                                                        
+                                                                        } else {
+                                                                            if (value) {
+                                                                                onTimeChange(idx, "endTime", value)
+                                                                            }
+                                                                        }
+                                                                    }
+                                                                }}
+                                                            />
+                                                        </Form.Group>
+                                                    </Row>
                                                 </Col>
-                                                <Col xs={6} sm={6} md={4} lg={3} style={addDropStyle}>
+                                                <Col xs={6} sm={6} md={4} lg={2} style={addDropStyle}>
                                                     <FloatingLabel label="Room Number">
                                                         <Form.Control type="text" placeholder="Room number" name="room" id={room} data-id={idx} value={val.room} onChange={e => onChange(idx, e)} required />
                                                     </FloatingLabel>
                                                 </Col>
-                                                <Col xs={6} sm={6} md={4} lg={3} style={addDropStyle}>
+                                                <Col xs={6} sm={6} md={4} lg={2} style={addDropStyle}>
                                                     <FloatingLabel label="Section">
                                                         <Form.Control type="text" placeholder="Section" name="section" id={section} data-id={idx} value={val.section} onChange={e => onChange(idx, e)} required />
                                                     </FloatingLabel>
