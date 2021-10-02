@@ -155,20 +155,18 @@ function Form6B({history}) {
                             <Card.Title style={{ margin: '10px 0 20px 0', color: '#9c0b0b', fontWeight: 'bold', textAlign: 'center' }}>{title}</Card.Title>
                             <Card.Title style={{ margin: '10px 0 20px 0', color: 'black', fontWeight: 'bold' }}>Student Information</Card.Title>
                             <Form style={{ color: 'black' }} onSubmit={submitHandler} >
-                                <Row className="mb-3">
-                                    <Form.Group as={Col} xs={12} sm={12} md={4}>
-                                        <Form.Label>First Name</Form.Label>
-                                        <Form.Control type="text" value={user && user.firstName} readOnly />
+                                <Row className="mb-3"> 
+                                    <Form.Group as={Col} xs={12} sm={6} md={6} lg={2}>
+                                        <Form.Label>Student Number</Form.Label>
+                                        <Form.Control value={user && user.studentNumber} readOnly />
                                     </Form.Group>
-
-                                    <Form.Group as={Col} xs={12} sm={6} md={4}>
-                                        <Form.Label>Middle Initial</Form.Label>
-                                        <Form.Control type="text" placeholder="(Optional)" value={middleInitial} readOnly />
+                                    <Form.Group as={Col} xs={12} sm={6} md={6} lg={4}>
+                                        <Form.Label>Course/Program</Form.Label>
+                                        <Form.Control type="text" value={user && user.course} readOnly />
                                     </Form.Group>
-
-                                    <Form.Group as={Col}xs={12} sm={6} md={4}>
-                                        <Form.Label>Last Name</Form.Label>
-                                        <Form.Control type="text" value={user && user.lastName} readOnly />
+                                    <Form.Group as={Col} xs={12} sm={12} md={12} lg={6}>
+                                        <Form.Label>Email address</Form.Label>
+                                        <Form.Control type='email' value={user && user.email} readOnly />
                                     </Form.Group>
                                 </Row>
 
@@ -177,12 +175,10 @@ function Form6B({history}) {
                                         <Form.Label>Student Number</Form.Label>
                                         <Form.Control value={user && user.studentNumber} readOnly />
                                     </Form.Group>
-
                                     <Form.Group as={Col} xs={12} sm={6} md={6} lg={4}>
                                         <Form.Label>Course/Program</Form.Label>
                                         <Form.Control type="text" value={user && user.course} readOnly />
                                     </Form.Group>
-
                                     <Form.Group as={Col} xs={12} sm={12} md={12} lg={4}>
                                         <Form.Label>Email address</Form.Label>
                                         <Form.Control type='email' value={user && user.email} readOnly />
@@ -193,14 +189,12 @@ function Form6B({history}) {
                                         <Form.Label>Term/Special</Form.Label>
                                         <Form.Control type="text" placeholder="1st" value={term} onChange={e => setTerm(e.target.value)} required />
                                     </Form.Group>
-
                                     <Row as={Col}>
                                         <Row>
                                             <Form.Group as={Col} xs={12}>
                                                 <Form.Label>Academic Year </Form.Label>
                                             </Form.Group>
                                         </Row>
-
                                         <Row>
                                             <Col xs={1} sm={2}>
                                                 <Form.Label>20</Form.Label>
@@ -217,16 +211,15 @@ function Form6B({history}) {
                                         </Row>
                                     </Row>
                                 </Row>
-
                                 <Card.Title 
-                                style={{ margin: '5px 0 20px 0',
-                                         color: 'black', 
-                                         fontWeight: 'bold',
-                                         
-                                         paddingTop: '20px'
-                                         
-                                         
-                                        }}>Courses to Cross-enroll / Drop
+                                    style={{
+                                        margin: '5px 0 20px 0',
+                                        color: 'black', 
+                                        fontWeight: 'bold',
+                                        paddingTop: '20px'
+                                    }}
+                                >
+                                    Courses to Cross-enroll / Drop
                                 </Card.Title>
                                 {inputFields.map((val, idx) => {
                                     //set unique id per row

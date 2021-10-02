@@ -253,11 +253,11 @@ function OverloadForm({ history }) {
                                         <Form.Label>Student Number</Form.Label>
                                         <Form.Control value={user && user.studentNumber} readOnly />
                                     </Form.Group>
-                                    <Form.Group as={Col} xs={12} sm={6} md={6} lg={6}>
+                                    <Form.Group as={Col} xs={12} sm={6} md={6} lg={4}>
                                         <Form.Label>Course/Program</Form.Label>
                                         <Form.Control type="text" value={user && user.course} readOnly />
                                     </Form.Group>
-                                    <Form.Group as={Col} xs={12} sm={12} md={12} lg={4}>
+                                    <Form.Group as={Col} xs={12} sm={12} md={12} lg={6}>
                                         <Form.Label>Email address</Form.Label>
                                         <Form.Control type='email' value={user && user.email} readOnly />
                                     </Form.Group>
