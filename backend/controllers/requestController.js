@@ -214,6 +214,30 @@ exports.getDeptChairRequests = catchAsyncErrors(async(req, res, next) => {
     const denied = await getRequestsDenied.query;
     const crossEnrollment = await getRequestsCrossEnrollment.query;
 
+
+    const dateToday = new Date(Date.now()).setHours(0,0,0,0)
+    const dateTomorrow = new Date(Date.now() + (24 * 60 * 60 * 1000)).setHours(0,0,0,0)
+    const dateLastWeek = new Date(Date.now() - (7 * 24 * 60 * 60 * 1000)).setHours(0,0,0,0)
+    const dateLastMonth = new Date(Date.now() - (30 * 24 * 60 * 60 * 1000)).setHours(0,0,0,0)
+    const dateLast3Months = new Date(Date.now() - (90 * 24 * 60 * 60 * 1000)).setHours(0,0,0,0)
+    const dateLast6Months = new Date(Date.now() - (180 * 24 * 60 * 60 * 1000)).setHours(0,0,0,0)
+    const dateLastYear = new Date(Date.now() - (360 * 24 * 60 * 60 * 1000)).setHours(0,0,0,0)
+
+    const dates = [dateToday, dateLastWeek, dateLastMonth, dateLast3Months, dateLast6Months, dateLastYear]
+
+    const stats = []
+    for (let i = 0 ; i < dates.length ; i++) {
+        const x = await Request.find({createdAt: {
+            "$gte": dates[i].toString(),
+            "$lt": dateTomorrow.toString()
+        },
+        "requestorInfo.course": deptCourse,
+        requestType: { $nin: requestTypeOfficeStaff 
+        }})
+
+        stats.push(x.length)
+    }
+
     res.status(200).json({
         success: true,
         requests,
@@ -222,7 +246,8 @@ exports.getDeptChairRequests = catchAsyncErrors(async(req, res, next) => {
         processing,
         approved,
         denied,
-        crossEnrollment
+        crossEnrollment,
+        stats
     })
 })
 
@@ -266,30 +291,25 @@ exports.getAllRequests = catchAsyncErrors(async(req, res, next) => {
     const approved = await getRequestsApproved.query;
     const denied = await getRequestsDenied.query;
 
-    // const getToday = new APIFeatures(Request.find()
-    //         .sort({
-    //             createdAt: {
-    //                 "$gte": Date.now(),
-    //                 "$lt": Date.now() + 1
-    //             }
-    //         }), req.query)
-    //     .searchRequests()
-    //     .filter()
-    //     .pagination(resPerPage)
+    const dateToday = new Date(Date.now()).setHours(0,0,0,0)
+    const dateTomorrow = new Date(Date.now() + (24 * 60 * 60 * 1000)).setHours(0,0,0,0)
+    const dateLastWeek = new Date(Date.now() - (7 * 24 * 60 * 60 * 1000)).setHours(0,0,0,0)
+    const dateLastMonth = new Date(Date.now() - (30 * 24 * 60 * 60 * 1000)).setHours(0,0,0,0)
+    const dateLast3Months = new Date(Date.now() - (90 * 24 * 60 * 60 * 1000)).setHours(0,0,0,0)
+    const dateLast6Months = new Date(Date.now() - (180 * 24 * 60 * 60 * 1000)).setHours(0,0,0,0)
+    const dateLastYear = new Date(Date.now() - (360 * 24 * 60 * 60 * 1000)).setHours(0,0,0,0)
 
-    // const getToday = new APIFeatures(Request.find()
-    //     .sort({ createdAt: -1 }), req.query)
-    //     .searchRequests()
-    //     .filter()
-    //     .pagination(resPerPage)
+    const dates = [dateToday, dateLastWeek, dateLastMonth, dateLast3Months, dateLast6Months, dateLastYear]
 
-    // const getToday = new APIFeatures(Request.find()
-    //     .sort({ createdAt: -1 }), req.query)
-    //     .searchRequests()
-    //     .filter()
-    //     .pagination(resPerPage)
+    const stats = []
+    for (let i = 0 ; i < dates.length ; i++) {
+        const x = await Request.find({createdAt: {
+            "$gte": dates[i].toString(),
+            "$lt": dateTomorrow.toString()
+        }})
 
-    // const today = await getToday.query;
+        stats.push(x.length)
+    }
 
     res.status(200).json({
         success: true,
@@ -299,7 +319,7 @@ exports.getAllRequests = catchAsyncErrors(async(req, res, next) => {
         processing,
         approved,
         denied,
-        // stats: [today, lastWeek, lastMonth]
+        stats
     })
 })
 

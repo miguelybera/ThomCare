@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react'
-import { LineChart, Line, CartesianGrid, XAxis, YAxis } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis } from 'recharts'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
@@ -13,18 +13,12 @@ import Loader from '../../layout/Loader'
 import ReportCard from './ReportCard'
 var dateFormat = require('dateformat')
 
-const data = [
-    {name: 'Page A', uv: 400},
-    {name: 'Page B', uv: 300},
-    {name: 'Page C', uv: 200}
-];
-
 const ControlPanel = ({ history }) => {
     const dispatch = useDispatch()
     const alert = useAlert()
 
     const { user } = useSelector(state => state.auth)
-    const { loading: listLoading, error, requests, processing, pending, approved, denied } = useSelector(state => state.requests)
+    const { loading: listLoading, error, requests, processing, pending, approved, denied, stats } = useSelector(state => state.requests)
     const { loading: recentsLoading, error: recentsError, recents } = useSelector(state => state.recents)
 
     const role = user && user.role
@@ -135,6 +129,22 @@ const ControlPanel = ({ history }) => {
         return data
     }
 
+    const setData = () => {
+        const data = [
+            {name: 'Today', uv: 0},
+            {name: '7d ago', uv: 0},
+            {name: '30d ago', uv: 0},
+            {name: '3m ago', uv: 0},
+            {name: '6m ago', uv: 0},
+            {name: 'A year ago', uv: 0}
+        ];
+
+        stats && stats.forEach((x, idx) => {
+            data[idx].uv = x
+        })
+        
+        return data
+    }
     return (
         <Fragment>
             <MetaData title={'Control Panel'} />
@@ -144,15 +154,18 @@ const ControlPanel = ({ history }) => {
                     <div className="">
                         <h1 style={{margin: '50px 0'}}>Control Panel</h1>
                         <Container fluid>
+                            {user.role !== 'Student' ? (
+                                <Fragment>
+                                    <Row style={{ display: 'flex', justifyContent: 'center', margin: '50px' }}>
+                                        <BarChart width={600} height={300} data={setData()}>
+                                            <XAxis dataKey="name" />
+                                            <YAxis />
+                                            <Bar dataKey="uv" barSize={30} fill="#8884d8"  label={"Requests"}/>
+                                        </BarChart>
+                                    </Row>
+                                </Fragment>
+                            ) : <Fragment></Fragment>}
                             <Row style={{ display: 'flex', justifyContent: 'center' }}>
-                            
-                                {/* <LineChart width={600} height={300} data={data}>
-                                    <Line type="monotone" dataKey="uv" stroke="#8884d8" />
-                                    <CartesianGrid stroke="#ccc" />
-                                    <XAxis dataKey="name" />
-                                    <YAxis />
-                                </LineChart> */}
-
                                 {user.role === 'Student' ? (
                                     <Fragment>
                                         <Col sm><ReportCard requestType={'Requests'} length={requests && requests.length} icon={'edit'} color={'red'}/></Col>
