@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Pdf from "react-to-pdf";
 import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
 import { Button } from 'react-bootstrap'
-import './css/overload.css'
+import './css/form6a.css'
 import '../../../../App.css'
 
 const ref = React.createRef();
@@ -47,243 +47,434 @@ const OVERLOADPDF = ({ studentInfo, submitted, setSubmitted }) => {
 
     return (
         <>
-            <div style={{ fontFamily: 'MuktaMalar' }}>
-                
-                <span style={{ margin: '10px' }}>
-                    <h4>Preview of accomplished form.</h4>
-                    <h6>Click 'Save as PDF' button below to download the form.</h6>
-                </span>
-
-                <div className="Post" ref={ref} style={{ border: '1px solid black ' }}>
-                    <div className="titlerow">
-                        <center>
-                            <span>UNIVERSITY OF SANTO TOMAS</span><br />
-                            <span>Espana, Manila</span>
-
-                            <br />
-                            <br />
-
-                            <p>REQUEST FOR STUDY OVERLOAD</p>
-                            <p>(Applicable to graduating students only - PPS No. 1012 Student Handbook)</p>
-                        </center>
+        <div style={{fontFamily: 'MuktaMalar' }}>
+            <span style={{ margin: '10px' }}>
+                <h4>Preview of accomplished form.</h4>
+                <h6>Click 'Save as PDF' button below to download the form.</h6>
+            </span>
+            <div className="Post" ref={ref} style={{ border: '1px solid black ' }}>
+                <div className="headerform">
+                    <div>
+                        UST FORM No. 6A<br />
+                        <span style={{ fontWeight: 'bold' }}>CHANGE / DROP COURSE </span>
                     </div>
-
-                    <div className="firstrow">
-                        <div>NAME OF STUDENT:</div>
-                        <div>STUDENT NO.</div>
-                    </div>
-
-                    <div className="secondrow">
-                        <div>Program:</div>
-                        <div>CURRICULUM YEAR:</div>
-                        <div>TERM:</div>
-                    </div>
-
-                    <div className="tablerow">
+                    <div>
                         <table>
                             <tbody>
                                 <tr>
-                                    <td>Full-Time Student</td>
-                                    <td></td>
-                                    <td>Total Number of Units Earned</td>
-                                    <td></td>
-                                    <td>Does the program require Bar or Board Examination?</td>
-                                    <td></td>
+                                    <td colSpan={10} style={{ textAlign: 'center' }}>STUDENT NO.</td>
                                 </tr>
                                 <tr>
-                                    <td>No. of "INCOMPLETE" grades</td>
-                                    <td></td>
-                                    <td>Total Number of Units Required for the Program</td>
-                                    <td></td>
-                                    <td>Is there a violation of courses prerequisites?</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>No. of Special Terms Attended</td>
-                                    <td></td>
-                                    <td>Normal Load (No. of Units) for the current Term</td>
-                                    <td></td>
-                                    <td>Total Number of Units to be Taken including Overload</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Total Number of Overload Units Already Taken</td>
-                                    <td></td>
-                                    <td>Working Student</td>
-                                    <td></td>
-                                    <td>No. of "5s"</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td>Average Rating</td>
-                                    <td colspan="5"></td>
+                                    {studentNumber.map(num => (
+                                        <td>{num}</td>
+                                    ))}
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-                    <br />
-
-                    <div className="loadrow">
-                        <div>LOAD REQUESTED FOR APPROVAL:</div>
+                    <div style={{ textAlign: 'center' }}>
+                        <span style={{ fontWeight: 'bold', fontSize: '18px', fontFamily: 'AveriaBold'}}>UNIVERSITY OF SANTO TOMAS</span><br />
+                        España St., Manila, Philippines
                     </div>
+                    <div>
+                        <img src="/images/UST_SEAL.png" alt="UST LOGO" width="80" height="80" />
+                    </div>
+                </div>
 
-                    <div className="inforow">
-                        <table>
+                <div className="namesabove">
+                    <div>Place a comma (,) between last and first names</div>
+                    <div style={{ textAlign: 'right' }}> <b>{studentInfo.term}</b> Term / Special, Academic Year 20<b>{studentInfo.year1}</b> - 20<b>{studentInfo.year2}</b></div>
+                </div>
+
+                <div className="namesform">
+                    <div>
+                        <table style={{ width: '100%' }}>
                             <tbody>
-                                <tr style="text-align:center;">
-                                    <td>COURSES</td>
-                                    <td>UNITS</td>
-                                    <td>TIME</td>
-                                    <td>DAYS</td>
-                                </tr>
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{name}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
-
-                    <br />
-
-                    <div className="specialrow">
-                        <div>SPECIAL TERM LOAD (If special term graduate):</div>
-                    </div>
-
-                    <div className="specialinfo">
-                        <table>
+                    <div>
+                        <table style={{ width: '100%' }}>
                             <tbody>
-                                <tr style="text-align:center">
-                                    <td>COURSES</td>
-                                    <td>UNITS</td>
-                                </tr>
                                 <tr>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td></td>
+                                    <td>{course}</td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
+                </div>
 
-                    <div className="tentativerow">
-                        TENTATIVE DATE OF GRADUATION:
-                    </div>
+                <div className="namesbelow" style={{ fontWeight: 'bold' }}>
+                    <div>LAST</div>
+                    <div>FIRST</div>
+                    <div>M.I.</div>
+                    <div style={{ textAlign: 'right' }}>COLLEGE/PROGRAM</div>
+                </div>
 
-                    <div className="signaturerow">
-                        <div></div>
+                <div style={{ fontWeight: 'bold' }}>REQUESTED:</div>
+                <center>
+                    <div className="dropform">
                         <div>
-                            <table className="sig">
-                                <tr>
-                                    <td>_______________________________</td>
-                                </tr>
-                                <tr style="text-align:center">
-                                    <td>Signature of Student</td>
-                                </tr>
+                            <table style={{ width: '95%' }}>
+                                <tbody>
+                                    <tr style={{ fontWeight: 'bold' }}>
+                                        <td colSpan={15} style={{ textAlign: 'center' }}>C O U R S E S</td>
+                                        <td>Units</td>
+                                        <td>Days</td>
+                                        <td>Time</td>
+                                        <td>Room</td>
+                                        <td>Section</td>
+                                    </tr>
+                                    {studentInfo.requested.length === 0 ? (
+                                        <Fragment>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </Fragment>
+                                    ) : (
+                                        <Fragment>
+                                            {
+                                                studentInfo.requested.map(x => (
+                                                    <Fragment>
+                                                        <tr>
+                                                            <td colSpan={15}>{x.courseCode} - {x.courseName}</td>
+                                                            <td>{Number(x.lecUnits) + Number(x.labUnits)}</td>{/** units*/}
+                                                            <td>{x.days}</td>{/** days */}
+                                                            <td >{x.time}</td>{/** time*/}
+                                                            <td>{x.room}</td>{/** room*/}
+                                                            <td>{x.section}</td>{/** section*/}
+                                                        </tr>
+                                                    </Fragment>
+                                                ))
+                                            }
+                                        </Fragment>
+                                    )}
+                                </tbody>
                             </table>
                         </div>
                     </div>
-
-                    <div className="reccomendrow">
-                        RECOMMENDING APPROVAL:
+                </center>
+                <br />
+                <div style={{ fontWeight: 'bold' }}>SPECIAL TERM:</div>
+                <center>
+                    <div className="addform">
+                        <div>
+                            <table style={{ width: '95%' }}>
+                                <tbody>
+                                    <tr style={{ fontWeight: 'bold' }}>
+                                        <td colSpan={15} style={{ textAlign: 'center', marginRight:'170px' }}>C O U R S E S</td>
+                                        <td>Units</td>
+                                        <td>Days</td>
+                                        <td >Time</td>
+                                        <td>Room</td>
+                                        <td>Section</td>
+                                    </tr>
+                                    {studentInfo.special.length === 0 ? (
+                                        <Fragment>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </Fragment>
+                                    ) : (
+                                        <Fragment>
+                                            {
+                                                studentInfo.special.map(x => (
+                                                    <Fragment>
+                                                        <tr>
+                                                            <td colSpan={15} style={{marginRight:'100px'}}>{x.courseCodeSpecialTerm} - {x.courseNameSpecialTerm}</td>
+                                                            <td >{Number(x.lecUnits) + Number(x.labUnits)}</td>{/** units*/}
+                                                            <td>{x.days}</td>{/** days */}
+                                                            <td >{x.time}</td>{/** time*/}
+                                                            <td >{x.room}</td>{/** room*/}
+                                                            <td >{x.section}</td>{/** section*/}
+                                                        </tr>
+                                                    </Fragment>
+                                                ))
+                                            }
+                                        </Fragment>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
+                </center>
 
-                    <div className="deanrow">
-                        <div style="text-align:center;">Dean</div>
-                        <div></div>
-                        <div>Approved</div>
-                        <div>Disapproved</div>
-                    </div>
+                <center>NEW TOTAL UNITS: </center>
 
-                    <div className="deanrow">
-                        <div></div>
-                        <div></div>
-                        <div>Total Units</div>
-                        <div></div>
-                    </div>
-
-                    <div className="daterow">
-                        <div>Date:</div>
-                        <div style="text-align:center;">Registrar</div>
-                    </div>
-
+                <div className="signatories" style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                    <div>Dean or Representative</div>
+                    <div></div>
+                    <div>Student's Signature</div>
                 </div>
 
-                <Pdf targetRef={ref} filename="overloadForm.pdf" options={options}>
-                    {({ toPdf }) =>
-                        <center>
-                            <Button onClick={toPdf} style={{ margin: '10px' }}>Save as PDF</Button>
-                            <Button onClick={goBack} style={{ margin: '10px' }}>Back</Button>
-                        </center>
-                    }
-                </Pdf>
+                <div style={{ textAlign: 'right', fontWeight: 'bold' }}>
+                    UST:S033-00-FO-04
+                </div>
+                <center>
+                    <div style={{ fontWeight: 'bold' }}>
+                        COPY FOR THE STUDENT
+                    </div>
+                </center>
+
+                <div className="headerform">
+                    <div>
+                        UST FORM No. 6A<br />
+                        <span style={{ fontWeight: 'bold' }}>CHANGE /DROP COURSE </span>
+                    </div>
+                    <div>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td colSpan={10} style={{ textAlign: 'center' }}>STUDENT NO.</td>
+                                </tr>
+                                <tr>
+                                    {studentNumber.map(num => (
+                                        <td>{num}</td>
+                                    ))}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div style={{ textAlign: 'center' }}>
+                        <span style={{ fontWeight: 'bold' }}>UNIVERSITY OF SANTO TOMAS</span><br />
+                        España St., Manila, Philippines
+
+                    </div>
+                    <div>
+                        <img src="/images/UST_SEAL.png" alt="UST LOGO" width="60" height="60" />
+                    </div>
+                </div>
+
+                <div className="namesabove">
+                    <div>Place a comma (,) between last and first names</div>
+                    <div style={{ textAlign: 'right' }}> <b>{studentInfo.term}</b> Term / Special, Academic Year 20<b>{studentInfo.year1}</b> - 20<b>{studentInfo.year2}</b></div>
+                </div>
+
+
+                <div className="namesform">
+                    <div>
+                        <table style={{ width: '100%' }}>
+                            <tbody>
+                                <tr>
+                                    <td>{name}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div>
+                        <table style={{ width: '100%' }}>
+                            <tbody>
+                                <tr>
+                                    <td>{course}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div className="namesbelow" style={{ fontWeight: 'bold' }}>
+                    <div>LAST</div>
+                    <div>FIRST</div>
+                    <div>M.I.</div>
+                    <div style={{ textAlign: 'right' }}>COLLEGE/PROGRAM</div>
+                </div>
+
+                <div style={{ fontWeight: 'bold' }}>TO BE DISCONTINUED:</div>
+                <center>
+                    <div className="dropform">
+
+                        <div>
+
+                            <table style={{ width: '95%' }}>
+                                <tbody>
+                                    <tr style={{ fontWeight: 'bold' }}>
+                                        <td colSpan={15} style={{ textAlign: 'center' }}>C O U R S E S</td>
+                                        <td>Units</td>
+                                        <td>Days</td>
+                                        <td>Time</td>
+                                        <td>Room</td>
+                                        <td>Section</td>
+                                    </tr>
+                                    {studentInfo.requested.length === 0 ? (
+                                        <Fragment>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </Fragment>
+                                    ) : (
+                                        <Fragment>
+                                            {
+                                                studentInfo.requested.map(x => (
+                                                    <Fragment>
+                                                        <tr>
+                                                            <td colSpan={15}>{x.courseCode} - {x.courseName}</td>
+                                                            <td>{Number(x.lecUnits) + Number(x.labUnits)}</td>{/** units*/}
+                                                            <td>{x.days}</td>{/** days */}
+                                                            <td>{x.time}</td>{/** time*/}
+                                                            <td>{x.room}</td>{/** room*/}
+                                                            <td>{x.section}</td>{/** section*/}
+                                                        </tr>
+                                                    </Fragment>
+                                                ))
+                                            }
+                                        </Fragment>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </center>
+
+                <br />
+                <div style={{ fontWeight: 'bold' }}>TO BE ADDED:</div>
+                <center>
+                    <div className="addform">
+                        <div>
+                            <table style={{ width: '95%' }}>
+                                <tbody>
+                                    <tr style={{ fontWeight: 'bold' }}>
+                                        <td colSpan={15} style={{ textAlign: 'center' }}>C O U R S E S</td>
+                                        <td>Units</td>
+                                        <td>Days</td>
+                                        <td>Time</td>
+                                        <td>Room</td>
+                                        <td>Section</td>
+                                    </tr>
+                                    {studentInfo.special.length === 0 ? (
+                                        <Fragment>
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            </tr>
+                                        </Fragment>
+                                    ) : (
+                                        <Fragment>
+                                            {
+                                                studentInfo.special.map(x => (
+                                                    <Fragment>
+                                                        <tr>
+                                                            <td colSpan={15}>{x.courseCodeSpecialTerm} - {x.courseNameSpecialTerm}</td>
+                                                            <td>{Number(x.lecUnits) + Number(x.labUnits)}</td>{/** units*/}
+                                                            <td>{x.days}</td>{/** days */}
+                                                            <td>{x.time}</td>{/** time*/}
+                                                            <td>{x.room}</td>{/** room*/}
+                                                            <td>{x.section}</td>{/** section*/}
+                                                        </tr>
+                                                    </Fragment>
+                                                ))
+                                            }
+                                        </Fragment>
+                                    )}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </center>
+
+                <center>NEW TOTAL UNITS: </center>
+
+                <div className="signatories" style={{ textAlign: 'center', fontWeight: 'bold' }}>
+                    <div>Dean or Representative</div>
+                    <div></div>
+                    <div>Student's Signature</div>
+                </div>
+
+                <div style={{ textAlign: 'right', fontWeight: 'bold' }}>
+                    UST:S033-00-FO-04
+                </div>
+                <center>
+                    <div style={{ fontWeight: 'bold' }}>
+                        COPY FOR THE DEAN
+                    </div>
+                </center>
+            </div>
+
+            <Pdf targetRef={ref} filename="addDropForm.pdf" options={options}>
+                {({ toPdf }) =>
+                    <center>
+                        <Button onClick={toPdf} style={{ margin: '10px' }}>Save as PDF</Button>
+                        <Button onClick={goBack} style={{ margin: '10px' }}>Back</Button>
+                    </center>
+                }
+            </Pdf>
             </div>
         </>
     );
