@@ -62,9 +62,9 @@ const NavUser = styled.div`
 
 const SidebarNav = styled.nav`
     background: #750908;
-    width: 240px;
-    top: 50px;
-    height: 100vh;
+    width: 250px;
+    top: 0px;
+    height: 100%;
     display: flex;
     justify-content: center;
     position: fixed;
