@@ -124,6 +124,7 @@ const CreateCourse = ({ history, match }) => {
                                                 type='text'
                                                 name='lecUnits'
                                                 value={lecUnits}
+                                                pattern="[0-9]{1}"
                                                 onChange={e => setLecUnits(e.target.value)}
                                                 required
                                             />
@@ -138,6 +139,7 @@ const CreateCourse = ({ history, match }) => {
                                                 type='text'
                                                 name='labUnits'
                                                 value={labUnits}
+                                                pattern="[0-9]{1}"
                                                 onChange={e => setLabUnits(e.target.value)}
                                                 required
                                             />
