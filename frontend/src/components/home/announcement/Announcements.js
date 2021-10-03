@@ -10,7 +10,7 @@ import MetaData from './../../layout/MetaData'
 import Loader from './../../layout/Loader'
 import { INSIDE_DASHBOARD_FALSE } from '../../../constants/dashboardConstants'
 import '../../../App.css'
-var dateFormat = require('dateformat')
+import dateformat from 'dateformat'
 
 const dropdown = {
     border: "2px solid black",
@@ -48,7 +48,7 @@ const Announcements = ({ history }) => {
         count = filteredAnnouncementsCount
     }
     
-    const changeDateFormat = date => dateFormat(date, "dddd mmm d, yyyy h:MMtt")
+    const changeDateFormat = date => dateformat(date, "dddd mmm d, yyyy h:MMtt")
 
     const setCurrentPageNo = (pageNumber) => { setCurrentPage(pageNumber) }
 

@@ -8,7 +8,7 @@ import { INSIDE_DASHBOARD_FALSE } from '../../../constants/dashboardConstants'
 import { TRACK_REQUEST_RESET } from '../../../constants/requestConstants'
 import MetaData from './../../layout/MetaData'
 import Loader from './../../layout/Loader'
-var dateFormat = require('dateformat')
+import dateformat from 'dateformat'
 
 const cardStyle = {
     marginTop: '30px',
@@ -33,7 +33,7 @@ const TrackingPageProgress = ({ history, match }) => {
     const tracker = match.params.trackingNumber
     const surname = match.params.lastName
 
-    const changeDateFormat = date => dateFormat(date, "mmm d, yyyy h:MMtt")
+    const changeDateFormat = date => dateformat(date, "mmm d, yyyy h:MMtt")
     const upperCase = (text) => text.toUpperCase()
 
     useEffect(() => {

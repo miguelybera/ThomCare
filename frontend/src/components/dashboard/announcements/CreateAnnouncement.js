@@ -1,14 +1,17 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
+import ReactQuill from 'react-quill'
 import { Form, Button, Card, Container, Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap'
 import { createAnnouncement, createAnnouncementType, getAnnouncementType, clearErrors } from '../../../actions/announcementActions'
 import { NEW_ANNOUNCEMENT_RESET, NEW_ANNOUNCEMENT_TYPE_RESET } from '../../../constants/announcementConstants'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
+import { modules, formats } from '../../../quill-templates/template'
 import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
-var dateFormat = require('dateformat')
+import 'react-quill/dist/quill.snow.css'
+import dateformat from 'dateformat'
 
 const CreateAnnouncement = ({ history }) => {
     const dispatch = useDispatch()
@@ -17,7 +20,7 @@ const CreateAnnouncement = ({ history }) => {
     const { loading, error, success } = useSelector(state => state.newAnnouncement)
     const { loading: announcementTypeLoading, announcementTypes, error: announcementTypeError } = useSelector(state => state.announcementType)
 
-    const changeDateFormat = (date) => dateFormat(date, "yyyy-mm-dd")
+    const changeDateFormat = (date) => dateformat(date, "yyyy-mm-dd")
 
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
@@ -147,12 +150,13 @@ const CreateAnnouncement = ({ history }) => {
                                         </Form.Group>
                                         <Form.Group className="mb-3">
                                             <Form.Label>Description</Form.Label>
-                                            <Form.Control
-                                                as="textarea"
-                                                rows={10}
+                                            <ReactQuill 
+                                                placeholder="Write something..."
                                                 name="description"
                                                 value={description}
-                                                onChange={e => setDescription(e.target.value)}
+                                                onChange={e => setDescription(e)}
+                                                modules={modules}
+                                                format={formats}
                                                 required
                                             />
                                         </Form.Group>

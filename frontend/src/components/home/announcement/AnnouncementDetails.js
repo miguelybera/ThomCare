@@ -8,7 +8,7 @@ import { getAnnouncementDetails, getUser, clearErrors } from './../../../actions
 import { INSIDE_DASHBOARD_FALSE } from '../../../constants/dashboardConstants'
 import MetaData from './../../layout/MetaData'
 import Loader from './../../layout/Loader'
-var dateFormat = require('dateformat')
+import dateformat from 'dateformat'
 
 const cardStyle = {
     margin: '20px',
@@ -36,7 +36,7 @@ const AnnouncementDetails = ({ history, match }) => {
 
     const announcementId = match.params.id
 
-    const changeDateFormat = (date) => dateFormat(date, "ddd, mmm d, yyyy h:MMtt")
+    const changeDateFormat = (date) => dateformat(date, "ddd, mmm d, yyyy h:MMtt")
     const upperCase = (name) => name.toUpperCase()
 
     useEffect(() => {

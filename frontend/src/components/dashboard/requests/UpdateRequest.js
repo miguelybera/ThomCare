@@ -9,7 +9,7 @@ import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
 import Sidebar from '../../layout/Sidebar'
-var dateFormat = require('dateformat')
+import dateformat from 'dateformat'
 
 const UpdateRequest = ({ history, match }) => {
     const dispatch = useDispatch()
@@ -33,7 +33,7 @@ const UpdateRequest = ({ history, match }) => {
 
     const requestId = match.params.id
 
-    const changeDateFormat = (date) => dateFormat(date, "mmm d, yyyy h:MMtt")
+    const changeDateFormat = (date) => dateformat(date, "mmm d, yyyy h:MMtt")
     const upperCase = (text) => text.toUpperCase()
 
     useEffect(() => {

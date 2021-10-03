@@ -10,14 +10,14 @@ import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
-var dateFormat = require('dateformat')
+import dateformat from 'dateformat'
 
 const ListAnnouncements = ({ history }) => {
     const alert = useAlert()
     const dispatch = useDispatch()
 
     const { loading, announcements, error } = useSelector(state => state.announcements)
-    const changeDateFormat = date => dateFormat(date, "mmm d, yyyy h:MMtt")
+    const changeDateFormat = date => dateformat(date, "mmm d, yyyy h:MMtt")
 
     const shortenDescription = (description) => {
         let y = description.split(' ')

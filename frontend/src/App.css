@@ -84,19 +84,21 @@
 }
 
 .image {
-  border-radius: 105px;
-  margin-left: auto;
-  padding-right: 15px;
-  padding-left: 15px;
+    border-radius: 105px;
+    margin-left: auto;
+    padding-right: 15px;
+    padding-left: 15px;
 }
 
 @media only screen and (max-width: 700px) {
-  .image {
-    border: 2px solid white;
-  }
+    .image {
+        border: 2px solid white;
+    }
 }
 
+
 /* announcements */
+
 #rectangle {
     /* gran changed this from 22 > 18 */
     background-color: #9c0b0b;
@@ -117,7 +119,9 @@
     border-bottom: 3px solid #9c0b0b;
 }
 
+
 /* footer */
+
 #foot {
     z-index: -1;
     width: 100%;
@@ -128,8 +132,14 @@
     left: 0;
 }
 
+
 /* side nav */
-.home, .reports, .products, .team, .reports {
+
+.home,
+.reports,
+.products,
+.team,
+.reports {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
@@ -138,4 +148,8 @@
     align-items: center;
     justify-content: center;
     font-size: 5rem;
+}
+
+.ql-editor {
+    min-height: 330px;
 }

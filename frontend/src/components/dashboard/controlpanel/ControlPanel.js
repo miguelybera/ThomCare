@@ -11,7 +11,7 @@ import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
 import ReportCard from './ReportCard'
-var dateFormat = require('dateformat')
+import dateformat from 'dateformat'
 
 const ControlPanel = ({ history }) => {
     const dispatch = useDispatch()
@@ -39,7 +39,7 @@ const ControlPanel = ({ history }) => {
         viewType = '1'
     }
 
-    const changeDateFormat = (date) => dateFormat(date, "yyyy-mm-dd")
+    const changeDateFormat = (date) => dateformat(date, "yyyy-mm-dd")
     const upperCase = (text) => text.toUpperCase()
 
     useEffect(() => {

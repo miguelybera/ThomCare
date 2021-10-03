@@ -8,7 +8,7 @@ import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
-var dateFormat = require('dateformat')
+import dateformat from 'dateformat'
 
 const ListAllRequests = ({ history }) => {
     const alert = useAlert()
@@ -16,7 +16,7 @@ const ListAllRequests = ({ history }) => {
 
     const { loading, audits, error } = useSelector(state => state.audits)
 
-    const changeDateFormat = (date) => dateFormat(date, "yyyy-mm-dd h:MMtt")
+    const changeDateFormat = (date) => dateformat(date, "yyyy-mm-dd h:MMtt")
 
     useEffect(() => {
         dispatch(getAuditLog())

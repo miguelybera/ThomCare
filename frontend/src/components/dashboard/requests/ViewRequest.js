@@ -10,7 +10,7 @@ import { ASSIGN_REQUEST_RESET, UPDATE_REQUEST_RESET, DELETE_REQUEST_RESET } from
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
 import Sidebar from '../../layout/Sidebar'
-var dateFormat = require('dateformat')
+import dateformat from 'dateformat'
 
 const cardStyle = {
     marginTop: '90px',
@@ -42,7 +42,7 @@ const ViewRequest = ({ history, match }) => {
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
-    const changeDateFormat = (date) => dateFormat(date, "mmm d, yyyy h:MMtt")
+    const changeDateFormat = (date) => dateformat(date, "mmm d, yyyy h:MMtt")
     const upperCase = (text) => text.toUpperCase()
 
     useEffect(() => {
