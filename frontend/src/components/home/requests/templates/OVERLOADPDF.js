@@ -72,37 +72,37 @@ const OVERLOADPDF = ({ studentInfo, submitted, setSubmitted }) => {
                                     <td>Full-Time Student</td>
                                     <td style={{textAlign: 'center'}}>{studentInfo.fullTime}</td>
                                     <td>Total Number of Units Earned</td>
-                                    <td></td>
+                                    <td style={{textAlign: 'center'}}>{studentInfo.unitsEarned}</td>
                                     <td>Does the program require Bar or Board Examination?</td>
-                                    <td></td>
+                                    <td style={{textAlign: 'center'}}>{studentInfo.bar}</td>
                                 </tr>
                                 <tr>
                                     <td>No. of "INCOMPLETE" grades</td>
-                                    <td></td>
+                                    <td style={{textAlign: 'center'}}>{studentInfo.incompleteGrades}</td>
                                     <td>Total Number of Units Required for the Program</td>
-                                    <td></td>
+                                    <td style={{textAlign: 'center'}}>{studentInfo.unitsRequired}</td>
                                     <td>Is there a violation of courses prerequisites?</td>
-                                    <td></td>
+                                    <td style={{textAlign: 'center'}}>{studentInfo.violations}</td>
                                 </tr>
                                 <tr>
                                     <td>No. of Special Terms Attended</td>
-                                    <td></td>
+                                    <td style={{textAlign: 'center'}}>{studentInfo.specialAttend}</td>
                                     <td>Normal Load (No. of Units) for the current Term</td>
-                                    <td></td>
+                                    <td style={{textAlign: 'center'}}>{studentInfo.normalLoad}</td>
                                     <td>Total Number of Units to be Taken including Overload</td>
-                                    <td></td>
+                                    <td style={{textAlign: 'center'}}>{studentInfo.totalUnits}</td>
                                 </tr>
                                 <tr>
                                     <td>Total Number of Overload Units Already Taken</td>
-                                    <td></td>
+                                    <td style={{textAlign: 'center'}}>{studentInfo.totalOverloadUnits}</td>
                                     <td>Working Student</td>
-                                    <td></td>
+                                    <td style={{textAlign: 'center'}}>{studentInfo.workingStudent}</td>
                                     <td>No. of "5s"</td>
-                                    <td></td>
+                                    <td style={{textAlign: 'center'}}>{studentInfo.totalFives}</td>
                                 </tr>
                                 <tr>
                                     <td>Average Rating</td>
-                                    <td colspan="5"></td>
+                                    <td colspan="5" style={{textAlign: 'center'}}>{studentInfo.aveRating}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -173,7 +173,7 @@ const OVERLOADPDF = ({ studentInfo, submitted, setSubmitted }) => {
                     </div>
 
                     <div className="deanrow">
-                        <div>_________________________________________________________________________</div>
+                        <div>____________________________________________________</div>
                         <div></div>
                         <div>Approved<input type="checkbox" disabled="true" style={{marginLeft:"10px", height:"15px", width:"15px"}}></input></div>
                         <div>Disapproved<input type="checkbox" disabled="true" style={{marginLeft:"10px", height:"15px", width:"15px"}}></input></div>
