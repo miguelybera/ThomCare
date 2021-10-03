@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Button } from 'react-bootstrap'
+import { Container, Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getRequests, updateRequest, clearErrors } from '../../../actions/requestActions'
 import { UPDATE_REQUEST_RESET } from '../../../constants/requestConstants'
@@ -170,12 +170,16 @@ const ListDeptChairRequests = ({ history }) => {
                     <Container>
                         <h3>My Requests {`/ ${status}`}</h3>
 
-                        <Button style={{margin: '10px'}} onClick={() => setStatus('Requests')}>View All</Button>
-                        <Button style={{margin: '10px'}} onClick={() => setStatus('Pending')}>Pending</Button>
-                        <Button style={{margin: '10px'}} onClick={() => setStatus('Processing')}>Processing</Button>
-                        <Button style={{margin: '10px'}} onClick={() => setStatus('Approved')}>Approved</Button>
-                        <Button style={{margin: '10px'}} onClick={() => setStatus('Denied')}>Denied</Button>
-                        <Button style={{margin: '10px'}} onClick={() => setStatus('Cross Enrollment')}>Cross Enrollment</Button>
+                        <ButtonToolbar>
+                            <ButtonGroup className="me-2">
+                                <Button onClick={() => setStatus('Requests')}>View All</Button>
+                                <Button onClick={() => setStatus('Pending')}>Pending</Button>
+                                <Button onClick={() => setStatus('Processing')}>Processing</Button>
+                                <Button onClick={() => setStatus('Approved')}>Approved</Button>
+                                <Button onClick={() => setStatus('Denied')}>Denied</Button>
+                                <Button onClick={() => setStatus('Cross Enrollment')}>Cross Enrollment</Button>
+                            </ButtonGroup>
+                        </ButtonToolbar>
 
                         {loading ? <Loader /> : (
                             <>

@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Button } from 'react-bootstrap'
+import { Container, Button, ButtonGroup, ButtonToolbar } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getRequests, clearErrors } from '../../../actions/requestActions'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
@@ -51,8 +51,6 @@ const ListAllRequests = ({ history }) => {
 
     useEffect(() => {
         dispatch(getRequests('CICS Staff', 'All'))
-
-        setRequestList(requests && requests)
 
         if (error) {
             alert.error(error)
@@ -140,11 +138,15 @@ const ListAllRequests = ({ history }) => {
                     <Container>
                         <h3>All Requests</h3>
 
-                        <Button style={{margin: '10px'}} onClick={() => setStatus('Requests')}>View All</Button>
-                        <Button style={{margin: '10px'}} onClick={() => setStatus('Pending')}>Pending</Button>
-                        <Button style={{margin: '10px'}} onClick={() => setStatus('Processing')}>Processing</Button>
-                        <Button style={{margin: '10px'}} onClick={() => setStatus('Approved')}>Approved</Button>
-                        <Button style={{margin: '10px'}} onClick={() => setStatus('Denied')}>Denied</Button>
+                        <ButtonToolbar>
+                            <ButtonGroup className="me-2">
+                                <Button onClick={() => setStatus('Requests')}>View All</Button>
+                                <Button onClick={() => setStatus('Pending')}>Pending</Button>
+                                <Button onClick={() => setStatus('Processing')}>Processing</Button>
+                                <Button onClick={() => setStatus('Approved')}>Approved</Button>
+                                <Button onClick={() => setStatus('Denied')}>Denied</Button>
+                            </ButtonGroup>
+                        </ButtonToolbar>
 
                         {loading ? <Loader /> : (
                             <>
