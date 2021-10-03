@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { FloatingLabel, Row, Container, Button, Col, Card, Form, Modal, Breadcrumb } from 'react-bootstrap'
+import { FloatingLabel, Row, Container, Button, Col, Card, Form, Modal, Breadcrumb, InputGroup } from 'react-bootstrap'
 import TimePicker from 'react-time-picker'
 import { getCourses, clearErrors } from '../../../../actions/courseActions'
 import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
@@ -28,8 +28,6 @@ function OverloadForm({ history }) {
     const [curriculum, setCurriculum] = useState('')
     const [term, setTerm] = useState('')
 
-
-
     const [fullTime, setFullTime] = useState()
     const [workingStudent, setWorkingStudent] = useState()
     const [bar, setBar] = useState()
@@ -43,7 +41,6 @@ function OverloadForm({ history }) {
     const [aveRating, setAveRating] = useState()
     const [unitsRequired, setUnitsRequired] = useState()
     const [specialAttend, setSpecialAttend] = useState()
-
 
     const [overload, setOverload] = useState([{
         status: '',
@@ -217,8 +214,6 @@ function OverloadForm({ history }) {
             aveRating,
             unitsRequired,
             specialAttend
-
-
         })
 
         setSubmitted(!submitted)
@@ -324,97 +319,92 @@ function OverloadForm({ history }) {
                                         <Form.Control type='email' value={user && user.email} readOnly />
                                     </Form.Group>
                                 </Row>
+
+                                <Card.Title style={{ margin: '10px 0 20px 0', fontWeight: 'bold' }}>Answer the following</Card.Title>          
                                 <Row style={{ paddingBottom: '20px' }}>
                                     <Form.Group as={Col} lg={3}>
                                         <Form.Label>Curriculum Year</Form.Label>
                                         <Form.Control type='text' placeholder="2021" value={curriculum} onChange={e => setCurriculum(e.target.value)}/>
                                     </Form.Group>
-                                    <Form.Group as={Col} lg={3} controlId="formGridAddress1">
+                                    <Form.Group as={Col} lg={3}>
                                         <Form.Label>Term</Form.Label>
                                         <Form.Control type='text' placeholder="2021 - 2022" value={term} onChange={e => setTerm(e.target.value)} />
                                     </Form.Group>
   
-                                </Row>
-
-
+                                </Row>                      
                                 <Row style={{ paddingBottom: '20px' }}>
-        
-                                    <Form.Group as={Col} >
+                                    <Form.Group as={Col} xs={12} md={3}>
                                         <Form.Check type="checkbox" label="Full Time" onChange={e => setFullTime(!fullTime)}/>
                                     </Form.Group>
 
-                                    <Form.Group as={Col} >
+                                    <Form.Group as={Col} xs={12} md={3}>
                                         <Form.Check type="checkbox" label="Working Student" onChange={e => setWorkingStudent(!workingStudent)}/>
                                     </Form.Group>
 
-                                    <Form.Group as={Col} >
+                                    <Form.Group as={Col} xs={12} md={3}>
                                         <Form.Check type="checkbox" label="Does the program require Bar or Board Examination?" onChange={e => setBar(!bar)}/>
                                     </Form.Group>
 
-                                    <Form.Group as={Col} >
+                                    <Form.Group as={Col} xs={12} md={3}>
                                         <Form.Check type="checkbox" label="Is there a violation of courses prerequisites?" onChange={e => setViolations(!violations)}/>
                                     </Form.Group>
-
                                 </Row>
-                                    
-                                <Row style={{ paddingBottom: '20px' }}>
-
-                                    <Form.Group as={Col} lg={2} controlId="formGridAddress1">
-                                        <Form.Label>Total Number of Units Earned</Form.Label>
-                                        <Form.Control type="text" value={unitsEarned} onChange={e => setUnitsEarned(e.target.value)}/>
+                                <Row>
+                                    <Form.Group as={Col} xs={12} style={{paddingBottom: '12px'}}>
+                                        <InputGroup>
+                                            <InputGroup.Text>Total Number of Units Earned</InputGroup.Text>
+                                            <Form.Control type="text" placeholder="ex. 1" value={unitsEarned} onChange={e => setUnitsEarned(e.target.value)} required/>
+                                        </InputGroup>
                                     </Form.Group>
-
-                                    <Form.Group as={Col} lg={2} controlId="formGridAddress1">
-                                        <Form.Label>No. of INCOMPLETE grades</Form.Label>
-                                        <Form.Control type="text" value={incompleteGrades} onChange={e => setIncompleteGrades(e.target.value)}/>
+                                    <Form.Group as={Col} xs={12} style={{paddingBottom: '12px'}}> 
+                                        <InputGroup>
+                                            <InputGroup.Text>No. of INCOMPLETE grades</InputGroup.Text>
+                                            <Form.Control type="text" placeholder="ex. 1" value={incompleteGrades} onChange={e => setIncompleteGrades(e.target.value)} required/>
+                                        </InputGroup>
                                     </Form.Group>
-
-                                    <Form.Group as={Col} lg={2} controlId="formGridAddress1">
-                                        <Form.Label>Total Number of Units Required for the Program</Form.Label>
-                                        <Form.Control type="text" value={unitsRequired} onChange={e => setUnitsRequired(e.target.value)}/>
+                                    <Form.Group as={Col} xs={12} style={{paddingBottom: '12px'}}>
+                                        <InputGroup>
+                                            <InputGroup.Text>Total Number of Units Required for the Program</InputGroup.Text>
+                                            <Form.Control type="text" placeholder="ex. 1" value={unitsRequired} onChange={e => setUnitsRequired(e.target.value)} required/>
+                                        </InputGroup>
                                     </Form.Group>
-
+                                    <Form.Group as={Col} xs={12} style={{paddingBottom: '12px'}}>
+                                        <InputGroup>
+                                            <InputGroup.Text>No. of Special Terms Attended</InputGroup.Text>
+                                            <Form.Control type="text" placeholder="ex. 1" value={specialAttend} onChange={e => setSpecialAttend(e.target.value)} required/>
+                                        </InputGroup>
+                                    </Form.Group>
+                                    <Form.Group as={Col} xs={12} style={{paddingBottom: '12px'}}>
+                                        <InputGroup>
+                                            <InputGroup.Text>Normal Load for the Current Term</InputGroup.Text>
+                                            <Form.Control type="text" placeholder="How many units?" value={normalLoad} onChange={e => setNormalLoad(e.target.value)} required/>
+                                        </InputGroup>
+                                    </Form.Group>
+                                    <Form.Group as={Col} xs={12} style={{paddingBottom: '12px'}}>
+                                        <InputGroup>
+                                            <InputGroup.Text>Total Number of Units to be Taken including Overload</InputGroup.Text>
+                                            <Form.Control type="text" placeholder="ex. 1" value={totalUnits} onChange={e => setTotalUnits(e.target.value)} required/>
+                                        </InputGroup>
+                                    </Form.Group>
+                                    <Form.Group as={Col} xs={12} style={{paddingBottom: '12px'}}>
+                                        <InputGroup>
+                                            <InputGroup.Text>Total Number of Overload Units Already Taken</InputGroup.Text>
+                                            <Form.Control type="text" placeholder="ex. 1" value={totalOverloadUnits} onChange={e => setTotalOverloadUnits(e.target.value)} required/>
+                                        </InputGroup>
+                                    </Form.Group>
+                                    <Form.Group as={Col} xs={12} style={{paddingBottom: '12px'}}>
+                                        <InputGroup>
+                                            <InputGroup.Text>No. of 5s</InputGroup.Text>
+                                            <Form.Control type="text" placeholder="ex. 1" value={totalFives} onChange={e => setTotalFives(e.target.value)} required/>
+                                        </InputGroup>
+                                    </Form.Group>
+                                    <Form.Group as={Col} xs={12} style={{paddingBottom: '12px'}}>
+                                        <InputGroup>
+                                            <InputGroup.Text>Average Rating</InputGroup.Text>
+                                            <Form.Control type="text" placeholder="ex. 1" value={aveRating} onChange={e => setAveRating(e.target.value)} required/>
+                                        </InputGroup>
+                                    </Form.Group>
                                 </Row>
-
-                                <Row style={{ paddingBottom: '20px' }}>
-
-                                    <Form.Group as={Col} lg={2} controlId="formGridAddress1">
-                                        <Form.Label>No. of Special Terms Attended</Form.Label>
-                                        <Form.Control type="text" value={specialAttend} onChange={e => setSpecialAttend(e.target.value)}/>
-                                    </Form.Group>
-                                    
-                                    <Form.Group as={Col} lg={2} controlId="formGridAddress1">
-                                        <Form.Label>Normal Load (No. of Units) for the current Term</Form.Label>
-                                        <Form.Control type="text" value={normalLoad} onChange={e => setNormalLoad(e.target.value)}/>
-                                    </Form.Group>
-
-                                    <Form.Group as={Col} lg={2} controlId="formGridAddress1">
-                                        <Form.Label>Total Number of Units to be Taken including Overload</Form.Label>
-                                        <Form.Control type="text" value={totalUnits} onChange={e => setTotalUnits(e.target.value)}/>
-                                    </Form.Group>
-
-                                </Row>
-                                
-                                <Row style={{ paddingBottom: '20px' }}>
-
-                                    <Form.Group as={Col} lg={2} controlId="formGridAddress1">
-                                        <Form.Label>Total Number of Overload Units Already Taken</Form.Label>
-                                        <Form.Control type="text" value={totalOverloadUnits} onChange={e => setTotalOverloadUnits(e.target.value)}/>
-                                    </Form.Group>
-
-                                    <Form.Group as={Col} lg={2} controlId="formGridAddress1">
-                                        <Form.Label>No. of 5s</Form.Label>
-                                        <Form.Control type="text" value={totalFives} onChange={e => setTotalFives(e.target.value)}/>
-                                    </Form.Group>
-
-                                    <Form.Group as={Col} lg={2} controlId="formGridAddress1">
-                                        <Form.Label>Average Rating</Form.Label>
-                                        <Form.Control type="text" value={aveRating} onChange={e => setAveRating(e.target.value)}/>
-                                    </Form.Group>
-
-       
-                                </Row>
-
                                 <Card.Title
                                     style={{
                                         margin: '10px 0 20px 0',
