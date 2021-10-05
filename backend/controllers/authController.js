@@ -312,7 +312,7 @@ exports.updateUser = catchAsyncErrors(async (req, res, next) => {
 
     await Audit.create({
         name: "User update",
-        eventInfo: `User (${firstName} ${lastName}) updated.`,
+        eventInfo: `User (${user.firstName} ${user.lastName}) updated.`,
         user: userName,
         dateAudit: Date.now()
     })
