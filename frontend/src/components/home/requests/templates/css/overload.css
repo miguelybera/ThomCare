@@ -121,7 +121,7 @@
 }
 .ustrow {
     display: grid;
-    grid-template-columns: 90% 10%;
+    grid-template-columns: 82% 18%;
     margin-left: 70px;
     margin-bottom: 20px; 
 }
