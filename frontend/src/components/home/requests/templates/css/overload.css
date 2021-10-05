@@ -119,6 +119,12 @@
     margin-left: 70px;
     margin-bottom: 20px; 
 }
+.ustrow {
+    display: grid;
+    grid-template-columns: 90% 10%;
+    margin-left: 70px;
+    margin-bottom: 20px; 
+}
 
 table,
 td,
