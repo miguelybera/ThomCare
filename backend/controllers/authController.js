@@ -218,7 +218,7 @@ exports.verifyStudent = catchAsyncErrors(async (req, res, next) => {
 
             User.findOne({ email }).exec((err, existingUser) => {
                 if (existingUser) { return next(new ErrorHandler('Email already exists')) }
-                const user = User.create({
+                const user =  User.create({
                     firstName,
                     middleName,
                     lastName,
@@ -226,11 +226,13 @@ exports.verifyStudent = catchAsyncErrors(async (req, res, next) => {
                     course,
                     email,
                     password
-                })
+                }).then(()=>
                 res.status(201).json({
                     success: true,
                     message: "User has been registered"
                 })
+                )
+                
             })
         })
     } else {
