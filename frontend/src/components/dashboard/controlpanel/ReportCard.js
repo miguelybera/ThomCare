@@ -4,7 +4,7 @@ import './styles.css'
 const ReportCard = ({ requestType, length, icon, color }) => {
     return (
     <Fragment >
-        <div class={`card bg-c-${color} order-card`}>
+        <div class={`card bg-c-${color} order-card`} style={{ maxWidth: '415px'}}>
             <div class="card-block">
                 <h6 class="m-b-20">{requestType}</h6>
                 <h2 class="text-right">

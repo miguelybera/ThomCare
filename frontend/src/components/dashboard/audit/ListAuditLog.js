@@ -44,17 +44,17 @@ const ListAllRequests = ({ history }) => {
                 {
                     label: 'Event Name',
                     field: 'name',
-                    width: 150
+                    width: 200
                 },
                 {
                     label: 'Event Info',
                     field: 'eventInfo',
-                    width: 300
+                    width: 450
                 },
                 {
                     label: 'User',
                     field: 'user',
-                    width: 150
+                    width: 200
                 }
             ],
             rows: []

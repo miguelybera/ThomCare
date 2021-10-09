@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react'
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts'
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
@@ -156,14 +156,16 @@ const ControlPanel = ({ history }) => {
                         <Container fluid>
                             {user.role !== 'Student' ? (
                                 <Fragment>
-                                    <Row style={{ display: 'flex', justifyContent: 'center', margin: '50px' }}>
-                                        <LineChart width={600} height={300} data={setData()}>
-                                            <Line type="monotone" dataKey="Total" stroke="#8884d8" />
-                                            <CartesianGrid stroke="#ccc" />
-                                            <XAxis dataKey="name" />
-                                            <YAxis />
-                                            <Tooltip />
-                                        </LineChart>
+                                    <Row style={{ display: 'flex', justifyContent: 'center', margin: '50px 0' }}>
+                                        <ResponsiveContainer width={'99%'} height={300}>
+                                            <LineChart width={600} height={300} data={setData()} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                                                <Line type="monotone" dataKey="Total" stroke="#8884d8" />
+                                                <CartesianGrid stroke="#ccc" />
+                                                <XAxis dataKey="name" />
+                                                <YAxis />
+                                                <Tooltip />
+                                            </LineChart>
+                                        </ResponsiveContainer>
                                     </Row>
                                 </Fragment>
                             ) : <Fragment></Fragment>}
@@ -204,8 +206,9 @@ const ControlPanel = ({ history }) => {
                         </Container>
                     </div>
                 </div>
-            )}
-        </Fragment>
+            )
+            }
+        </Fragment >
     )
 }
 
