@@ -246,7 +246,8 @@ export const registerReducer = (state = {}, action) => {
                 ...state,
                 loading: false,
                 isCreated: true,
-                message: action.payload
+                success: action.payload.success,
+                message: action.payload.message
             }
 
         case REGISTER_USER_FAIL:

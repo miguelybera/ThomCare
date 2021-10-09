@@ -39,7 +39,7 @@ router.route('/admin/user/:id').delete(isAuthenticatedUser, authorizeRoles('CICS
 
 //student
 router.route('/registerStudent').post(registerStudent);
-router.route('/verify/account/:token').post(verifyStudent);
+router.route('/verify/account/:token').get(verifyStudent);
 
 //dept chair
 router.route('/deptChair/users').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getStudentAccounts);

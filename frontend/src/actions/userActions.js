@@ -35,6 +35,9 @@ import {
     REGISTER_USER_REQUEST,
     REGISTER_USER_SUCCESS,
     REGISTER_USER_FAIL,
+    VERIFY_STUDENT_REQUEST,
+    VERIFY_STUDENT_SUCCESS,
+    VERIFY_STUDENT_FAIL,
     NEW_PASSWORD_REQUEST,
     NEW_PASSWORD_SUCCESS,
     NEW_PASSWORD_FAIL,
@@ -266,11 +269,33 @@ export const register = (admin, user) => async (dispatch) => {
 
         dispatch({
             type: REGISTER_USER_SUCCESS,
-            payload: data.message
+            payload: data
         })
     } catch (error) {
         dispatch({
             type: REGISTER_USER_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+//verify
+export const verify = (token) => async (dispatch) => {
+    try {
+        dispatch({
+            type: VERIFY_STUDENT_REQUEST
+        })
+
+        const { data } = await axios.get(`/api/v1/verify/account/${token}`)
+
+        dispatch({
+            type: VERIFY_STUDENT_SUCCESS,
+            payload: data
+        })
+
+    } catch (error) {
+        dispatch({
+            type: VERIFY_STUDENT_FAIL,
             payload: error.response.data.message
         })
     }

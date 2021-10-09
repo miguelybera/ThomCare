@@ -214,11 +214,12 @@ exports.verifyStudent = catchAsyncErrors(async (req, res, next) => {
     if (token) {
         jwt.verify(token, process.env.ACCOUNT_TOKEN, function (err, decodedToken) {
             if (err) { return next(new ErrorHandler('Token is invalid or expired')) }
+
             const { firstName, middleName, lastName, studentNumber, course, email, password } = decodedToken
 
             User.findOne({ email }).exec((err, existingUser) => {
                 if (existingUser) { return next(new ErrorHandler('Email already exists')) }
-                const user =  User.create({
+                const user = User.create({
                     firstName,
                     middleName,
                     lastName,
@@ -226,13 +227,12 @@ exports.verifyStudent = catchAsyncErrors(async (req, res, next) => {
                     course,
                     email,
                     password
-                }).then(()=>
-                res.status(201).json({
-                    success: true,
-                    message: "User has been registered"
-                })
+                }).then(() =>
+                    res.status(201).json({
+                        success: true,
+                        message: "Congratulations! Your ThomCare student account has been successfully registered. You may now log in."
+                    })
                 )
-                
             })
         })
     } else {
