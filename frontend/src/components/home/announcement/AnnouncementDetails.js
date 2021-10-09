@@ -11,10 +11,9 @@ import Loader from './../../layout/Loader'
 import dateformat from 'dateformat'
 
 const cardStyle = {
-    margin: '20px',
+    margin: '20px auto',
     width: '75%',
-    align: 'center',
-    border: 'solid 0.69px gray'
+    align: 'center'
 }
 
 const AnnouncementDetails = ({ history, match }) => {

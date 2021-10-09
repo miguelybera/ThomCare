@@ -41,15 +41,17 @@ const ListForms = ({ history }) => {
                         <Fragment>
                             {forms && forms.map(form => (
                                 <Col>
-                                    <Card style={{ marginTop: '60px' }}>
+                                    <Card style={{ margin: '10px 0', height: '250px', maxHeight: '350px' }}>
                                         <Card.Body>
                                             <Card.Title>{form.title}</Card.Title>
-                                            <Card.Text>
-                                                <Markup content={form.description}/>
+                                            <Card.Text style={{ height: '150px', maxHeight: '150px', overflowY: 'scroll' }}>
+                                                <Markup content={form.description} />
                                             </Card.Text>
-                                            <a href={form.attachments && form.attachments[0].path} target="_blank" rel="noreferrer">
-                                                <Button style={{ margin: '5px' }}>Download</Button>
-                                            </a>
+                                            <Card.Text style={{ position: 'absolute', bottom: 0 }}>
+                                                <a href={form.attachments && form.attachments[0].path} target="_blank" rel="noreferrer">
+                                                    <Button style={{ margin: '5px' }}>Download</Button>
+                                                </a>
+                                            </Card.Text>
                                         </Card.Body>
                                     </Card>
                                 </Col>

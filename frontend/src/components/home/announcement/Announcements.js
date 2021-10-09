@@ -295,7 +295,7 @@ const Announcements = ({ history }) => {
                 <Row xs={1} md={2} className="g-4">
                     {announcements && (announcements.length !== 0) ? announcements.map(announcement => (
                         <Col>
-                            <Card style={{ borderRadius: '25px', background: '#F5F5F5', marginBottom: '20px' }}>
+                            <Card style={{ borderRadius: '25px', background: '#F5F5F5', marginBottom: '20px', height: '300px', overflowY: 'auto' }}>
                                 <Card.Body>
                                     <Card.Header style={{ background: '#F5F5F5', fontWeight: '600' }}>{announcement.title}</Card.Header>
                                     <Card.Text style={{ marginLeft: '15px' }}>
