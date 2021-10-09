@@ -173,7 +173,6 @@ function App() {
                                         {/**USERS */}
                                             <ProtectedRoute path='/admin/users' forCICS={true} component={ListUsers} exact />
                                             <ProtectedRoute path='/admin/register' forCICS={true} component={RegisterAdmin} exact />
-                                            <ProtectedRoute path='/admin/user/:id' forCICS={true} component={UpdateUser} exact />
                                         {/**AUDIT */}
                                             <ProtectedRoute path='/audit' forCICS={true} component={ListAuditLog} exact />
                                     {/**CICS STAFF ROUTES */}
@@ -195,6 +194,8 @@ function App() {
                                             <ProtectedRoute path='/admin/announcementTypes' forAdmins={true} component={ListAnnouncementType} exact />
                                             <ProtectedRoute path='/admin/new/announcement' forAdmins={true} component={CreateAnnouncement} exact />
                                             <ProtectedRoute path='/admin/announcement/:id' forAdmins={true} component={UpdateAnnouncement} exact />
+                                        {/**USERS */}
+                                            <ProtectedRoute path='/admin/user/:id' forAdmins={true} component={UpdateUser} exact />
                                     {/**DEPT CHAIR & CICS STAFF ROUTES */}
                                 {/**CONTROL PANEL ROUTES */}
                             </div>
