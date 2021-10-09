@@ -68,17 +68,17 @@ const ListStudentRequests = ({ history }) => {
                 {
                     label: 'Date',
                     field: 'date',
-                    width: 150
+                    width: 250
                 },
                 {
                     label: 'Request Type',
                     field: 'requestType',
-                    width: 180
+                    width: 300
                 },
                 {
                     label: 'Status',
                     field: 'requestStatus',
-                    width: 150
+                    width: 300
                 },
                 {
                     label: 'Actions',

@@ -85,17 +85,17 @@ const ListCICSRequests = ({ history }) => {
                 {
                     label: 'Date',
                     field: 'date',
-                    width: 150
+                    width: 120
                 },
                 {
                     label: 'Request Type',
                     field: 'requestType',
-                    width: 180
+                    width: 250
                 },
                 {
                     label: 'Requested by',
                     field: 'name',
-                    width: 230
+                    width: 280
                 },
                 {
                     label: 'Status',
@@ -105,7 +105,7 @@ const ListCICSRequests = ({ history }) => {
                 {
                     label: 'Actions',
                     field: 'actions',
-                    width: 150
+                    width: 200
                 }
             ],
             rows: []

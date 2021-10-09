@@ -89,17 +89,17 @@ const ListMyRequests = ({ history }) => {
                 {
                     label: 'Date',
                     field: 'date',
-                    width: 150
+                    width: 120
                 },
                 {
                     label: 'Request Type',
                     field: 'requestType',
-                    width: 180
+                    width: 250
                 },
                 {
                     label: 'Requested by',
                     field: 'name',
-                    width: 200
+                    width: 280
                 },
                 {
                     label: 'Status',
@@ -109,7 +109,7 @@ const ListMyRequests = ({ history }) => {
                 {
                     label: 'Actions',
                     field: 'actions',
-                    width: 180
+                    width: 200
                 }
             ],
             rows: []

@@ -61,21 +61,27 @@ const ListAnnouncementType = ({ history }) => {
         const data = {
             columns: [
                 {
+                    label: 'No.',
+                    field: 'number',
+                    width: 100
+                },
+                {
                     label: 'Announcement Category',
                     field: 'announcementCategory',
-                    width: 180
+                    width: 800
                 },
                 {
                     label: 'Actions',
                     field: 'actions',
-                    width: 150
+                    width: 100
                 }
             ],
             rows: []
         }
 
-        announcementTypes && announcementTypes.forEach(announcement => {
+        announcementTypes && announcementTypes.forEach((announcement, x) => {
             data.rows.push({
+                number: ++x,
                 announcementCategory: announcement.announcementCategory,
                 actions: <Fragment>
                     <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {

@@ -80,12 +80,12 @@ const ListArchivedAnnouncements = ({ history }) => {
                 {
                     label: 'Date',
                     field: 'date',
-                    width: 150
+                    width: 130
                 },
                 {
                     label: 'Title',
                     field: 'title',
-                    width: 180
+                    width: 200
                 },
                 {
                     label: 'Description',
@@ -95,12 +95,12 @@ const ListArchivedAnnouncements = ({ history }) => {
                 {
                     label: 'Tags',
                     field: 'tags',
-                    width: 150
+                    width: 190
                 },
                 {
                     label: 'Actions',
                     field: 'actions',
-                    width: 150
+                    width: 180
                 }
             ],
             rows: []

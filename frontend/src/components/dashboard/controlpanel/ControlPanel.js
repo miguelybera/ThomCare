@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect } from 'react'
-import { BarChart, Bar, XAxis, YAxis } from 'recharts'
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
@@ -22,7 +22,7 @@ const ControlPanel = ({ history }) => {
     const { loading: recentsLoading, error: recentsError, recents } = useSelector(state => state.recents)
 
     const role = user && user.role
-    
+
     let link = '', reqType = '', viewType = ''
 
     if (user.role === 'CICS Staff') {
@@ -76,12 +76,12 @@ const ControlPanel = ({ history }) => {
                 {
                     label: 'Request Type',
                     field: 'requestType',
-                    width: 200
+                    width: 270
                 },
                 {
                     label: 'Requested by',
                     field: 'name',
-                    width: 250
+                    width: 300
                 },
                 {
                     label: 'Status',
@@ -131,18 +131,18 @@ const ControlPanel = ({ history }) => {
 
     const setData = () => {
         const data = [
-            {name: 'Today', uv: 0},
-            {name: '7d ago', uv: 0},
-            {name: '30d ago', uv: 0},
-            {name: '3m ago', uv: 0},
-            {name: '6m ago', uv: 0},
-            {name: 'A year ago', uv: 0}
+            { name: 'Today', Total: 0 },
+            { name: '7d ago', Total: 0 },
+            { name: '30d ago', Total: 0 },
+            { name: '3m ago', Total: 0 },
+            { name: '6m ago', Total: 0 },
+            { name: 'A year ago', Total: 0 }
         ];
 
         stats && stats.forEach((x, idx) => {
-            data[idx].uv = x
+            data[idx].Total = x
         })
-        
+
         return data
     }
     return (
@@ -152,31 +152,33 @@ const ControlPanel = ({ history }) => {
             {listLoading ? <Loader /> : (
                 <div className="row">
                     <div className="">
-                        <h1 style={{margin: '50px 0'}}>Control Panel</h1>
+                        <h1 style={{ margin: '50px 0' }}>Control Panel</h1>
                         <Container fluid>
                             {user.role !== 'Student' ? (
                                 <Fragment>
                                     <Row style={{ display: 'flex', justifyContent: 'center', margin: '50px' }}>
-                                        <BarChart width={600} height={300} data={setData()}>
+                                        <LineChart width={600} height={300} data={setData()}>
+                                            <Line type="monotone" dataKey="Total" stroke="#8884d8" />
+                                            <CartesianGrid stroke="#ccc" />
                                             <XAxis dataKey="name" />
                                             <YAxis />
-                                            <Bar dataKey="uv" barSize={30} fill="#8884d8"  label={"Requests"}/>
-                                        </BarChart>
+                                            <Tooltip />
+                                        </LineChart>
                                     </Row>
                                 </Fragment>
                             ) : <Fragment></Fragment>}
                             <Row style={{ display: 'flex', justifyContent: 'center' }}>
                                 {user.role === 'Student' ? (
                                     <Fragment>
-                                        <Col sm><ReportCard requestType={'Requests'} length={requests && requests.length} icon={'edit'} color={'red'}/></Col>
+                                        <Col sm><ReportCard requestType={'Requests'} length={requests && requests.length} icon={'edit'} color={'red'} /></Col>
                                     </Fragment>
                                 ) : (
                                     <Fragment>
-                                        <Col sm><ReportCard requestType={'Requests'} length={requests && requests.length} icon={'edit'} color={'red'}/></Col>
-                                        <Col sm><ReportCard requestType={'Pending'} length={pending && pending.length} icon={'paperclip'} color={'blue'}/></Col>
-                                        <Col sm><ReportCard requestType={'Processing'} length={processing && processing.length} icon={'spinner'} color={'yellow'}/></Col>
-                                        <Col sm><ReportCard requestType={'Denied'} length={denied && denied.length} icon={'times-circle'} color={'blue'}/></Col>
-                                        <Col sm><ReportCard requestType={'Approved'} length={approved && approved.length} icon={'check-circle'} color={'red'}/></Col>
+                                        <Col sm><ReportCard requestType={'Requests'} length={requests && requests.length} icon={'edit'} color={'red'} /></Col>
+                                        <Col sm><ReportCard requestType={'Pending'} length={pending && pending.length} icon={'paperclip'} color={'blue'} /></Col>
+                                        <Col sm><ReportCard requestType={'Processing'} length={processing && processing.length} icon={'spinner'} color={'yellow'} /></Col>
+                                        <Col sm><ReportCard requestType={'Denied'} length={denied && denied.length} icon={'times-circle'} color={'blue'} /></Col>
+                                        <Col sm><ReportCard requestType={'Approved'} length={approved && approved.length} icon={'check-circle'} color={'red'} /></Col>
                                     </Fragment>
                                 )}
                             </Row>

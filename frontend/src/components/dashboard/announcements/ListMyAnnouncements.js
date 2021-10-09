@@ -89,12 +89,12 @@ const ListMyAnnoucements = ({ history }) => {
                 {
                     label: 'Date',
                     field: 'date',
-                    width: 100
+                    width: 130
                 },
                 {
                     label: 'Title',
                     field: 'title',
-                    width: 150
+                    width: 200
                 },
                 {
                     label: 'Description',
@@ -104,12 +104,12 @@ const ListMyAnnoucements = ({ history }) => {
                 {
                     label: 'Tags',
                     field: 'tags',
-                    width: 180
+                    width: 190
                 },
                 {
                     label: 'Actions',
                     field: 'actions',
-                    width: 150
+                    width: 180
                 }
             ],
             rows: []
@@ -155,7 +155,7 @@ const ListMyAnnoucements = ({ history }) => {
 
     return (
         <Fragment>
-            <MetaData title={'Announcements'} />
+            <MetaData title={'My Announcements'} />
             <Modal
                 show={show}
                 onHide={handleClose}
@@ -180,7 +180,7 @@ const ListMyAnnoucements = ({ history }) => {
                 <div className="">
                     <Container className="space_inside"></Container>
                     <Container>
-                        <h3>Announcements</h3>
+                        <h3>My Announcements</h3>
                         <Button variant="primary"><Link to='/admin/new/announcement' style={{ textDecoration: 'none', color: 'white' }}>Create announcement</Link></Button>
                         {loading ? <Loader /> : (
                             <>

@@ -56,17 +56,17 @@ const ListAnnouncements = ({ history }) => {
                 {
                     label: 'Title',
                     field: 'title',
-                    width: 180
+                    width: 250
                 },
                 {
                     label: 'Description',
                     field: 'description',
-                    width: 300
+                    width: 350
                 },
                 {
                     label: 'Tags',
                     field: 'tags',
-                    width: 150
+                    width: 250
                 }
             ],
             rows: []

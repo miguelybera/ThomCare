@@ -146,22 +146,22 @@ const ViewRequest = ({ history, match }) => {
                 {
                     label: 'Date',
                     field: 'dateOfRemark',
-                    width: 100
+                    width: 200
                 },
                 {
                     label: 'Status',
                     field: 'updatedStatus',
-                    width: 70
+                    width: 200
                 },
                 {
                     label: 'Remarks',
                     field: 'remarksMessage',
-                    width: 300
+                    width: 325
                 },
                 {
                     label: 'Files',
                     field: 'returningFiles',
-                    width: 300
+                    width: 275
                 }
             ],
             rows: []
