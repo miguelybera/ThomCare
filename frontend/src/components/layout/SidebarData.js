@@ -165,7 +165,7 @@ export const SidebarData = [
                 {
                     title: 'Create Announcement',
                     path: '/admin/new/announcement',
-                    icon: <i class="fa fa-edit-square-o" aria-hidden="true"></i>
+                    icon: <i class="fa fa-plus" aria-hidden="true"></i>
                 },
                 {
                     title: 'Announcements',
@@ -175,7 +175,7 @@ export const SidebarData = [
                 {
                     title: 'My Announcements',
                     path: '/admin/me/announcements',
-                    icon: <i class="fa fa-list-ul" aria-hidden="true"></i>
+                    icon: <i class="fa fa-thumb-tack" aria-hidden="true"></i>
                 },
                 {
                     title: 'Archived Announcements',
@@ -185,7 +185,7 @@ export const SidebarData = [
                 {
                     title: 'Announcement Types',
                     path: '/admin/announcementTypes',
-                    icon: <i class="fa fa-archive" aria-hidden="true"></i>
+                    icon: <i class="fa fa-sort" aria-hidden="true"></i>
                 }
             ]
         },
@@ -203,17 +203,17 @@ export const SidebarData = [
                 {
                     title: 'Office Requests',
                     path: '/admin/cics/requests',
-                    icon: <i class="fa fa-home" aria-hidden="true"></i>
+                    icon: <i class="fa fa-briefcase" aria-hidden="true"></i>
                 },
                 {
                     title: 'Available requests',
                     path: '/admin/cics/available/requests',
-                    icon: <i class="fa fa-home" aria-hidden="true"></i>
+                    icon: <i class="fa fa-check" aria-hidden="true"></i>
                 },
                 {
                     title: 'Assigned to me',
                     path: '/admin/me/requests',
-                    icon: <i class="fa fa-home" aria-hidden="true"></i>
+                    icon: <i class="fa fa-user-circle" aria-hidden="true"></i>
                 },
                 {
                     title: 'Trash',
@@ -224,14 +224,14 @@ export const SidebarData = [
         },
         {
             title: 'Others',
-            icon: <i class="fa fa-user" aria-hidden="true"></i>,
+            icon: <i class="fa fa-sort-desc" aria-hidden="true"></i>,
             iconClosed: <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>,
             iconOpened: <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>,
             subNav: [
                 {
                     title: 'Courses',
                     path: '/admin/courses',
-                    icon: <i class="fa fa-home" aria-hidden="true"></i>
+                    icon: <i class="fa fa-graduation-cap" aria-hidden="true"></i>
                 },
                 {
                     title: 'Forms',
