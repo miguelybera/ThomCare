@@ -706,3 +706,33 @@ exports.deleteRequest = catchAsyncErrors(async(req, res, next) => {
         message: "Request has been deleted"
     })
 })
+
+// unassign request
+exports.unassignRequest = catchAsyncErrors(async(req, res, next) => {
+    let request = await Request.findById(req.params.requestId);
+
+    if (!request) { return next(new ErrorHandler(`Request does not exist with this id:(${req.params.requestId})`)) }
+
+    const newRequestData = { managedBy: "" }
+
+    request = await Request.findByIdAndUpdate(req.params.requestId, newRequestData, {
+        new: true,
+        runValidators: true,
+        useFindAndModify: false
+    })
+
+    const userName = req.user.firstName + ' ' + req.user.lastName
+
+    await Audit.create({
+        name: "Request unassignment",
+        eventInfo: `Request with tracking number: ${req.body.trackingNumber} was unassigned by user ${req.user.id}`,
+        user: userName,
+        dateAudit: Date.now()
+    })
+
+    res.status(200).json({
+        success: true,
+        message: `Request has been unassigned by ${req.user.email}`
+    })
+
+})

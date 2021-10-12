@@ -29,7 +29,8 @@ const {
     updateRequest,
     deleteRequest,
     trashRequest,
-    assignRequestToSelfCICS
+    assignRequestToSelfCICS,
+    unassignRequest
 } = require('../controllers/requestController')
 
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth')
@@ -77,6 +78,7 @@ router.route('/admin/cics/office/requests').get(isAuthenticatedUser, authorizeRo
 router.route('/admin/cics/available/requests').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getAvailableRequests);
 router.route('/admin/cics/assign/:requestId').put(isAuthenticatedUser, authorizeRoles('CICS Staff'), assignRequestToSelfCICS);
 router.route('/admin/cics/me/requests').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getAssignedRequests);
+router.route('/admin/cics/unassign/:requestId').put(isAuthenticatedUser, authorizeRoles('CICS Staff'), unassignRequest);
 
 //dept chair and cics staff (the trash request can also be used for restoring the request back)
 router.route('/admin/requests/trash').get(isAuthenticatedUser, authorizeRoles('CICS Staff', 'IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getTrashedRequests);
