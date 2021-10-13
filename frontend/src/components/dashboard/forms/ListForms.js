@@ -35,7 +35,11 @@ const ListForms = ({ history }) => {
             <MetaData title={`Downloadable Forms`} />
             <Sidebar />
             <Container fluid style={{ padding: "50px" }}>
-                <h3><b>Downloadable Forms</b></h3>
+                <div style={{ display: 'flex', marginBottom: '20px' }}>
+                    <div style={{ marginRight: 'auto', marginTop: '30px' }}>
+                        <h3>Downloadable Forms</h3>
+                    </div>
+                </div>
                 <Row xs={1} md={2} className="g-4" >
                     {loading ? <Loader /> : (
                         <Fragment>
@@ -44,12 +48,12 @@ const ListForms = ({ history }) => {
                                     <Card style={{ margin: '10px 0', height: '250px', maxHeight: '350px' }}>
                                         <Card.Body>
                                             <Card.Title>{form.title}</Card.Title>
-                                            <Card.Text style={{ height: '150px', maxHeight: '150px', overflowY: 'scroll' }}>
+                                            <Card.Text style={{ height: '150px', maxHeight: '150px', overflowY: 'scroll', padding: '10px' }}>
                                                 <Markup content={form.description} />
                                             </Card.Text>
                                             <Card.Text style={{ position: 'absolute', bottom: 0 }}>
                                                 <a href={form.attachments && form.attachments[0].path} target="_blank" rel="noreferrer">
-                                                    <Button style={{ margin: '5px' }}>Download</Button>
+                                                    <Button style={{ margin: '5px' }} variant="outline-secondary">Download</Button>
                                                 </a>
                                             </Card.Text>
                                         </Card.Body>

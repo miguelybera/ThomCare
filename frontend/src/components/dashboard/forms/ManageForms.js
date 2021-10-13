@@ -87,19 +87,19 @@ const ManageForms = ({ history, match }) => {
                                     <Card style={{ margin: '10px 0', height: '250px', maxHeight: '350px' }}>
                                         <Card.Body>
                                             <Card.Title>{form.title}</Card.Title>
-                                            <Card.Text style={{ height: '150px', maxHeight: '150px', overflowY: 'scroll' }}>
+                                            <Card.Text style={{ height: '150px', maxHeight: '150px', overflowY: 'scroll', padding: '10px' }}>
                                                 <Markup content={form.description} />
                                             </Card.Text>
                                             <Card.Text style={{ position: 'absolute', bottom: 0 }}>
                                                 <a href={form.attachments && form.attachments[0].path} target="_blank" rel="noreferrer">
-                                                    <Button style={{ margin: '5px' }}>Download</Button>
+                                                    <Button style={{ margin: '5px' }} variant="outline-secondary">Download</Button>
                                                 </a>
                                                 <Link to={`/admin/form/${form._id}`}>
-                                                    <Button style={{ margin: '10px 5px' }}>
+                                                    <Button style={{ margin: '10px 5px' }} variant="primary">
                                                         Update
                                                     </Button>
                                                 </Link>
-                                                <Button style={{ margin: '10px 5px' }} onClick={() => deleteFormHandler(form._id)}>
+                                                <Button style={{ margin: '10px 5px' }} variant="danger" onClick={() => deleteFormHandler(form._id)}>
                                                     Delete
                                                 </Button>
                                             </Card.Text>

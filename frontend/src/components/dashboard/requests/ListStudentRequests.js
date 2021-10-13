@@ -68,7 +68,7 @@ const ListStudentRequests = ({ history }) => {
                 {
                     label: 'Date',
                     field: 'date',
-                    width: 250
+                    width: 200
                 },
                 {
                     label: 'Request Type',
@@ -83,7 +83,7 @@ const ListStudentRequests = ({ history }) => {
                 {
                     label: 'Actions',
                     field: 'actions',
-                    width: 150
+                    width: 200
                 }
             ],
             rows: []

@@ -132,7 +132,7 @@ const CreateAnnouncement = ({ history }) => {
             {announcementTypeLoading ? <Loader /> : (
                 <Container fluid style={{ padding: "50px 20px", marginTop: '50px' }}>
                     <center><h3>New announcement</h3></center>
-                    <Card style={{ maxWidth: '50rem', marginTop: '40px', margin: 'auto', backgroundColor: "#F5F5F5", borderTop: '7px solid #9c0b0b' }}>
+                    <Card style={{ width: '100%', marginTop: '40px', margin: 'auto', backgroundColor: "#F5F5F5", borderTop: '7px solid #9c0b0b' }}>
                         <Card.Body>
                             <Form onSubmit={submitHandler}>
                                 <Form.Group className="mb-3">
@@ -277,7 +277,7 @@ const CreateAnnouncement = ({ history }) => {
                                             />
                                         </Form.Group>
                                     </Col>
-                                    <Col xs={12} sm={12} md={12} lg={4} xl={4}>
+                                    <Col xs={12} sm={12} md={12} lg={8} xl={8}>
                                         <Form.Group className="mb-3">
                                             <Form.Label>Attach document(s):</Form.Label>
                                             <Form.Control
@@ -288,7 +288,7 @@ const CreateAnnouncement = ({ history }) => {
                                             />
                                         </Form.Group>
                                     </Col>
-                                    <Col xs={12} sm={12} md={12} lg={4} xl={4}>
+                                    <Col xs={12}>
                                         <Form.Label className={fileAttachments.length !== 0 ? `` : `d-none`}>Attachment(s):</Form.Label>
                                         <Form.Group className="mb-3 mt-2">
                                             <ListGroup>

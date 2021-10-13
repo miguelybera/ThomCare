@@ -3,6 +3,7 @@ import { useAlert } from 'react-alert'
 import ReactQuill from 'react-quill'
 import { useDispatch, useSelector } from 'react-redux'
 import { Form, Button, Card, Container, Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap'
+import { MDBDataTableV5 } from 'mdbreact'
 import { getAnnouncementDetails, getAnnouncementType, createAnnouncementType, updateAnnouncement, clearErrors } from '../../../actions/announcementActions'
 import { ANNOUNCEMENT_DETAILS_RESET, NEW_ANNOUNCEMENT_TYPE_RESET, UPDATE_ANNOUNCEMENT_RESET } from '../../../constants/announcementConstants'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
@@ -156,6 +157,44 @@ const UpdateAnnouncement = ({ history, match }) => {
 
         dispatch(updateAnnouncement(announcement._id, formData))
     }
+    const setAttachments = () => {
+        const data = {
+            columns: [
+                {
+                    label: 'File name',
+                    field: 'fileName',
+                    width: 750
+                },
+                {
+                    label: 'File Size',
+                    field: 'fileSize',
+                    width: 150
+                },
+                {
+                    label: 'Actions',
+                    field: 'action',
+                    width: 100
+                }
+            ],
+            rows: []
+        }
+
+        oldAttachments && oldAttachments.forEach(file => {
+            data.rows.push({
+                fileName: file.originalname,
+                fileSize: Number(file.size / 1000000).toFixed(2) + ' MB',
+                action: <Fragment>
+                    <a href={file.path} target="_blank" rel="noreferrer">
+                        <button className="btn btn-primary py-1 px-2 ml-2">
+                            <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                        </button>
+                    </a>
+                </Fragment>
+            })
+        })
+
+        return data
+    }
 
     return (
         <Fragment>
@@ -166,7 +205,7 @@ const UpdateAnnouncement = ({ history, match }) => {
                     <center><h3>Update announcement</h3></center>
                     {announcementLoading || announcementTypeLoading ? <Loader /> : (
                         <Container fluid>
-                            <Card style={{ maxWidth: '50rem', marginTop: '40px', margin: 'auto', backgroundColor: "#F5F5F5", borderTop: '7px solid #9c0b0b' }}>
+                            <Card style={{ width: '100%', marginTop: '40px', margin: 'auto', backgroundColor: "#F5F5F5", borderTop: '7px solid #9c0b0b' }}>
                                 <Card.Body>
                                     <Form onSubmit={submitHandler}>
                                         <Form.Group className="mb-3">
@@ -311,7 +350,7 @@ const UpdateAnnouncement = ({ history, match }) => {
                                                     />
                                                 </Form.Group>
                                             </Col>
-                                            <Col xs={12} sm={12} md={12} lg={4} xl={4}>
+                                            <Col xs={12} sm={12} md={12} lg={8} xl={8}>
                                                 <Form.Group className="mb-3">
                                                     <Form.Label>Attach document(s):</Form.Label>
                                                     <Form.Control
@@ -322,22 +361,21 @@ const UpdateAnnouncement = ({ history, match }) => {
                                                     />
                                                 </Form.Group>
                                             </Col>
-                                            <Col xs={12} sm={12} md={12} lg={4} xl={4}>
+                                            <Col xs={12}>
                                                 <Form.Group className="mb-3">
-                                                    <Form.Label className={oldAttachments.length !== 0 || fileAttachments.length !== 0 ? `` : `d-none`}>Attachment(s):</Form.Label>
+                                                    <Form.Label className={oldAttachments.length !== 0 || fileAttachments.length !== 0 ? `` : `d-none`}>
+                                                        Attachment(s):
+                                                    </Form.Label>
+                                                    {oldAttachments && <MDBDataTableV5
+                                                        data={setAttachments()}
+                                                        searchTop
+                                                        pagingTop
+                                                        scrollX
+                                                        entriesOptions={[5, 20, 25]}
+                                                        entries={10}
+                                                        style={{ backgroundColor: 'white' }}
+                                                    />}
                                                     <ListGroup>
-                                                        {oldAttachments && oldAttachments.map(file => (
-                                                            <Fragment>
-                                                                <ListGroupItem>
-                                                                    {file.originalname} <font size="1rem">{Number(file.size / 1000000).toFixed(2)} MB</font> <a href={file.path} target="_blank" rel="noreferrer">
-                                                                        <button className="btn btn-primary py-1 px-2 ml-2">
-                                                                            <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
-                                                                        </button>
-                                                                    </a>
-                                                                </ListGroupItem>
-                                                            </Fragment>
-                                                        ))}
-
                                                         {fileAttachments && fileAttachments.map(file => (
                                                             <ListGroupItem>
                                                                 {file.name}

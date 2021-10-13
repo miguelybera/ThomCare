@@ -174,7 +174,9 @@ const ControlPanel = ({ history }) => {
                             <Row style={{ display: 'flex', justifyContent: 'center' }}>
                                 {user.role === 'Student' ? (
                                     <Fragment>
-                                        <Col sm><ReportCard requestType={'Requests'} length={requests && requests.length} icon={'edit'} color={'red'} /></Col>
+                                        <center>
+                                            <Col sm><ReportCard requestType={'Requests'} length={requests && requests.length} icon={'edit'} color={'red'} /></Col>
+                                        </center>
                                     </Fragment>
                                 ) : (
                                     <Fragment>

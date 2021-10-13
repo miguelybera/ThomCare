@@ -147,7 +147,6 @@ const AnnouncementDetails = ({ history, match }) => {
                                     style={{ backgroundColor: 'white' }}
                                 />
                             )}
-
                         </Card.Text>
                         <Card.Text style={{ fontWeight: '600', color: 'gray', fontSize: '12px' }}>Posted by: {singleUser && upperCase(singleUser.firstName + ' ' + singleUser.lastName)}</Card.Text>
                         <Card.Text style={{ fontSize: '10px', color: 'gray' }}>
