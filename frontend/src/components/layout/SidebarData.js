@@ -35,7 +35,7 @@ export const SidebarData = [
         {
             title: 'Log out',
             path: '',
-            icon: <i class="fa fa-sign-out" aria-hidden="true"></i>
+            icon: <i class="fa fa-caret-square-o-left" aria-hidden="true"></i>
         }
     ],
     [ //dept chair
@@ -63,7 +63,7 @@ export const SidebarData = [
                 {
                     title: 'Create Announcement',
                     path: '/admin/new/announcement',
-                    icon: <i class="fa fa-edit-square-o" aria-hidden="true"></i>
+                    icon: <i class="fa fa-plus" aria-hidden="true"></i>
                 },
                 {
                     title: 'Announcements',
@@ -73,7 +73,7 @@ export const SidebarData = [
                 {
                     title: 'My Announcements',
                     path: '/admin/me/announcements',
-                    icon: <i class="fa fa-list-ul" aria-hidden="true"></i>
+                    icon: <i class="fa fa-thumb-tack" aria-hidden="true"></i>
                 },
                 {
                     title: 'Archived Announcements',
@@ -83,7 +83,7 @@ export const SidebarData = [
                 {
                     title: 'Announcement Types',
                     path: '/admin/announcementTypes',
-                    icon: <i class="fa fa-archive" aria-hidden="true"></i>
+                    icon: <i class="fa fa-sort" aria-hidden="true"></i>
                 }
             ]
         },
@@ -107,24 +107,25 @@ export const SidebarData = [
         },
         {
             title: 'Others',
-            icon: <i class="fa fa-users" aria-hidden="true"></i>,
+            icon: <i class="fa fa-sort-desc" aria-hidden="true"></i>,
             iconClosed: <i class="fa fa-chevron-circle-down" aria-hidden="true"></i>,
             iconOpened: <i class="fa fa-chevron-circle-up" aria-hidden="true"></i>,
             subNav: [
                 {
                     title: 'Courses',
                     path: '/admin/courses',
-                    icon: <i class="fa fa-home" aria-hidden="true"></i>
+                    icon: <i class="fa fa-window-maximize" aria-hidden="true"></i>
                 },
                 {
                     title: 'Forms',
                     path: '/admin/manageforms',
-                    icon: <i class="fa fa-home" aria-hidden="true"></i>
+                    icon: <i class="fa fa-file" aria-hidden="true"></i>
                 },
                 {
                     title: 'Students',
                     path: '/admin/deptchair/students',
-                    icon: <i class="fa fa-trash" aria-hidden="true"></i>
+                    icon: <i class="fa fa-users" aria-hidden="true"></i>
+
                 },
             ]
         },
@@ -136,7 +137,8 @@ export const SidebarData = [
         {
             title: 'Log out',
             path: '',
-            icon: <i class="fa fa-sign-out" aria-hidden="true"></i>
+            icon: <i class="fa fa-caret-square-o-left" aria-hidden="true"></i>
+
         }
     ],
     [ //cics staff
@@ -231,12 +233,13 @@ export const SidebarData = [
                 {
                     title: 'Courses',
                     path: '/admin/courses',
-                    icon: <i class="fa fa-graduation-cap" aria-hidden="true"></i>
+                    icon: <i class="fa fa-window-maximize" aria-hidden="true"></i>
                 },
                 {
                     title: 'Forms',
                     path: '/admin/manageforms',
-                    icon: <i class="fa fa-home" aria-hidden="true"></i>
+                    icon: <i class="fa fa-file" aria-hidden="true"></i>
+
                 },
                 {
                     title: 'User accounts',
@@ -263,7 +266,8 @@ export const SidebarData = [
         {
             title: 'Log out',
             path: '',
-            icon: <i class="fa fa-sign-out" aria-hidden="true"></i>
+            icon: <i class="fa fa-caret-square-o-left" aria-hidden="true"></i>
+
         }
     ]
 ]
