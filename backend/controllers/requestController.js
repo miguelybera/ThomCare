@@ -586,11 +586,7 @@ exports.assignRequestToSelfCICS = catchAsyncErrors(async (req, res, next) => {
 
     await Audit.create({
         name: "Request assignment",
-<<<<<<< HEAD
         eventInfo: `Request with tracking number: ${request.trackingNumber} was assigned to user ${req.user.email}`,
-=======
-        eventInfo: `Request with tracking number: ${request.trackingNumber} was assigned to user ${req.user.id}`,
->>>>>>> d9b968cc918c0b52b1b9e7961721664eca824ba0
         user: userName,
         dateAudit: Date.now()
     })
@@ -725,11 +721,7 @@ exports.unassignRequest = catchAsyncErrors(async (req, res, next) => {
 
     await Audit.create({
         name: "Request unassignment",
-<<<<<<< HEAD
         eventInfo: `Request with tracking number: ${request.trackingNumber} was unassigned from user ${req.user.email}`,
-=======
-        eventInfo: `Request with tracking number: ${request.trackingNumber} was unassigned from user ${req.user.id}`,
->>>>>>> d9b968cc918c0b52b1b9e7961721664eca824ba0
         user: userName,
         dateAudit: Date.now()
     })
