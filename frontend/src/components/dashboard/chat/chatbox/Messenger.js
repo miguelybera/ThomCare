@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState, useRef } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Modal, Button } from 'react-bootstrap'
+import { Modal, Button, Form, FormControl, InputGroup, FloatingLabel } from 'react-bootstrap'
 import { sendMessage, createConversation, clearErrors } from './../../../../actions/chatActions'
 import { ALL_MESSAGES_REQUEST, ALL_MESSAGES_SUCCESS, ALL_MESSAGES_FAIL, ALL_CONVERSATIONS_REQUEST, ALL_CONVERSATIONS_SUCCESS, ALL_CONVERSATIONS_FAIL } from '../../../../constants/chatConstants'
 import { ALL_USERS_REQUEST, ALL_USERS_SUCCESS, ALL_USERS_FAIL } from '../../../../constants/userConstants'
@@ -15,6 +15,12 @@ import Sidebar from '../../../layout/Sidebar'
 import Loader from '../../../layout/Loader'
 import './messenger.css'
 import '../online/chatonline.css'
+
+const dropdown = {
+    border: "2px solid black",
+    borderRadius: "20px",
+    margin: '5px 0'
+}
 
 const Messenger = ({ history }) => {
     const dispatch = useDispatch()
@@ -261,7 +267,7 @@ const Messenger = ({ history }) => {
                 </Modal.Header>
                 <Modal.Body>
                     <>
-                        <div className='chatOnline'>
+                        <div className='chatOnline' style={{ maxHeight: '300px', overflowY: 'scroll' }}>
                             {users && users.map(o => (
                                 displayUsers(o)
                             ))}
@@ -278,16 +284,31 @@ const Messenger = ({ history }) => {
 
             <div className='messenger'>
                 <div className='chatMenu'>
-                    <div className='chatMenuWrapper'>
-                        <input
-                            placeholder='Search for friends'
-                            className='chatMenuInput'
-                            value={search}
-                            onChange={(e) => setSearch(e.target.value)}
-                        />
-                        <Button onClick={() => searchButton()}>Search</Button>
-                        <Button variant="primary" onClick={handleShow}>
-                            + New message
+                    <div className='chatMenuWrapper' style={{ width: '100%' }}>
+                        <InputGroup className="mb-3">
+                            <FloatingLabel label="Search" style={{ width: '70%' }}>
+                                <FormControl
+                                    type="search"
+                                    placeholder='Search for friends'
+                                    aria-label="Search by title"
+                                    size="sm"
+                                    name="search"
+                                    value={search}
+                                    onChange={(e) => setSearch(e.target.value)}
+                                    width="170px"
+                                    right="0px"
+                                />
+                            </FloatingLabel>
+                            <Button variant="secondary" onClick={() => searchButton()}>
+                                <span className="fa-sm">
+                                    <i className="fa fa-search"></i>
+                                </span>
+                            </Button>
+                        </InputGroup>
+                        <Button variant="primary" onClick={handleShow} style={{ width: '85%' }}>
+                            Start a conversation <span className="fa-sm">
+                                <i className="fa fa-edit"></i>
+                            </span>
                         </Button>
                         {loading ? <Loader /> : (
                             conversationList && conversationList.map((c) => (
