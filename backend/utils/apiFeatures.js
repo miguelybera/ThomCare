@@ -31,7 +31,7 @@ class APIFeatures {
     //audit
     searchAudit() {
         const keyword = this.queryStr.keyword ? {
-            user: {
+            eventInfo: {
                 $regex: this.queryStr.keyword,
                 $options: 'i' // i means case insensitive
             }
