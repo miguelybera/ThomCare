@@ -32,6 +32,9 @@ const Styles = styled.div`
     }
 }`;
 
+const Images = styled.div`
+    margin-right: 5px;
+`;
 const Drop = styled.div` 
     a, .navbar-nav .nav-link  {
     border-radius: 105px;
@@ -58,7 +61,8 @@ const Header = () => {
             <Styles>
                 <Navbar style={{ backgroundColor: 'white', borderBottom: "7px solid #9c0b0b" }} expand="lg">
                     <Container >
-                        <img src="/images/CICS_SEAL.png" width="50" height="60" float="right" margin="1150px" alt="CICS Seal" />
+                        {/* <Images><img src="/images/UST_LOGO.png" width="60" height="60" className="mr-2" alt="CICS Seal" /></Images> */}
+                        <Images><img src="/images/CICS_SEAL.png" width="50" height="60" className="mr-2" alt="CICS Seal" /></Images>
                         <Navbar.Brand style={{ fontFamily: "AveriaBold", color: "#9c0b0b", paddingBottom: "0px", paddingLeft: "10px" }}>
                             <p style={{ fontFamily: "MuktaMalar", fontWeight: "bold", fontSize: "70%", paddingTop: "5px", marginBottom: "0px" }}>
                                 College of Information and Computing Sciences
