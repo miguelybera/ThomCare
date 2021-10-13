@@ -282,7 +282,7 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
 
 // Get all users admin => /api/v1/admin/users
 exports.getUsers = catchAsyncErrors(async (req, res, next) => {
-    const users = await User.find()
+    const users = await User.find().sort({ role: 1, firstName: 1 })
 
     res.status(200).json({
         success: true,
@@ -368,7 +368,7 @@ exports.getStudentAccounts = catchAsyncErrors(async (req, res, next) => {
         case 'Student':
             return next(new ErrorHandler('Role does not have access to this resource'))
     }
-    const users = await User.find({ role: 'Student', course: deptCourse })
+    const users = await User.find({ role: 'Student', course: deptCourse }).sort({ firstName: 1 })
 
     res.status(200).json({
         success: true,
