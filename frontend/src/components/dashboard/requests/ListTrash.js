@@ -76,10 +76,10 @@ const ListAllRequests = ({ history }) => {
     }
 
     const updateRequestHandler = (id) => {
-        dispatch(updateRequest(id, {isTrash: false}, true))
+        dispatch(updateRequest(id, { isTrash: false }, true))
         handleClose()
     }
-    
+
     const setRequests = () => {
         const data = {
             columns: [
@@ -96,7 +96,7 @@ const ListAllRequests = ({ history }) => {
                 {
                     label: 'Requested by',
                     field: 'name',
-                    width: 280
+                    width: 310
                 },
                 {
                     label: 'Status',
@@ -106,14 +106,14 @@ const ListAllRequests = ({ history }) => {
                 {
                     label: 'Actions',
                     field: 'actions',
-                    width: 200
+                    width: 230
                 }
             ],
             rows: []
         }
 
         requests.forEach(request => {
-            const viewType = '4'+request._id
+            const viewType = '4' + request._id
 
             data.rows.push({
                 date: changeDateFormat(request.createdAt),
@@ -136,7 +136,7 @@ const ListAllRequests = ({ history }) => {
                             <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
                         </Button>
                     </Link>
-                    <Button variant="warning" className="mr-5" style={{ margin: '5px' }} onClick={() => { updateRequestHandler(request._id)}}>
+                    <Button variant="warning" className="mr-5" style={{ margin: '5px' }} onClick={() => { updateRequestHandler(request._id) }}>
                         <i class="fa fa-undo" aria-hidden="true" />
                     </Button>
                     <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
@@ -178,9 +178,12 @@ const ListAllRequests = ({ history }) => {
             <Sidebar />
             <div className="row">
                 <div className="">
-                    <Container className="space_inside"></Container>
-                    <Container>
-                        <h3>Trash</h3>
+                    <Container fluid style={{ padding: "50px" }}>
+                        <div style={{ display: 'flex', marginBottom: '20px' }}>
+                            <div style={{ marginRight: 'auto', marginTop: '30px' }}>
+                                <h3>Trash</h3>
+                            </div>
+                        </div>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5

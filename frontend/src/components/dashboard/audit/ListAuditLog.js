@@ -126,13 +126,13 @@ const ListAllRequests = ({ history }) => {
             <Sidebar />
             <div className="row">
                 <div className="">
-                    <Container className="space_inside"></Container>
-                    <Container>
-                        <h3>Audit Log</h3>
-
+                    <Container fluid style={{ padding: "50px" }}>
                         <Form onSubmit={searchHandler}>
-                            <Row >
-                                <Col xs={12} md={4} lg={2}>
+                            <Row style={{ marginTop: '30px', marginBottom: '20px' }}>
+                                <Col style={{ marginRight: 'auto' }} xs={12} sm={12} md={3}>
+                                    <h3>Audit Log</h3>
+                                </Col>
+                                <Col xs={12} sm={3} md={3}>
                                     <Form.Group>
                                         <Form.Select
                                             aria-label="SearchType"
@@ -149,8 +149,8 @@ const ListAllRequests = ({ history }) => {
                                         </Form.Select>
                                     </Form.Group>
                                 </Col>
-                                <Col xs={12} md={4} lg={2}>
-                                    <Form.Group sm>
+                                <Col xs={12} sm={4} md={3}>
+                                    <Form.Group sm={12} md>
                                         <FormControl
                                             type="search"
                                             placeholder="Search"
@@ -167,9 +167,9 @@ const ListAllRequests = ({ history }) => {
                                         />
                                     </Form.Group>
                                 </Col>
-                                <Col xs={12} md={4} lg={2}>
-                                    <Form.Group sm>
-                                        <center>
+                                <Col xs={12} sm={5} md={3}>
+                                    <center>
+                                        <Form.Group sm>
                                             <Button type='submit' style={{ margin: '5px' }} disabled={searchType === '' ? true : false}>Submit</Button>
                                             <Button
                                                 type='submit'
@@ -182,12 +182,11 @@ const ListAllRequests = ({ history }) => {
                                                 }}
                                                 style={{ margin: '5px' }}
                                             >Reset</Button>
-                                        </center>
-                                    </Form.Group>
+                                        </Form.Group>
+                                    </center>
                                 </Col>
                             </Row>
                         </Form>
-
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5

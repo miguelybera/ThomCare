@@ -47,8 +47,8 @@ const ForgotPassword = ({ history }) => {
         <>
             <MetaData title={'Forgot your password?'} />
             <Container fluid>
-                <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
-                    <Card style={{ width: '30rem', align: 'center' }}>
+                <Row className='justify-content-md-center'>
+                    <Card style={{ maxWidth: '30rem', margin: '50px auto', backgroundColor: "#F5F5F5", borderTop: '7px solid #9c0b0b' }}>
                         <Card.Body>
                             <Card.Title style={{ margin: '50px 0 20px 0' }}>Forgot Password?</Card.Title>
                             <Card.Text style={{ fontSize: '12px' }}>Enter your registered UST GSuite email address. A reset password link will be sent to your inbox.</Card.Text>

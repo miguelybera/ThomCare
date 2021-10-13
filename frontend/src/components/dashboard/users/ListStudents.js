@@ -94,7 +94,7 @@ const ListStudents = ({ history }) => {
             middleName && middleName.forEach(x => {
                 middleInitial += x[0]
             })
-            
+
             data.rows.push({
                 name: `${user.firstName} ${middleInitial} ${user.lastName}`,
                 email: user.email,
@@ -144,9 +144,12 @@ const ListStudents = ({ history }) => {
             <Sidebar />
             <div className="row">
                 <div className="">
-                    <Container className="space_inside"></Container>
-                    <Container>
-                        <h3>Student Accounts</h3>
+                    <Container fluid style={{ padding: "50px" }}>
+                        <div style={{ display: 'flex', marginBottom: '20px' }}>
+                            <div style={{ marginRight: 'auto', marginTop: '30px' }}>
+                                <h3>Student Accounts</h3>
+                            </div>
+                        </div>
                         {loading ? <Loader /> : (
                             <MDBDataTableV5
                                 data={setUsers()}

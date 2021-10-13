@@ -50,7 +50,7 @@ const UpdateAnnouncement = ({ history, match }) => {
         if (announcementTypeError) {
             alert.error(announcementTypeError)
             dispatch(clearErrors())
-            
+
             history.push('/error')
         }
     }, [dispatch, history, alert, announcementTypeError])
@@ -75,7 +75,7 @@ const UpdateAnnouncement = ({ history, match }) => {
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
-            
+
             history.push('/error')
         }
 
@@ -161,216 +161,213 @@ const UpdateAnnouncement = ({ history, match }) => {
         <Fragment>
             <MetaData title={'Update Announcement'} />
             <Sidebar />
-            <div className="row">
-                <div className="">
-                    <Container className="space_inside"></Container>
-                    {announcementTypeLoading ? <Loader /> : (
+            {announcementTypeLoading ? <Loader /> : (
+                <Container fluid style={{ padding: "50px 20px", marginTop: '50px' }}>
+                    <center><h3>Update announcement</h3></center>
+                    {announcementLoading || announcementTypeLoading ? <Loader /> : (
                         <Container fluid>
-                            <h3>Update Announcement</h3>
-                            {announcementLoading || announcementTypeLoading ? <Loader /> : (
-                                <Card>
-                                    <Card.Body>
-                                        <Form onSubmit={submitHandler}>
-                                            <Form.Group className="mb-3">
-                                                <Form.Label>Title</Form.Label>
-                                                <Form.Control
-                                                    type="text"
-                                                    name="title"
-                                                    value={title}
-                                                    onChange={e => setTitle(e.target.value)}
-                                                    required
-                                                />
-                                            </Form.Group>
-                                            <Form.Group className="mb-3">
-                                                <Form.Label>Description</Form.Label>
-                                            
-                                                <ReactQuill 
-                                                    placeholder="Write something..."
-                                                    name="description"
-                                                    value={description}
-                                                    onChange={e => setDescription(e)}
-                                                    modules={modules}
-                                                    format={formats}
-                                                    required
-                                                />
-                                            </Form.Group>
-                                            <Row>
-                                                <Form.Label>Categories</Form.Label>
-                                            </Row>
-                                            <Row>
-                                                <Col xs={12} sm={6} md={6} lg={3} xl={3}>
-                                                    <Form.Group className="mb-3">
-                                                        <Form.Label>Year Level</Form.Label>
-                                                        <Form.Select
-                                                            aria-label="Default select example"
-                                                            name="yearLevel"
-                                                            value={yearLevel}
-                                                            onChange={e => setYearLevel(e.target.value)}
-                                                        >
-                                                            {levels.map(level => (
-                                                                <option value={level}>{level}</option>
-                                                            ))}
-                                                        </Form.Select>
-                                                    </Form.Group>
-                                                </Col>
-                                                <Col xs={12} sm={6} md={6} lg={3} xl={3}>
-                                                    <Form.Group className="mb-3">
-                                                        <Form.Label>Course</Form.Label>
-                                                        <Form.Select
-                                                            aria-label="Default select example"
-                                                            value={course}
-                                                            name="course"
-                                                            onChange={e => setCourse(e.target.value)}
-                                                        >
-                                                            {programs.map(program => (
-                                                                <option value={program}>{program}</option>
-                                                            ))}
-                                                        </Form.Select>
-                                                    </Form.Group>
-                                                </Col>
-                                                <Col xs={12} sm={6} md={6} lg={3} xl={3}>
-                                                    <Form.Group className="mb-3">
-                                                        <Form.Label>Track</Form.Label>
-                                                        <Form.Select
-                                                            aria-label="Default select example"
-                                                            name="track" value={track}
-                                                            onChange={e => setTrack(e.target.value)}
-                                                            disabled={course === 'All' || yearLevel === 'All' || yearLevel === '1st Year' || yearLevel === '2nd Year' ? true : false}
-                                                        >
-                                                            {course === 'Computer Science' ? (
+                            <Card style={{ maxWidth: '50rem', marginTop: '40px', margin: 'auto', backgroundColor: "#F5F5F5", borderTop: '7px solid #9c0b0b' }}>
+                                <Card.Body>
+                                    <Form onSubmit={submitHandler}>
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Title</Form.Label>
+                                            <Form.Control
+                                                type="text"
+                                                name="title"
+                                                value={title}
+                                                onChange={e => setTitle(e.target.value)}
+                                                required
+                                            />
+                                        </Form.Group>
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>Description</Form.Label>
+
+                                            <ReactQuill
+                                                placeholder="Write something..."
+                                                name="description"
+                                                value={description}
+                                                onChange={e => setDescription(e)}
+                                                modules={modules}
+                                                format={formats}
+                                                required
+                                            />
+                                        </Form.Group>
+                                        <Row>
+                                            <Form.Label>Categories</Form.Label>
+                                        </Row>
+                                        <Row>
+                                            <Col xs={12} sm={6} md={6} lg={3} xl={3}>
+                                                <Form.Group className="mb-3">
+                                                    <Form.Label>Year Level</Form.Label>
+                                                    <Form.Select
+                                                        aria-label="Default select example"
+                                                        name="yearLevel"
+                                                        value={yearLevel}
+                                                        onChange={e => setYearLevel(e.target.value)}
+                                                    >
+                                                        {levels.map(level => (
+                                                            <option value={level}>{level}</option>
+                                                        ))}
+                                                    </Form.Select>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={12} sm={6} md={6} lg={3} xl={3}>
+                                                <Form.Group className="mb-3">
+                                                    <Form.Label>Course</Form.Label>
+                                                    <Form.Select
+                                                        aria-label="Default select example"
+                                                        value={course}
+                                                        name="course"
+                                                        onChange={e => setCourse(e.target.value)}
+                                                    >
+                                                        {programs.map(program => (
+                                                            <option value={program}>{program}</option>
+                                                        ))}
+                                                    </Form.Select>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={12} sm={6} md={6} lg={3} xl={3}>
+                                                <Form.Group className="mb-3">
+                                                    <Form.Label>Track</Form.Label>
+                                                    <Form.Select
+                                                        aria-label="Default select example"
+                                                        name="track" value={track}
+                                                        onChange={e => setTrack(e.target.value)}
+                                                        disabled={course === 'All' || yearLevel === 'All' || yearLevel === '1st Year' || yearLevel === '2nd Year' ? true : false}
+                                                    >
+                                                        {course === 'Computer Science' ? (
+                                                            <Fragment>
+                                                                {csTracks.map(track => (
+                                                                    <option value={track}>{track}</option>
+                                                                ))}
+                                                            </Fragment>
+                                                        ) : (
+                                                            course === 'Information Technology' ? (
                                                                 <Fragment>
-                                                                    {csTracks.map(track => (
+                                                                    {itTracks.map(track => (
                                                                         <option value={track}>{track}</option>
                                                                     ))}
                                                                 </Fragment>
                                                             ) : (
-                                                                course === 'Information Technology' ? (
-                                                                    <Fragment>
-                                                                        {itTracks.map(track => (
-                                                                            <option value={track}>{track}</option>
-                                                                        ))}
-                                                                    </Fragment>
-                                                                ) : (
-                                                                    <Fragment>
-                                                                        {isTracks.map(track => (
-                                                                            <option value={track}>{track}</option>
-                                                                        ))}
-                                                                    </Fragment>
-                                                                )
-                                                            )}
-                                                        </Form.Select>
-                                                    </Form.Group>
-                                                </Col>
-                                                <Col xs={12} sm={6} md={6} lg={3} xl={3}>
-                                                    <Form.Group className="mb-3">
-                                                        <Form.Label>Announcement Type</Form.Label>
-                                                        <Form.Select
-                                                            aria-label="Default select example"
-                                                            name="announcementType"
-                                                            value={announcementType}
-                                                            onChange={e => setAnnouncementType(e.target.value)}
-                                                            required
-                                                        >
-                                                            <option value='All'>All</option>
-                                                            {announcementTypes && announcementTypes.map(type => (
-                                                                <option value={type.announcementCategory}>{type.announcementCategory}</option>
-                                                            ))}
-                                                            <option value='Add new'>Add new...</option>
-                                                        </Form.Select>
-                                                    </Form.Group>
-                                                    <Form.Group className={announcementType !== 'Add new' ? `mb-3 d-none` : `mb-3`}>
-                                                        <Form.Control
-                                                            type="text"
-                                                            name="announcementCategory"
-                                                            value={announcementCategory}
-                                                            placeholder="Add new announcement category"
-                                                            onChange={e => setAnnouncementCategory(e.target.value)}
-                                                            disabled={announcementType !== 'Add new' ? true : false}
-                                                        />
-                                                    </Form.Group>
-                                                </Col>
-                                            </Row>
-                                            <Row>
-                                                <Col xs={12} sm={12} md={12} lg={4} xl={4}>
-                                                    <Form.Group className="mb-3">
-                                                        <Form.Check
-                                                            type="checkbox"
-                                                            label="Set expiry date"
-                                                            defaultChecked={setExpiry}
-                                                            value={setExpiry}
-                                                            name="setExpiry"
-                                                            onClick={() => {
-                                                                setSetExpiry(!setExpiry)
-                                                                setCtr(ctr + 1)
-                                                            }}
-                                                        />
-                                                        <Form.Control
-                                                            type="date"
-                                                            name="archiveDate"
-                                                            value={archiveDate}
-                                                            onChange={e => setArchiveDate(e.target.value)}
-                                                            disabled={setExpiry ? false : true}
-                                                        />
-                                                    </Form.Group>
-                                                </Col>
-                                                <Col xs={12} sm={12} md={12} lg={4} xl={4}>
-                                                    <Form.Group className="mb-3">
-                                                        <Form.Label>Attach document(s):</Form.Label>
-                                                        <Form.Control
-                                                            type="file"
-                                                            name="file"
-                                                            onChange={onChange}
-                                                            multiple
-                                                        />
-                                                    </Form.Group>
-                                                </Col>
-                                                <Col xs={12} sm={12} md={12} lg={4} xl={4}>
-                                                    <Form.Group className="mb-3">
-                                                        <Form.Label className={oldAttachments.length !== 0 || fileAttachments.length !== 0 ? `` : `d-none`}>Attachment(s):</Form.Label>
-                                                        <ListGroup>
-                                                            {oldAttachments && oldAttachments.map(file => (
                                                                 <Fragment>
-                                                                    <ListGroupItem>
-                                                                        {file.originalname} <font size="1rem">{Number(file.size / 1000000).toFixed(2)} MB</font> <a href={file.path} target="_blank" rel="noreferrer">
-                                                                            <button className="btn btn-primary py-1 px-2 ml-2">
-                                                                                <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
-                                                                            </button>
-                                                                        </a>
-                                                                    </ListGroupItem>
+                                                                    {isTracks.map(track => (
+                                                                        <option value={track}>{track}</option>
+                                                                    ))}
                                                                 </Fragment>
-                                                            ))}
-
-                                                            {fileAttachments && fileAttachments.map(file => (
+                                                            )
+                                                        )}
+                                                    </Form.Select>
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={12} sm={6} md={6} lg={3} xl={3}>
+                                                <Form.Group className="mb-3">
+                                                    <Form.Label>Announcement Type</Form.Label>
+                                                    <Form.Select
+                                                        aria-label="Default select example"
+                                                        name="announcementType"
+                                                        value={announcementType}
+                                                        onChange={e => setAnnouncementType(e.target.value)}
+                                                        required
+                                                    >
+                                                        <option value='All'>All</option>
+                                                        {announcementTypes && announcementTypes.map(type => (
+                                                            <option value={type.announcementCategory}>{type.announcementCategory}</option>
+                                                        ))}
+                                                        <option value='Add new'>Add new...</option>
+                                                    </Form.Select>
+                                                </Form.Group>
+                                                <Form.Group className={announcementType !== 'Add new' ? `mb-3 d-none` : `mb-3`}>
+                                                    <Form.Control
+                                                        type="text"
+                                                        name="announcementCategory"
+                                                        value={announcementCategory}
+                                                        placeholder="Add new announcement category"
+                                                        onChange={e => setAnnouncementCategory(e.target.value)}
+                                                        disabled={announcementType !== 'Add new' ? true : false}
+                                                    />
+                                                </Form.Group>
+                                            </Col>
+                                        </Row>
+                                        <Row>
+                                            <Col xs={12} sm={12} md={12} lg={4} xl={4}>
+                                                <Form.Group className="mb-3">
+                                                    <Form.Check
+                                                        type="checkbox"
+                                                        label="Set expiry date"
+                                                        defaultChecked={setExpiry}
+                                                        value={setExpiry}
+                                                        name="setExpiry"
+                                                        onClick={() => {
+                                                            setSetExpiry(!setExpiry)
+                                                            setCtr(ctr + 1)
+                                                        }}
+                                                    />
+                                                    <Form.Control
+                                                        type="date"
+                                                        name="archiveDate"
+                                                        value={archiveDate}
+                                                        onChange={e => setArchiveDate(e.target.value)}
+                                                        disabled={setExpiry ? false : true}
+                                                    />
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={12} sm={12} md={12} lg={4} xl={4}>
+                                                <Form.Group className="mb-3">
+                                                    <Form.Label>Attach document(s):</Form.Label>
+                                                    <Form.Control
+                                                        type="file"
+                                                        name="file"
+                                                        onChange={onChange}
+                                                        multiple
+                                                    />
+                                                </Form.Group>
+                                            </Col>
+                                            <Col xs={12} sm={12} md={12} lg={4} xl={4}>
+                                                <Form.Group className="mb-3">
+                                                    <Form.Label className={oldAttachments.length !== 0 || fileAttachments.length !== 0 ? `` : `d-none`}>Attachment(s):</Form.Label>
+                                                    <ListGroup>
+                                                        {oldAttachments && oldAttachments.map(file => (
+                                                            <Fragment>
                                                                 <ListGroupItem>
-                                                                    {file.name}
+                                                                    {file.originalname} <font size="1rem">{Number(file.size / 1000000).toFixed(2)} MB</font> <a href={file.path} target="_blank" rel="noreferrer">
+                                                                        <button className="btn btn-primary py-1 px-2 ml-2">
+                                                                            <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                                                                        </button>
+                                                                    </a>
                                                                 </ListGroupItem>
-                                                            ))}
-                                                        </ListGroup>
-                                                    </Form.Group>
-                                                </Col>
-                                            </Row>
-                                            <center>
-                                                <Button
-                                                    type='submit'
-                                                    style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
-                                                    disabled={loading ? true : false}>
-                                                    {loading ? (
-                                                        <span>
-                                                            <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
-                                                        </span>
-                                                    ) : (
-                                                        <span>Update</span>
-                                                    )}
-                                                </Button>
-                                            </center>
-                                        </Form>
-                                    </Card.Body>
-                                </Card>
-                            )}
+                                                            </Fragment>
+                                                        ))}
+
+                                                        {fileAttachments && fileAttachments.map(file => (
+                                                            <ListGroupItem>
+                                                                {file.name}
+                                                            </ListGroupItem>
+                                                        ))}
+                                                    </ListGroup>
+                                                </Form.Group>
+                                            </Col>
+                                        </Row>
+                                        <center>
+                                            <Button
+                                                type='submit'
+                                                style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                                disabled={loading ? true : false}>
+                                                {loading ? (
+                                                    <span>
+                                                        <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
+                                                    </span>
+                                                ) : (
+                                                    <span>Update</span>
+                                                )}
+                                            </Button>
+                                        </center>
+                                    </Form>
+                                </Card.Body>
+                            </Card>
                         </Container>
                     )}
-                </div>
-            </div>
+                </Container>
+            )}
         </Fragment>
 
     )

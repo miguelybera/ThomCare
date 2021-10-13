@@ -171,9 +171,8 @@ const UpdateRequest = ({ history, match }) => {
         <Fragment>
             <MetaData title={`Update Request`} />
             <Sidebar />
-            <Container className="space_inside" />
             {requestLoading ? <Loader /> : (
-                <Container classname="align-me" fluid style={{ paddingBottom: '100px' }}>
+                <Container classname="align-me" fluid style={{ paddingBottom: '50px 50px 100px 50px' }}>
                     <Card style={{ backgroundColor: '#fff' }}>  {/*, width: '100rem' */}
                         <Card.Body>
                             <Card.Title style={{ margin: '10px 0 20px 0', color: '#9c0b0b', fontWeight: 'bold' }}>

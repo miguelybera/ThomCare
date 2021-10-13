@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Button, ButtonToolbar, ButtonGroup } from 'react-bootstrap'
+import { Container, Button, ButtonToolbar, ButtonGroup, Row, Col } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getRequests, updateRequest, clearErrors } from '../../../actions/requestActions'
 import { UPDATE_REQUEST_RESET } from '../../../constants/requestConstants'
@@ -119,8 +119,8 @@ const ListDeptChairRequests = ({ history }) => {
         }
 
         requestList && requestList.forEach(request => {
-            const viewType = '1'+request._id
-            
+            const viewType = '1' + request._id
+
             data.rows.push({
                 date: changeDateFormat(request.createdAt),
                 requestType: request.requestType,
@@ -166,21 +166,24 @@ const ListDeptChairRequests = ({ history }) => {
             <Sidebar />
             <div className="row">
                 <div className="">
-                    <Container className="space_inside"></Container>
-                    <Container>
-                        <h3>My Requests {`/ ${status}`}</h3>
-
-                        <ButtonToolbar>
-                            <ButtonGroup className="me-2">
-                                <Button onClick={() => setStatus('Requests')}>View All</Button>
-                                <Button onClick={() => setStatus('Pending')}>Pending</Button>
-                                <Button onClick={() => setStatus('Processing')}>Processing</Button>
-                                <Button onClick={() => setStatus('Approved')}>Approved</Button>
-                                <Button onClick={() => setStatus('Denied')}>Denied</Button>
-                                <Button onClick={() => setStatus('Cross Enrollment')}>Cross Enrollment</Button>
-                            </ButtonGroup>
-                        </ButtonToolbar>
-
+                    <Container fluid style={{ padding: "50px" }}>
+                        <Row style={{ margin: '30px 0 20px 0' }}>
+                            <Col xs={12} sm={4}>
+                                <h3>My Requests {`/ ${status}`}</h3>
+                            </Col>
+                            <Col xs={12} sm={8}>
+                                <ButtonToolbar>
+                                    <ButtonGroup className="me-2">
+                                        <Button variant="outline-secondary" onClick={() => setStatus('Requests')}>View All</Button>
+                                        <Button variant="outline-secondary" onClick={() => setStatus('Pending')}>Pending</Button>
+                                        <Button variant="outline-secondary" onClick={() => setStatus('Processing')}>Processing</Button>
+                                        <Button variant="outline-secondary" onClick={() => setStatus('Approved')}>Approved</Button>
+                                        <Button variant="outline-secondary" onClick={() => setStatus('Denied')}>Denied</Button>
+                                        <Button variant="outline-secondary" onClick={() => setStatus('Cross Enrollment')}>Cross Enrollment</Button>
+                                    </ButtonGroup>
+                                </ButtonToolbar>
+                            </Col>
+                        </Row>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5

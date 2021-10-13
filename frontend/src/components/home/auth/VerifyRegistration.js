@@ -37,58 +37,67 @@ const VerifyRegistration = ({ history, match }) => {
     return (
         <Fragment>
             <MetaData title={success ? 'Registration successful' : 'Verify Student Registration'} />
-            <Container fluid>
-                <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
-                    <Card style={{ width: '30rem', align: 'center' }}>
-                        {loading ? ((<Loader />)) : (
-                            !verified ? (
-                                <Fragment>
-                                    <div class="progress">
-                                        <div
-                                            class="progress-bar"
-                                            role="progressbar"
-                                            style={{ width: '90%' }}
-                                            aria-valuenow='90'
-                                            aria-valuemin="0"
-                                            aria-valuemax='100'
-                                        >
-                                            90%
+            <Container fluid style={{ padding: "50px 20px" }}>
+
+                {loading ? <Loader /> : (
+                    !verified ? (<Fragment>
+                        <center>
+                            <h3>Verify registration</h3>
+                            <p className="text-muted" style={{ fontSize: '14px', textAlign: 'center', marginBottom: '20px', maxWidth: '30rem' }}>
+                                {success ? message : 'Click on the button below to verify your account.'}
+                            </p>
+                        </center>
+                        <Card style={{ maxWidth: '30rem', marginTop: '40px', margin: 'auto', backgroundColor: "#F5F5F5", borderTop: '7px solid #9c0b0b' }}>
+                            <Card.Body>
+                                <div class="progress">
+                                    <div
+                                        class="progress-bar"
+                                        role="progressbar"
+                                        style={{ width: '90%' }}
+                                        aria-valuenow='90'
+                                        aria-valuemin="0"
+                                        aria-valuemax='100'
+                                    >
+                                        90%
                                         </div>
+                                </div>
+                                <center>
+                                    <Button type='submit' style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }} onClick={verifyHandler}>
+                                        Verify my account
+                                    </Button>
+                                </center>
+                            </Card.Body>
+                        </Card>
+                    </Fragment>) : (<Fragment>
+                        <center>
+                            <h3>{success ? 'Registration successful' : 'Registration Error'}</h3>
+                            <p className="text-muted" style={{ fontSize: '14px', textAlign: 'center', marginBottom: '20px', maxWidth: '30rem' }}>
+                                {success ? message : error}
+                            </p>
+                        </center>
+                        <Card style={{ maxWidth: '30rem', marginTop: '40px', margin: 'auto', backgroundColor: "#F5F5F5", borderTop: '7px solid #9c0b0b' }}>
+                            <Card.Body>
+                                <div class="progress">
+                                    <div
+                                        class="progress-bar"
+                                        role="progressbar"
+                                        style={success ? { width: '100%' } : { width: '90%' }}
+                                        aria-valuenow={success ? '100' : '90'}
+                                        aria-valuemin="0"
+                                        aria-valuemax='100'
+                                    >
+                                        {success ? '100%' : '90%'}
                                     </div>
-                                    <Card.Body>
-                                        <Card.Title style={{ margin: '50px 0 20px 0' }}>Verify your account</Card.Title>
-                                        <Card.Text>{success ? message : 'Click on the button below to verify your account.'}</Card.Text>
-                                        <Button type='submit' style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }} onClick={verifyHandler}>
-                                            Verify my account
-                                        </Button>
-                                    </Card.Body>
-                                </Fragment>
-                            ) : (
-                                <Fragment>
-                                    <div class="progress">
-                                        <div
-                                            class="progress-bar"
-                                            role="progressbar"
-                                            style={success ? { width: '100%' } : { width: '90%' }}
-                                            aria-valuenow={success ? '100' : '90'}
-                                            aria-valuemin="0"
-                                            aria-valuemax='100'
-                                        >
-                                            {success ? '100%' : '90%'}
-                                        </div>
-                                    </div>
-                                    <Card.Body>
-                                        <Card.Title style={{ margin: '50px 0 20px 0' }}>{success ? 'Registration successful' : 'Registration Error'}</Card.Title>
-                                        <Card.Text>{success ? message : error}</Card.Text>
-                                        <Button type='submit' style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }} onClick={success ? goToLogin : goToHome}>
-                                            {success ? 'Log in' : 'Back to Home'}
-                                        </Button>
-                                    </Card.Body>
-                                </Fragment>
-                            )
-                        )}
-                    </Card>
-                </Row>
+                                </div>
+                                <center>
+                                    <Button type='submit' style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }} onClick={success ? goToLogin : goToHome}>
+                                        {success ? 'Log in' : 'Back to Home'}
+                                    </Button>
+                                </center>
+                            </Card.Body>
+                        </Card>
+                    </Fragment>)
+                )}
             </Container>
         </Fragment>
     )

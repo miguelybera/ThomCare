@@ -21,7 +21,7 @@ const ListAvailableRequests = ({ history }) => {
 
     const changeDateFormat = (date) => dateformat(date, "mmm d, yyyy h:MMtt")
     const upperCase = (text) => text.toUpperCase()
-    
+
     useEffect(() => {
         dispatch(getRequests('CICS Staff', 'Available'))
 
@@ -88,7 +88,7 @@ const ListAvailableRequests = ({ history }) => {
         }
 
         requests.forEach(request => {
-            const viewType = '3'+request._id
+            const viewType = '3' + request._id
 
             data.rows.push({
                 date: changeDateFormat(request.createdAt),
@@ -130,9 +130,12 @@ const ListAvailableRequests = ({ history }) => {
             <Sidebar />
             <div className="row">
                 <div className="">
-                    <Container className="space_inside"></Container>
-                    <Container>
-                        <h3>Available Requests</h3>
+                    <Container fluid style={{ padding: "50px" }}>
+                        <div style={{ display: 'flex', marginBottom: '20px' }}>
+                            <div style={{ marginRight: 'auto', marginTop: '30px' }}>
+                                <h3>Available Requests</h3>
+                            </div>
+                        </div>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5

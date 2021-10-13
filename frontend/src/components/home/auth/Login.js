@@ -91,7 +91,7 @@ const Login = ({ history }) => {
                     </Card>
                 </Row>
             </Container>
-            <Container className="space"></Container>
+            <Container fluid style={{ paddingTop: "75px" }}/>
         </Fragment>
     )
 }

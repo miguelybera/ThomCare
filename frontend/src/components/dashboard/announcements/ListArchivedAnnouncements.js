@@ -110,7 +110,7 @@ const ListArchivedAnnouncements = ({ history }) => {
             data.rows.push({
                 date: changeDateFormat(announcement.createdAt),
                 title: announcement.title,
-                description: <Fragment><Markup content={shortenDescription(announcement.description)}/></Fragment>,
+                description: <Fragment><Markup content={shortenDescription(announcement.description)} /></Fragment>,
                 tags: <Fragment>
                     <span>
                         <p style={{ margin: '0' }}><b>Year Level: </b>{announcement.yearLevel}</p>
@@ -164,9 +164,12 @@ const ListArchivedAnnouncements = ({ history }) => {
             <Sidebar />
             <div className="row">
                 <div className="">
-                    <Container className="space_inside"></Container>
-                    <Container>
-                        <h3>Archived Announcements</h3>
+                    <Container fluid style={{ padding: "50px" }}>
+                        <div style={{ display: 'flex', marginBottom: '20px' }}>
+                            <div style={{ marginRight: 'auto', marginTop: '30px' }}>
+                                <h3>Archived Announcements</h3>
+                            </div>
+                        </div>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5

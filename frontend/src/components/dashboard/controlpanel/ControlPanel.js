@@ -152,7 +152,7 @@ const ControlPanel = ({ history }) => {
             <Sidebar />
             {listLoading ? <Loader /> : (
                 <div className="row">
-                    <div className="">
+                    <div className='control-panel'>
                         <h1 style={{ margin: '50px 0' }}>Control Panel</h1>
                         <Container fluid>
                             {user.role !== 'Student' ? (
@@ -198,13 +198,15 @@ const ControlPanel = ({ history }) => {
                                     />
                                 )}
                             </Row>
-                            <Row>
-                                <Link to={link}>
-                                    <Button style={{ marginBottom: '20px' }}>
-                                        View All Requests
+                            <div style={{ display: 'flex', marginBottom: '20px' }}>
+                                <div style={{ marginLeft: 'auto' }}>
+                                    <Link to={link}>
+                                        <Button style={{ marginBottom: '20px' }}>
+                                            View All Requests
                                     </Button>
-                                </Link>
-                            </Row>
+                                    </Link>
+                                </div>
+                            </div>
                         </Container>
                     </div>
                 </div>

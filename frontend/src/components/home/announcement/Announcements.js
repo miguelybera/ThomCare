@@ -41,13 +41,13 @@ const Announcements = ({ history }) => {
     const csTracks = ['Core Computer Science', 'Game Development', 'Data Science']
     const itTracks = ['Network and Security', 'Web and Mobile App Development', 'IT Automation']
     const isTracks = ['Business Analytics', 'Service Management']
-    
+
     let count = announcementCount
 
     if (filter.course !== '' || filter.yearLevel !== '' || filter.track !== '' || filter.announcementType !== '' || filter.title !== '') {
         count = filteredAnnouncementsCount
     }
-    
+
     const changeDateFormat = date => dateformat(date, "dddd mmm d, yyyy h:MMtt")
 
     const setCurrentPageNo = (pageNumber) => { setCurrentPage(pageNumber) }
@@ -103,7 +103,7 @@ const Announcements = ({ history }) => {
                 announcementType: '',
                 title: ''
             })
-            
+
             history.push('/error')
         }
 
@@ -140,7 +140,7 @@ const Announcements = ({ history }) => {
     const searchHandler = e => {
         e.preventDefault()
 
-        setSearchButton(searchButton+1)
+        setSearchButton(searchButton + 1)
     }
 
     return (
@@ -150,198 +150,199 @@ const Announcements = ({ history }) => {
                 <div id="rectangle" >
                     <h3>ANNOUNCEMENTS</h3>
                 </div>
-                <Container className="space"></Container>
-                <Form onSubmit={searchHandler}>
-                    <Row >
-                        <Col xs={12} md={4} lg={2}>
-                            <Form.Group>
-                                <Form.Select
-                                    aria-label="Course"
-                                    size="sm"
-                                    style={dropdown}
-                                    name="yearLevel"
-                                    value={yearLevel}
-                                    onChange={onChange}
-                                >
-                                    <option value=''>Year Level</option>
-                                    <option value="1st Year">1st Year</option>
-                                    <option value="2nd Year">2nd Year</option>
-                                    <option value="3rd Year">3rd Year</option>
-                                    <option value="4th Year">4th Year</option>
-                                </Form.Select>
-                            </Form.Group>
-                        </Col>
-                        <Col xs={12} md={4} lg={2}>
-                            <Form.Group>
-                                <Form.Select
-                                    aria-label="YearLevel"
-                                    size="sm"
-                                    style={dropdown}
-                                    name="course"
-                                    value={course}
-                                    onChange={onChange}
-                                >
-                                    <option value=''>Course</option>
-                                    <option value="Computer Science">Computer Science</option>
-                                    <option value="Information Systems">Information Systems</option>
-                                    <option value="Information Technology">Information Technology</option>
-                                </Form.Select>
-                            </Form.Group>
-                        </Col>
-                        <Col xs={12} md={4} lg={2}>
-                            <Form.Group>
-                                <Form.Select
-                                    aria-label="tracks"
-                                    size="sm"
-                                    style={dropdown}
-                                    name="track"
-                                    value={track}
-                                    onChange={onChange}
-                                >
-                                    <option value=''>Track</option>
-                                    {String(course).includes('Information Systems') ? (
-                                        <Fragment>
-                                            {isTracks.map(track => (
-                                                <option value={track}>{track}</option>
-                                            ))}
-                                        </Fragment>
-                                    ) : (
-                                        String(course).includes('Computer Science') ? (
+                <Container fluid style={{ paddingTop: "75px" }}>
+                    <Form onSubmit={searchHandler}>
+                        <Row >
+                            <Col xs={12} md={4} lg={2}>
+                                <Form.Group>
+                                    <Form.Select
+                                        aria-label="Course"
+                                        size="sm"
+                                        style={dropdown}
+                                        name="yearLevel"
+                                        value={yearLevel}
+                                        onChange={onChange}
+                                    >
+                                        <option value=''>Year Level</option>
+                                        <option value="1st Year">1st Year</option>
+                                        <option value="2nd Year">2nd Year</option>
+                                        <option value="3rd Year">3rd Year</option>
+                                        <option value="4th Year">4th Year</option>
+                                    </Form.Select>
+                                </Form.Group>
+                            </Col>
+                            <Col xs={12} md={4} lg={2}>
+                                <Form.Group>
+                                    <Form.Select
+                                        aria-label="YearLevel"
+                                        size="sm"
+                                        style={dropdown}
+                                        name="course"
+                                        value={course}
+                                        onChange={onChange}
+                                    >
+                                        <option value=''>Course</option>
+                                        <option value="Computer Science">Computer Science</option>
+                                        <option value="Information Systems">Information Systems</option>
+                                        <option value="Information Technology">Information Technology</option>
+                                    </Form.Select>
+                                </Form.Group>
+                            </Col>
+                            <Col xs={12} md={4} lg={2}>
+                                <Form.Group>
+                                    <Form.Select
+                                        aria-label="tracks"
+                                        size="sm"
+                                        style={dropdown}
+                                        name="track"
+                                        value={track}
+                                        onChange={onChange}
+                                    >
+                                        <option value=''>Track</option>
+                                        {String(course).includes('Information Systems') ? (
                                             <Fragment>
-                                                {csTracks.map(track => (
+                                                {isTracks.map(track => (
                                                     <option value={track}>{track}</option>
                                                 ))}
                                             </Fragment>
                                         ) : (
-                                            String(course).includes('Information Technology') ? (
+                                            String(course).includes('Computer Science') ? (
                                                 <Fragment>
-                                                    {itTracks.map(track => (
+                                                    {csTracks.map(track => (
                                                         <option value={track}>{track}</option>
                                                     ))}
                                                 </Fragment>
                                             ) : (
-                                                <Fragment>
-                                                    {tracks.map(track => (
-                                                        <option value={track}>{track}</option>
-                                                    ))}
-                                                </Fragment>
+                                                String(course).includes('Information Technology') ? (
+                                                    <Fragment>
+                                                        {itTracks.map(track => (
+                                                            <option value={track}>{track}</option>
+                                                        ))}
+                                                    </Fragment>
+                                                ) : (
+                                                    <Fragment>
+                                                        {tracks.map(track => (
+                                                            <option value={track}>{track}</option>
+                                                        ))}
+                                                    </Fragment>
+                                                )
                                             )
-                                        )
-                                    )}
+                                        )}
 
-                                </Form.Select>
-                            </Form.Group>
-                        </Col>
-                        <Col xs={12} md={4} lg={2}>
-                            <Form.Group>
-                                <Form.Select
-                                    aria-label="AnnouncementType"
-                                    size="sm"
-                                    style={dropdown}
-                                    name="announcementType"
-                                    value={announcementType}
-                                    onChange={onChange}
-                                >
-                                    <option value=''>Announcement Type</option>
-                                    {announcementTypes && announcementTypes.map(type => (
-                                        <option value={type.announcementCategory}>{type.announcementCategory}</option>
-                                    ))}
-                                </Form.Select>
-                            </Form.Group>
-                        </Col>
-                        <Col xs={12} md={4} lg={2}>
-                            <Form.Group sm>
-                                <FormControl
-                                    type="search"
-                                    placeholder="Search by title"
-                                    className="mr-2"
-                                    aria-label="Search by title"
-                                    size="sm"
-                                    name="title"
-                                    value={title}
-                                    onChange={onChange}
-                                    width="170px"
-                                    right="0px"
-                                    style={dropdown}
-                                />
-                            </Form.Group>
-                        </Col>
-                        <Col xs={12} md={4} lg={2}>
-                            <Form.Group sm>
-                                <center>
-                                    <Button type='submit' style={{margin: '5px'}}>Submit</Button>
-                                    <Button
-                                        type="submit"
-                                        variant="outline-primary"
-                                        onClick={() => {
-                                            setFilter({
-                                                course: '',
-                                                yearLevel: '',
-                                                track: '',
-                                                announcementType: '',
-                                                title: ''
-                                            })
-                                        }}
-                                        style={{margin: '5px'}}
-                                    >Reset</Button>
-                                </center>
-                            </Form.Group>
-                        </Col>
+                                    </Form.Select>
+                                </Form.Group>
+                            </Col>
+                            <Col xs={12} md={4} lg={2}>
+                                <Form.Group>
+                                    <Form.Select
+                                        aria-label="AnnouncementType"
+                                        size="sm"
+                                        style={dropdown}
+                                        name="announcementType"
+                                        value={announcementType}
+                                        onChange={onChange}
+                                    >
+                                        <option value=''>Announcement Type</option>
+                                        {announcementTypes && announcementTypes.map(type => (
+                                            <option value={type.announcementCategory}>{type.announcementCategory}</option>
+                                        ))}
+                                    </Form.Select>
+                                </Form.Group>
+                            </Col>
+                            <Col xs={12} md={4} lg={2}>
+                                <Form.Group sm>
+                                    <FormControl
+                                        type="search"
+                                        placeholder="Search by title"
+                                        className="mr-2"
+                                        aria-label="Search by title"
+                                        size="sm"
+                                        name="title"
+                                        value={title}
+                                        onChange={onChange}
+                                        width="170px"
+                                        right="0px"
+                                        style={dropdown}
+                                    />
+                                </Form.Group>
+                            </Col>
+                            <Col xs={12} md={4} lg={2}>
+                                <Form.Group sm>
+                                    <center>
+                                        <Button type='submit' style={{ margin: '5px' }}>Submit</Button>
+                                        <Button
+                                            type="submit"
+                                            variant="outline-primary"
+                                            onClick={() => {
+                                                setFilter({
+                                                    course: '',
+                                                    yearLevel: '',
+                                                    track: '',
+                                                    announcementType: '',
+                                                    title: ''
+                                                })
+                                            }}
+                                            style={{ margin: '5px' }}
+                                        >Reset</Button>
+                                    </center>
+                                </Form.Group>
+                            </Col>
+                        </Row>
+                    </Form>
+                </Container>
+                <br />
+
+                {loading || announcementTypeLoading ? <Loader /> : (
+                    <Row xs={1} md={2} className="g-4">
+                        {announcements && (announcements.length !== 0) ? announcements.map(announcement => (
+                            <Col>
+                                <Card style={{ borderRadius: '25px', background: '#F5F5F5', marginBottom: '20px', height: '300px', overflowY: 'auto' }}>
+                                    <Card.Body>
+                                        <Card.Header style={{ background: '#F5F5F5', fontWeight: '600' }}>{announcement.title}</Card.Header>
+                                        <Card.Text style={{ marginLeft: '15px' }}>
+                                            <span style={{ fontWeight: '300', color: 'gray', fontSize: '12px' }}>{changeDateFormat(announcement.createdAt)}</span>
+                                            <br />
+                                            <span style={{ fontWeight: '500', fontSize: '14px' }}><Markup content={shortenDescription(announcement.description)} /> <Link to={`/announcement/${announcement._id}`}>Read More &#xbb;</Link></span>
+                                            <br /><br />
+                                            <span style={{ fontSize: '12px', color: 'gray' }}>Attachments: {announcement.fileAttachments.length} file(s)</span>
+                                        </Card.Text>
+                                        <Card.Text style={{ fontSize: '10px', color: 'gray', marginLeft: '15px' }}>
+                                            <span>Year Level: {announcement.yearLevel}</span>
+                                            <br />
+                                            <span>Course: {announcement.course}</span>
+                                            <br />
+                                            <span>Track: {announcement.track}</span>
+                                            <br />
+                                            <span>Announcement Type: {announcement.announcementType}</span>
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
+                        )) : (
+                            <Col>
+                                <h3 style={{ margin: '10px 0 100px 0' }}>No announcements found.</h3>
+                            </Col>
+                        )}
                     </Row>
-                </Form>
+                )}
+
+                {resPerPage < count && (
+                    <div className="d-flex justify-content-center mt-5">
+                        <Pagination
+                            activePage={currentPage}
+                            itemsCountPerPage={resPerPage}
+                            totalItemsCount={announcementCount}
+                            onChange={setCurrentPageNo}
+                            nextPageText={'Next'}
+                            prevPageText={'Prev'}
+                            firstPageText={'First'}
+                            lastPageText={'Last'}
+                            itemClass='page-item'
+                            linkClass='page-link'
+                        />
+                    </div>
+                )}
             </Container>
-            <br />
-
-            {loading || announcementTypeLoading ? <Loader /> : (
-                <Row xs={1} md={2} className="g-4">
-                    {announcements && (announcements.length !== 0) ? announcements.map(announcement => (
-                        <Col>
-                            <Card style={{ borderRadius: '25px', background: '#F5F5F5', marginBottom: '20px', height: '300px', overflowY: 'auto' }}>
-                                <Card.Body>
-                                    <Card.Header style={{ background: '#F5F5F5', fontWeight: '600' }}>{announcement.title}</Card.Header>
-                                    <Card.Text style={{ marginLeft: '15px' }}>
-                                        <span style={{ fontWeight: '300', color: 'gray', fontSize: '12px' }}>{changeDateFormat(announcement.createdAt)}</span>
-                                        <br />
-                                        <span style={{ fontWeight: '500', fontSize: '14px' }}><Markup content={shortenDescription(announcement.description)}/> <Link to={`/announcement/${announcement._id}`}>Read More &#xbb;</Link></span>
-                                        <br /><br />
-                                        <span style={{ fontSize: '12px', color: 'gray' }}>Attachments: {announcement.fileAttachments.length} file(s)</span>
-                                    </Card.Text>
-                                    <Card.Text style={{ fontSize: '10px', color: 'gray', marginLeft: '15px' }}>
-                                        <span>Year Level: {announcement.yearLevel}</span>
-                                        <br />
-                                        <span>Course: {announcement.course}</span>
-                                        <br />
-                                        <span>Track: {announcement.track}</span>
-                                        <br />
-                                        <span>Announcement Type: {announcement.announcementType}</span>
-                                    </Card.Text>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    )) : (
-                        <Col>
-                            <h3 style={{ margin: '10px 0 100px 0' }}>No announcements found.</h3>
-                        </Col>
-                    )}
-                </Row>
-            )}
-
-            {resPerPage < count && (
-                <div className="d-flex justify-content-center mt-5">
-                    <Pagination
-                        activePage={currentPage}
-                        itemsCountPerPage={resPerPage}
-                        totalItemsCount={announcementCount}
-                        onChange={setCurrentPageNo}
-                        nextPageText={'Next'}
-                        prevPageText={'Prev'}
-                        firstPageText={'First'}
-                        lastPageText={'Last'}
-                        itemClass='page-item'
-                        linkClass='page-link'
-                    />
-                </div>
-            )}
         </Fragment>
     )
 }

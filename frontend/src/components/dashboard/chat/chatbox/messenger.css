@@ -1,8 +1,13 @@
 .messenger {
-    height: 100vh;
+    height: calc(100vh-70px);
     display: flex;
     margin-top: -10px;
     padding-top: 60px;
+}
+
+.buttonsGroup {
+    margin-top: 20px;
+    padding-top: 10px;
 }
 
 .chatMenu {
@@ -23,6 +28,7 @@
 
 .chatBox {
     flex: 8.5;
+    padding-top: 20px;
 }
 
 .chatBoxWrapper {
@@ -38,6 +44,10 @@
     top: 10%;
     font-size: 40px;
     cursor: default;
+}
+
+.chatBoxName {
+    font-size: 20px;
 }
 
 .chatBoxTop {

@@ -69,149 +69,142 @@ const RegisterAdmin = ({ history }) => {
         <Fragment>
             <MetaData title={'Register User'} />
             <Sidebar />
-            <div className="row">
-
-                <div className="">
-                    <Container className="space_inside"></Container>
-
-                    <Container fluid>
-                        <h3>Register User</h3>
-                        <Container fluid>
-                            <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
-                                <Card style={{ width: '40rem', align: 'center' }}>
-                                    <Card.Body>
-                                        <Form onSubmit={submitHandler}>
-                                            <Form.Group as={Row} className="mb-3">
-                                                <Form.Label column sm={2}>
-                                                    Name
+            <Container fluid style={{ padding: "50px 20px", marginTop: '50px' }}>
+                <Container fluid>
+                    <center><h3>Register admin</h3></center>
+                    <Row className='justify-content-md-center'>
+                        <Card style={{ width: '40rem', marginTop: '40px', margin: 'auto', backgroundColor: "#F5F5F5", borderTop: '7px solid #9c0b0b' }}>
+                            <Card.Body>
+                                <Form onSubmit={submitHandler}>
+                                    <Form.Group as={Row} className="mb-3">
+                                        <Form.Label column sm={2}>
+                                            Name
                                                 </Form.Label>
-                                                <Col md={4} style={{ marginTop: '5px' }}>
-                                                    <Form.Control
-                                                        type="text"
-                                                        placeholder="First Name"
-                                                        value={firstName}
-                                                        onChange={e => setFirstName(upperCase(e.target.value))}
-                                                        pattern="([A-zÀ-ž\s]){2,}"
-                                                        required
-                                                    />
-                                                </Col>
-                                                <Col md={3} style={{ marginTop: '5px' }}>
-                                                    <Form.Control
-                                                        type="text"
-                                                        placeholder="(Optional) Middle Name"
-                                                        value={middleName}
-                                                        onChange={e => setMiddleName(upperCase(e.target.value))}
-                                                        pattern="([A-zÀ-ž\s]){2,}"
-                                                    />
-                                                </Col>
-                                                <Col md={3} style={{ marginTop: '5px' }}>
-                                                    <Form.Control
-                                                        type="text"
-                                                        placeholder="Last Name"
-                                                        value={lastName}
-                                                        onChange={e => setLastName(upperCase(e.target.value))}
-                                                        pattern="([A-zÀ-ž\s]){2,}"
-                                                        required
-                                                    />
-                                                </Col>
-                                            </Form.Group>
-                                            <Form.Group as={Row} className="mb-3">
-                                                <Form.Label column sm={3}>
-                                                    Role
+                                        <Col md={4} style={{ marginTop: '5px' }}>
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="First Name"
+                                                value={firstName}
+                                                onChange={e => setFirstName(upperCase(e.target.value))}
+                                                pattern="([A-zÀ-ž\s]){2,}"
+                                                required
+                                            />
+                                        </Col>
+                                        <Col md={3} style={{ marginTop: '5px' }}>
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="(Optional) Middle Name"
+                                                value={middleName}
+                                                onChange={e => setMiddleName(upperCase(e.target.value))}
+                                                pattern="([A-zÀ-ž\s]){2,}"
+                                            />
+                                        </Col>
+                                        <Col md={3} style={{ marginTop: '5px' }}>
+                                            <Form.Control
+                                                type="text"
+                                                placeholder="Last Name"
+                                                value={lastName}
+                                                onChange={e => setLastName(upperCase(e.target.value))}
+                                                pattern="([A-zÀ-ž\s]){2,}"
+                                                required
+                                            />
+                                        </Col>
+                                    </Form.Group>
+                                    <Form.Group as={Row} className="mb-3">
+                                        <Form.Label column sm={3}>
+                                            Role
                                                 </Form.Label>
-                                                <Col sm={9}>
-                                                    <Form.Select
-                                                        aria-label="Default select example"
-                                                        value={role}
-                                                        name="role"
-                                                        onChange={e => setRole(e.target.value)}
-                                                        required
-                                                    >
-                                                        <option value=''>-</option>
-                                                        {roles.map(role => (
-                                                            <option value={role}>{role}</option>
-                                                        ))}
-                                                    </Form.Select>
-                                                </Col>
-                                            </Form.Group>
-                                            <Form.Group as={Row} className="mb-3">
-                                                <Form.Label column sm={3}>
-                                                    Email address
+                                        <Col sm={9}>
+                                            <Form.Select
+                                                aria-label="Default select example"
+                                                value={role}
+                                                name="role"
+                                                onChange={e => setRole(e.target.value)}
+                                                required
+                                            >
+                                                <option value=''>-</option>
+                                                {roles.map(role => (
+                                                    <option value={role}>{role}</option>
+                                                ))}
+                                            </Form.Select>
+                                        </Col>
+                                    </Form.Group>
+                                    <Form.Group as={Row} className="mb-3">
+                                        <Form.Label column sm={3}>
+                                            Email address
                                                 </Form.Label>
-                                                <Col sm={9}>
-                                                    <Form.Control
-                                                        type="email"
-                                                        placeholder="juan.delacruz.iics@ust.edu.ph"
-                                                        pattern="[a-z.]{1,}@ust\.edu\.ph"
-                                                        value={email}
-                                                        name="email"
-                                                        onChange={e => setEmail(e.target.value)}
-                                                        required
-                                                    />
-                                                </Col>
-                                            </Form.Group>
-                                            <Row className="mb-3">
-                                                <Form.Group as={Col} md={6} style={{ marginTop: '5px' }}>
-                                                    <Form.Label>Password</Form.Label>
-                                                    <InputGroup className="mb-3">
-                                                        <Form.Control
-                                                            type={showPassword ? "password" : "text"}
-                                                            placeholder="Password"
-                                                            name="password"
-                                                            value={password}
-                                                            onChange={e => setPassword(e.target.value)}
-                                                            minlength='6'
-                                                            required
-                                                        />
-                                                        <Button variant="secondary" onClick={showPasswordToggle}>
-                                                            <span className="fa-sm">
-                                                                <i className={showPassword ? "fa fa-eye-slash" : "fa fa-eye"}></i>
-                                                            </span>
-                                                        </Button>
-                                                    </InputGroup>
-                                                </Form.Group>
-                                                <Form.Group as={Col} md={6} style={{ marginTop: '5px' }}>
-                                                    <Form.Label>Confirm Password</Form.Label>
-                                                    <InputGroup className="mb-3">
-                                                        <Form.Control
-                                                            type={showConfirm ? "password" : "text"}
-                                                            placeholder="Confirm Password"
-                                                            name="confirmPassword"
-                                                            value={confirmPassword}
-                                                            onChange={e => setConfirmPassword(e.target.value)}
-                                                            minlength='6'
-                                                            required
-                                                        />
-                                                        <Button variant="secondary" onClick={showConfirmToggle}>
-                                                            <span className="fa-sm">
-                                                                <i className={showConfirm ? "fa fa-eye-slash" : "fa fa-eye"}></i>
-                                                            </span>
-                                                        </Button>
-                                                    </InputGroup>
-                                                </Form.Group>
-                                            </Row>
-                                            <center>
-                                                <Button
-                                                    type='submit'
-                                                    style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
-                                                    disabled={loading ? true : false}>
-                                                    {loading ? (
-                                                        <span>
-                                                            <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
-                                                        </span>
-                                                    ) : (
-                                                        <span>Register</span>
-                                                    )}
+                                        <Col sm={9}>
+                                            <Form.Control
+                                                type="email"
+                                                placeholder="juan.delacruz.iics@ust.edu.ph"
+                                                pattern="[a-z.]{1,}@ust\.edu\.ph"
+                                                value={email}
+                                                name="email"
+                                                onChange={e => setEmail(e.target.value)}
+                                                required
+                                            />
+                                        </Col>
+                                    </Form.Group>
+                                    <Row className="mb-3">
+                                        <Form.Group as={Col} md={6} style={{ marginTop: '5px' }}>
+                                            <Form.Label>Password</Form.Label>
+                                            <InputGroup className="mb-3">
+                                                <Form.Control
+                                                    type={showPassword ? "password" : "text"}
+                                                    placeholder="Password"
+                                                    name="password"
+                                                    value={password}
+                                                    onChange={e => setPassword(e.target.value)}
+                                                    minlength='6'
+                                                    required
+                                                />
+                                                <Button variant="secondary" onClick={showPasswordToggle}>
+                                                    <span className="fa-sm">
+                                                        <i className={showPassword ? "fa fa-eye-slash" : "fa fa-eye"}></i>
+                                                    </span>
                                                 </Button>
-                                            </center>
-                                        </Form>
-                                    </Card.Body>
-                                </Card>
-                            </Row>
-                        </Container>
-                    </Container>
-                </div>
-            </div>
+                                            </InputGroup>
+                                        </Form.Group>
+                                        <Form.Group as={Col} md={6} style={{ marginTop: '5px' }}>
+                                            <Form.Label>Confirm Password</Form.Label>
+                                            <InputGroup className="mb-3">
+                                                <Form.Control
+                                                    type={showConfirm ? "password" : "text"}
+                                                    placeholder="Confirm Password"
+                                                    name="confirmPassword"
+                                                    value={confirmPassword}
+                                                    onChange={e => setConfirmPassword(e.target.value)}
+                                                    minlength='6'
+                                                    required
+                                                />
+                                                <Button variant="secondary" onClick={showConfirmToggle}>
+                                                    <span className="fa-sm">
+                                                        <i className={showConfirm ? "fa fa-eye-slash" : "fa fa-eye"}></i>
+                                                    </span>
+                                                </Button>
+                                            </InputGroup>
+                                        </Form.Group>
+                                    </Row>
+                                    <center>
+                                        <Button
+                                            type='submit'
+                                            style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                            disabled={loading ? true : false}>
+                                            {loading ? (
+                                                <span>
+                                                    <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
+                                                </span>
+                                            ) : (
+                                                <span>Register</span>
+                                            )}
+                                        </Button>
+                                    </center>
+                                </Form>
+                            </Card.Body>
+                        </Card>
+                    </Row>
+                </Container>
+            </Container>
         </Fragment>
 
     )

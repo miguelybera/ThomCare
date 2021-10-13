@@ -49,9 +49,15 @@ const ConfirmRegister = ({ history, studentInfo, submitted, setSubmitted }) => {
             <MetaData title={'Confirm Student Information'} />
             {!success ? (
                 <Fragment>
-                    <Container className="space"></Container>
-                    <Container fluid>
-                        <Card style={{ maxWidth: '30rem', marginTop: '40px', margin: 'auto' }}>
+                    <Container fluid style={{ padding: "50px 20px" }}>
+                        <center>
+                            <h3>Confirm student information</h3>
+                            <p className="text-muted" style={{ fontSize: '12px', textAlign: 'center', marginBottom: '20px', maxWidth: '30rem' }}>
+                                Kindly confirm your student information below.
+                                Once submitted, you will not be able to update your profile (Contact your administrator to request for a profile update).
+                            </p>
+                        </center>
+                        <Card style={{ maxWidth: '30rem', marginTop: '40px', margin: 'auto', backgroundColor: "#F5F5F5", borderTop: '7px solid #9c0b0b' }}>
                             <Card.Body>
                                 <div class="progress">
                                     <div
@@ -65,14 +71,6 @@ const ConfirmRegister = ({ history, studentInfo, submitted, setSubmitted }) => {
                                         90%
                                     </div>
                                 </div>
-                                <Card.Title style={{ textAlign: 'center' }}>Confirm Student Information</Card.Title>
-                                <Card.Subtitle
-                                    className="text-muted"
-                                    style={{ fontSize: '12px', textAlign: 'center', marginBottom: '20px' }}
-                                >
-                                    Kindly confirm your student information below.
-                                    Once submitted, you will not be able to update your profile (Contact your administrator to request for a profile update).
-                                </Card.Subtitle>
                                 <Card.Text><b>Name:</b> {studentInfo.firstName}{studentInfo.middleName ? ' ' + studentInfo.middleName + ' ' : ' '}{studentInfo.lastName}</Card.Text>
                                 <Card.Text><b>Student Number:</b> {studentInfo.studentNumber}</Card.Text>
                                 <Card.Text><b>Course:</b> {studentInfo.course}</Card.Text>

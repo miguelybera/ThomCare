@@ -2,7 +2,8 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Card, Breadcrumb, ListGroup, ListGroupItem } from 'react-bootstrap'
+import { Card, Breadcrumb } from 'react-bootstrap'
+import { MDBDataTableV5 } from 'mdbreact'
 import { Markup } from 'interweave'
 import { getAnnouncementDetails, getUser, clearErrors } from './../../../actions/announcementActions'
 import { INSIDE_DASHBOARD_FALSE } from '../../../constants/dashboardConstants'
@@ -11,8 +12,8 @@ import Loader from './../../layout/Loader'
 import dateformat from 'dateformat'
 
 const cardStyle = {
-    margin: '20px auto',
-    width: '75%',
+    margin: '50px auto',
+    width: '100%',
     align: 'center'
 }
 
@@ -79,6 +80,45 @@ const AnnouncementDetails = ({ history, match }) => {
 
     }, [dispatch, alert, userError, createdBy])
 
+    const setAttachments = () => {
+        const data = {
+            columns: [
+                {
+                    label: 'File name',
+                    field: 'fileName',
+                    width: 750
+                },
+                {
+                    label: 'File Size',
+                    field: 'fileSize',
+                    width: 150
+                },
+                {
+                    label: 'Actions',
+                    field: 'action',
+                    width: 100
+                }
+            ],
+            rows: []
+        }
+
+        fileAttachments && fileAttachments.forEach(file => {
+            data.rows.push({
+                fileName: file.originalname,
+                fileSize: Number(file.size / 1000000).toFixed(2) + ' MB',
+                action: <Fragment>
+                    <a href={file.path} target="_blank" rel="noreferrer">
+                        <button className="btn btn-primary py-1 px-2 ml-2">
+                            <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                        </button>
+                    </a>
+                </Fragment>
+            })
+        })
+
+        return data
+    }
+
     return (
         <>
             <MetaData title={title} />
@@ -93,31 +133,21 @@ const AnnouncementDetails = ({ history, match }) => {
                     <Card.Body>
                         <Card.Title>{title}</Card.Title>
                         <Card.Text style={{ fontWeight: 'lighter', color: 'gray', fontSize: '12px' }}>Posted on: {changeDateFormat(createdAt)}</Card.Text>
-                        <Card.Text style={{ paddingBottom: '45px' }}><Markup content={description}/></Card.Text>
+                        <Card.Text style={{ paddingBottom: '45px' }}><Markup content={description} /></Card.Text>
                         <Card.Text>
                             {fileAttachments.length !== 0 && (<p>Attachments:</p>)}
-                            <ListGroup variant="flush">
-                                {fileAttachments && fileAttachments.map((file, index) => {
-                                    if (file.mimetype.includes('image/')) {
-                                        return (<Fragment>
-                                            <center>
-                                                <img src={file.path} style={{ width: '500px' }} alt={`img ${index + 1}`}></img>
-                                                <p>{file.originalname}</p>
-                                            </center>
-                                        </Fragment>)
-                                    } else {
-                                        return ((
-                                            <ListGroupItem>
-                                                {file.originalname} <font size="1rem">{Number(file.size / 1000000).toFixed(2)} MB</font> <a href={file.path} target="_blank" rel="noreferrer">
-                                                    <button className="btn btn-primary py-1 px-2 ml-2">
-                                                        <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
-                                                    </button>
-                                                </a>
-                                            </ListGroupItem>
-                                        ))
-                                    }
-                                })}
-                            </ListGroup>
+                            {fileAttachments.length !== 0 && (
+                                <MDBDataTableV5
+                                    data={setAttachments()}
+                                    searchTop
+                                    pagingTop
+                                    scrollX
+                                    entriesOptions={[5, 20, 25]}
+                                    entries={10}
+                                    style={{ backgroundColor: 'white' }}
+                                />
+                            )}
+
                         </Card.Text>
                         <Card.Text style={{ fontWeight: '600', color: 'gray', fontSize: '12px' }}>Posted by: {singleUser && upperCase(singleUser.firstName + ' ' + singleUser.lastName)}</Card.Text>
                         <Card.Text style={{ fontSize: '10px', color: 'gray' }}>

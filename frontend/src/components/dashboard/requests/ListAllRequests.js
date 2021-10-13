@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Button, ButtonGroup, ButtonToolbar } from 'react-bootstrap'
+import { Container, Button, ButtonGroup, ButtonToolbar, Row, Col } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getRequests, clearErrors } from '../../../actions/requestActions'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
@@ -23,10 +23,10 @@ const ListAllRequests = ({ history }) => {
 
     const changeDateFormat = (date) => dateformat(date, "mmm d, yyyy h:MMtt")
     const upperCase = (text) => text.toUpperCase()
-    
+
     useEffect(() => {
         setRequestList([])
-        
+
         switch (status) {
             case 'Requests':
                 setRequestList(requests)
@@ -46,7 +46,7 @@ const ListAllRequests = ({ history }) => {
             default:
                 break
         }
-        
+
     }, [status, requests, pending, processing, approved, denied])
 
     useEffect(() => {
@@ -75,7 +75,7 @@ const ListAllRequests = ({ history }) => {
                 {
                     label: 'Request Type',
                     field: 'requestType',
-                    width: 250
+                    width: 300
                 },
                 {
                     label: 'Requested by',
@@ -90,14 +90,14 @@ const ListAllRequests = ({ history }) => {
                 {
                     label: 'Actions',
                     field: 'actions',
-                    width: 200
+                    width: 150
                 }
             ],
             rows: []
         }
 
         requestList && requestList.forEach(request => {
-            const viewType = '5'+request._id
+            const viewType = '5' + request._id
 
             data.rows.push({
                 date: changeDateFormat(request.createdAt),
@@ -122,7 +122,6 @@ const ListAllRequests = ({ history }) => {
                     </Link>
                 </Fragment>
             })
-
         })
 
         return data
@@ -134,20 +133,23 @@ const ListAllRequests = ({ history }) => {
             <Sidebar />
             <div className="row">
                 <div className="">
-                    <Container className="space_inside"></Container>
-                    <Container>
-                        <h3>All Requests</h3>
-
-                        <ButtonToolbar>
-                            <ButtonGroup className="me-2">
-                                <Button onClick={() => setStatus('Requests')}>View All</Button>
-                                <Button onClick={() => setStatus('Pending')}>Pending</Button>
-                                <Button onClick={() => setStatus('Processing')}>Processing</Button>
-                                <Button onClick={() => setStatus('Approved')}>Approved</Button>
-                                <Button onClick={() => setStatus('Denied')}>Denied</Button>
-                            </ButtonGroup>
-                        </ButtonToolbar>
-
+                    <Container fluid style={{ padding: "50px" }}>
+                        <Row style={{ margin: '30px 0 20px 0' }}>
+                            <Col xs={12} sm={4}>
+                                <h3>All  Requests {`/ ${status}`}</h3>
+                            </Col>
+                            <Col xs={12} sm={8}>
+                                <ButtonToolbar>
+                                    <ButtonGroup className="mr-2">
+                                        <Button variant="outline-secondary" onClick={() => setStatus('Requests')}>View All</Button>
+                                        <Button variant="outline-secondary" onClick={() => setStatus('Pending')}>Pending</Button>
+                                        <Button variant="outline-secondary" onClick={() => setStatus('Processing')}>Processing</Button>
+                                        <Button variant="outline-secondary" onClick={() => setStatus('Approved')}>Approved</Button>
+                                        <Button variant="outline-secondary" onClick={() => setStatus('Denied')}>Denied</Button>
+                                    </ButtonGroup>
+                                </ButtonToolbar>
+                            </Col>
+                        </Row>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5

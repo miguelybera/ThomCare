@@ -50,9 +50,12 @@ const ManageForms = ({ history, match }) => {
         <Fragment>
             <MetaData title={`Manage Forms`} />
             <Sidebar />
-
             <Container fluid style={{ padding: "50px" }}>
-                <h3><b>Manage Forms</b></h3>
+                <div style={{ display: 'flex', marginBottom: '20px' }}>
+                    <div style={{ marginRight: 'auto', marginTop: '30px' }}>
+                        <h3>Manage Forms</h3>
+                    </div>
+                </div>
                 <Row xs={1} md={2} className="g-4" >
                     {loading ? <Loader /> : (
                         <Fragment>
@@ -92,11 +95,11 @@ const ManageForms = ({ history, match }) => {
                                                     <Button style={{ margin: '5px' }}>Download</Button>
                                                 </a>
                                                 <Link to={`/admin/form/${form._id}`}>
-                                                    <Button style={{ margin: '5px' }}>
+                                                    <Button style={{ margin: '10px 5px' }}>
                                                         Update
                                                     </Button>
                                                 </Link>
-                                                <Button style={{ margin: '5px' }} onClick={() => deleteFormHandler(form._id)}>
+                                                <Button style={{ margin: '10px 5px' }} onClick={() => deleteFormHandler(form._id)}>
                                                     Delete
                                                 </Button>
                                             </Card.Text>

@@ -112,160 +112,153 @@ const UpdateUser = ({ history, match }) => {
         <Fragment>
             <MetaData title={'Update User'} />
             <Sidebar />
-            <div className="row">
-                <div className="">
-                    <Container className="space_inside"></Container>
+            <Container fluid style={{ padding: "50px 20px", marginTop: '50px'}}>
+                {userLoading ? <Loader /> : (
                     <Container fluid>
-                        {userLoading ? (
-                            <Loader />
-                        ) : (
-                            <Container fluid>
-                                <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
-                                    <Card style={{ width: '40rem', align: 'center' }}>
-                                        <Card.Body>
-                                            <Card.Title style={{ margin: '50px 0 20px 0' }}>Update User</Card.Title>
-                                            <Form onSubmit={submitHandler}>
-                                                <Form.Group as={Row} className="mb-3">
-                                                    <Form.Label column sm={2}>
-                                                        Name
+                        <center><h3>Update User</h3></center>
+                        <Row className='justify-content-md-center'>
+                            <Card style={{ width: '40rem', marginTop: '40px', margin: 'auto', backgroundColor: "#F5F5F5", borderTop: '7px solid #9c0b0b' }}>
+                                <Card.Body>
+                                    <Form onSubmit={submitHandler}>
+                                        <Form.Group as={Row} className="mb-3">
+                                            <Form.Label column sm={2}>
+                                                Name
                                                     </Form.Label>
-                                                    <Col md={4} style={{ marginTop: '5px' }}>
+                                            <Col md={4} style={{ marginTop: '5px' }}>
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="First Name"
+                                                    value={firstName}
+                                                    onChange={e => setFirstName(upperCase(e.target.value))}
+                                                    pattern="([A-zÀ-ž\s]){2,}"
+                                                    required
+                                                />
+                                            </Col>
+                                            <Col md={3} style={{ marginTop: '5px' }}>
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="(Optional) Middle Name"
+                                                    value={middleName}
+                                                    onChange={e => setMiddleName(upperCase(e.target.value))}
+                                                    pattern="([A-zÀ-ž\s]){2,}"
+                                                />
+                                            </Col>
+                                            <Col md={3} style={{ marginTop: '5px' }}>
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Last Name"
+                                                    value={lastName}
+                                                    onChange={e => setLastName(upperCase(e.target.value))}
+                                                    pattern="([A-zÀ-ž\s]){2,}"
+                                                    required
+                                                />
+                                            </Col>
+                                        </Form.Group>
+
+                                        {role === 'Student' ? (
+                                            <>
+                                                <Form.Group as={Row} className="mb-3">
+                                                    <Form.Label column sm={3}>
+                                                        Student number
+                                                            </Form.Label>
+                                                    <Col sm={9}>
                                                         <Form.Control
                                                             type="text"
-                                                            placeholder="First Name"
-                                                            value={firstName}
-                                                            onChange={e => setFirstName(upperCase(e.target.value))}
-                                                            pattern="([A-zÀ-ž\s]){2,}"
-                                                            required
-                                                        />
-                                                    </Col>
-                                                    <Col md={3} style={{ marginTop: '5px' }}>
-                                                        <Form.Control
-                                                            type="text"
-                                                            placeholder="(Optional) Middle Name"
-                                                            value={middleName}
-                                                            onChange={e => setMiddleName(upperCase(e.target.value))}
-                                                            pattern="([A-zÀ-ž\s]){2,}"
-                                                        />
-                                                    </Col>
-                                                    <Col md={3} style={{ marginTop: '5px' }}>
-                                                        <Form.Control
-                                                            type="text"
-                                                            placeholder="Last Name"
-                                                            value={lastName}
-                                                            onChange={e => setLastName(upperCase(e.target.value))}
-                                                            pattern="([A-zÀ-ž\s]){2,}"
-                                                            required
+                                                            placeholder="Student number"
+                                                            value={studentNumber}
+                                                            name="studentNumber"
+                                                            onChange={e => setStudentNumber(e.target.value)}
                                                         />
                                                     </Col>
                                                 </Form.Group>
 
-                                                {role === 'Student' ? (
-                                                    <>
-                                                        <Form.Group as={Row} className="mb-3">
-                                                            <Form.Label column sm={3}>
-                                                                Student number
-                                                            </Form.Label>
-                                                            <Col sm={9}>
-                                                                <Form.Control
-                                                                    type="text"
-                                                                    placeholder="Student number"
-                                                                    value={studentNumber}
-                                                                    name="studentNumber"
-                                                                    onChange={e => setStudentNumber(e.target.value)}
-                                                                />
-                                                            </Col>
-                                                        </Form.Group>
-
-                                                        <Form.Group as={Row} className="mb-3">
-                                                            <Form.Label column sm={3}>
-                                                                Course
-                                                            </Form.Label>
-                                                            <Col sm={9}>
-                                                                <Form.Select
-                                                                    aria-label="Default select example"
-                                                                    value={course}
-                                                                    name="course"
-                                                                    onChange={e => setCourse(e.target.value)}
-                                                                    required
-                                                                >
-                                                                    {programs.map(program => (
-                                                                        <option value={program}>{program}</option>
-                                                                    ))}
-                                                                </Form.Select>
-                                                            </Col>
-                                                        </Form.Group>
-                                                        <Form.Group as={Row} className="mb-3">
-                                                            <Form.Label column sm={3}>
-                                                                Role
-                                                            </Form.Label>
-                                                            <Col sm={9}>
-                                                                <Form.Control
-                                                                    type="text"
-                                                                    placeholder="Role"
-                                                                    value={role}
-                                                                    disabled
-                                                                />
-                                                            </Col>
-                                                        </Form.Group>
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <Form.Group as={Row} className="mb-3">
-                                                            <Form.Label column sm={3}>
-                                                                Role
-                                                            </Form.Label>
-                                                            <Col sm={9}>
-                                                                <Form.Select
-                                                                    aria-label="Default select example"
-                                                                    value={role}
-                                                                    name="role"
-                                                                    onChange={e => setRole(e.target.value)}
-                                                                    required
-                                                                >
-                                                                    {roles.map(role => (
-                                                                        <option value={role}>{role}</option>
-                                                                    ))}
-                                                                </Form.Select>
-                                                            </Col>
-                                                        </Form.Group>
-                                                    </>)}
                                                 <Form.Group as={Row} className="mb-3">
                                                     <Form.Label column sm={3}>
-                                                        Email address
-                                                    </Form.Label>
+                                                        Course
+                                                            </Form.Label>
+                                                    <Col sm={9}>
+                                                        <Form.Select
+                                                            aria-label="Default select example"
+                                                            value={course}
+                                                            name="course"
+                                                            onChange={e => setCourse(e.target.value)}
+                                                            required
+                                                        >
+                                                            {programs.map(program => (
+                                                                <option value={program}>{program}</option>
+                                                            ))}
+                                                        </Form.Select>
+                                                    </Col>
+                                                </Form.Group>
+                                                <Form.Group as={Row} className="mb-3">
+                                                    <Form.Label column sm={3}>
+                                                        Role
+                                                            </Form.Label>
                                                     <Col sm={9}>
                                                         <Form.Control
-                                                            type="email"
-                                                            placeholder="Email address"
-                                                            value={email}
+                                                            type="text"
+                                                            placeholder="Role"
+                                                            value={role}
                                                             disabled
                                                         />
                                                     </Col>
                                                 </Form.Group>
-                                                <center>
-                                                    <Button
-                                                        type='submit'
-                                                        style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
-                                                        disabled={loading ? true : false}>
-                                                        {loading ? (
-                                                            <span>
-                                                                <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
-                                                            </span>
-                                                        ) : (
-                                                            <span>Update</span>
-                                                        )}
-                                                    </Button>
-                                                </center>
-                                            </Form>
-                                        </Card.Body>
-                                    </Card>
-                                </Row>
-                            </Container>
-                        )}
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Form.Group as={Row} className="mb-3">
+                                                    <Form.Label column sm={3}>
+                                                        Role
+                                                            </Form.Label>
+                                                    <Col sm={9}>
+                                                        <Form.Select
+                                                            aria-label="Default select example"
+                                                            value={role}
+                                                            name="role"
+                                                            onChange={e => setRole(e.target.value)}
+                                                            required
+                                                        >
+                                                            {roles.map(role => (
+                                                                <option value={role}>{role}</option>
+                                                            ))}
+                                                        </Form.Select>
+                                                    </Col>
+                                                </Form.Group>
+                                            </>)}
+                                        <Form.Group as={Row} className="mb-3">
+                                            <Form.Label column sm={3}>
+                                                Email address
+                                                    </Form.Label>
+                                            <Col sm={9}>
+                                                <Form.Control
+                                                    type="email"
+                                                    placeholder="Email address"
+                                                    value={email}
+                                                    disabled
+                                                />
+                                            </Col>
+                                        </Form.Group>
+                                        <center>
+                                            <Button
+                                                type='submit'
+                                                style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                                disabled={loading ? true : false}>
+                                                {loading ? (
+                                                    <span>
+                                                        <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
+                                                    </span>
+                                                ) : (
+                                                    <span>Update</span>
+                                                )}
+                                            </Button>
+                                        </center>
+                                    </Form>
+                                </Card.Body>
+                            </Card>
+                        </Row>
                     </Container>
-                </div>
-            </div>
+                )}
+            </Container>
         </Fragment>
 
     )

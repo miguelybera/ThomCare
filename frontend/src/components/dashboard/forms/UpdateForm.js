@@ -87,98 +87,103 @@ const UpdateForm = ({ history, match }) => {
             <MetaData title={'Update Form'} />
             <Sidebar />
             {loading ? <Loader /> : (
-                <Container fluid>
-                    <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
-                        <Card style={{ backgroundColor: "#F5F5F5", width: '30rem', align: 'center', borderTop: '7px solid #9c0b0b', marginBottom: '50px' }}>
-                            <Card.Body>
-                                <Card.Title style={{ margin: '20px 0 20px 0', fontWeight: "bold" }}>Update Form</Card.Title>
-                                <Form onSubmit={submitHandler}>
-                                    <Form.Group className="mb-3">
-                                        <FloatingLabel
-                                            label="Title"
-                                            className="mb-3"
-                                        >
-                                            <Form.Control
-                                                type='text'
-                                                name='title'
-                                                value={title}
-                                                onChange={e => setTitle(e.target.value)}
-                                                required
-                                            />
-                                        </FloatingLabel>
-                                    </Form.Group>
-                                    <Form.Group className="mb-3">
-                                        <FloatingLabel
-                                            label="Form Description"
-                                            className="mb-3"
-                                        >
-                                            <Form.Control
-                                                as="textarea"
-                                                rows={5}
-                                                name='description'
-                                                value={description}
-                                                onChange={e => setDescription(e.target.value)}
-                                                required
-                                            />
-                                        </FloatingLabel>
-                                    </Form.Group>
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>
-                                            Attachments:
-                                            <OverlayTrigger placement='bottom-start' overlay={
-                                                <Tooltip id="tooltip-disabled" >
-                                                    Accepted File Formats:
-                                                    <ul style={{ textAlign: 'left' }}>
-                                                        <li>PDF</li>
-                                                        <li>JPG</li>
-                                                        <li>PNG</li>
-                                                        <li>Word File</li>
-                                                        <li>Excel File</li>
-                                                    </ul>
-                                                </Tooltip >
-                                            }>
-                                                <span class="fa fa-question-circle" style={{ marginRight: '.3rem' }} />
-                                            </OverlayTrigger>
-                                        </Form.Label>
-                                        <Form.Control type="file" name="attachments" onChange={onChange} className="mb-3" />
+                <Container fluid style={{ padding: "50px 20px", marginTop: '40px' }}>
+                    <Container fluid>
+                        <center>
+                            <h3>Update form</h3>
+                        </center>
+                        <Row className='justify-content-md-center'>
+                            <Card style={{ width: '40rem', marginTop: '40px', margin: 'auto', backgroundColor: "#F5F5F5", borderTop: '7px solid #9c0b0b' }}>
+                                <Card.Body>
+                                    <Card.Title style={{ margin: '20px 0 20px 0', fontWeight: "bold" }}>Update Form</Card.Title>
+                                    <Form onSubmit={submitHandler}>
                                         <Form.Group className="mb-3">
-                                            {oldAttachments !== 0 &&
-                                                <Form.Label>Previous attachment: </Form.Label>
-                                            }
-                                            <ListGroup>
-                                                {oldAttachments && oldAttachments.map(file => (
-                                                    <Fragment>
-                                                        <ListGroupItem>
-                                                            {file.originalname} <font size="1rem">{Number(file.size / 1000000).toFixed(2)} MB</font> <a href={file.path} target="_blank" rel="noreferrer">
-                                                                <button className="btn btn-primary py-1 px-2 ml-2">
-                                                                    <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
-                                                                </button>
-                                                            </a>
-                                                        </ListGroupItem>
-                                                    </Fragment>
-                                                ))}
-                                            </ListGroup>
+                                            <FloatingLabel
+                                                label="Title"
+                                                className="mb-3"
+                                            >
+                                                <Form.Control
+                                                    type='text'
+                                                    name='title'
+                                                    value={title}
+                                                    onChange={e => setTitle(e.target.value)}
+                                                    required
+                                                />
+                                            </FloatingLabel>
                                         </Form.Group>
-                                    </Form.Group>
-                                    <center>
-                                        <Button
-                                            type='submit'
-                                            style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
-                                            disabled={loading ? true : false}
-                                        >
-                                            {updateLoading ? (
-                                                <span>
-                                                    <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
-                                                </span>
-                                            ) : (
-                                                <span>Submit</span>
-                                            )}
-                                        </Button>
-                                    </center>
-                                </Form>
-                            </Card.Body>
-                        </Card>
-                    </Row>
+                                        <Form.Group className="mb-3">
+                                            <FloatingLabel
+                                                label="Form Description"
+                                                className="mb-3"
+                                            >
+                                                <Form.Control
+                                                    as="textarea"
+                                                    rows={10}
+                                                    name='description'
+                                                    value={description}
+                                                    onChange={e => setDescription(e.target.value)}
+                                                    required
+                                                />
+                                            </FloatingLabel>
+                                        </Form.Group>
+                                        <Form.Group className="mb-3">
+                                            <Form.Label>
+                                                Attachments:
+                                            <OverlayTrigger placement='bottom-start' overlay={
+                                                    <Tooltip id="tooltip-disabled" >
+                                                        Accepted File Formats:
+                                                    <ul style={{ textAlign: 'left' }}>
+                                                            <li>PDF</li>
+                                                            <li>JPG</li>
+                                                            <li>PNG</li>
+                                                            <li>Word File</li>
+                                                            <li>Excel File</li>
+                                                        </ul>
+                                                    </Tooltip >
+                                                }>
+                                                    <span class="fa fa-question-circle" style={{ marginRight: '.3rem' }} />
+                                                </OverlayTrigger>
+                                            </Form.Label>
+                                            <Form.Control type="file" name="attachments" onChange={onChange} className="mb-3" />
+                                            <Form.Group className="mb-3">
+                                                {oldAttachments !== 0 &&
+                                                    <Form.Label>Previous attachment: </Form.Label>
+                                                }
+                                                <ListGroup>
+                                                    {oldAttachments && oldAttachments.map(file => (
+                                                        <Fragment>
+                                                            <ListGroupItem>
+                                                                {file.originalname} <font size="1rem">{Number(file.size / 1000000).toFixed(2)} MB</font> <a href={file.path} target="_blank" rel="noreferrer">
+                                                                    <button className="btn btn-primary py-1 px-2 ml-2">
+                                                                        <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                                                                    </button>
+                                                                </a>
+                                                            </ListGroupItem>
+                                                        </Fragment>
+                                                    ))}
+                                                </ListGroup>
+                                            </Form.Group>
+                                        </Form.Group>
+                                        <center>
+                                            <Button
+                                                type='submit'
+                                                style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                                disabled={loading ? true : false}
+                                            >
+                                                {updateLoading ? (
+                                                    <span>
+                                                        <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
+                                                    </span>
+                                                ) : (
+                                                    <span>Submit</span>
+                                                )}
+                                            </Button>
+                                        </center>
+                                    </Form>
+                                </Card.Body>
+                            </Card>
+                        </Row>
+                    </Container>
                 </Container>
             )}
         </>

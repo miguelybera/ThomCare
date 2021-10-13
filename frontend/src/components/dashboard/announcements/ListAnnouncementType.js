@@ -5,7 +5,7 @@ import { Container, Modal, Button } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getAnnouncementType, deleteAnnouncementType, clearErrors } from './../../../actions/announcementActions'
 import { DELETE_ANNOUNCEMENT_TYPE_RESET } from './../../../constants/announcementConstants'
-import {INSIDE_DASHBOARD_TRUE} from '../../../constants/dashboardConstants'
+import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Sidebar from './../../layout/Sidebar'
 import MetaData from './../../layout/MetaData'
 import Loader from './../../layout/Loader'
@@ -123,9 +123,12 @@ const ListAnnouncementType = ({ history }) => {
             <Sidebar />
             <div className="row">
                 <div className="">
-                    <Container className="space_inside"></Container>
-                    <Container>
-                        <h3>Announcement Types</h3>
+                    <Container fluid style={{ padding: "50px" }}>
+                        <div style={{ display: 'flex', marginBottom: '20px' }}>
+                            <div style={{ marginRight: 'auto', marginTop: '30px' }}>
+                                <h3>Announcement Types</h3>
+                            </div>
+                        </div>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5

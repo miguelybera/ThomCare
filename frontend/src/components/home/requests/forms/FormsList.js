@@ -11,7 +11,7 @@ const FormsList = () => {
                     <h3>FORMS</h3>
                 </div>
             </Container>
-            <Container fluid style={{ paddingTop: '38px' }}>
+                <Container fluid style={{ padding: "50px 20px" }}>
                 <Table bordered hover size="sm" style={{ paddingTop: '100px', marginTop: '50px', justifyContent: 'center' }}>
                     <thead>
                         <tr style={{ textAlign: 'center' }}>
@@ -76,7 +76,6 @@ const FormsList = () => {
                     </tbody>
                 </Table>
             </Container>
-            <Container className="space"></Container>
         </Fragment>
     )
 }

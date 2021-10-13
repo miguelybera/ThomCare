@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Button, ButtonGroup, ButtonToolbar } from 'react-bootstrap'
+import { Container, Button, ButtonGroup, ButtonToolbar, Row, Col } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getRequests, updateRequest, unassignRequest, clearErrors } from '../../../actions/requestActions'
 import { UPDATE_REQUEST_RESET, UNASSIGN_REQUEST_RESET } from '../../../constants/requestConstants'
@@ -25,10 +25,10 @@ const ListMyRequests = ({ history }) => {
 
     const changeDateFormat = (date) => dateformat(date, "mmm d, yyyy h:MMtt")
     const upperCase = (text) => text.toUpperCase()
-    
+
     useEffect(() => {
         setRequestList([])
-        
+
         switch (status) {
             case 'Requests':
                 setRequestList(requests)
@@ -48,7 +48,7 @@ const ListMyRequests = ({ history }) => {
             default:
                 break
         }
-        
+
     }, [status, requests, pending, processing, approved, denied])
 
     useEffect(() => {
@@ -65,9 +65,9 @@ const ListMyRequests = ({ history }) => {
             alert.error(updateError)
             dispatch(clearErrors())
         }
-        
+
         if (isUpdated) {
-            if(handler === 'Trash') {
+            if (handler === 'Trash') {
                 alert.success('Request has been moved to Trash successfully.')
                 history.push('/admin/me/requests')
 
@@ -90,7 +90,7 @@ const ListMyRequests = ({ history }) => {
     }, [dispatch, history, alert, error, updateError, isUpdated])
 
     const updateRequestHandler = (id) => {
-        dispatch(updateRequest(id, {isTrash: true}, true))
+        dispatch(updateRequest(id, { isTrash: true }, true))
         setHandler('Trash')
     }
 
@@ -132,8 +132,8 @@ const ListMyRequests = ({ history }) => {
         }
 
         requestList && requestList.forEach(request => {
-            const viewType = '1'+request._id
-            
+            const viewType = '1' + request._id
+
             data.rows.push({
                 date: changeDateFormat(request.createdAt),
                 requestType: request.requestType,
@@ -184,20 +184,23 @@ const ListMyRequests = ({ history }) => {
             <Sidebar />
             <div className="row">
                 <div className="">
-                    <Container className="space_inside"></Container>
-                    <Container>
-                        <h3>My Requests {`/ ${status}`}</h3>
-                        
-                        <ButtonToolbar>
-                            <ButtonGroup className="me-2">
-                                <Button onClick={() => setStatus('Requests')}>View All</Button>
-                                <Button onClick={() => setStatus('Pending')}>Pending</Button>
-                                <Button onClick={() => setStatus('Processing')}>Processing</Button>
-                                <Button onClick={() => setStatus('Approved')}>Approved</Button>
-                                <Button onClick={() => setStatus('Denied')}>Denied</Button>
-                            </ButtonGroup>
-                        </ButtonToolbar>
-
+                    <Container fluid style={{ padding: "50px" }}>
+                        <Row style={{ margin: '30px 0 20px 0' }}>
+                            <Col xs={12} sm={4}>
+                                <h3>My Requests {`/ ${status}`}</h3>
+                            </Col>
+                            <Col xs={12} sm={8}>
+                                <ButtonToolbar>
+                                    <ButtonGroup className="mr-2">
+                                        <Button variant="outline-secondary" onClick={() => setStatus('Requests')}>View All</Button>
+                                        <Button variant="outline-secondary" onClick={() => setStatus('Pending')}>Pending</Button>
+                                        <Button variant="outline-secondary" onClick={() => setStatus('Processing')}>Processing</Button>
+                                        <Button variant="outline-secondary" onClick={() => setStatus('Approved')}>Approved</Button>
+                                        <Button variant="outline-secondary" onClick={() => setStatus('Denied')}>Denied</Button>
+                                    </ButtonGroup>
+                                </ButtonToolbar>
+                            </Col>
+                        </Row>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5

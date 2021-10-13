@@ -53,9 +53,9 @@ const Register = () => {
             <MetaData title={'Register'} />
             {!submitted ? (
                 <Fragment>
-                    <Container className="space"></Container>
-                    <Container fluid>
-                        <Card style={{ maxWidth: '850px', margin: 'auto' }}>
+                    <Container fluid style={{ padding: "50px 20px" }}>
+                        <center><h3>Register an account</h3></center>
+                        <Card style={{ maxWidth: '850px', marginTop: '40px', margin: 'auto', backgroundColor: "#F5F5F5", borderTop: '7px solid #9c0b0b' }}>
                             <Card.Body style={{ margin: '20px' }}>
                                 <div class="progress">
                                     <div
@@ -69,7 +69,6 @@ const Register = () => {
                                         50%
                                     </div>
                                 </div>
-                                <Card.Title style={{ margin: '50px 0 20px 0' }}>Register an account</Card.Title>
                                 <Form method='post' onSubmit={submitHandler} encType='application/json'>
                                     <Row className="mb-3">
                                         <Form.Group as={Col} md={5} style={{ marginTop: '5px' }}>
@@ -206,7 +205,6 @@ const Register = () => {
             ) : (
                 <ConfirmRegister studentInfo={user} submitted={submitted} setSubmitted={setSubmitted} />
             )}
-            <Container className="space"></Container>
         </>
     )
 }

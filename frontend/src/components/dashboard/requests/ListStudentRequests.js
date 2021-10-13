@@ -24,7 +24,7 @@ const ListStudentRequests = ({ history }) => {
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-    
+
     const changeDateFormat = (date) => dateformat(date, "mmm d, yyyy h:MMtt")
     const upperCase = (text) => text.toUpperCase()
 
@@ -90,7 +90,7 @@ const ListStudentRequests = ({ history }) => {
         }
 
         requests.forEach(request => {
-            const viewType = '2'+request._id
+            const viewType = '2' + request._id
 
             data.rows.push({
                 date: changeDateFormat(request.createdAt),
@@ -107,18 +107,18 @@ const ListStudentRequests = ({ history }) => {
                     </p>
                 </Fragment>,
                 actions: <Fragment>
-                <Link to={`/view/request/${viewType}`}>
-                    <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
-                        <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                    <Link to={`/view/request/${viewType}`}>
+                        <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
+                            <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                        </Button>
+                    </Link>
+                    <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
+                        setRequestId(request._id)
+                        handleShow()
+                    }}>
+                        <i class="fa fa-trash" aria-hidden="true" />
                     </Button>
-                </Link>
-                <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
-                    setRequestId(request._id)
-                    handleShow()
-                }}>
-                    <i class="fa fa-trash" aria-hidden="true" />
-                </Button>
-            </Fragment>
+                </Fragment>
             })
 
         })
@@ -151,9 +151,12 @@ const ListStudentRequests = ({ history }) => {
             <Sidebar />
             <div className="row">
                 <div className="">
-                    <Container className="space_inside"></Container>
-                    <Container>
-                        <h3>My Requests</h3>
+                    <Container fluid style={{ padding: "50px" }}>
+                        <div style={{ display: 'flex', marginBottom: '20px' }}>
+                            <div style={{ marginRight: 'auto', marginTop: '30px' }}>
+                                <h3>My Requests</h3>
+                            </div>
+                        </div>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5

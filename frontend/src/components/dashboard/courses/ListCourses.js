@@ -69,7 +69,7 @@ const ListCourses = ({ history }) => {
                 {
                     label: 'Course Name',
                     field: 'courseName',
-                    width: 300
+                    width: 270
                 },
                 {
                     label: 'Lec Units',
@@ -89,7 +89,7 @@ const ListCourses = ({ history }) => {
                 {
                     label: 'Actions',
                     field: 'actions',
-                    width: 150
+                    width: 180
                 }
             ],
             rows: []
@@ -146,14 +146,19 @@ const ListCourses = ({ history }) => {
             <Sidebar />
             <div className="row">
                 <div className="">
-                    <Container className="space_inside"></Container>
-                    <Container>
-                        <h3>Courses</h3>
-                        <Link to='/admin/new/course'>
-                            <Button>
-                                Add new course
-                            </Button>
-                        </Link>
+                    <Container fluid style={{ padding: "50px" }}>
+                        <div style={{ display: 'flex', marginBottom: '20px' }}>
+                            <div style={{ marginRight: 'auto', marginTop: '30px' }}>
+                                <h3>Courses</h3>
+                            </div>
+                            <div style={{ marginLeft: 'auto', marginTop: '30px' }}>
+                                <Link to='/admin/new/course' style={{ textDecoration: 'none', color: 'white' }}>
+                                    <Button variant="primary">
+                                        Add course
+                                    </Button>
+                                </Link>
+                            </div>
+                        </div>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5

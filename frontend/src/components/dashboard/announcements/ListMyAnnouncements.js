@@ -119,7 +119,7 @@ const ListMyAnnoucements = ({ history }) => {
             data.rows.push({
                 date: changeDateFormat(announcement.createdAt),
                 title: announcement.title,
-                description: <Fragment><Markup content={shortenDescription(announcement.description)}/></Fragment>,
+                description: <Fragment><Markup content={shortenDescription(announcement.description)} /></Fragment>,
                 tags: <Fragment>
                     <span>
                         <p style={{ margin: '0' }}><b>Year Level: </b>{announcement.yearLevel}</p>
@@ -178,10 +178,19 @@ const ListMyAnnoucements = ({ history }) => {
             <Sidebar />
             <div className="row">
                 <div className="">
-                    <Container className="space_inside"></Container>
-                    <Container>
-                        <h3>My Announcements</h3>
-                        <Button variant="primary"><Link to='/admin/new/announcement' style={{ textDecoration: 'none', color: 'white' }}>Create announcement</Link></Button>
+                    <Container fluid style={{ padding: "50px" }}>
+                        <div style={{ display: 'flex', marginBottom: '20px' }}>
+                            <div style={{ marginRight: 'auto', marginTop: '30px' }}>
+                                <h3>My Announcements</h3>
+                            </div>
+                            <div style={{ marginLeft: 'auto', marginTop: '30px' }}>
+                                <Link to='/admin/new/announcement' style={{ textDecoration: 'none', color: 'white' }}>
+                                    <Button variant="primary">
+                                        Create announcement
+                                    </Button>
+                                </Link>
+                            </div>
+                        </div>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5

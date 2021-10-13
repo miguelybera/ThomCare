@@ -246,7 +246,7 @@ const Messenger = ({ history }) => {
     //sockets end
 
     return (
-        <>
+        <Fragment>
             <MetaData title={'Messages'} />
             <Sidebar />
             <Modal
@@ -278,31 +278,33 @@ const Messenger = ({ history }) => {
             <div className='messenger'>
                 <div className='chatMenu'>
                     <div className='chatMenuWrapper' style={{ width: '100%' }}>
-                        <InputGroup className="mb-3">
-                            <FloatingLabel label="Search" style={{ width: '70%' }}>
-                                <FormControl
-                                    type="search"
-                                    placeholder='Search for friends'
-                                    aria-label="Search by title"
-                                    size="sm"
-                                    name="search"
-                                    value={search}
-                                    onChange={(e) => setSearch(e.target.value)}
-                                    width="170px"
-                                    right="0px"
-                                />
-                            </FloatingLabel>
-                            <Button variant="secondary" onClick={() => searchButton()}>
-                                <span className="fa-sm">
-                                    <i className="fa fa-search"></i>
+                        <div className="buttonsGroup">
+                            <InputGroup className="mb-3">
+                                <FloatingLabel label="Search" style={{ width: '70%' }}>
+                                    <FormControl
+                                        type="search"
+                                        placeholder='Search'
+                                        aria-label="Search"
+                                        size="sm"
+                                        name="search"
+                                        value={search}
+                                        onChange={(e) => setSearch(e.target.value)}
+                                        width="170px"
+                                        right="0px"
+                                    />
+                                </FloatingLabel>
+                                <Button variant="secondary" onClick={() => searchButton()}>
+                                    <span className="fa-sm">
+                                        <i className="fa fa-search"></i>
+                                    </span>
+                                </Button>
+                            </InputGroup>
+                            <Button variant="primary" onClick={handleShow} style={{ width: '85%' }}>
+                                Start a conversation <span className="fa-sm">
+                                    <i className="fa fa-edit"></i>
                                 </span>
                             </Button>
-                        </InputGroup>
-                        <Button variant="primary" onClick={handleShow} style={{ width: '85%' }}>
-                            Start a conversation <span className="fa-sm">
-                                <i className="fa fa-edit"></i>
-                            </span>
-                        </Button>
+                        </div>
                         <div className="conversationList">
                             {loading ? <Loader /> : (
                                 conversationList && conversationList.map((c) => (
@@ -324,7 +326,7 @@ const Messenger = ({ history }) => {
                     <div className='chatBoxWrapper'>
                         {
                             currentChat ? (<>
-                                <p>{userName && userName}</p>
+                                <p className="chatBoxName">{userName && userName}</p>
                                 <div className='chatBoxTop'>
                                     {messagesLoading ? <Loader /> : (
                                         messageList && messageList.map(m => (
@@ -354,8 +356,7 @@ const Messenger = ({ history }) => {
                     </div>
                 </div>
             </div>
-
-        </>
+        </Fragment>
     )
 }
 

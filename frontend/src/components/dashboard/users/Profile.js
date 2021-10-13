@@ -75,98 +75,94 @@ const Profile = () => {
         <>
             <MetaData title={'My Profile'} />
             <Sidebar />
-            {loading ? (
-                <Loader />
-            ) : (
-
-                <Container fluid>
-                    <Container className="space_inside"></Container>
-                    <Row className='justify-content-md-center' style={{ marginTop: '30px' }}>
-                        <Card style={{ backgroundColor: "#F5F5F5", width: '40rem', align: 'center' }}>
-                            <Card.Body >
-                                <Card.Title style={{ margin: '20px 0 20px 0', fontWeight: "bold" }}>
-                                    {editProfile ? 'Edit My Profile' : 'My Profile'}
-                                </Card.Title>
-                                <Form onSubmit={submitHandler}>
-                                    <Form.Group as={Row} className="mb-3">
-                                        <Form.Label column sm={2}>
-                                            Name
+            {loading ? <Loader /> : (
+                <Container fluid style={{ padding: "50px 20px", marginTop: '50px' }}>
+                    <Container fluid>
+                        <center>
+                            <h3>{editProfile ? 'Edit My Profile' : 'My Profile'}</h3>
+                        </center>
+                        <Row className='justify-content-md-center'>
+                            <Card style={{ width: '40rem', marginTop: '40px', margin: 'auto', backgroundColor: "#F5F5F5", borderTop: '7px solid #9c0b0b' }}>
+                                <Card.Body>
+                                    <Form onSubmit={submitHandler}>
+                                        <Form.Group as={Row} className="mb-3">
+                                            <Form.Label column sm={2}>
+                                                Name
                                         </Form.Label>
-                                        <Col md={4} style={{ marginTop: '5px' }}>
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="First Name"
-                                                value={firstName}
-                                                disabled={editProfile ? false : true}
-                                                onChange={e => setFirstName(upperCase(e.target.value))}
-                                                pattern="([A-zÀ-ž\s]){2,}"
-                                                required
-                                            />
-                                        </Col>
-                                        <Col md={3} style={{ marginTop: '5px' }}>
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="(Optional) Middle Name"
-                                                value={middleName}
-                                                disabled={editProfile ? false : true}
-                                                onChange={e => setMiddleName(upperCase(e.target.value))}
-                                                pattern="([A-zÀ-ž\s]){2,}"
-                                            />
-                                        </Col>
-                                        <Col md={3} style={{ marginTop: '5px' }}>
-                                            <Form.Control
-                                                type="text"
-                                                placeholder="Last Name"
-                                                value={lastName}
-                                                disabled={editProfile ? false : true}
-                                                onChange={e => setLastName(upperCase(e.target.value))}
-                                                pattern="([A-zÀ-ž\s]){2,}"
-                                                required
-                                            />
-                                        </Col>
-                                    </Form.Group>
+                                            <Col md={4} style={{ marginTop: '5px' }}>
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="First Name"
+                                                    value={firstName}
+                                                    disabled={editProfile ? false : true}
+                                                    onChange={e => setFirstName(upperCase(e.target.value))}
+                                                    pattern="([A-zÀ-ž\s]){2,}"
+                                                    required
+                                                />
+                                            </Col>
+                                            <Col md={3} style={{ marginTop: '5px' }}>
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="(Optional) Middle Name"
+                                                    value={middleName}
+                                                    disabled={editProfile ? false : true}
+                                                    onChange={e => setMiddleName(upperCase(e.target.value))}
+                                                    pattern="([A-zÀ-ž\s]){2,}"
+                                                />
+                                            </Col>
+                                            <Col md={3} style={{ marginTop: '5px' }}>
+                                                <Form.Control
+                                                    type="text"
+                                                    placeholder="Last Name"
+                                                    value={lastName}
+                                                    disabled={editProfile ? false : true}
+                                                    onChange={e => setLastName(upperCase(e.target.value))}
+                                                    pattern="([A-zÀ-ž\s]){2,}"
+                                                    required
+                                                />
+                                            </Col>
+                                        </Form.Group>
 
-                                    {role === 'Student' ? (
-                                        <>
-                                            <Form.Group as={Row} className="mb-3">
-                                                <Form.Label column sm={3}>
-                                                    Student number
+                                        {role === 'Student' ? (
+                                            <>
+                                                <Form.Group as={Row} className="mb-3">
+                                                    <Form.Label column sm={3}>
+                                                        Student number
                                                 </Form.Label>
-                                                <Col sm={9}>
-                                                    <Form.Control type="text" placeholder="Student number" value={studentNumber} disabled />
-                                                </Col>
-                                            </Form.Group>
+                                                    <Col sm={9}>
+                                                        <Form.Control type="text" placeholder="Student number" value={studentNumber} disabled />
+                                                    </Col>
+                                                </Form.Group>
 
-                                            <Form.Group as={Row} className="mb-3">
-                                                <Form.Label column sm={2}>
-                                                    Course
+                                                <Form.Group as={Row} className="mb-3">
+                                                    <Form.Label column sm={2}>
+                                                        Course
                                                 </Form.Label>
-                                                <Col sm={10}>
-                                                    <Form.Control type="text" placeholder="Course" value={course} disabled />
-                                                </Col>
-                                            </Form.Group>
-                                        </>
-                                    ) : (
-                                        <>
-                                            <Form.Group as={Row} className="mb-3">
-                                                <Form.Label column sm={3}>
-                                                    Role
+                                                    <Col sm={10}>
+                                                        <Form.Control type="text" placeholder="Course" value={course} disabled />
+                                                    </Col>
+                                                </Form.Group>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <Form.Group as={Row} className="mb-3">
+                                                    <Form.Label column sm={3}>
+                                                        Role
                                                 </Form.Label>
-                                                <Col sm={9}>
-                                                    <Form.Control type="text" placeholder="Role" value={role} disabled />
-                                                </Col>
-                                            </Form.Group>
-                                        </>)}
-                                    <Form.Group as={Row} className="mb-3">
-                                        <Form.Label column sm={3}>
-                                            Email address
+                                                    <Col sm={9}>
+                                                        <Form.Control type="text" placeholder="Role" value={role} disabled />
+                                                    </Col>
+                                                </Form.Group>
+                                            </>)}
+                                        <Form.Group as={Row} className="mb-3">
+                                            <Form.Label column sm={3}>
+                                                Email address
                                         </Form.Label>
-                                        <Col sm={9}>
-                                            <Form.Control type="email" placeholder="Email address" value={email} disabled />
-                                        </Col>
-                                    </Form.Group>
-                                    {
-                                        editProfile ? (
+                                            <Col sm={9}>
+                                                <Form.Control type="email" placeholder="Email address" value={email} disabled />
+                                            </Col>
+                                        </Form.Group>
+                                        {editProfile ? (
                                             <center>
                                                 <Button
                                                     type='submit'
@@ -196,12 +192,12 @@ const Profile = () => {
                                                     </center>
                                                 </Fragment>
                                             )
-                                        )
-                                    }
-                                </Form>
-                            </Card.Body>
-                        </Card>
-                    </Row>
+                                        )}
+                                    </Form>
+                                </Card.Body>
+                            </Card>
+                        </Row>
+                    </Container>
                 </Container>
             )}
 
