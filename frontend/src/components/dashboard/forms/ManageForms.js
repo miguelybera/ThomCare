@@ -59,29 +59,20 @@ const ManageForms = ({ history, match }) => {
                 <Row xs={1} md={2} className="g-4" >
                     {loading ? <Loader /> : (
                         <Fragment>
-                            <Link to='/admin/new/form'>
-                                <Col>
-                                    <Card style={{ border: 0, margin: '10px 0', height: '250px' }}>
-                                        <Card.Body>
-                                            <center>
-                                                <span style={{
-                                                    height: "100px",
-                                                    width: "100px",
-                                                    backgroundColor: "#0D6EFD",
-                                                    borderRadius: "50%",
-                                                    display: "inline-block"
-                                                }}
-                                                >
-                                                    <span style={{ color: 'white' }}>
-                                                        <i className="fa fa-plus-circle fa-4" aria-hidden="true"></i>
-                                                    </span>
+                            <Col>
+                                <Card style={{ border: 0, height: '250px', paddingTop: '20px' }}>
+                                    <Card.Body style={{ marginLeft: 'auto', marginRight: 'auto' }}>
+                                        <Link to='/admin/new/form' style={{ textDecoration: 'none' }}>
+                                            <Button variant="primary" style={{ height: '150px', width: '150px', borderRadius: '50%', padding: '0px', marginLeft: '2px' }}>
+                                                <span className="fa-7x">
+                                                    <i className="fa fa-plus-circle"></i>
                                                 </span>
-                                            </center>
-                                        </Card.Body>
-                                        <Card.Title class="text-primary" style={{ textAlign: 'center' }}>Upload New Form</Card.Title>
-                                    </Card>
-                                </Col>
-                            </Link>
+                                            </Button>
+                                            <Card.Text style={{ textDecoration: 'none', color: 'black', fontSize: '20px', padding: '20px', marginBottom: '10px' }}>Upload new form</Card.Text>
+                                        </Link>
+                                    </Card.Body>
+                                </Card>
+                            </Col>
                             {forms && forms.map(form => (
                                 <Col>
                                     <Card style={{ margin: '10px 0', height: '250px', maxHeight: '350px' }}>

@@ -220,7 +220,6 @@ const UpdateAnnouncement = ({ history, match }) => {
                                         </Form.Group>
                                         <Form.Group className="mb-3">
                                             <Form.Label>Description</Form.Label>
-
                                             <ReactQuill
                                                 placeholder="Write something..."
                                                 name="description"
@@ -366,7 +365,7 @@ const UpdateAnnouncement = ({ history, match }) => {
                                                     <Form.Label className={oldAttachments.length !== 0 || fileAttachments.length !== 0 ? `` : `d-none`}>
                                                         Attachment(s):
                                                     </Form.Label>
-                                                    {oldAttachments && <MDBDataTableV5
+                                                    {oldAttachments.length !== 0 && <MDBDataTableV5
                                                         data={setAttachments()}
                                                         searchTop
                                                         pagingTop
