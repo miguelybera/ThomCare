@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { FloatingLabel, Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
+import { FloatingLabel, Form, Button, Card, Container, Row, Col, InputGroup } from 'react-bootstrap'
 import { login, clearErrors } from './../../../actions/userActions'
 import { INSIDE_DASHBOARD_FALSE } from '../../../constants/dashboardConstants'
 import MetaData from './../../layout/MetaData'
@@ -43,9 +43,9 @@ const Login = ({ history }) => {
             <MetaData title={'Login'} />
             <Container fluid >
                 <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
-                    <Card style={{ backgroundColor: "#F5F5F5", width: '30rem', align: 'center',borderTop: '7px solid #9c0b0b', marginBottom: '50px'}}>
+                    <Card style={{ backgroundColor: "#F5F5F5", width: '30rem', align: 'center', borderTop: '7px solid #9c0b0b', marginBottom: '50px' }}>
                         <Card.Body>
-                            <Card.Title style={{ margin: '20px 0 20px 0', fontWeight:"bold" }}>Login</Card.Title>
+                            <Card.Title style={{ margin: '20px 0 20px 0', fontWeight: "bold" }}>Login</Card.Title>
                             <Form onSubmit={submitHandler}>
                                 <FloatingLabel label="Email address" className="mb-3">
                                     <Form.Control
@@ -67,13 +67,17 @@ const Login = ({ history }) => {
                                         required
                                     />
                                 </FloatingLabel>
+                                <InputGroup>
+                                    <Form.Control type="text" required />
+                                    <InputGroup.Text>Normal Load for the Current Term</InputGroup.Text>
+                                </InputGroup>
                                 <center><Button type='submit' style={{ marginTop: '15px', borderRadius: '50px', width: '10rem' }}>Submit</Button></center>
                             </Form>
                             <Row style={{ paddingTop: '20px', fontSize: "14px" }} >
-                                <Col style={{ textAlign: 'center'}}>No account yet? Click <Link to='/register' style={{ textDecoration: 'underline', color: 'blue' }}>here</Link> to register.</Col>
+                                <Col style={{ textAlign: 'center' }}>No account yet? Click <Link to='/register' style={{ textDecoration: 'underline', color: 'blue' }}>here</Link> to register.</Col>
                             </Row>
-                            <Row style={{ paddingTop: '10px', fontSize: "14px" }} >
-                                <Col style={{ textAlign: 'center'}}>Forgot your Password? <Link to='/forgotpassword' style={{ textDecoration: 'underline', color: 'blue' }}>Reset password</Link>.</Col>
+                            <Row style={{ paddingTop: '10px', fontSize: "14px" }} >\
+                                <Col style={{ textAlign: 'center' }}>Forgot your Password? <Link to='/forgotpassword' style={{ textDecoration: 'underline', color: 'blue' }}>Reset password</Link>.</Col>
                             </Row>
                         </Card.Body>
                     </Card>
