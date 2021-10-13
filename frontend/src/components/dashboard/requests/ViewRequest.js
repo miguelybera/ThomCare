@@ -4,9 +4,9 @@ import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { MDBDataTableV5 } from 'mdbreact'
 import { Card, Button, Modal, Row, Col, Form, ListGroup, ListGroupItem } from 'react-bootstrap'
-import { getRequestDetails, updateRequest, deleteRequest, assignRequest, clearErrors } from '../../../actions/requestActions'
+import { getRequestDetails, updateRequest, deleteRequest, assignRequest, unassignRequest, clearErrors } from '../../../actions/requestActions'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
-import { ASSIGN_REQUEST_RESET, UPDATE_REQUEST_RESET, DELETE_REQUEST_RESET } from '../../../constants/requestConstants'
+import { ASSIGN_REQUEST_RESET, UNASSIGN_REQUEST_RESET, UPDATE_REQUEST_RESET, DELETE_REQUEST_RESET } from '../../../constants/requestConstants'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
 import Sidebar from '../../layout/Sidebar'
@@ -32,6 +32,7 @@ const ViewRequest = ({ history, match }) => {
     const [trackingNumber, setTrackingNumber] = useState('')
     const [fileRequirements, setFileRequirements] = useState([])
     const [remarks, setRemarks] = useState([])
+    const [unassign, setUnassign] = useState(false)
 
     const requestId = match.params.id
     const id = requestId.substr(1, requestId.length - 1)
@@ -83,9 +84,18 @@ const ViewRequest = ({ history, match }) => {
         }
 
         if (isUpdated) {
-            if (Number(viewType) === 1) {
+            if (Number(viewType) === 1 && setUnassign) {
+                alert.success('Request has been unassigned from user successfully.')
+                setViewType(3)
+                
+                history.push(`/view/request/${viewType}${request._id}`)
+                dispatch({
+                    type: UNASSIGN_REQUEST_RESET
+                })
+            } else if (Number(viewType) === 1 && !setUnassign) {
                 alert.success('Request has been moved to Trash.')
                 setViewType(4)
+                
                 history.push(`/view/request/${viewType}${request._id}`)
                 dispatch({
                     type: UPDATE_REQUEST_RESET
@@ -93,6 +103,7 @@ const ViewRequest = ({ history, match }) => {
             } else if (Number(viewType) === 4) {
                 alert.success('Request has been restored.')
                 setViewType(1)
+                
                 history.push(`/view/request/${viewType}${request._id}`)
                 dispatch({
                     type: UPDATE_REQUEST_RESET
@@ -100,6 +111,7 @@ const ViewRequest = ({ history, match }) => {
             } else if (Number(viewType) === 3) {
                 alert.success('Request has been assigned to user successfully.')
                 setViewType(1)
+                
                 history.push(`/view/request/${viewType}${request._id}`)
                 dispatch({
                     type: ASSIGN_REQUEST_RESET
@@ -133,6 +145,11 @@ const ViewRequest = ({ history, match }) => {
 
     const assignRequestHandler = (id) => {
         dispatch(assignRequest(id, {}))
+    }
+
+    const unassignRequestHandler = (id) => {
+        dispatch(unassignRequest(id, {}))
+        setUnassign(!unassign)
     }
 
     const deleteRequestHandler = (id) => {
@@ -296,7 +313,7 @@ const ViewRequest = ({ history, match }) => {
                                 </Form.Group>
                             </Row>
                             <Row>
-                                <Form.Group as={Col} className="mb-3" xs={12} md={6}>
+                                <Form.Group as={Col} className="mb-3" xs={12}>
                                     <Form.Label>Request attachments</Form.Label>
                                     <ListGroup variant="flush">
                                         {fileRequirements && fileRequirements.map(file => (
@@ -334,6 +351,14 @@ const ViewRequest = ({ history, match }) => {
                                         Update
                                     </Button>
                                 </Link>
+                                <Button
+                                    variant="secondary"
+                                    style={{ width: '10rem', margin: '10px' }}
+                                    onClick={() => {
+                                        unassignRequestHandler(id)
+                                    }}>
+                                    Unassign from self
+                                </Button>
                                 <Button
                                     variant="danger"
                                     style={{ width: '5rem', margin: '10px' }} onClick={() => {

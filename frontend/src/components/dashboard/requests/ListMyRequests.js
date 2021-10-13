@@ -75,7 +75,7 @@ const ListMyRequests = ({ history }) => {
                     type: UPDATE_REQUEST_RESET
                 })
             } else {
-                alert.success('Request has been unassigned to user successfully.')
+                alert.success('Request has been unassigned from user successfully.')
                 history.push('/admin/me/requests')
 
                 dispatch({

@@ -158,6 +158,7 @@ const ControlPanel = ({ history }) => {
                             {user.role !== 'Student' ? (
                                 <Fragment>
                                     <Row style={{ display: 'flex', justifyContent: 'center', margin: '50px 0' }}>
+                                        <h3>Recent requests</h3>
                                         <ResponsiveContainer width={'99%'} height={300}>
                                             <LineChart width={600} height={300} data={setData()} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                                                 <Line type="monotone" dataKey="Total" stroke="#8884d8" />
