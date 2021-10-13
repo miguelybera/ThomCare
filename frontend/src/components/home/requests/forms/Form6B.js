@@ -361,6 +361,7 @@ function Form6B({history}) {
                                                                         }
                                                                     }
                                                                 }}
+                                                                required
                                                             />
                                                         </Form.Group>
                                                         <Form.Group as={Col} xs={6}>
@@ -386,6 +387,7 @@ function Form6B({history}) {
                                                                         }
                                                                     }
                                                                 }}
+                                                                required
                                                             />
                                                         </Form.Group>
                                                     </Row>

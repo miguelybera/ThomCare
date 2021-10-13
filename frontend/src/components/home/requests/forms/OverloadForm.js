@@ -38,7 +38,6 @@ function OverloadForm({ history }) {
     const [totalUnits, setTotalUnits] = useState()
     const [totalOverloadUnits, setTotalOverloadUnits] = useState()
     const [totalFives, setTotalFives] = useState()
-    const [aveRating, setAveRating] = useState()
     const [unitsRequired, setUnitsRequired] = useState()
     const [specialAttend, setSpecialAttend] = useState()
 
@@ -211,7 +210,6 @@ function OverloadForm({ history }) {
             totalUnits,
             totalOverloadUnits,
             totalFives,
-            aveRating,
             unitsRequired,
             specialAttend
         })
@@ -324,11 +322,11 @@ function OverloadForm({ history }) {
                                 <Row style={{ paddingBottom: '20px' }}>
                                     <Form.Group as={Col} lg={3}>
                                         <Form.Label>Curriculum Year</Form.Label>
-                                        <Form.Control type='text' placeholder="2021" value={curriculum} onChange={e => setCurriculum(e.target.value)}/>
+                                        <Form.Control type='text' placeholder="2021-2022" pattern="20[0-9]{2}-20[0-9]{2}" value={curriculum} onChange={e => setCurriculum(e.target.value)} required/>
                                     </Form.Group>
                                     <Form.Group as={Col} lg={3}>
                                         <Form.Label>Term</Form.Label>
-                                        <Form.Control type='text' placeholder="2021 - 2022" value={term} onChange={e => setTerm(e.target.value)} />
+                                        <Form.Control type='text' placeholder="1st Term/2nd Term/Summer Term" value={term} onChange={e => setTerm(e.target.value)} required/>
                                     </Form.Group>
   
                                 </Row>                      
@@ -398,12 +396,6 @@ function OverloadForm({ history }) {
                                             <Form.Control type="text" placeholder="ex. 1" value={totalFives} onChange={e => setTotalFives(e.target.value)} required/>
                                         </InputGroup>
                                     </Form.Group>
-                                    <Form.Group as={Col} xs={12} style={{paddingBottom: '12px'}}>
-                                        <InputGroup>
-                                            <InputGroup.Text>Average Rating</InputGroup.Text>
-                                            <Form.Control type="text" placeholder="ex. 1" value={aveRating} onChange={e => setAveRating(e.target.value)} required/>
-                                        </InputGroup>
-                                    </Form.Group>
                                 </Row>
                                 <Card.Title
                                     style={{
@@ -435,7 +427,6 @@ function OverloadForm({ history }) {
                                                         <Button variant='primary' onClick={() => addRow(1)} style={{ width: '40px' }}>
                                                             <i className="fa fa-plus-circle" aria-hidden="true"></i>
                                                         </Button>
-
                                                     ) : (
                                                         <Fragment>
                                                             <Button variant='primary' onClick={() => addRow(1)} style={{ width: '40px', marginLeft: '5px' }}>
@@ -452,7 +443,7 @@ function OverloadForm({ history }) {
                                                 <Col xs={12} md={4} lg={3} style={addDropStyle} >
                                                     <FloatingLabel label="Course Code">
                                                         <Form.Select  aria-label="Default select example" name="courseCode" id={courseCode} data-id={idx} value={val.courseCode} onChange={e => onChange(1, idx, e)} required>
-                                                            <option value='requested'>Course Code</option>
+                                                            <option value=''>Course Code</option>
                                                             {courses && courses.map(course => (
                                                                 <option value={course.courseCode}>{course.courseCode}</option>
                                                             ))}
@@ -514,6 +505,7 @@ function OverloadForm({ history }) {
                                                                         }
                                                                     }
                                                                 }}
+                                                                required
                                                             />
                                                         </Form.Group>
                                                         <Form.Group as={Col} xs={6}>
@@ -539,6 +531,7 @@ function OverloadForm({ history }) {
                                                                         }
                                                                     }
                                                                 }}
+                                                                required
                                                             />
                                                         </Form.Group>
                                                     </Row>
@@ -619,7 +612,7 @@ function OverloadForm({ history }) {
                                         </Form.Label>
                                     </Col>
                                     <Col xs={12} md={6} style={addDropStyle}>
-                                        <Form.Control type="text" placeholder="May 2022" value={tentative} onChange={e => setTentative(e.target.value)} required/>
+                                        <Form.Control type="text" placeholder="Month / Year" value={tentative} onChange={e => setTentative(e.target.value)} required/>
                                     </Col>
                                 </Row>
                                 <center>

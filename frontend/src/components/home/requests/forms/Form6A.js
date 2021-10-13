@@ -365,6 +365,7 @@ function Form6A({ history }) {
                                                                         }
                                                                     }
                                                                 }}
+                                                                required
                                                             />
                                                         </Form.Group>
                                                         <Form.Group as={Col} xs={6}>
@@ -390,6 +391,7 @@ function Form6A({ history }) {
                                                                         }
                                                                     }
                                                                 }}
+                                                                required
                                                             />
                                                         </Form.Group>
                                                     </Row>

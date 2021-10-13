@@ -36,7 +36,11 @@ const Drop = styled.div`
     a, .navbar-nav .nav-link  {
     border-radius: 105px;
     color: black;
-}`;
+    }
+    
+    &:hover{
+        color: black;
+    }`;
 
 const Header = () => {
     const dispatch = useDispatch()
@@ -50,77 +54,49 @@ const Header = () => {
     }
 
     return (
-        <>
-            <Fragment>
-                <Styles>
-                    <Navbar style={{ backgroundColor: 'white', borderBottom: "7px solid #9c0b0b" }} expand="lg">
-                        <Container >
-                            <img
-                                src="/images/CICS_SEAL.png"
-                                width="50"
-                                height="60"
-                                float="right"
-                                margin="1150px"
-                                alt="CICS Seal" />
-                            <Navbar.Brand style={{
-                                fontFamily: "AveriaBold",
-                                color: "#9c0b0b",
-                                paddingBottom: "0px",
-                                paddingLeft: "10px"
-                            }}>
-                                <p style={{
-                                    fontFamily: "MuktaMalar",
-                                    fontWeight: "bold",
-                                    fontSize: "70%",
-                                    paddingTop: "5px",
-                                    marginBottom: "0px"
-                                }}>
-                                    College of Information and Computing Sciences
+        <Fragment>
+            <Styles>
+                <Navbar style={{ backgroundColor: 'white', borderBottom: "7px solid #9c0b0b" }} expand="lg">
+                    <Container >
+                        <img src="/images/CICS_SEAL.png" width="50" height="60" float="right" margin="1150px" alt="CICS Seal" />
+                        <Navbar.Brand style={{ fontFamily: "AveriaBold", color: "#9c0b0b", paddingBottom: "0px", paddingLeft: "10px" }}>
+                            <p style={{ fontFamily: "MuktaMalar", fontWeight: "bold", fontSize: "70%", paddingTop: "5px", marginBottom: "0px" }}>
+                                College of Information and Computing Sciences
                                 </p>
-                                <h1 style={{
-                                    fontSize: "150%",
-                                    marginTop: "0px",
-                                    paddingTop: "0px",
-                                    borderTop: "10px"
-                                }}>
-                                    ThomCare
+                            <h1 style={{ fontSize: "150%", marginTop: "0px", paddingTop: "0px", borderTop: "10px" }}>
+                                ThomCare
                                 </h1>
-                            </Navbar.Brand>
-                            <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                            <Navbar.Collapse id="responsive-navbar-nav"
-                                style={{
-                                    float: "right",
-                                    fontSize: "85%",
-                                    fontWeight: "bold",
-                                }}>
-                                <Nav variant="pills" className="image">
-                                    <Nav.Link className="image"><Link to='/' activeStyle>Announcements</Link></Nav.Link>
-                                    <Nav.Link className={user ? "image" : "d-none image"}><Link to='/forms/list' activeStyle>Generate Form</Link></Nav.Link>
-                                    <Nav.Link className="image"><Link to='/download/forms/list' activeStyle>Downloadable Forms</Link></Nav.Link>
-                                    <Nav.Link className={user ? "image" : "d-none image"}><Link to='/submit/request' activeStyle onClick={() => {dispatch({ type: SUBMIT_REQUEST_RESET })}}>Submit Request</Link></Nav.Link>
-                                    <Nav.Link className="image"><Link to='/track' activeStyle>Track my Request</Link></Nav.Link>
-                                    <Nav.Link className={user ? "d-none image" : "image"} href="/login">Login</Nav.Link>
-                                </Nav>
-                                {!loading && user && 
-                                    <Drop>
-                                        <NavDropdown title={`${user.firstName}`} id="basic-nav-dropdown">
-                                            <NavDropdown.Item><Link to='/controlpanel'>Control Panel</Link></NavDropdown.Item>
-                                            <NavDropdown.Item><Link to='/profile'>My Profile</Link></NavDropdown.Item>
-                                            <NavDropdown.Item><Link to='/messenger'>Messenger</Link></NavDropdown.Item>
-                                            <NavDropdown.Divider />
-                                            <NavDropdown.Item style={{ color: 'red' }}>
-                                                <Link to='/' onClick={logoutHandler}>
-                                                    Log out
-                                                </Link>
-                                            </NavDropdown.Item>
-                                        </NavDropdown>
-                                    </Drop>}
-                            </Navbar.Collapse>
-                        </Container>
-                    </Navbar>
-                </Styles>
-            </Fragment>
-        </>
+                        </Navbar.Brand>
+                        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+                        <Navbar.Collapse id="responsive-navbar-nav" style={{ float: "right", fontSize: "0.85rem", fontWeight: "bold" }}>
+                            <Nav variant="pills" className="image">
+                                <Nav.Link><Link to='/' activeStyle>Announcements</Link></Nav.Link>
+                                <Nav.Link className={user ? "" : "d-none "}><Link to='/forms/list' activeStyle>Generate Form</Link></Nav.Link>
+                                <Nav.Link><Link to='/download/forms/list' activeStyle>Downloadable Forms</Link></Nav.Link>
+                                <Nav.Link className={user ? "" : "d-none "}><Link to='/submit/request' activeStyle onClick={() => { dispatch({ type: SUBMIT_REQUEST_RESET }) }}>Submit Request</Link></Nav.Link>
+                                <Nav.Link><Link to='/track' activeStyle>Track my Request</Link></Nav.Link>
+                                <Nav.Link className={user ? "d-none " : ""} href="/login">Login</Nav.Link>
+                            </Nav>
+                            {!loading && user &&
+                                <Drop>
+                                    <NavDropdown title={`${user.firstName}`} id="basic-nav-dropdown">
+                                        <NavDropdown.Item><Link to='/controlpanel'>Control Panel</Link></NavDropdown.Item>
+                                        <NavDropdown.Item><Link to='/profile'>My Profile</Link></NavDropdown.Item>
+                                        <NavDropdown.Item><Link to='/messenger'>Messenger</Link></NavDropdown.Item>
+                                        <NavDropdown.Divider />
+                                        <NavDropdown.Item style={{ color: 'red' }}>
+                                            <Link to='/' onClick={logoutHandler}>
+                                                Log out
+                                            </Link>
+                                        </NavDropdown.Item>
+                                    </NavDropdown>
+                                </Drop>
+                            }
+                        </Navbar.Collapse>
+                    </Container>
+                </Navbar>
+            </Styles>
+        </Fragment>
     )
 }
 

@@ -102,7 +102,7 @@ const OVERLOADPDF = ({ studentInfo, submitted, setSubmitted }) => {
                                 </tr>
                                 <tr>
                                     <td>Average Rating</td>
-                                    <td colspan="5" style={{textAlign: 'center'}}>{studentInfo.aveRating}</td>
+                                    <td colspan="5" style={{textAlign: 'center'}}></td>
                                 </tr>
                             </tbody>
                         </table>

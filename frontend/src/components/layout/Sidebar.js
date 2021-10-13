@@ -45,7 +45,11 @@ const NavTitle = styled.div`
     display:flex;
     align-items: center;
     justify-content: center;
-    z-index: -2;`;
+    z-index: -2;
+    
+    @media only screen and (max-width: 600px) {
+        display: none;
+    }`;
 
 const NavUser = styled.div`
     width: 100%;
@@ -91,7 +95,6 @@ const Sidebar = () => {
                         <FaIcons.FaBars onClick={showSidebar} />
                     </NavIcon>
                     <NavTitle>
-
                         <img
                             src="/images/CICS_SEAL.png"
                             width="26"

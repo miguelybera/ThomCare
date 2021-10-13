@@ -3,7 +3,6 @@
     align-items: center;
     padding: 10px;
     cursor: pointer;
-    overflow-y: scroll;
 }
 
 .conversation:hover {
@@ -20,8 +19,4 @@
 
 .conversationName {
     font-weight: 500;
-}
-
-.currentChat {
-    background-color: red
 }
