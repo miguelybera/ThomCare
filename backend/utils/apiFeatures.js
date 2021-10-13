@@ -35,9 +35,9 @@ class APIFeatures {
                 $regex: this.queryStr.name,
                 $options: 'i' // i means case insensitive
             }
-        } : this.queryStr.keyword ? {
+        } : this.queryStr.eventInfo ? {
             eventInfo: {
-                $regex: this.queryStr.keyword,
+                $regex: this.queryStr.eventInfo,
                 $options: 'i' // i means case insensitive
             }
         } :
@@ -48,7 +48,6 @@ class APIFeatures {
                 }
             } : {}
 
-        console.log(keyword)
         this.query = this.query.find({ ...keyword });
         return this;
     }
