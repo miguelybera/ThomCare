@@ -149,7 +149,6 @@ const ListAllRequests = ({ history }) => {
                                         </Form.Select>
                                     </Form.Group>
                                 </Col>
-
                                 <Col xs={12} md={4} lg={2}>
                                     <Form.Group sm>
                                         <FormControl
@@ -174,6 +173,7 @@ const ListAllRequests = ({ history }) => {
                                             <Button type='submit' style={{ margin: '5px' }} disabled={searchType === '' ? true : false}>Submit</Button>
                                             <Button
                                                 type='submit'
+                                                variant="outline-primary"
                                                 onClick={() => {
                                                     setFilter({
                                                         searchType: '',

@@ -271,7 +271,8 @@ const Announcements = ({ history }) => {
                                 <center>
                                     <Button type='submit' style={{margin: '5px'}}>Submit</Button>
                                     <Button
-                                        type='submit'
+                                        type="submit"
+                                        variant="outline-primary"
                                         onClick={() => {
                                             setFilter({
                                                 course: '',
@@ -319,7 +320,7 @@ const Announcements = ({ history }) => {
                         </Col>
                     )) : (
                         <Col>
-                            <h3 style={{ margin: '10px 0' }}>No announcements found.</h3>
+                            <h3 style={{ margin: '10px 0 100px 0' }}>No announcements found.</h3>
                         </Col>
                     )}
                 </Row>

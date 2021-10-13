@@ -74,7 +74,7 @@ const Footer = () => {
                                     <i class="fa fa-map-marker" aria-hidden="true"></i> Blessed Pier Giorgio Frassati Building <br />
                                     <i class="fa fa-location-arrow" aria-hidden="true"></i> Espana Blvd., Sampaloc, Manila, Philippines 1008 <br />
                                     <i class="fa fa-phone" aria-hidden="true"></i> Local: +632-4061611 local 8241 <br />
-                                    <i class="fa fa-envelope" aria-hidden="true"></i> Email: cics@ust.edu.ph <br />
+                                    <i class="fa fa-envelope" aria-hidden="true"></i> Email: iics@ust.edu.ph / cics@ust.edu.ph <br />
                                     <i class="fa fa-fax" aria-hidden="true"></i> Telefax: +632-7315738
                                 </ul>
                             </div>
