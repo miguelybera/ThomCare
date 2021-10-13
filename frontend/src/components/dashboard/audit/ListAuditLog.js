@@ -145,7 +145,7 @@ const ListAllRequests = ({ history }) => {
                                             <option value=''>Type</option>
                                             <option value="user">User</option>
                                             <option value="name">Event Name</option>
-                                            <option value="eventInfo">Event Info</option>
+                                            <option value="keyword">Event Info</option>
                                         </Form.Select>
                                     </Form.Group>
                                 </Col>

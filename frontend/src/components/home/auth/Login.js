@@ -15,6 +15,9 @@ const Login = ({ history }) => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+    const [showPassword, setShowPassword] = useState('false')
+
+    const showPasswordToggle = () => setShowPassword(!showPassword)
 
     useEffect(() => {
         if (isAuthenticated) {
@@ -54,29 +57,34 @@ const Login = ({ history }) => {
                                         pattern="[a-z.]{1,}@ust\.edu\.ph"
                                         name="email"
                                         value={email}
-                                        onChange={e => setEmail(e.target.value)} required
-                                    />
-                                </FloatingLabel>
-                                <FloatingLabel label="Password">
-                                    <Form.Control
-                                        type="password"
-                                        placeholder="Password"
-                                        name="password"
-                                        value={password}
-                                        onChange={e => setPassword(e.target.value)}
+                                        onChange={e => setEmail(e.target.value)}
                                         required
                                     />
                                 </FloatingLabel>
-                                <InputGroup>
-                                    <Form.Control type="text" required />
-                                    <InputGroup.Text>Normal Load for the Current Term</InputGroup.Text>
+                                <InputGroup className="mb-3">
+                                    <FloatingLabel label="Password" style={{ width: '89%' }}>
+                                        <Form.Control
+                                            type={showPassword ? "password" : "text"}
+                                            placeholder="Password"
+                                            name="password"
+                                            value={password}
+                                            onChange={e => setPassword(e.target.value)}
+                                            required
+                                        />
+                                    </FloatingLabel>
+                                    <Button variant="secondary" onClick={showPasswordToggle}>
+                                        <span className="fa-sm">
+                                            <i className={showPassword ? "fa fa-eye-slash" : "fa fa-eye"}></i>
+                                        </span>
+                                    </Button>
                                 </InputGroup>
+
                                 <center><Button type='submit' style={{ marginTop: '15px', borderRadius: '50px', width: '10rem' }}>Submit</Button></center>
                             </Form>
                             <Row style={{ paddingTop: '20px', fontSize: "14px" }} >
                                 <Col style={{ textAlign: 'center' }}>No account yet? Click <Link to='/register' style={{ textDecoration: 'underline', color: 'blue' }}>here</Link> to register.</Col>
                             </Row>
-                            <Row style={{ paddingTop: '10px', fontSize: "14px" }} >\
+                            <Row style={{ paddingTop: '10px', fontSize: "14px" }} >
                                 <Col style={{ textAlign: 'center' }}>Forgot your Password? <Link to='/forgotpassword' style={{ textDecoration: 'underline', color: 'blue' }}>Reset password</Link>.</Col>
                             </Row>
                         </Card.Body>

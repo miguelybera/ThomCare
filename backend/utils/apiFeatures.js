@@ -30,12 +30,25 @@ class APIFeatures {
 
     //audit
     searchAudit() {
-        const keyword = this.queryStr.keyword ? {
+        const keyword = this.queryStr.name ? {
+            name: {
+                $regex: this.queryStr.name,
+                $options: 'i' // i means case insensitive
+            }
+        } : this.queryStr.keyword ? {
             eventInfo: {
                 $regex: this.queryStr.keyword,
                 $options: 'i' // i means case insensitive
             }
-        } : {}
+        } :
+            this.queryStr.user ? {
+                user: {
+                    $regex: this.queryStr.user,
+                    $options: 'i' // i means case insensitive
+                }
+            } : {}
+
+        console.log(keyword)
         this.query = this.query.find({ ...keyword });
         return this;
     }

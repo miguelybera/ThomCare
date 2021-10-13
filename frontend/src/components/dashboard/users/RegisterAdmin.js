@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
+import { Form, Button, Card, Container, Row, Col, InputGroup } from 'react-bootstrap'
 import { register, clearErrors } from '../../../actions/userActions'
 import { REGISTER_USER_RESET } from '../../../constants/userConstants'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
@@ -21,9 +21,13 @@ const RegisterAdmin = ({ history }) => {
     const [password, setPassword] = useState('')
     const [confirmPassword, setConfirmPassword] = useState('')
     const [role, setRole] = useState('')
+    const [showPassword, setShowPassword] = useState('false')
+    const [showConfirm, setShowConfirm] = useState('false')
 
     const roles = ['CICS Staff', 'IT Dept Chair', 'IS Dept Chair', 'CS Dept Chair']
 
+    const showPasswordToggle = () => setShowPassword(!showPassword)
+    const showConfirmToggle = () => setShowConfirm(!showConfirm)
     const upperCase = (text) => text.toUpperCase()
 
     useEffect(() => {
@@ -60,7 +64,7 @@ const RegisterAdmin = ({ history }) => {
         }
         dispatch(register(true, formData))
     }
-    
+
     return (
         <Fragment>
             <MetaData title={'Register User'} />
@@ -147,30 +151,43 @@ const RegisterAdmin = ({ history }) => {
                                                 </Col>
                                             </Form.Group>
                                             <Row className="mb-3">
-                                                <Form.Group as={Col} md={6}>
+                                                <Form.Group as={Col} md={6} style={{ marginTop: '5px' }}>
                                                     <Form.Label>Password</Form.Label>
-                                                    <Form.Control
-                                                        type="password"
-                                                        placeholder="Password"
-                                                        name="password"
-                                                        value={password}
-                                                        onChange={e => setPassword(e.target.value)}
-                                                        minlength='6'
-                                                        required
-                                                    />
+                                                    <InputGroup className="mb-3">
+                                                        <Form.Control
+                                                            type={showPassword ? "password" : "text"}
+                                                            placeholder="Password"
+                                                            name="password"
+                                                            value={password}
+                                                            onChange={e => setPassword(e.target.value)}
+                                                            minlength='6'
+                                                            required
+                                                        />
+                                                        <Button variant="secondary" onClick={showPasswordToggle}>
+                                                            <span className="fa-sm">
+                                                                <i className={showPassword ? "fa fa-eye-slash" : "fa fa-eye"}></i>
+                                                            </span>
+                                                        </Button>
+                                                    </InputGroup>
                                                 </Form.Group>
-
-                                                <Form.Group as={Col} md={6}>
+                                                <Form.Group as={Col} md={6} style={{ marginTop: '5px' }}>
                                                     <Form.Label>Confirm Password</Form.Label>
-                                                    <Form.Control
-                                                        type="password"
-                                                        placeholder="Password"
-                                                        name="confirmPassword"
-                                                        value={confirmPassword}
-                                                        onChange={e => setConfirmPassword(e.target.value)}
-                                                        minlength='6'
-                                                        required
-                                                    />
+                                                    <InputGroup className="mb-3">
+                                                        <Form.Control
+                                                            type={showConfirm ? "password" : "text"}
+                                                            placeholder="Confirm Password"
+                                                            name="confirmPassword"
+                                                            value={confirmPassword}
+                                                            onChange={e => setConfirmPassword(e.target.value)}
+                                                            minlength='6'
+                                                            required
+                                                        />
+                                                        <Button variant="secondary" onClick={showConfirmToggle}>
+                                                            <span className="fa-sm">
+                                                                <i className={showConfirm ? "fa fa-eye-slash" : "fa fa-eye"}></i>
+                                                            </span>
+                                                        </Button>
+                                                    </InputGroup>
                                                 </Form.Group>
                                             </Row>
                                             <center>

@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
+import { Form, Button, Card, Container, Row, Col, InputGroup } from 'react-bootstrap'
 import { INSIDE_DASHBOARD_FALSE } from '../../../constants/dashboardConstants'
 import MetaData from '../../layout/MetaData'
 import ConfirmRegister from './ConfirmRegister'
@@ -9,6 +9,9 @@ const Register = () => {
     const dispatch = useDispatch()
 
     const [submitted, setSubmitted] = useState(false)
+    const [showPassword, setShowPassword] = useState('false')
+    const [showConfirm, setShowConfirm] = useState('false')
+
     const [user, setUser] = useState({
         firstName: '',
         middleName: '',
@@ -19,9 +22,11 @@ const Register = () => {
         password: '',
         confirmPassword: ''
     })
-    
+
     const { firstName, middleName, lastName, email, studentNumber, course, password, confirmPassword } = user
 
+    const showPasswordToggle = () => setShowPassword(!showPassword)
+    const showConfirmToggle = () => setShowConfirm(!showConfirm)
     const upperCase = (text) => text.toUpperCase()
 
     useEffect(() => {
@@ -148,27 +153,41 @@ const Register = () => {
                                     <Row className="mb-3">
                                         <Form.Group as={Col} md={6} style={{ marginTop: '5px' }}>
                                             <Form.Label>Password</Form.Label>
-                                            <Form.Control
-                                                type="password"
-                                                placeholder="Password"
-                                                name="password"
-                                                value={password}
-                                                onChange={onChange}
-                                                minlength='6'
-                                                required
-                                            />
+                                            <InputGroup className="mb-3">
+                                                <Form.Control
+                                                    type={showPassword ? "password" : "text"}
+                                                    placeholder="Password"
+                                                    name="password"
+                                                    value={password}
+                                                    onChange={onChange}
+                                                    minlength='6'
+                                                    required
+                                                />
+                                                <Button variant="secondary" onClick={showPasswordToggle}>
+                                                    <span className="fa-sm">
+                                                        <i className={showPassword ? "fa fa-eye-slash" : "fa fa-eye"}></i>
+                                                    </span>
+                                                </Button>
+                                            </InputGroup>
                                         </Form.Group>
                                         <Form.Group as={Col} md={6} style={{ marginTop: '5px' }}>
                                             <Form.Label>Confirm Password</Form.Label>
-                                            <Form.Control
-                                                type="password"
-                                                placeholder="Confirm Password"
-                                                name="confirmPassword"
-                                                value={confirmPassword}
-                                                onChange={onChange}
-                                                minlength='6'
-                                                required
-                                            />
+                                            <InputGroup className="mb-3">
+                                                <Form.Control
+                                                    type={showConfirm ? "password" : "text"}
+                                                    placeholder="Confirm Password"
+                                                    name="confirmPassword"
+                                                    value={confirmPassword}
+                                                    onChange={onChange}
+                                                    minlength='6'
+                                                    required
+                                                />
+                                                <Button variant="secondary" onClick={showConfirmToggle}>
+                                                    <span className="fa-sm">
+                                                        <i className={showConfirm ? "fa fa-eye-slash" : "fa fa-eye"}></i>
+                                                    </span>
+                                                </Button>
+                                            </InputGroup>
                                         </Form.Group>
                                     </Row>
                                     <center>
@@ -185,7 +204,7 @@ const Register = () => {
                     </Container>
                 </Fragment>
             ) : (
-                <ConfirmRegister studentInfo={user} submitted={submitted} setSubmitted={setSubmitted}/>
+                <ConfirmRegister studentInfo={user} submitted={submitted} setSubmitted={setSubmitted} />
             )}
             <Container className="space"></Container>
         </>
