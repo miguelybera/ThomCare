@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState, useRef } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Modal, Button, Form, FormControl, InputGroup, FloatingLabel } from 'react-bootstrap'
+import { Modal, Button, FormControl, InputGroup, FloatingLabel } from 'react-bootstrap'
 import { sendMessage, createConversation, clearErrors } from './../../../../actions/chatActions'
 import { ALL_MESSAGES_REQUEST, ALL_MESSAGES_SUCCESS, ALL_MESSAGES_FAIL, ALL_CONVERSATIONS_REQUEST, ALL_CONVERSATIONS_SUCCESS, ALL_CONVERSATIONS_FAIL } from '../../../../constants/chatConstants'
 import { ALL_USERS_REQUEST, ALL_USERS_SUCCESS, ALL_USERS_FAIL } from '../../../../constants/userConstants'
@@ -14,13 +14,6 @@ import MetaData from '../../../layout/MetaData'
 import Sidebar from '../../../layout/Sidebar'
 import Loader from '../../../layout/Loader'
 import './messenger.css'
-import '../online/chatonline.css'
-
-const dropdown = {
-    border: "2px solid black",
-    borderRadius: "20px",
-    margin: '5px 0'
-}
 
 const Messenger = ({ history }) => {
     const dispatch = useDispatch()
@@ -38,7 +31,6 @@ const Messenger = ({ history }) => {
     const [newMessage, setNewMessage] = useState('')
     const [arrivalMessage, setArrivalMessage] = useState('')
     const [conversationList, setConversationList] = useState([])
-    const [onlineUsers, setOnlineUsers] = useState([])
     const [userName, setUserName] = useState('')
     const [search, setSearch] = useState('')
     const [users, setUsers] = useState([])
@@ -146,6 +138,10 @@ const Messenger = ({ history }) => {
     }, [messageList])
 
     useEffect(() => {
+        scrollRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }, [currentChat])
+
+    useEffect(() => {
         if (conversation) {
             history.push('/messenger')
             setCurrentChat(conversation)
@@ -246,9 +242,6 @@ const Messenger = ({ history }) => {
     useEffect(() => {
         //send something to socket server
         socket.current.emit('addUser', userId)
-        socket.current.on('getUsers', users => {
-            setOnlineUsers(users)
-        })
     }, [])
     //sockets end
 
@@ -310,19 +303,21 @@ const Messenger = ({ history }) => {
                                 <i className="fa fa-edit"></i>
                             </span>
                         </Button>
-                        {loading ? <Loader /> : (
-                            conversationList && conversationList.map((c) => (
-                                <Fragment>
-                                    <div onClick={() => {
-                                        setSearch('')
-                                        setCurrentChat(c)
-                                        setUserName(c.names[0] === name ? c.names[1] : c.names[0])
-                                    }}>
-                                        <Conversation receiverName={c.names[0] === name ? c.names[1] : c.names[0]} />
-                                    </div>
-                                </Fragment>
-                            ))
-                        )}
+                        <div className="conversationList">
+                            {loading ? <Loader /> : (
+                                conversationList && conversationList.map((c) => (
+                                    <Fragment>
+                                        <div onClick={() => {
+                                            setSearch('')
+                                            setCurrentChat(c)
+                                            setUserName(c.names[0] === name ? c.names[1] : c.names[0])
+                                        }}>
+                                            <Conversation receiverName={c.names[0] === name ? c.names[1] : c.names[0]} />
+                                        </div>
+                                    </Fragment>
+                                ))
+                            )}
+                        </div>
                     </div>
                 </div>
                 <div className='chatBox'>
