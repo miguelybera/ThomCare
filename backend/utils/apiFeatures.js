@@ -4,7 +4,8 @@ class APIFeatures {
         this.queryStr = queryStr
     }
 
-    search() {
+    //announcement
+    searchTitle() {
         const keyword = this.queryStr.keyword ? {
             title: {
                 $regex: this.queryStr.keyword,
@@ -14,6 +15,8 @@ class APIFeatures {
         this.query = this.query.find({ ...keyword });
         return this;
     }
+
+    //request
     searchRequests() {
         const keyword = this.queryStr.keyword ? {
             trackingNumber: {
@@ -24,9 +27,11 @@ class APIFeatures {
         this.query = this.query.find({ ...keyword });
         return this;
     }
+
+    //audit
     searchAudit() {
         const keyword = this.queryStr.keyword ? {
-            userAudit: {
+            user: {
                 $regex: this.queryStr.keyword,
                 $options: 'i' // i means case insensitive
             }
@@ -34,6 +39,8 @@ class APIFeatures {
         this.query = this.query.find({ ...keyword });
         return this;
     }
+
+    //forms
     searchForms() {
         const keyword = this.queryStr.keyword ? {
             formName: {
@@ -44,6 +51,8 @@ class APIFeatures {
         this.query = this.query.find({ ...keyword });
         return this;
     }
+
+    //conversation
     searchUser() {
         const keyword = this.queryStr.keyword ? {
             names: {
@@ -55,6 +64,7 @@ class APIFeatures {
         this.query = this.query.find({ ...keyword });
         return this;
     }
+
     filter() {
         const queryCopy = { ...this.queryStr };
 

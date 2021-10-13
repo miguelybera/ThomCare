@@ -110,7 +110,7 @@ exports.newAnnouncement = catchAsyncErrors(async (req, res, next) => {
 exports.getHomepageAnnouncements = catchAsyncErrors(async (req, res, next) => {
     const resPerPage = 10
     const announcementCount = await Announcement.countDocuments({ archiveDate: { $gte: Date.now() } })
-    const apiFeatures = new APIFeatures(Announcement.find({ archiveDate: { $gte: Date.now() } }).sort({ createdAt: -1 }), req.query).search().filter().pagination(resPerPage)
+    const apiFeatures = new APIFeatures(Announcement.find({ archiveDate: { $gte: Date.now() } }).sort({ createdAt: -1 }), req.query).searchTitle().filter().pagination(resPerPage)
 
     // !for finding date "$gte": new Date("2014-08-01"), "$lt": new Date("2014-08-02")
     
@@ -129,7 +129,7 @@ exports.getHomepageAnnouncements = catchAsyncErrors(async (req, res, next) => {
 // Get all unarchived announcements /api/v1/admin/unarchivedAnnouncements (For Admin)
 exports.getUnarchivedAnnouncement = catchAsyncErrors(async (req, res, next) => {
     const announcementCount = await Announcement.countDocuments({ archiveDate: { $gte: Date.now() } })
-    const apiFeatures = new APIFeatures(Announcement.find({ archiveDate: { $gte: Date.now() } }).sort({ createdAt: -1 }), req.query).search().filter()
+    const apiFeatures = new APIFeatures(Announcement.find({ archiveDate: { $gte: Date.now() } }).sort({ createdAt: -1 }), req.query).searchTitle().filter()
 
     let announcements = await apiFeatures.query
     let filteredAnnouncementsCount = announcements.length
@@ -145,7 +145,7 @@ exports.getUnarchivedAnnouncement = catchAsyncErrors(async (req, res, next) => {
 // Get all archived announcements /api/v1/admin/archivedAnnouncements (For admin only)
 exports.getArchivedAnnouncements = catchAsyncErrors(async (req, res, next) => {
     const announcementCount = await Announcement.countDocuments({ archiveDate: { $lte: Date.now() } })
-    const apiFeatures = new APIFeatures(Announcement.find({ archiveDate: { $lte: Date.now() } }).sort({ createdAt: -1 }), req.query).search().filter()
+    const apiFeatures = new APIFeatures(Announcement.find({ archiveDate: { $lte: Date.now() } }).sort({ createdAt: -1 }), req.query).searchTitle().filter()
 
     let announcements = await apiFeatures.query
 
@@ -172,7 +172,7 @@ exports.getSingleAnnouncement = catchAsyncErrors(async (req, res, next) => {
 exports.getMyAnnouncements = catchAsyncErrors(async (req, res, next) => {
     const announcementCount = await Announcement.countDocuments({ createdBy: req.user.id })
     const apiFeatures = new APIFeatures(Announcement.find({ createdBy: req.user.id,
-                                                            archiveDate: { $gte: Date.now() }  }).sort({ createdAt: -1 }), req.query).search().filter()
+                                                            archiveDate: { $gte: Date.now() }  }).sort({ createdAt: -1 }), req.query).searchTitle().filter()
 
     let announcements = await apiFeatures.query
 
