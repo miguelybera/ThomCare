@@ -39,7 +39,7 @@ const ControlPanel = ({ history }) => {
         viewType = '1'
     }
 
-    const changeDateFormat = (date) => dateformat(date, "yyyy-mm-dd")
+    const changeDateFormat = (date) => dateformat(date, "mmm dd")
     const upperCase = (text) => text.toUpperCase()
 
     useEffect(() => {
@@ -130,14 +130,14 @@ const ControlPanel = ({ history }) => {
     }
 
     const setData = () => {
-        const data = [
-            { name: 'Today', Total: 0 },
-            { name: '7d ago', Total: 0 },
-            { name: '30d ago', Total: 0 },
-            { name: '3m ago', Total: 0 },
-            { name: '6m ago', Total: 0 },
-            { name: 'A year ago', Total: 0 }
-        ];
+        const data = []
+
+        for (let i = 0; i < 5; i++) {
+            data.push({
+                name: changeDateFormat(new Date(Date.now() - (i * 24 * 60 * 60 * 1000))),
+                Total: 0
+            })
+        }
 
         stats && stats.forEach((x, idx) => {
             data[idx].Total = x
@@ -145,6 +145,7 @@ const ControlPanel = ({ history }) => {
 
         return data
     }
+
     return (
         <Fragment>
             <MetaData title={'Control Panel'} />
