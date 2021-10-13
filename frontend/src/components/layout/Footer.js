@@ -69,7 +69,7 @@ const Footer = () => {
                                 {/* <img src="/images/CICS_SEAL.png" alt="CICS Seal" className="cics-seal" /> */}
                             </div>
                             <div class="col-sm-6 col-md-3 item">
-                                <h3>Contact Info</h3>
+                                <h3>Contact info</h3>
                                 <ul>
                                     <i class="fa fa-map-marker" aria-hidden="true"></i> Blessed Pier Giorgio Frassati Building <br />
                                     <i class="fa fa-location-arrow" aria-hidden="true"></i> Espana Blvd., Sampaloc, Manila, Philippines 1008 <br />

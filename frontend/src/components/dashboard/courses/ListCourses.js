@@ -64,7 +64,7 @@ const ListCourses = ({ history }) => {
                 {
                     label: 'Course Code',
                     field: 'courseCode',
-                    width: 150
+                    width: 145
                 },
                 {
                     label: 'Course Name',
@@ -74,17 +74,17 @@ const ListCourses = ({ history }) => {
                 {
                     label: 'Lec Units',
                     field: 'lecUnits',
-                    width: 100
+                    width: 135
                 },
                 {
                     label: 'Lab Units',
                     field: 'labUnits',
-                    width: 100
+                    width: 135
                 },
                 {
                     label: 'Total Units',
                     field: 'totalUnits',
-                    width: 100
+                    width: 135
                 },
                 {
                     label: 'Actions',
