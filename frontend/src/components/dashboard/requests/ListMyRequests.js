@@ -4,8 +4,8 @@ import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { Container, Button, ButtonGroup, ButtonToolbar } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
-import { getRequests, updateRequest, clearErrors } from '../../../actions/requestActions'
-import { UPDATE_REQUEST_RESET } from '../../../constants/requestConstants'
+import { getRequests, updateRequest, unassignRequest, clearErrors } from '../../../actions/requestActions'
+import { UPDATE_REQUEST_RESET, UNASSIGN_REQUEST_RESET } from '../../../constants/requestConstants'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
@@ -20,6 +20,7 @@ const ListMyRequests = ({ history }) => {
     const { error: updateError, isUpdated } = useSelector(state => state.request)
 
     const [requestList, setRequestList] = useState([])
+    const [handler, setHandler] = useState('')
     const [status, setStatus] = useState('Requests')
 
     const changeDateFormat = (date) => dateformat(date, "mmm d, yyyy h:MMtt")
@@ -66,12 +67,21 @@ const ListMyRequests = ({ history }) => {
         }
         
         if (isUpdated) {
-            alert.success('Request has been moved to Trash successfully.')
-            history.push('/admin/me/requests')
+            if(handler === 'Trash') {
+                alert.success('Request has been moved to Trash successfully.')
+                history.push('/admin/me/requests')
 
-            dispatch({
-                type: UPDATE_REQUEST_RESET
-            })
+                dispatch({
+                    type: UPDATE_REQUEST_RESET
+                })
+            } else {
+                alert.success('Request has been unassigned to user successfully.')
+                history.push('/admin/me/requests')
+
+                dispatch({
+                    type: UNASSIGN_REQUEST_RESET
+                })
+            }
         }
 
         dispatch({
@@ -81,6 +91,12 @@ const ListMyRequests = ({ history }) => {
 
     const updateRequestHandler = (id) => {
         dispatch(updateRequest(id, {isTrash: true}, true))
+        setHandler('Trash')
+    }
+
+    const unassignRequestHandler = (id) => {
+        dispatch(unassignRequest(id, {}))
+        setHandler('Unassign')
     }
 
     const setRequests = () => {
@@ -94,7 +110,7 @@ const ListMyRequests = ({ history }) => {
                 {
                     label: 'Request Type',
                     field: 'requestType',
-                    width: 250
+                    width: 225
                 },
                 {
                     label: 'Requested by',
@@ -109,7 +125,7 @@ const ListMyRequests = ({ history }) => {
                 {
                     label: 'Actions',
                     field: 'actions',
-                    width: 200
+                    width: 225
                 }
             ],
             rows: []
@@ -148,6 +164,11 @@ const ListMyRequests = ({ history }) => {
                         updateRequestHandler(request._id)
                     }}>
                         <i class="fa fa-trash" aria-hidden="true" />
+                    </Button>
+                    <Button variant="secondary" className="mr-5" style={{ margin: '5px' }} onClick={() => {
+                        unassignRequestHandler(request._id)
+                    }}>
+                        <i class="fa fa-undo" aria-hidden="true" />
                     </Button>
                 </Fragment>
             })

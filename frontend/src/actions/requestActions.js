@@ -24,6 +24,9 @@ import {
     ASSIGN_REQUEST_REQUEST,
     ASSIGN_REQUEST_SUCCESS,
     ASSIGN_REQUEST_FAIL,
+    UNASSIGN_REQUEST_REQUEST,
+    UNASSIGN_REQUEST_SUCCESS,
+    UNASSIGN_REQUEST_FAIL,
     CLEAR_ERRORS
 } from '../constants/requestConstants'
 
@@ -68,7 +71,7 @@ export const submitRequest = (request) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post(`/api/v1/submit`, request, config)
+    const { data } = await axios.post(`/api/v1/submit`, request, config)
 
         dispatch({
             type: SUBMIT_REQUEST_SUCCESS,
@@ -262,6 +265,34 @@ export const assignRequest = (requestId, request) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: ASSIGN_REQUEST_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+//unassign request 
+export const unassignRequest = (requestId, request) => async (dispatch) => {
+    try {
+        dispatch({
+            type: UNASSIGN_REQUEST_REQUEST
+        })
+
+        const config = {
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const { data } = await axios.put(`/api/v1/admin/cics/unassign/${requestId}`, request, config)
+
+        dispatch({
+            type: UNASSIGN_REQUEST_SUCCESS,
+            payload: data.success
+        })
+    }
+    catch (error) {
+        dispatch({
+            type: UNASSIGN_REQUEST_FAIL,
             payload: error.response.data.message
         })
     }

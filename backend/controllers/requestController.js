@@ -725,7 +725,7 @@ exports.unassignRequest = catchAsyncErrors(async(req, res, next) => {
 
     await Audit.create({
         name: "Request unassignment",
-        eventInfo: `Request with tracking number: ${req.body.trackingNumber} was unassigned by user ${req.user.id}`,
+        eventInfo: `Request with tracking number: ${req.body.trackingNumber} was unassigned from user ${req.user.id}`,
         user: userName,
         dateAudit: Date.now()
     })
