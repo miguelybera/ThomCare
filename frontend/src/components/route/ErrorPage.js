@@ -18,8 +18,9 @@ const Error = () => {
                 <div class="notfound-404">
                     <h1>:(</h1>
                 </div>
-                <h2>404 - Page not found</h2>
-                <p>The page you are looking for might have been removed had its name changed or is temporarily unavailable.</p>
+                <h2>We encountered an error!</h2>
+                <p>The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.</p>
+                <p>Reload the page to continue.</p>
                 <a href="/">home page</a>
             </div>
         </div>

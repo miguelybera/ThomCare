@@ -217,8 +217,8 @@ exports.getDeptChairRequests = catchAsyncErrors(async (req, res, next) => {
     const dates = []
     const stats = []
 
-    for (let i = 0; i < 6; i++) {
-        dates.push(new Date(Date.now() - (i * 24 * 60 * 60 * 1000)).setHours(0, 0, 0, 0))
+    for (let i = 0; i < 8; i++) {
+        dates.push(new Date(Date.now() - ((i - 1) * 24 * 60 * 60 * 1000)).setHours(0, 0, 0, 0))
     }
 
     for (let i = 0; i < dates.length - 1; i++) {
@@ -292,8 +292,8 @@ exports.getAllRequests = catchAsyncErrors(async (req, res, next) => {
     const dates = []
     const stats = []
 
-    for (let i = 0; i < 6; i++) {
-        dates.push(new Date(Date.now() - (i * 24 * 60 * 60 * 1000)).setHours(0, 0, 0, 0))
+    for (let i = 0; i < 8; i++) {
+        dates.push(new Date(Date.now() - ((i - 1) * 24 * 60 * 60 * 1000)).setHours(0, 0, 0, 0))
     }
 
     for (let i = 0; i < dates.length - 1; i++) {

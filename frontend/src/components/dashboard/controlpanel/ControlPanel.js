@@ -132,7 +132,7 @@ const ControlPanel = ({ history }) => {
     const setData = () => {
         const data = []
 
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 7; i++) {
             data.push({
                 name: changeDateFormat(new Date(Date.now() - (i * 24 * 60 * 60 * 1000))),
                 Total: 0
@@ -153,24 +153,7 @@ const ControlPanel = ({ history }) => {
             {listLoading ? <Loader /> : (
                 <div className="row">
                     <div className='control-panel'>
-                        <h1 style={{ margin: '50px 0' }}>Control Panel</h1>
-                        <Container fluid>
-                            {user.role !== 'Student' ? (
-                                <Fragment>
-                                    <Row style={{ display: 'flex', justifyContent: 'center', margin: '50px 0' }}>
-                                        <h3>Recent requests</h3>
-                                        <ResponsiveContainer width={'99%'} height={300}>
-                                            <LineChart width={600} height={300} data={setData()} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                                                <Line type="monotone" dataKey="Total" stroke="#8884d8" />
-                                                <CartesianGrid stroke="#ccc" />
-                                                <XAxis dataKey="name" />
-                                                <YAxis />
-                                                <Tooltip />
-                                            </LineChart>
-                                        </ResponsiveContainer>
-                                    </Row>
-                                </Fragment>
-                            ) : <Fragment></Fragment>}
+                        <Container fluid style={{ margin: '100px 0'}}>
                             <Row style={{ display: 'flex', justifyContent: 'center' }}>
                                 {user.role === 'Student' ? (
                                     <Fragment>
@@ -188,6 +171,22 @@ const ControlPanel = ({ history }) => {
                                     </Fragment>
                                 )}
                             </Row>
+                            {user.role !== 'Student' ? (
+                                <Fragment>
+                                    <Row style={{ display: 'flex', justifyContent: 'center', margin: '20px 0' }}>
+                                        <h4 style={{ paddingLeft: '40px'}}>Weekly chart</h4>
+                                        <ResponsiveContainer width={'99%'} height={300}>
+                                            <LineChart width={600} height={300} data={setData()} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                                                <Line type="monotone" dataKey="Total" stroke="#8884d8" />
+                                                <CartesianGrid stroke="#ccc" />
+                                                <XAxis dataKey="name" />
+                                                <YAxis />
+                                                <Tooltip />
+                                            </LineChart>
+                                        </ResponsiveContainer>
+                                    </Row>
+                                </Fragment>
+                            ) : <Fragment></Fragment>}
                             <Row>
                                 <h3>Latest submissions</h3>
                                 {recentsLoading ? <Loader /> : (
