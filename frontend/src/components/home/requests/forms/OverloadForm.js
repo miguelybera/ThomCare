@@ -12,7 +12,7 @@ import OVERLOADPDF from '../templates/OVERLOADPDF'
 
 const addDropStyle = {
     marginBottom: '5px'
-} 
+}
 
 function OverloadForm({ history }) {
     const alert = useAlert()
@@ -20,7 +20,7 @@ function OverloadForm({ history }) {
 
     const { courses, error, loading } = useSelector(state => state.courses)
     const { user } = useSelector(state => state.auth)
-    
+
     const [studentInfo, setStudentInfo] = useState({})
     const [middleInitial, setMiddleInitial] = useState('')
     const [submitted, setSubmitted] = useState(false)
@@ -84,9 +84,9 @@ function OverloadForm({ history }) {
             type: INSIDE_DASHBOARD_FALSE
         })
     }, [dispatch, history, alert, error, user])
-    
+
     const addRow = (num) => {
-        if(num === 1) {
+        if (num === 1) {
             setOverload([...overload, {
                 courseCode: '',
                 courseName: '',
@@ -103,15 +103,15 @@ function OverloadForm({ history }) {
                 lecUnits: '',
                 labUnits: ''
             }])
-        }   
+        }
     }
 
     const deleteRow = (num, index) => {
-        const values = num === 1 ?  [...overload] : [...specialTerm]
- 
+        const values = num === 1 ? [...overload] : [...specialTerm]
+
         values.splice(index, 1)
 
-        if(num === 1) {
+        if (num === 1) {
             setOverload(values)
         } else {
             setSpecialTerm(values)
@@ -136,7 +136,7 @@ function OverloadForm({ history }) {
     const onChange = (num, index, e) => {
         e.preventDefault()
 
-        const values = num === 1 ?  [...overload] : [...specialTerm]
+        const values = num === 1 ? [...overload] : [...specialTerm]
 
         values[index][e.target.name] = e.target.value
 
@@ -150,7 +150,7 @@ function OverloadForm({ history }) {
             values[index]["lecUnits"] = ''
         }
 
-        if(num === 1){
+        if (num === 1) {
             setOverload(values)
         } else {
             setSpecialTerm(values)
@@ -159,13 +159,13 @@ function OverloadForm({ history }) {
 
     const onTimeChange = (index, name, value) => {
         const values = [...overload]
-        let aa = 'AM', time=''
+        let aa = 'AM', time = ''
 
-        let hr = value.substring(0,2)
+        let hr = value.substring(0, 2)
 
-        if(Number(hr) > 12) {
+        if (Number(hr) > 12) {
             aa = 'PM'
-            time = hr - 12 + value.substring(2,5) + aa
+            time = hr - 12 + value.substring(2, 5) + aa
             values[index][name] = time
         } else if (Number(hr) === 12) {
             aa = 'PM'
@@ -174,8 +174,8 @@ function OverloadForm({ history }) {
         } else {
             aa = 'AM'
 
-            if(Number(hr) === 0) {
-                time = '12' + value.substring(2,5) + aa
+            if (Number(hr) === 0) {
+                time = '12' + value.substring(2, 5) + aa
             } else {
                 time = value + aa
             }
@@ -221,8 +221,8 @@ function OverloadForm({ history }) {
         const [lgShow, setLgShow] = useState(false)
 
         return (
-            <>
-                <Button onClick={() => setLgShow(true)}>General Instructions</Button>
+            <Fragment>
+                <Button variant='outline-secondary' onClick={() => setLgShow(true)}>General Instructions</Button>
                 <Modal
                     size="lg"
                     show={lgShow}
@@ -258,14 +258,14 @@ function OverloadForm({ history }) {
                                     <li>Graduating student is limited only to six (6) units of overload for the
                                         Academic Year.</li>
                                     <li>Non-graduating students, upon the endorsement of the Dean, may carry a
-                                        maximum overload of three (3) units in an academic year for the purpose of
+                                    maximum overload of three (3) units in an academic year for the purpose of
                                         being on a regular track in the succeeding year level.</li>
                                 </ul>
                             </ul>
                         </Row>
                     </Modal.Body>
                 </Modal>
-            </>
+            </Fragment>
         );
     }
 
@@ -318,82 +318,82 @@ function OverloadForm({ history }) {
                                     </Form.Group>
                                 </Row>
 
-                                <Card.Title style={{ margin: '10px 0 20px 0', fontWeight: 'bold' }}>Answer the following</Card.Title>          
+                                <Card.Title style={{ margin: '10px 0 20px 0', fontWeight: 'bold' }}>Answer the following</Card.Title>
                                 <Row style={{ paddingBottom: '20px' }}>
                                     <Form.Group as={Col} lg={3}>
                                         <Form.Label>Curriculum Year</Form.Label>
-                                        <Form.Control type='text' placeholder="2021-2022" pattern="20[0-9]{2}-20[0-9]{2}" value={curriculum} onChange={e => setCurriculum(e.target.value)} required/>
+                                        <Form.Control type='text' placeholder="2021-2022" pattern="20[0-9]{2}-20[0-9]{2}" value={curriculum} onChange={e => setCurriculum(e.target.value)} required />
                                     </Form.Group>
                                     <Form.Group as={Col} lg={3}>
                                         <Form.Label>Term</Form.Label>
-                                        <Form.Control type='text' placeholder="1st Term/2nd Term/Summer Term" value={term} onChange={e => setTerm(e.target.value)} required/>
+                                        <Form.Control type='text' placeholder="1st Term/2nd Term/Summer Term" value={term} onChange={e => setTerm(e.target.value)} required />
                                     </Form.Group>
-  
-                                </Row>                      
+
+                                </Row>
                                 <Row style={{ paddingBottom: '20px' }}>
                                     <Form.Group as={Col} xs={12} md={3}>
-                                        <Form.Check type="checkbox" label="Full Time" onChange={e => setFullTime(!fullTime)}/>
+                                        <Form.Check type="checkbox" label="Full Time" onChange={e => setFullTime(!fullTime)} />
                                     </Form.Group>
 
                                     <Form.Group as={Col} xs={12} md={3}>
-                                        <Form.Check type="checkbox" label="Working Student" onChange={e => setWorkingStudent(!workingStudent)}/>
+                                        <Form.Check type="checkbox" label="Working Student" onChange={e => setWorkingStudent(!workingStudent)} />
                                     </Form.Group>
 
                                     <Form.Group as={Col} xs={12} md={3}>
-                                        <Form.Check type="checkbox" label="Does the program require Bar or Board Examination?" onChange={e => setBar(!bar)}/>
+                                        <Form.Check type="checkbox" label="Does the program require Bar or Board Examination?" onChange={e => setBar(!bar)} />
                                     </Form.Group>
 
                                     <Form.Group as={Col} xs={12} md={3}>
-                                        <Form.Check type="checkbox" label="Is there a violation of courses prerequisites?" onChange={e => setViolations(!violations)}/>
+                                        <Form.Check type="checkbox" label="Is there a violation of courses prerequisites?" onChange={e => setViolations(!violations)} />
                                     </Form.Group>
                                 </Row>
                                 <Row>
-                                    <Form.Group as={Col} xs={12} style={{paddingBottom: '12px'}}>
+                                    <Form.Group as={Col} xs={12} style={{ paddingBottom: '12px' }}>
                                         <InputGroup>
                                             <InputGroup.Text>Total Number of Units Earned</InputGroup.Text>
-                                            <Form.Control type="text" placeholder="ex. 1" value={unitsEarned} onChange={e => setUnitsEarned(e.target.value)} required/>
+                                            <Form.Control type="text" placeholder="ex. 1" value={unitsEarned} onChange={e => setUnitsEarned(e.target.value)} required />
                                         </InputGroup>
                                     </Form.Group>
-                                    <Form.Group as={Col} xs={12} style={{paddingBottom: '12px'}}> 
+                                    <Form.Group as={Col} xs={12} style={{ paddingBottom: '12px' }}>
                                         <InputGroup>
                                             <InputGroup.Text>No. of INCOMPLETE grades</InputGroup.Text>
-                                            <Form.Control type="text" placeholder="ex. 1" value={incompleteGrades} onChange={e => setIncompleteGrades(e.target.value)} required/>
+                                            <Form.Control type="text" placeholder="ex. 1" value={incompleteGrades} onChange={e => setIncompleteGrades(e.target.value)} required />
                                         </InputGroup>
                                     </Form.Group>
-                                    <Form.Group as={Col} xs={12} style={{paddingBottom: '12px'}}>
+                                    <Form.Group as={Col} xs={12} style={{ paddingBottom: '12px' }}>
                                         <InputGroup>
                                             <InputGroup.Text>Total Number of Units Required for the Program</InputGroup.Text>
-                                            <Form.Control type="text" placeholder="ex. 1" value={unitsRequired} onChange={e => setUnitsRequired(e.target.value)} required/>
+                                            <Form.Control type="text" placeholder="ex. 1" value={unitsRequired} onChange={e => setUnitsRequired(e.target.value)} required />
                                         </InputGroup>
                                     </Form.Group>
-                                    <Form.Group as={Col} xs={12} style={{paddingBottom: '12px'}}>
+                                    <Form.Group as={Col} xs={12} style={{ paddingBottom: '12px' }}>
                                         <InputGroup>
                                             <InputGroup.Text>No. of Special Terms Attended</InputGroup.Text>
-                                            <Form.Control type="text" placeholder="ex. 1" value={specialAttend} onChange={e => setSpecialAttend(e.target.value)} required/>
+                                            <Form.Control type="text" placeholder="ex. 1" value={specialAttend} onChange={e => setSpecialAttend(e.target.value)} required />
                                         </InputGroup>
                                     </Form.Group>
-                                    <Form.Group as={Col} xs={12} style={{paddingBottom: '12px'}}>
+                                    <Form.Group as={Col} xs={12} style={{ paddingBottom: '12px' }}>
                                         <InputGroup>
                                             <InputGroup.Text>Normal Load for the Current Term</InputGroup.Text>
-                                            <Form.Control type="text" placeholder="How many units?" value={normalLoad} onChange={e => setNormalLoad(e.target.value)} required/>
+                                            <Form.Control type="text" placeholder="How many units?" value={normalLoad} onChange={e => setNormalLoad(e.target.value)} required />
                                         </InputGroup>
                                     </Form.Group>
-                                    <Form.Group as={Col} xs={12} style={{paddingBottom: '12px'}}>
+                                    <Form.Group as={Col} xs={12} style={{ paddingBottom: '12px' }}>
                                         <InputGroup>
                                             <InputGroup.Text>Total Number of Units to be Taken including Overload</InputGroup.Text>
-                                            <Form.Control type="text" placeholder="ex. 1" value={totalUnits} onChange={e => setTotalUnits(e.target.value)} required/>
+                                            <Form.Control type="text" placeholder="ex. 1" value={totalUnits} onChange={e => setTotalUnits(e.target.value)} required />
                                         </InputGroup>
                                     </Form.Group>
-                                    <Form.Group as={Col} xs={12} style={{paddingBottom: '12px'}}>
+                                    <Form.Group as={Col} xs={12} style={{ paddingBottom: '12px' }}>
                                         <InputGroup>
                                             <InputGroup.Text>Total Number of Overload Units Already Taken</InputGroup.Text>
-                                            <Form.Control type="text" placeholder="ex. 1" value={totalOverloadUnits} onChange={e => setTotalOverloadUnits(e.target.value)} required/>
+                                            <Form.Control type="text" placeholder="ex. 1" value={totalOverloadUnits} onChange={e => setTotalOverloadUnits(e.target.value)} required />
                                         </InputGroup>
                                     </Form.Group>
-                                    <Form.Group as={Col} xs={12} style={{paddingBottom: '12px'}}>
+                                    <Form.Group as={Col} xs={12} style={{ paddingBottom: '12px' }}>
                                         <InputGroup>
                                             <InputGroup.Text>No. of 5s</InputGroup.Text>
-                                            <Form.Control type="text" placeholder="ex. 1" value={totalFives} onChange={e => setTotalFives(e.target.value)} required/>
+                                            <Form.Control type="text" placeholder="ex. 1" value={totalFives} onChange={e => setTotalFives(e.target.value)} required />
                                         </InputGroup>
                                     </Form.Group>
                                 </Row>
@@ -410,7 +410,7 @@ function OverloadForm({ history }) {
                                     //set unique id per row
                                     let courseCode = `courseCode-${idx}`,
                                         courseName = `courseName-${idx}`,
-                                        lecUnits = `lecUnits-${idx}`, 
+                                        lecUnits = `lecUnits-${idx}`,
                                         labUnits = `labUnits-${idx}`,
                                         days = `days-${idx}`,
                                         startTime = `startTime-${idx}`,
@@ -432,7 +432,7 @@ function OverloadForm({ history }) {
                                                             <Button variant='primary' onClick={() => addRow(1)} style={{ width: '40px', marginLeft: '5px' }}>
                                                                 <i className="fa fa-plus-circle" aria-hidden="true"></i>
                                                             </Button>
-                                                            <Button variant='danger' onClick={() => deleteRow(1,idx)} style={{ width: '40px', marginLeft: '5px' }}>
+                                                            <Button variant='danger' onClick={() => deleteRow(1, idx)} style={{ width: '40px', marginLeft: '5px' }}>
                                                                 <i className="fa fa-minus" aria-hidden="true"></i>
                                                             </Button>
                                                         </Fragment>
@@ -442,7 +442,7 @@ function OverloadForm({ history }) {
                                             <Row className="mb-3">
                                                 <Col xs={12} md={4} lg={3} style={addDropStyle} >
                                                     <FloatingLabel label="Course Code">
-                                                        <Form.Select  aria-label="Default select example" name="courseCode" id={courseCode} data-id={idx} value={val.courseCode} onChange={e => onChange(1, idx, e)} required>
+                                                        <Form.Select aria-label="Default select example" name="courseCode" id={courseCode} data-id={idx} value={val.courseCode} onChange={e => onChange(1, idx, e)} required>
                                                             <option value=''>Course Code</option>
                                                             {courses && courses.map(course => (
                                                                 <option value={course.courseCode}>{course.courseCode}</option>
@@ -489,7 +489,7 @@ function OverloadForm({ history }) {
                                                                 id={startTime}
                                                                 data-id={idx}
                                                                 value={val.startTime}
-                                                                onChange={value =>  {
+                                                                onChange={value => {
 
                                                                     // ? value === null if and only if AM/PM is selected
                                                                     // ? value = jsonobject & null when selected but time is not complete
@@ -497,7 +497,7 @@ function OverloadForm({ history }) {
 
                                                                     if (value !== null) {
                                                                         if (value.isDefaultPrevented && value.isDefaultPrevented.name === "functionThatReturnsFalse") {
-                                                                        
+
                                                                         } else {
                                                                             if (value) {
                                                                                 onTimeChange(idx, "startTime", value)
@@ -516,14 +516,14 @@ function OverloadForm({ history }) {
                                                                 id={endTime}
                                                                 data-id={idx}
                                                                 value={val.endTime}
-                                                                onChange={value =>  {
+                                                                onChange={value => {
                                                                     // ? value === null if and only if AM/PM is selected
                                                                     // ? value = jsonobject & null when selected but time is not complete
                                                                     // ? value is time when complete
 
                                                                     if (value !== null) {
                                                                         if (value.isDefaultPrevented && value.isDefaultPrevented.name === "functionThatReturnsFalse") {
-                                                                        
+
                                                                         } else {
                                                                             if (value) {
                                                                                 onTimeChange(idx, "endTime", value)
@@ -538,7 +538,8 @@ function OverloadForm({ history }) {
                                                 </Col>
                                             </Row>
                                         </Fragment>
-                                    )})
+                                    )
+                                })
                                 }
                                 <Card.Title style={{ margin: '30px 0 20px 0', color: 'black', fontWeight: 'bold' }}>
                                     SPECIAL TERM LOAD   (if special term graduate):
@@ -550,7 +551,7 @@ function OverloadForm({ history }) {
                                         courseName = `courseName-${idx}`,
                                         lecUnits = `lecUnits-${idx}`,
                                         labUnits = `labUnits-${idx}`
-                                        
+
                                     return (
                                         <Fragment>
                                             <Row>
@@ -568,7 +569,7 @@ function OverloadForm({ history }) {
                                                             <Button variant='primary' onClick={() => addRow(2)} style={{ width: '40px', marginLeft: '5px' }}>
                                                                 <i className="fa fa-plus-circle" aria-hidden="true"></i>
                                                             </Button>
-                                                            <Button variant='danger' onClick={() => deleteRow(2,idx)} style={{ width: '40px', marginLeft: '5px' }}>
+                                                            <Button variant='danger' onClick={() => deleteRow(2, idx)} style={{ width: '40px', marginLeft: '5px' }}>
                                                                 <i className="fa fa-minus" aria-hidden="true"></i>
                                                             </Button>
                                                         </Fragment>
@@ -578,7 +579,7 @@ function OverloadForm({ history }) {
                                             <Row className="mb-3" key={val.index}>
                                                 <Col xs={12} md={4} lg={3} style={addDropStyle} >
                                                     <FloatingLabel label="Course Code">
-                                                        <Form.Select  aria-label="Default select example" name="courseCode" id={courseCode} data-id={idx} value={val.courseCode} onChange={e => onChange(2, idx, e)} required>
+                                                        <Form.Select aria-label="Default select example" name="courseCode" id={courseCode} data-id={idx} value={val.courseCode} onChange={e => onChange(2, idx, e)} required>
                                                             <option value='requested'>Course Code</option>
                                                             {courses && courses.map(course => (
                                                                 <option value={course.courseCode}>{course.courseCode}</option>
@@ -603,7 +604,8 @@ function OverloadForm({ history }) {
                                                 </Col>
                                             </Row>
                                         </Fragment>
-                                    )})
+                                    )
+                                })
                                 }
                                 <Row className="mb-3" style={{ margin: '30px 0 20px 0', fontWeight: 'bold' }}>
                                     <Col xs={12} md={3} style={addDropStyle} >
@@ -612,13 +614,13 @@ function OverloadForm({ history }) {
                                         </Form.Label>
                                     </Col>
                                     <Col xs={12} md={6} style={addDropStyle}>
-                                        <Form.Control type="text" placeholder="Month / Year" value={tentative} onChange={e => setTentative(e.target.value)} required/>
+                                        <Form.Control type="text" placeholder="Month / Year" value={tentative} onChange={e => setTentative(e.target.value)} required />
                                     </Col>
                                 </Row>
                                 <center>
-                                    <Button 
-                                        type='submit' 
-                                        style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }} 
+                                    <Button
+                                        type='submit'
+                                        style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
                                         disabled={user.role !== 'Student' ? true : false}
                                     >
                                         Generate Form

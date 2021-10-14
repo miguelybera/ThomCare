@@ -2,6 +2,7 @@
     font-family: MuktaMalar;
     min-height: 100vh;
     display: flex;
+    /**!maybe this is the problem*/
     flex-direction: column;
     overflow: hidden;
 }

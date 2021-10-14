@@ -224,8 +224,8 @@ exports.getDeptChairRequests = catchAsyncErrors(async (req, res, next) => {
     for (let i = 0; i < dates.length - 1; i++) {
         const x = await Request.find({
             createdAt: {
-                "$gte": dates[i + 1].toString(),
-                "$lt": dates[i].toString()
+                "$gt": dates[i + 1].toString(),
+                "$lte": dates[i].toString()
             },
             "requestorInfo.course": deptCourse,
             requestType: {
@@ -299,8 +299,8 @@ exports.getAllRequests = catchAsyncErrors(async (req, res, next) => {
     for (let i = 0; i < dates.length - 1; i++) {
         const x = await Request.find({
             createdAt: {
-                "$gte": dates[i + 1].toString(),
-                "$lt": dates[i].toString()
+                "$gt": dates[i + 1].toString(),
+                "$lte": dates[i].toString()
             }
         })
 
