@@ -18,32 +18,26 @@ const Styles = styled.div`
     text-align: center;
     paddingTop: 0px;
     paddingBottom: 0px;
+    border-radius: 105px;
     width: fit-content;
-    
-    &:active{ 
-      background-color:#294b32;
-      color: white;
-    }
-
-    &:hover{
-      text-align:center;
-      display: inline-block;
-      border-radius: 10px
-    }
 }`;
 
 const Images = styled.div`
     margin-right: 5px;
 `;
+
 const Drop = styled.div` 
     a, .navbar-nav .nav-link  {
     border-radius: 105px;
     color: black;
-    }
-    
-    &:hover{
-        color: black;
+    font-size: 0.85rem;
     }`;
+
+const navBrandStyle = {
+    fontSize: '0.85rem',
+    margin: '0px auto',
+    padding: '2px'
+}
 
 const Header = () => {
     const dispatch = useDispatch()
@@ -72,24 +66,25 @@ const Header = () => {
                                 </h1>
                         </Navbar.Brand>
                         <Navbar.Toggle aria-controls="basic-navbar-nav" />
-                        <Navbar.Collapse id="responsive-navbar-nav" style={{ float: "right", fontSize: "0.85rem", fontWeight: "bold" }}>
-                            <Nav variant="pills" className="image">
-                                <Nav.Link><Link to='/' activeStyle>Announcements</Link></Nav.Link>
-                                <Nav.Link className={user ? "" : "d-none "}><Link to='/forms/list' activeStyle>Generate Form</Link></Nav.Link>
-                                <Nav.Link><Link to='/download/forms/list' activeStyle>Downloadable Forms</Link></Nav.Link>
-                                <Nav.Link className={user ? "" : "d-none "}><Link to='/submit/request' activeStyle onClick={() => { dispatch({ type: SUBMIT_REQUEST_RESET }) }}>Submit Request</Link></Nav.Link>
-                                <Nav.Link><Link to='/track' activeStyle>Track my Request</Link></Nav.Link>
-                                <Nav.Link className={user ? "d-none " : ""} href="/login">Login</Nav.Link>
+                        <Navbar.Collapse id="responsive-navbar-nav" style={{ float: "right", fontSize: "0.85rem", fontWeight: "bold", color: 'black' }}>
+                            <Nav variant="pills" className="green-button">
+                                <Link to='/' className="green-button-children"><Navbar.Brand style={navBrandStyle}>Announcements</Navbar.Brand></Link>
+                                <Link to='/forms/list' className={user ? "green-button-children" : "d-none "}><Navbar.Brand style={navBrandStyle}>Generate Form</Navbar.Brand></Link>
+                                <Link to='/download/forms/list' className="green-button-children"><Navbar.Brand style={navBrandStyle}>Downloadable Forms</Navbar.Brand></Link>
+                                <Link to='/submit/request' onClick={() => { dispatch({ type: SUBMIT_REQUEST_RESET }) }} className={user ? "green-button-children" : "d-none "}><Navbar.Brand style={navBrandStyle}>Submit Request</Navbar.Brand></Link>
+                                <Link to='/track' className="green-button-children"><Navbar.Brand style={navBrandStyle}>Track my Request</Navbar.Brand></Link>
+
+                                <Nav.Link href='/login' className={user ? "d-none" : "green-button-children"} style={{ marginLeft: '6px'}}><Navbar.Brand style={navBrandStyle}>Login</Navbar.Brand></Nav.Link>
                             </Nav>
                             {!loading && user &&
                                 <Drop>
-                                    <NavDropdown title={`${user.firstName}`} id="basic-nav-dropdown">
+                                    <NavDropdown title={`${user.firstName}`} id="basic-nav-dropdown" style={{ marginLeft: '-8px'}}>
                                         <NavDropdown.Item><Link to='/controlpanel'>Control Panel</Link></NavDropdown.Item>
                                         <NavDropdown.Item><Link to='/profile'>My Profile</Link></NavDropdown.Item>
                                         <NavDropdown.Item><Link to='/messenger'>Messenger</Link></NavDropdown.Item>
                                         <NavDropdown.Divider />
-                                        <NavDropdown.Item style={{ color: 'red' }}>
-                                            <Link to='/' onClick={logoutHandler}>
+                                        <NavDropdown.Item>
+                                            <Link to='/' onClick={logoutHandler} style={{ color: 'red'}}>
                                                 Log out
                                             </Link>
                                         </NavDropdown.Item>

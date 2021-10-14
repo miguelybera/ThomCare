@@ -31,17 +31,23 @@
     border-top: 3px solid #bbb;
 }
 
-.image {
+.green-button {
     border-radius: 105px;
     margin-left: auto;
-    padding-right: 15px;
-    padding-left: 15px;
+    text-align: center;
+    color: black;
 }
 
-@media only screen and (max-width: 700px) {
-    .image {
-        border: 2px solid white;
-    }
+.green-button-children {
+    padding: 5px;
+    color: black;
+    text-align: center;
+}
+
+.green-button-children:active {
+    background-color: #4c7758;
+    text-align: center;
+    color: white;
 }
 
 
