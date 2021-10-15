@@ -1,17 +1,28 @@
-import React, { Fragment } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useDispatch } from 'react-redux'
 import { Table, Container, Button } from 'react-bootstrap'
-
+import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
+import MetaData from './../../../layout/MetaData'
 
 const FormsList = () => {
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch({
+            type: INSIDE_DASHBOARD_FALSE
+        })
+    }, [dispatch])
+
     return (
         <Fragment>
+            <MetaData title={'Forms'}/>
             <Container>
                 <div id="rectangle" >
                     <h3>FORMS</h3>
                 </div>
             </Container>
-                <Container fluid style={{ marginTop: '50px', padding: "50px 20px" }}>
+            <Container fluid style={{ marginTop: '50px', padding: "50px 20px", fontFamily: 'MuktaMalar' }}>
                 <Table bordered hover size="sm" style={{ justifyContent: 'center' }}>
                     <thead>
                         <tr style={{ textAlign: 'center' }}>

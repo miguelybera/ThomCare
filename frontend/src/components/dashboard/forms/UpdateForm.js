@@ -27,8 +27,9 @@ const UpdateForm = ({ history, match }) => {
 
     const formId = match.params.id
 
-    const goBack = () => {
+        const goBack = () => {
         window.history.back()
+        handleClose()
     }
 
     useEffect(() => {

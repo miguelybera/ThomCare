@@ -47,6 +47,7 @@ const CreateAnnouncement = ({ history }) => {
     
     const goBack = () => {
         window.history.back()
+        handleClose()
     }
 
     useEffect(() => {

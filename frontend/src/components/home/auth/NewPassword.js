@@ -59,42 +59,44 @@ const NewPassword = ({ history, match }) => {
                         <Card.Body>
                             <Card.Title style={{ margin: '50px 0 20px 0' }}>Update Password</Card.Title>
                             <Form onSubmit={submitHandler}>
-                                <InputGroup className="mb-3">
-                                    <FloatingLabel label="New Password" style={{ width: '89%' }}>
+                                <Form.Group style={{ marginTop: '5px' }}>
+                                    <Form.Label>Password</Form.Label>
+                                    <InputGroup className="mb-3">
                                         <Form.Control
                                             type={showPassword ? "password" : "text"}
-                                            placeholder="mypassword"
+                                            placeholder="••••••"
                                             name="password"
                                             value={password}
                                             onChange={e => setPassword(e.target.value)}
                                             minlength="6"
                                             required
                                         />
-                                    </FloatingLabel>
-                                    <Button variant="secondary" onClick={showPasswordToggle}>
-                                        <span className="fa-sm">
-                                            <i className={showPassword ? "fa fa-eye-slash" : "fa fa-eye"}></i>
-                                        </span>
-                                    </Button>
-                                </InputGroup>
-                                <InputGroup className="mb-3">
-                                    <FloatingLabel label="Confirm new password" style={{ width: '89%' }}>
+                                        <Button variant="secondary" onClick={showPasswordToggle}>
+                                            <span className="fa-sm">
+                                                <i className={showPassword ? "fa fa-eye-slash" : "fa fa-eye"}></i>
+                                            </span>
+                                        </Button>
+                                    </InputGroup>
+                                </Form.Group>
+                                <Form.Group style={{ marginTop: '5px' }}>
+                                    <Form.Label>Confirm New Password</Form.Label>
+                                    <InputGroup className="mb-3">
                                         <Form.Control
                                             type={showConfirm ? "password" : "text"}
-                                            placeholder="mypassword"
+                                            placeholder="••••••"
                                             name="confirmPassword"
                                             value={confirmPassword}
                                             onChange={e => setConfirmPassword(e.target.value)}
                                             minlength="6"
                                             required
                                         />
-                                    </FloatingLabel>
-                                    <Button variant="secondary" onClick={showConfirmToggle}>
-                                        <span className="fa-sm">
-                                            <i className={showConfirm ? "fa fa-eye-slash" : "fa fa-eye"}></i>
-                                        </span>
-                                    </Button>
-                                </InputGroup>
+                                        <Button variant="secondary" onClick={showConfirmToggle}>
+                                            <span className="fa-sm">
+                                                <i className={showConfirm ? "fa fa-eye-slash" : "fa fa-eye"}></i>
+                                            </span>
+                                        </Button>
+                                    </InputGroup>
+                                </Form.Group>
                                 <center>
                                     <Button
                                         type='submit'

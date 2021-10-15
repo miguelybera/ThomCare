@@ -49,8 +49,9 @@ const UpdateAnnouncement = ({ history, match }) => {
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
 
-    const goBack = () => {
+        const goBack = () => {
         window.history.back()
+        handleClose()
     }
 
     useEffect(() => {

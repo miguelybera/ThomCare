@@ -35,8 +35,9 @@ const UpdateUser = ({ history, match }) => {
     const handleShow = () => setShow(true)
     const upperCase = (text) => text.toUpperCase()
 
-    const goBack = () => {
+        const goBack = () => {
         window.history.back()
+        handleClose()
     }
 
     useEffect(() => {

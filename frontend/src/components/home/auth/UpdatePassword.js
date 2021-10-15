@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
-import { useDispatch, useSelector } from 'react-redux' 
+import { useDispatch, useSelector } from 'react-redux'
 import { FloatingLabel, Form, Button, Card, Container, Row, InputGroup, Modal } from 'react-bootstrap'
 import { updatePassword, clearErrors } from './../../../actions/userActions'
 import { UPDATE_PASSWORD_RESET } from './../../../constants/userConstants'
@@ -29,8 +29,9 @@ const UpdatePassword = ({ history }) => {
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
 
-    const goBack = () => {
+        const goBack = () => {
         window.history.back()
+        handleClose()
     }
 
     useEffect(() => {
@@ -81,65 +82,68 @@ const UpdatePassword = ({ history }) => {
                     <Button variant="primary" onClick={goBack}>Yes, I'm sure</Button>
                 </Modal.Footer>
             </Modal>
-            <Container fluid>
-                <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
-                    <Card style={{ backgroundColor: "#F5F5F5", width: '30rem', align: 'center', borderTop: '10px solid #9c0b0b', marginBottom: '50px' }}>
+            <Container fluid style={{ marginTop: '50px' }}>
+                <Row className='justify-content-md-center'>
+                    <Card style={{ backgroundColor: "#F5F5F5", width: '30rem', align: 'center', borderTop: '10px solid #9c0b0b', margin: '50px 0' }}>
                         <Card.Body>
                             <Card.Title style={{ margin: '20px 0 20px 0', fontWeight: "bold" }}>Update Password</Card.Title>
                             <Form onSubmit={submitHandler}>
-                                <InputGroup className="mb-3">
-                                    <FloatingLabel label="Old Password" style={{ width: '89%' }}>
+                                <Form.Group style={{ marginTop: '5px' }}>
+                                    <Form.Label>Old Password</Form.Label>
+                                    <InputGroup className="mb-3">
                                         <Form.Control
                                             type={showOld ? "password" : "text"}
-                                            placeholder="mypassword"
+                                            placeholder="••••••"
                                             name="oldPassword"
                                             value={oldPassword}
                                             onChange={e => setOldPassword(e.target.value)}
                                             required
                                         />
-                                    </FloatingLabel>
-                                    <Button variant="secondary" onClick={showOldToggle}>
-                                        <span className="fa-sm">
-                                            <i className={showOld ? "fa fa-eye-slash" : "fa fa-eye"}></i>
-                                        </span>
-                                    </Button>
-                                </InputGroup>
-                                <InputGroup className="mb-3">
-                                    <FloatingLabel label="New Password" style={{ width: '89%' }}>
+                                        <Button variant="secondary" onClick={showOldToggle}>
+                                            <span className="fa-sm">
+                                                <i className={showOld ? "fa fa-eye-slash" : "fa fa-eye"}></i>
+                                            </span>
+                                        </Button>
+                                    </InputGroup>
+                                </Form.Group>
+                                <Form.Group style={{ marginTop: '5px' }}>
+                                    <Form.Label>New Password</Form.Label>
+                                    <InputGroup className="mb-3">
                                         <Form.Control
                                             type={showPassword ? "password" : "text"}
-                                            placeholder="mypassword"
+                                            placeholder="••••••"
                                             name="password"
                                             value={password}
                                             onChange={e => setPassword(e.target.value)}
                                             minlength="6"
                                             required
                                         />
-                                    </FloatingLabel>
-                                    <Button variant="secondary" onClick={showPasswordToggle}>
-                                        <span className="fa-sm">
-                                            <i className={showPassword ? "fa fa-eye-slash" : "fa fa-eye"}></i>
-                                        </span>
-                                    </Button>
-                                </InputGroup>
-                                <InputGroup className="mb-3">
-                                    <FloatingLabel label="Confirm new password" style={{ width: '89%' }}>
+                                        <Button variant="secondary" onClick={showPasswordToggle}>
+                                            <span className="fa-sm">
+                                                <i className={showPassword ? "fa fa-eye-slash" : "fa fa-eye"}></i>
+                                            </span>
+                                        </Button>
+                                    </InputGroup>
+                                </Form.Group>
+                                <Form.Group style={{ marginTop: '5px' }}>
+                                    <Form.Label>Confirm New Password</Form.Label>
+                                    <InputGroup className="mb-3">
                                         <Form.Control
                                             type={showConfirm ? "password" : "text"}
-                                            placeholder="mypassword"
+                                            placeholder="••••••"
                                             name="confirmPassword"
                                             value={confirmPassword}
                                             onChange={e => setConfirmPassword(e.target.value)}
                                             minlength="6"
                                             required
                                         />
-                                    </FloatingLabel>
-                                    <Button variant="secondary" onClick={showConfirmToggle}>
-                                        <span className="fa-sm">
-                                            <i className={showConfirm ? "fa fa-eye-slash" : "fa fa-eye"}></i>
-                                        </span>
-                                    </Button>
-                                </InputGroup>
+                                        <Button variant="secondary" onClick={showConfirmToggle}>
+                                            <span className="fa-sm">
+                                                <i className={showConfirm ? "fa fa-eye-slash" : "fa fa-eye"}></i>
+                                            </span>
+                                        </Button>
+                                    </InputGroup>
+                                </Form.Group>
                                 <center>
                                     <Button
                                         type='button'

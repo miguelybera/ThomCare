@@ -50,7 +50,8 @@ const Login = ({ history }) => {
                         <Card.Body>
                             <Card.Title style={{ margin: '20px 0 20px 0', fontWeight: "bold" }}>Login</Card.Title>
                             <Form onSubmit={submitHandler}>
-                                <FloatingLabel label="Email address" className="mb-3">
+                                <Form.Group style={{ marginTop: '5px' }}>
+                                    <Form.Label>Email address</Form.Label>
                                     <Form.Control
                                         type='email'
                                         placeholder="juan.delacruz.iics@ust.edu.ph"
@@ -60,25 +61,25 @@ const Login = ({ history }) => {
                                         onChange={e => setEmail(e.target.value)}
                                         required
                                     />
-                                </FloatingLabel>
-                                <InputGroup className="mb-3">
-                                    <FloatingLabel label="Password" style={{ width: '89%' }}>
+                                </Form.Group>
+                                <Form.Group style={{ marginTop: '5px' }}>
+                                    <Form.Label>Password</Form.Label>
+                                    <InputGroup className="mb-3">
                                         <Form.Control
                                             type={showPassword ? "password" : "text"}
-                                            placeholder="Password"
+                                            placeholder="••••••••"
                                             name="password"
                                             value={password}
                                             onChange={e => setPassword(e.target.value)}
                                             required
                                         />
-                                    </FloatingLabel>
-                                    <Button variant="secondary" onClick={showPasswordToggle}>
-                                        <span className="fa-sm">
-                                            <i className={showPassword ? "fa fa-eye-slash" : "fa fa-eye"}></i>
-                                        </span>
-                                    </Button>
-                                </InputGroup>
-
+                                        <Button variant="secondary" onClick={showPasswordToggle}>
+                                            <span className="fa-sm">
+                                                <i className={showPassword ? "fa fa-eye-slash" : "fa fa-eye"}></i>
+                                            </span>
+                                        </Button>
+                                    </InputGroup>
+                                </Form.Group>
                                 <center><Button type='submit' style={{ marginTop: '15px', borderRadius: '50px', width: '10rem' }}>Submit</Button></center>
                             </Form>
                             <Row style={{ paddingTop: '20px', fontSize: "14px" }} >
@@ -91,7 +92,7 @@ const Login = ({ history }) => {
                     </Card>
                 </Row>
             </Container>
-            <Container fluid style={{ paddingTop: "75px" }}/>
+            <Container fluid style={{ paddingTop: "75px" }} />
         </Fragment>
     )
 }
