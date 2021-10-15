@@ -147,7 +147,6 @@ const ListAllRequests = ({ history }) => {
                     </Button>
                 </Fragment>
             })
-
         })
 
         return data

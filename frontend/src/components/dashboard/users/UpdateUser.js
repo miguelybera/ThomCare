@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
+import { Form, Button, Card, Container, Row, Col, Modal } from 'react-bootstrap'
 import { getUserDetails, updateUser, clearErrors } from '../../../actions/userActions'
 import { UPDATE_USER_RESET } from '../../../constants/userConstants'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
@@ -24,13 +24,20 @@ const UpdateUser = ({ history, match }) => {
     const [role, setRole] = useState('')
     const [studentNumber, setStudentNumber] = useState('')
     const [course, setCourse] = useState('')
+    const [show, setShow] = useState(false)
 
     const programs = ['Computer Science', 'Information Systems', 'Information Technology']
     const roles = ['CICS Staff', 'IT Dept Chair', 'IS Dept Chair', 'CS Dept Chair']
 
     const userId = match.params.id
 
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
     const upperCase = (text) => text.toUpperCase()
+
+    const goBack = () => {
+        window.history.back()
+    }
 
     useEffect(() => {
         if (singleUser && singleUser._id !== userId) {
@@ -112,6 +119,25 @@ const UpdateUser = ({ history, match }) => {
         <Fragment>
             <MetaData title={'Update User'} />
             <Sidebar />
+            <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Are you sure you want to discard any changes?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Any changes done will be gone.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={goBack}>Yes, I'm sure</Button>
+                </Modal.Footer>
+            </Modal>
             <Container fluid style={{ padding: "50px 20px", marginTop: '50px'}}>
                 {userLoading ? <Loader /> : (
                     <Container fluid>
@@ -240,8 +266,16 @@ const UpdateUser = ({ history, match }) => {
                                         </Form.Group>
                                         <center>
                                             <Button
+                                                type='button'
+                                                style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
+                                                disabled={loading ? true : false}
+                                                variant='outline-secondary'
+                                                onClick={handleShow}>
+                                                Discard
+                                            </Button>
+                                            <Button
                                                 type='submit'
-                                                style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                                style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
                                                 disabled={loading ? true : false}>
                                                 {loading ? (
                                                     <span>

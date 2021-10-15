@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Row, Container, Button, Col, Card, Form, Accordion, ListGroup, ListGroupItem } from 'react-bootstrap'
+import { Row, Container, Button, Col, Card, Form, Accordion, ListGroup, ListGroupItem, Modal } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getRequestDetails, updateRequest, clearErrors } from '../../../actions/requestActions'
 import { REQUEST_DETAILS_RESET, UPDATE_REQUEST_RESET } from '../../../constants/requestConstants'
@@ -28,6 +28,7 @@ const UpdateRequest = ({ history, match }) => {
     const [returningFiles, setReturningFiles] = useState([])
     const [remarks, setRemarks] = useState([])
     const [remarksMessage, setRemarksMessage] = useState([])
+    const [show, setShow] = useState(false)
 
     const status = ["Pending", "Processing", "Denied", "Approved"]
 
@@ -35,6 +36,13 @@ const UpdateRequest = ({ history, match }) => {
 
     const changeDateFormat = (date) => dateformat(date, "mmm d, yyyy h:MMtt")
     const upperCase = (text) => text.toUpperCase()
+
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
+
+    const goBack = () => {
+        window.history.back()
+    }
 
     useEffect(() => {
         if (request && request._id !== requestId) {
@@ -171,6 +179,25 @@ const UpdateRequest = ({ history, match }) => {
         <Fragment>
             <MetaData title={`Update Request`} />
             <Sidebar />
+            <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Are you sure you want to discard any changes?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Any changes done will be gone.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={goBack}>Yes, I'm sure</Button>
+                </Modal.Footer>
+            </Modal>
             {requestLoading ? <Loader /> : (
                 <Container classname="align-me" fluid style={{ paddingBottom: '50px 50px 100px 50px' }}>
                     <Card style={{ backgroundColor: '#fff' }}>  {/*, width: '100rem' */}
@@ -318,19 +345,29 @@ const UpdateRequest = ({ history, match }) => {
                                         </ListGroup>
                                     </Form.Group>
                                 </Row>
-                                <center><Button
-                                    type='submit'
-                                    style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
-                                    disabled={loading ? true : false}
-                                >
-                                    {loading ? (
-                                        <span>
-                                            <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
-                                        </span>
-                                    ) : (
-                                        <span>Update</span>
-                                    )}
-                                </Button></center>
+                                <center>
+                                    <Button
+                                        type='button'
+                                        style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
+                                        disabled={loading ? true : false}
+                                        variant='outline-secondary'
+                                        onClick={handleShow}>
+                                        Discard
+                                    </Button>
+                                    <Button
+                                        type='submit'
+                                        style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
+                                        disabled={loading ? true : false}
+                                    >
+                                        {loading ? (
+                                            <span>
+                                                <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
+                                            </span>
+                                        ) : (
+                                            <span>Update</span>
+                                        )}
+                                    </Button>
+                                </center>
                             </Form>
                         </Card.Body>
                     </Card>

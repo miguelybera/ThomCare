@@ -86,7 +86,7 @@ const ConfirmRegister = ({ history, studentInfo, currentStep, setCurrentStep }) 
                                     </Button>
                                     <Button
                                         onClick={submitHandler}
-                                        style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                        style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
                                         disabled={loading ? true : false}>
                                         {loading ? (
                                             <span>

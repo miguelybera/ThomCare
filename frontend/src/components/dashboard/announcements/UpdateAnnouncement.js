@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import ReactQuill from 'react-quill'
 import { useDispatch, useSelector } from 'react-redux'
-import { Form, Button, Card, Container, Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap'
+import { Form, Button, Card, Container, Row, Col, ListGroup, ListGroupItem, Modal } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getAnnouncementDetails, getAnnouncementType, createAnnouncementType, updateAnnouncement, clearErrors } from '../../../actions/announcementActions'
 import { ANNOUNCEMENT_DETAILS_RESET, NEW_ANNOUNCEMENT_TYPE_RESET, UPDATE_ANNOUNCEMENT_RESET } from '../../../constants/announcementConstants'
@@ -36,6 +36,7 @@ const UpdateAnnouncement = ({ history, match }) => {
     const [fileAttachments, setFileAttachments] = useState([])
     const [oldAttachments, setOldAttachments] = useState([])
     const [ctr, setCtr] = useState(0)
+    const [show, setShow] = useState(false)
 
     const levels = ['All', '1st Year', '2nd Year', '3rd Year', '4th Year']
     const programs = ['All', 'Computer Science', 'Information Systems', 'Information Technology']
@@ -44,6 +45,13 @@ const UpdateAnnouncement = ({ history, match }) => {
     const isTracks = ["All", "Business Analytics", "Service Management"]
 
     const announcementId = match.params.id
+
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
+
+    const goBack = () => {
+        window.history.back()
+    }
 
     useEffect(() => {
         dispatch(getAnnouncementType())
@@ -200,6 +208,25 @@ const UpdateAnnouncement = ({ history, match }) => {
         <Fragment>
             <MetaData title={'Update Announcement'} />
             <Sidebar />
+            <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Are you sure you want to discard any changes?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Any changes done will be gone.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={goBack}>Yes, I'm sure</Button>
+                </Modal.Footer>
+            </Modal>
             {announcementTypeLoading ? <Loader /> : (
                 <Container fluid style={{ padding: "50px 20px", marginTop: '50px' }}>
                     <center><h3>Update announcement</h3></center>
@@ -386,8 +413,16 @@ const UpdateAnnouncement = ({ history, match }) => {
                                         </Row>
                                         <center>
                                             <Button
+                                                type='button'
+                                                style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
+                                                disabled={loading ? true : false}
+                                                variant='outline-secondary'
+                                                onClick={handleShow}>
+                                                Discard
+                                            </Button>
+                                            <Button
                                                 type='submit'
-                                                style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                                style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
                                                 disabled={loading ? true : false}>
                                                 {loading ? (
                                                     <span>

@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import ReactQuill from 'react-quill'
-import { Form, Button, Card, Container, Row, Col, ListGroup, ListGroupItem } from 'react-bootstrap'
+import { Form, Button, Card, Container, Row, Col, ListGroup, ListGroupItem, Modal } from 'react-bootstrap'
 import { createAnnouncement, createAnnouncementType, getAnnouncementType, clearErrors } from '../../../actions/announcementActions'
 import { NEW_ANNOUNCEMENT_RESET, NEW_ANNOUNCEMENT_TYPE_RESET } from '../../../constants/announcementConstants'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
@@ -33,12 +33,21 @@ const CreateAnnouncement = ({ history }) => {
     const [setExpiry, setSetExpiry] = useState(false)
     const [fileAttachments, setFileAttachments] = useState([])
 
+    const [show, setShow] = useState(false)
+    
     const levels = ['All', '1st Year', '2nd Year', '3rd Year', '4th Year']
     const programs = ['All', 'Computer Science', 'Information Systems', 'Information Technology']
 
     const csTracks = ["All", "Core Computer Science", "Game Development", "Data Science"]
     const itTracks = ["All", "Network and Security", "Web and Mobile App Development", "IT Automation"]
     const isTracks = ["All", "Business Analytics", "Service Management"]
+
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
+    
+    const goBack = () => {
+        window.history.back()
+    }
 
     useEffect(() => {
         dispatch(getAnnouncementType())
@@ -127,6 +136,25 @@ const CreateAnnouncement = ({ history }) => {
         <Fragment>
             <MetaData title={'New Announcement'} />
             <Sidebar />
+            <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Are you sure you want to discard any changes?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Any changes done will be gone.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={goBack}>Yes, I'm sure</Button>
+                </Modal.Footer>
+            </Modal>
             {announcementTypeLoading ? <Loader /> : (
                 <Container fluid style={{ padding: "50px 20px", marginTop: '50px' }}>
                     <center><h3>New announcement</h3></center>
@@ -301,8 +329,16 @@ const CreateAnnouncement = ({ history }) => {
                                 </Row>
                                 <center>
                                     <Button
+                                        type='button'
+                                        style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
+                                        disabled={loading ? true : false}
+                                        variant='outline-secondary'
+                                        onClick={handleShow}>
+                                        Discard
+                                    </Button>
+                                    <Button
                                         type='submit'
-                                        style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                        style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
                                         disabled={loading ? true : false}>
                                         {loading ? (
                                             <span>

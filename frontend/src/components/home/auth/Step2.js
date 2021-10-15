@@ -142,7 +142,7 @@ const Step2 = ({ studentInfo, currentStep, setCurrentStep }) => {
                                         >
                                             Back
                                     </Button>
-                                        <Button type='submit' style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}>
+                                        <Button type='submit' style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}>
                                             Next
                                     </Button>
                                     </center>

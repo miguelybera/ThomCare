@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { FloatingLabel, Form, Button, Card, Container, Row, OverlayTrigger, Tooltip, ListGroup, ListGroupItem } from 'react-bootstrap'
+import { FloatingLabel, Form, Button, Card, Container, Row, OverlayTrigger, Tooltip, ListGroup, ListGroupItem, Modal } from 'react-bootstrap'
 import { createForm, clearErrors } from '../../../actions/formActions'
 import { NEW_FORM_RESET } from '../../../constants/formConstants'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
@@ -17,6 +17,14 @@ const CreateForm = ({ history }) => {
     const [title, setTitle] = useState()
     const [description, setDescription] = useState()
     const [attachments, setAttachments] = useState([])
+    const [show, setShow] = useState(false)
+
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
+
+    const goBack = () => {
+        window.history.back()
+    }
 
     useEffect(() => {
         if (success) {
@@ -65,6 +73,25 @@ const CreateForm = ({ history }) => {
         <>
             <MetaData title={'New Form'} />
             <Sidebar />
+            <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Are you sure you want to discard any changes?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Any changes done will be gone.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={goBack}>Yes, I'm sure</Button>
+                </Modal.Footer>
+            </Modal>
             <Container fluid style={{ padding: "50px 20px", marginTop: '40px' }}>
                 <Container fluid>
                     <center>
@@ -134,8 +161,16 @@ const CreateForm = ({ history }) => {
                                     </Form.Group>
                                     <center>
                                         <Button
+                                            type='button'
+                                            style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
+                                            disabled={loading ? true : false}
+                                            variant='outline-secondary'
+                                            onClick={handleShow}>
+                                            Discard
+                                        </Button>
+                                        <Button
                                             type='submit'
-                                            style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                            style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
                                             disabled={loading ? true : false}
                                         >
                                             {loading ? (

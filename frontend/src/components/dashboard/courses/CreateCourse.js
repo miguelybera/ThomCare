@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { FloatingLabel, Form, Button, Card, Container, Row } from 'react-bootstrap'
+import { FloatingLabel, Form, Button, Card, Container, Row, Modal } from 'react-bootstrap'
 import { createCourse, clearErrors } from '../../../actions/courseActions'
 import { NEW_COURSE_RESET } from '../../../constants/courseConstants'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
@@ -18,6 +18,15 @@ const CreateCourse = ({ history }) => {
     const [courseCode, setCourseCode] = useState()
     const [lecUnits, setLecUnits] = useState()
     const [labUnits, setLabUnits] = useState()
+
+    const [show, setShow] = useState(false)
+
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
+
+    const goBack = () => {
+        window.history.back()
+    }
 
     useEffect(() => {
         if (success) {
@@ -56,6 +65,25 @@ const CreateCourse = ({ history }) => {
         <>
             <MetaData title={'New Course'} />
             <Sidebar />
+            <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Are you sure you want to discard any changes?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Any changes done will be gone.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={goBack}>Yes, I'm sure</Button>
+                </Modal.Footer>
+            </Modal>
             <Container fluid>
                 <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
                     <Card style={{ backgroundColor: "#F5F5F5", width: '30rem', align: 'center', borderTop: '7px solid #9c0b0b', marginBottom: '50px' }}>
@@ -122,8 +150,16 @@ const CreateCourse = ({ history }) => {
                                 </Form.Group>
                                 <center>
                                     <Button
+                                        type='button'
+                                        style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
+                                        disabled={loading ? true : false}
+                                        variant='outline-secondary'
+                                        onClick={handleShow}>
+                                        Discard
+                                    </Button>
+                                    <Button
                                         type='submit'
-                                        style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                        style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
                                         disabled={loading ? true : false}
                                     >
                                         {loading ? (

@@ -8,7 +8,6 @@ import "@fortawesome/fontawesome-free/css/all.min.css"
 
 //layout folder
 import ScrollToTop from './components/layout/ScrollToTop'
-import Loader from './components/layout/Loader'
 import Header from './components/layout/Header'
 import Footer from './components/layout/Footer'
 

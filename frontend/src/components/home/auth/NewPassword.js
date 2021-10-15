@@ -98,7 +98,7 @@ const NewPassword = ({ history, match }) => {
                                 <center>
                                     <Button
                                         type='submit'
-                                        style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                        style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
                                         disabled={loading ? true : false}>
                                         {loading ? (
                                             <span>

@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { FloatingLabel, Form, Button, Card, Container, Row, OverlayTrigger, Tooltip, ListGroup, ListGroupItem } from 'react-bootstrap'
+import { FloatingLabel, Form, Button, Card, Container, Row, OverlayTrigger, Tooltip, ListGroup, ListGroupItem, Modal } from 'react-bootstrap'
 import { getFormDetails, updateForm, clearErrors } from './../../../actions/formActions'
 import { UPDATE_FORM_RESET } from './../../../constants/formConstants'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
@@ -20,8 +20,16 @@ const UpdateForm = ({ history, match }) => {
     const [description, setDescription] = useState()
     const [attachments, setAttachments] = useState([])
     const [oldAttachments, setOldAttachments] = useState([])
+    const [show, setShow] = useState(false)
+
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
 
     const formId = match.params.id
+
+    const goBack = () => {
+        window.history.back()
+    }
 
     useEffect(() => {
         if (form && form._id !== formId) {
@@ -86,6 +94,25 @@ const UpdateForm = ({ history, match }) => {
         <>
             <MetaData title={'Update Form'} />
             <Sidebar />
+            <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Are you sure you want to discard any changes?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Any changes done will be gone.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={goBack}>Yes, I'm sure</Button>
+                </Modal.Footer>
+            </Modal>
             {loading ? <Loader /> : (
                 <Container fluid style={{ padding: "50px 20px", marginTop: '40px' }}>
                     <Container fluid>
@@ -166,8 +193,16 @@ const UpdateForm = ({ history, match }) => {
                                         </Form.Group>
                                         <center>
                                             <Button
+                                                type='button'
+                                                style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
+                                                disabled={loading ? true : false}
+                                                variant='outline-secondary'
+                                                onClick={handleShow}>
+                                                Discard
+                                            </Button>
+                                            <Button
                                                 type='submit'
-                                                style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                                style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
                                                 disabled={loading ? true : false}
                                             >
                                                 {updateLoading ? (

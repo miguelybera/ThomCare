@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Form, Card, Button, Container, Row, Col } from 'react-bootstrap'
+import { Form, Card, Button, Container, Row, Col, Modal } from 'react-bootstrap'
 import { loadUser, updateProfile, clearErrors } from '../../../actions/userActions'
 import { UPDATE_PROFILE_RESET } from '../../../constants/userConstants'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
@@ -26,8 +26,14 @@ const Profile = () => {
     const [role, setRole] = useState('')
 
     const [editProfile, setEditProfile] = useState(false)
+    const [show, setShow] = useState(false)
 
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
     const upperCase = (text) => text.toUpperCase()
+    const goBack = () => {
+        setEditProfile(!editProfile)
+    }
 
     useEffect(() => {
         setFirstName(user.firstName)
@@ -75,6 +81,25 @@ const Profile = () => {
         <>
             <MetaData title={'My Profile'} />
             <Sidebar />
+            <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Are you sure you want to discard any changes?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Any changes done will be gone.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={goBack}>Yes, I'm sure</Button>
+                </Modal.Footer>
+            </Modal>
             {loading ? <Loader /> : (
                 <Container fluid style={{ padding: "50px 20px", marginTop: '50px' }}>
                     <Container fluid>
@@ -164,6 +189,14 @@ const Profile = () => {
                                         </Form.Group>
                                         {editProfile ? (
                                             <center>
+                                                <Button
+                                                    type='button'
+                                                    style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
+                                                    disabled={loading ? true : false}
+                                                    variant='outline-secondary'
+                                                    onClick={handleShow}>
+                                                    Discard
+                                                </Button>
                                                 <Button
                                                     type='submit'
                                                     style={{ marginTop: '10px', marginRight: '5px', borderRadius: '50px', width: '10rem' }}

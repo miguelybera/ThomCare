@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Form, Button, Card, Container, Row, Col, InputGroup } from 'react-bootstrap'
+import { Form, Button, Card, Container, Row, Col, InputGroup, Modal } from 'react-bootstrap'
 import { register, clearErrors } from '../../../actions/userActions'
 import { REGISTER_USER_RESET } from '../../../constants/userConstants'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
@@ -23,13 +23,20 @@ const RegisterAdmin = ({ history }) => {
     const [role, setRole] = useState('')
     const [showPassword, setShowPassword] = useState('false')
     const [showConfirm, setShowConfirm] = useState('false')
+    const [show, setShow] = useState(false)
 
     const roles = ['CICS Staff', 'IT Dept Chair', 'IS Dept Chair', 'CS Dept Chair']
 
     const showPasswordToggle = () => setShowPassword(!showPassword)
     const showConfirmToggle = () => setShowConfirm(!showConfirm)
     const upperCase = (text) => text.toUpperCase()
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
 
+    const goBack = () => {
+        window.history.back()
+    }
+    
     useEffect(() => {
         if (error) {
             alert.error(error)
@@ -67,8 +74,27 @@ const RegisterAdmin = ({ history }) => {
 
     return (
         <Fragment>
-            <MetaData title={'Register User'} />
+            <MetaData title={'Register admin'} />
             <Sidebar />
+            <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Are you sure you want to discard any changes?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Any changes done will be gone.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={goBack}>Yes, I'm sure</Button>
+                </Modal.Footer>
+            </Modal>
             <Container fluid style={{ padding: "50px 20px", marginTop: '50px' }}>
                 <Container fluid>
                     <center><h3>Register admin</h3></center>
@@ -187,8 +213,16 @@ const RegisterAdmin = ({ history }) => {
                                     </Row>
                                     <center>
                                         <Button
+                                            type='button'
+                                            style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
+                                            disabled={loading ? true : false}
+                                            variant='outline-secondary'
+                                            onClick={handleShow}>
+                                            Discard
+                                        </Button>
+                                        <Button
                                             type='submit'
-                                            style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                            style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
                                             disabled={loading ? true : false}>
                                             {loading ? (
                                                 <span>

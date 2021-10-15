@@ -15,6 +15,10 @@ const ForgotPassword = ({ history }) => {
 
     const [email, setEmail] = useState('')
 
+    const goBack = () => {
+        history.push('/login')
+    }
+
     const goToLogin = () => {
         dispatch({
             type: FORGOT_PASSWORD_RESET
@@ -93,8 +97,16 @@ const ForgotPassword = ({ history }) => {
                                         </FloatingLabel>
                                         <center>
                                             <Button
+                                                type='button'
+                                                style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
+                                                disabled={loading ? true : false}
+                                                variant='outline-secondary'
+                                                onClick={goBack}>
+                                                Back
+                                            </Button>
+                                            <Button
                                                 type='submit'
-                                                style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }}
+                                                style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
                                                 disabled={loading ? true : false}>
                                                 {loading ? (
                                                     <span>

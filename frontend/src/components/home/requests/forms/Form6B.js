@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { FloatingLabel, Row, Container, Button, Col, Card, Form, Breadcrumb } from 'react-bootstrap'
+import { FloatingLabel, Row, Container, Button, Col, Card, Form, Breadcrumb, Modal } from 'react-bootstrap'
 import TimePicker from 'react-time-picker'
 import { getCourses, clearErrors } from '../../../../actions/courseActions'
 import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
@@ -27,6 +27,8 @@ function Form6B({history}) {
     const [submitted, setSubmitted] = useState(false)
     const [studentInfo, setStudentInfo] = useState({})
     const [middleInitial, setMiddleInitial] = useState('')
+    const [show, setShow] = useState(false)
+
     const [inputFields, setInputFields] = useState([{
         status: '',
         courseCode: '',
@@ -40,6 +42,13 @@ function Form6B({history}) {
     }])
 
     const title = 'Form 6B - Cross-Enrollment Form'
+
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
+
+    const goBack = () => {
+        window.history.back()
+    }
 
     const getMiddleInitial = (name) => {
         const middleName = name ? name.split(' ') : ''
@@ -172,6 +181,25 @@ function Form6B({history}) {
     return (
         <Fragment>
             <MetaData title={title} />
+            <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Are you sure you want to discard any changes?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    Any changes done will be gone.
+                </Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary" onClick={goBack}>Yes, I'm sure</Button>
+                </Modal.Footer>
+            </Modal>
             {loading ? <Loader /> : !submitted ? (
                 <Container classname="align-me" fluid style={{ paddingBottom: '100px', paddingTop: '40px' }}>
                     <Card style={{ backgroundColor: '#fff', width: '100%' }}>  {/*, width: '100rem' */}
@@ -406,7 +434,17 @@ function Form6B({history}) {
                                         </Fragment>
                                     )})
                                 }
-                                <center><Button type='submit' style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }} disabled={user.role !== 'Student' ? true : false}>Generate Form</Button></center>
+                                <center>
+                                    <Button
+                                        type='button'
+                                        style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
+                                        disabled={loading ? true : false}
+                                        variant='outline-secondary'
+                                        onClick={handleShow}>
+                                        Discard
+                                    </Button>
+                                    <Button type='submit' style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }} disabled={user.role !== 'Student' ? true : false}>Generate Form</Button>
+                                </center>
                             </Form>
                         </Card.Body>
                     </Card>

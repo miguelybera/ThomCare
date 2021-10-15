@@ -46,7 +46,7 @@ const VerifyRegistration = ({ history, match }) => {
                             <p className="text-muted" style={{ fontSize: '14px', textAlign: 'center', marginBottom: '20px', maxWidth: '30rem' }}>
                                 {success ? message : 'Click on the button below to verify your account.'}
                             </p>
-                            <Button type='submit' variant="outline-danger" style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }} onClick={verifyHandler}>
+                            <Button type='submit' variant="outline-danger" style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }} onClick={verifyHandler}>
                                 Verify
                             </Button>
                         </center>
@@ -68,7 +68,7 @@ const VerifyRegistration = ({ history, match }) => {
                             <p className="text-muted" style={{ fontSize: '14px', textAlign: 'center', marginBottom: '20px', maxWidth: '30rem' }}>
                                 {success ? message : error}
                             </p>
-                            <Button type='submit' variant='outline-primary' style={{ marginTop: '10px', borderRadius: '50px', width: '10rem' }} onClick={success ? goToLogin : goToHome}>
+                            <Button type='submit' variant='outline-primary' style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }} onClick={success ? goToLogin : goToHome}>
                                 {success ? 'Log in' : 'Back to Home'}
                             </Button>
                         </center>
