@@ -18,7 +18,7 @@ const ControlPanel = ({ history }) => {
     const alert = useAlert()
 
     const { user } = useSelector(state => state.auth)
-    const { loading: listLoading, error, requests, processing, pending, approved, denied, stats } = useSelector(state => state.requests)
+    const { loading: listLoading, error, requests, processing, pending, approved, denied, dailyStats, weeklyStats, overViewStats } = useSelector(state => state.requests)
     const { loading: recentsLoading, error: recentsError, recents } = useSelector(state => state.recents)
 
     const role = user && user.role
@@ -129,7 +129,7 @@ const ControlPanel = ({ history }) => {
         return data
     }
 
-    const setData = () => {
+    const setDailyData = () => {
         const data = []
 
         for (let i = 0; i < 7; i++) {
@@ -139,7 +139,51 @@ const ControlPanel = ({ history }) => {
             })
         }
 
-        stats && stats.forEach((x, idx) => {
+        dailyStats && dailyStats.forEach((x, idx) => {
+            data[idx].Total = x
+        })
+
+        return data
+    }
+
+    const setWeeklyData = () => {
+        const data = []
+
+        for (let i = 0; i < 5; i++) {
+            data.push({
+                name: changeDateFormat(new Date(Date.now() - (i * 7 * 24 * 60 * 60 * 1000))),
+                Total: 0
+            })
+        }
+
+        weeklyStats && weeklyStats.forEach((x, idx) => {
+            data[idx].Total = x
+        })
+
+        return data
+    }
+
+    const setOverViewData = () => {
+        const data = [
+            {
+                name: 'Today',
+                Total: 0
+            },
+            {
+                name: '7d',
+                Total: 0
+            },
+            {
+                name: '30d',
+                Total: 0
+            },
+            {
+                name: '60d',
+                Total: 0
+            }
+        ]
+
+        overViewStats && overViewStats.forEach((x, idx) => {
             data[idx].Total = x
         })
 
@@ -153,7 +197,7 @@ const ControlPanel = ({ history }) => {
             {listLoading ? <Loader /> : (
                 <div className="row">
                     <div className='control-panel'>
-                        <Container fluid style={{ margin: '100px 0'}}>
+                        <Container fluid style={{ margin: '100px 0' }}>
                             <Row style={{ display: 'flex', justifyContent: 'center' }}>
                                 {user.role === 'Student' ? (
                                     <Fragment>
@@ -174,9 +218,35 @@ const ControlPanel = ({ history }) => {
                             {user.role !== 'Student' ? (
                                 <Fragment>
                                     <Row style={{ display: 'flex', justifyContent: 'center', margin: '20px 0' }}>
-                                        <h4 style={{ paddingLeft: '40px'}}>Daily requests</h4>
+                                        <Col xs={12} md={6} style={{ marginTop: '5px' }}>
+                                            <h4 style={{ paddingLeft: '40px' }}>Daily requests</h4>
+                                            <ResponsiveContainer width={'99%'} height={300}>
+                                                <LineChart width={600} height={300} data={setDailyData()} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                                                    <Line type="monotone" dataKey="Total" stroke="#8884d8" />
+                                                    <CartesianGrid stroke="#ccc" />
+                                                    <XAxis dataKey="name" />
+                                                    <YAxis />
+                                                    <Tooltip />
+                                                </LineChart>
+                                            </ResponsiveContainer>
+                                        </Col>
+                                        <Col xs={12} md={6} style={{ marginTop: '5px' }}>
+                                            <h4 style={{ paddingLeft: '40px' }}>Weekly requests</h4>
+                                            <ResponsiveContainer width={'99%'} height={300}>
+                                                <LineChart width={600} height={300} data={setWeeklyData()} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                                                    <Line type="monotone" dataKey="Total" stroke="#8884d8" />
+                                                    <CartesianGrid stroke="#ccc" />
+                                                    <XAxis dataKey="name" />
+                                                    <YAxis />
+                                                    <Tooltip />
+                                                </LineChart>
+                                            </ResponsiveContainer>
+                                        </Col>
+                                    </Row>
+                                    <Row style={{ display: 'flex', justifyContent: 'center', margin: '20px 0' }}>
+                                        <h4 style={{ paddingLeft: '40px', marginTop: '5px' }}>Overview</h4>
                                         <ResponsiveContainer width={'99%'} height={300}>
-                                            <LineChart width={600} height={300} data={setData()} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                                            <LineChart width={600} height={300} data={setOverViewData()} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
                                                 <Line type="monotone" dataKey="Total" stroke="#8884d8" />
                                                 <CartesianGrid stroke="#ccc" />
                                                 <XAxis dataKey="name" />

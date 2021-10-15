@@ -162,7 +162,7 @@ export const submitRequestReducer = (state = { request: {} }, action) => {
 }
 
 //get ALL requests
-export const getRequestsReducer = (state = { requests: [], recents: [], pending: [], processing: [], approved: [], denied: [], crossEnrollment: [], stats: [] }, action) => {
+export const getRequestsReducer = (state = { requests: [], recents: [], pending: [], processing: [], approved: [], denied: [], crossEnrollment: [], dailyStats: [], weeklyStats: [], overViewStats: [] }, action) => {
     switch (action.type) {
         case GET_REQUESTS_REQUEST:
             return {
@@ -174,7 +174,10 @@ export const getRequestsReducer = (state = { requests: [], recents: [], pending:
                 processing: [],
                 approved: [],
                 denied: [],
-                crossEnrollment: []
+                crossEnrollment: [],
+                dailyStats: [],
+                weeklyStats: [],
+                overViewStats: []
             }
 
         case GET_REQUESTS_SUCCESS:
@@ -187,7 +190,9 @@ export const getRequestsReducer = (state = { requests: [], recents: [], pending:
                 approved: action.payload.approved,
                 denied: action.payload.denied,
                 crossEnrollment: action.payload.crossEnrollment,
-                stats: action.payload.stats,
+                dailyStats: action.payload.dailyStats,
+                weeklyStats: action.payload.weeklyStats,
+                overViewStats: action.payload.overViewStats,
                 success: action.payload.success
             }
 
