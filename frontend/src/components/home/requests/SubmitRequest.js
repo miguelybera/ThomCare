@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
+import { Link } from 'react-router-dom'
 import { Form, Button, Card, Container, Row, Col, OverlayTrigger, Tooltip, ListGroup, ListGroupItem } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { submitRequest, clearErrors } from './../../../actions/requestActions'
@@ -49,7 +50,7 @@ const SubmitRequest = () => {
     const upperCase = (text) => text.toUpperCase()
 
     for (let i = 0; i < 26; i++) {
-        alphabet.push(upperCase((i+10).toString(36)))
+        alphabet.push(upperCase((i + 10).toString(36)))
     }
 
     const reset = () => {
@@ -107,155 +108,189 @@ const SubmitRequest = () => {
     return (
         <>
             <MetaData title={'Submit Request'} />
-            {!success ? (
-                <Container fluid>
-                    <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
-                        <Card style={{ backgroundColor: "#F5F5F5", width: '30rem', align: 'center', borderTop: '7px solid #9c0b0b', marginBottom: '50px' }}>
-                            <Card.Body>
-                                <Card.Title style={{ margin: '20px 0 20px 0', fontWeight: "bold" }}>Submit Request</Card.Title>
-                                <Form onSubmit={submitHandler}>
-                                    <Row>
-                                        <Col xs={12} sm={12} md={6}>
+            <Row>
+                <Col xs={12} md={6} lg={5}>
+                    <Container fluid>
+                        <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
+                            <Card style={{ align: 'center', marginBottom: '50px' }}>
+                                <h5 style={{ marginTop: '20px'}}>General Instructions</h5>
+                                <Card.Body>
+                                    <Card.Text>For requests such as <strong>Add/Drop Course Form, Overload Form, and Cross-enrollment forms</strong>, go to <Link to='/forms/list'>Generate Form</Link> page.</Card.Text>
+                                    <Card.Text>1. Select form.</Card.Text>
+                                    <Card.Text>2. Fill out the fields.</Card.Text>
+                                    <Card.Text>3. Click the 'Generate Form' button.</Card.Text>
+                                    <Card.Text>4. Confirm the details on the page. Click 'Save as PDF' to download the file.</Card.Text>
+                                    <Card.Text>5. Attach e-signature, if required.</Card.Text>
+                                    <Card.Text>6. Submit the document by filling out the <strong>Submit Request</strong> form.</Card.Text>
+                                    <Card.Text>7. Attach the required documents.</Card.Text>
+                                    <Card.Text>8. Click the 'Submit' button.</Card.Text>
+                                    <hr/>
+                                    <Card.Text>For other requests <strong>not available</strong> in the Generate Forms page, go to <Link to='/downloadable/forms/list'>Downloadable Forms</Link> page.</Card.Text>
+                                    <Card.Text>1. Select form to download.</Card.Text>
+                                    <Card.Text>2. Fill out the fields in the document.</Card.Text>
+                                    <Card.Text>3. Submit the document by filling out the <strong>Submit Request</strong> form.</Card.Text>
+                                    <Card.Text>4. Attach the required documents.</Card.Text>
+                                    <Card.Text>5. Click the 'Submit' button.</Card.Text>
+                                </Card.Body>
+                            </Card>
+                        </Row>
+                    </Container>
+                </Col>
+                <Col xs={12} md={6} lg={7}>
+                    {!success ? (
+                        <Container fluid>
+                            <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
+                                <Card style={{ backgroundColor: "#F5F5F5", width: '30rem', align: 'center', borderTop: '7px solid #9c0b0b', marginBottom: '50px' }}>
+                                    <Card.Body>
+                                        <Card.Title style={{ margin: '20px 0 20px 0', fontWeight: "bold" }}>Submit Request</Card.Title>
+                                        <Form onSubmit={submitHandler}>
+                                            <Row>
+                                                <Col xs={12} sm={12} md={6}>
+                                                    <Form.Group className="mb-3">
+                                                        <Form.Label>Year Level: </Form.Label>
+                                                        <Form.Select
+                                                            className="mb-3"
+                                                            aria-label="Default select example"
+                                                            name="yearLevel" value={yearLevel}
+                                                            onChange={e => setYearLevel(e.target.value)}
+                                                            required
+                                                        >
+                                                            <option value=''>-</option>
+                                                            {levels.map(level => (
+                                                                <option value={level}>{level}</option>
+                                                            ))}
+                                                        </Form.Select>
+                                                    </Form.Group>
+                                                </Col>
+                                                <Col xs={12} sm={12} md={6}>
+                                                    <Form.Group className="mb-3">
+                                                        <Form.Label>Section: </Form.Label>
+                                                        <Form.Select
+                                                            aria-label="Default select example"
+                                                            name='section'
+                                                            value={section}
+                                                            onChange={e => setSection(e.target.value)}
+                                                            required
+                                                        >
+                                                            <option value=''>-</option>
+                                                            <option value='Alumni'>Alumni</option>
+                                                            {alphabet.map(letter => (
+                                                                <option value={letter}>{letter}</option>
+                                                            ))}
+                                                        </Form.Select>
+                                                    </Form.Group>
+                                                </Col>
+                                            </Row>
                                             <Form.Group className="mb-3">
-                                                <Form.Label>Year Level: </Form.Label>
+                                                <Form.Label>Request Type: </Form.Label>
                                                 <Form.Select
-                                                    className="mb-3"
                                                     aria-label="Default select example"
-                                                    name="yearLevel" value={yearLevel}
-                                                    onChange={e => setYearLevel(e.target.value)}
+                                                    name='requestType'
+                                                    value={requestType}
+                                                    onChange={e => setRequestType(e.target.value)}
                                                     required
                                                 >
                                                     <option value=''>-</option>
-                                                    {levels.map(level => (
-                                                        <option value={level}>{level}</option>
+                                                    {requestTypes.map(type => (
+                                                        <option value={type}>{type}</option>
                                                     ))}
                                                 </Form.Select>
                                             </Form.Group>
-                                        </Col>
-                                        <Col xs={12} sm={12} md={6}>
                                             <Form.Group className="mb-3">
-                                                <Form.Label>Section: </Form.Label>
-                                                <Form.Select
-                                                    aria-label="Default select example"
-                                                    name='section'
-                                                    value={section}
-                                                    onChange={e => setSection(e.target.value)}
-                                                    required
-                                                >
-                                                    <option value=''>-</option>
-                                                    <option value='Alumni'>Alumni</option>
-                                                    {alphabet.map(letter => (
-                                                        <option value={letter}>{letter}</option>
-                                                    ))}
-                                                </Form.Select>
+                                                <Form.Label>Notes: </Form.Label>
+                                                <Form.Control
+                                                    as="textarea"
+                                                    placeholder="(Optional)"
+                                                    rows={4}
+                                                    name='notes'
+                                                    value={notes}
+                                                    onChange={e => setNotes(e.target.value)}
+                                                />
                                             </Form.Group>
-                                        </Col>
-                                    </Row>
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Request Type: </Form.Label>
-                                        <Form.Select
-                                            aria-label="Default select example"
-                                            name='requestType'
-                                            value={requestType}
-                                            onChange={e => setRequestType(e.target.value)}
-                                            required
-                                        >
-                                            <option value=''>-</option>
-                                            {requestTypes.map(type => (
-                                                <option value={type}>{type}</option>
-                                            ))}
-                                        </Form.Select>
-                                    </Form.Group>
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>Notes: </Form.Label>
-                                        <Form.Control
-                                            as="textarea"
-                                            placeholder="(Optional)"
-                                            rows={4}
-                                            name='notes'
-                                            value={notes}
-                                            onChange={e => setNotes(e.target.value)}
-                                        />
-                                    </Form.Group>
-                                    <Form.Group className="mb-3">
-                                        <Form.Label>
-                                            Attachments:
-                                            <OverlayTrigger placement='bottom-start' overlay={
-                                                <Tooltip id="tooltip-disabled" >
-                                                    Accepted File Formats:
-                                                    <ul style={{ textAlign: 'left' }}>
-                                                        <li>PDF</li>
-                                                        <li>JPG</li>
-                                                        <li>PNG</li>
-                                                        <li>Word File</li>
-                                                        <li>Excel File</li>
-                                                    </ul>
-                                                </Tooltip >
-                                            }>
-                                                <span class="fa fa-question-circle" style={{ marginRight: '.3rem' }} />
-                                            </OverlayTrigger>
-                                        </Form.Label>
-                                        <Form.Control type="file" name="fileRequirements" onChange={onChange} multiple required />
-                                    </Form.Group>
-                                    <Form.Group className="mb-3">
-                                        <ListGroup>
-                                            {fileRequirements.map((file, idx) => (
-                                                <ListGroupItem>
-                                                    File {idx + 1}: {file.name}
-                                                </ListGroupItem>
-                                            ))}
-                                        </ListGroup>
-                                    </Form.Group>
-                                    <center>
-                                        <Button
-                                            type='submit'
-                                            style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
-                                            disabled={loading || user.role !== 'Student' ? true : false}
-                                        >
-                                            {loading ? (
-                                                <span>
-                                                    <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
-                                                </span>
-                                            ) : (
-                                                <span>Submit</span>
-                                            )}
-                                        </Button>
-                                    </center>
-                                </Form>
-                            </Card.Body>
-                        </Card>
-                    </Row>
-                </Container>
-            )
-                : (
-                    <Fragment style={{ marginTop: '30px' }}>
-                        <Card style={cardStyle}>
-                            <Card.Body>
-                                <Card.Title>Tracking ID#: {request?.trackingNumber}</Card.Title>
-                                <Card.Text><b>Name:</b> {request?.requestorInfo.lastName}, {request?.requestorInfo.firstName}</Card.Text>
-                                <Card.Text><b>Request Type:</b> {request?.requestType}</Card.Text>
-                                <Card.Text><b>Notes:</b> {request?.notes}</Card.Text>
-                                <Card.Text>
+                                            <Form.Group className="mb-3">
+                                                <Form.Label>
+                                                    Attachments: &nbsp;
+                                                    <OverlayTrigger
+                                                        placement='bottom-start'
+                                                        overlay={
+                                                            <Tooltip id="tooltip-disabled" >
+                                                                Accepted File Formats:
+                                                                <ul style={{ textAlign: 'left' }}>
+                                                                    <li>PDF</li>
+                                                                    <li>JPG</li>
+                                                                    <li>PNG</li>
+                                                                    <li>Word File</li>
+                                                                    <li>Excel File</li>
+                                                                </ul>
+                                                            </Tooltip >
+                                                        }>
+                                                            <span class="fa fa-question-circle" style={{ marginRight: '.3rem' }} />
+                                                    </OverlayTrigger>
+                                                </Form.Label>
+                                                <Form.Control type="file" name="fileRequirements" onChange={onChange} multiple required />
+                                            </Form.Group>
+                                            <Form.Group className="mb-3">
+                                                <ListGroup>
+                                                    {fileRequirements.map((file, idx) => (
+                                                        <ListGroupItem>
+                                                            File {idx + 1}: {file.name}
+                                                        </ListGroupItem>
+                                                    ))}
+                                                </ListGroup>
+                                            </Form.Group>
+                                            <center>
+                                                <Button
+                                                    type='submit'
+                                                    style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
+                                                    disabled={loading || user.role !== 'Student' ? true : false}
+                                                >
+                                                    {loading ? (
+                                                        <span>
+                                                            <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
+                                                        </span>
+                                                    ) : (
+                                                        <span>Submit</span>
+                                                    )}
+                                                </Button>
+                                            </center>
+                                        </Form>
+                                    </Card.Body>
+                                </Card>
+                            </Row>
+                        </Container>
+                    )
+                        : (
+                            <Fragment style={{ marginTop: '30px' }}>
+                                <Card style={cardStyle}>
+                                    <Card.Body>
+                                        <Card.Title>Tracking ID#: {request?.trackingNumber}</Card.Title>
+                                        <Card.Text><b>Name:</b> {request?.requestorInfo.lastName}, {request?.requestorInfo.firstName}</Card.Text>
+                                        <Card.Text><b>Request Type:</b> {request?.requestType}</Card.Text>
+                                        <Card.Text><b>Notes:</b> {request?.notes}</Card.Text>
+                                        <Card.Text>
                                     Attachments:
                                     <ListGroup>
-                                        {request?.fileRequirements.map((file, idx) => (
-                                            <ListGroupItem>
-                                                {file.originalname} <font size="1rem">{Number(file.size / 1000000).toFixed(2)} MB</font> <a href={file.path} target="_blank" rel="noreferrer">
-                                                    <button className="btn btn-primary py-1 px-2 ml-2">
-                                                        <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
-                                                    </button>
-                                                </a>
-                                            </ListGroupItem>
-                                        ))}
-                                    </ListGroup>
-                                </Card.Text>
-                                <Card.Text>
-                                    <Button onClick={() => reset()}>Submit Request Again</Button>
-                                </Card.Text>
-                            </Card.Body>
-                        </Card>
-                    </Fragment>
-                )}
+                                                {request?.fileRequirements.map((file, idx) => (
+                                                    <ListGroupItem>
+                                                        {file.originalname} <font size="1rem">{Number(file.size / 1000000).toFixed(2)} MB</font> <a href={file.path} target="_blank" rel="noreferrer">
+                                                            <button className="btn btn-primary py-1 px-2 ml-2">
+                                                                <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                                                            </button>
+                                                        </a>
+                                                    </ListGroupItem>
+                                                ))}
+                                            </ListGroup>
+                                        </Card.Text>
+                                        <Card.Text>
+                                            <Button onClick={() => reset()}>Submit Request Again</Button>
+                                        </Card.Text>
+                                    </Card.Body>
+                                </Card>
+                            </Fragment>
+                        )
+                    }
+                </Col>
+            </Row >
         </>
     )
 }
