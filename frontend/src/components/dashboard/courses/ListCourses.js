@@ -146,12 +146,12 @@ const ListCourses = ({ history }) => {
             <Sidebar />
             <div className="row">
                 <div className="">
-                    <Container fluid style={{ padding: "50px" }}>
+                    <Container fluid style={{ padding: "50px 0px" }}>
                         <div style={{ display: 'flex', marginBottom: '20px' }}>
                             <div style={{ marginRight: 'auto', marginTop: '30px' }}>
                                 <h3>Courses</h3>
                             </div>
-                            <div style={{ marginLeft: 'auto', marginTop: '30px' }}>
+                            <div style={{ marginLeft: '2px', marginTop: '30px', marginRight: '2px' }}>
                                 <Link to='/admin/new/course' style={{ textDecoration: 'none', color: 'white' }}>
                                     <Button variant="primary">
                                         Add course

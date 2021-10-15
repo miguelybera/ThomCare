@@ -166,7 +166,7 @@ const ListDeptChairRequests = ({ history }) => {
             <Sidebar />
             <div className="row">
                 <div className="">
-                    <Container fluid style={{ padding: "50px" }}>
+                    <Container fluid style={{ padding: "50px 0px" }}>
                         <Row style={{ margin: '30px 0 20px 0' }}>
                             <Col xs={12} sm={4}>
                                 <h3>My Requests {`/ ${status}`}</h3>

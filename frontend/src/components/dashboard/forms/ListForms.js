@@ -34,7 +34,7 @@ const ListForms = ({ history }) => {
         <Fragment>
             <MetaData title={`Downloadable Forms`} />
             <Sidebar />
-            <Container fluid style={{ padding: "50px" }}>
+            <Container fluid style={{ padding: "50px 0px" }}>
                 <div style={{ display: 'flex', marginBottom: '20px' }}>
                     <div style={{ marginRight: 'auto', marginTop: '30px' }}>
                         <h3>Downloadable Forms</h3>

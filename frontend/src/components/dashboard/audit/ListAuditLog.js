@@ -126,7 +126,7 @@ const ListAllRequests = ({ history }) => {
             <Sidebar />
             <div className="row">
                 <div className="">
-                    <Container fluid style={{ padding: "50px" }}>
+                    <Container fluid style={{ padding: "50px 0px" }}>
                         <Form onSubmit={searchHandler}>
                             <Row style={{ marginTop: '30px', marginBottom: '20px' }}>
                                 <Col style={{ marginRight: 'auto' }} xs={12} sm={12} md={3}>

@@ -70,39 +70,39 @@ const OVERLOADPDF = ({ studentInfo, submitted, setSubmitted }) => {
                             <tbody>
                                 <tr>
                                     <td>Full-Time Student</td>
-                                    <td style={{textAlign: 'center'}}>{studentInfo.fullTime}</td>
+                                    <td style={{ textAlign: 'center' }}>{studentInfo.fullTime}</td>
                                     <td>Total Number of Units Earned</td>
-                                    <td style={{textAlign: 'center'}}>{studentInfo.unitsEarned}</td>
+                                    <td style={{ textAlign: 'center' }}>{studentInfo.unitsEarned}</td>
                                     <td>Does the program require Bar or Board Examination?</td>
-                                    <td style={{textAlign: 'center'}}>{studentInfo.bar}</td>
+                                    <td style={{ textAlign: 'center' }}>{studentInfo.bar}</td>
                                 </tr>
                                 <tr>
                                     <td>No. of "INCOMPLETE" grades</td>
-                                    <td style={{textAlign: 'center'}}>{studentInfo.incompleteGrades}</td>
+                                    <td style={{ textAlign: 'center' }}>{studentInfo.incompleteGrades}</td>
                                     <td>Total Number of Units Required for the Program</td>
-                                    <td style={{textAlign: 'center'}}>{studentInfo.unitsRequired}</td>
+                                    <td style={{ textAlign: 'center' }}>{studentInfo.unitsRequired}</td>
                                     <td>Is there a violation of courses prerequisites?</td>
-                                    <td style={{textAlign: 'center'}}>{studentInfo.violations}</td>
+                                    <td style={{ textAlign: 'center' }}>{studentInfo.violations}</td>
                                 </tr>
                                 <tr>
                                     <td>No. of Special Terms Attended</td>
-                                    <td style={{textAlign: 'center'}}>{studentInfo.specialAttend}</td>
+                                    <td style={{ textAlign: 'center' }}>{studentInfo.specialAttend}</td>
                                     <td>Normal Load (No. of Units) for the current Term</td>
-                                    <td style={{textAlign: 'center'}}>{studentInfo.normalLoad}</td>
+                                    <td style={{ textAlign: 'center' }}>{studentInfo.normalLoad}</td>
                                     <td>Total Number of Units to be Taken including Overload</td>
-                                    <td style={{textAlign: 'center'}}>{studentInfo.totalUnits}</td>
+                                    <td style={{ textAlign: 'center' }}>{studentInfo.totalUnits}</td>
                                 </tr>
                                 <tr>
                                     <td>Total Number of Overload Units Already Taken</td>
-                                    <td style={{textAlign: 'center'}}>{studentInfo.totalOverloadUnits}</td>
+                                    <td style={{ textAlign: 'center' }}>{studentInfo.totalOverloadUnits}</td>
                                     <td>Working Student</td>
-                                    <td style={{textAlign: 'center'}}>{studentInfo.workingStudent}</td>
+                                    <td style={{ textAlign: 'center' }}>{studentInfo.workingStudent}</td>
                                     <td>No. of "5s"</td>
-                                    <td style={{textAlign: 'center'}}>{studentInfo.totalFives}</td>
+                                    <td style={{ textAlign: 'center' }}>{studentInfo.totalFives}</td>
                                 </tr>
                                 <tr>
                                     <td>Average Rating</td>
-                                    <td colspan="5" style={{textAlign: 'center'}}></td>
+                                    <td colspan="5" style={{ textAlign: 'center' }}></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -125,7 +125,7 @@ const OVERLOADPDF = ({ studentInfo, submitted, setSubmitted }) => {
                                 </tr>
                                 {studentInfo.overload && studentInfo.overload.map(x => {
                                     const total = Number(x.lecUnits) + Number(x.labUnits)
-                                    
+
                                     return (
                                         <tr>
                                             <td>{x.courseName}</td>
@@ -175,8 +175,8 @@ const OVERLOADPDF = ({ studentInfo, submitted, setSubmitted }) => {
                     <div className="deanrow">
                         <div>____________________________________________________</div>
                         <div></div>
-                        <div>Approved<input type="checkbox" disabled="true" style={{marginLeft:"10px", height:"15px", width:"15px"}}></input></div>
-                        <div>Disapproved<input type="checkbox" disabled="true" style={{marginLeft:"10px", height:"15px", width:"15px"}}></input></div>
+                        <div>Approved<input type="checkbox" disabled="true" style={{ marginLeft: "10px", height: "15px", width: "15px" }}></input></div>
+                        <div>Disapproved<input type="checkbox" disabled="true" style={{ marginLeft: "10px", height: "15px", width: "15px" }}></input></div>
                     </div>
 
                     <div className="deanrow">

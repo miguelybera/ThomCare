@@ -164,7 +164,7 @@ const ListArchivedAnnouncements = ({ history }) => {
             <Sidebar />
             <div className="row">
                 <div className="">
-                    <Container fluid style={{ padding: "50px" }}>
+                    <Container fluid style={{ padding: "50px 0px" }}>
                         <div style={{ display: 'flex', marginBottom: '20px' }}>
                             <div style={{ marginRight: 'auto', marginTop: '30px' }}>
                                 <h3>Archived Announcements</h3>

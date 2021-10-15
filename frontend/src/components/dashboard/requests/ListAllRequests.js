@@ -133,13 +133,14 @@ const ListAllRequests = ({ history }) => {
             <Sidebar />
             <div className="row">
                 <div className="">
-                    <Container fluid style={{ padding: "50px" }}>
+                    <Container fluid style={{ padding: "50px 0px" }}>
                         <Row style={{ margin: '30px 0 20px 0' }}>
                             <Col xs={12} sm={4}>
-                                <h3>All  Requests {`/ ${status}`}</h3>
+                                <h3>All Requests</h3>
+                                <h6 className='text-muted'>{`${status}`}</h6>
                             </Col>
                             <Col xs={12} sm={8}>
-                                <ButtonToolbar>
+                                <ButtonToolbar style={{ margin: '2px' }}>
                                     <ButtonGroup className="mr-2">
                                         <Button variant="outline-secondary" onClick={() => setStatus('Requests')}>View All</Button>
                                         <Button variant="outline-secondary" onClick={() => setStatus('Pending')}>Pending</Button>
