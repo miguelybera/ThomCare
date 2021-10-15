@@ -297,23 +297,22 @@ const Announcements = ({ history }) => {
                         {announcements && (announcements.length !== 0) ? announcements.map(announcement => (
                             <Col>
                                 <Card style={{ borderRadius: '25px', background: '#F5F5F5', marginBottom: '20px', height: '300px', overflowY: 'auto' }}>
+                                    <Card.Header style={{ background: '#F5F5F5', fontWeight: '600', marginTop: '5px', marginLeft: '15px' }}>{announcement.title}</Card.Header>
                                     <Card.Body>
-                                        <Card.Header style={{ background: '#F5F5F5', fontWeight: '600' }}>{announcement.title}</Card.Header>
-                                        <Card.Text style={{ marginLeft: '15px' }}>
-                                            <span style={{ fontWeight: '300', color: 'gray', fontSize: '12px' }}>{changeDateFormat(announcement.createdAt)}</span>
-                                            <br />
-                                            <span style={{ fontWeight: '500', fontSize: '14px' }}><Markup content={shortenDescription(announcement.description)} /> <Link to={`/announcement/${announcement._id}`}>Read More &#xbb;</Link></span>
-                                            <br /><br />
-                                            <span style={{ fontSize: '12px', color: 'gray' }}>Attachments: {announcement.fileAttachments.length} file(s)</span>
+                                        <Card.Text style={{ marginLeft: '15px', fontWeight: '300', color: 'gray', fontSize: '12px' }}>
+                                            {changeDateFormat(announcement.createdAt)}
+                                        </Card.Text>
+                                        <Card.Text style={{ marginLeft: '15px', fontWeight: '500', fontSize: '14px', marginTop: '3px' }}>
+                                            <Markup content={shortenDescription(announcement.description)} /> <Link to={`/announcement/${announcement._id}`}>Read More &#xbb;</Link>
+                                        </Card.Text>
+                                        <Card.Text style={{ marginLeft: '15px', fontSize: '12px', color: 'gray' }}>
+                                            Attachments: {announcement.fileAttachments.length} file(s)
                                         </Card.Text>
                                         <Card.Text style={{ fontSize: '10px', color: 'gray', marginLeft: '15px' }}>
-                                            <span>Year Level: {announcement.yearLevel}</span>
-                                            <br />
-                                            <span>Course: {announcement.course}</span>
-                                            <br />
-                                            <span>Track: {announcement.track}</span>
-                                            <br />
-                                            <span>Announcement Type: {announcement.announcementType}</span>
+                                            Year Level: {announcement.yearLevel}<br />
+                                            Course: {announcement.course}<br />
+                                            Track: {announcement.track}<br />
+                                            Announcement Type: {announcement.announcementType}
                                         </Card.Text>
                                     </Card.Body>
                                 </Card>

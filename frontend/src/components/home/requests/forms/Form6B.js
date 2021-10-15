@@ -366,7 +366,7 @@ function Form6B({history}) {
                                                 <Col xs={6} sm={6} md={4} lg={5} style={addDropStyle}>
                                                     <Row className="mt-3">
                                                         <Form.Group as={Col} xs={6}>
-                                                            <Form.Label>Start Time</Form.Label>
+                                                            <Form.Label>Start Time&nbsp;</Form.Label>
                                                             <TimePicker
                                                                 disableClock
                                                                 name="startTime"
@@ -393,7 +393,7 @@ function Form6B({history}) {
                                                             />
                                                         </Form.Group>
                                                         <Form.Group as={Col} xs={6}>
-                                                            <Form.Label>End Time</Form.Label>
+                                                            <Form.Label>End Time&nbsp;</Form.Label>
                                                             <TimePicker
                                                                 disableClock
                                                                 name="endTime"
