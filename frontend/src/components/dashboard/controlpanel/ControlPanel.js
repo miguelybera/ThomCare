@@ -39,7 +39,7 @@ const ControlPanel = ({ history }) => {
         viewType = '1'
     }
 
-    const changeDateFormat = (date) => dateformat(date, "mmm dd")
+    const changeDateFormat = (date) => dateformat(date, "mm/dd")
     const upperCase = (text) => text.toUpperCase()
 
     useEffect(() => {
@@ -151,7 +151,7 @@ const ControlPanel = ({ history }) => {
 
         for (let i = 0; i < 5; i++) {
             data.push({
-                name: changeDateFormat(new Date(Date.now() - (i * 7 * 24 * 60 * 60 * 1000))),
+                name: changeDateFormat(new Date(Date.now() - (i * 7 * 24 * 60 * 60 * 1000))) + '-' + changeDateFormat(new Date(Date.now() - ((i - 1) * 7 * 24 * 60 * 60 * 1000))),
                 Total: 0
             })
         }
