@@ -224,8 +224,8 @@ exports.getDeptChairRequests = catchAsyncErrors(async (req, res, next) => {
     for (let i = 0; i < dailyDates.length - 1; i++) {
         const x = await Request.find({
             createdAt: {
-                "$gt": dailyDates[i + 1].toString(),
-                "$lte": dailyDates[i].toString()
+                "$gte": dailyDates[i + 1].toString(),
+                "$lt": dailyDates[i].toString()
             },
             "requestorInfo.course": deptCourse,
             requestType: {
@@ -246,8 +246,8 @@ exports.getDeptChairRequests = catchAsyncErrors(async (req, res, next) => {
     for (let i = 0; i < weeklyDates.length - 1; i++) {
         const x = await Request.find({
             createdAt: {
-                "$gt": weeklyDates[i + 1].toString(),
-                "$lte": weeklyDates[i].toString()
+                "$gte": weeklyDates[i + 1].toString(),
+                "$lt": weeklyDates[i].toString()
             },
             "requestorInfo.course": deptCourse,
             requestType: {
@@ -269,8 +269,8 @@ exports.getDeptChairRequests = catchAsyncErrors(async (req, res, next) => {
     for (let i = 0; i < overViewDates.length - 1; i++) {
         const x = await Request.find({
             createdAt: {
-                "$gt": overViewDates[i + 1].toString(),
-                "$lte": overViewDates[0].toString()
+                "$gte": overViewDates[i + 1].toString(),
+                "$lt": overViewDates[0].toString()
             },
             "requestorInfo.course": deptCourse,
             requestType: {
@@ -346,8 +346,8 @@ exports.getAllRequests = catchAsyncErrors(async (req, res, next) => {
     for (let i = 0; i < dailyDates.length - 1; i++) {
         const x = await Request.find({
             createdAt: {
-                "$gt": dailyDates[i + 1].toString(),
-                "$lte": dailyDates[i].toString()
+                "$gte": dailyDates[i + 1].toString(),
+                "$lt": dailyDates[i].toString()
             }
         })
 
@@ -364,8 +364,8 @@ exports.getAllRequests = catchAsyncErrors(async (req, res, next) => {
     for (let i = 0; i < weeklyDates.length - 1; i++) {
         const x = await Request.find({
             createdAt: {
-                "$gt": weeklyDates[i + 1].toString(),
-                "$lte": weeklyDates[i].toString()
+                "$gte": weeklyDates[i + 1].toString(),
+                "$lt": weeklyDates[i].toString()
             }
         })
 
@@ -383,8 +383,8 @@ exports.getAllRequests = catchAsyncErrors(async (req, res, next) => {
     for (let i = 0; i < overViewDates.length - 1; i++) {
         const x = await Request.find({
             createdAt: {
-                "$gt": overViewDates[i + 1].toString(),
-                "$lte": overViewDates[0].toString()
+                "$gte": overViewDates[i + 1].toString(),
+                "$lt": overViewDates[0].toString()
             }
         })
 
