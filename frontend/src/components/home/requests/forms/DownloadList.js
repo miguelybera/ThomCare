@@ -50,9 +50,6 @@ const DownloadList = () => {
                                 <td style={{ textAlign: 'center' }}>{form.title}</td>
                                 <td><Markup content={form.description}/></td>
                                 <td style={{ textAlign: 'center' }}>
-                                    <Button variant="warning" href={form.attachments[0].path} target="_blank" rel="noreferrer" style={{ margin: '5px' }}>
-                                        <i class="fa fa-eye" aria-hidden="true"></i> 
-                                    </Button>
                                     <Button variant="primary" href={form.attachments[0].path} target="_blank" rel="noreferrer" style={{ margin: '5px' }}>
                                         <i class="fa fa-download" aria-hidden="true"></i>
                                     </Button>
