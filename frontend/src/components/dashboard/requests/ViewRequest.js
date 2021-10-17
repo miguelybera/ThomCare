@@ -299,6 +299,9 @@ const ViewRequest = ({ history, match }) => {
                                         {upperCase(requestStatus)}
                                     </font>
                                 </Card.Text>
+                                <Card.Text>
+                                    <span className='text-muted'>Date submitted: {changeDateFormat(request.createdAt)}</span>
+                                </Card.Text>
                                 <Row>
                                     <Form.Group as={Col} className="mb-3" xs={12} sm={12} md={4}>
                                         <Form.Label>First Name</Form.Label>
@@ -331,7 +334,6 @@ const ViewRequest = ({ history, match }) => {
                                         <Form.Control type="text" value={requestorInfo.email} readOnly />
                                     </Form.Group>
                                 </Row>
-
                                 <Row>
                                     <Form.Group as={Col} className="mb-3" xs={12} md={3}>
                                         <Form.Label>Tracking Number</Form.Label>

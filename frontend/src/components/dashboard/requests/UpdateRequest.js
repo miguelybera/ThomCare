@@ -40,7 +40,7 @@ const UpdateRequest = ({ history, match }) => {
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
 
-        const goBack = () => {
+    const goBack = () => {
         window.history.back()
         handleClose()
     }
@@ -176,6 +176,45 @@ const UpdateRequest = ({ history, match }) => {
         return data
     }
 
+    const setAttachments = () => {
+        const data = {
+            columns: [
+                {
+                    label: 'File name',
+                    field: 'fileName',
+                    width: 750
+                },
+                {
+                    label: 'File Size',
+                    field: 'fileSize',
+                    width: 150
+                },
+                {
+                    label: 'Actions',
+                    field: 'action',
+                    width: 100
+                }
+            ],
+            rows: []
+        }
+
+        fileRequirements && fileRequirements.forEach(file => {
+            data.rows.push({
+                fileName: file.originalname,
+                fileSize: Number(file.size / 1000000).toFixed(2) + ' MB',
+                action: <Fragment>
+                    <a href={file.path} target="_blank" rel="noreferrer">
+                        <button className="btn btn-primary py-1 px-2 ml-2">
+                            <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                        </button>
+                    </a>
+                </Fragment>
+            })
+        })
+
+        return data
+    }
+
     return (
         <Fragment>
             <MetaData title={`Update Request`} />
@@ -200,8 +239,8 @@ const UpdateRequest = ({ history, match }) => {
                 </Modal.Footer>
             </Modal>
             {requestLoading ? <Loader /> : (
-                <Container classname="align-me" fluid style={{ paddingBottom: '50px 50px 100px 50px' }}>
-                    <Card style={{ backgroundColor: '#fff' }}>  {/*, width: '100rem' */}
+                <Container fluid style={{ padding: "50px 0px", marginTop: '50px' }}>
+                    <Card style={{ width: '100%', marginTop: '40px', margin: 'auto', backgroundColor: "#F5F5F5", borderTop: '7px solid #9c0b0b' }}>
                         <Card.Body>
                             <Card.Title style={{ margin: '10px 0 20px 0', color: '#9c0b0b', fontWeight: 'bold' }}>
                                 {requestType} <br />
@@ -219,6 +258,9 @@ const UpdateRequest = ({ history, match }) => {
                                 }>
                                     {upperCase(currentStatus)}
                                 </font>
+                            </Card.Text>
+                            <Card.Text>
+                                <span className='text-muted'>Date submitted: {changeDateFormat(request.createdAt)}</span>
                             </Card.Text>
                             <Accordion defaultActiveKey="0">
                                 <Accordion.Item eventKey="0">
@@ -273,19 +315,17 @@ const UpdateRequest = ({ history, match }) => {
                                             </Form.Group>
                                         </Row>
                                         <Row>
-                                            <Form.Group as={Col} className="mb-3" xs={12} md={6}>
+                                            <Form.Group as={Col} className="mb-3" xs={12}>
                                                 <Form.Label>Request attachments</Form.Label>
-                                                <ListGroup variant="flush">
-                                                    {fileRequirements && fileRequirements.map(file => (
-                                                        <ListGroupItem>
-                                                            {file.originalname} <font size="1rem">{Number(file.size / 1000000).toFixed(2)} MB</font> <a href={file.path} target="_blank" rel="noreferrer">
-                                                                <button className="btn btn-primary py-1 px-2 ml-2">
-                                                                    <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
-                                                                </button>
-                                                            </a>
-                                                        </ListGroupItem>
-                                                    ))}
-                                                </ListGroup>
+                                                <MDBDataTableV5
+                                                    data={setAttachments()}
+                                                    searchTop
+                                                    pagingTop
+                                                    scrollX
+                                                    entriesOptions={[5, 20, 25]}
+                                                    entries={10}
+                                                    style={{ backgroundColor: 'white' }}
+                                                />
                                             </Form.Group>
                                         </Row>
                                         <Card.Title style={{ margin: '10px 0 20px 0', color: '#9c0b0b', fontWeight: 'bold' }}>Request History</Card.Title>
@@ -301,10 +341,10 @@ const UpdateRequest = ({ history, match }) => {
                                     </Accordion.Body>
                                 </Accordion.Item>
                             </Accordion>
-                            <Card.Title style={{ margin: '10px 0 20px 0', color: '#9c0b0b', fontWeight: 'bold' }}>Update Request</Card.Title>
+                            <Card.Title style={{ margin: '20px 0', color: '#9c0b0b', fontWeight: 'bold' }}>Update Request</Card.Title>
                             <Form onSubmit={submitHandler}>
                                 <Row>
-                                    <Form.Group as={Col} className="mb-3" xs={12} md={6} lg={3}>
+                                    <Form.Group as={Col} className="mb-3" xs={12} lg={3}>
                                         <Form.Label>Status</Form.Label>
                                         <Form.Select
                                             aria-label="Default select example"
@@ -319,7 +359,7 @@ const UpdateRequest = ({ history, match }) => {
                                             ))}
                                         </Form.Select>
                                     </Form.Group>
-                                    <Form.Group as={Col} className="mb-3" xs={12} md={6} lg={3}>
+                                    <Form.Group as={Col} className="mb-3" xs={12} lg={5}>
                                         <Form.Label>Remarks message</Form.Label>
                                         <Form.Control
                                             as="textarea"
@@ -329,7 +369,7 @@ const UpdateRequest = ({ history, match }) => {
                                             onChange={e => setRemarksMessage(e.target.value)}
                                         />
                                     </Form.Group>
-                                    <Form.Group as={Col} className="mb-3" xs={12} md={returningFiles.length !== 0 ? 6 : 12} lg={returningFiles.length !== 0 ? 3 : 6}>
+                                    <Form.Group as={Col} className="mb-3" xs={12} lg={4}>
                                         <Form.Label>Attachments</Form.Label>
                                         <Form.Control
                                             type="file"
@@ -338,10 +378,12 @@ const UpdateRequest = ({ history, match }) => {
                                             multiple
                                         />
                                     </Form.Group>
-                                    <Form.Group as={Col} className="mb-3" xs={12} md={returningFiles.length !== 0 ? 6 : 6} lg={returningFiles.length !== 0 ? 3 : 12}>
+                                    <Form.Group as={Col} className="mb-3" xs={12}>
                                         <ListGroup>
-                                            {returningFiles && returningFiles.map(file => (
-                                                <ListGroupItem>{file.name}</ListGroupItem>
+                                            {returningFiles && returningFiles.map((file, idx) => (
+                                                <ListGroupItem>
+                                                    File {idx + 1}: {file.name}
+                                                </ListGroupItem>
                                             ))}
                                         </ListGroup>
                                     </Form.Group>

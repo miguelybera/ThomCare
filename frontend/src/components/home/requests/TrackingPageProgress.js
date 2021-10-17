@@ -131,6 +131,45 @@ const TrackingPageProgress = ({ history, match }) => {
         return data
     }
 
+    const setAttachments = () => {
+        const data = {
+            columns: [
+                {
+                    label: 'File name',
+                    field: 'fileName',
+                    width: 750
+                },
+                {
+                    label: 'File Size',
+                    field: 'fileSize',
+                    width: 150
+                },
+                {
+                    label: 'Actions',
+                    field: 'action',
+                    width: 100
+                }
+            ],
+            rows: []
+        }
+
+        fileRequirements && fileRequirements.forEach(file => {
+            data.rows.push({
+                fileName: file.originalname,
+                fileSize: Number(file.size / 1000000).toFixed(2) + ' MB',
+                action: <Fragment>
+                    <a href={file.path} target="_blank" rel="noreferrer">
+                        <button className="btn btn-primary py-1 px-2 ml-2">
+                            <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                        </button>
+                    </a>
+                </Fragment>
+            })
+        })
+
+        return data
+    }
+
     return (
         <Fragment>
             <MetaData title={`Tracking ID: ${trackingNumber}`} />
@@ -138,7 +177,6 @@ const TrackingPageProgress = ({ history, match }) => {
                 <Fragment style={{ marginTop: '30px' }}>
                     <Card style={cardStyle}>
                         <Card.Body>
-
                             <Card.Title style={{ margin: '10px 0 20px 0', color: '#9c0b0b', fontWeight: 'bold' }}>
                                 {requestType} <br />
                                 Tracking #: {trackingNumber} - {requestorInfo.lastName} <br />
@@ -155,6 +193,9 @@ const TrackingPageProgress = ({ history, match }) => {
                                 }>
                                     {upperCase(requestStatus)}
                                 </font>
+                            </Card.Text>
+                            <Card.Text>
+                                <span className='text-muted'>Date submitted: {changeDateFormat(request.createdAt)}</span>
                             </Card.Text>
                             <Row>
                                 <Form.Group as={Col} className="mb-3" xs={12} sm={12} md={4}>
@@ -204,19 +245,17 @@ const TrackingPageProgress = ({ history, match }) => {
                                 </Form.Group>
                             </Row>
                             <Row>
-                                <Form.Group as={Col} className="mb-3" xs={12} md={6}>
+                                <Form.Group as={Col} className="mb-3" xs={12}>
                                     <Form.Label>Request attachments</Form.Label>
-                                    <ListGroup variant="flush">
-                                        {fileRequirements && fileRequirements.map(file => (
-                                            <ListGroupItem>
-                                                {file.originalname} <font size="1rem">{Number(file.size / 1000000).toFixed(2)} MB</font> <a href={file.path} target="_blank" rel="noreferrer">
-                                                    <button className="btn btn-primary py-1 px-2 ml-2">
-                                                        <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
-                                                    </button>
-                                                </a>
-                                            </ListGroupItem>
-                                        ))}
-                                    </ListGroup>
+                                    <MDBDataTableV5
+                                        data={setAttachments()}
+                                        searchTop
+                                        pagingTop
+                                        scrollX
+                                        entriesOptions={[5, 20, 25]}
+                                        entries={10}
+                                        style={{ backgroundColor: 'white' }}
+                                    />
                                 </Form.Group>
                             </Row>
                             <Card.Title style={{ margin: '10px 0 20px 0', color: '#9c0b0b', fontWeight: 'bold' }}>Request History</Card.Title>

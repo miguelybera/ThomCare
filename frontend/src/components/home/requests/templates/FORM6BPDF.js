@@ -75,7 +75,7 @@ const FORM6BPDF = ({ studentInfo, submitted, setSubmitted }) => {
                         España St., Manila, Philippines
                     </div>
                         <div>
-                            <img src="/images/UST_SEAL.png" alt="UST LOGO" width="80" height="80" />
+                            <img src="/images/UST_LOGO.png" alt="UST LOGO" width="80" height="80" />
                         </div>
                     </div>
 
@@ -292,7 +292,7 @@ const FORM6BPDF = ({ studentInfo, submitted, setSubmitted }) => {
 
                     </div>
                         <div>
-                            <img src="/images/UST_SEAL.png" alt="UST LOGO" width="60" height="60" />
+                            <img src="/images/UST_LOGO.png" alt="UST LOGO" width="80" height="80" />
                         </div>
                     </div>
 
@@ -489,11 +489,11 @@ const FORM6BPDF = ({ studentInfo, submitted, setSubmitted }) => {
                     </center>
                 </div>
 
-                <Pdf targetRef={ref} filename="crossDropForm.pdf" options={options}>
+                <Pdf targetRef={ref} filename={`${studentInfo.studentNumber}-cross-drop-form.pdf`} options={options}>
                     {({ toPdf }) =>
                         <center>
+                            <Button onClick={goBack} variant='outline-danger' style={{ margin: '10px' }}>Back</Button>
                             <Button onClick={toPdf} style={{ margin: '10px' }}>Save as PDF</Button>
-                            <Button onClick={goBack} style={{ margin: '10px' }}>Back</Button>
                         </center>
                     }
                 </Pdf>

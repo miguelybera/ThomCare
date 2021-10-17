@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { FloatingLabel, Row, Container, Button, Col, Card, Form, Breadcrumb, Modal } from 'react-bootstrap'
+import { FloatingLabel, Row, Container, Button, Col, Card, Form, Breadcrumb, Modal, InputGroup } from 'react-bootstrap'
 import TimePicker from 'react-time-picker'
 import { getCourses, clearErrors } from '../../../../actions/courseActions'
 import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
@@ -11,7 +11,7 @@ import Loader from '../../../layout/Loader'
 import FORM6APDF from '../templates/FORM6APDF'
 
 const addDropStyle = {
-    marginBottom: '5px' 
+    marginBottom: '5px'
 }
 
 function Form6A({ history }) {
@@ -48,7 +48,7 @@ function Form6A({ history }) {
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
 
-        const goBack = () => {
+    const goBack = () => {
         window.history.back()
         handleClose()
     }
@@ -100,7 +100,7 @@ function Form6A({ history }) {
         })
         return mi
     }
-    
+
     useEffect(() => {
         dispatch(getCourses())
         setMiddleInitial(getMiddleInitial(user.middleName))
@@ -137,13 +137,13 @@ function Form6A({ history }) {
 
     const onTimeChange = (index, name, value) => {
         const values = [...inputFields]
-        let aa = 'AM', time=''
+        let aa = 'AM', time = ''
 
-        let hr = value.substring(0,2)
+        let hr = value.substring(0, 2)
 
-        if(Number(hr) > 12) {
+        if (Number(hr) > 12) {
             aa = 'PM'
-            time = hr - 12 + value.substring(2,5) + aa
+            time = hr - 12 + value.substring(2, 5) + aa
             values[index][name] = time
         } else if (Number(hr) === 12) {
             aa = 'PM'
@@ -152,8 +152,8 @@ function Form6A({ history }) {
         } else {
             aa = 'AM'
 
-            if(Number(hr) === 0) {
-                time = '12' + value.substring(2,5) + aa
+            if (Number(hr) === 0) {
+                time = '12' + value.substring(2, 5) + aa
             } else {
                 time = value + aa
             }
@@ -246,31 +246,19 @@ function Form6A({ history }) {
                                     </Form.Group>
                                 </Row>
                                 <Row className="mb-3" style={{ paddingBottom: '30px' }}>
-                                    <Form.Group as={Col} xs={12} sm={12} md={6}>
+                                    <Form.Group as={Col} xs={12} sm={12} md={4}>
                                         <Form.Label>Term</Form.Label>
                                         <Form.Control type="text" placeholder="1st" value={term} onChange={e => setTerm(e.target.value)} required />
                                     </Form.Group>
-                                    <Row as={Col}>
-                                        <Row>
-                                            <Form.Group as={Col} xs={12}>
-                                                <Form.Label>Academic Year </Form.Label>
-                                            </Form.Group>
-                                        </Row>
-                                        <Row>
-                                            <Col xs={2}>
-                                                <Form.Label>20</Form.Label>
-                                            </Col>
-                                            <Col xs={2}>
-                                                <Form.Control type="text" placeholder="xx" pattern="[0-9]{2}" value={year1} onChange={e => setYear1(e.target.value)} required />
-                                            </Col>
-                                            <Col xs={2}>
-                                                <Form.Label>- 20</Form.Label>
-                                            </Col>
-                                            <Col xs={2}>
-                                                <Form.Control type="text" placeholder="xx" pattern="[0-9]{2}" value={year2} onChange={e => setYear2(e.target.value)} required />
-                                            </Col>
-                                        </Row>
-                                    </Row>
+                                    <Col xs={12} sm={12} md={4}>
+                                        <Form.Label>Academic Year </Form.Label>
+                                        <InputGroup className="mb-3">
+                                            <InputGroup.Text>20</InputGroup.Text>
+                                            <Form.Control type="text" placeholder="xx" pattern="[0-9]{2}" value={year1} onChange={e => setYear1(e.target.value)} required />
+                                            <InputGroup.Text>- 20</InputGroup.Text>
+                                            <Form.Control type="text" placeholder="xx" pattern="[0-9]{2}" value={year1} onChange={e => setYear1(e.target.value)} required />
+                                        </InputGroup>
+                                    </Col>
                                 </Row>
                                 <Card.Title
                                     style={{
@@ -299,7 +287,7 @@ function Form6A({ history }) {
                                     return (
                                         <Fragment key={val.index}>
                                             <Row>
-                                                <Col style={{paddingTop: '13px'}}>
+                                                <Col style={{ paddingTop: '13px' }}>
                                                     <p>Courses to Add/Drop #{idx + 1}</p>
                                                 </Col>
                                                 <Col xs={4} sm={4} md={3} lg={2} style={{ textAlign: 'right', marginBottom: '5px' }}>
@@ -324,7 +312,7 @@ function Form6A({ history }) {
                                                 <Col xs={12} md={6} lg={2} style={addDropStyle}  >
                                                     <FloatingLabel label="Add/Drop">
                                                         <Form.Select aria-label="Default select example" name="status" id={status} data-id={idx} value={val.status} onChange={e => onChange(idx, e)} required>
-                                                            <option value=''>Add/Drop</option>
+                                                            <option value=''>-</option>
                                                             <option value="Add">Add</option>
                                                             <option value="Drop">Drop</option>
                                                         </Form.Select>
@@ -379,7 +367,7 @@ function Form6A({ history }) {
                                                                 id={startTime}
                                                                 data-id={idx}
                                                                 value={val.startTime}
-                                                                onChange={value =>  {
+                                                                onChange={value => {
 
                                                                     // ? value === null if and only if AM/PM is selected
                                                                     // ? value = jsonobject & null when selected but time is not complete
@@ -387,7 +375,7 @@ function Form6A({ history }) {
 
                                                                     if (value !== null) {
                                                                         if (value.isDefaultPrevented && value.isDefaultPrevented.name === "functionThatReturnsFalse") {
-                                                                        
+
                                                                         } else {
                                                                             if (value) {
                                                                                 onTimeChange(idx, "startTime", value)
@@ -406,14 +394,14 @@ function Form6A({ history }) {
                                                                 id={endTime}
                                                                 data-id={idx}
                                                                 value={val.endTime}
-                                                                onChange={value =>  {
+                                                                onChange={value => {
                                                                     // ? value === null if and only if AM/PM is selected
                                                                     // ? value = jsonobject & null when selected but time is not complete
                                                                     // ? value is time when complete
 
                                                                     if (value !== null) {
                                                                         if (value.isDefaultPrevented && value.isDefaultPrevented.name === "functionThatReturnsFalse") {
-                                                                        
+
                                                                         } else {
                                                                             if (value) {
                                                                                 onTimeChange(idx, "endTime", value)
@@ -438,7 +426,8 @@ function Form6A({ history }) {
                                                 </Col>
                                             </Row>
                                         </Fragment>
-                                    )})
+                                    )
+                                })
                                 }
                                 <center>
                                     <Button
@@ -456,7 +445,7 @@ function Form6A({ history }) {
                     </Card>
                 </Container>
             ) : (
-                <FORM6APDF title={`Download Add Drop Form`} studentInfo={studentInfo} submitted={submitted} setSubmitted={setSubmitted}/>
+                <FORM6APDF title={`Download Add Drop Form`} studentInfo={studentInfo} submitted={submitted} setSubmitted={setSubmitted} />
             )}
         </Fragment >
     )

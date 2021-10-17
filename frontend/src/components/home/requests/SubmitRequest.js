@@ -1,12 +1,13 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
+import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { Form, Button, Card, Container, Row, Col, OverlayTrigger, Tooltip, ListGroup, ListGroupItem } from 'react-bootstrap'
-import { useDispatch, useSelector } from 'react-redux'
 import { submitRequest, clearErrors } from './../../../actions/requestActions'
 import { SUBMIT_REQUEST_RESET } from './../../../constants/requestConstants'
 import { INSIDE_DASHBOARD_FALSE } from '../../../constants/dashboardConstants'
 import MetaData from './../../layout/MetaData'
+import dateformat from 'dateformat'
 
 const cardStyle = {
     marginTop: '30px',
@@ -48,6 +49,7 @@ const SubmitRequest = () => {
     let alphabet = []
 
     const upperCase = (text) => text.toUpperCase()
+    const changeDateFormat = date => dateformat(date, "mmm d, yyyy h:MMtt")
 
     for (let i = 0; i < 26; i++) {
         alphabet.push(upperCase((i + 10).toString(36)))
@@ -113,7 +115,7 @@ const SubmitRequest = () => {
                     <Container fluid>
                         <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
                             <Card style={{ align: 'center', marginBottom: '50px' }}>
-                                <h5 style={{ marginTop: '20px'}}>General Instructions</h5>
+                                <h5 style={{ marginTop: '20px' }}>General Instructions</h5>
                                 <Card.Body>
                                     <Card.Text>For requests such as <strong>Add/Drop Course Form, Overload Form, and Cross-enrollment forms</strong>, go to <Link to='/forms/list'>Generate Form</Link> page.</Card.Text>
                                     <Card.Text>1. Select form.</Card.Text>
@@ -124,7 +126,7 @@ const SubmitRequest = () => {
                                     <Card.Text>6. Submit the document by filling out the <strong>Submit Request</strong> form.</Card.Text>
                                     <Card.Text>7. Attach the required documents.</Card.Text>
                                     <Card.Text>8. Click the 'Submit' button.</Card.Text>
-                                    <hr/>
+                                    <hr />
                                     <Card.Text>For other requests <strong>not available</strong> in the Generate Forms page, go to <Link to='/downloadable/forms/list'>Downloadable Forms</Link> page.</Card.Text>
                                     <Card.Text>1. Select form to download.</Card.Text>
                                     <Card.Text>2. Fill out the fields in the document.</Card.Text>
@@ -224,7 +226,7 @@ const SubmitRequest = () => {
                                                                 </ul>
                                                             </Tooltip >
                                                         }>
-                                                            <span class="fa fa-question-circle" style={{ marginRight: '.3rem' }} />
+                                                        <span class="fa fa-question-circle" style={{ marginRight: '.3rem' }} />
                                                     </OverlayTrigger>
                                                 </Form.Label>
                                                 <Form.Control type="file" name="fileRequirements" onChange={onChange} multiple required />
@@ -264,25 +266,30 @@ const SubmitRequest = () => {
                                 <Card style={cardStyle}>
                                     <Card.Body>
                                         <Card.Title>Tracking ID#: {request?.trackingNumber}</Card.Title>
+                                        <Card.Text><span className='text-muted'>Date submitted: {changeDateFormat(request.createdAt)}</span></Card.Text>
                                         <Card.Text><b>Name:</b> {request?.requestorInfo.lastName}, {request?.requestorInfo.firstName}</Card.Text>
                                         <Card.Text><b>Request Type:</b> {request?.requestType}</Card.Text>
                                         <Card.Text><b>Notes:</b> {request?.notes}</Card.Text>
                                         <Card.Text>
-                                    Attachments:
-                                    <ListGroup>
+                                            Attachments:
+                                            <ListGroup>
                                                 {request?.fileRequirements.map((file, idx) => (
                                                     <ListGroupItem>
-                                                        {file.originalname} <font size="1rem">{Number(file.size / 1000000).toFixed(2)} MB</font> <a href={file.path} target="_blank" rel="noreferrer">
-                                                            <button className="btn btn-primary py-1 px-2 ml-2">
-                                                                <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
-                                                            </button>
-                                                        </a>
+                                                        {file.originalname} <span style={{ margin: '0 5px', fontSize: '1rem' }} className="text-muted">
+                                                            {Number(file.size / 1000000).toFixed(2)} MB
+                                                        </span> <span style={{ margin: '0 5px' }}>
+                                                            <a href={file.path} target="_blank" rel="noreferrer">
+                                                                <button className="btn btn-primary py-1 px-2 ml-2">
+                                                                    <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                                                                </button>
+                                                            </a>
+                                                        </span>
                                                     </ListGroupItem>
                                                 ))}
                                             </ListGroup>
                                         </Card.Text>
                                         <Card.Text>
-                                            <Button onClick={() => reset()}>Submit Request Again</Button>
+                                            <center><Button variant='outline-danger' onClick={() => reset()}>Back</Button></center>
                                         </Card.Text>
                                     </Card.Body>
                                 </Card>

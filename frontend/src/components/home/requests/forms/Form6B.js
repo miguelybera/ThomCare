@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { FloatingLabel, Row, Container, Button, Col, Card, Form, Breadcrumb, Modal } from 'react-bootstrap'
+import { FloatingLabel, Row, Container, Button, Col, Card, Form, Breadcrumb, Modal, InputGroup } from 'react-bootstrap'
 import TimePicker from 'react-time-picker'
 import { getCourses, clearErrors } from '../../../../actions/courseActions'
 import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
@@ -242,32 +242,20 @@ function Form6B({history}) {
                                         <Form.Control type='email' value={user && user.email} readOnly />
                                     </Form.Group>
                                 </Row>
-                                <Row className="mb-3" style={{paddingBottom:'30px'}}>
-                                    <Form.Group as={Col} xs={12} sm={12} md={6}>
-                                        <Form.Label>Term/Special</Form.Label>
+                                <Row className="mb-3" style={{ paddingBottom: '30px' }}>
+                                    <Form.Group as={Col} xs={12} sm={12} md={4}>
+                                        <Form.Label>Term</Form.Label>
                                         <Form.Control type="text" placeholder="1st" value={term} onChange={e => setTerm(e.target.value)} required />
                                     </Form.Group>
-                                    <Row as={Col}>
-                                        <Row>
-                                            <Form.Group as={Col} xs={12}>
-                                                <Form.Label>Academic Year </Form.Label>
-                                            </Form.Group>
-                                        </Row>
-                                        <Row>
-                                            <Col xs={1} sm={2}>
-                                                <Form.Label>20</Form.Label>
-                                            </Col>
-                                            <Col xs={5} sm={4}>
-                                                <Form.Control type="text" placeholder="xx" pattern="[0-9]{2}" value={year1} onChange={e => setYear1(e.target.value)} required />
-                                            </Col>
-                                            <Col xs={1} sm={2}>
-                                                <Form.Label>-20</Form.Label>
-                                            </Col>
-                                            <Col xs={5} sm={4}>
-                                                <Form.Control type="text" placeholder="xx" pattern="[0-9]{2}" value={year2} onChange={e => setYear2(e.target.value)} required />
-                                            </Col>
-                                        </Row>
-                                    </Row>
+                                    <Col xs={12} sm={12} md={4}>
+                                        <Form.Label>Academic Year </Form.Label>
+                                        <InputGroup className="mb-3">
+                                            <InputGroup.Text>20</InputGroup.Text>
+                                            <Form.Control type="text" placeholder="xx" pattern="[0-9]{2}" value={year1} onChange={e => setYear1(e.target.value)} required />
+                                            <InputGroup.Text>- 20</InputGroup.Text>
+                                            <Form.Control type="text" placeholder="xx" pattern="[0-9]{2}" value={year1} onChange={e => setYear1(e.target.value)} required />
+                                        </InputGroup>
+                                    </Col>
                                 </Row>
                                 <Card.Title 
                                     style={{

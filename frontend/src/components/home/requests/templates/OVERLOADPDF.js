@@ -199,11 +199,11 @@ const OVERLOADPDF = ({ studentInfo, submitted, setSubmitted }) => {
 
                 </div>
 
-                <Pdf targetRef={ref} filename="overloadForm.pdf" options={options}>
+                <Pdf targetRef={ref} filename={`${studentInfo.studentNumber}-overload-form.pdf`} options={options}>
                     {({ toPdf }) =>
                         <center>
+                            <Button onClick={goBack} variant='outline-danger' style={{ margin: '10px' }}>Back</Button>
                             <Button onClick={toPdf} style={{ margin: '10px' }}>Save as PDF</Button>
-                            <Button onClick={goBack} style={{ margin: '10px' }}>Back</Button>
                         </center>
                     }
                 </Pdf>
