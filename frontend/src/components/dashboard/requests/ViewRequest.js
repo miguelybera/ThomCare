@@ -300,7 +300,7 @@ const ViewRequest = ({ history, match }) => {
                                     </font>
                                 </Card.Text>
                                 <Card.Text>
-                                    <span className='text-muted'>Date submitted: {changeDateFormat(request.createdAt)}</span>
+                                    <span className='text-muted'><strong>Date submitted:</strong> {changeDateFormat(request.createdAt)}</span>
                                 </Card.Text>
                                 <Row>
                                     <Form.Group as={Col} className="mb-3" xs={12} sm={12} md={4}>

@@ -266,7 +266,7 @@ const SubmitRequest = () => {
                                 <Card style={cardStyle}>
                                     <Card.Body>
                                         <Card.Title>Tracking ID#: {request?.trackingNumber}</Card.Title>
-                                        <Card.Text><span className='text-muted'>Date submitted: {changeDateFormat(request.createdAt)}</span></Card.Text>
+                                        <Card.Text><span className='text-muted'><strong>Date submitted:</strong> {changeDateFormat(request.createdAt)}</span></Card.Text>
                                         <Card.Text><b>Name:</b> {request?.requestorInfo.lastName}, {request?.requestorInfo.firstName}</Card.Text>
                                         <Card.Text><b>Request Type:</b> {request?.requestType}</Card.Text>
                                         <Card.Text><b>Notes:</b> {request?.notes}</Card.Text>

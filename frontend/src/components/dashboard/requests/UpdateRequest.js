@@ -260,7 +260,7 @@ const UpdateRequest = ({ history, match }) => {
                                 </font>
                             </Card.Text>
                             <Card.Text>
-                                <span className='text-muted'>Date submitted: {changeDateFormat(request.createdAt)}</span>
+                                <span className='text-muted'><strong>Date submitted:</strong> {changeDateFormat(request.createdAt)}</span>
                             </Card.Text>
                             <Accordion defaultActiveKey="0">
                                 <Accordion.Item eventKey="0">
