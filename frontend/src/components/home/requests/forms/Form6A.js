@@ -256,7 +256,7 @@ function Form6A({ history }) {
                                             <InputGroup.Text>20</InputGroup.Text>
                                             <Form.Control type="text" placeholder="xx" pattern="[0-9]{2}" value={year1} onChange={e => setYear1(e.target.value)} required />
                                             <InputGroup.Text>- 20</InputGroup.Text>
-                                            <Form.Control type="text" placeholder="xx" pattern="[0-9]{2}" value={year1} onChange={e => setYear1(e.target.value)} required />
+                                            <Form.Control type="text" placeholder="xx" pattern="[0-9]{2}" value={year2} onChange={e => setYear2(e.target.value)} required />
                                         </InputGroup>
                                     </Col>
                                 </Row>

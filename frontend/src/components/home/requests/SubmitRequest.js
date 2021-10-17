@@ -121,7 +121,7 @@ const SubmitRequest = () => {
                                     <Card.Text>1. Select form.</Card.Text>
                                     <Card.Text>2. Fill out the fields.</Card.Text>
                                     <Card.Text>3. Click the 'Generate Form' button.</Card.Text>
-                                    <Card.Text>4. Confirm the details on the page. Click 'Save as PDF' to download the file.</Card.Text>
+                                    <Card.Text>4. Confirm the details on the page. Click the 'Save as PDF' to download the file.</Card.Text>
                                     <Card.Text>5. Attach e-signature, if required.</Card.Text>
                                     <Card.Text>6. Submit the document by filling out the <strong>Submit Request</strong> form.</Card.Text>
                                     <Card.Text>7. Attach the required documents.</Card.Text>

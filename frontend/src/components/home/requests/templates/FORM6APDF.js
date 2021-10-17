@@ -1,5 +1,6 @@
 import React, { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
 import Pdf from "react-to-pdf";
 import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
 import { Button, Row } from 'react-bootstrap'
@@ -48,9 +49,9 @@ const FORM6APDF = ({ studentInfo, submitted, setSubmitted }) => {
             <div style={{ fontFamily: 'MuktaMalar' }}>
                 <span style={{ margin: '10px' }}>
                     <h4>Preview of accomplished form.</h4>
-                    <h6>Click 'Save as PDF' button below to download the form.</h6>
+                    <h6>Click the 'Save as PDF' button below to download the form. After downloading, attach your signature to the document. Submit document along with other requirements <Link to='/submit/request'>here</Link> to complete your request.</h6>
                 </span>
-                <div className="Post" ref={ref} style={{ border: '1px solid black ' }}>
+                <div className="Post" ref={ref} style={{ border: '1px solid black' }}>
                     <div className="headerform">
                         <div style={{ fontSize: '10px' }}>
                             UST Form No. 6A<br />
@@ -482,10 +483,12 @@ const FORM6APDF = ({ studentInfo, submitted, setSubmitted }) => {
 
                 <Pdf targetRef={ref} filename={`${studentInfo.studentNumber}-add-drop-form.pdf`} options={options}>
                     {({ toPdf }) =>
-                        <center>
-                            <Button onClick={goBack} variant='outline-danger' style={{ margin: '10px' }}>Back</Button>
-                            <Button onClick={toPdf} style={{ margin: '10px' }}>Save as PDF</Button>
-                        </center>
+                        <span style={{ margin: '5px' }}>
+                            <center>
+                                <Button onClick={goBack} variant='outline-danger' style={{ margin: '10px' }}>Back</Button>
+                                <Button onClick={toPdf} style={{ margin: '10px' }}>Save as PDF</Button>
+                            </center>
+                        </span>
                     }
                 </Pdf>
             </div>
