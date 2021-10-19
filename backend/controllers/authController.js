@@ -364,7 +364,7 @@ exports.getStudentAccounts = catchAsyncErrors(async (req, res, next) => {
         case 'CS Dept Chair':
             deptCourse = 'Computer Science'
             break
-        case 'CICS Staff':
+        case 'CICS Office':
         case 'Student':
             return next(new ErrorHandler('Role does not have access to this resource'))
     }

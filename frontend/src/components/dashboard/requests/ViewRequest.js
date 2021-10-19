@@ -376,7 +376,7 @@ const ViewRequest = ({ history, match }) => {
                         </Card>
                         <center>
                             {Number(viewType) === 1 ? (
-                                user.role === 'CICS Staff' ? (
+                                user.role === 'CICS Office' ? (
                                     <Fragment>
                                         <Link to={`/admin/request/${id}`}>
                                             <Button

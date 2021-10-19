@@ -50,7 +50,7 @@ const userSchema = new mongoose.Schema({
         enum: {
             values: [
                 'Student',
-                'CICS Staff',
+                'CICS Office',
                 'IT Dept Chair',
                 'IS Dept Chair',
                 'CS Dept Chair'

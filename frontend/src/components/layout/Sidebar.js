@@ -131,7 +131,7 @@ const Sidebar = () => {
                                 })}
                             </Fragment>
                         ) : (
-                            user.role === 'CICS Staff' ? (
+                            user.role === 'CICS Office' ? (
                                 <Fragment>
                                     {SidebarData[2].map((item, index) => {
                                         return <SubMenu item={item} key={index} />;

@@ -52,7 +52,7 @@ const ListMyRequests = ({ history }) => {
     }, [status, requests, pending, processing, approved, denied])
 
     useEffect(() => {
-        dispatch(getRequests('CICS Staff', 'Me'))
+        dispatch(getRequests('CICS Office', 'Me'))
 
         if (error) {
             alert.error(error)

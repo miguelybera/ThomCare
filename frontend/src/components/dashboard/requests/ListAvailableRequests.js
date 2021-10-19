@@ -23,7 +23,7 @@ const ListAvailableRequests = ({ history }) => {
     const upperCase = (text) => text.toUpperCase()
 
     useEffect(() => {
-        dispatch(getRequests('CICS Staff', 'Available'))
+        dispatch(getRequests('CICS Office', 'Available'))
 
         if (error) {
             alert.error(error)

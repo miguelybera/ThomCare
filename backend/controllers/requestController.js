@@ -165,7 +165,7 @@ exports.getDeptChairRequests = catchAsyncErrors(async (req, res, next) => {
         case 'CS Dept Chair':
             deptCourse = 'Computer Science'
             break
-        case 'CICS Staff':
+        case 'CICS Office':
         case 'Student':
             return next(new ErrorHandler('Role does not have access to this resource'))
     }
@@ -521,7 +521,7 @@ exports.getTrashedRequests = catchAsyncErrors(async (req, res, next) => {
         case 'CS Dept Chair':
             deptCourse = 'Computer Science'
             break
-        case 'CICS Staff':
+        case 'CICS Office':
             deptCourse = 'Office'
             break
         case 'Student':
@@ -567,7 +567,7 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
         case 'CS Dept Chair':
             deptCourse = 'Computer Science'
             break
-        case 'CICS Staff':
+        case 'CICS Office':
             break
         case 'Student':
             return next(new ErrorHandler('Role does not have access to this resource'))
@@ -660,7 +660,7 @@ exports.assignRequestToSelfCICS = catchAsyncErrors(async (req, res, next) => {
 
     if (!request) { return next(new ErrorHandler(`Request does not exist with this id:(${req.params.requestId})`)) }
     if(request.managedBy != ""){
-        return next(new ErrorHandler(`This request is already been assigned to a CICS Staff`))
+        return next(new ErrorHandler(`This request is already been assigned to a CICS Office`))
     }
 
     const newRequestData = { managedBy: req.user.id }

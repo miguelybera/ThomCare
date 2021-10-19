@@ -27,7 +27,7 @@ const UpdateUser = ({ history, match }) => {
     const [show, setShow] = useState(false)
 
     const programs = ['Computer Science', 'Information Systems', 'Information Technology']
-    const roles = ['CICS Staff', 'IT Dept Chair', 'IS Dept Chair', 'CS Dept Chair']
+    const roles = ['CICS Office', 'IT Dept Chair', 'IS Dept Chair', 'CS Dept Chair']
 
     const userId = match.params.id
 
@@ -73,7 +73,7 @@ const UpdateUser = ({ history, match }) => {
         }
 
         if (isUpdated) {
-            if (user.role !== 'CICS Staff') {
+            if (user.role !== 'CICS Office') {
                 history.push('/admin/deptchair/students')
             } else {
                 history.push('/admin/users')

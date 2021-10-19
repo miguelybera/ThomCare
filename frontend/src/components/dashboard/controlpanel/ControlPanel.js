@@ -25,7 +25,7 @@ const ControlPanel = ({ history }) => {
 
     let link = '', reqType = '', viewType = ''
 
-    if (user.role === 'CICS Staff') {
+    if (user.role === 'CICS Office') {
         link = '/admin/all/requests'
         reqType = 'All'
         viewType = '5'

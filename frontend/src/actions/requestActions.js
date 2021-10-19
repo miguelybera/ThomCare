@@ -95,7 +95,7 @@ export const getRequests = (role, route) => async (dispatch) => {
 
         let link = ``
 
-        if (role === 'CICS Staff') {
+        if (role === 'CICS Office') {
             switch (route) {
                 case 'Office':
                     link = `/api/v1/admin/cics/office/requests`
@@ -176,7 +176,7 @@ export const getRecent = (role) => async (dispatch) => {
 
         let link = ``
 
-        if (role === 'CICS Staff') {
+        if (role === 'CICS Office') {
             link = `/api/v1/admin/cics/all/requests`
         } else if (role === 'Student') { //student
             link = `/api/v1/me/requests`

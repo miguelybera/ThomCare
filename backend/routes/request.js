@@ -73,19 +73,19 @@ router.route('/me/requests').get(isAuthenticatedUser, authorizeRoles('Student'),
 router.route('/admin/deptChair/requests').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getDeptChairRequests);
 
 //cics staff
-router.route('/admin/cics/all/requests').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getAllRequests); //didnt use it?
-router.route('/admin/cics/office/requests').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getOfficeRequests);
-router.route('/admin/cics/available/requests').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getAvailableRequests);
-router.route('/admin/cics/assign/:requestId').put(isAuthenticatedUser, authorizeRoles('CICS Staff'), assignRequestToSelfCICS);
-router.route('/admin/cics/me/requests').get(isAuthenticatedUser, authorizeRoles('CICS Staff'), getAssignedRequests);
-router.route('/admin/cics/unassign/:requestId').put(isAuthenticatedUser, authorizeRoles('CICS Staff'), unassignRequest);
+router.route('/admin/cics/all/requests').get(isAuthenticatedUser, authorizeRoles('CICS Office'), getAllRequests); //didnt use it?
+router.route('/admin/cics/office/requests').get(isAuthenticatedUser, authorizeRoles('CICS Office'), getOfficeRequests);
+router.route('/admin/cics/available/requests').get(isAuthenticatedUser, authorizeRoles('CICS Office'), getAvailableRequests);
+router.route('/admin/cics/assign/:requestId').put(isAuthenticatedUser, authorizeRoles('CICS Office'), assignRequestToSelfCICS);
+router.route('/admin/cics/me/requests').get(isAuthenticatedUser, authorizeRoles('CICS Office'), getAssignedRequests);
+router.route('/admin/cics/unassign/:requestId').put(isAuthenticatedUser, authorizeRoles('CICS Office'), unassignRequest);
 
 //dept chair and cics staff (the trash request can also be used for restoring the request back)
-router.route('/admin/requests/trash').get(isAuthenticatedUser, authorizeRoles('CICS Staff', 'IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getTrashedRequests);
-router.route('/admin/update/:requestId').put(isAuthenticatedUser, thomcareUploadAdmin.array('returningFiles'), authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), updateRequest);
-router.route('/admin/trash/:requestId').put(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Staff'), trashRequest);
+router.route('/admin/requests/trash').get(isAuthenticatedUser, authorizeRoles('CICS Office', 'IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getTrashedRequests);
+router.route('/admin/update/:requestId').put(isAuthenticatedUser, thomcareUploadAdmin.array('returningFiles'), authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Office'), updateRequest);
+router.route('/admin/trash/:requestId').put(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Office'), trashRequest);
 
 //dept chair, cics staff, student
-router.route('/delete/:requestId').delete(isAuthenticatedUser, authorizeRoles('Student', 'CICS Staff', 'IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), deleteRequest);
+router.route('/delete/:requestId').delete(isAuthenticatedUser, authorizeRoles('Student', 'CICS Office', 'IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), deleteRequest);
 
 module.exports = router;

@@ -30,8 +30,8 @@ const ListAllRequests = ({ history }) => {
     const upperCase = (text) => text.toUpperCase()
 
     useEffect(() => {
-        if (user.role === 'CICS Staff') {
-            dispatch(getRequests('CICS Staff', 'Trash'))
+        if (user.role === 'CICS Office') {
+            dispatch(getRequests('CICS Office', 'Trash'))
         } else {
             dispatch(getRequests('Dept Chair', 'Trash'))
         }

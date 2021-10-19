@@ -25,7 +25,7 @@ const RegisterAdmin = ({ history }) => {
     const [showConfirm, setShowConfirm] = useState('false')
     const [show, setShow] = useState(false)
 
-    const roles = ['CICS Staff', 'IT Dept Chair', 'IS Dept Chair', 'CS Dept Chair']
+    const roles = ['CICS Office', 'IT Dept Chair', 'IS Dept Chair', 'CS Dept Chair']
 
     const showPasswordToggle = () => setShowPassword(!showPassword)
     const showConfirmToggle = () => setShowConfirm(!showConfirm)

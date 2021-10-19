@@ -20,11 +20,11 @@ const ProtectedRoute = ({ forAdmins, forCICS, forDeptChairs, component: Componen
                             return <Redirect to='/controlpanel'/>
                         }
 
-                        if (forCICS === true && user.role !== 'CICS Staff') {
+                        if (forCICS === true && user.role !== 'CICS Office') {
                             return <Redirect to='/controlpanel'/>
                         }
 
-                        if (forDeptChairs === true && (user.role === 'CICS Staff' || user.role === 'Student')) {
+                        if (forDeptChairs === true && (user.role === 'CICS Office' || user.role === 'Student')) {
                             return <Redirect to='/controlpanel'/>
                         }
 
