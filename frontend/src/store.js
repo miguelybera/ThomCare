@@ -1,6 +1,5 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
-import { composeWithDevTools } from 'redux-devtools-extension'
 
 import {
     authReducer,
@@ -105,7 +104,6 @@ let initialState = {} //contains all the data we want to put in this state just 
 
 //clear the store
 const middleware = [thunk]
-const store = createStore(reducer, initialState, composeWithDevTools(applyMiddleware(...middleware)))
-//const store = createStore(reducer, initialState, applyMiddleware(...middleware))
+const store = createStore(reducer, initialState, applyMiddleware(...middleware))
 
 export default store

@@ -107,11 +107,11 @@ const CreateCourse = ({ history, match }) => {
                     <Button variant="primary" onClick={goBack}>Yes, I'm sure</Button>
                 </Modal.Footer>
             </Modal>
-            <Container fluid>
+            <Container fluid style={{ marginTop: '100px' }}>
                 <Row className='justify-content-md-center' style={{ marginTop: '50px' }}>
                     <Card style={{ backgroundColor: "#F5F5F5", width: '30rem', align: 'center', borderTop: '7px solid #9c0b0b', marginBottom: '50px' }}>
                         <Card.Body>
-                            <Card.Title style={{ margin: '20px 0 20px 0', fontWeight: "bold" }}>Update Course Information</Card.Title>
+                            <Card.Title style={{ margin: '20px 0', fontWeight: "bold" }}>Update Course Information</Card.Title>
                             {loading ? <Loader /> : (
                                 <Form onSubmit={submitHandler}>
                                     <Form.Group className="mb-3">
