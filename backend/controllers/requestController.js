@@ -821,3 +821,34 @@ exports.unassignRequest = catchAsyncErrors(async (req, res, next) => {
     })
 
 })
+
+exports.getCrossEnrollmentPending = catchAsyncErrors(async (req, res, next) => {
+    const reqStatusIT = ['Approved pending for IT','Approved by IT','Denied by IT',];
+    const reqStatusIS = ['Approved pending for IS','Approved by IS','Denied by IS',];
+    const reqStatusCS = ['Approved pending for CS','Approved by CS','Denied by CS',];
+    switch (req.user.role) {
+        case 'IT Dept Chair':
+            crossStatus = reqStatusIT
+            break
+        case 'IS Dept Chair':
+            crossStatus = reqStatusIS
+            break
+        case 'CS Dept Chair':
+            crossStatus = reqStatusCS
+            break
+        case 'CICS Office':
+        case 'Student':
+            return next(new ErrorHandler('Role does not have access to this resource'))
+    }
+    const getRequestsCrossEnrollment = new APIFeatures(Request.find({ isTrash: false, requestType: 'Cross Enrollment within CICS', requestStatus:{ $in: crossStatus } })
+    .sort({ createdAt: -1 }), req.query)
+    .searchRequests()
+    .filter()
+
+    const crossRequests = await getRequestsCrossEnrollment.query;
+
+    res.status(200).json({
+        success: true,
+        crossRequests
+    })
+})
