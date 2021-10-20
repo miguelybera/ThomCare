@@ -23,17 +23,6 @@ const courseSchema = new mongoose.Schema({
         trim: true,
         required: [true, 'Please enter lab units'],
         default: '0'
-    },
-    semester:{
-        type: String,
-        required: [true, 'Please enter the semester'],
-        enum: {
-            values: [
-                '1st',
-                '2nd',
-                'Special'
-            ]
-        },
     }
 })
 
