@@ -18,13 +18,14 @@ const CreateCourse = ({ history }) => {
     const [courseCode, setCourseCode] = useState()
     const [lecUnits, setLecUnits] = useState()
     const [labUnits, setLabUnits] = useState()
+    const [available, setAvailable] = useState()
 
     const [show, setShow] = useState(false)
 
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
 
-        const goBack = () => {
+    const goBack = () => {
         window.history.back()
         handleClose()
     }
@@ -56,12 +57,13 @@ const CreateCourse = ({ history }) => {
             courseCode,
             courseName,
             lecUnits,
-            labUnits
+            labUnits,
+            available
         }
 
         dispatch(createCourse(formData))
     }
-    
+
     return (
         <>
             <MetaData title={'New Course'} />
@@ -97,11 +99,11 @@ const CreateCourse = ({ history }) => {
                                         className="mb-3"
                                     >
                                         <Form.Control
-                                        type='text'
-                                        name='courseCode'
-                                        value={courseCode}
-                                        onChange={e => setCourseCode(e.target.value)}
-                                        required
+                                            type='text'
+                                            name='courseCode'
+                                            value={courseCode}
+                                            onChange={e => setCourseCode(e.target.value)}
+                                            required
                                         />
                                     </FloatingLabel>
                                 </Form.Group>
@@ -147,6 +149,25 @@ const CreateCourse = ({ history }) => {
                                             onChange={e => setLabUnits(e.target.value)}
                                             required
                                         />
+                                    </FloatingLabel>
+                                </Form.Group>
+                                <Form.Group className="mb-3">
+                                    <FloatingLabel
+                                        label="Available?"
+                                        className="mb-3"
+                                    >
+                                        <Form.Select
+                                            type='text'
+                                            name='available'
+                                            pattern="[0-9]{1}"
+                                            value={available}
+                                            onChange={e => setAvailable(e.target.value)}
+                                            required
+                                        >
+                                            <option value=''>-</option>
+                                            <option value='Yes'>Yes</option>
+                                            <option value='No'>No</option>
+                                        </Form.Select>
                                     </FloatingLabel>
                                 </Form.Group>
                                 <center>

@@ -4,7 +4,7 @@ import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { Container, Modal, Button } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
-import { getCourses, deleteCourse, clearErrors } from '../../../actions/courseActions'
+import { getAllCourses, deleteCourse, clearErrors } from '../../../actions/courseActions'
 import { DELETE_COURSE_RESET } from '../../../constants/courseConstants'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Sidebar from '../../layout/Sidebar'
@@ -25,7 +25,7 @@ const ListCourses = ({ history }) => {
     const handleShow = () => setShow(true);
 
     useEffect(() => {
-        dispatch(getCourses())
+        dispatch(getAllCourses())
 
         if (isDeleted) {
             alert.success('Course deleted.')
@@ -82,8 +82,8 @@ const ListCourses = ({ history }) => {
                     width: 135
                 },
                 {
-                    label: 'Total Units',
-                    field: 'totalUnits',
+                    label: 'Available?',
+                    field: 'available',
                     width: 135
                 },
                 {
@@ -101,7 +101,13 @@ const ListCourses = ({ history }) => {
                 courseName: course.courseName,
                 lecUnits: course.lecUnits + ' units',
                 labUnits: course.labUnits + ' units',
-                totalUnits: Number(course.lecUnits) + Number(course.labUnits) + ' units',
+                available: <Fragment>
+                <p style={{
+                    color: course.available === 'No' ? 'red' : 'green'
+                }}>
+                    {course.available}
+                </p>
+            </Fragment>,
                 actions: <Fragment>
                     <Link to={`/admin/course/${course._id}`}>
                         <Button variant="warning" className="mr-5" style={{ margin: '5px' }}>

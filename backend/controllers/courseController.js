@@ -39,6 +39,16 @@ exports.getAllCourses = catchAsyncErrors(async (req, res, next) => {
     })
 })
 
+// view available courses => /api/v1/available/courses
+exports.getAvailableCourses = catchAsyncErrors(async (req, res, next) => {
+    const courses = await Course.find({ available: 'Yes' }).sort({ courseCode: 1 })
+
+    res.status(200).json({
+        success: true,
+        courses
+    })
+})
+
 // Get single course /api/v1/course/:id
 exports.getSingleCourse = catchAsyncErrors(async (req, res, next) => {
     const course = await Course.findById(req.params.id);

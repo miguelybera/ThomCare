@@ -25,6 +25,29 @@ export const getCourses = () => async (dispatch) => {
             type: GET_COURSES_REQUEST
         })
 
+        const { data } = await axios.get(`/api/v1/available/courses`)
+
+        dispatch({
+            type: GET_COURSES_SUCCESS,
+            payload: data
+        })
+    }
+    catch (error) {
+        dispatch({
+            type: GET_COURSES_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+
+// get all courses
+export const getAllCourses = () => async (dispatch) => {
+    try {
+        dispatch({
+            type: GET_COURSES_REQUEST
+        })
+
         const { data } = await axios.get(`/api/v1/courses`)
 
         dispatch({

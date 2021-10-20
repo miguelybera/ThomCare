@@ -11,7 +11,6 @@ import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
 import dateformat from 'dateformat'
-import { Filter } from 'interweave'
 
 const dropdown = {
     border: "2px solid black",
