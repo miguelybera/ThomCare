@@ -822,7 +822,7 @@ exports.unassignRequest = catchAsyncErrors(async (req, res, next) => {
 
 })
 
-exports.getCrossEnrollmentPending = catchAsyncErrors(async (req, res, next) => {
+exports.getCrossEnrollment = catchAsyncErrors(async (req, res, next) => {
     const reqStatusIT = ['Approved pending for IT','Approved by IT','Denied by IT',];
     const reqStatusIS = ['Approved pending for IS','Approved by IS','Denied by IS',];
     const reqStatusCS = ['Approved pending for CS','Approved by CS','Denied by CS',];

@@ -25,6 +25,7 @@ const {
     getTrashedRequests,
     getAvailableRequests,
     getAssignedRequests,
+    getCrossEnrollment,
 
     updateRequest,
     deleteRequest,
@@ -71,6 +72,7 @@ router.route('/me/requests').get(isAuthenticatedUser, authorizeRoles('Student'),
 
 //dept chair
 router.route('/admin/deptChair/requests').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getDeptChairRequests);
+router.route('/admin/deptChair/crossEnrollment').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getCrossEnrollment);
 
 //cics staff
 router.route('/admin/cics/all/requests').get(isAuthenticatedUser, authorizeRoles('CICS Office'), getAllRequests); //didnt use it?
