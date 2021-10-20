@@ -23,6 +23,16 @@ const courseSchema = new mongoose.Schema({
         trim: true,
         required: [true, 'Please enter lab units'],
         default: '0'
+    },
+    available:{
+        type: String,
+        required: [true, 'Please enter availability status'],
+        enum: {
+            values: [
+                'Yes',
+                'No'
+            ]},
+            default: 'Yes'
     }
 })
 
