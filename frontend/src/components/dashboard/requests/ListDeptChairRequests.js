@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Button, ButtonToolbar, ButtonGroup, Row, Col } from 'react-bootstrap'
+import { Container, Button, ButtonToolbar, ButtonGroup, Row, Col, Form } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getRequests, updateRequest, clearErrors } from '../../../actions/requestActions'
 import { UPDATE_REQUEST_RESET } from '../../../constants/requestConstants'
@@ -11,6 +11,13 @@ import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
 import dateformat from 'dateformat'
+import { Filter } from 'interweave'
+
+const dropdown = {
+    border: "2px solid black",
+    borderRadius: "20px",
+    margin: '5px 0'
+}
 
 const ListDeptChairRequests = ({ history }) => {
     const alert = useAlert()
@@ -21,6 +28,28 @@ const ListDeptChairRequests = ({ history }) => {
 
     const [requestList, setRequestList] = useState([])
     const [status, setStatus] = useState('Requests')
+    const [searchButton, setSearchButton] = useState(1)
+    const [filter, setFilter] = useState({
+        requestType: ''
+    })
+    const requestTypes = [
+        'Adding/Dropping of Course',
+        'Cross Enrollment within CICS',
+        'Cross Enrollment outside CICS',
+        'Request for Petition Classes within CICS',
+        'Request for Crediting of Courses',
+        'Request for Overload',
+        'Request to Override',
+        'Request for Late Enrollment',
+        'Request for Manual Enrollment',
+        'Request for Course Description',
+        'Request for Certificate of Grades',
+        'Request for Leave of Absence',
+        'Submission of Admission Memo',
+        'Others'
+    ]
+
+    const { requestType } = filter
 
     const changeDateFormat = (date) => dateformat(date, "mmm d, yyyy h:MMtt")
     const upperCase = (text) => text.toUpperCase()
@@ -54,7 +83,7 @@ const ListDeptChairRequests = ({ history }) => {
     }, [status, requests, pending, processing, approved, denied, crossEnrollment])
 
     useEffect(() => {
-        dispatch(getRequests('Dept Chair', 'Requests'))
+        dispatch(getRequests('Dept Chair', 'Requests', ''))
 
         if (error) {
             alert.error(error)
@@ -81,6 +110,22 @@ const ListDeptChairRequests = ({ history }) => {
             type: INSIDE_DASHBOARD_TRUE
         })
     }, [dispatch, history, alert, error, updateError, isUpdated])
+
+    useEffect(() => {
+        dispatch(getRequests('Dept Chair', 'Requests', requestType))
+
+        if (error) {
+            alert.error(error)
+            dispatch(clearErrors())
+
+            setFilter({
+                requestType: ''
+            })
+
+            history.push('/error')
+        }
+
+    }, [dispatch, history, alert, error, searchButton])
 
     const updateRequestHandler = (id) => {
         dispatch(updateRequest(id, { isTrash: true }, true))
@@ -160,6 +205,19 @@ const ListDeptChairRequests = ({ history }) => {
         return data
     }
 
+    const onChange = e => {
+        setFilter({
+            ...filter,
+            [e.target.name]: e.target.value
+        })
+    }
+
+    const searchHandler = e => {
+        e.preventDefault()
+
+        setSearchButton(searchButton + 1)
+    }
+
     return (
         <Fragment>
             <MetaData title={'My Requests'} />
@@ -184,6 +242,34 @@ const ListDeptChairRequests = ({ history }) => {
                                 </ButtonToolbar>
                             </Col>
                         </Row>
+                        <Form onSubmit={searchHandler}>
+                            <Row >
+                                <Col xs={12} md={4} lg={2}>
+                                    <Form.Group>
+                                        <Form.Select
+                                            aria-label="Course"
+                                            size="sm"
+                                            style={dropdown}
+                                            name="requestType"
+                                            value={requestType}
+                                            onChange={onChange}
+                                        >
+                                            <option value=''>Request Type</option>
+                                            {requestTypes.map(r => (
+                                                <option value={r}>{r}</option>
+                                            ))}
+                                        </Form.Select>
+                                    </Form.Group>
+                                </Col>
+                                <Col xs={12} md={4} lg={2}>
+                                    <Form.Group sm>
+                                        <center>
+                                            <Button type='submit' style={{ margin: '5px' }}>Submit</Button>
+                                        </center>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                        </Form>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5
