@@ -823,9 +823,9 @@ exports.unassignRequest = catchAsyncErrors(async (req, res, next) => {
 })
 
 exports.getCrossEnrollment = catchAsyncErrors(async (req, res, next) => {
-    const reqStatusIT = ['Approved pending for IT','Approved by IT','Denied by IT',];
-    const reqStatusIS = ['Approved pending for IS','Approved by IS','Denied by IS',];
-    const reqStatusCS = ['Approved pending for CS','Approved by CS','Denied by CS',];
+    const reqStatusIT = ['Pending for IT Approval','Approved by IT','Denied by IT',];
+    const reqStatusIS = ['Pending for IS Approval','Approved by IS','Denied by IS',];
+    const reqStatusCS = ['Pending for CS Approval','Approved by CS','Denied by CS',];
     switch (req.user.role) {
         case 'IT Dept Chair':
             crossStatus = reqStatusIT
