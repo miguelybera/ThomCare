@@ -14,6 +14,9 @@ import {
     GET_REQUESTS_REQUEST,
     GET_REQUESTS_SUCCESS,
     GET_REQUESTS_FAIL,
+    GET_CROSSENROL_REQUEST,
+    GET_CROSSENROL_SUCCESS,
+    GET_CROSSENROL_FAIL,
     GET_RECENT_REQUEST,
     GET_RECENT_SUCCESS,
     GET_RECENT_FAIL,
@@ -165,6 +168,7 @@ export const submitRequestReducer = (state = { request: {} }, action) => {
 export const getRequestsReducer = (state = { requests: [], recents: [], pending: [], processing: [], approved: [], denied: [], crossEnrollment: [], dailyStats: [], weeklyStats: [], overViewStats: [] }, action) => {
     switch (action.type) {
         case GET_REQUESTS_REQUEST:
+        case GET_CROSSENROL_REQUEST:
             return {
                 ...state,
                 loading: true,
@@ -181,6 +185,7 @@ export const getRequestsReducer = (state = { requests: [], recents: [], pending:
             }
 
         case GET_REQUESTS_SUCCESS:
+        case GET_CROSSENROL_SUCCESS:
             return {
                 loading: false,
                 requests: action.payload.requests,
@@ -197,6 +202,7 @@ export const getRequestsReducer = (state = { requests: [], recents: [], pending:
             }
 
         case GET_REQUESTS_FAIL:
+        case GET_CROSSENROL_FAIL:
             return {
                 ...state,
                 loading: false,

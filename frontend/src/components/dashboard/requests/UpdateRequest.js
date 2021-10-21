@@ -30,11 +30,24 @@ const UpdateRequest = ({ history, match }) => {
     const [remarksMessage, setRemarksMessage] = useState([])
     const [show, setShow] = useState(false)
 
-    const status = ["Pending", "Processing", "Denied", "Approved"]
+    const [status, setStatus] = useState([])
+
+    const normalStatus = ['Pending', 'Processing', 'Denied', 'Approved']
+    const crossEnrolStatus = [
+        'Processing',
+        'Pending for CS Approval',
+        'Pending for IS Approval',
+        'Pending for IT Approval',
+        'Approved by CS',
+        'Approved by IS',
+        'Approved by IT',
+        'Denied by CS',
+        'Denied by IS',
+        'Denied by IT'];
 
     const requestId = match.params.id
 
-    const changeDateFormat = (date) => dateformat(date, "mmm d, yyyy h:MMtt")
+    const changeDateFormat = (date) => dateformat(date, 'mmm d, yyyy h:MMtt')
     const upperCase = (text) => text.toUpperCase()
 
     const handleClose = () => setShow(false)
@@ -88,6 +101,14 @@ const UpdateRequest = ({ history, match }) => {
             type: INSIDE_DASHBOARD_TRUE
         })
     }, [dispatch, request, error, history, alert, isUpdated, updateError, requestId])
+
+    useEffect(() => {
+        if (requestType === 'Cross Enrollment within CICS') {
+            setStatus(crossEnrolStatus)
+        } else {
+            setStatus(normalStatus)
+        }
+    }, [request, requestId])
 
     const onChange = e => {
         const files = Array.from(e.target.files)

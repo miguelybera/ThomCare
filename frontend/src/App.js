@@ -71,6 +71,7 @@ import UpdateForm from './components/dashboard/forms/UpdateForm'
 //dashboard/requests folder
 import ListCICSRequests from './components/dashboard/requests/ListCICSRequests'
 import ListDeptChairRequests from './components/dashboard/requests/ListDeptChairRequests'
+import ListCrossEnrollment from './components/dashboard/requests/ListCrossEnrollment'
 import ListStudentRequests from './components/dashboard/requests/ListStudentRequests'
 import ListMyRequests from './components/dashboard/requests/ListMyRequests'
 import ListAllRequests from './components/dashboard/requests/ListAllRequests'
@@ -150,6 +151,7 @@ function App() {
                                             {/**DEPT CHAIR ROUTES */}
                                                 {/**REQUESTS */}
                                                 <ProtectedRoute path='/admin/deptchair/requests' forDeptChairs={true} component={ListDeptChairRequests} exact />
+                                                <ProtectedRoute path='/admin/deptchair/crossenrollment/requests' forDeptChairs={true} component={ListCrossEnrollment} exact />
                                                 {/**USERS */}
                                                 <ProtectedRoute path='/admin/deptchair/students' forDeptChairs={true} component={ListStudents} exact />
                                             {/**DEPT CHAIR ROUTES */}

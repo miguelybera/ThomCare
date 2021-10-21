@@ -220,7 +220,7 @@ const ListDeptChairRequests = ({ history }) => {
     return (
         <Fragment>
             <MetaData title={'My Requests'} />
-            <Sidebar />
+            <Sidebar />updat
             <div className="row">
                 <div className="">
                     <Container fluid style={{ padding: "50px 0px" }}>
@@ -236,7 +236,8 @@ const ListDeptChairRequests = ({ history }) => {
                                         <Button variant="outline-secondary" onClick={() => setStatus('Processing')}>Processing</Button>
                                         <Button variant="outline-secondary" onClick={() => setStatus('Approved')}>Approved</Button>
                                         <Button variant="outline-secondary" onClick={() => setStatus('Denied')}>Denied</Button>
-                                        <Button variant="outline-secondary" onClick={() => setStatus('Cross Enrollment')}>Cross Enrollment</Button>
+                                        <Button variant="outline-secondary" onClick={() => setStatus('Cross Enrollment')}>Outgoing Cross Enrollment</Button>
+                                        <Button variant="outline-secondary" onClick={() => history.push('/admin/deptchair/crossenrollment/requests')}>Incoming Cross Enrollment</Button>
                                     </ButtonGroup>
                                 </ButtonToolbar>
                             </Col>

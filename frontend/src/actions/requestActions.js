@@ -12,6 +12,9 @@ import {
     GET_REQUESTS_REQUEST,
     GET_REQUESTS_SUCCESS,
     GET_REQUESTS_FAIL,
+    GET_CROSSENROL_REQUEST,
+    GET_CROSSENROL_SUCCESS,
+    GET_CROSSENROL_FAIL,
     GET_RECENT_REQUEST,
     GET_RECENT_SUCCESS,
     GET_RECENT_FAIL,
@@ -140,6 +143,29 @@ export const getRequests = (role, route, requestType) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: GET_REQUESTS_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+
+//get requests
+export const getCrossEnrol = () => async (dispatch) => {
+    try {
+        dispatch({
+            type: GET_CROSSENROL_REQUEST
+        })
+
+        const { data } = await axios.get('/api/v1/admin/deptChair/crossEnrollment')
+
+        dispatch({
+            type: GET_CROSSENROL_SUCCESS,
+            payload: data
+        })
+    }
+    catch (error) {
+        dispatch({
+            type: GET_CROSSENROL_FAIL,
             payload: error.response.data.message
         })
     }
