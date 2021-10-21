@@ -826,29 +826,40 @@ exports.getCrossEnrollment = catchAsyncErrors(async (req, res, next) => {
     const reqStatusIT = ['Pending for IT Approval', 'Approved by IT', 'Denied by IT'];
     const reqStatusIS = ['Pending for IS Approval', 'Approved by IS', 'Denied by IS'];
     const reqStatusCS = ['Pending for CS Approval', 'Approved by CS', 'Denied by CS'];
+    let deptCourse = ''
     switch (req.user.role) {
         case 'IT Dept Chair':
             crossStatus = reqStatusIT
+            deptCourse = 'Information Technology'
             break
         case 'IS Dept Chair':
             crossStatus = reqStatusIS
+            deptCourse = 'Information Systems'
             break
         case 'CS Dept Chair':
             crossStatus = reqStatusCS
+            deptCourse = 'Computer Science'
             break
         case 'CICS Office':
         case 'Student':
             return next(new ErrorHandler('Role does not have access to this resource'))
     }
-    const getRequestsCrossEnrollment = new APIFeatures(Request.find({ isTrash: false, requestType: 'Cross Enrollment within CICS', requestStatus: { $in: crossStatus } })
+     
+    const getRequestsCrossEnrollmentOutgoing = new APIFeatures(Request.find({ isTrash: false, requestType: 'Cross Enrollment within CICS', requestStatus: { $in: crossStatus } })
         .sort({ createdAt: -1 }), req.query)
         .searchRequests()
         .filter()
+    const crossEnrollmentOutgoing = await getRequestsCrossEnrollmentOutgoing.query;
 
-    const crossEnrollment = await getRequestsCrossEnrollment.query;
+    const getRequestsCrossEnrollmentIncoming = new APIFeatures(Request.find({ "requestorInfo.course": deptCourse, isTrash: false, requestType: 'Cross Enrollment within CICS' })
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
+    const crossEnrollmentIncoming = await getRequestsCrossEnrollmentIncoming.query;
 
     res.status(200).json({
         success: true,
-        crossEnrollment
+        crossEnrollmentOutgoing,
+        crossEnrollmentIncoming
     })
 })
