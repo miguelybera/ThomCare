@@ -144,7 +144,7 @@ exports.deleteConvo = catchAsyncErrors(async (req, res, next) => {
         members: { $all: [req.params.firstUserId, req.params.secondUserId] },
     })
 
-    if (!conversation) { return next(new ErrorHandler('Course Not Found', 404)) }
+    if (!conversation) { return next(new ErrorHandler('Conversation Not Found', 404)) }
    
 
     await conversation.remove()
