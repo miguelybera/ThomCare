@@ -94,17 +94,7 @@ const ListIncomingCrossEnrollment = ({ history }) => {
                 date: changeDateFormat(request.createdAt),
                 requestType: request.requestType,
                 name: request.requestorInfo.firstName + ' ' + request.requestorInfo.lastName,
-                requestStatus: <Fragment>
-                    <p style={{
-                        color: request.requestStatus === 'Pending' ? 'blue' : (
-                            request.requestStatus === 'Processing' ? '#ffcc00' : (
-                                request.requestStatus === 'Denied' ? 'red' : 'green'
-                            )
-                        )
-                    }}>
-                        {upperCase(request.requestStatus)}
-                    </p>
-                </Fragment>,
+                requestStatus: upperCase(request.requestStatus),
                 actions: <Fragment>
                     <Link to={`/view/request/${viewType}`}>
                         <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
