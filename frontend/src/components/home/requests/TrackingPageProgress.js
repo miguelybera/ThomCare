@@ -249,10 +249,8 @@ const TrackingPageProgress = ({ history, match }) => {
                                     <Form.Label>Request attachments</Form.Label>
                                     <MDBDataTableV5
                                         data={setAttachments()}
-                                        searchTop
-                                        pagingTop
                                         scrollX
-                                        entriesOptions={[5, 20, 25]}
+                                        entriesOptions={[10, 20, 30, 40, 50]}
                                         entries={10}
                                         style={{ backgroundColor: 'white' }}
                                     />
@@ -261,10 +259,8 @@ const TrackingPageProgress = ({ history, match }) => {
                             <Card.Title style={{ margin: '10px 0 20px 0', color: '#9c0b0b', fontWeight: 'bold' }}>Request History</Card.Title>
                             <MDBDataTableV5
                                 data={setHistory()}
-                                searchTop
-                                pagingTop
                                 scrollX
-                                entriesOptions={[5, 20, 25]}
+                                entriesOptions={[10, 20, 30, 40, 50]}
                                 entries={10}
                                 style={{ backgroundColor: 'white' }}
                             />

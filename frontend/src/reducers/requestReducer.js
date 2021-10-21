@@ -165,7 +165,7 @@ export const submitRequestReducer = (state = { request: {} }, action) => {
 }
 
 //get ALL requests
-export const getRequestsReducer = (state = { requests: [], recents: [], pending: [], processing: [], approved: [], denied: [], crossEnrollment: [], dailyStats: [], weeklyStats: [], overViewStats: [] }, action) => {
+export const getRequestsReducer = (state = { requests: [], recents: [], pending: [], processing: [], approved: [], denied: [], dailyStats: [], weeklyStats: [], overViewStats: [] }, action) => {
     switch (action.type) {
         case GET_REQUESTS_REQUEST:
         case GET_CROSSENROL_REQUEST:
@@ -178,7 +178,6 @@ export const getRequestsReducer = (state = { requests: [], recents: [], pending:
                 processing: [],
                 approved: [],
                 denied: [],
-                crossEnrollment: [],
                 dailyStats: [],
                 weeklyStats: [],
                 overViewStats: []
@@ -194,7 +193,6 @@ export const getRequestsReducer = (state = { requests: [], recents: [], pending:
                 processing: action.payload.processing,
                 approved: action.payload.approved,
                 denied: action.payload.denied,
-                crossEnrollment: action.payload.crossEnrollment,
                 dailyStats: action.payload.dailyStats,
                 weeklyStats: action.payload.weeklyStats,
                 overViewStats: action.payload.overViewStats,
@@ -202,6 +200,43 @@ export const getRequestsReducer = (state = { requests: [], recents: [], pending:
             }
 
         case GET_REQUESTS_FAIL:
+        case GET_CROSSENROL_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+//get ALL requests
+export const getCrossEnrollReducer = (state = { crossEnrollmentIncoming: [], crossEnrollmentOutgoing: [] }, action) => {
+    switch (action.type) {
+        case GET_CROSSENROL_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                crossEnrollmentIncoming: [],
+                crossEnrollmentOutgoing: []
+            }
+
+        case GET_CROSSENROL_SUCCESS:
+            return {
+                loading: false,
+                crossEnrollmentIncoming: action.payload.crossEnrollmentIncoming,
+                crossEnrollmentOutgoing: action.payload.crossEnrollmentOutgoing,
+                success: action.payload.success
+            }
+
         case GET_CROSSENROL_FAIL:
             return {
                 ...state,

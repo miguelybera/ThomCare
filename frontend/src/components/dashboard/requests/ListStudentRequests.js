@@ -162,9 +162,9 @@ const ListStudentRequests = ({ history }) => {
                                 <MDBDataTableV5
                                     data={setRequests()}
                                     searchTop
-                                    pagingTop
+                                    searchBottom={false}
                                     scrollX
-                                    entriesOptions={[5, 20, 25]}
+                                    entriesOptions={[10, 20, 30, 40, 50]}
                                     entries={10}
                                 />
                             </>

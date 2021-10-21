@@ -2,77 +2,28 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Button, ButtonGroup, ButtonToolbar, Row, Col } from 'react-bootstrap'
+import { Container, Button, ButtonToolbar, ButtonGroup, Row, Col, Form } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
-import { getRequests, clearErrors } from '../../../actions/requestActions'
+import { getCrossEnrol, updateRequest, clearErrors } from '../../../actions/requestActions'
+import { UPDATE_REQUEST_RESET } from '../../../constants/requestConstants'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
 import dateformat from 'dateformat'
 
-const ListAllRequests = ({ history }) => {
-
+const ListIncomingCrossEnrollment = ({ history }) => {
     const alert = useAlert()
     const dispatch = useDispatch()
 
-    const { loading, requests, pending, processing, approved, denied, error } = useSelector(state => state.requests)
-
-    const [requestList, setRequestList] = useState([])
-    const [status, setStatus] = useState('Requests')
-    const [searchButton, setSearchButton] = useState(1)
-    const [filter, setFilter] = useState({
-        requestType: ''
-    })
-    const requestTypes = [
-        'Adding/Dropping of Course',
-        'Cross Enrollment within CICS',
-        'Cross Enrollment outside CICS',
-        'Request for Petition Classes within CICS',
-        'Request for Crediting of Courses',
-        'Request for Overload',
-        'Request to Override',
-        'Request for Late Enrollment',
-        'Request for Manual Enrollment',
-        'Request for Course Description',
-        'Request for Certificate of Grades',
-        'Request for Leave of Absence',
-        'Submission of Admission Memo',
-        'Others'
-    ]
-
-    const { requestType } = filter
+    const { loading, crossEnrollmentIncoming, error } = useSelector(state => state.crossEnrollment)
+    const { error: updateError, isUpdated } = useSelector(state => state.request)
 
     const changeDateFormat = (date) => dateformat(date, "mmm d, yyyy h:MMtt")
     const upperCase = (text) => text.toUpperCase()
 
     useEffect(() => {
-        setRequestList([])
-
-        switch (status) {
-            case 'Requests':
-                setRequestList(requests)
-                break
-            case 'Pending':
-                setRequestList(pending)
-                break
-            case 'Processing':
-                setRequestList(processing)
-                break
-            case 'Approved':
-                setRequestList(approved)
-                break
-            case 'Denied':
-                setRequestList(denied)
-                break
-            default:
-                break
-        }
-
-    }, [status, requests, pending, processing, approved, denied])
-
-    useEffect(() => {
-        dispatch(getRequests('CICS Office', 'All'))
+        dispatch(getCrossEnrol())
 
         if (error) {
             alert.error(error)
@@ -81,10 +32,28 @@ const ListAllRequests = ({ history }) => {
             history.push('/error')
         }
 
+        if (updateError) {
+            alert.error(updateError)
+            dispatch(clearErrors())
+        }
+
+        if (isUpdated) {
+            alert.success('Request has been moved to Trash successfully.')
+            history.push('/admin/deptchair/crossenrollment/incoming')
+
+            dispatch({
+                type: UPDATE_REQUEST_RESET
+            })
+        }
+
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, history, alert, error])
+    }, [dispatch, history, alert, error, updateError, isUpdated])
+
+    const updateRequestHandler = (id) => {
+        dispatch(updateRequest(id, { isTrash: true }, true))
+    }
 
     const setRequests = () => {
         const data = {
@@ -97,7 +66,7 @@ const ListAllRequests = ({ history }) => {
                 {
                     label: 'Request Type',
                     field: 'requestType',
-                    width: 300
+                    width: 250
                 },
                 {
                     label: 'Requested by',
@@ -112,14 +81,14 @@ const ListAllRequests = ({ history }) => {
                 {
                     label: 'Actions',
                     field: 'actions',
-                    width: 150
+                    width: 200
                 }
             ],
             rows: []
         }
 
-        requestList && requestList.forEach(request => {
-            const viewType = '5' + request._id
+        crossEnrollmentIncoming && crossEnrollmentIncoming.forEach(request => {
+            const viewType = '1' + request._id
 
             data.rows.push({
                 date: changeDateFormat(request.createdAt),
@@ -142,8 +111,19 @@ const ListAllRequests = ({ history }) => {
                             <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
                         </Button>
                     </Link>
+                    <Link to={`/admin/request/${request._id}`}>
+                        <Button variant="warning" className="mr-5" style={{ margin: '5px' }}>
+                            <i class="fa fa-edit" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                        </Button>
+                    </Link>
+                    <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
+                        updateRequestHandler(request._id)
+                    }}>
+                        <i class="fa fa-trash" aria-hidden="true" />
+                    </Button>
                 </Fragment>
             })
+
         })
 
         return data
@@ -151,26 +131,14 @@ const ListAllRequests = ({ history }) => {
 
     return (
         <Fragment>
-            <MetaData title={'All Requests'} />
+            <MetaData title={'Incoming Cross Enrollment'} />
             <Sidebar />
             <div className="row">
                 <div className="">
                     <Container fluid style={{ padding: "50px 0px" }}>
                         <Row style={{ margin: '30px 0 20px 0' }}>
-                            <Col xs={12} sm={4}>
-                                <h3>All Requests</h3>
-                                <h6 className='text-muted'>{`${status}`}</h6>
-                            </Col>
-                            <Col xs={12} sm={8}>
-                                <ButtonToolbar style={{ margin: '2px' }}>
-                                    <ButtonGroup className="mr-2">
-                                        <Button variant="outline-secondary" onClick={() => setStatus('Requests')}>View All</Button>
-                                        <Button variant="outline-secondary" onClick={() => setStatus('Pending')}>Pending</Button>
-                                        <Button variant="outline-secondary" onClick={() => setStatus('Processing')}>Processing</Button>
-                                        <Button variant="outline-secondary" onClick={() => setStatus('Approved')}>Approved</Button>
-                                        <Button variant="outline-secondary" onClick={() => setStatus('Denied')}>Denied</Button>
-                                    </ButtonGroup>
-                                </ButtonToolbar>
+                            <Col xs={12}>
+                                <h3>Incoming Cross Enrollment</h3>
                             </Col>
                         </Row>
                         {loading ? <Loader /> : (
@@ -192,4 +160,4 @@ const ListAllRequests = ({ history }) => {
     )
 }
 
-export default ListAllRequests
+export default ListIncomingCrossEnrollment

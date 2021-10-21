@@ -263,7 +263,8 @@ const ControlPanel = ({ history }) => {
                                     <MDBDataTableV5
                                         data={setRequests()}
                                         searchTop
-                                        pagingTop
+                                    searchBottom={false}
+                                        
                                         scrollX
                                         entries={5}
                                     />

@@ -90,7 +90,7 @@ export const submitRequest = (request) => async (dispatch) => {
 }
 
 //get requests
-export const getRequests = (role, route, requestType) => async (dispatch) => {
+export const getRequests = (role, route) => async (dispatch) => {
     try {
         dispatch({
             type: GET_REQUESTS_REQUEST
@@ -126,7 +126,7 @@ export const getRequests = (role, route, requestType) => async (dispatch) => {
                     link = `/api/v1/admin/requests/trash`
                     break
                 case 'Requests':
-                    link = `/api/v1/admin/deptChair/requests${requestType ? `?requestType=${requestType}` : ``}`
+                    link = `/api/v1/admin/deptChair/requests`
                     break
                 default:
                     link = ``

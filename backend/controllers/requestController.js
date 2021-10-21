@@ -826,7 +826,8 @@ exports.getCrossEnrollment = catchAsyncErrors(async (req, res, next) => {
     const reqStatusIT = ['Pending for IT Approval', 'Approved by IT', 'Denied by IT'];
     const reqStatusIS = ['Pending for IS Approval', 'Approved by IS', 'Denied by IS'];
     const reqStatusCS = ['Pending for CS Approval', 'Approved by CS', 'Denied by CS'];
-    let deptCourse = ''
+    let deptCourse = '', crossStatus = []
+    
     switch (req.user.role) {
         case 'IT Dept Chair':
             crossStatus = reqStatusIT
@@ -844,18 +845,19 @@ exports.getCrossEnrollment = catchAsyncErrors(async (req, res, next) => {
         case 'Student':
             return next(new ErrorHandler('Role does not have access to this resource'))
     }
-     
-    const getRequestsCrossEnrollmentOutgoing = new APIFeatures(Request.find({ isTrash: false, requestType: 'Cross Enrollment within CICS', requestStatus: { $in: crossStatus } })
-        .sort({ createdAt: -1 }), req.query)
-        .searchRequests()
-        .filter()
-    const crossEnrollmentOutgoing = await getRequestsCrossEnrollmentOutgoing.query;
 
-    const getRequestsCrossEnrollmentIncoming = new APIFeatures(Request.find({ "requestorInfo.course": deptCourse, isTrash: false, requestType: 'Cross Enrollment within CICS' })
+    const getCrossEnrollmentOutgoing = new APIFeatures(Request.find({ isTrash: false, requestType: 'Cross Enrollment within CICS', requestStatus: { $in: crossStatus } })
         .sort({ createdAt: -1 }), req.query)
         .searchRequests()
         .filter()
-    const crossEnrollmentIncoming = await getRequestsCrossEnrollmentIncoming.query;
+
+    const getCrossEnrollmentIncoming = new APIFeatures(Request.find({ "requestorInfo.course": deptCourse, isTrash: false, requestType: 'Cross Enrollment within CICS' })
+        .sort({ createdAt: -1 }), req.query)
+        .searchRequests()
+        .filter()
+
+    const crossEnrollmentIncoming = await getCrossEnrollmentIncoming.query
+    const crossEnrollmentOutgoing = await getCrossEnrollmentOutgoing.query
 
     res.status(200).json({
         success: true,

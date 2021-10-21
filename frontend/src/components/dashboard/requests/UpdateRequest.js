@@ -80,6 +80,12 @@ const UpdateRequest = ({ history, match }) => {
             window.history.back()
         }
 
+        if (requestType === 'Cross Enrollment within CICS') {
+            setStatus(crossEnrolStatus)
+        } else {
+            setStatus(normalStatus)
+        }
+
         if (isUpdated) {
             dispatch({
                 type: UPDATE_REQUEST_RESET
@@ -101,14 +107,6 @@ const UpdateRequest = ({ history, match }) => {
             type: INSIDE_DASHBOARD_TRUE
         })
     }, [dispatch, request, error, history, alert, isUpdated, updateError, requestId])
-
-    useEffect(() => {
-        if (requestType === 'Cross Enrollment within CICS') {
-            setStatus(crossEnrolStatus)
-        } else {
-            setStatus(normalStatus)
-        }
-    }, [request, requestId])
 
     const onChange = e => {
         const files = Array.from(e.target.files)
@@ -340,10 +338,8 @@ const UpdateRequest = ({ history, match }) => {
                                                 <Form.Label>Request attachments</Form.Label>
                                                 <MDBDataTableV5
                                                     data={setAttachments()}
-                                                    searchTop
-                                                    pagingTop
                                                     scrollX
-                                                    entriesOptions={[5, 20, 25]}
+                                                    entriesOptions={[10, 20, 30, 40, 50]}
                                                     entries={10}
                                                     style={{ backgroundColor: 'white' }}
                                                 />
@@ -352,10 +348,8 @@ const UpdateRequest = ({ history, match }) => {
                                         <Card.Title style={{ margin: '10px 0 20px 0', color: '#9c0b0b', fontWeight: 'bold' }}>Request History</Card.Title>
                                         <MDBDataTableV5
                                             data={setHistory()}
-                                            searchTop
-                                            pagingTop
                                             scrollX
-                                            entriesOptions={[5, 20, 25]}
+                                            entriesOptions={[10, 20, 30, 40, 50]}
                                             entries={10}
                                             style={{ backgroundColor: 'white' }}
                                         />
@@ -375,7 +369,9 @@ const UpdateRequest = ({ history, match }) => {
                                             required
                                         >
                                             <option value=''></option>
-                                            {status.map(status => (
+                                            {requestType && String(requestType).includes('Cross Enrollment within CICS') ? crossEnrolStatus.map(status => (
+                                                <option value={status}>{status}</option>
+                                            )) : normalStatus.map(status => (
                                                 <option value={status}>{status}</option>
                                             ))}
                                         </Form.Select>

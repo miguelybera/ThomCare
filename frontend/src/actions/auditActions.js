@@ -7,17 +7,13 @@ import {
 import axios from 'axios'
 
 //Get audit log
-export const getAuditLog = (filter) => async (dispatch) => {
+export const getAuditLog = () => async (dispatch) => {
     try {
         dispatch({
             type: GET_AUDIT_REQUEST
         })
 
-        const { searchType, searchItem } = filter
-
-        console.log(searchType, searchItem)
-
-        const { data } = await axios.get(`/api/v1/admin/auditlogs${searchType ? `?${searchType}=${searchItem}` : ``}`)
+        const { data } = await axios.get(`/api/v1/admin/auditlogs`)
 
         dispatch({
             type: GET_AUDIT_SUCCESS,

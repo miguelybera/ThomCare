@@ -30,6 +30,7 @@ import {
     trackRequestReducer,
     getRequestDetailsReducer,
     getRequestsReducer,
+    getCrossEnrollReducer,
     getRecentReducer,
     submitRequestReducer,
     requestReducer
@@ -82,6 +83,7 @@ const reducer = combineReducers({
     track: trackRequestReducer,
     requestDetails: getRequestDetailsReducer, //get single request details
     requests: getRequestsReducer, //get all requests
+    crossEnrollment: getCrossEnrollReducer,
     recents: getRecentReducer,
     submitRequest: submitRequestReducer,
     request: requestReducer,

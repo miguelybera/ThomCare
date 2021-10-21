@@ -12,43 +12,15 @@ import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
 import dateformat from 'dateformat'
 
-const dropdown = {
-    border: "2px solid black",
-    borderRadius: "20px",
-    margin: '5px 0'
-}
-
 const ListDeptChairRequests = ({ history }) => {
     const alert = useAlert()
     const dispatch = useDispatch()
 
-    const { loading, requests, pending, processing, approved, denied, crossEnrollment, error } = useSelector(state => state.requests)
+    const { loading, requests, pending, processing, approved, denied, error } = useSelector(state => state.requests)
     const { error: updateError, isUpdated } = useSelector(state => state.request)
 
     const [requestList, setRequestList] = useState([])
     const [status, setStatus] = useState('Requests')
-    const [searchButton, setSearchButton] = useState(1)
-    const [filter, setFilter] = useState({
-        requestType: ''
-    })
-    const requestTypes = [
-        'Adding/Dropping of Course',
-        'Cross Enrollment within CICS',
-        'Cross Enrollment outside CICS',
-        'Request for Petition Classes within CICS',
-        'Request for Crediting of Courses',
-        'Request for Overload',
-        'Request to Override',
-        'Request for Late Enrollment',
-        'Request for Manual Enrollment',
-        'Request for Course Description',
-        'Request for Certificate of Grades',
-        'Request for Leave of Absence',
-        'Submission of Admission Memo',
-        'Others'
-    ]
-
-    const { requestType } = filter
 
     const changeDateFormat = (date) => dateformat(date, "mmm d, yyyy h:MMtt")
     const upperCase = (text) => text.toUpperCase()
@@ -72,17 +44,14 @@ const ListDeptChairRequests = ({ history }) => {
             case 'Denied':
                 setRequestList(denied)
                 break
-            case 'Cross Enrollment':
-                setRequestList(crossEnrollment)
-                break
             default:
                 break
         }
 
-    }, [status, requests, pending, processing, approved, denied, crossEnrollment])
+    }, [status, requests, pending, processing, approved, denied])
 
     useEffect(() => {
-        dispatch(getRequests('Dept Chair', 'Requests', ''))
+        dispatch(getRequests('Dept Chair', 'Requests'))
 
         if (error) {
             alert.error(error)
@@ -109,22 +78,6 @@ const ListDeptChairRequests = ({ history }) => {
             type: INSIDE_DASHBOARD_TRUE
         })
     }, [dispatch, history, alert, error, updateError, isUpdated])
-
-    useEffect(() => {
-        dispatch(getRequests('Dept Chair', 'Requests', requestType))
-
-        if (error) {
-            alert.error(error)
-            dispatch(clearErrors())
-
-            setFilter({
-                requestType: ''
-            })
-
-            history.push('/error')
-        }
-
-    }, [dispatch, history, alert, error, searchButton])
 
     const updateRequestHandler = (id) => {
         dispatch(updateRequest(id, { isTrash: true }, true))
@@ -165,56 +118,44 @@ const ListDeptChairRequests = ({ history }) => {
         requestList && requestList.forEach(request => {
             const viewType = '1' + request._id
 
-            data.rows.push({
-                date: changeDateFormat(request.createdAt),
-                requestType: request.requestType,
-                name: request.requestorInfo.firstName + ' ' + request.requestorInfo.lastName,
-                requestStatus: <Fragment>
-                    <p style={{
-                        color: request.requestStatus === 'Pending' ? 'blue' : (
-                            request.requestStatus === 'Processing' ? '#ffcc00' : (
-                                request.requestStatus === 'Denied' ? 'red' : 'green'
+            if (request.requestType !== 'Cross Enrollment within CICS') {
+                data.rows.push({
+                    date: changeDateFormat(request.createdAt),
+                    requestType: request.requestType,
+                    name: request.requestorInfo.firstName + ' ' + request.requestorInfo.lastName,
+                    requestStatus: <Fragment>
+                        <p style={{
+                            color: request.requestStatus === 'Pending' ? 'blue' : (
+                                request.requestStatus === 'Processing' ? '#ffcc00' : (
+                                    request.requestStatus === 'Denied' ? 'red' : 'green'
+                                )
                             )
-                        )
-                    }}>
-                        {upperCase(request.requestStatus)}
-                    </p>
-                </Fragment>,
-                actions: <Fragment>
-                    <Link to={`/view/request/${viewType}`}>
-                        <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
-                            <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                        }}>
+                            {upperCase(request.requestStatus)}
+                        </p>
+                    </Fragment>,
+                    actions: <Fragment>
+                        <Link to={`/view/request/${viewType}`}>
+                            <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
+                                <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                            </Button>
+                        </Link>
+                        <Link to={`/admin/request/${request._id}`}>
+                            <Button variant="warning" className="mr-5" style={{ margin: '5px' }}>
+                                <i class="fa fa-edit" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                            </Button>
+                        </Link>
+                        <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
+                            updateRequestHandler(request._id)
+                        }}>
+                            <i class="fa fa-trash" aria-hidden="true" />
                         </Button>
-                    </Link>
-                    <Link to={`/admin/request/${request._id}`}>
-                        <Button variant="warning" className="mr-5" style={{ margin: '5px' }}>
-                            <i class="fa fa-edit" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
-                        </Button>
-                    </Link>
-                    <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
-                        updateRequestHandler(request._id)
-                    }}>
-                        <i class="fa fa-trash" aria-hidden="true" />
-                    </Button>
-                </Fragment>
-            })
-
+                    </Fragment>
+                })
+            }
         })
 
         return data
-    }
-
-    const onChange = e => {
-        setFilter({
-            ...filter,
-            [e.target.name]: e.target.value
-        })
-    }
-
-    const searchHandler = e => {
-        e.preventDefault()
-
-        setSearchButton(searchButton + 1)
     }
 
     return (
@@ -236,48 +177,18 @@ const ListDeptChairRequests = ({ history }) => {
                                         <Button variant="outline-secondary" onClick={() => setStatus('Processing')}>Processing</Button>
                                         <Button variant="outline-secondary" onClick={() => setStatus('Approved')}>Approved</Button>
                                         <Button variant="outline-secondary" onClick={() => setStatus('Denied')}>Denied</Button>
-                                        <Button variant="outline-secondary" onClick={() => setStatus('Cross Enrollment')}>Outgoing Cross Enrollment</Button>
-                                        <Button variant="outline-secondary" onClick={() => history.push('/admin/deptchair/crossenrollment/requests')}>Incoming Cross Enrollment</Button>
                                     </ButtonGroup>
                                 </ButtonToolbar>
                             </Col>
                         </Row>
-                        <Form onSubmit={searchHandler}>
-                            <Row >
-                                <Col xs={12} md={4} lg={2}>
-                                    <Form.Group>
-                                        <Form.Select
-                                            aria-label="Course"
-                                            size="sm"
-                                            style={dropdown}
-                                            name="requestType"
-                                            value={requestType}
-                                            onChange={onChange}
-                                        >
-                                            <option value=''>Request Type</option>
-                                            {requestTypes.map(r => (
-                                                <option value={r}>{r}</option>
-                                            ))}
-                                        </Form.Select>
-                                    </Form.Group>
-                                </Col>
-                                <Col xs={12} md={4} lg={2}>
-                                    <Form.Group sm>
-                                        <center>
-                                            <Button type='submit' style={{ margin: '5px' }}>Submit</Button>
-                                        </center>
-                                    </Form.Group>
-                                </Col>
-                            </Row>
-                        </Form>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5
                                     data={setRequests()}
                                     searchTop
-                                    pagingTop
+                                    searchBottom={false}
                                     scrollX
-                                    entriesOptions={[5, 20, 25]}
+                                    entriesOptions={[10, 20, 30, 40, 50]}
                                     entries={10}
                                 />
                             </>

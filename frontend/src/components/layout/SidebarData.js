@@ -99,6 +99,16 @@ export const SidebarData = [
                     icon: <i class="fa fa-list-ul" aria-hidden="true"></i>
                 },
                 {
+                    title: 'Incoming Cross Enrollment',
+                    path: '/admin/deptchair/crossenrollment/incoming',
+                    icon: <i class="fa fa-arrow-left" aria-hidden="true"></i>
+                },
+                {
+                    title: 'Outgoing Cross Enrollment',
+                    path: '/admin/deptchair/crossenrollment/outgoing',
+                    icon: <i class="fa fa-arrow-right" aria-hidden="true"></i>
+                },
+                {
                     title: 'Trash',
                     path: '/admin/requests/trash',
                     icon: <i class="fa fa-trash" aria-hidden="true"></i>

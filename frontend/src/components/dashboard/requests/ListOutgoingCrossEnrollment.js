@@ -12,17 +12,11 @@ import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
 import dateformat from 'dateformat'
 
-const dropdown = {
-    border: "2px solid black",
-    borderRadius: "20px",
-    margin: '5px 0'
-}
-
-const ListCrossEnrollment = ({ history }) => {
+const ListOutgoingCrossEnrollment = ({ history }) => {
     const alert = useAlert()
     const dispatch = useDispatch()
 
-    const { loading, crossEnrollment, error } = useSelector(state => state.requests)
+    const { loading, crossEnrollmentOutgoing, error } = useSelector(state => state.crossEnrollment)
     const { error: updateError, isUpdated } = useSelector(state => state.request)
 
     const changeDateFormat = (date) => dateformat(date, "mmm d, yyyy h:MMtt")
@@ -45,7 +39,7 @@ const ListCrossEnrollment = ({ history }) => {
 
         if (isUpdated) {
             alert.success('Request has been moved to Trash successfully.')
-            history.push('/admin/deptchair/crossenrollment/requests')
+            history.push('/admin/deptchair/crossenrollment/Outgoing')
 
             dispatch({
                 type: UPDATE_REQUEST_RESET
@@ -93,7 +87,7 @@ const ListCrossEnrollment = ({ history }) => {
             rows: []
         }
 
-        crossEnrollment && crossEnrollment.forEach(request => {
+        crossEnrollmentOutgoing && crossEnrollmentOutgoing.forEach(request => {
             const viewType = '1' + request._id
 
             data.rows.push({
@@ -137,25 +131,24 @@ const ListCrossEnrollment = ({ history }) => {
 
     return (
         <Fragment>
-            <MetaData title={'Cross Enrollment Requests'} />
+            <MetaData title={'Outgoing Cross Enrollment'} />
             <Sidebar />
             <div className="row">
                 <div className="">
                     <Container fluid style={{ padding: "50px 0px" }}>
                         <Row style={{ margin: '30px 0 20px 0' }}>
                             <Col xs={12}>
-                                <h3>Cross Enrollment</h3>
+                                <h3>Outgoing Cross Enrollment</h3>
                             </Col>
                         </Row>
-                        
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5
                                     data={setRequests()}
                                     searchTop
-                                    pagingTop
+                                    searchBottom={false}
                                     scrollX
-                                    entriesOptions={[5, 20, 25]}
+                                    entriesOptions={[10, 20, 30, 40, 50]}
                                     entries={10}
                                 />
                             </>
@@ -167,4 +160,4 @@ const ListCrossEnrollment = ({ history }) => {
     )
 }
 
-export default ListCrossEnrollment
+export default ListOutgoingCrossEnrollment
