@@ -1,7 +1,7 @@
-import React, { Fragment, useState, useEffect } from 'react'
+import React, { Fragment, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Form, Row, Col, Button, FormControl } from 'react-bootstrap'
+import { Container, Row, Col } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getAuditLog, clearErrors } from '../../../actions/auditActions'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
@@ -9,12 +9,6 @@ import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
 import dateformat from 'dateformat'
-
-const dropdown = {
-    border: "2px solid black",
-    borderRadius: "20px",
-    margin: '5px 0'
-}
 
 const ListAllRequests = ({ history }) => {
     const alert = useAlert()
