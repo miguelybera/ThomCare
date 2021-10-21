@@ -249,6 +249,7 @@ const TrackingPageProgress = ({ history, match }) => {
                                     <Form.Label>Request attachments</Form.Label>
                                     <MDBDataTableV5
                                         data={setAttachments()}
+                                        searchTop
                                         scrollX
                                         entriesOptions={[5, 10, 15]}
                                         entries={10}
