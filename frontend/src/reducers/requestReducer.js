@@ -168,7 +168,6 @@ export const submitRequestReducer = (state = { request: {} }, action) => {
 export const getRequestsReducer = (state = { requests: [], recents: [], pending: [], processing: [], approved: [], denied: [], dailyStats: [], weeklyStats: [], overViewStats: [] }, action) => {
     switch (action.type) {
         case GET_REQUESTS_REQUEST:
-        case GET_CROSSENROL_REQUEST:
             return {
                 ...state,
                 loading: true,
@@ -184,7 +183,6 @@ export const getRequestsReducer = (state = { requests: [], recents: [], pending:
             }
 
         case GET_REQUESTS_SUCCESS:
-        case GET_CROSSENROL_SUCCESS:
             return {
                 loading: false,
                 requests: action.payload.requests,
@@ -200,7 +198,6 @@ export const getRequestsReducer = (state = { requests: [], recents: [], pending:
             }
 
         case GET_REQUESTS_FAIL:
-        case GET_CROSSENROL_FAIL:
             return {
                 ...state,
                 loading: false,

@@ -35,6 +35,7 @@ const ListAllRequests = ({ history }) => {
         } else {
             dispatch(getRequests('Dept Chair', 'Trash'))
         }
+
         if (error) {
             alert.error(error)
             dispatch(clearErrors())
@@ -112,7 +113,7 @@ const ListAllRequests = ({ history }) => {
             rows: []
         }
 
-        requests.forEach(request => {
+        requests && requests.forEach(request => {
             const viewType = '4' + request._id
 
             data.rows.push({

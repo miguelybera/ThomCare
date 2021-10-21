@@ -338,8 +338,9 @@ const UpdateRequest = ({ history, match }) => {
                                                 <Form.Label>Request attachments</Form.Label>
                                                 <MDBDataTableV5
                                                     data={setAttachments()}
+                                                    searchTop
                                                     scrollX
-                                                    entriesOptions={[10, 20, 30, 40, 50]}
+                                                    entriesOptions={[5, 10, 15]}
                                                     entries={10}
                                                     style={{ backgroundColor: 'white' }}
                                                 />
@@ -348,8 +349,9 @@ const UpdateRequest = ({ history, match }) => {
                                         <Card.Title style={{ margin: '10px 0 20px 0', color: '#9c0b0b', fontWeight: 'bold' }}>Request History</Card.Title>
                                         <MDBDataTableV5
                                             data={setHistory()}
+                                            searchTop
                                             scrollX
-                                            entriesOptions={[10, 20, 30, 40, 50]}
+                                            entriesOptions={[5, 10, 15]}
                                             entries={10}
                                             style={{ backgroundColor: 'white' }}
                                         />
