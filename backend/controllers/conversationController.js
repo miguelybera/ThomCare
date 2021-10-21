@@ -139,3 +139,20 @@ exports.getBothConvo = catchAsyncErrors(async (req, res, next) => {
         res.status(500).json(err)
     }
 })
+exports.deleteConvo = catchAsyncErrors(async (req, res, next) => {
+    const conversation = await Conversation.findOne({
+        members: { $all: [req.params.firstUserId, req.params.secondUserId] },
+    })
+
+    if (!conversation) { return next(new ErrorHandler('Course Not Found', 404)) }
+   
+
+    await conversation.remove()
+    messages = await Message.deleteMany({conversationId: conversation.id})
+
+    res.status(200).json({
+        success: true,
+        message: "Conversation deleted"
+    })
+
+})
