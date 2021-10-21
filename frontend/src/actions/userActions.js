@@ -92,6 +92,7 @@ export const logout = () => async (dispatch) => {
         //     // Makes sure the page reloads. Changes are only visible after you refresh.
         //     window.location.reload(true);
         // }
+        window.location.reload();
     } catch (error) {
         dispatch({
             type: LOGOUT_FAIL,
