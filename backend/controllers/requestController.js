@@ -846,12 +846,12 @@ exports.getCrossEnrollment = catchAsyncErrors(async (req, res, next) => {
             return next(new ErrorHandler('Role does not have access to this resource'))
     }
 
-    const getCrossEnrollmentOutgoing = new APIFeatures(Request.find({ isTrash: false, requestType: 'Cross Enrollment within CICS', requestStatus: { $in: crossStatus } })
+    const  getCrossEnrollmentIncoming= new APIFeatures(Request.find({ isTrash: false, requestType: 'Cross Enrollment within CICS', requestStatus: { $in: crossStatus } })
         .sort({ createdAt: -1 }), req.query)
         .searchRequests()
         .filter()
 
-    const getCrossEnrollmentIncoming = new APIFeatures(Request.find({ "requestorInfo.course": deptCourse, isTrash: false, requestType: 'Cross Enrollment within CICS' })
+    const getCrossEnrollmentOutgoing = new APIFeatures(Request.find({ "requestorInfo.course": deptCourse, isTrash: false, requestType: 'Cross Enrollment within CICS' })
         .sort({ createdAt: -1 }), req.query)
         .searchRequests()
         .filter()
