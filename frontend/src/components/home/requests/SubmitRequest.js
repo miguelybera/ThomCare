@@ -28,7 +28,7 @@ const SubmitRequest = () => {
     const [requestType, setRequestType] = useState()
     const [notes, setNotes] = useState()
 
-    const levels = ['1st Year', '2nd Year', '3rd Year', '4th Year', 'Alumni']
+    const levels = ['1st Year', '2nd Year', '3rd Year', '4th Year', 'Alumni', 'Irregular']
     const requestTypes = [
         'Adding/Dropping of Course',
         'Cross Enrollment within CICS',
@@ -176,6 +176,7 @@ const SubmitRequest = () => {
                                                         >
                                                             <option value=''>-</option>
                                                             <option value='Alumni'>Alumni</option>
+                                                            <option value='Irregular'>Irregular</option>
                                                             {alphabet.map(letter => (
                                                                 <option value={letter}>{letter}</option>
                                                             ))}
