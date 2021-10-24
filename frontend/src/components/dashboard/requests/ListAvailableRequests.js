@@ -1,8 +1,8 @@
-import React, { Fragment, useEffect } from 'react'
+import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Button } from 'react-bootstrap'
+import { Container, Button, Form, Row, Col } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getRequests, assignRequest, clearErrors } from '../../../actions/requestActions'
 import { ASSIGN_REQUEST_RESET } from '../../../constants/requestConstants'
@@ -12,12 +12,36 @@ import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
 import dateformat from 'dateformat'
 
+const dropdown = {
+    border: "2px solid black",
+    borderRadius: "20px",
+    margin: '5px 0'
+}
+
 const ListAvailableRequests = ({ history }) => {
     const alert = useAlert()
     const dispatch = useDispatch()
 
     const { loading, requests, error } = useSelector(state => state.requests)
     const { error: updateError, isUpdated } = useSelector(state => state.request)
+    const [requestType, setRequestType] = useState('')
+
+    const requestTypes = [
+        'Adding/Dropping of Course',
+        'Cross Enrollment within CICS',
+        'Cross Enrollment outside CICS',
+        'Request for Petition Classes within CICS',
+        'Request for Crediting of Courses',
+        'Request for Overload',
+        'Request to Override',
+        'Request for Late Enrollment',
+        'Request for Manual Enrollment',
+        'Request for Course Description',
+        'Request for Certificate of Grades',
+        'Request for Leave of Absence',
+        'Submission of Admission Memo',
+        'Others'
+    ]
 
     const changeDateFormat = (date) => dateformat(date, "mmm d, yyyy h:MMtt")
     const upperCase = (text) => text.toUpperCase()
@@ -50,6 +74,21 @@ const ListAvailableRequests = ({ history }) => {
             type: INSIDE_DASHBOARD_TRUE
         })
     }, [dispatch, history, alert, error, updateError, isUpdated])
+
+    useEffect(() => {
+        dispatch(getRequests('CICS Office', 'Available', requestType))
+
+        if (error) {
+            alert.error(error)
+            dispatch(clearErrors())
+
+            history.push('/error')
+        }
+
+        dispatch({
+            type: INSIDE_DASHBOARD_TRUE
+        })
+    }, [dispatch, history, alert, error, requestType])
 
     const assignRequestHandler = (id) => {
         dispatch(assignRequest(id, {}))
@@ -136,6 +175,27 @@ const ListAvailableRequests = ({ history }) => {
                                 <h3>Available Requests</h3>
                             </div>
                         </div>
+                        <Form>
+                            <Row >
+                                <Col xs={12} md={4}>
+                                    <Form.Group>
+                                        <Form.Select
+                                            aria-label="Course"
+                                            size="sm"
+                                            style={dropdown}
+                                            name="requestType"
+                                            value={requestType}
+                                            onChange={e => setRequestType(e.target.value)}
+                                        >
+                                            <option value=''>Request Type</option>
+                                            {requestTypes.map(r => (
+                                                <option value={r}>{r}</option>
+                                            ))}
+                                        </Form.Select>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                        </Form>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5

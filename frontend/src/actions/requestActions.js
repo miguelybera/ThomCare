@@ -90,7 +90,7 @@ export const submitRequest = (request) => async (dispatch) => {
 }
 
 //get requests
-export const getRequests = (role, route) => async (dispatch) => {
+export const getRequests = (role, route, requestType) => async (dispatch) => {
     try {
         dispatch({
             type: GET_REQUESTS_REQUEST
@@ -101,32 +101,32 @@ export const getRequests = (role, route) => async (dispatch) => {
         if (role === 'CICS Office') {
             switch (route) {
                 case 'Office':
-                    link = `/api/v1/admin/cics/office/requests`
+                    link = `/api/v1/admin/cics/office/requests${requestType ? `?requestType=${requestType}` : ''}`
                     break
                 case 'Trash':
-                    link = `/api/v1/admin/requests/trash`
+                    link = `/api/v1/admin/requests/trash${requestType ? `?requestType=${requestType}` : ''}`
                     break
                 case 'Available':
-                    link = `/api/v1/admin/cics/available/requests`
+                    link = `/api/v1/admin/cics/available/requests${requestType ? `?requestType=${requestType}` : ''}`
                     break
                 case 'All':
-                    link = `/api/v1/admin/cics/all/requests`
+                    link = `/api/v1/admin/cics/all/requests${requestType ? `?requestType=${requestType}` : ''}`
                     break
                 case 'Me':
-                    link = `/api/v1/admin/cics/me/requests`
+                    link = `/api/v1/admin/cics/me/requests${requestType ? `?requestType=${requestType}` : ''}`
                     break
                 default:
                     link = ``
             }
         } else if (role === 'Student') { //student
-            link = `/api/v1/me/requests`
+            link = `/api/v1/me/requests${requestType ? `?requestType=${requestType}` : ''}`
         } else {
             switch (route) {
                 case 'Trash':
-                    link = `/api/v1/admin/requests/trash`
+                    link = `/api/v1/admin/requests/trash${requestType ? `?requestType=${requestType}` : ''}`
                     break
                 case 'Requests':
-                    link = `/api/v1/admin/deptChair/requests`
+                    link = `/api/v1/admin/deptChair/requests${requestType ? `?requestType=${requestType}` : ''}`
                     break
                 default:
                     link = ``

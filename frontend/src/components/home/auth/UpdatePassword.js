@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { FloatingLabel, Form, Button, Card, Container, Row, InputGroup, Modal } from 'react-bootstrap'
+import { Form, Button, Card, Container, Row, InputGroup, Modal } from 'react-bootstrap'
 import { updatePassword, clearErrors } from './../../../actions/userActions'
 import { UPDATE_PASSWORD_RESET } from './../../../constants/userConstants'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'

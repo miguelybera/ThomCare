@@ -10,7 +10,7 @@ const Error = () => {
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [])
+    }, [dispatch])
 
     return (
         <div id="notfound">

@@ -1,6 +1,6 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useDispatch } from 'react-redux'
-import { Form, Button, Card, Container, Row, Col, InputGroup } from 'react-bootstrap'
+import { Form, Button, Card, Container, Row, Col } from 'react-bootstrap'
 import { INSIDE_DASHBOARD_FALSE } from '../../../constants/dashboardConstants'
 import MetaData from '../../layout/MetaData'
 import Step2 from './Step2'

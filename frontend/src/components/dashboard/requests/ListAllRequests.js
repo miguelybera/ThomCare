@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Button, ButtonGroup, ButtonToolbar, Row, Col } from 'react-bootstrap'
+import { Container, Button, ButtonGroup, ButtonToolbar, Row, Col, Form } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getRequests, clearErrors } from '../../../actions/requestActions'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
@@ -11,8 +11,13 @@ import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
 import dateformat from 'dateformat'
 
-const ListAllRequests = ({ history }) => {
+const dropdown = {
+    border: "2px solid black",
+    borderRadius: "20px",
+    margin: '5px 0'
+}
 
+const ListAllRequests = ({ history }) => {
     const alert = useAlert()
     const dispatch = useDispatch()
 
@@ -20,10 +25,7 @@ const ListAllRequests = ({ history }) => {
 
     const [requestList, setRequestList] = useState([])
     const [status, setStatus] = useState('Requests')
-    const [searchButton, setSearchButton] = useState(1)
-    const [filter, setFilter] = useState({
-        requestType: ''
-    })
+    const [requestType, setRequestType] = useState('')
     const requestTypes = [
         'Adding/Dropping of Course',
         'Cross Enrollment within CICS',
@@ -40,8 +42,6 @@ const ListAllRequests = ({ history }) => {
         'Submission of Admission Memo',
         'Others'
     ]
-
-    const { requestType } = filter
 
     const changeDateFormat = (date) => dateformat(date, "mmm d, yyyy h:MMtt")
     const upperCase = (text) => text.toUpperCase()
@@ -85,6 +85,21 @@ const ListAllRequests = ({ history }) => {
             type: INSIDE_DASHBOARD_TRUE
         })
     }, [dispatch, history, alert, error])
+
+    useEffect(() => {
+        dispatch(getRequests('CICS Office', 'All', requestType))
+
+        if (error) {
+            alert.error(error)
+            dispatch(clearErrors())
+
+            history.push('/error')
+        }
+
+        dispatch({
+            type: INSIDE_DASHBOARD_TRUE
+        })
+    }, [dispatch, history, alert, error, requestType])
 
     const setRequests = () => {
         const data = {
@@ -164,7 +179,7 @@ const ListAllRequests = ({ history }) => {
                             <Col xs={12} sm={8}>
                                 <ButtonToolbar style={{ margin: '2px' }}>
                                     <ButtonGroup className="mr-2">
-                                        <Button variant="outline-secondary" onClick={() => setStatus('Requests')}>View All</Button>
+                                        <Button variant="outline-secondary" onClick={() => setStatus('Requests')}>All</Button>
                                         <Button variant="outline-secondary" onClick={() => setStatus('Pending')}>Pending</Button>
                                         <Button variant="outline-secondary" onClick={() => setStatus('Processing')}>Processing</Button>
                                         <Button variant="outline-secondary" onClick={() => setStatus('Approved')}>Approved</Button>
@@ -173,6 +188,27 @@ const ListAllRequests = ({ history }) => {
                                 </ButtonToolbar>
                             </Col>
                         </Row>
+                        <Form>
+                            <Row >
+                                <Col xs={12} md={4}>
+                                    <Form.Group>
+                                        <Form.Select
+                                            aria-label="Course"
+                                            size="sm"
+                                            style={dropdown}
+                                            name="requestType"
+                                            value={requestType}
+                                            onChange={e => setRequestType(e.target.value)}
+                                        >
+                                            <option value=''>Request Type</option>
+                                            {requestTypes.map(r => (
+                                                <option value={r}>{r}</option>
+                                            ))}
+                                        </Form.Select>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                        </Form>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5

@@ -1,6 +1,6 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button, Card, Container, Row } from 'react-bootstrap'
+import { Button, Container } from 'react-bootstrap'
 import { verify } from './../../../actions/userActions'
 import { VERIFY_STUDENT_RESET } from './../../../constants/userConstants'
 import { INSIDE_DASHBOARD_FALSE } from '../../../constants/dashboardConstants'

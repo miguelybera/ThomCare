@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Modal, Button } from 'react-bootstrap'
+import { Container, Modal, Button, Form, Row, Col } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getRequests, deleteRequest, clearErrors } from '../../../actions/requestActions'
 import { DELETE_REQUEST_RESET } from '../../../constants/requestConstants'
@@ -11,6 +11,12 @@ import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
 import dateformat from 'dateformat'
+
+const dropdown = {
+    border: "2px solid black",
+    borderRadius: "20px",
+    margin: '5px 0'
+}
 
 const ListStudentRequests = ({ history }) => {
     const alert = useAlert()
@@ -21,6 +27,24 @@ const ListStudentRequests = ({ history }) => {
 
     const [show, setShow] = useState(false);
     const [requestId, setRequestId] = useState('');
+    const [requestType, setRequestType] = useState('')
+
+    const requestTypes = [
+        'Adding/Dropping of Course',
+        'Cross Enrollment within CICS',
+        'Cross Enrollment outside CICS',
+        'Request for Petition Classes within CICS',
+        'Request for Crediting of Courses',
+        'Request for Overload',
+        'Request to Override',
+        'Request for Late Enrollment',
+        'Request for Manual Enrollment',
+        'Request for Course Description',
+        'Request for Certificate of Grades',
+        'Request for Leave of Absence',
+        'Submission of Admission Memo',
+        'Others'
+    ]
 
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
@@ -56,6 +80,21 @@ const ListStudentRequests = ({ history }) => {
             type: INSIDE_DASHBOARD_TRUE
         })
     }, [dispatch, history, alert, error, deleteError, isDeleted])
+
+    useEffect(() => {
+        dispatch(getRequests('Student', '', requestType))
+
+        if (error) {
+            alert.error(error)
+            dispatch(clearErrors())
+
+            history.push('/error')
+        }
+
+        dispatch({
+            type: INSIDE_DASHBOARD_TRUE
+        })
+    }, [dispatch, history, alert, error, requestType])
 
     const deleteRequestHandler = (id) => {
         dispatch(deleteRequest(id))
@@ -157,6 +196,27 @@ const ListStudentRequests = ({ history }) => {
                                 <h3>My Requests</h3>
                             </div>
                         </div>
+                        <Form>
+                            <Row >
+                                <Col xs={12} md={4} lg={3}>
+                                    <Form.Group>
+                                        <Form.Select
+                                            aria-label="Course"
+                                            size="sm"
+                                            style={dropdown}
+                                            name="requestType"
+                                            value={requestType}
+                                            onChange={e => setRequestType(e.target.value)}
+                                        >
+                                            <option value=''>Request Type</option>
+                                            {requestTypes.map(r => (
+                                                <option value={r}>{r}</option>
+                                            ))}
+                                        </Form.Select>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                        </Form>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5

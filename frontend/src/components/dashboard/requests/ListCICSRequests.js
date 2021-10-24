@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Button, ButtonGroup, ButtonToolbar, Row, Col } from 'react-bootstrap'
+import { Container, Button, ButtonGroup, ButtonToolbar, Row, Col, Form } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getRequests, clearErrors } from '../../../actions/requestActions'
 import { ASSIGN_REQUEST_RESET } from '../../../constants/requestConstants'
@@ -11,6 +11,12 @@ import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
 import dateformat from 'dateformat'
+
+const dropdown = {
+    border: "2px solid black",
+    borderRadius: "20px",
+    margin: '5px 0'
+}
 
 const ListCICSRequests = ({ history }) => {
     const alert = useAlert()
@@ -21,6 +27,15 @@ const ListCICSRequests = ({ history }) => {
 
     const [requestList, setRequestList] = useState([])
     const [status, setStatus] = useState('Requests')
+    const [requestType, setRequestType] = useState('')
+
+    const requestTypes = [
+        'Request for Course Description',
+        'Request for Certificate of Grades',
+        'Request for Leave of Absence',
+        'Submission of Admission Memo',
+        'Others'
+    ]
 
     const changeDateFormat = (date) => dateformat(date, "mmm d, yyyy h:MMtt")
     const upperCase = (text) => text.toUpperCase()
@@ -78,6 +93,21 @@ const ListCICSRequests = ({ history }) => {
             type: INSIDE_DASHBOARD_TRUE
         })
     }, [dispatch, history, alert, error, updateError, isUpdated])
+
+    useEffect(() => {
+        dispatch(getRequests('CICS Office', 'Office', requestType))
+
+        if (error) {
+            alert.error(error)
+            dispatch(clearErrors())
+
+            history.push('/error')
+        }
+
+        dispatch({
+            type: INSIDE_DASHBOARD_TRUE
+        })
+    }, [dispatch, history, alert, error, requestType])
 
     const setRequests = () => {
         const data = {
@@ -158,7 +188,7 @@ const ListCICSRequests = ({ history }) => {
                             <Col xs={12} sm={8}>
                                 <ButtonToolbar style={{ margin: '2px' }}>
                                     <ButtonGroup className="mr-2">
-                                        <Button variant="outline-secondary" onClick={() => setStatus('Requests')}>View All</Button>
+                                        <Button variant="outline-secondary" onClick={() => setStatus('Requests')}>All</Button>
                                         <Button variant="outline-secondary" onClick={() => setStatus('Pending')}>Pending</Button>
                                         <Button variant="outline-secondary" onClick={() => setStatus('Processing')}>Processing</Button>
                                         <Button variant="outline-secondary" onClick={() => setStatus('Approved')}>Approved</Button>
@@ -167,6 +197,27 @@ const ListCICSRequests = ({ history }) => {
                                 </ButtonToolbar>
                             </Col>
                         </Row>
+                        <Form>
+                            <Row >
+                                <Col xs={12} md={4} lg={3}>
+                                    <Form.Group>
+                                        <Form.Select
+                                            aria-label="Course"
+                                            size="sm"
+                                            style={dropdown}
+                                            name="requestType"
+                                            value={requestType}
+                                            onChange={e => setRequestType(e.target.value)}
+                                        >
+                                            <option value=''>Request Type</option>
+                                            {requestTypes.map(r => (
+                                                <option value={r}>{r}</option>
+                                            ))}
+                                        </Form.Select>
+                                    </Form.Group>
+                                </Col>
+                            </Row>
+                        </Form>
                         {loading ? <Loader /> : (
                             <>
                                 <MDBDataTableV5

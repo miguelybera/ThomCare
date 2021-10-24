@@ -30,8 +30,6 @@ const UpdateRequest = ({ history, match }) => {
     const [remarksMessage, setRemarksMessage] = useState([])
     const [show, setShow] = useState(false)
 
-    const [status, setStatus] = useState([])
-
     const normalStatus = ['Pending', 'Processing', 'Denied', 'Approved']
     const crossEnrolStatus = [
         'Processing',
@@ -78,12 +76,6 @@ const UpdateRequest = ({ history, match }) => {
             alert.error(error)
             dispatch(clearErrors())
             window.history.back()
-        }
-
-        if (requestType === 'Cross Enrollment within CICS') {
-            setStatus(crossEnrolStatus)
-        } else {
-            setStatus(normalStatus)
         }
 
         if (isUpdated) {

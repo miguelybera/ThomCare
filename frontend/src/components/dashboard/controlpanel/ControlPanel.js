@@ -12,7 +12,6 @@ import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
 import ReportCard from './ReportCard'
 import dateformat from 'dateformat'
-import e from 'cors'
 
 const ControlPanel = ({ history }) => {
     const dispatch = useDispatch()
@@ -49,7 +48,9 @@ const ControlPanel = ({ history }) => {
         })
 
         dispatch(getRequests(role, reqType))
-        dispatch(getStats(role))
+        if (role !== 'Student') {
+            dispatch(getStats(role))
+        }
 
         if (error || statsError) {
             alert.error(error)
@@ -261,8 +262,6 @@ const ControlPanel = ({ history }) => {
                                     <MDBDataTableV5
                                         data={setRequests()}
                                         searchTop
-                                        searchBottom={false}
-
                                         scrollX
                                         entries={5}
                                     />
