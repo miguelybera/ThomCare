@@ -9,11 +9,6 @@ import MetaData from './../../../layout/MetaData'
 const FormsList = () => {
     const dispatch = useDispatch()
 
-    const [show, setShow] = useState(false)
-    const [message, setMessage] = useState('')
-    const handleClose = () => setShow(false)
-    const handleShow = () => setShow(true)
-
     useEffect(() => {
         dispatch({
             type: INSIDE_DASHBOARD_FALSE
@@ -104,16 +99,16 @@ const FormsList = () => {
         <li>Accomplished and duly-signed Form 6A</li>
     </ul>`
 
-    function ModalInstructions({content}) {
-        const [lgShow, setLgShow] = useState(false)
+    function ModalInstructions({ content }) {
+        const [show, setShow] = useState(false)
 
         return (
             <Fragment>
-                <Button variant='outline-secondary' onClick={() => setLgShow(true)}>View Instructions</Button>
+                <Button variant='outline-secondary' onClick={() => setShow(true)}>View Instructions</Button>
                 <Modal
                     size="lg"
-                    show={lgShow}
-                    onHide={() => setLgShow(false)}
+                    show={show}
+                    onHide={() => setShow(false)}
                     aria-labelledby="example-modal-sizes-title-lg"
                     style={{ paddingTop: '40px' }}
                     centered
@@ -131,24 +126,15 @@ const FormsList = () => {
         )
     }
 
-
     return (
         <Fragment>
             <MetaData title={'Forms'} />
-
-            
-           
             <Container>
                 <div id="rectangle" >
                     <h3>FORMS</h3>
                 </div>
             </Container>
-
-            
             <Container fluid style={{ marginTop: '50px', padding: "50px 20px", fontFamily: 'MuktaMalar' }}>
-
-            
-
                 <Table bordered hover size="sm" style={{ justifyContent: 'center' }}>
                     <thead>
                         <tr style={{ textAlign: 'center' }}>
@@ -163,7 +149,7 @@ const FormsList = () => {
                             <td>Form 6A</td>
                             <td>Adding/Dropping of course / Cross - Enrollment (within CICS) </td>
                             <td>
-                            <ModalInstructions content={form6aInstructions}/>
+                                <ModalInstructions content={form6aInstructions} />
                             </td>
                             <td>
                                 <Link to='/forms/form-6a'>
@@ -180,7 +166,7 @@ const FormsList = () => {
                             <td>Form 6B</td>
                             <td>Cross- Enrollment with other academic unit/s</td>
                             <td>
-                            <ModalInstructions content={form6bInstructions}/>
+                                <ModalInstructions content={form6bInstructions} />
                             </td>
                             <td>
                                 <Link to='/forms/form-6b'>
@@ -196,7 +182,7 @@ const FormsList = () => {
                             <td>Overload Form</td>
                             <td>Request for Overload</td>
                             <td>
-                            <ModalInstructions content={overloadInstructions}/>
+                                <ModalInstructions content={overloadInstructions} />
                             </td>
                             <td>
                                 <Link to='/forms/overload-form'>
