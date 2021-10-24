@@ -29,6 +29,9 @@ const {
     getAssignedRequests,
     getCrossEnrollment,
 
+    getDeptChairStats,
+    getAllStats,
+
     updateRequest,
     deleteRequest,
     trashRequest,
@@ -75,11 +78,13 @@ router.route('/me/requests').get(isAuthenticatedUser, authorizeRoles('Student'),
 //dept chair
 router.route('/admin/deptChair/requests').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getDeptChairRequests);
 router.route('/admin/deptChair/crossEnrollment').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getCrossEnrollment);
+router.route('/admin/deptChair/stats').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getDeptChairStats);
 
 //cics staff
-router.route('/admin/cics/all/requests').get(isAuthenticatedUser, authorizeRoles('CICS Office'), getAllRequests); //didnt use it?
+router.route('/admin/cics/all/requests').get(isAuthenticatedUser, authorizeRoles('CICS Office'), getAllRequests);
 router.route('/admin/cics/office/requests').get(isAuthenticatedUser, authorizeRoles('CICS Office'), getOfficeRequests);
 router.route('/admin/cics/available/requests').get(isAuthenticatedUser, authorizeRoles('CICS Office'), getAvailableRequests);
+router.route('/admin/cics/stats').get(isAuthenticatedUser, authorizeRoles('CICS Office'), getAllStats);
 router.route('/admin/cics/assign/:requestId').put(isAuthenticatedUser, authorizeRoles('CICS Office'), assignRequestToSelfCICS);
 router.route('/admin/cics/me/requests').get(isAuthenticatedUser, authorizeRoles('CICS Office'), getAssignedRequests);
 router.route('/admin/cics/unassign/:requestId').put(isAuthenticatedUser, authorizeRoles('CICS Office'), unassignRequest);

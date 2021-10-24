@@ -15,9 +15,9 @@ import {
     GET_CROSSENROL_REQUEST,
     GET_CROSSENROL_SUCCESS,
     GET_CROSSENROL_FAIL,
-    GET_RECENT_REQUEST,
-    GET_RECENT_SUCCESS,
-    GET_RECENT_FAIL,
+    REQUEST_STATS_REQUEST,
+    REQUEST_STATS_SUCCESS,
+    REQUEST_STATS_FAIL,
     UPDATE_REQUEST_REQUEST,
     UPDATE_REQUEST_SUCCESS,
     UPDATE_REQUEST_FAIL,
@@ -148,6 +148,35 @@ export const getRequests = (role, route) => async (dispatch) => {
     }
 }
 
+//get stats
+export const getStats = (role) => async (dispatch) => {
+    try {
+        dispatch({
+            type: REQUEST_STATS_REQUEST
+        })
+
+        let link = ''
+
+        if (role === 'CICS Office') {
+            link = `/api/v1/admin/cics/stats`
+        } else {
+            link = `/api/v1/admin/deptChair/stats`
+        }
+        
+        const { data } = await axios.get(link)
+
+        dispatch({
+            type: REQUEST_STATS_SUCCESS,
+            payload: data
+        })
+    }
+    catch (error) {
+        dispatch({
+            type: REQUEST_STATS_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
 
 //get requests
 export const getCrossEnrol = () => async (dispatch) => {
@@ -188,38 +217,6 @@ export const getRequestDetails = (requestId) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: REQUEST_DETAILS_FAIL,
-            payload: error.response.data.message
-        })
-    }
-}
-
-//get recent requests
-export const getRecent = (role) => async (dispatch) => {
-    try {
-        dispatch({
-            type: GET_RECENT_REQUEST
-        })
-
-        let link = ``
-
-        if (role === 'CICS Office') {
-            link = `/api/v1/admin/cics/all/requests`
-        } else if (role === 'Student') { //student
-            link = `/api/v1/me/requests`
-        } else {
-            link = `/api/v1/admin/deptChair/requests`
-        }
-
-        const { data } = await axios.get(link)
-
-        dispatch({
-            type: GET_RECENT_SUCCESS,
-            payload: data.recents
-        })
-    }
-    catch (error) {
-        dispatch({
-            type: GET_RECENT_FAIL,
             payload: error.response.data.message
         })
     }

@@ -5,21 +5,22 @@ import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { Container, Button, Row, Col } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
-import { getRequests, getRecent, clearErrors } from '../../../actions/requestActions'
+import { getRequests, getStats, clearErrors } from '../../../actions/requestActions'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
 import Loader from '../../layout/Loader'
 import ReportCard from './ReportCard'
 import dateformat from 'dateformat'
+import e from 'cors'
 
 const ControlPanel = ({ history }) => {
     const dispatch = useDispatch()
     const alert = useAlert()
 
     const { user } = useSelector(state => state.auth)
-    const { loading: listLoading, error, requests, processing, pending, approved, denied, dailyStats, weeklyStats, overViewStats } = useSelector(state => state.requests)
-    const { loading: recentsLoading, error: recentsError, recents } = useSelector(state => state.recents)
+    const { loading, error, requests, processing, pending, approved, denied } = useSelector(state => state.requests)
+    const { loading: statsLoading, error: statsError, dailyStats, weeklyStats, overViewStats } = useSelector(state => state.stats)
 
     const role = user && user.role
 
@@ -48,22 +49,15 @@ const ControlPanel = ({ history }) => {
         })
 
         dispatch(getRequests(role, reqType))
-        dispatch(getRecent(role))
+        dispatch(getStats(role))
 
-        if (error) {
+        if (error || statsError) {
             alert.error(error)
             dispatch(clearErrors())
 
             history.push('/error')
         }
-
-        if (recentsError) {
-            alert.error(error)
-            dispatch(clearErrors())
-
-            history.push('/error')
-        }
-    }, [dispatch, history, alert, error, role, reqType, recentsError])
+    }, [dispatch, history, alert, error, role, reqType, statsError])
 
     const setRequests = () => {
         const data = {
@@ -97,32 +91,36 @@ const ControlPanel = ({ history }) => {
             rows: []
         }
 
-        recents.forEach(request => {
-            const reqLink = viewType + request._id
+        requests && requests.forEach((request, idx) => {
+            if (idx < 5) {
+                const reqLink = viewType + request._id
 
-            data.rows.push({
-                date: changeDateFormat(request.createdAt),
-                requestType: request.requestType,
-                name: request.requestorInfo.firstName + ' ' + request.requestorInfo.lastName,
-                requestStatus: <Fragment>
-                    <p style={{
-                        color: request.requestStatus === 'Pending' ? 'blue' : (
-                            request.requestStatus === 'Processing' ? '#ffcc00' : (
-                                request.requestStatus === 'Denied' ? 'red' : 'green'
+                data.rows.push({
+                    date: changeDateFormat(request.createdAt),
+                    requestType: request.requestType,
+                    name: request.requestorInfo.firstName + ' ' + request.requestorInfo.lastName,
+                    requestStatus: <Fragment>
+                        <p style={{
+                            color: request.requestStatus === 'Pending' ? 'blue' : (
+                                request.requestStatus === 'Processing' ? '#ffcc00' : (
+                                    request.requestStatus === 'Denied' ? 'red' : 'green'
+                                )
                             )
-                        )
-                    }}>
-                        {upperCase(request.requestStatus)}
-                    </p>
-                </Fragment>,
-                actions: <Fragment>
-                    <Link to={`/view/request/${reqLink}`}>
-                        <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
-                            <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
-                        </Button>
-                    </Link>
-                </Fragment>
-            })
+                        }}>
+                            {upperCase(request.requestStatus)}
+                        </p>
+                    </Fragment>,
+                    actions: <Fragment>
+                        <Link to={`/view/request/${reqLink}`}>
+                            <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
+                                <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                            </Button>
+                        </Link>
+                    </Fragment>
+                })
+            } else {
+                return
+            }
 
         })
 
@@ -194,7 +192,7 @@ const ControlPanel = ({ history }) => {
         <Fragment>
             <MetaData title={'Control Panel'} />
             <Sidebar />
-            {listLoading ? <Loader /> : (
+            {loading || statsLoading ? <Loader /> : (
                 <div className="row">
                     <div className='control-panel'>
                         <Container fluid style={{ margin: '100px 0' }}>
@@ -259,12 +257,12 @@ const ControlPanel = ({ history }) => {
                             ) : <Fragment></Fragment>}
                             <Row>
                                 <h3>Latest submissions</h3>
-                                {recentsLoading ? <Loader /> : (
+                                {loading ? <Loader /> : (
                                     <MDBDataTableV5
                                         data={setRequests()}
                                         searchTop
-                                    searchBottom={false}
-                                        
+                                        searchBottom={false}
+
                                         scrollX
                                         entries={5}
                                     />

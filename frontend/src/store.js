@@ -31,7 +31,7 @@ import {
     getRequestDetailsReducer,
     getRequestsReducer,
     getCrossEnrollReducer,
-    getRecentReducer,
+    getStatsReducer,
     submitRequestReducer,
     requestReducer
 } from './reducers/requestReducer'
@@ -84,9 +84,9 @@ const reducer = combineReducers({
     requestDetails: getRequestDetailsReducer, //get single request details
     requests: getRequestsReducer, //get all requests
     crossEnrollment: getCrossEnrollReducer,
-    recents: getRecentReducer,
     submitRequest: submitRequestReducer,
-    request: requestReducer,
+    request: requestReducer, //update delete request
+    stats: getStatsReducer, //get stats requests
 
     courses: getCoursesReducer, //get all courses details
     course: courseReducer, // update delete course

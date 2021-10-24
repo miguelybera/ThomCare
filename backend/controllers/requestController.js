@@ -136,18 +136,11 @@ exports.getMyRequests = catchAsyncErrors(async (req, res, next) => {
         .searchRequests()
         .filter()
 
-    const getRecents = new APIFeatures(Request.find({ requestedById: req.user.id }).sort({ createdAt: -1 }), req.query)
-        .searchRequests()
-        .filter()
-        .pagination(resPerPage)
-
     const requests = await getRequests.query
-    const recents = await getRecents.query
 
     res.status(200).json({
         success: true,
-        requests,
-        recents
+        requests
     })
 })
 
@@ -175,12 +168,6 @@ exports.getDeptChairRequests = catchAsyncErrors(async (req, res, next) => {
         .searchRequests()
         .filter()
 
-    const getRecents = new APIFeatures(Request.find({ "requestorInfo.course": deptCourse, isTrash: false, requestType: { $nin: requestTypeOfficeStaff } })
-        .sort({ createdAt: -1 }), req.query)
-        .searchRequests()
-        .filter()
-        .pagination(resPerPage)
-
     const getRequestsPending = new APIFeatures(Request.find({ "requestorInfo.course": deptCourse, requestStatus: 'Pending', isTrash: false, requestType: { $nin: requestTypeOfficeStaff } })
         .sort({ createdAt: -1 }), req.query)
         .searchRequests()
@@ -201,18 +188,41 @@ exports.getDeptChairRequests = catchAsyncErrors(async (req, res, next) => {
         .searchRequests()
         .filter()
 
-    const getRequestsCrossEnrollment = new APIFeatures(Request.find({ isTrash: false, requestType: 'Cross Enrollment within CICS' })
-        .sort({ createdAt: -1 }), req.query)
-        .searchRequests()
-        .filter()
-
     const requests = await getRequests.query;
-    const recents = await getRecents.query;
     const pending = await getRequestsPending.query;
     const processing = await getRequestsProcessing.query;
     const approved = await getRequestsApproved.query;
     const denied = await getRequestsDenied.query;
-    const crossEnrollment = await getRequestsCrossEnrollment.query;
+
+    res.status(200).json({
+        success: true,
+        requests,
+        pending,
+        processing,
+        approved,
+        denied
+    })
+})
+
+
+// Get all requests involving specific department chair => /api/v1/deptChair/stats
+exports.getDeptChairStats = catchAsyncErrors(async (req, res, next) => {
+    let deptCourse = ''
+
+    switch (req.user.role) {
+        case 'IT Dept Chair':
+            deptCourse = 'Information Technology'
+            break
+        case 'IS Dept Chair':
+            deptCourse = 'Information Systems'
+            break
+        case 'CS Dept Chair':
+            deptCourse = 'Computer Science'
+            break
+        case 'CICS Office':
+        case 'Student':
+            return next(new ErrorHandler('Role does not have access to this resource'))
+    }
 
     const dailyDates = []
     const dailyStats = []
@@ -280,16 +290,9 @@ exports.getDeptChairRequests = catchAsyncErrors(async (req, res, next) => {
 
         overViewStats.push(x.length)
     }
-
+    
     res.status(200).json({
         success: true,
-        requests,
-        recents,
-        pending,
-        processing,
-        approved,
-        denied,
-        crossEnrollment,
         dailyStats,
         weeklyStats,
         overViewStats
@@ -302,12 +305,6 @@ exports.getAllRequests = catchAsyncErrors(async (req, res, next) => {
         .sort({ createdAt: -1 }), req.query)
         .searchRequests()
         .filter()
-
-    const getRecents = new APIFeatures(Request.find()
-        .sort({ createdAt: -1 }), req.query)
-        .searchRequests()
-        .filter()
-        .pagination(resPerPage)
 
     const getRequestsPending = new APIFeatures(Request.find({ requestStatus: 'Pending', isTrash: false })
         .sort({ createdAt: -1 }), req.query)
@@ -330,12 +327,23 @@ exports.getAllRequests = catchAsyncErrors(async (req, res, next) => {
         .filter()
 
     const requests = await getRequests.query;
-    const recents = await getRecents.query;
     const pending = await getRequestsPending.query;
     const processing = await getRequestsProcessing.query;
     const approved = await getRequestsApproved.query;
     const denied = await getRequestsDenied.query;
 
+    res.status(200).json({
+        success: true,
+        requests,
+        pending,
+        processing,
+        approved,
+        denied
+    })
+})
+
+// Get all requests cics staff side => /api/v1/cicsAdmin/stats
+exports.getAllStats = catchAsyncErrors(async (req, res, next) => {
     const dailyDates = []
     const dailyStats = []
 
@@ -393,12 +401,6 @@ exports.getAllRequests = catchAsyncErrors(async (req, res, next) => {
 
     res.status(200).json({
         success: true,
-        requests,
-        recents,
-        pending,
-        processing,
-        approved,
-        denied,
         dailyStats,
         weeklyStats,
         overViewStats
@@ -614,7 +616,7 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
     let eventInfo = `Updated request with tracking number: ${request.trackingNumber} with status of ${req.body.requestStatus}${withFiles}`
 
     if (remarksMessage) {
-        eventInfo = `Updated request with tracking number: ${request.trackingNumber} with status of ${req.body.requestStatus}${withFiles} with remarks of: ${remarksMessage}`
+        eventInfo += ` with remarks of: ${remarksMessage}`
     }
     await Audit.create({
         name: `Request update`,
@@ -623,10 +625,10 @@ exports.updateRequest = catchAsyncErrors(async (req, res, next) => {
         dateAudit: Date.now()
     })
 
-    let msg = ``
+    let msg = remarksMessage
 
     if (req.files.length > 0) {
-        msg = `& a file has been attached to your request. Please view your request on the website to download the file attachment.`
+        msg += ` along with file attachment(s). Please view your request on the <a href="${req.protocol}://${process.env.THOM_HOST}">website</a> to download the file attachment(s).`
     }
 
     const emailData = {

@@ -17,9 +17,9 @@ import {
     GET_CROSSENROL_REQUEST,
     GET_CROSSENROL_SUCCESS,
     GET_CROSSENROL_FAIL,
-    GET_RECENT_REQUEST,
-    GET_RECENT_SUCCESS,
-    GET_RECENT_FAIL,
+    REQUEST_STATS_REQUEST,
+    REQUEST_STATS_SUCCESS,
+    REQUEST_STATS_FAIL,
     UPDATE_REQUEST_REQUEST,
     UPDATE_REQUEST_SUCCESS,
     UPDATE_REQUEST_FAIL,
@@ -165,39 +165,69 @@ export const submitRequestReducer = (state = { request: {} }, action) => {
 }
 
 //get ALL requests
-export const getRequestsReducer = (state = { requests: [], recents: [], pending: [], processing: [], approved: [], denied: [], dailyStats: [], weeklyStats: [], overViewStats: [] }, action) => {
+export const getRequestsReducer = (state = { requests: [], pending: [], processing: [], approved: [], denied: [], dailyStats: [], weeklyStats: [], overViewStats: [] }, action) => {
     switch (action.type) {
         case GET_REQUESTS_REQUEST:
             return {
                 ...state,
                 loading: true,
                 requests: [],
-                recents: [],
                 pending: [],
                 processing: [],
                 approved: [],
-                denied: [],
-                dailyStats: [],
-                weeklyStats: [],
-                overViewStats: []
+                denied: []
             }
 
         case GET_REQUESTS_SUCCESS:
             return {
                 loading: false,
                 requests: action.payload.requests,
-                recents: action.payload.recents,
                 pending: action.payload.pending,
                 processing: action.payload.processing,
                 approved: action.payload.approved,
                 denied: action.payload.denied,
+                success: action.payload.success
+            }
+
+        case GET_REQUESTS_FAIL:
+            return {
+                ...state,
+                loading: false,
+                error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+export const getStatsReducer = (state = { dailyStats: [], weeklyStats: [], overViewStats: [] }, action) => {
+    switch (action.type) {
+        case REQUEST_STATS_REQUEST:
+            return {
+                ...state,
+                loading: true,
+                dailyStats: [],
+                weeklyStats: [],
+                overViewStats: []
+            }
+
+        case REQUEST_STATS_SUCCESS:
+            return {
+                loading: false,
                 dailyStats: action.payload.dailyStats,
                 weeklyStats: action.payload.weeklyStats,
                 overViewStats: action.payload.overViewStats,
                 success: action.payload.success
             }
 
-        case GET_REQUESTS_FAIL:
+        case REQUEST_STATS_FAIL:
             return {
                 ...state,
                 loading: false,
@@ -235,41 +265,6 @@ export const getCrossEnrollReducer = (state = { crossEnrollmentIncoming: [], cro
             }
 
         case GET_CROSSENROL_FAIL:
-            return {
-                ...state,
-                loading: false,
-                error: action.payload
-            }
-
-        case CLEAR_ERRORS:
-            return {
-                ...state,
-                error: null
-            }
-
-        default:
-            return state
-    }
-}
-
-//get recent requests
-export const getRecentReducer = (state = { recents: [] }, action) => {
-    switch (action.type) {
-        case GET_RECENT_REQUEST:
-            return {
-                ...state,
-                loading: true,
-                recents: [],
-            }
-
-        case GET_RECENT_SUCCESS:
-            return {
-                ...state,
-                loading: false,
-                recents: action.payload
-            }
-
-        case GET_RECENT_FAIL:
             return {
                 ...state,
                 loading: false,
