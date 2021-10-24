@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { Table, Container, Button, Modal } from 'react-bootstrap'
+import { Table, Container, Row, Button, Modal } from 'react-bootstrap'
 import { Markup } from 'interweave'
 import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
 import MetaData from './../../../layout/MetaData'
@@ -104,34 +104,51 @@ const FormsList = () => {
         <li>Accomplished and duly-signed Form 6A</li>
     </ul>`
 
+    function ModalInstructions({content}) {
+        const [lgShow, setLgShow] = useState(false)
+
+        return (
+            <Fragment>
+                <Button variant='outline-secondary' onClick={() => setLgShow(true)}>View Instructions</Button>
+                <Modal
+                    size="lg"
+                    show={lgShow}
+                    onHide={() => setLgShow(false)}
+                    aria-labelledby="example-modal-sizes-title-lg"
+                    style={{ paddingTop: '40px' }}
+                    centered
+                >
+                    <Modal.Header closeButton>
+                        <Modal.Title id="example-modal-sizes-title-lg">
+                            <h3 style={{ fontWeight: 'bold' }}>General Instructions:</h3>
+                        </Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        <Markup content={content} />
+                    </Modal.Body>
+                </Modal>
+            </Fragment>
+        )
+    }
+
+
     return (
         <Fragment>
             <MetaData title={'Forms'} />
-            <Modal
-                show={show}
-                onHide={() => setShow(false)}
-                dialogClassName="modal-90w"
-                aria-labelledby="example-modal-sizes-title-lg"
-                style={{ paddingTop: '40px' }}
-            >
-                <Modal.Header closeButton>
-                    <Modal.Title>Instructions</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Markup content={message} />
-                </Modal.Body>
-                <Modal.Footer>
-                    <Button variant="secondary" onClick={handleClose}>
-                        Close
-                    </Button>
-                </Modal.Footer>
-            </Modal>
+
+            
+           
             <Container>
                 <div id="rectangle" >
                     <h3>FORMS</h3>
                 </div>
             </Container>
+
+            
             <Container fluid style={{ marginTop: '50px', padding: "50px 20px", fontFamily: 'MuktaMalar' }}>
+
+            
+
                 <Table bordered hover size="sm" style={{ justifyContent: 'center' }}>
                     <thead>
                         <tr style={{ textAlign: 'center' }}>
@@ -146,10 +163,7 @@ const FormsList = () => {
                             <td>Form 6A</td>
                             <td>Adding/Dropping of course / Cross - Enrollment (within CICS) </td>
                             <td>
-                                <Button variant='outline-secondary' onClick={() => {
-                                    setMessage(form6aInstructions)
-                                    handleShow()
-                                }}>View instructions</Button>
+                            <ModalInstructions content={form6aInstructions}/>
                             </td>
                             <td>
                                 <Link to='/forms/form-6a'>
@@ -166,10 +180,7 @@ const FormsList = () => {
                             <td>Form 6B</td>
                             <td>Cross- Enrollment with other academic unit/s</td>
                             <td>
-                                <Button variant='outline-secondary' onClick={() => {
-                                    setMessage(form6bInstructions)
-                                    handleShow()
-                                }}>View instructions</Button>
+                            <ModalInstructions content={form6bInstructions}/>
                             </td>
                             <td>
                                 <Link to='/forms/form-6b'>
@@ -185,10 +196,7 @@ const FormsList = () => {
                             <td>Overload Form</td>
                             <td>Request for Overload</td>
                             <td>
-                                <Button variant='outline-secondary' onClick={() => {
-                                    setMessage(overloadInstructions)
-                                    handleShow()
-                                }}>View instructions</Button>
+                            <ModalInstructions content={overloadInstructions}/>
                             </td>
                             <td>
                                 <Link to='/forms/overload-form'>
