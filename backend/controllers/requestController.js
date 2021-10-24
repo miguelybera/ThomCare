@@ -533,7 +533,7 @@ exports.getTrashedRequests = catchAsyncErrors(async (req, res, next) => {
     let getRequests = ''
 
     if (deptCourse === 'Office') {
-        getRequests = new APIFeatures(Request.find({ isTrash: true, requestType: { $in: requestTypeOfficeStaff } })
+        getRequests = new APIFeatures(Request.find({ isTrash: true, managedBy: req.user.id, requestType: { $in: requestTypeOfficeStaff } })
             .sort({ createdAt: -1 }), req.query)
             .searchRequests()
             .filter()
