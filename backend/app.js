@@ -1,23 +1,23 @@
-const express = require('express');
-const app = express();
+const express = require('express')
+const app = express()
 const cookieParser = require('cookie-parser')
 const path = require('path')
 
-const errorMiddleware = require('./middlewares/errors');
+const errorMiddleware = require('./middlewares/errors')
 
 // Setting up config file
 //if(process.env.NODE_ENV !== 'PRODUCTION') require('dotenv').config({ path: 'backend/config/config.env' })
 
-app.use(express.json());
-app.use(cookieParser());
+app.use(express.json())
+app.use(cookieParser())
 
 //Import all routes
-const announcements = require('./routes/announcement');
-const auth = require('./routes/auth');
-const conversation = require('./routes/conversation');
-const message = require('./routes/message');
-const request = require('./routes/request');
-const audit = require('./routes/audit');
+const announcements = require('./routes/announcement')
+const auth = require('./routes/auth')
+const conversation = require('./routes/conversation')
+const message = require('./routes/message')
+const request = require('./routes/request')
+const audit = require('./routes/audit')
 const announcementType = require('./routes/announcementType')
 const course = require('./routes/course')
 const form = require('./routes/form')
@@ -41,6 +41,6 @@ if(process.env.NODE_ENV === 'PRODUCTION'){
 }
 */
 // Middleware to handle errors
-app.use(errorMiddleware);
+app.use(errorMiddleware)
 
 module.exports = app

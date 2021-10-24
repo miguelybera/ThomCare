@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 const path = require('path')
 const multer = require('multer')
-const ErrorHandler = require('../utils/errorHandler');
+const ErrorHandler = require('../utils/errorHandler')
 const fileMimeTypes = [
     'image/jpeg',
     'image/png',
@@ -29,9 +29,9 @@ const {
     getArchivedAnnouncements,
     archiveAnnouncement,
     getHomepageAnnouncements
-} = require('../controllers/announcementController');
+} = require('../controllers/announcementController')
 
-const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth');
+const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth')
 const announcementStorage = require('../config/announcementFiles')
 
 const announcementUpload = multer({
@@ -47,18 +47,18 @@ const announcementUpload = multer({
 })
 
 //all users
-router.route('/announcement/:id').get(getSingleAnnouncement);
-router.route('/announcements').get(getHomepageAnnouncements);
+router.route('/announcement/:id').get(getSingleAnnouncement)
+router.route('/announcements').get(getHomepageAnnouncements)
 
 //student
 
 //dept chair and cics staff
-router.route('/admin/me/announcements').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Office'), getMyAnnouncements);
-router.route('/admin/unarchivedAnnouncements').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Office'), getUnarchivedAnnouncement);
-router.route('/admin/new/announcement').post(isAuthenticatedUser, announcementUpload.array('fileAttachments'), authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Office'), newAnnouncement);
-router.route('/admin/announcement/:id').put(isAuthenticatedUser, announcementUpload.array('fileAttachments'), updateAnnouncement);
-router.route('/admin/announcement/:id').delete(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Office'), deleteAnnouncement);
-router.route('/admin/archivedAnnouncements').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Office'), getArchivedAnnouncements);
-router.route('/admin/archiveAnnouncement/:id').put(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Office'), archiveAnnouncement);
+router.route('/admin/me/announcements').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Office'), getMyAnnouncements)
+router.route('/admin/unarchivedAnnouncements').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Office'), getUnarchivedAnnouncement)
+router.route('/admin/new/announcement').post(isAuthenticatedUser, announcementUpload.array('fileAttachments'), authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Office'), newAnnouncement)
+router.route('/admin/announcement/:id').put(isAuthenticatedUser, announcementUpload.array('fileAttachments'), updateAnnouncement)
+router.route('/admin/announcement/:id').delete(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Office'), deleteAnnouncement)
+router.route('/admin/archivedAnnouncements').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Office'), getArchivedAnnouncements)
+router.route('/admin/archiveAnnouncement/:id').put(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Office'), archiveAnnouncement)
 
-module.exports = router;
+module.exports = router

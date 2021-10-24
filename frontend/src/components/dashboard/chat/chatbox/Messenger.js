@@ -36,10 +36,10 @@ const Messenger = ({ history }) => {
     const [users, setUsers] = useState([])
     const [createConvoClicked, setCreateConvoClicked] = useState(0)
     const [clicked, setClicked] = useState(0)
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(false)
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
     const name = user && user.firstName + ' ' + user.lastName
     const imglink = 'https://res.cloudinary.com/dwcxehcui/image/upload/v1632063359/logo/default_w0escb.png'
 
@@ -236,8 +236,8 @@ const Messenger = ({ history }) => {
     useEffect(() => {
         arrivalMessage &&
             currentChat?.members.includes(arrivalMessage.sender) &&
-            setMessageList((prev) => [...prev, arrivalMessage]);
-    }, [arrivalMessage, currentChat]);
+            setMessageList((prev) => [...prev, arrivalMessage])
+    }, [arrivalMessage, currentChat])
 
     useEffect(() => {
         //send something to socket server

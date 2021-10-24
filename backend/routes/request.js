@@ -40,7 +40,7 @@ const {
 } = require('../controllers/requestController')
 
 const { isAuthenticatedUser, authorizeRoles } = require('../middlewares/auth')
-const studentStorage = require('../config/submittedFiles');
+const studentStorage = require('../config/submittedFiles')
 const adminStorage = require('../config/returningFiles')
 
 const thomcareUploadStudent = multer({
@@ -68,33 +68,33 @@ const thomcareUploadAdmin = multer({
 })
 
 //all users
-router.route('/tracker').post(requestTracker);
-router.route('/request/:requestId').get(isAuthenticatedUser, getSingleRequest); // no isAuthenticatedUser because a student can open request details while not signed in because of the tracker
+router.route('/tracker').post(requestTracker)
+router.route('/request/:requestId').get(isAuthenticatedUser, getSingleRequest) // no isAuthenticatedUser because a student can open request details while not signed in because of the tracker
 
 //student
-router.route('/submit').post(isAuthenticatedUser, authorizeRoles('Student'), thomcareUploadStudent.array('fileRequirements'), submitRequest);
-router.route('/me/requests').get(isAuthenticatedUser, authorizeRoles('Student'), getMyRequests);
+router.route('/submit').post(isAuthenticatedUser, authorizeRoles('Student'), thomcareUploadStudent.array('fileRequirements'), submitRequest)
+router.route('/me/requests').get(isAuthenticatedUser, authorizeRoles('Student'), getMyRequests)
 
 //dept chair
-router.route('/admin/deptChair/requests').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getDeptChairRequests);
-router.route('/admin/deptChair/crossEnrollment').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getCrossEnrollment);
-router.route('/admin/deptChair/stats').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getDeptChairStats);
+router.route('/admin/deptChair/requests').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getDeptChairRequests)
+router.route('/admin/deptChair/crossEnrollment').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getCrossEnrollment)
+router.route('/admin/deptChair/stats').get(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getDeptChairStats)
 
 //cics staff
-router.route('/admin/cics/all/requests').get(isAuthenticatedUser, authorizeRoles('CICS Office'), getAllRequests);
-router.route('/admin/cics/office/requests').get(isAuthenticatedUser, authorizeRoles('CICS Office'), getOfficeRequests);
-router.route('/admin/cics/available/requests').get(isAuthenticatedUser, authorizeRoles('CICS Office'), getAvailableRequests);
-router.route('/admin/cics/stats').get(isAuthenticatedUser, authorizeRoles('CICS Office'), getAllStats);
-router.route('/admin/cics/assign/:requestId').put(isAuthenticatedUser, authorizeRoles('CICS Office'), assignRequestToSelfCICS);
-router.route('/admin/cics/me/requests').get(isAuthenticatedUser, authorizeRoles('CICS Office'), getAssignedRequests);
-router.route('/admin/cics/unassign/:requestId').put(isAuthenticatedUser, authorizeRoles('CICS Office'), unassignRequest);
+router.route('/admin/cics/all/requests').get(isAuthenticatedUser, authorizeRoles('CICS Office'), getAllRequests)
+router.route('/admin/cics/office/requests').get(isAuthenticatedUser, authorizeRoles('CICS Office'), getOfficeRequests)
+router.route('/admin/cics/available/requests').get(isAuthenticatedUser, authorizeRoles('CICS Office'), getAvailableRequests)
+router.route('/admin/cics/stats').get(isAuthenticatedUser, authorizeRoles('CICS Office'), getAllStats)
+router.route('/admin/cics/assign/:requestId').put(isAuthenticatedUser, authorizeRoles('CICS Office'), assignRequestToSelfCICS)
+router.route('/admin/cics/me/requests').get(isAuthenticatedUser, authorizeRoles('CICS Office'), getAssignedRequests)
+router.route('/admin/cics/unassign/:requestId').put(isAuthenticatedUser, authorizeRoles('CICS Office'), unassignRequest)
 
 //dept chair and cics staff (the trash request can also be used for restoring the request back)
-router.route('/admin/requests/trash').get(isAuthenticatedUser, authorizeRoles('CICS Office', 'IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getTrashedRequests);
-router.route('/admin/update/:requestId').put(isAuthenticatedUser, thomcareUploadAdmin.array('returningFiles'), authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Office'), updateRequest);
-router.route('/admin/trash/:requestId').put(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Office'), trashRequest);
+router.route('/admin/requests/trash').get(isAuthenticatedUser, authorizeRoles('CICS Office', 'IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), getTrashedRequests)
+router.route('/admin/update/:requestId').put(isAuthenticatedUser, thomcareUploadAdmin.array('returningFiles'), authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Office'), updateRequest)
+router.route('/admin/trash/:requestId').put(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Office'), trashRequest)
 
 //dept chair, cics staff, student
-router.route('/delete/:requestId').delete(isAuthenticatedUser, authorizeRoles('Student', 'CICS Office', 'IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), deleteRequest);
+router.route('/delete/:requestId/:emptyTrash').delete(isAuthenticatedUser, authorizeRoles('Student', 'CICS Office', 'IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair'), deleteRequest)
 
-module.exports = router;
+module.exports = router

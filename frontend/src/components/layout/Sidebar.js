@@ -83,9 +83,9 @@ const SidebarWrap = styled.div`
 const Sidebar = () => {
     const { user } = useSelector(state => state.auth)
 
-    const [sidebar, setSidebar] = useState(false);
+    const [sidebar, setSidebar] = useState(false)
 
-    const showSidebar = () => setSidebar(!sidebar);
+    const showSidebar = () => setSidebar(!sidebar)
 
     return (
         <>
@@ -127,20 +127,20 @@ const Sidebar = () => {
                         {user.role === 'Student' ? (
                             <Fragment>
                                 {SidebarData[0].map((item, index) => {
-                                    return <SubMenu item={item} key={index} />;
+                                    return <SubMenu item={item} key={index} />
                                 })}
                             </Fragment>
                         ) : (
                             user.role === 'CICS Office' ? (
                                 <Fragment>
                                     {SidebarData[2].map((item, index) => {
-                                        return <SubMenu item={item} key={index} />;
+                                        return <SubMenu item={item} key={index} />
                                     })}
                                 </Fragment>
                             ) : (
                                 <Fragment>
                                     {SidebarData[1].map((item, index) => {
-                                        return <SubMenu item={item} key={index} />;
+                                        return <SubMenu item={item} key={index} />
                                     })}
                                 </Fragment>
                             )
@@ -149,7 +149,7 @@ const Sidebar = () => {
                 </SidebarNav>
             </IconContext.Provider>
         </>
-    );
-};
+    )
+}
 
 export default Sidebar

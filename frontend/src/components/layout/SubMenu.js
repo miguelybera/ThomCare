@@ -41,20 +41,20 @@ const DropdownLink = styled(Link)`
         border-left: 4px solid #ffffff;
         cursor: pointer;
         text-decoration: none;
-    }`;
+    }`
 
 const SubMenu = ({ item }) => {
     const dispatch = useDispatch()
     const alert = useAlert()
 
-    const [subnav, setSubnav] = useState(false);
+    const [subnav, setSubnav] = useState(false)
 
-    const showSubnav = () => setSubnav(!subnav);
+    const showSubnav = () => setSubnav(!subnav)
 
     const logoutHandler = () => {
         dispatch(logout())
         alert.success('Logged out successfully.')
-        // window.location.reload(true);
+        // window.location.reload(true)
     }
 
     return (

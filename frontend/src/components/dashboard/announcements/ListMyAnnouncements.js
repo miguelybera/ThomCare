@@ -20,11 +20,11 @@ const ListMyAnnoucements = ({ history }) => {
     const { loading, announcements, error } = useSelector(state => state.announcements)
     const { error: deleteError, isDeleted, isUpdated } = useSelector(state => state.announcement)
 
-    const [show, setShow] = useState(false);
-    const [deleteAnnouncementId, setDeleteAnnouncementId] = useState('');
+    const [show, setShow] = useState(false)
+    const [deleteAnnouncementId, setDeleteAnnouncementId] = useState('')
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
 
     const shortenDescription = (description) => {
         let y = description.split(' ')

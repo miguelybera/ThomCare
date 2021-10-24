@@ -1,5 +1,5 @@
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
-const cloudinary = require('cloudinary').v2;
+const { CloudinaryStorage } = require('multer-storage-cloudinary')
+const cloudinary = require('cloudinary').v2
 
 const announcementFiles = new CloudinaryStorage({
     cloudinary: cloudinary,
@@ -10,7 +10,7 @@ const announcementFiles = new CloudinaryStorage({
                 public_id: filename,
                 folder: 'announcementFiles',
                 resource_type: "raw"
-            };
+            }
             resolve(fileInfo)
         })
     }

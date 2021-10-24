@@ -1,16 +1,16 @@
 import React, { Fragment, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import Pdf from "react-to-pdf";
+import Pdf from "react-to-pdf"
 import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
 import { Button } from 'react-bootstrap'
 import './css/overload.css'
 import '../../../../App.css'
 
-const ref = React.createRef();
+const ref = React.createRef()
 
 const OVERLOADPDF = ({ studentInfo, submitted, setSubmitted }) => {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
 
     const { user } = useSelector(state => state.auth)
 

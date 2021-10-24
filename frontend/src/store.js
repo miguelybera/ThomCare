@@ -49,7 +49,8 @@ import {
 } from './reducers/dashboardReducers'
 
 import {
-    auditLogsReducer
+    auditLogsReducer,
+    newAuditReducer
 } from './reducers/auditReducers'
 
 import {
@@ -94,7 +95,9 @@ const reducer = combineReducers({
     course: courseReducer, // update delete course
     courseDetails: getCourseDetailsReducer, // get course details
     newCourse: newCourseReducer, // update delete course
+    
     audits: auditLogsReducer, //get all audits
+    audit: newAuditReducer, //get all audits
 
     form: formReducer, // update delete form
     forms: formsReducer, // get all forms

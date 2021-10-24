@@ -18,11 +18,11 @@ const ListStudents = ({ history }) => {
     const { loading, users, error } = useSelector(state => state.users)
     const { error: deleteError, isDeleted } = useSelector(state => state.user)
 
-    const [show, setShow] = useState(false);
-    const [deleteUserId, setDeleteUserId] = useState('');
+    const [show, setShow] = useState(false)
+    const [deleteUserId, setDeleteUserId] = useState('')
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
 
     useEffect(() => {
         dispatch(getStudents())

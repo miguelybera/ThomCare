@@ -1,9 +1,9 @@
-const Form = require('../models/form');
-const ErrorHandler = require('../utils/errorHandler');
-const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
-const APIFeatures = require('../utils/apiFeatures');
-const Audit = require('../models/audit');
-const cloudinary = require('cloudinary').v2;
+const Form = require('../models/form')
+const ErrorHandler = require('../utils/errorHandler')
+const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
+const APIFeatures = require('../utils/apiFeatures')
+const Audit = require('../models/audit')
+const cloudinary = require('cloudinary').v2
 
 // Create or upload a new form => /api/v1/admin/new/form
 exports.createForm = catchAsyncErrors(async (req, res, next) => {
@@ -43,7 +43,7 @@ exports.getAllForms = catchAsyncErrors(async (req, res, next) => {
 
 //get single form => /api/v1/form/:formId
 exports.getSingleForm = catchAsyncErrors(async (req, res, next) => {
-    const form = await Form.findById(req.params.formId);
+    const form = await Form.findById(req.params.formId)
     if (!form) { return next(new ErrorHandler('Form Id does not exist')) }
     res.status(200).json({
         success: true,

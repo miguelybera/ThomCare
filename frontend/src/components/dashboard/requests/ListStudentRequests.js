@@ -25,8 +25,8 @@ const ListStudentRequests = ({ history }) => {
     const { loading, requests, error } = useSelector(state => state.requests)
     const { error: deleteError, isDeleted } = useSelector(state => state.request)
 
-    const [show, setShow] = useState(false);
-    const [requestId, setRequestId] = useState('');
+    const [show, setShow] = useState(false)
+    const [requestId, setRequestId] = useState('')
     const [requestType, setRequestType] = useState('')
 
     const requestTypes = [
@@ -46,8 +46,8 @@ const ListStudentRequests = ({ history }) => {
         'Others'
     ]
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
 
     const changeDateFormat = (date) => dateformat(date, "mmm d, yyyy h:MMtt")
     const upperCase = (text) => text.toUpperCase()
@@ -97,7 +97,7 @@ const ListStudentRequests = ({ history }) => {
     }, [dispatch, history, alert, error, requestType])
 
     const deleteRequestHandler = (id) => {
-        dispatch(deleteRequest(id))
+        dispatch(deleteRequest(id, 'No'))
         handleClose()
     }
 

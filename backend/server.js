@@ -1,13 +1,13 @@
-const app = require('./app');
-const dotenv = require('dotenv');
-const connectDatabase = require('./config/database');
-const cloudinary = require('cloudinary').v2;
-const { connect } = require('mongoose');
+const app = require('./app')
+const dotenv = require('dotenv')
+const connectDatabase = require('./config/database')
+const cloudinary = require('cloudinary').v2
+const { connect } = require('mongoose')
 
 // Handle Uncaught exceptions
 process.on('uncaughtException', err => {
-    console.log(`ERROR: ${err.message}`);
-    console.log('Shutting down server due to uncaught exceptions');
+    console.log(`ERROR: ${err.message}`)
+    console.log('Shutting down server due to uncaught exceptions')
     process.exit(1)
 })
 
@@ -16,7 +16,7 @@ dotenv.config({ path: 'backend/config/config.env' })
 //if(process.env.NODE_ENV !== 'PRODUCTION') require('dotenv').config({ path: 'backend/config/config.env' })
 
 // Connecting to Database
-connectDatabase();
+connectDatabase()
 
 //Setting up cloudinary config
 cloudinary.config({
@@ -26,7 +26,7 @@ cloudinary.config({
 })
 
 const server = app.listen(process.env.PORT, () => {
-    console.log(`Server started on PORT: ${process.env.PORT} in ${process.env.NODE_ENV} mode.`);
+    console.log(`Server started on PORT: ${process.env.PORT} in ${process.env.NODE_ENV} mode.`)
 })
 
 //socket
@@ -49,16 +49,16 @@ let users = []
 
 const addUser = (userId, socketId) => {
     !users.some((user) => user.userId === userId) &&
-        users.push({ userId, socketId });
-};
+        users.push({ userId, socketId })
+}
 
 const removeUser = (socketId) => {
-    users = users.filter((user) => user.socketId !== socketId);
-};
+    users = users.filter((user) => user.socketId !== socketId)
+}
 
 const getUser = (userId) => {
-    return users.find((user) => user.userId === userId);
-};
+    return users.find((user) => user.userId === userId)
+}
 
 io.on('connection', (socket) => {
     //take userID and socketId from user
@@ -69,26 +69,26 @@ io.on('connection', (socket) => {
 
     //send and get message
     socket.on("sendMessage", ({ senderId, receiverId, text }) => {
-        const user = getUser(receiverId);
+        const user = getUser(receiverId)
         try {
             io.to(user.socketId).emit("getMessage", {
                 senderId,
                 text
-            });
+            })
         } catch (err) {
         }
-    });
+    })
 
     //on disconnection
     socket.on('disconnect', () => {
         removeUser(socket.id)
-        io.emit("getUsers", users);
+        io.emit("getUsers", users)
     })
 })
 
 // Handle Unhandled Promise Rejections
 process.on('unhandledRejection', err => {
-    console.log(`ERROR: ${err.message}`);
+    console.log(`ERROR: ${err.message}`)
     console.log('Shutting Down the server due to Unhandled promise rejection')
     server.close(() => {
         process.exit(1)

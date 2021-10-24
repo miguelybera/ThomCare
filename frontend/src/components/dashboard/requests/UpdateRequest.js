@@ -41,7 +41,7 @@ const UpdateRequest = ({ history, match }) => {
         'Approved by IT',
         'Denied by CS',
         'Denied by IS',
-        'Denied by IT'];
+        'Denied by IT']
 
     const requestId = match.params.id
 

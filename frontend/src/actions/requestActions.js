@@ -322,13 +322,13 @@ export const unassignRequest = (requestId, request) => async (dispatch) => {
 }
 
 //delete request
-export const deleteRequest = (requestId) => async (dispatch) => {
+export const deleteRequest = (requestId, emptyTrash) => async (dispatch) => {
     try {
         dispatch({
             type: DELETE_REQUEST_REQUEST
         })
 
-        const { data } = await axios.delete(`/api/v1/delete/${requestId}`)
+        const { data } = await axios.delete(`/api/v1/delete/${requestId}/${emptyTrash}`)
 
         dispatch({
             type: DELETE_REQUEST_SUCCESS,

@@ -33,10 +33,10 @@ const ViewRequest = ({ history, match }) => {
     const id = requestId.substr(1, requestId.length - 1)
     const [viewType, setViewType] = useState(requestId.substr(0, 1))
 
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(false)
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
 
     const changeDateFormat = (date) => dateformat(date, "mmm d, yyyy h:MMtt")
     const upperCase = (text) => text.toUpperCase()
@@ -148,7 +148,7 @@ const ViewRequest = ({ history, match }) => {
     }
 
     const deleteRequestHandler = (id) => {
-        dispatch(deleteRequest(id))
+        dispatch(deleteRequest(id, 'No'))
         handleClose()
     }
 

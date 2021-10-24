@@ -17,11 +17,11 @@ const ListAnnouncementType = ({ history }) => {
     const { loading, announcementTypes, error } = useSelector(state => state.announcementType)
     const { error: deleteError, isDeleted } = useSelector(state => state.announcement)
 
-    const [show, setShow] = useState(false);
-    const [deleteAnnouncementId, setDeleteAnnouncementId] = useState('');
+    const [show, setShow] = useState(false)
+    const [deleteAnnouncementId, setDeleteAnnouncementId] = useState('')
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
 
     useEffect(() => {
         dispatch(getAnnouncementType())

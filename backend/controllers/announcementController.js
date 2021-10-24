@@ -1,8 +1,8 @@
-const Announcement = require('../models/announcement');
-const ErrorHandler = require('../utils/errorHandler');
-const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
-const APIFeatures = require('../utils/apiFeatures');
-const cloudinary = require('cloudinary').v2;
+const Announcement = require('../models/announcement')
+const ErrorHandler = require('../utils/errorHandler')
+const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
+const APIFeatures = require('../utils/apiFeatures')
+const cloudinary = require('cloudinary').v2
 
 const csTracks = ["All", "Core Computer Science", "Game Development", "Data Science"]
 const itTracks = ["All", "Network and Security", "Web and Mobile App Development", "IT Automation"]
@@ -111,8 +111,6 @@ exports.getHomepageAnnouncements = catchAsyncErrors(async (req, res, next) => {
     const resPerPage = 10
     const announcementCount = await Announcement.countDocuments({ archiveDate: { $gte: Date.now() } })
     const apiFeatures = new APIFeatures(Announcement.find({ archiveDate: { $gte: Date.now() } }).sort({ createdAt: -1 }), req.query).searchTitle().filter().pagination(resPerPage)
-
-    // !for finding date "$gte": new Date("2014-08-01"), "$lt": new Date("2014-08-02")
     
     let announcements = await apiFeatures.query
     let filteredAnnouncementsCount = announcements.length
@@ -158,7 +156,7 @@ exports.getArchivedAnnouncements = catchAsyncErrors(async (req, res, next) => {
 
 // Get single announcement /api/v1/announcement/:id
 exports.getSingleAnnouncement = catchAsyncErrors(async (req, res, next) => {
-    const announcement = await Announcement.findById(req.params.id);
+    const announcement = await Announcement.findById(req.params.id)
 
     if (!announcement) { return next(new ErrorHandler('Announcement Not Found', 404)) }
 
@@ -309,7 +307,7 @@ exports.updateAnnouncement = catchAsyncErrors(async (req, res, next) => {
 
 // delete announcement /api/v1/admin/announcement/:id
 exports.deleteAnnouncement = catchAsyncErrors(async (req, res, next) => {
-    const announcement = await Announcement.findById(req.params.id);
+    const announcement = await Announcement.findById(req.params.id)
     if (!announcement) { return next(new ErrorHandler('Announcement Not Found', 404)) }
 
     const filesAttached = announcement.fileAttachments
@@ -337,7 +335,7 @@ exports.deleteAnnouncement = catchAsyncErrors(async (req, res, next) => {
 
 // archive announcement /api/v1/admin/archiveAnnouncement/:id
 exports.archiveAnnouncement = catchAsyncErrors(async (req, res, next) => {
-    let announcement = await Announcement.findById(req.params.id);
+    let announcement = await Announcement.findById(req.params.id)
     if (!announcement) { return next(new ErrorHandler('Announcement Not Found', 404)) }
 
     announcement = await Announcement.findByIdAndUpdate(req.params.id, { setExpiry: true, archiveDate: Date.now() - 1000 }, {

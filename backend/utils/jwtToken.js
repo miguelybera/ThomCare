@@ -3,7 +3,7 @@
 const sendToken = (user, statusCode, res) => {
 
     // Create Jwt Token 
-    const token = user.getJwtToken();
+    const token = user.getJwtToken()
 
     // Options for cookie
     const options = {

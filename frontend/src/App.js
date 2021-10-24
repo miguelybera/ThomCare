@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import { useSelector } from 'react-redux'
 import { loadUser } from './actions/userActions'
 import store from './store'
-import './App.css';
+import './App.css'
 import "@fortawesome/fontawesome-free/css/all.min.css"
 
 //layout folder
@@ -215,4 +215,4 @@ function App() {
     )
 }
 
-export default App;
+export default App

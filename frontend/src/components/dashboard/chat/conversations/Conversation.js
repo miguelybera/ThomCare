@@ -24,18 +24,18 @@ const Conversations = ({ history, conversation, currentUser }) => {
     const imglink = 'https://res.cloudinary.com/dwcxehcui/image/upload/v1632063359/logo/default_w0escb.png'
 
     useEffect(() => {
-        const id = conversation.members.find((m) => m !== currentUserId);
+        const id = conversation.members.find((m) => m !== currentUserId)
 
         const getUser = async () => {
             try {
-                const { data } = await axios(`/api/v1/chat/user/${id}`);
+                const { data } = await axios(`/api/v1/chat/user/${id}`)
                 setUser(data.singleUser)
             } catch (err) {
                 console.log(err)
             }
         }
 
-        getUser();
+        getUser()
     }, [currentUser, conversation, alert])
 
     const name = user ? user.firstName + ' ' + user.lastName : 'Deleted Account'

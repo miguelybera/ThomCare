@@ -1,15 +1,15 @@
-const Course = require('../models/course');
-const ErrorHandler = require('../utils/errorHandler');
-const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
-const APIFeatures = require('../utils/apiFeatures');
+const Course = require('../models/course')
+const ErrorHandler = require('../utils/errorHandler')
+const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
+const APIFeatures = require('../utils/apiFeatures')
 
 // Create course => /api/v1/admin/new/course
 exports.newCourse = catchAsyncErrors(async (req, res, next) => {
     const { courseCode, courseName, lecUnits, labUnits } = req.body
 
-    const course = await Course.findOne({ courseCode });
+    const course = await Course.findOne({ courseCode })
 
-    if (course) { return next(new ErrorHandler('Course already exists', 404)); }
+    if (course) { return next(new ErrorHandler('Course already exists', 404)) }
 
     try {
         const course = await Course.create({
@@ -51,7 +51,7 @@ exports.getAvailableCourses = catchAsyncErrors(async (req, res, next) => {
 
 // Get single course /api/v1/course/:id
 exports.getSingleCourse = catchAsyncErrors(async (req, res, next) => {
-    const course = await Course.findById(req.params.id);
+    const course = await Course.findById(req.params.id)
 
     if (!course) { return next(new ErrorHandler('Course Not Found', 404)) }
 

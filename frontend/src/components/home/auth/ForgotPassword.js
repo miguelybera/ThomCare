@@ -43,7 +43,7 @@ const ForgotPassword = ({ history }) => {
     }, [dispatch, history, alert, error])
 
     const submitHandler = (e) => {
-        e.preventDefault();
+        e.preventDefault()
         dispatch(forgotPassword(email))
     }
 

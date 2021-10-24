@@ -18,11 +18,11 @@ const ListCourses = ({ history }) => {
     const { loading, courses, error } = useSelector(state => state.courses)
     const { isDeleted, error: deleteError } = useSelector(state => state.course)
 
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(false)
     const [id, setId] = useState('')
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
 
     useEffect(() => {
         dispatch(getAllCourses())

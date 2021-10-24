@@ -81,7 +81,7 @@ export const logout = () => async (dispatch) => {
             type: LOGOUT_SUCCESS
         })
         
-        window.location.reload();
+        window.location.reload()
     } catch (error) {
         dispatch({
             type: LOGOUT_FAIL,

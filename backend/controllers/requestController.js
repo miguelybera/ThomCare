@@ -290,7 +290,7 @@ exports.getDeptChairStats = catchAsyncErrors(async (req, res, next) => {
 
         overViewStats.push(x.length)
     }
-    
+
     res.status(200).json({
         success: true,
         dailyStats,
@@ -777,17 +777,19 @@ exports.deleteRequest = catchAsyncErrors(async (req, res, next) => {
         }
     }
 
-    const userName = req.user.firstName + ' ' + req.user.lastName
-
-    await Audit.create({
-        name: "Request permanent deletion",
-        eventInfo: `Permanently deleted request with tracking number: ${request.trackingNumber}.`,
-        user: userName,
-        dateAudit: Date.now()
-    })
-
     await request.remove()
 
+    const userName = req.user.firstName + ' ' + req.user.lastName
+
+    if (req.params.emptyTrash == 'No') {
+        await Audit.create({
+            name: "Request permanent deletion",
+            eventInfo: `Permanently deleted request with tracking number: ${request.trackingNumber}.`,
+            user: userName,
+            dateAudit: Date.now()
+        })
+    }
+    
     res.status(200).json({
         success: true,
         message: "Request has been deleted"
@@ -829,7 +831,7 @@ exports.getCrossEnrollment = catchAsyncErrors(async (req, res, next) => {
     const reqStatusIS = ['Pending for IS Approval', 'Approved by IS', 'Denied by IS'];
     const reqStatusCS = ['Pending for CS Approval', 'Approved by CS', 'Denied by CS'];
     let deptCourse = '', crossStatus = []
-    
+
     switch (req.user.role) {
         case 'IT Dept Chair':
             crossStatus = reqStatusIT
@@ -848,7 +850,7 @@ exports.getCrossEnrollment = catchAsyncErrors(async (req, res, next) => {
             return next(new ErrorHandler('Role does not have access to this resource'))
     }
 
-    const  getCrossEnrollmentIncoming= new APIFeatures(Request.find({ isTrash: false, requestType: 'Cross Enrollment within CICS', requestStatus: { $in: crossStatus } })
+    const getCrossEnrollmentIncoming = new APIFeatures(Request.find({ isTrash: false, requestType: 'Cross Enrollment within CICS', requestStatus: { $in: crossStatus } })
         .sort({ createdAt: -1 }), req.query)
         .searchRequests()
         .filter()

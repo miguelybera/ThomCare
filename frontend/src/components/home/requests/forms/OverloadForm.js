@@ -275,7 +275,7 @@ function OverloadForm({ history }) {
                     </Modal.Body>
                 </Modal>
             </Fragment>
-        );
+        )
     }
 
     return (

@@ -1,27 +1,26 @@
-const User = require('../models/user');
-const Audit = require('../models/audit');
-const ErrorHandler = require('../utils/errorHandler');
-const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
-const sendToken = require('../utils/jwtToken');
-const sendEmail = require('../utils/sendEmail');
-const crypto = require('crypto');
-const jwt = require('jsonwebtoken');
+const User = require('../models/user')
+const Audit = require('../models/audit')
+const ErrorHandler = require('../utils/errorHandler')
+const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
+const sendToken = require('../utils/jwtToken')
+const sendEmail = require('../utils/sendEmail')
+const crypto = require('crypto')
+const jwt = require('jsonwebtoken')
 const verifyEmail = require('../config/templates/verifyEmail')
 const resetPassword = require('../config/templates/resetPassword')
 
 // Register a user => /api/v1/admin/register
 exports.registerAdmin = catchAsyncErrors(async (req, res, next) => {
-    const { firstName, middleName, lastName, email, password, role } = req.body;
+    const { firstName, middleName, lastName, email, password, role } = req.body
 
     const studentNumber = '0000000000'
     const course = 'N/A'
 
     if (req.body.password !== req.body.confirmPassword) { return next(new ErrorHandler('Password does not match')) }
-
     if ((req.body.email.substr(-10) !== "ust.edu.ph")) { return next(new ErrorHandler('UST GSuite accounts are only allowed')) } // will change to ust.edu.ph only after development
 
     const checkUser = await User.findOne({ email })
-    if (checkUser) { return next(new ErrorHandler('Email account already exists', 404)); }
+    if (checkUser) { return next(new ErrorHandler('Email account already exists', 404)) }
 
     const user = await User.create({
         firstName,
@@ -52,20 +51,20 @@ exports.registerAdmin = catchAsyncErrors(async (req, res, next) => {
 
 // Login User => /api/v1/login
 exports.login = catchAsyncErrors(async (req, res, next) => {
-    const { email, password } = req.body;
+    const { email, password } = req.body
 
     //Checks if email and password is entered by user
     if (!email || !password) { return next(new ErrorHandler('Please enter email & password', 400)) }
 
     // Finding user in database
-    const user = await User.findOne({ email }).select('+password');
+    const user = await User.findOne({ email }).select('+password')
 
-    if (!user) { return next(new ErrorHandler('Invalid Email or Password', 401)); }
+    if (!user) { return next(new ErrorHandler('Invalid Email or Password', 401)) }
 
     // Checks if password is correct or not
-    const isPasswordMatched = await user.comparePassword(password);
+    const isPasswordMatched = await user.comparePassword(password)
 
-    if (!isPasswordMatched) { return next(new ErrorHandler('Invalid Email or Password', 401)); }
+    if (!isPasswordMatched) { return next(new ErrorHandler('Invalid Email or Password', 401)) }
 
     sendToken(user, 200, res)
 })
@@ -77,19 +76,6 @@ exports.logout = catchAsyncErrors(async (req, res, next) => {
         httpOnly: true
     })
 
-    // res.setHeader(
-    //     "Set-Cookie",
-    //     cookie.serialize("token", "", {
-    //       httpOnly: true,
-    //       secure: process.env.NODE_ENV !== "development",
-    //       expires: new Date(0),
-    //       sameSite: "strict",
-    //       path: "/",
-    //     })
-    //   );
-
-    // res.clearCookie('token')
-
     res.status(200).json({
         success: true,
         message: 'Logged out'
@@ -98,12 +84,12 @@ exports.logout = catchAsyncErrors(async (req, res, next) => {
 
 // Forgot Password => /api/v1/password/forgot
 exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
-    const user = await User.findOne({ email: req.body.email });
+    const user = await User.findOne({ email: req.body.email })
 
-    if (!user) { return next(new ErrorHandler('Email does not exist', 404)); }
+    if (!user) { return next(new ErrorHandler('Email does not exist', 404)) }
 
     // Get reset token
-    const resetToken = user.getResetPasswordToken();
+    const resetToken = user.getResetPasswordToken()
 
     await user.save({ validateBeforeSave: false })
 
@@ -135,9 +121,7 @@ exports.forgotPassword = catchAsyncErrors(async (req, res, next) => {
 })
 
 // Reset Password => /api/v1/password/reset/:token
-
 exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
-
     // Hash URL token
     const resetPasswordToken = crypto.createHash('sha256').update(req.params.token).digest('hex')
 
@@ -154,7 +138,7 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
     user.resetPasswordToken = undefined
     user.resetPasswordExpire = undefined
 
-    await user.save();
+    await user.save()
 
     res.status(200).json({
         success: true,
@@ -165,25 +149,15 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
 
 // Register a student => /api/v1/registerStudent
 exports.registerStudent = catchAsyncErrors(async (req, res, next) => {
-    const { firstName, middleName, lastName, studentNumber, course, email, password } = req.body;
+    const { firstName, middleName, lastName, studentNumber, course, email, password } = req.body
 
-    //for postman
-    if ((firstName == null) || (firstName == '')) { return next(new ErrorHandler('Please enter first name')) }
-    if ((lastName == null) || (lastName == '')) { return next(new ErrorHandler('Please enter last name')) }
-    if ((studentNumber == null) || (studentNumber == '')) { return next(new ErrorHandler('Please enter student number')) }
-    if ((course == null) || (course == '')) { return next(new ErrorHandler('Please enter course')) }
-    if ((course !== 'Computer Science') && (course !== 'Information Technology') && (course !== 'Information Systems')) { return next(new ErrorHandler('Please enter the correct course')) }
-    if ((email == null) || (email == '')) { return next(new ErrorHandler('Please enter email')) }
-    if ((password == null) || (password == '')) { return next(new ErrorHandler('Please enter password')) }
-    if (!(req.body.email.substr(-15) == "iics@ust.edu.ph" || req.body.email.substr(-15) == "cics@ust.edu.ph")) { return next(new ErrorHandler('UST GSuite accounts are only allowed')) }
+    const user = await User.findOne({ email })
 
-    const user = await User.findOne({ email });
-
-    if (user) { return next(new ErrorHandler('Email account already exists', 404)); }
+    if (user) { return next(new ErrorHandler('Email account already exists', 404)) }
 
     if (req.body.password !== req.body.confirmPassword) { return next(new ErrorHandler('Password does not match')) }
 
-    const registerToken = jwt.sign({ firstName, middleName, lastName, studentNumber, course, email, password }, process.env.ACCOUNT_TOKEN, { expiresIn: process.env.REGISTER_EXPIRES });
+    const registerToken = jwt.sign({ firstName, middleName, lastName, studentNumber, course, email, password }, process.env.ACCOUNT_TOKEN, { expiresIn: process.env.REGISTER_EXPIRES })
 
     // create reset password url
     const link = `${req.protocol}://${process.env.THOM_HOST}/verify/account/${registerToken}`

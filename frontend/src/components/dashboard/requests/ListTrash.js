@@ -5,7 +5,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Container, Modal, Button, Row, Col, Form } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getRequests, updateRequest, deleteRequest, clearErrors } from '../../../actions/requestActions'
+import { createAudit } from '../../../actions/auditActions'
 import { UPDATE_REQUEST_RESET, DELETE_REQUEST_RESET } from '../../../constants/requestConstants'
+import { NEW_AUDIT_RESET } from '../../../constants/auditConstants'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
 import Sidebar from '../../layout/Sidebar'
 import MetaData from '../../layout/MetaData'
@@ -25,12 +27,17 @@ const ListAllRequests = ({ history }) => {
     const { loading, requests, error } = useSelector(state => state.requests)
     const { user } = useSelector(state => state.auth)
     const { error: deleteError, isDeleted, isUpdated } = useSelector(state => state.request)
+    const { success } = useSelector(state => state.audit)
 
-    const [show, setShow] = useState(false);
-    const [requestId, setRequestId] = useState('');
+    const [show, setShow] = useState(false)
+    const [emptyShow, setEmptyShow] = useState(false)
+    const [deleteAll, setDeleteAll] = useState(false)
+    const [requestId, setRequestId] = useState('')
 
-    const handleClose = () => setShow(false);
-    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false)
+    const handleShow = () => setShow(true)
+    const handleEmptyClose = () => setEmptyShow(false)
+    const handleEmptyShow = () => setEmptyShow(true)
 
     const changeDateFormat = (date) => dateformat(date, "mmm d, yyyy h:MMtt")
     const upperCase = (text) => text.toUpperCase()
@@ -88,7 +95,13 @@ const ListAllRequests = ({ history }) => {
             dispatch(clearErrors())
         }
 
-        if (isDeleted) {
+        if (isDeleted && deleteAll) {
+            dispatch({
+                type: DELETE_REQUEST_RESET
+            })
+        }
+
+        if (isDeleted && deleteAll === false) {
             alert.success('Request has been deleted successfully.')
             history.push('/admin/requests/trash')
 
@@ -109,7 +122,15 @@ const ListAllRequests = ({ history }) => {
         dispatch({
             type: INSIDE_DASHBOARD_TRUE
         })
-    }, [dispatch, history, alert, error, isUpdated, isDeleted, deleteError, user.role])
+    }, [dispatch, history, alert, error, isUpdated, isDeleted, deleteError, deleteAll, user.role])
+
+    useEffect(() => {
+        if (success) {
+            dispatch({
+                type: NEW_AUDIT_RESET
+            })
+        }
+    }, [dispatch, success])
 
     useEffect(() => {
         if (user.role === 'CICS Office') {
@@ -131,13 +152,34 @@ const ListAllRequests = ({ history }) => {
     }, [dispatch, history, alert, error, requestType, user.role])
 
     const deleteRequestHandler = (id) => {
-        dispatch(deleteRequest(id))
+        dispatch(deleteRequest(id, 'No'))
         handleClose()
     }
 
     const updateRequestHandler = (id) => {
         dispatch(updateRequest(id, { isTrash: false }, true))
         handleClose()
+    }
+
+    const emptyTrash = () => {
+        setDeleteAll(!deleteAll)
+
+        let length = requests.length
+
+        requests.forEach(request => {
+            dispatch(deleteRequest(request._id, 'Yes'))
+        })
+
+        alert.success('Trash has been emptied.')
+
+        const msg = {
+            name: "Emptied requests trash",
+            eventInfo: `${length} request(s) deleted.`
+        }
+
+        dispatch(createAudit(msg))
+
+        handleEmptyClose()
     }
 
     const setRequests = () => {
@@ -234,6 +276,20 @@ const ListAllRequests = ({ history }) => {
                     <Button variant="primary" onClick={() => deleteRequestHandler(requestId)}>Yes, I'm sure</Button>
                 </Modal.Footer>
             </Modal>
+            <Modal show={emptyShow} onHide={handleEmptyClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Empty Trash?</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Are you sure you want to delete ALL messages? This cannot be undone.</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleEmptyClose}>
+                        Close
+                                </Button>
+                    <Button variant="primary" onClick={() => emptyTrash()}>
+                        Yes, I'm sure
+                                </Button>
+                </Modal.Footer>
+            </Modal>
             <Sidebar />
             <div className="row">
                 <div className="">
@@ -241,6 +297,9 @@ const ListAllRequests = ({ history }) => {
                         <div style={{ display: 'flex', marginBottom: '20px' }}>
                             <div style={{ marginRight: 'auto', marginTop: '30px' }}>
                                 <h3>Trash</h3>
+                            </div>
+                            <div style={{ marginLeft: 'auto', marginTop: '30px' }}>
+                                <Button variant='outline-danger' onClick={handleEmptyShow}>Empty Trash</Button>
                             </div>
                         </div>
                         <Form>
@@ -261,6 +320,7 @@ const ListAllRequests = ({ history }) => {
                                             ))}
                                         </Form.Select>
                                     </Form.Group>
+
                                 </Col>
                             </Row>
                         </Form>

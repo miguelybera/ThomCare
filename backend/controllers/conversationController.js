@@ -1,9 +1,9 @@
-const Conversation = require('../models/conversation');
-const Audit = require('../models/audit');
-const ErrorHandler = require('../utils/errorHandler');
-const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
-const APIFeatures = require('../utils/apiFeatures');
-const User = require('../models/user');
+const Conversation = require('../models/conversation')
+const Audit = require('../models/audit')
+const ErrorHandler = require('../utils/errorHandler')
+const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
+const APIFeatures = require('../utils/apiFeatures')
+const User = require('../models/user')
 const Message = require('../models/message')
 
 // create conversaation
@@ -37,7 +37,7 @@ exports.createConversation = catchAsyncErrors(async (req, res, next) => {
         res.status(200).json({
             conversation,
             message
-        });
+        })
     } catch (err) {
         res.status(500).json(err)
     }
@@ -81,8 +81,9 @@ exports.getBothConversation = catchAsyncErrors(async (req, res, next) => {
 
 exports.deleteConversation = catchAsyncErrors(async (req, res, next) => {
     const conversation = await Conversation.findById(req.params.id)
-    
-    if (!conversation) { return next(new ErrorHandler('Conversation Not Found', 404)) }
+
+    // if (!conversation) { return next(new ErrorHandler('Conversation Not Found', 404)) }
+    if (!conversation) { return next() }
 
     const member = req.user._id != conversation.members[0] ? conversation.members[0] : conversation.members[1]
 

@@ -31,12 +31,12 @@ const thomcareUpload = multer({
 })
 
 // Admin
-router.route('/admin/new/form').post(isAuthenticatedUser, thomcareUpload.array('attachments'), authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Office'), createForm);
+router.route('/admin/new/form').post(isAuthenticatedUser, thomcareUpload.array('attachments'), authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Office'), createForm)
 router.route('/admin/form/:formId').put(isAuthenticatedUser, thomcareUpload.array('attachments'), authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Office'), updateForm)
 router.route('/admin/form/:formId').delete(isAuthenticatedUser, authorizeRoles('IT Dept Chair', 'CS Dept Chair', 'IS Dept Chair', 'CICS Office'), deleteForm)
 
 //All
-router.route('/forms').get(getAllForms);
-router.route('/form/:formId').get(isAuthenticatedUser, getSingleForm);
+router.route('/forms').get(getAllForms)
+router.route('/form/:formId').get(isAuthenticatedUser, getSingleForm)
 
-module.exports = router;
+module.exports = router

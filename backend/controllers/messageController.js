@@ -1,9 +1,9 @@
-const Message = require('../models/message');
-const ErrorHandler = require('../utils/errorHandler');
-const catchAsyncErrors = require('../middlewares/catchAsyncErrors');
-const APIFeatures = require('../utils/apiFeatures');
-const Conversation = require('../models/conversation');
-const User = require('../models/user');
+const Message = require('../models/message')
+const ErrorHandler = require('../utils/errorHandler')
+const catchAsyncErrors = require('../middlewares/catchAsyncErrors')
+const APIFeatures = require('../utils/apiFeatures')
+const Conversation = require('../models/conversation')
+const User = require('../models/user')
 
 // add a message
 exports.createMessage = catchAsyncErrors(async (req, res, next) => {
@@ -19,7 +19,7 @@ exports.createMessage = catchAsyncErrors(async (req, res, next) => {
     }
 
     req.body.sender = req.user.id
-    req.body.conversationId = req.params.conversationId;
+    req.body.conversationId = req.params.conversationId
 
     //github
     const newMessage = new Message(req.body)

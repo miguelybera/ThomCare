@@ -82,22 +82,4 @@ const announcementSchema = new mongoose.Schema({
     }
 })
 
-/*announcementSchema.post("save", function(announcement, next ){
-    cron.schedule('* * * * *', 
-    async function() { 
-        const dateToday = Date.now();
-        if(announcement.archiveDate.valueOf() <= dateToday.valueOf() ){
-            const result = await mongoose.model("Announcement")
-            .update({ "_id" : announcement._id}, {$set: {isArchive:true}});
-
-            if(result.nModified===1){
-                console.log("isArchive set to true for", announcement.title);
-            }
-        }     
-}
-);
-    next ();
-});
-*/
-
 module.exports = mongoose.model('Announcement', announcementSchema)
