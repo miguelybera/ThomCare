@@ -28,6 +28,8 @@ const CreateCourse = ({ history, match }) => {
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
 
+    const upperCase = (text) => text.toUpperCase()
+
     const goBack = () => {
         window.history.back()
         handleClose()
@@ -126,7 +128,7 @@ const CreateCourse = ({ history, match }) => {
                                                 type='text'
                                                 name='courseCode'
                                                 value={courseCode}
-                                                onChange={e => setCourseCode(e.target.value)}
+                                                onChange={e => setCourseCode(upperCase(e.target.value))}
                                                 required
                                             />
                                         </FloatingLabel>
@@ -140,7 +142,7 @@ const CreateCourse = ({ history, match }) => {
                                                 type='text'
                                                 name='courseName'
                                                 value={courseName}
-                                                onChange={e => setCourseName(e.target.value)}
+                                                onChange={e => setCourseName(upperCase(e.target.value))}
                                                 required
                                             />
                                         </FloatingLabel>
