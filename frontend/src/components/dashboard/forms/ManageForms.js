@@ -2,7 +2,8 @@ import React, { Fragment, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Card, Button, Container, Row, Col } from 'react-bootstrap'
+import { Button, Container } from 'react-bootstrap'
+import { MDBDataTableV5 } from 'mdbreact'
 import { Markup } from 'interweave'
 import { getForms, deleteForm, clearErrors } from './../../../actions/formActions'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
@@ -46,6 +47,53 @@ const ManageForms = ({ history, match }) => {
         dispatch(deleteForm(id))
     }
 
+    const setForms = () => {
+        const data = {
+            columns: [
+                {
+                    label: 'Title',
+                    field: 'title',
+                    width: 250
+                },
+                {
+                    label: 'Description',
+                    field: 'description',
+                    width: 500
+                },
+                {
+                    label: 'Actions',
+                    field: 'actions',
+                    width: 250
+                }
+            ],
+            rows: []
+        }
+
+        forms && forms.forEach(form => {
+            data.rows.push({
+                title: form.title,
+                description: <Markup content={form.description}/>,
+                actions: <Fragment>
+                    <a href={form.attachments && form.attachments[0].path} target="_blank" rel="noreferrer">
+                        <Button style={{ margin: '5px' }} variant="outline-secondary">
+                            <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'black' }} />
+                        </Button>
+                    </a>
+                    <Link to={`/admin/form/${form._id}`}>
+                        <Button style={{ margin: '10px 5px' }} variant="primary">
+                            <i class="fa fa-edit" aria-hidden="true" />
+                        </Button>
+                    </Link>
+                    <Button style={{ margin: '10px 5px' }} variant="danger" onClick={() => deleteFormHandler(form._id)}>
+                        <i class="fa fa-trash" aria-hidden="true" />
+                    </Button>
+                </Fragment>
+            })
+        })
+
+        return data
+    }
+
     return (
         <Fragment>
             <MetaData title={`Manage Forms`} />
@@ -53,54 +101,22 @@ const ManageForms = ({ history, match }) => {
             <Container fluid style={{ padding: "50px 0px" }}>
                 <div style={{ display: 'flex', marginBottom: '20px' }}>
                     <div style={{ marginRight: 'auto', marginTop: '30px' }}>
-                        <h3>Manage Forms</h3>
+                        <h3>Manage forms</h3>
+                    </div>
+                    <div style={{ marginLeft: 'auto', marginTop: '30px' }}>
+                        <Link to='/admin/new/form'><Button>Add new form</Button></Link>
                     </div>
                 </div>
-                <Row xs={1} md={2} className="g-4" >
-                    {loading ? <Loader /> : (
-                        <Fragment>
-                            <Col>
-                                <Card style={{ border: 0, height: '250px', paddingTop: '20px' }}>
-                                    <Card.Body style={{ marginLeft: 'auto', marginRight: 'auto' }}>
-                                        <Link to='/admin/new/form' style={{ textDecoration: 'none' }}>
-                                            <Button variant="primary" style={{ height: '150px', width: '150px', borderRadius: '50%', padding: '0px', marginLeft: '2px' }}>
-                                                <span className="fa-7x">
-                                                    <i className="fa fa-plus-circle"></i>
-                                                </span>
-                                            </Button>
-                                            <Card.Text style={{ textDecoration: 'none', color: 'black', fontSize: '20px', padding: '20px', marginBottom: '10px' }}>Upload new form</Card.Text>
-                                        </Link>
-                                    </Card.Body>
-                                </Card>
-                            </Col>
-                            {forms && forms.map(form => (
-                                <Col>
-                                    <Card style={{ margin: '10px 0', height: '250px', maxHeight: '350px' }}>
-                                        <Card.Body>
-                                            <Card.Title>{form.title}</Card.Title>
-                                            <Card.Text style={{ height: '150px', maxHeight: '150px', overflowY: 'scroll', padding: '10px' }}>
-                                                <Markup content={form.description} />
-                                            </Card.Text>
-                                            <Card.Text style={{ position: 'absolute', bottom: 0 }}>
-                                                <a href={form.attachments && form.attachments[0].path} target="_blank" rel="noreferrer">
-                                                    <Button style={{ margin: '5px' }} variant="outline-secondary">Download</Button>
-                                                </a>
-                                                <Link to={`/admin/form/${form._id}`}>
-                                                    <Button style={{ margin: '10px 5px' }} variant="primary">
-                                                        Update
-                                                    </Button>
-                                                </Link>
-                                                <Button style={{ margin: '10px 5px' }} variant="danger" onClick={() => deleteFormHandler(form._id)}>
-                                                    Delete
-                                                </Button>
-                                            </Card.Text>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                            ))}
-                        </Fragment>
-                    )}
-                </Row>
+                {loading ? <Loader /> : (
+                    <MDBDataTableV5
+                        data={setForms()}
+                        searchTop
+                        searchBottom={false}
+                        scrollX
+                        entriesOptions={[10, 20, 30, 40, 50]}
+                        entries={10}
+                    />
+                )}
             </Container>
         </Fragment >
     )

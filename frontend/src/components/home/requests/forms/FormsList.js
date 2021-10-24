@@ -111,7 +111,8 @@ const FormsList = () => {
                 show={show}
                 onHide={() => setShow(false)}
                 dialogClassName="modal-90w"
-                aria-labelledby="example-custom-modal-styling-title"
+                aria-labelledby="example-modal-sizes-title-lg"
+                style={{ paddingTop: '40px' }}
             >
                 <Modal.Header closeButton>
                     <Modal.Title>Instructions</Modal.Title>

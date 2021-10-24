@@ -211,7 +211,7 @@ const UpdateForm = ({ history, match }) => {
                                                         <i class="fa fa-circle-o-notch fa-spin fa-1x fa-fw" style={{ textAlign: 'center' }}></i>
                                                     </span>
                                                 ) : (
-                                                    <span>Submit</span>
+                                                    <span>Update</span>
                                                 )}
                                             </Button>
                                         </center>

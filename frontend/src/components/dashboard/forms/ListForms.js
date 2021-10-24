@@ -1,7 +1,8 @@
 import React, { Fragment, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Card, Button, Container, Row, Col } from 'react-bootstrap'
+import { Button, Container } from 'react-bootstrap'
+import { MDBDataTableV5 } from 'mdbreact'
 import { Markup } from 'interweave'
 import { getForms, clearErrors } from './../../../actions/formActions'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
@@ -30,6 +31,45 @@ const ListForms = ({ history }) => {
         })
     }, [dispatch, history, error, alert])
 
+    const setForms = () => {
+        const data = {
+            columns: [
+                {
+                    label: 'Title',
+                    field: 'title',
+                    width: 250
+                },
+                {
+                    label: 'Description',
+                    field: 'description',
+                    width: 600
+                },
+                {
+                    label: 'Actions',
+                    field: 'actions',
+                    width: 150
+                }
+            ],
+            rows: []
+        }
+
+        forms && forms.forEach(form => {
+            data.rows.push({
+                title: form.title,
+                description: <Markup content={form.description} />,
+                actions: <Fragment>
+                    <a href={form.attachments && form.attachments[0].path} target="_blank" rel="noreferrer">
+                        <Button style={{ margin: '5px' }} variant="outline-secondary">
+                            <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'black' }} />
+                        </Button>
+                    </a>
+                </Fragment>
+            })
+        })
+
+        return data
+    }
+
     return (
         <Fragment>
             <MetaData title={`Downloadable Forms`} />
@@ -37,32 +77,19 @@ const ListForms = ({ history }) => {
             <Container fluid style={{ padding: "50px 0px" }}>
                 <div style={{ display: 'flex', marginBottom: '20px' }}>
                     <div style={{ marginRight: 'auto', marginTop: '30px' }}>
-                        <h3>Downloadable Forms</h3>
+                        <h3>Downloadable forms</h3>
                     </div>
                 </div>
-                <Row xs={1} md={2} className="g-4" >
-                    {loading ? <Loader /> : (
-                        <Fragment>
-                            {forms && forms.map(form => (
-                                <Col>
-                                    <Card style={{ margin: '10px 0', height: '250px', maxHeight: '350px' }}>
-                                        <Card.Body>
-                                            <Card.Title>{form.title}</Card.Title>
-                                            <Card.Text style={{ height: '150px', maxHeight: '150px', overflowY: 'scroll', padding: '10px' }}>
-                                                <Markup content={form.description} />
-                                            </Card.Text>
-                                            <Card.Text style={{ position: 'absolute', bottom: 0 }}>
-                                                <a href={form.attachments && form.attachments[0].path} target="_blank" rel="noreferrer">
-                                                    <Button style={{ margin: '5px' }} variant="outline-secondary">Download</Button>
-                                                </a>
-                                            </Card.Text>
-                                        </Card.Body>
-                                    </Card>
-                                </Col>
-                            ))}
-                        </Fragment>
-                    )}
-                </Row>
+                {loading ? <Loader /> : (
+                    <MDBDataTableV5
+                        data={setForms()}
+                        searchTop
+                        searchBottom={false}
+                        scrollX
+                        entriesOptions={[10, 20, 30, 40, 50]}
+                        entries={10}
+                    />
+                )}
             </Container>
         </Fragment>
     )
