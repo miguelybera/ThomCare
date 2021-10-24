@@ -145,10 +145,8 @@ const Messenger = ({ history }) => {
         if (conversation) {
             history.push('/messenger')
             setCurrentChat(conversation)
-
-            socket.current.emit('newConversation', conversation)
-
             setUserName(conversation.names[0] === name ? conversation.names[1] : conversation.names[0])
+            socket.current.emit('newConversation', conversation)
 
             if (convMessage) {
                 alert.success(convMessage)
