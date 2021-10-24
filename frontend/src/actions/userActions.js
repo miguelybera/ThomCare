@@ -80,18 +80,7 @@ export const logout = () => async (dispatch) => {
         dispatch({
             type: LOGOUT_SUCCESS
         })
-        // if ('caches' in window) {
-        //     console.log('here in caches')
-        //     caches.keys().then((names) => {
-        //         // Delete all the cache files
-        //         names.forEach(name => {
-        //             caches.delete(name);
-        //         })
-        //     });
-
-        //     // Makes sure the page reloads. Changes are only visible after you refresh.
-        //     window.location.reload(true);
-        // }
+        
         window.location.reload();
     } catch (error) {
         dispatch({

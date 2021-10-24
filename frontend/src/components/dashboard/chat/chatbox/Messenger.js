@@ -85,7 +85,7 @@ const Messenger = ({ history }) => {
                     type: ALL_CONVERSATIONS_REQUEST
                 })
 
-                const { data } = await axios.get(`/api/v1/convo/${id}?${name ? `keyword=${name}` : ``}`)
+                const { data } = await axios.get(`/api/v1/conversations/${id}${name ? `?keyword=${name}` : ``}`)
 
                 dispatch({
                     type: ALL_CONVERSATIONS_SUCCESS,
@@ -113,7 +113,7 @@ const Messenger = ({ history }) => {
                 dispatch({
                     type: ALL_MESSAGES_REQUEST
                 })
-                const { data } = await axios.get(`/api/v1/getMsg/${id}`)
+                const { data } = await axios.get(`/api/v1/message/${id}`)
 
                 setMessageList(data.messages)
                 dispatch({
@@ -314,7 +314,7 @@ const Messenger = ({ history }) => {
                                             setCurrentChat(c)
                                             setUserName(c.names[0] === name ? c.names[1] : c.names[0])
                                         }}>
-                                            <Conversation receiverName={c.names[0] === name ? c.names[1] : c.names[0]} />
+                                            <Conversation conversation={c} currentUser={user} />
                                         </div>
                                     </Fragment>
                                 ))

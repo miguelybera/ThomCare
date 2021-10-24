@@ -7,6 +7,10 @@ import {
     CREATE_CONVERSATION_SUCCESS,
     CREATE_CONVERSATION_FAIL,
     CREATE_CONVERSATION_RESET,
+    DELETE_CONVERSATION_REQUEST,
+    DELETE_CONVERSATION_SUCCESS,
+    DELETE_CONVERSATION_FAIL,
+    DELETE_CONVERSATION_RESET,
     ALL_CONVERSATIONS_REQUEST,
     ALL_CONVERSATIONS_SUCCESS,
     ALL_CONVERSATIONS_FAIL,
@@ -62,7 +66,7 @@ export const createConversationReducer = (state = {}, action) => {
 }
 
 //get conversations
-export const conversationReducer = (state = { conversations: [] }, action) => {
+export const getConversationsReducer = (state = { conversations: [] }, action) => {
     switch (action.type) {
         case ALL_CONVERSATIONS_REQUEST:
             return {
@@ -189,6 +193,48 @@ export const messageReducer = (state = { messages: [] }, action) => {
             return {
                 loading: false,
                 error: action.payload
+            }
+
+        case CLEAR_ERRORS:
+            return {
+                ...state,
+                error: null
+            }
+
+        default:
+            return state
+    }
+}
+
+//create conversation
+export const conversationReducer = (state = {}, action) => {
+    switch (action.type) {
+
+        case DELETE_CONVERSATION_REQUEST:
+            return {
+                ...state,
+                loading: true
+            }
+
+        case DELETE_CONVERSATION_SUCCESS:
+            return {
+                ...state,
+                loading: false,
+                isDeleted: action.payload
+            }
+
+        case DELETE_CONVERSATION_FAIL:
+            return {
+                ...state,
+                error: action.payload,
+                loading: false
+            }
+
+        case DELETE_CONVERSATION_RESET:
+            return {
+                ...state,
+                isDeleted: false,
+                loading: false
             }
 
         case CLEAR_ERRORS:

@@ -6,6 +6,9 @@ import {
     CREATE_CONVERSATION_REQUEST,
     CREATE_CONVERSATION_SUCCESS,
     CREATE_CONVERSATION_FAIL,
+    DELETE_CONVERSATION_REQUEST,
+    DELETE_CONVERSATION_SUCCESS,
+    DELETE_CONVERSATION_FAIL,
     ALL_CONVERSATIONS_REQUEST,
     ALL_CONVERSATIONS_SUCCESS,
     ALL_CONVERSATIONS_FAIL,
@@ -19,7 +22,7 @@ export const getConversations = (id, name) => async (dispatch) => {
             type: ALL_CONVERSATIONS_REQUEST
         })
 
-        const { data } = await axios.get(`/api/v1/convo/${id}?${name ? `keyword=${name}` : ``}`)
+        const { data } = await axios.get(`/api/v1/conversations/${id}?${name ? `keyword=${name}` : ``}`)
 
         dispatch({
             type: ALL_CONVERSATIONS_SUCCESS,
@@ -47,7 +50,7 @@ export const sendMessage = (message) => async (dispatch, getState) => {
             }
         }
 
-        const { data } = await axios.post('/api/v1/createMsg', message, config)
+        const { data } = await axios.post('/api/v1/create/message', message, config)
 
         dispatch({
             type: SEND_MESSAGE_SUCCESS,
@@ -63,7 +66,7 @@ export const sendMessage = (message) => async (dispatch, getState) => {
 }
 
 //create new conversation
-export const createConversation = (convo) => async (dispatch) => {
+export const createConversation = (conversation) => async (dispatch) => {
 
     try {
         dispatch({
@@ -76,7 +79,7 @@ export const createConversation = (convo) => async (dispatch) => {
             }
         }
 
-        const { data } = await axios.post(`/api/v1/createConvo`, convo, config)
+        const { data } = await axios.post(`/api/v1/create/conversation`, conversation, config)
 
         dispatch({
             type: CREATE_CONVERSATION_SUCCESS,
@@ -86,6 +89,30 @@ export const createConversation = (convo) => async (dispatch) => {
     catch (error) {
         dispatch({
             type: CREATE_CONVERSATION_FAIL,
+            payload: error.response.data.message
+        })
+    }
+}
+
+//create new conversation
+export const deleteConversation = (id) => async (dispatch) => {
+
+    try {
+        dispatch({
+            type: DELETE_CONVERSATION_REQUEST
+        })
+
+
+        const { data } = await axios.delete(`/api/v1/delete/${id}`)
+
+        dispatch({
+            type: DELETE_CONVERSATION_SUCCESS,
+            payload: data
+        })
+    }
+    catch (error) {
+        dispatch({
+            type: DELETE_CONVERSATION_FAIL,
             payload: error.response.data.message
         })
     }

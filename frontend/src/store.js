@@ -11,10 +11,11 @@ import {
 } from './reducers/userReducers'
 
 import {
-    conversationReducer,
+    getConversationsReducer,
     messageReducer,
     sendMessageReducer,
-    createConversationReducer
+    createConversationReducer,
+    conversationReducer
 } from './reducers/chatReducers'
 
 import {
@@ -65,7 +66,8 @@ const reducer = combineReducers({
     singleUser: userDetailsReducer, //get single user details
     user: userReducer, //update and delete profile
 
-    conversations: conversationReducer, //get all conversations of user
+    conversations: getConversationsReducer, //get all conversations of user
+    conversation: conversationReducer, //delete conversation of user
     messages: messageReducer, //get all messages in conversation
     sendMessage: sendMessageReducer, //send message in conversation
     createConvo: createConversationReducer, //for creating conversation with a user

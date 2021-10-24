@@ -286,7 +286,6 @@ exports.getUsers = catchAsyncErrors(async (req, res, next) => {
 
     res.status(200).json({
         success: true,
-        count: users.length,
         users
     })
 })
@@ -296,6 +295,7 @@ exports.getUser = catchAsyncErrors(async (req, res, next) => {
     const singleUser = await User.findById(req.params.id)
 
     if (!singleUser) { return next(new ErrorHandler(`User not found with this id:(${req.params.id})`)) }
+
     res.status(200).json({
         success: true,
         singleUser
@@ -333,7 +333,7 @@ exports.deleteUser = catchAsyncErrors(async (req, res, next) => {
 
     const deletedUser = user.firstName + ' ' + user.lastName
 
-    await user.remove();
+    await user.remove()
 
     const userName = req.user.firstName + ' ' + req.user.lastName
 
@@ -372,7 +372,6 @@ exports.getStudentAccounts = catchAsyncErrors(async (req, res, next) => {
 
     res.status(200).json({
         success: true,
-        count: users.length,
         users
     })
 })
@@ -381,15 +380,13 @@ exports.getStudentAccounts = catchAsyncErrors(async (req, res, next) => {
 exports.getChatAccounts = catchAsyncErrors(async (req, res, next) => {
     let users
     if (req.user.role == 'Student') {
-        users = await User.find({ role: { $ne: 'Student' } })
+        users = await User.find({ role: { $ne: 'Student' } }).sort({ role: 1, firstName: 1 })
     } else {
-        users = await User.find()
+        users = await User.find().sort({ role: 1, firstName: 1 })
     }
-
 
     res.status(200).json({
         success: true,
-        count: users.length,
         users
     })
 })
