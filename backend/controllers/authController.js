@@ -150,6 +150,16 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
 // Register a student => /api/v1/registerStudent
 exports.registerStudent = catchAsyncErrors(async (req, res, next) => {
     const { firstName, middleName, lastName, studentNumber, course, email, password } = req.body
+    //for postman
+    if ((firstName == null) || (firstName == '')) { return next(new ErrorHandler('Please enter first name')) }
+    if ((lastName == null) || (lastName == '')) { return next(new ErrorHandler('Please enter last name')) }
+    if ((studentNumber == null) || (studentNumber == '')) { return next(new ErrorHandler('Please enter student number')) }
+    if ((course == null) || (course == '')) { return next(new ErrorHandler('Please enter course')) }
+    if ((course !== 'Computer Science') && (course !== 'Information Technology') && (course !== 'Information Systems')) { return next(new ErrorHandler('Please enter the correct course')) }
+    if ((email == null) || (email == '')) { return next(new ErrorHandler('Please enter email')) }
+    if ((password == null) || (password == '')) { return next(new ErrorHandler('Please enter password')) }
+    if (!(req.body.email.substr(-15) == "iics@ust.edu.ph" || req.body.email.substr(-15) == "cics@ust.edu.ph")) { return next(new ErrorHandler('UST GSuite accounts are only allowed')) }
+
 
     const user = await User.findOne({ email })
 
