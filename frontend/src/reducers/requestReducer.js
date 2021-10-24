@@ -207,7 +207,7 @@ export const getRequestsReducer = (state = { requests: [], pending: [], processi
     }
 }
 
-export const getStatsReducer = (state = { dailyStats: [], weeklyStats: [], overViewStats: [] }, action) => {
+export const getStatsReducer = (state = { dailyStats: [], weeklyStats: [] }, action) => {
     switch (action.type) {
         case REQUEST_STATS_REQUEST:
             return {
@@ -215,7 +215,7 @@ export const getStatsReducer = (state = { dailyStats: [], weeklyStats: [], overV
                 loading: true,
                 dailyStats: [],
                 weeklyStats: [],
-                overViewStats: []
+                // overViewStats: []
             }
 
         case REQUEST_STATS_SUCCESS:
@@ -223,7 +223,7 @@ export const getStatsReducer = (state = { dailyStats: [], weeklyStats: [], overV
                 loading: false,
                 dailyStats: action.payload.dailyStats,
                 weeklyStats: action.payload.weeklyStats,
-                overViewStats: action.payload.overViewStats,
+                // overViewStats: action.payload.overViewStats,
                 success: action.payload.success
             }
 

@@ -3,7 +3,7 @@ import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContai
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Button, Row, Col } from 'react-bootstrap'
+import { Container, Button, Row, Col, Card } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getRequests, getStats, clearErrors } from '../../../actions/requestActions'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
@@ -19,7 +19,7 @@ const ControlPanel = ({ history }) => {
 
     const { user } = useSelector(state => state.auth)
     const { loading, error, requests, processing, pending, approved, denied } = useSelector(state => state.requests)
-    const { loading: statsLoading, error: statsError, dailyStats, weeklyStats, overViewStats } = useSelector(state => state.stats)
+    const { loading: statsLoading, error: statsError, dailyStats, weeklyStats } = useSelector(state => state.stats)
 
     const role = user && user.role
 
@@ -162,33 +162,6 @@ const ControlPanel = ({ history }) => {
         return data
     }
 
-    const setOverViewData = () => {
-        const data = [
-            {
-                name: 'Today',
-                Total: 0
-            },
-            {
-                name: '7d',
-                Total: 0
-            },
-            {
-                name: '30d',
-                Total: 0
-            },
-            {
-                name: '60d',
-                Total: 0
-            }
-        ]
-
-        overViewStats && overViewStats.forEach((x, idx) => {
-            data[idx].Total = x
-        })
-
-        return data
-    }
-
     return (
         <Fragment>
             <MetaData title={'Control Panel'} />
@@ -218,64 +191,69 @@ const ControlPanel = ({ history }) => {
                                 <Fragment>
                                     <Row style={{ display: 'flex', justifyContent: 'center', margin: '20px 0' }}>
                                         <Col xs={12} md={6} style={{ marginTop: '5px' }}>
-                                            <h4 style={{ paddingLeft: '40px' }}>Daily requests</h4>
-                                            <ResponsiveContainer width={'99%'} height={300}>
-                                                <LineChart width={600} height={300} data={setDailyData()} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                                                    <Line type="monotone" dataKey="Total" stroke="#8884d8" />
-                                                    <CartesianGrid stroke="#ccc" />
-                                                    <XAxis dataKey="name" />
-                                                    <YAxis />
-                                                    <Tooltip />
-                                                </LineChart>
-                                            </ResponsiveContainer>
+                                            <Card>
+                                                <Card.Header>Daily requests</Card.Header>
+                                                <Card.Body>
+                                                    <ResponsiveContainer width={'99%'} height={300}>
+                                                        <LineChart width={600} height={300} data={setDailyData()} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                                                            <Line type="monotone" dataKey="Total" stroke="#8884d8" />
+                                                            <CartesianGrid stroke="#ccc" />
+                                                            <XAxis dataKey="name" />
+                                                            <YAxis />
+                                                            <Tooltip />
+                                                        </LineChart>
+                                                    </ResponsiveContainer>
+                                                </Card.Body>
+                                            </Card>
                                         </Col>
                                         <Col xs={12} md={6} style={{ marginTop: '5px' }}>
-                                            <h4 style={{ paddingLeft: '40px' }}>Weekly requests</h4>
-                                            <ResponsiveContainer width={'99%'} height={300}>
-                                                <LineChart width={600} height={300} data={setWeeklyData()} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                                                    <Line type="monotone" dataKey="Total" stroke="#8884d8" />
-                                                    <CartesianGrid stroke="#ccc" />
-                                                    <XAxis dataKey="name" />
-                                                    <YAxis />
-                                                    <Tooltip />
-                                                </LineChart>
-                                            </ResponsiveContainer>
+                                            <Card>
+                                                <Card.Header>Weekly requests</Card.Header>
+                                                <Card.Body>
+                                                    <ResponsiveContainer width={'99%'} height={300}>
+                                                        <LineChart width={600} height={300} data={setWeeklyData()} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+                                                            <Line type="monotone" dataKey="Total" stroke="#8884d8" />
+                                                            <CartesianGrid stroke="#ccc" />
+                                                            <XAxis dataKey="name" />
+                                                            <YAxis />
+                                                            <Tooltip />
+                                                        </LineChart>
+                                                    </ResponsiveContainer>
+                                                </Card.Body>
+                                            </Card>
                                         </Col>
-                                    </Row>
-                                    <Row style={{ display: 'flex', justifyContent: 'center', margin: '20px 0' }}>
-                                        <h4 style={{ paddingLeft: '40px', marginTop: '5px' }}>Overview</h4>
-                                        <ResponsiveContainer width={'99%'} height={300}>
-                                            <LineChart width={600} height={300} data={setOverViewData()} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-                                                <Line type="monotone" dataKey="Total" stroke="#8884d8" />
-                                                <CartesianGrid stroke="#ccc" />
-                                                <XAxis dataKey="name" />
-                                                <YAxis />
-                                                <Tooltip />
-                                            </LineChart>
-                                        </ResponsiveContainer>
                                     </Row>
                                 </Fragment>
                             ) : <Fragment></Fragment>}
                             <Row>
-                                <h3>Latest submissions</h3>
                                 {loading ? <Loader /> : (
-                                    <MDBDataTableV5
-                                        data={setRequests()}
-                                        searchTop
-                                        scrollX
-                                        entries={5}
-                                    />
+                                    <Fragment>
+                                        <Card>
+                                            <div style={{ display: 'flex', marginBottom: '20px' }}>
+                                                <div style={{ marginRight: 'auto', marginTop: '10px' }}>
+                                                    <Card.Title style={{ paddingTop: '10px' }}>Recent submissions</Card.Title>
+                                                </div>
+                                                <div style={{ marginLeft: 'auto', marginTop: '10px' }}>
+                                                    <Link to={link}>
+                                                        <Button>
+                                                            View All
+                                                            </Button>
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                            <Card.Body>
+                                                <MDBDataTableV5
+                                                    data={setRequests()}
+                                                    searchTop
+                                                    scrollX
+                                                    entries={5}
+                                                    entriesOptions={[5]}
+                                                />
+                                            </Card.Body>
+                                        </Card>
+                                    </Fragment>
                                 )}
                             </Row>
-                            <div style={{ display: 'flex', marginBottom: '20px' }}>
-                                <div style={{ marginLeft: 'auto' }}>
-                                    <Link to={link}>
-                                        <Button style={{ marginBottom: '20px' }}>
-                                            View All Requests
-                                    </Button>
-                                    </Link>
-                                </div>
-                            </div>
                         </Container>
                     </div>
                 </div>

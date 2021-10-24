@@ -331,7 +331,6 @@ const ListAllRequests = ({ history }) => {
                                     data={setRequests()}
                                     searchTop
                                     searchBottom={false}
-
                                     scrollX
                                     entriesOptions={[10, 20, 30, 40, 50]}
                                     entries={10}

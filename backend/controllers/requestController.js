@@ -268,34 +268,34 @@ exports.getDeptChairStats = catchAsyncErrors(async (req, res, next) => {
         weeklyStats.push(x.length)
     }
 
-    const dates = [0, 1, 7, 30, 60]
-    const overViewDates = []
-    const overViewStats = []
+    // const dates = [0, 1, 7, 30, 60]
+    // const overViewDates = []
+    // const overViewStats = []
 
-    for (let i = 0; i < dates.length; i++) {
-        overViewDates.push(new Date(Date.now() - ((dates[i] - 1) * 24 * 60 * 60 * 1000)).setHours(0, 0, 0, 0))
-    }
+    // for (let i = 0; i < dates.length; i++) {
+    //     overViewDates.push(new Date(Date.now() - ((dates[i] - 1) * 24 * 60 * 60 * 1000)).setHours(0, 0, 0, 0))
+    // }
 
-    for (let i = 0; i < overViewDates.length - 1; i++) {
-        const x = await Request.find({
-            createdAt: {
-                "$gte": overViewDates[i + 1].toString(),
-                "$lt": overViewDates[0].toString()
-            },
-            "requestorInfo.course": deptCourse,
-            requestType: {
-                $nin: requestTypeOfficeStaff
-            }
-        })
+    // for (let i = 0; i < overViewDates.length - 1; i++) {
+    //     const x = await Request.find({
+    //         createdAt: {
+    //             "$gte": overViewDates[i + 1].toString(),
+    //             "$lt": overViewDates[0].toString()
+    //         },
+    //         "requestorInfo.course": deptCourse,
+    //         requestType: {
+    //             $nin: requestTypeOfficeStaff
+    //         }
+    //     })
 
-        overViewStats.push(x.length)
-    }
+    //     overViewStats.push(x.length)
+    // }
 
     res.status(200).json({
         success: true,
         dailyStats,
         weeklyStats,
-        overViewStats
+        // overViewStats
     })
 })
 
@@ -380,30 +380,30 @@ exports.getAllStats = catchAsyncErrors(async (req, res, next) => {
         weeklyStats.push(x.length)
     }
 
-    const dates = [0, 1, 7, 30, 60]
-    const overViewDates = []
-    const overViewStats = []
+    // const dates = [0, 1, 7, 30, 60]
+    // const overViewDates = []
+    // const overViewStats = []
 
-    for (let i = 0; i < dates.length; i++) {
-        overViewDates.push(new Date(Date.now() - ((dates[i] - 1) * 24 * 60 * 60 * 1000)).setHours(0, 0, 0, 0))
-    }
+    // for (let i = 0; i < dates.length; i++) {
+    //     overViewDates.push(new Date(Date.now() - ((dates[i] - 1) * 24 * 60 * 60 * 1000)).setHours(0, 0, 0, 0))
+    // }
 
-    for (let i = 0; i < overViewDates.length - 1; i++) {
-        const x = await Request.find({
-            createdAt: {
-                "$gte": overViewDates[i + 1].toString(),
-                "$lt": overViewDates[0].toString()
-            }
-        })
+    // for (let i = 0; i < overViewDates.length - 1; i++) {
+    //     const x = await Request.find({
+    //         createdAt: {
+    //             "$gte": overViewDates[i + 1].toString(),
+    //             "$lt": overViewDates[0].toString()
+    //         }
+    //     })
 
-        overViewStats.push(x.length)
-    }
+    //     overViewStats.push(x.length)
+    // }
 
     res.status(200).json({
         success: true,
         dailyStats,
         weeklyStats,
-        overViewStats
+        // overViewStats
     })
 })
 
