@@ -303,7 +303,7 @@ const Announcements = ({ history }) => {
                                             {changeDateFormat(announcement.createdAt)}
                                         </Card.Text>
                                         <Card.Text style={{ marginLeft: '15px', fontWeight: '500', fontSize: '14px', marginTop: '3px' }}>
-                                            <Markup content={shortenDescription(announcement.description)} /> <Link to={`/announcement/${announcement._id}`}>Read More &#xbb</Link>
+                                            <Markup content={shortenDescription(announcement.description)} /> <Link to={`/announcement/${announcement._id}`}>Read More &#xbb;</Link>
                                         </Card.Text>
                                         <Card.Text style={{ marginLeft: '15px', fontSize: '12px', color: 'gray' }}>
                                             Attachments: {announcement.fileAttachments.length} file(s)
