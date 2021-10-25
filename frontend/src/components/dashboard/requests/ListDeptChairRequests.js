@@ -37,7 +37,7 @@ const ListDeptChairRequests = ({ history }) => {
         'Request to Override',
         'Request for Late Enrollment',
         'Request for Manual Enrollment',
-        'Others'
+        'Others (Dept Chair)'
     ]
 
     const changeDateFormat = (date) => dateformat(date, "mmm d, yyyy h:MMtt")

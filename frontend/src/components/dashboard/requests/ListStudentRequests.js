@@ -43,7 +43,8 @@ const ListStudentRequests = ({ history }) => {
         'Request for Certificate of Grades',
         'Request for Leave of Absence',
         'Submission of Admission Memo',
-        'Others'
+        'Others (Dept Chair)',
+        'Others (CICS Office)'
     ]
 
     const handleClose = () => setShow(false)

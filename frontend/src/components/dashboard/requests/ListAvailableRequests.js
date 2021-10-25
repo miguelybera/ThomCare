@@ -27,20 +27,11 @@ const ListAvailableRequests = ({ history }) => {
     const [requestType, setRequestType] = useState('')
 
     const requestTypes = [
-        'Adding/Dropping of Course',
-        'Cross Enrollment within CICS',
-        'Cross Enrollment outside CICS',
-        'Request for Petition Classes within CICS',
-        'Request for Crediting of Courses',
-        'Request for Overload',
-        'Request to Override',
-        'Request for Late Enrollment',
-        'Request for Manual Enrollment',
         'Request for Course Description',
         'Request for Certificate of Grades',
         'Request for Leave of Absence',
         'Submission of Admission Memo',
-        'Others'
+        'Others (CICS Office)'
     ]
 
     const changeDateFormat = (date) => dateformat(date, "mmm d, yyyy h:MMtt")

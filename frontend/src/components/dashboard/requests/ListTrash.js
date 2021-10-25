@@ -45,20 +45,11 @@ const ListAllRequests = ({ history }) => {
     const [requestType, setRequestType] = useState('')
 
     let requestTypes = [
-        'Adding/Dropping of Course',
-        'Cross Enrollment within CICS',
-        'Cross Enrollment outside CICS',
-        'Request for Petition Classes within CICS',
-        'Request for Crediting of Courses',
-        'Request for Overload',
-        'Request to Override',
-        'Request for Late Enrollment',
-        'Request for Manual Enrollment',
         'Request for Course Description',
         'Request for Certificate of Grades',
         'Request for Leave of Absence',
         'Submission of Admission Memo',
-        'Others'
+        'Others (CICS Office)'
     ]
 
     if (user.role !== 'CICS Office') {
@@ -72,7 +63,7 @@ const ListAllRequests = ({ history }) => {
             'Request to Override',
             'Request for Late Enrollment',
             'Request for Manual Enrollment',
-            'Others'
+            'Others (Dept Chair)'
         ]
     }
 

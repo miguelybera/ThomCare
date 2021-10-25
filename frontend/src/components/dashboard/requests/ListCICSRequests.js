@@ -34,7 +34,7 @@ const ListCICSRequests = ({ history }) => {
         'Request for Certificate of Grades',
         'Request for Leave of Absence',
         'Submission of Admission Memo',
-        'Others'
+        'Others (CICS Office)'
     ]
 
     const changeDateFormat = (date) => dateformat(date, "mmm d, yyyy h:MMtt")
