@@ -5,7 +5,7 @@ const APIFeatures = require('../utils/apiFeatures')
 
 // Create course => /api/v1/admin/new/course
 exports.newCourse = catchAsyncErrors(async (req, res, next) => {
-    const { courseCode, courseName, lecUnits, labUnits } = req.body
+    const { courseCode, courseName, lecUnits, labUnits, available } = req.body
 
     const course = await Course.findOne({ courseCode })
 
@@ -16,7 +16,8 @@ exports.newCourse = catchAsyncErrors(async (req, res, next) => {
             courseCode,
             courseName,
             lecUnits,
-            labUnits
+            labUnits,
+            available
         })
 
         res.status(201).json({
