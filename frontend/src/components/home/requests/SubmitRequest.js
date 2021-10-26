@@ -124,25 +124,37 @@ const SubmitRequest = () => {
                     yearLevel: e.target.value,
                     section: 'Alumni'
                 })
+            } else if (e.target.value === 'Irregular') {
+                setRequestInfo({
+                    ...requestInfo,
+                    yearLevel: e.target.value,
+                    section: 'Irregular'
+                })
             } else {
                 setRequestInfo({
                     ...requestInfo,
                     yearLevel: e.target.value,
-                    section: section !== 'Alumni' ? section : ''
+                    section: section === 'Alumni' || section == 'Irregular' ? '' : section
                 })
             }
         } else if (e.target.name === 'section') {
             if (e.target.value === 'Alumni') {
                 setRequestInfo({
                     ...requestInfo,
-                    yearLevel:'Alumni',
+                    yearLevel: 'Alumni',
+                    section: e.target.value
+                })
+            } else if (e.target.value === 'Irregular') {
+                setRequestInfo({
+                    ...requestInfo,
+                    yearLevel: 'Irregular',
                     section: e.target.value
                 })
             } else {
                 setRequestInfo({
                     ...requestInfo,
                     section: e.target.value,
-                    yearLevel: yearLevel !== 'Alumni' ? yearLevel : ''
+                    yearLevel: yearLevel === 'Alumni' || yearLevel === 'Irregular' ? '' : yearLevel
                 })
             }
         } else {
@@ -218,11 +230,11 @@ const SubmitRequest = () => {
                                                             name='section'
                                                             value={section}
                                                             onChange={onInfoChange}
-                                                            disabled={yearLevel === 'Alumni' ? true : false}
+                                                            disabled={yearLevel === 'Alumni' || yearLevel === 'Irregular' ? true : false}
                                                             required
                                                         >
                                                             <option value=''>-</option>
-                                                            <option className={yearLevel === 'Alumni' ? 'd-none' : null} value='Alumni'>Alumni</option>
+                                                            <option value='Alumni'>Alumni</option>
                                                             <option value='Irregular'>Irregular</option>
                                                             {alphabet.map(letter => (
                                                                 <option value={letter}>{letter}</option>
