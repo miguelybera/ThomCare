@@ -252,7 +252,7 @@ exports.getDeptChairStats = catchAsyncErrors(async (req, res, next) => {
     const weeklyDates = []
     const weeklyStats = []
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = -1; i < 5; i++) {
         weeklyDates.push(new Date(Date.now() - ((i * 7) * 24 * 60 * 60 * 1000)).setHours(0, 0, 0, 0))
     }
 
@@ -368,7 +368,7 @@ exports.getAllStats = catchAsyncErrors(async (req, res, next) => {
     const weeklyDates = []
     const weeklyStats = []
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = -1; i < 5; i++) {
         weeklyDates.push(new Date(Date.now() - ((i * 7) * 24 * 60 * 60 * 1000)).setHours(0, 0, 0, 0))
     }
 

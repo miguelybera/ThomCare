@@ -23,10 +23,14 @@ const SubmitRequest = () => {
     const { user } = useSelector(state => state.auth)
 
     const [fileRequirements, setFileRequirements] = useState([])
-    const [section, setSection] = useState()
-    const [yearLevel, setYearLevel] = useState()
-    const [requestType, setRequestType] = useState()
-    const [notes, setNotes] = useState()
+    const [requestInfo, setRequestInfo] = useState({
+        yearLevel: '',
+        section: '',
+        notes: '',
+        requestType: ''
+    })
+
+    const { yearLevel, section, notes, requestType } = requestInfo
 
     const levels = ['1st Year', '2nd Year', '3rd Year', '4th Year', 'Alumni', 'Irregular']
     const requestTypes = [
@@ -66,11 +70,13 @@ const SubmitRequest = () => {
         if (success) {
             alert.success('File submitted.')
 
-            setRequestType('')
-            setNotes('')
             setFileRequirements([])
-            setSection('')
-            setYearLevel('')
+            setRequestInfo({
+                yearLevel: '',
+                section: '',
+                notes: '',
+                requestType: ''
+            })
         }
 
         if (error) {
@@ -106,6 +112,45 @@ const SubmitRequest = () => {
         formData.set('requestType', requestType)
 
         dispatch(submitRequest(formData))
+    }
+
+    const onInfoChange = e => {
+        e.preventDefault()
+
+        if (e.target.name === 'yearLevel') {
+            if (e.target.value === 'Alumni') {
+                setRequestInfo({
+                    ...requestInfo,
+                    yearLevel: e.target.value,
+                    section: 'Alumni'
+                })
+            } else {
+                setRequestInfo({
+                    ...requestInfo,
+                    yearLevel: e.target.value,
+                    section: section !== 'Alumni' ? section : ''
+                })
+            }
+        } else if (e.target.name === 'section') {
+            if (e.target.value === 'Alumni') {
+                setRequestInfo({
+                    ...requestInfo,
+                    yearLevel:'Alumni',
+                    section: e.target.value
+                })
+            } else {
+                setRequestInfo({
+                    ...requestInfo,
+                    section: e.target.value,
+                    yearLevel: yearLevel !== 'Alumni' ? yearLevel : ''
+                })
+            }
+        } else {
+            setRequestInfo({
+                ...requestInfo,
+                [e.target.name]: e.target.value
+            })
+        }
     }
 
     return (
@@ -155,7 +200,7 @@ const SubmitRequest = () => {
                                                             className="mb-3"
                                                             aria-label="Default select example"
                                                             name="yearLevel" value={yearLevel}
-                                                            onChange={e => setYearLevel(e.target.value)}
+                                                            onChange={onInfoChange}
                                                             required
                                                         >
                                                             <option value=''>-</option>
@@ -172,11 +217,12 @@ const SubmitRequest = () => {
                                                             aria-label="Default select example"
                                                             name='section'
                                                             value={section}
-                                                            onChange={e => setSection(e.target.value)}
+                                                            onChange={onInfoChange}
+                                                            disabled={yearLevel === 'Alumni' ? true : false}
                                                             required
                                                         >
                                                             <option value=''>-</option>
-                                                            <option value='Alumni'>Alumni</option>
+                                                            <option className={yearLevel === 'Alumni' ? 'd-none' : null} value='Alumni'>Alumni</option>
                                                             <option value='Irregular'>Irregular</option>
                                                             {alphabet.map(letter => (
                                                                 <option value={letter}>{letter}</option>
@@ -191,7 +237,7 @@ const SubmitRequest = () => {
                                                     aria-label="Default select example"
                                                     name='requestType'
                                                     value={requestType}
-                                                    onChange={e => setRequestType(e.target.value)}
+                                                    onChange={onInfoChange}
                                                     required
                                                 >
                                                     <option value=''>-</option>
@@ -208,7 +254,7 @@ const SubmitRequest = () => {
                                                     rows={4}
                                                     name='notes'
                                                     value={notes}
-                                                    onChange={e => setNotes(e.target.value)}
+                                                    onChange={onInfoChange}
                                                 />
                                             </Form.Group>
                                             <Form.Group className="mb-3">
