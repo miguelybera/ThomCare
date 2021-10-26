@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { Table, Container, Row, Button, Modal } from 'react-bootstrap'
+import { Table, Container, Button, Modal } from 'react-bootstrap'
 import { Markup } from 'interweave'
 import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
 import MetaData from './../../../layout/MetaData'
