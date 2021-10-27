@@ -25,18 +25,6 @@ const FORM6APDF = ({ studentInfo, submitted, setSubmitted }) => {
     const name = studentInfo.lastName + ', ' + studentInfo.firstName + ' ' + middleInitial
     const course = user.course
 
-    let toAdd = [], toDrop = [], newAddTotalUnits = 0, newDropTotalUnits = 0
-
-    studentInfo.addDrop.forEach(x => {
-        if (x.status === 'Add') {
-            toAdd.push(x)
-            newAddTotalUnits +=  (Number(x.lecUnits) + Number(x.labUnits))
-        } else {
-            toDrop.push(x)
-            newDropTotalUnits +=  (Number(x.lecUnits) + Number(x.labUnits))
-        }
-    })
-
     const options = {
         format: 'legal'
     }
@@ -126,7 +114,7 @@ const FORM6APDF = ({ studentInfo, submitted, setSubmitted }) => {
                                             <td>Room</td>
                                             <td>Section</td>
                                         </tr>
-                                        {toDrop.length === 0 ? (
+                                        {studentInfo.toDrop.length === 0 ? (
                                             <Fragment>
                                                 <tr>
                                                     <td></td>
@@ -154,7 +142,7 @@ const FORM6APDF = ({ studentInfo, submitted, setSubmitted }) => {
                                         ) : (
                                             <Fragment>
                                                 {
-                                                    toDrop.map(x => (
+                                                    studentInfo.toDrop.map(x => (
                                                         <Fragment>
                                                             <tr>
                                                                 <td colSpan={15}>{x.courseCode} - {x.courseName}</td>
@@ -189,7 +177,7 @@ const FORM6APDF = ({ studentInfo, submitted, setSubmitted }) => {
                                             <td>Room</td>
                                             <td>Section</td>
                                         </tr>
-                                        {toAdd.length === 0 ? (
+                                        {studentInfo.toAdd.length === 0 ? (
                                             <Fragment>
                                                 <tr>
                                                     <td></td>
@@ -217,7 +205,7 @@ const FORM6APDF = ({ studentInfo, submitted, setSubmitted }) => {
                                         ) : (
                                             <Fragment>
                                                 {
-                                                    toAdd.map(x => (
+                                                    studentInfo.toAdd.map(x => (
                                                         <Fragment>
                                                             <tr>
                                                                 <td colSpan={15} style={{ marginRight: '100px' }}>{x.courseCode} - {x.courseName}</td>
@@ -238,7 +226,7 @@ const FORM6APDF = ({ studentInfo, submitted, setSubmitted }) => {
                         </div>
                     </center>
 
-                    <center>NEW TOTAL UNITS: To add: {newAddTotalUnits} units, To drop: {newDropTotalUnits} units</center>
+                    <center>NEW TOTAL UNITS: To add: {studentInfo.newAddTotalUnits} units, To drop: {studentInfo.newDropTotalUnits} units</center>
 
                     <div className="signatories" style={{ textAlign: 'center', fontWeight: 'bold' }}>
                         <Row>
@@ -341,7 +329,7 @@ const FORM6APDF = ({ studentInfo, submitted, setSubmitted }) => {
                                             <td>Room</td>
                                             <td>Section</td>
                                         </tr>
-                                        {toDrop.length === 0 ? (
+                                        {studentInfo.toDrop.length === 0 ? (
                                             <Fragment>
                                                 <tr>
                                                     <td></td>
@@ -369,7 +357,7 @@ const FORM6APDF = ({ studentInfo, submitted, setSubmitted }) => {
                                         ) : (
                                             <Fragment>
                                                 {
-                                                    toDrop.map(x => (
+                                                    studentInfo.toDrop.map(x => (
                                                         <Fragment>
                                                             <tr>
                                                                 <td colSpan={15}>{x.courseCode} - {x.courseName}</td>
@@ -405,7 +393,7 @@ const FORM6APDF = ({ studentInfo, submitted, setSubmitted }) => {
                                             <td>Room</td>
                                             <td>Section</td>
                                         </tr>
-                                        {toAdd.length === 0 ? (
+                                        {studentInfo.toAdd.length === 0 ? (
                                             <Fragment>
                                                 <tr>
                                                     <td></td>
@@ -433,7 +421,7 @@ const FORM6APDF = ({ studentInfo, submitted, setSubmitted }) => {
                                         ) : (
                                             <Fragment>
                                                 {
-                                                    toAdd.map(x => (
+                                                    studentInfo.toAdd.map(x => (
                                                         <Fragment>
                                                             <tr>
                                                                 <td colSpan={15}>{x.courseCode} - {x.courseName}</td>
@@ -454,7 +442,7 @@ const FORM6APDF = ({ studentInfo, submitted, setSubmitted }) => {
                         </div>
                     </center>
 
-                    <center>NEW TOTAL UNITS: To add: {newAddTotalUnits} units, To drop: {newDropTotalUnits} units</center>
+                    <center>NEW TOTAL UNITS: To add: {studentInfo.newAddTotalUnits} units, To drop: {studentInfo.newDropTotalUnits} units</center>
 
                     <div className="signatories" style={{ textAlign: 'center', fontWeight: 'bold' }}>
                         <Row>

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { FloatingLabel, Row, Container, Button, Col, Card, Form, Breadcrumb, Modal, InputGroup } from 'react-bootstrap'
-import TimePicker from 'react-time-picker'
 import { getCourses, clearErrors } from '../../../../actions/courseActions'
 import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
 import MetaData from '../../../layout/MetaData'
@@ -121,63 +120,16 @@ function Form6A({ history }) {
 
         const values = [...inputFields]
 
-        // if (e.target.name === 'days') {
-        //     values[index]["days"] += e.target.value + ' '
-        //     console.log('inside days')
-        // } else {
-        //     values[index][e.target.name] = e.target.value
-
-        //     if (values[index]["courseCode"] !== '') {
-        //         values[index]["courseName"] = getCourseName(values[index]["courseCode"], "courseName")
-        //         values[index]["labUnits"] = getCourseName(values[index]["courseCode"], "labUnits")
-        //         values[index]["lecUnits"] = getCourseName(values[index]["courseCode"], "lecUnits")
-        //     } else {
-        //         values[index]["courseName"] = ''
-        //         values[index]["labUnits"] = ''
-        //         values[index]["lecUnits"] = ''
-        //     }
-
-        //     console.log('outside days')
-        // }
-
         values[index][e.target.name] = e.target.value
 
-            if (values[index]["courseCode"] !== '') {
-                values[index]["courseName"] = getCourseName(values[index]["courseCode"], "courseName")
-                values[index]["labUnits"] = getCourseName(values[index]["courseCode"], "labUnits")
-                values[index]["lecUnits"] = getCourseName(values[index]["courseCode"], "lecUnits")
-            } else {
-                values[index]["courseName"] = ''
-                values[index]["labUnits"] = ''
-                values[index]["lecUnits"] = ''
-            }
-
-        setInputFields(values)
-    }
-
-    const onTimeChange = (index, name, value) => {
-        const values = [...inputFields]
-        let aa = 'AM', time = ''
-
-        let hr = value.substring(0, 2)
-
-        if (Number(hr) > 12) {
-            aa = 'PM'
-            time = hr - 12 + value.substring(2, 5) + aa
-            values[index][name] = time
-        } else if (Number(hr) === 12) {
-            aa = 'PM'
-            time = value + aa
-            values[index][name] = time
+        if (values[index]["courseCode"] !== '') {
+            values[index]["courseName"] = getCourseName(values[index]["courseCode"], "courseName")
+            values[index]["labUnits"] = getCourseName(values[index]["courseCode"], "labUnits")
+            values[index]["lecUnits"] = getCourseName(values[index]["courseCode"], "lecUnits")
         } else {
-            aa = 'AM'
-
-            if (Number(hr) === 0) {
-                time = '12' + value.substring(2, 5) + aa
-            } else {
-                time = value + aa
-            }
-            values[index][name] = time
+            values[index]["courseName"] = ''
+            values[index]["labUnits"] = ''
+            values[index]["lecUnits"] = ''
         }
 
         setInputFields(values)
@@ -186,6 +138,27 @@ function Form6A({ history }) {
     const submitHandler = e => {
         e.preventDefault()
 
+        let toAdd = [], toDrop = [], newAddTotalUnits = 0, newDropTotalUnits = 0
+
+        inputFields.forEach(x => {
+            if (x.status === 'Add') {
+                toAdd.push(x)
+            } else {
+                toDrop.push(x)
+            }
+        })
+
+        const uniqueToAdd = [...new Map(toAdd.map(item => [item['courseCode'], item])).values()]
+        const uniqueToDrop = [...new Map(toDrop.map(item => [item['courseCode'], item])).values()]
+
+        uniqueToAdd.forEach(x => {
+            newAddTotalUnits += (Number(x.lecUnits) + Number(x.labUnits))
+        })
+
+        uniqueToDrop.forEach(x => {
+            newDropTotalUnits += (Number(x.lecUnits) + Number(x.labUnits))
+        })
+
         setStudentInfo({
             firstName: user.firstName,
             middleName: user.middleName ? user.middleName[0] : '',
@@ -193,7 +166,10 @@ function Form6A({ history }) {
             email: user.email,
             studentNumber: user.studentNumber,
             course: user.course,
-            addDrop: inputFields,
+            toAdd,
+            toDrop,
+            newAddTotalUnits,
+            newDropTotalUnits,
             term,
             year1,
             year2
@@ -363,8 +339,7 @@ function Form6A({ history }) {
                                                         <Form.Control type="number" placeholder="Lab Units" name="labUnits" id={labUnits} data-id={idx} value={val.labUnits} onChange={e => onChange(idx, e)} readOnly />
                                                     </FloatingLabel>
                                                 </Col>
-                                                <Col xs={6} sm={6} md={4} lg={3} style={addDropStyle}>
-                                                    {/* <Form.Label>Days</Form.Label> */}
+                                                <Col xs={12} sm={12} md={4} lg={2} style={addDropStyle}>
                                                     <FloatingLabel label="Days">
                                                         <Form.Select aria-label="Default select example" placeholder='M' name="days" id={days} data-id={idx} value={val.days} onChange={e => onChange(idx, e)} required >
                                                             <option value=''>Days</option>
@@ -377,84 +352,23 @@ function Form6A({ history }) {
                                                             <option value='Su'>Su</option>
                                                         </Form.Select>
                                                     </FloatingLabel>
-                                                    {/* <Row>
-                                                        <Col>
-
-                                                            <Form.Check type='checkbox' onChange={e => onChange(idx, e)} name='days' id= label='M' value='M' />
-                                                            <Form.Check type='checkbox' onChange={e => onChange(idx, e)} name='days' id= label='T' value='T' />
-                                                            <Form.Check type='checkbox' onChange={e => onChange(idx, e)} name='days' id= label='W' value='W' />
-                                                            <Form.Check type='checkbox' onChange={e => onChange(idx, e)} name='days' id= label='Th' value='Th' />
-                                                        </Col>
-                                                        <Col>
-                                                            <Form.Check type='checkbox' onChange={e => onChange(idx, e)} name='days' id= label='F' value='F' />
-                                                            <Form.Check type='checkbox' onChange={e => onChange(idx, e)} name='days' id= label='S' value='S' />
-                                                            <Form.Check type='checkbox' onChange={e => onChange(idx, e)} name='days' id= label='Sun' value='Sun' />
-                                                        </Col>
-                                                    </Row> */}
                                                 </Col>
-                                                <Col xs={6} sm={6} md={4} lg={5} style={addDropStyle}>
-                                                    <Row className="mt-3">
-                                                        <Form.Group as={Col} xs={6}>
-                                                            <Form.Label>Start Time&nbsp;</Form.Label>
-                                                            <TimePicker
-                                                                disableClock
-                                                                name="startTime"
-                                                                id={startTime}
-                                                                data-id={idx}
-                                                                value={val.startTime}
-                                                                onChange={value => {
-
-                                                                    // ? value === null if and only if AM/PM is selected
-                                                                    // ? value = jsonobject & null when selected but time is not complete
-                                                                    // ? value is time when complete
-
-                                                                    if (value !== null) {
-                                                                        if (value.isDefaultPrevented && value.isDefaultPrevented.name === "functionThatReturnsFalse") {
-
-                                                                        } else {
-                                                                            if (value) {
-                                                                                onTimeChange(idx, "startTime", value)
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }}
-                                                                required
-                                                            />
-                                                        </Form.Group>
-                                                        <Form.Group as={Col} xs={6}>
-                                                            <Form.Label>End Time&nbsp;</Form.Label>
-                                                            <TimePicker
-                                                                disableClock
-                                                                name="endTime"
-                                                                id={endTime}
-                                                                data-id={idx}
-                                                                value={val.endTime}
-                                                                onChange={value => {
-                                                                    // ? value === null if and only if AM/PM is selected
-                                                                    // ? value = jsonobject & null when selected but time is not complete
-                                                                    // ? value is time when complete
-
-                                                                    if (value !== null) {
-                                                                        if (value.isDefaultPrevented && value.isDefaultPrevented.name === "functionThatReturnsFalse") {
-
-                                                                        } else {
-                                                                            if (value) {
-                                                                                onTimeChange(idx, "endTime", value)
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }}
-                                                                required
-                                                            />
-                                                        </Form.Group>
-                                                    </Row>
+                                                <Col xs={6} sm={6} md={6} lg={3} style={addDropStyle}>
+                                                    <FloatingLabel label="Start Time (ex: 7:00 AM)">
+                                                        <Form.Control type="text" placeholder="Start Time (ex: 7:00 AM)" name="startTime" id={startTime} data-id={idx} value={val.startTime} onChange={e => onChange(idx, e)} required />
+                                                    </FloatingLabel>
                                                 </Col>
-                                                <Col xs={6} sm={6} md={4} lg={2} style={addDropStyle}>
+                                                <Col xs={6} sm={6} md={6} lg={3} style={addDropStyle}>
+                                                    <FloatingLabel label="End Time (ex: 7:00 AM)">
+                                                        <Form.Control type="text" placeholder="End Time (7:00 AM)" name="endTime" id={endTime} data-id={idx} value={val.endTime} onChange={e => onChange(idx, e)} required />
+                                                    </FloatingLabel>
+                                                </Col>
+                                                <Col xs={6} sm={6} md={6} lg={2} style={addDropStyle}>
                                                     <FloatingLabel label="Room Number">
                                                         <Form.Control type="text" placeholder="Room number" name="room" id={room} data-id={idx} value={val.room} onChange={e => onChange(idx, e)} required />
                                                     </FloatingLabel>
                                                 </Col>
-                                                <Col xs={6} sm={6} md={4} lg={2} style={addDropStyle}>
+                                                <Col xs={6} sm={6} md={6} lg={2} style={addDropStyle}>
                                                     <FloatingLabel label="Section">
                                                         <Form.Control type="text" placeholder="Section" name="section" id={section} data-id={idx} value={val.section} onChange={e => onChange(idx, e)} required />
                                                     </FloatingLabel>
@@ -462,8 +376,7 @@ function Form6A({ history }) {
                                             </Row>
                                         </Fragment>
                                     )
-                                })
-                                }
+                                })}
                                 <center>
                                     <Button
                                         type='button'

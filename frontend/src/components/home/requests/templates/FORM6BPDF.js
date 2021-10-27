@@ -25,18 +25,6 @@ const FORM6BPDF = ({ studentInfo, submitted, setSubmitted }) => {
     const name = studentInfo.lastName + ', ' + studentInfo.firstName + ' ' + middleInitial
     const course = user.course
 
-    let toCross = [], toDrop = [], newDropTotalUnits = 0, newCrossTotalUnits = 0
-
-    studentInfo.crossDrop.forEach(x => {
-        if (x.status === 'Cross-enroll') {
-            toCross.push(x)
-            newCrossTotalUnits += (Number(x.lecUnits) + Number(x.labUnits))
-        } else {
-            toDrop.push(x)
-            newDropTotalUnits += (Number(x.lecUnits) + Number(x.labUnits))
-        }
-    })
-
     const options = {
         format: 'legal'
     }
@@ -126,7 +114,7 @@ const FORM6BPDF = ({ studentInfo, submitted, setSubmitted }) => {
                                             <td>Room</td>
                                             <td>Section</td>
                                         </tr>
-                                        {toDrop.length === 0 ? (
+                                        {studentInfo.toDrop.length === 0 ? (
                                             <Fragment>
                                                 <tr>
                                                     <td></td>
@@ -154,7 +142,7 @@ const FORM6BPDF = ({ studentInfo, submitted, setSubmitted }) => {
                                         ) : (
                                             <Fragment>
                                                 {
-                                                    toDrop.map(x => (
+                                                    studentInfo.toDrop.map(x => (
                                                         <Fragment>
                                                             <tr>
                                                                 <td colSpan={15}>{x.courseCode} - {x.courseName}</td>
@@ -189,7 +177,7 @@ const FORM6BPDF = ({ studentInfo, submitted, setSubmitted }) => {
                                             <td>Room</td>
                                             <td>Section</td>
                                         </tr>
-                                        {toCross.length === 0 ? (
+                                        {studentInfo.toCross.length === 0 ? (
                                             <Fragment>
                                                 <tr>
                                                     <td></td>
@@ -217,7 +205,7 @@ const FORM6BPDF = ({ studentInfo, submitted, setSubmitted }) => {
                                         ) : (
                                             <Fragment>
                                                 {
-                                                    toCross.map(x => (
+                                                    studentInfo.toCross.map(x => (
                                                         <Fragment>
                                                             <tr>
                                                                 <td colSpan={15} style={{ marginRight: '100px' }}>{x.courseCode} - {x.courseName}</td>
@@ -238,7 +226,7 @@ const FORM6BPDF = ({ studentInfo, submitted, setSubmitted }) => {
                         </div>
                     </center>
 
-                    <center>NEW TOTAL UNITS: To cross-enroll: {newCrossTotalUnits} units, To drop: {newDropTotalUnits} units</center>
+                    <center>NEW TOTAL UNITS: To cross-enroll: {studentInfo.newCrossTotalUnits} units, To drop: {studentInfo.newDropTotalUnits} units</center>
 
                     <div className="signatories" style={{ textAlign: 'center', fontWeight: 'bold' }}>
                         <Row>
@@ -346,7 +334,7 @@ const FORM6BPDF = ({ studentInfo, submitted, setSubmitted }) => {
                                             <td>Room</td>
                                             <td>Section</td>
                                         </tr>
-                                        {toDrop.length === 0 ? (
+                                        {studentInfo.toDrop.length === 0 ? (
                                             <Fragment>
                                                 <tr>
                                                     <td></td>
@@ -374,7 +362,7 @@ const FORM6BPDF = ({ studentInfo, submitted, setSubmitted }) => {
                                         ) : (
                                             <Fragment>
                                                 {
-                                                    toDrop.map(x => (
+                                                    studentInfo.toDrop.map(x => (
                                                         <Fragment>
                                                             <tr>
                                                                 <td colSpan={15}>{x.courseCode} - {x.courseName}</td>
@@ -410,7 +398,7 @@ const FORM6BPDF = ({ studentInfo, submitted, setSubmitted }) => {
                                             <td>Room</td>
                                             <td>Section</td>
                                         </tr>
-                                        {toCross.length === 0 ? (
+                                        {studentInfo.toCross.length === 0 ? (
                                             <Fragment>
                                                 <tr>
                                                     <td></td>
@@ -438,7 +426,7 @@ const FORM6BPDF = ({ studentInfo, submitted, setSubmitted }) => {
                                         ) : (
                                             <Fragment>
                                                 {
-                                                    toCross.map(x => (
+                                                    studentInfo.toCross.map(x => (
                                                         <Fragment>
                                                             <tr>
                                                                 <td colSpan={15}>{x.courseCode} - {x.courseName}</td>
@@ -459,7 +447,7 @@ const FORM6BPDF = ({ studentInfo, submitted, setSubmitted }) => {
                         </div>
                     </center>
 
-                    <center>NEW TOTAL UNITS: To cross-enroll: {newCrossTotalUnits} units, To drop: {newDropTotalUnits} units</center>
+                    <center>NEW TOTAL UNITS: To cross-enroll: {studentInfo.newCrossTotalUnits} units, To drop: {studentInfo.newDropTotalUnits} units</center>
 
                     <div className="signatories" style={{ textAlign: 'center', fontWeight: 'bold' }}>
                         <Row>

@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
 import { FloatingLabel, Row, Container, Button, Col, Card, Form, Modal, Breadcrumb, InputGroup } from 'react-bootstrap'
-import TimePicker from 'react-time-picker'
 import { getCourses, clearErrors } from '../../../../actions/courseActions'
 import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
 import MetaData from '../../../layout/MetaData'
@@ -74,7 +73,7 @@ function OverloadForm({ history }) {
     const handleClose = () => setShow(false)
     const handleShow = () => setShow(true)
 
-        const goBack = () => {
+    const goBack = () => {
         window.history.back()
         handleClose()
     }
@@ -164,34 +163,6 @@ function OverloadForm({ history }) {
         } else {
             setSpecialTerm(values)
         }
-    }
-
-    const onTimeChange = (index, name, value) => {
-        const values = [...overload]
-        let aa = 'AM', time = ''
-
-        let hr = value.substring(0, 2)
-
-        if (Number(hr) > 12) {
-            aa = 'PM'
-            time = hr - 12 + value.substring(2, 5) + aa
-            values[index][name] = time
-        } else if (Number(hr) === 12) {
-            aa = 'PM'
-            time = value + aa
-            values[index][name] = time
-        } else {
-            aa = 'AM'
-
-            if (Number(hr) === 0) {
-                time = '12' + value.substring(2, 5) + aa
-            } else {
-                time = value + aa
-            }
-            values[index][name] = time
-        }
-
-        setOverload(values)
     }
 
     const submitHandler = e => {
@@ -483,17 +454,17 @@ function OverloadForm({ history }) {
                                                         <Form.Control type="text" placeholder="Course Name" name="courseName" id={courseName} data-id={idx} value={val.courseName} onChange={e => onChange(1, idx, e)} readOnly />
                                                     </FloatingLabel>
                                                 </Col>
-                                                <Col xs={12} sm={6} md={3} style={addDropStyle}>
+                                                <Col xs={12} sm={6} md={2} style={addDropStyle}>
                                                     <FloatingLabel label="Lec Units">
                                                         <Form.Control type="number" placeholder="Lec Units" name="lecUnits" id={lecUnits} data-id={idx} value={val.lecUnits} onChange={e => onChange(1, idx, e)} readOnly />
                                                     </FloatingLabel>
                                                 </Col>
-                                                <Col xs={12} sm={6} md={3} style={addDropStyle}>
+                                                <Col xs={12} sm={6} md={2} style={addDropStyle}>
                                                     <FloatingLabel label="Lab Units">
                                                         <Form.Control type="number" placeholder="Lab Units" name="labUnits" id={labUnits} data-id={idx} value={val.labUnits} onChange={e => onChange(1, idx, e)} readOnly />
                                                     </FloatingLabel>
                                                 </Col>
-                                                <Col xs={12} sm={6} md={2} style={addDropStyle}>
+                                                <Col xs={12} sm={6} md={6}  lg={2} style={addDropStyle}>
                                                     <FloatingLabel label="Days">
                                                         <Form.Select aria-label="Default select example" placeholder='M' name="days" id={days} data-id={idx} value={val.days} onChange={e => onChange(1, idx, e)} required >
                                                             <option value=''>Days</option>
@@ -507,62 +478,15 @@ function OverloadForm({ history }) {
                                                         </Form.Select>
                                                     </FloatingLabel>
                                                 </Col>
-                                                <Col xs={12} sm={6} md={4} style={addDropStyle}>
-                                                    <Row className="mt-3">
-                                                        <Form.Group as={Col} xs={6}>
-                                                            <Form.Label>Start Time&nbsp;</Form.Label>
-                                                            <TimePicker
-                                                                disableClock
-                                                                name="startTime"
-                                                                id={startTime}
-                                                                data-id={idx}
-                                                                value={val.startTime}
-                                                                onChange={value => {
-
-                                                                    // ? value === null if and only if AM/PM is selected
-                                                                    // ? value = jsonobject & null when selected but time is not complete
-                                                                    // ? value is time when complete
-
-                                                                    if (value !== null) {
-                                                                        if (value.isDefaultPrevented && value.isDefaultPrevented.name === "functionThatReturnsFalse") {
-
-                                                                        } else {
-                                                                            if (value) {
-                                                                                onTimeChange(idx, "startTime", value)
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }}
-                                                                required
-                                                            />
-                                                        </Form.Group>
-                                                        <Form.Group as={Col} xs={6}>
-                                                            <Form.Label>End Time&nbsp;</Form.Label>
-                                                            <TimePicker
-                                                                disableClock
-                                                                name="endTime"
-                                                                id={endTime}
-                                                                data-id={idx}
-                                                                value={val.endTime}
-                                                                onChange={value => {
-                                                                    // ? value === null if and only if AM/PM is selected
-                                                                    // ? value = jsonobject & null when selected but time is not complete
-                                                                    // ? value is time when complete
-
-                                                                    if (value !== null) {
-                                                                        if (value.isDefaultPrevented && value.isDefaultPrevented.name === "functionThatReturnsFalse") {
-
-                                                                        } else {
-                                                                            if (value) {
-                                                                                onTimeChange(idx, "endTime", value)
-                                                                            }
-                                                                        }
-                                                                    }
-                                                                }}
-                                                                required
-                                                            />
-                                                        </Form.Group>
-                                                    </Row>
+                                                <Col xs={6} sm={6} md={6} lg={3} style={addDropStyle}>
+                                                    <FloatingLabel label="Start Time (ex: 7:00 AM)">
+                                                        <Form.Control type="text" placeholder="Start Time (ex: 7:00 AM)" name="startTime" id={startTime} data-id={idx} value={val.startTime} onChange={e => onChange(idx, e)} required />
+                                                    </FloatingLabel>
+                                                </Col>
+                                                <Col xs={6} sm={6} md={6} lg={3} style={addDropStyle}>
+                                                    <FloatingLabel label="End Time (ex: 7:00 AM)">
+                                                        <Form.Control type="text" placeholder="End Time (7:00 AM)" name="endTime" id={endTime} data-id={idx} value={val.endTime} onChange={e => onChange(idx, e)} required />
+                                                    </FloatingLabel>
                                                 </Col>
                                             </Row>
                                         </Fragment>
