@@ -108,7 +108,7 @@ const AnnouncementDetails = ({ history, match }) => {
                 fileSize: Number(file.size / 1000000).toFixed(2) + ' MB',
                 action: <Fragment>
                     <a href={file.path} target="_blank" rel="noreferrer">
-                        <button className="btn btn-primary py-1 px-2 ml-2">
+                        <button className="btn btn-outline-success py-1 px-2 ml-2">
                             <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
                         </button>
                     </a>
@@ -135,15 +135,17 @@ const AnnouncementDetails = ({ history, match }) => {
                         <Card.Text style={{ fontWeight: 'lighter', color: 'gray', fontSize: '12px' }}>Posted on: {changeDateFormat(createdAt)}</Card.Text>
                         <Card.Text style={{ paddingBottom: '45px' }}><Markup content={description} /></Card.Text>
                         <Card.Text>
-                            {fileAttachments.length !== 0 && (<p>Attachments:</p>)}
                             {fileAttachments.length !== 0 && (
-                                <MDBDataTableV5
-                                    data={setAttachments()}
-                                    searchTop
-                                    entriesOptions={[10, 20, 30, 40, 50]}
-                                    entries={10}
-                                    style={{ backgroundColor: 'white' }}
-                                />
+                                <Fragment>
+                                    <p>Attachments:</p>
+                                    <MDBDataTableV5
+                                        data={setAttachments()}
+                                        searchTop
+                                        entriesOptions={[10, 20, 30, 40, 50]}
+                                        entries={10}
+                                        style={{ backgroundColor: 'white' }}
+                                    />
+                                </Fragment>
                             )}
                         </Card.Text>
                         <Card.Text style={{ fontWeight: '600', color: 'gray', fontSize: '12px' }}>Posted by: {singleUser && upperCase(singleUser.firstName + ' ' + singleUser.lastName)}</Card.Text>
