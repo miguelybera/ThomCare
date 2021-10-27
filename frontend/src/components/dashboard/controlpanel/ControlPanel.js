@@ -182,21 +182,21 @@ const ControlPanel = ({ history }) => {
                                 {user.role === 'Student' ? (
                                     <Fragment>
                                         <center>
-                                            <Col sm><ReportCard requestType={'My Requests'} length={requests && requests.length} icon={'edit'} color={'red'} /></Col>
+                                            <Col sm><ReportCard requestType={'My Requests'} length={requests && requests.length} icon={'edit'} color={'white'} /></Col>
                                         </center>
                                     </Fragment>
                                 ) : (
                                     <Fragment>
                                         <Row>
                                             <center>
-                                                <Col sm><ReportCard requestType={'Total Requests'} length={requests && requests.length} icon={'edit'} color={'red'} /></Col>
+                                                <Col sm><ReportCard requestType={'Total Requests'} length={requests && requests.length} icon={'edit'} color={'white'} /></Col>
                                             </center>
                                         </Row>
                                         <Row>
                                             <Col sm><ReportCard requestType={'Pending'} length={pending && pending.length} icon={'paperclip'} color={'blue'} /></Col>
                                             <Col sm><ReportCard requestType={'Processing'} length={processing && processing.length} icon={'spinner'} color={'yellow'} /></Col>
-                                            <Col sm><ReportCard requestType={'Denied'} length={denied && denied.length} icon={'times-circle'} color={'blue'} /></Col>
-                                            <Col sm><ReportCard requestType={'Approved'} length={approved && approved.length} icon={'check-circle'} color={'red'} /></Col>
+                                            <Col sm><ReportCard requestType={'Approved'} length={approved && approved.length} icon={'check-circle'} color={'green'} /></Col>
+                                            <Col sm><ReportCard requestType={'Denied'} length={denied && denied.length} icon={'times-circle'} color={'red'} /></Col>
                                         </Row>
                                     </Fragment>
                                 )}

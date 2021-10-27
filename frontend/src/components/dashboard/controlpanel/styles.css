@@ -7,6 +7,16 @@
     color: #fff;
 }
 
+.bg-c-white {
+    background: linear-gradient(45deg, rgb(235, 235, 235), #fff);
+    border: 1px solid black;
+    color: black;
+}
+
+.bg-c-green {
+    background: linear-gradient(45deg, #15850a, rgb(84, 197, 62));
+}
+
 .bg-c-blue {
     background: linear-gradient(45deg, #4099ff, #73b4ff);
 }
@@ -16,11 +26,7 @@
 }
 
 .bg-c-yellow {
-    background: linear-gradient(45deg, #FFB64D, #ffcb80);
-}
-
-.bg-c-pink {
-    background: linear-gradient(45deg, #FF5370, #ff869a);
+    background: linear-gradient(45deg, #ffaa0b, #ffd18c);
 }
 
 .card {
