@@ -132,7 +132,7 @@ const Register = () => {
                                     </Row>
                                     <center>
                                         <Button
-                                            variant='danger'
+                                            variant='outline-danger'
                                             style={{ marginRight: '5px', marginTop: '10px', borderRadius: '50px', width: '10rem' }}
                                             disabled={true}
                                         >

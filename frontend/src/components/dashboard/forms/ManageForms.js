@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button, Container } from 'react-bootstrap'
+import { Button, Container, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { Markup } from 'interweave'
 import { getForms, deleteForm, clearErrors } from './../../../actions/formActions'
@@ -72,21 +72,45 @@ const ManageForms = ({ history, match }) => {
         forms && forms.forEach(form => {
             data.rows.push({
                 title: form.title,
-                description: <Markup content={form.description}/>,
+                description: <Markup content={form.description} />,
                 actions: <Fragment>
-                    <a href={form.attachments && form.attachments[0].path} target="_blank" rel="noreferrer">
-                        <Button style={{ margin: '5px' }} variant="outline-secondary">
-                            <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'black' }} />
+                    <OverlayTrigger
+                        placement='bottom-start'
+                        overlay={
+                            <Tooltip id="tooltip-disabled">
+                                Edit
+                        </Tooltip>
+                        }>
+                        <Link to={`/admin/form/${form._id}`}>
+                            <Button style={{ margin: '10px 5px' }} variant="primary">
+                                <i class="fa fa-edit" aria-hidden="true" />
+                            </Button>
+                        </Link>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                        placement='bottom-start'
+                        overlay={
+                            <Tooltip id="tooltip-disabled">
+                                Download
+                            </Tooltip>
+                        }>
+                        <a href={form.attachments && form.attachments[0].path} target="_blank" rel="noreferrer">
+                            <Button style={{ margin: '5px' }} variant="outline-success">
+                                <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none' }} />
+                            </Button>
+                        </a>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                        placement='bottom-start'
+                        overlay={
+                            <Tooltip id="tooltip-disabled">
+                                Delete
+                            </Tooltip>
+                        }>
+                        <Button style={{ margin: '10px 5px' }} variant="danger" onClick={() => deleteFormHandler(form._id)}>
+                            <i class="fa fa-trash" aria-hidden="true" />
                         </Button>
-                    </a>
-                    <Link to={`/admin/form/${form._id}`}>
-                        <Button style={{ margin: '10px 5px' }} variant="primary">
-                            <i class="fa fa-edit" aria-hidden="true" />
-                        </Button>
-                    </Link>
-                    <Button style={{ margin: '10px 5px' }} variant="danger" onClick={() => deleteFormHandler(form._id)}>
-                        <i class="fa fa-trash" aria-hidden="true" />
-                    </Button>
+                    </OverlayTrigger>
                 </Fragment>
             })
         })
@@ -104,7 +128,9 @@ const ManageForms = ({ history, match }) => {
                         <h3>Manage forms</h3>
                     </div>
                     <div style={{ marginLeft: 'auto', marginTop: '30px' }}>
-                        <Link to='/admin/new/form'><Button>Add new form</Button></Link>
+                        <Link to='/admin/new/form'>
+                            <Button variant='outline-secondary'>Add new form</Button>
+                        </Link>
                     </div>
                 </div>
                 {loading ? <Loader /> : (

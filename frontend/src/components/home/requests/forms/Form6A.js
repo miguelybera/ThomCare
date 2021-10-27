@@ -121,17 +121,37 @@ function Form6A({ history }) {
 
         const values = [...inputFields]
 
+        // if (e.target.name === 'days') {
+        //     values[index]["days"] += e.target.value + ' '
+        //     console.log('inside days')
+        // } else {
+        //     values[index][e.target.name] = e.target.value
+
+        //     if (values[index]["courseCode"] !== '') {
+        //         values[index]["courseName"] = getCourseName(values[index]["courseCode"], "courseName")
+        //         values[index]["labUnits"] = getCourseName(values[index]["courseCode"], "labUnits")
+        //         values[index]["lecUnits"] = getCourseName(values[index]["courseCode"], "lecUnits")
+        //     } else {
+        //         values[index]["courseName"] = ''
+        //         values[index]["labUnits"] = ''
+        //         values[index]["lecUnits"] = ''
+        //     }
+
+        //     console.log('outside days')
+        // }
+
         values[index][e.target.name] = e.target.value
 
-        if (values[index]["courseCode"] !== '') {
-            values[index]["courseName"] = getCourseName(values[index]["courseCode"], "courseName")
-            values[index]["labUnits"] = getCourseName(values[index]["courseCode"], "labUnits")
-            values[index]["lecUnits"] = getCourseName(values[index]["courseCode"], "lecUnits")
-        } else {
-            values[index]["courseName"] = ''
-            values[index]["labUnits"] = ''
-            values[index]["lecUnits"] = ''
-        }
+            if (values[index]["courseCode"] !== '') {
+                values[index]["courseName"] = getCourseName(values[index]["courseCode"], "courseName")
+                values[index]["labUnits"] = getCourseName(values[index]["courseCode"], "labUnits")
+                values[index]["lecUnits"] = getCourseName(values[index]["courseCode"], "lecUnits")
+            } else {
+                values[index]["courseName"] = ''
+                values[index]["labUnits"] = ''
+                values[index]["lecUnits"] = ''
+            }
+
         setInputFields(values)
     }
 
@@ -344,6 +364,7 @@ function Form6A({ history }) {
                                                     </FloatingLabel>
                                                 </Col>
                                                 <Col xs={6} sm={6} md={4} lg={3} style={addDropStyle}>
+                                                    {/* <Form.Label>Days</Form.Label> */}
                                                     <FloatingLabel label="Days">
                                                         <Form.Select aria-label="Default select example" placeholder='M' name="days" id={days} data-id={idx} value={val.days} onChange={e => onChange(idx, e)} required >
                                                             <option value=''>Days</option>
@@ -356,6 +377,20 @@ function Form6A({ history }) {
                                                             <option value='Su'>Su</option>
                                                         </Form.Select>
                                                     </FloatingLabel>
+                                                    {/* <Row>
+                                                        <Col>
+
+                                                            <Form.Check type='checkbox' onChange={e => onChange(idx, e)} name='days' id= label='M' value='M' />
+                                                            <Form.Check type='checkbox' onChange={e => onChange(idx, e)} name='days' id= label='T' value='T' />
+                                                            <Form.Check type='checkbox' onChange={e => onChange(idx, e)} name='days' id= label='W' value='W' />
+                                                            <Form.Check type='checkbox' onChange={e => onChange(idx, e)} name='days' id= label='Th' value='Th' />
+                                                        </Col>
+                                                        <Col>
+                                                            <Form.Check type='checkbox' onChange={e => onChange(idx, e)} name='days' id= label='F' value='F' />
+                                                            <Form.Check type='checkbox' onChange={e => onChange(idx, e)} name='days' id= label='S' value='S' />
+                                                            <Form.Check type='checkbox' onChange={e => onChange(idx, e)} name='days' id= label='Sun' value='Sun' />
+                                                        </Col>
+                                                    </Row> */}
                                                 </Col>
                                                 <Col xs={6} sm={6} md={4} lg={5} style={addDropStyle}>
                                                     <Row className="mt-3">
@@ -434,7 +469,7 @@ function Form6A({ history }) {
                                         type='button'
                                         style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
                                         disabled={loading ? true : false}
-                                        variant='outline-secondary'
+                                        variant='outline-danger'
                                         onClick={handleShow}>
                                         Discard
                                     </Button>

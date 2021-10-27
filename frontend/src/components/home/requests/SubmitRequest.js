@@ -552,8 +552,8 @@ const SubmitRequest = () => {
                                                             {Number(file.size / 1000000).toFixed(2)} MB
                                                         </span> <span style={{ margin: '0 5px' }}>
                                                             <a href={file.path} target="_blank" rel="noreferrer">
-                                                                <button className="btn btn-primary py-1 px-2 ml-2">
-                                                                    <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                                                                <button className="btn btn-outline-success py-1 px-2 ml-2">
+                                                                    <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none' }} />
                                                                 </button>
                                                             </a>
                                                         </span>
@@ -562,7 +562,7 @@ const SubmitRequest = () => {
                                             </ListGroup>
                                         </Card.Text>
                                         <Card.Text>
-                                            <center><Button variant='outline-danger' onClick={() => reset()}>Back</Button></center>
+                                            <center><Button variant='outline-secondary' onClick={() => reset()}>Back</Button></center>
                                         </Card.Text>
                                     </Card.Body>
                                 </Card>

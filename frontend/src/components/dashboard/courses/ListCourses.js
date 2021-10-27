@@ -2,7 +2,7 @@ import React, { Fragment, useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Modal, Button } from 'react-bootstrap'
+import { Container, Modal, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getAllCourses, deleteCourse, clearErrors } from '../../../actions/courseActions'
 import { DELETE_COURSE_RESET } from '../../../constants/courseConstants'
@@ -102,24 +102,40 @@ const ListCourses = ({ history }) => {
                 lecUnits: course.lecUnits + ' units',
                 labUnits: course.labUnits + ' units',
                 available: <Fragment>
-                <p style={{
-                    color: course.available === 'No' ? 'red' : 'green'
-                }}>
-                    {course.available}
-                </p>
-            </Fragment>,
-                actions: <Fragment>
-                    <Link to={`/admin/course/${course._id}`}>
-                        <Button variant="warning" className="mr-5" style={{ margin: '5px' }}>
-                            <i class="fa fa-edit" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
-                        </Button>
-                    </Link>
-                    <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
-                        setId(course._id)
-                        handleShow()
+                    <p style={{
+                        color: course.available === 'No' ? 'red' : 'green'
                     }}>
-                        <i class="fa fa-trash" aria-hidden="true" />
-                    </Button>
+                        {course.available}
+                    </p>
+                </Fragment>,
+                actions: <Fragment>
+                    <OverlayTrigger
+                        placement='bottom-start'
+                        overlay={
+                            <Tooltip id="tooltip-disabled">
+                                Edit
+                            </Tooltip>
+                        }>
+                        <Link to={`/admin/course/${course._id}`}>
+                            <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
+                                <i class="fa fa-edit" aria-hidden="true" style={{ textDecoration: 'none' }} />
+                            </Button>
+                        </Link>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                        placement='bottom-start'
+                        overlay={
+                            <Tooltip id="tooltip-disabled">
+                                Delete
+                            </Tooltip>
+                        }>
+                        <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
+                            setId(course._id)
+                            handleShow()
+                        }}>
+                            <i class="fa fa-trash" aria-hidden="true" />
+                        </Button>
+                    </OverlayTrigger>
                 </Fragment>
             })
         })
@@ -159,7 +175,7 @@ const ListCourses = ({ history }) => {
                             </div>
                             <div style={{ marginLeft: '2px', marginTop: '30px', marginRight: '2px' }}>
                                 <Link to='/admin/new/course' style={{ textDecoration: 'none', color: 'white' }}>
-                                    <Button variant="primary">
+                                    <Button variant="outline-secondary">
                                         Add course
                                     </Button>
                                 </Link>
@@ -171,7 +187,7 @@ const ListCourses = ({ history }) => {
                                     data={setCourses()}
                                     searchTop
                                     searchBottom={false}
-                                    
+
                                     scrollX
                                     entriesOptions={[10, 20, 30, 40, 50]}
                                     entries={10}

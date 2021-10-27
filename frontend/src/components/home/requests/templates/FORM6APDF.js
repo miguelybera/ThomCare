@@ -25,17 +25,16 @@ const FORM6APDF = ({ studentInfo, submitted, setSubmitted }) => {
     const name = studentInfo.lastName + ', ' + studentInfo.firstName + ' ' + middleInitial
     const course = user.course
 
-    let toAdd = [], toDrop = [], newTotalUnits = 0
+    let toAdd = [], toDrop = [], newAddTotalUnits = 0, newDropTotalUnits = 0
 
     studentInfo.addDrop.forEach(x => {
         if (x.status === 'Add') {
             toAdd.push(x)
-            newTotalUnits += (Number(x.lecUnits) + Number(x.labUnits))
+            newAddTotalUnits +=  (Number(x.lecUnits) + Number(x.labUnits))
         } else {
             toDrop.push(x)
-            newTotalUnits -= (Number(x.lecUnits) + Number(x.labUnits))
+            newDropTotalUnits +=  (Number(x.lecUnits) + Number(x.labUnits))
         }
-
     })
 
     const options = {
@@ -239,7 +238,7 @@ const FORM6APDF = ({ studentInfo, submitted, setSubmitted }) => {
                         </div>
                     </center>
 
-                    <center>NEW TOTAL UNITS: {newTotalUnits}</center>
+                    <center>NEW TOTAL UNITS: To add: {newAddTotalUnits} units, To drop: {newDropTotalUnits} units</center>
 
                     <div className="signatories" style={{ textAlign: 'center', fontWeight: 'bold' }}>
                         <Row>
@@ -455,7 +454,7 @@ const FORM6APDF = ({ studentInfo, submitted, setSubmitted }) => {
                         </div>
                     </center>
 
-                    <center>NEW TOTAL UNITS: {newTotalUnits}</center>
+                    <center>NEW TOTAL UNITS: To add: {newAddTotalUnits} units, To drop: {newDropTotalUnits} units</center>
 
                     <div className="signatories" style={{ textAlign: 'center', fontWeight: 'bold' }}>
                         <Row>

@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Modal, Button } from 'react-bootstrap'
+import { Container, Modal, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { Markup } from 'interweave'
 import { getMyAnnouncements, deleteAnnouncement, archiveAnnouncement, clearErrors } from '../../../actions/announcementActions'
@@ -129,22 +129,46 @@ const ListMyAnnoucements = ({ history }) => {
                     </span>
                 </Fragment>,
                 actions: <Fragment>
-                    <Link to={`/admin/announcement/${announcement._id}`}>
-                        <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
-                            <i class="fa fa-edit" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                    <OverlayTrigger
+                        placement='bottom-start'
+                        overlay={
+                            <Tooltip id="tooltip-disabled">
+                                Edit
+                            </Tooltip>
+                        }>
+                        <Link to={`/admin/announcement/${announcement._id}`} style={{ margin: '5px' }}>
+                            <Button variant="primary" className="mr-5">
+                                <i class="fa fa-edit" aria-hidden="true" style={{ textDecoration: 'none' }} />
+                            </Button>
+                        </Link>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                        placement='bottom-start'
+                        overlay={
+                            <Tooltip id="tooltip-disabled">
+                                Archive
+                            </Tooltip>
+                        }>
+                        <Button variant="warning" className="mr-5" style={{ margin: '5px', color: 'black' }} onClick={() => {
+                            dispatch(archiveAnnouncement(announcement._id))
+                        }}>
+                            <i class="fa fa-archive" aria-hidden="true" />
                         </Button>
-                    </Link>
-                    <Button variant="warning" className="mr-5" style={{ margin: '5px' }} onClick={() => {
-                        dispatch(archiveAnnouncement(announcement._id))
-                    }}>
-                        <i class="fa fa-archive" aria-hidden="true" />
-                    </Button>
-                    <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
-                        handleShow()
-                        setDeleteAnnouncementId(announcement._id)
-                    }}>
-                        <i class="fa fa-trash" aria-hidden="true" />
-                    </Button>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                        placement='bottom-start'
+                        overlay={
+                            <Tooltip id="tooltip-disabled">
+                                Delete
+                            </Tooltip>
+                        }>
+                        <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
+                            handleShow()
+                            setDeleteAnnouncementId(announcement._id)
+                        }}>
+                            <i class="fa fa-trash" aria-hidden="true" />
+                        </Button>
+                    </OverlayTrigger>
                 </Fragment>
             })
 
@@ -184,8 +208,8 @@ const ListMyAnnoucements = ({ history }) => {
                                 <h3>My Announcements</h3>
                             </div>
                             <div style={{ marginLeft: '2px', marginTop: '30px', marginRight: '2px' }}>
-                                <Link to='/admin/new/announcement' style={{ textDecoration: 'none', color: 'white' }}>
-                                    <Button variant="primary">
+                                <Link to='/admin/new/announcement' style={{ textDecoration: 'none' }}>
+                                    <Button variant="outline-secondary">
                                         Create announcement
                                     </Button>
                                 </Link>
@@ -197,7 +221,7 @@ const ListMyAnnoucements = ({ history }) => {
                                     data={setAnnouncements()}
                                     searchTop
                                     searchBottom={false}
-                                    
+
                                     scrollX
                                     entriesOptions={[10, 20, 30, 40, 50]}
                                     entries={10}

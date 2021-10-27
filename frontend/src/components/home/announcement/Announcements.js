@@ -269,10 +269,10 @@ const Announcements = ({ history }) => {
                             <Col xs={12} md={4} lg={2}>
                                 <Form.Group sm>
                                     <center>
-                                        <Button type='submit' style={{ margin: '5px' }}>Submit</Button>
+                                        <Button type='submit' style={{ margin: '5px' }}>Search</Button>
                                         <Button
                                             type="submit"
-                                            variant="outline-primary"
+                                            variant="outline-secondary"
                                             onClick={() => {
                                                 setFilter({
                                                     course: '',

@@ -283,7 +283,7 @@ const ConfirmRegister = ({ history, studentInfo, currentStep, setCurrentStep }) 
                                 <Card.Text><b>Email:</b> {studentInfo.email}</Card.Text>
                                 <center>
                                     <Button
-                                        variant='danger'
+                                        variant='outline-danger'
                                         onClick={goBack}
                                         style={{ marginRight: '5px', marginTop: '10px', borderRadius: '50px', width: '10rem' }}
                                         disabled={loading ? true : false}

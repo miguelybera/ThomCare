@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Modal, Button } from 'react-bootstrap'
+import { Container, Modal, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getUsers, deleteUser, clearErrors } from '../../../actions/userActions'
 import { DELETE_USER_RESET } from '../../../constants/userConstants'
@@ -103,28 +103,51 @@ const ListUsers = ({ history }) => {
                 actions: <Fragment>
                     {(user._id === currentUser._id) ? (
                         <span>
-                            <Link to={`/profile`}>
-                                <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
-                                    <i class="fa fa-edit" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
-                                </Button>
-                            </Link>
+                            <OverlayTrigger
+                                placement='bottom-start'
+                                overlay={
+                                    <Tooltip id="tooltip-disabled">
+                                        Edit
+                                    </Tooltip>
+                                }>
+                                <Link to={`/profile`}>
+                                    <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
+                                        <i class="fa fa-edit" aria-hidden="true" style={{ textDecoration: 'none' }} />
+                                    </Button>
+                                </Link>
+                            </OverlayTrigger>
                         </span>
                     ) : (
                         <span>
-                            <Link to={`/admin/user/${user._id}`}>
-                                <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
-                                    <i class="fa fa-edit" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
-                                </Button>
-                            </Link>
+                            <OverlayTrigger
+                                placement='bottom-start'
+                                overlay={
+                                    <Tooltip id="tooltip-disabled">
+                                        Edit
+                                    </Tooltip>
+                                }>
+                                <Link to={`/admin/user/${user._id}`}>
+                                    <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
+                                        <i class="fa fa-edit" aria-hidden="true" style={{ textDecoration: 'none' }} />
+                                    </Button>
+                                </Link>
+                            </OverlayTrigger>
                         </span>
-                    )
-                    }
-                    <Button variant="danger" className="mr-5" disabled={user._id === currentUser._id ? true : false} style={{ margin: '5px' }} onClick={() => {
-                        handleShow()
-                        setDeleteUserId(user._id)
-                    }}>
-                        <i class="fa fa-trash" aria-hidden="true" />
-                    </Button>
+                    )}
+                    <OverlayTrigger
+                        placement='bottom-start'
+                        overlay={
+                            <Tooltip id="tooltip-disabled">
+                                Delete
+                            </Tooltip>
+                        }>
+                        <Button variant="danger" className="mr-5" disabled={user._id === currentUser._id ? true : false} style={{ margin: '5px' }} onClick={() => {
+                            handleShow()
+                            setDeleteUserId(user._id)
+                        }}>
+                            <i class="fa fa-trash" aria-hidden="true" />
+                        </Button>
+                    </OverlayTrigger>
                 </Fragment >
             })
 

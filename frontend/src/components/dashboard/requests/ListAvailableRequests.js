@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Button, Form, Row, Col } from 'react-bootstrap'
+import { Container, Button, Form, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getRequests, assignRequest, clearErrors } from '../../../actions/requestActions'
 import { ASSIGN_REQUEST_RESET } from '../../../constants/requestConstants'
@@ -136,19 +136,34 @@ const ListAvailableRequests = ({ history }) => {
                     </p>
                 </Fragment>,
                 actions: <Fragment>
-                    <Link to={`/view/request/${viewType}`}>
-                        <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
-                            <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                    <OverlayTrigger
+                        placement='bottom-start'
+                        overlay={
+                            <Tooltip id="tooltip-disabled">
+                                View
+                        </Tooltip>
+                        }>
+                        <Link to={`/view/request/${viewType}`}>
+                            <Button variant="secondary" className="mr-5" style={{ margin: '5px' }}>
+                                <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none' }} />
+                            </Button>
+                        </Link>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                        placement='bottom-start'
+                        overlay={
+                            <Tooltip id="tooltip-disabled">
+                                Assign to me
+                        </Tooltip>
+                        }>
+                        <Button variant="outline-secondary" className="mr-5" style={{ margin: '5px' }} onClick={() => {
+                            assignRequestHandler(request._id)
+                        }}>
+                            <i class="fa fa-user" aria-hidden="true" />
                         </Button>
-                    </Link>
-                    <Button variant="warning" className="mr-5" style={{ margin: '5px' }} onClick={() => {
-                        assignRequestHandler(request._id)
-                    }}>
-                        <i class="fa fa-user" aria-hidden="true" />
-                    </Button>
+                    </OverlayTrigger>
                 </Fragment>
             })
-
         })
 
         return data

@@ -25,17 +25,16 @@ const FORM6BPDF = ({ studentInfo, submitted, setSubmitted }) => {
     const name = studentInfo.lastName + ', ' + studentInfo.firstName + ' ' + middleInitial
     const course = user.course
 
-    let toCross = [], toDrop = [], newTotalUnits = 0
+    let toCross = [], toDrop = [], newDropTotalUnits = 0, newCrossTotalUnits = 0
 
     studentInfo.crossDrop.forEach(x => {
         if (x.status === 'Cross-enroll') {
             toCross.push(x)
-            newTotalUnits += (Number(x.lecUnits) + Number(x.labUnits))
+            newCrossTotalUnits += (Number(x.lecUnits) + Number(x.labUnits))
         } else {
             toDrop.push(x)
-            newTotalUnits -= (Number(x.lecUnits) + Number(x.labUnits))
+            newDropTotalUnits += (Number(x.lecUnits) + Number(x.labUnits))
         }
-
     })
 
     const options = {
@@ -239,7 +238,7 @@ const FORM6BPDF = ({ studentInfo, submitted, setSubmitted }) => {
                         </div>
                     </center>
 
-                    <center>NEW TOTAL UNITS: {newTotalUnits}</center>
+                    <center>NEW TOTAL UNITS: To cross-enroll: {newCrossTotalUnits} units, To drop: {newDropTotalUnits} units</center>
 
                     <div className="signatories" style={{ textAlign: 'center', fontWeight: 'bold' }}>
                         <Row>
@@ -460,7 +459,7 @@ const FORM6BPDF = ({ studentInfo, submitted, setSubmitted }) => {
                         </div>
                     </center>
 
-                    <center>NEW TOTAL UNITS: {newTotalUnits}</center>
+                    <center>NEW TOTAL UNITS: To cross-enroll: {newCrossTotalUnits} units, To drop: {newDropTotalUnits} units</center>
 
                     <div className="signatories" style={{ textAlign: 'center', fontWeight: 'bold' }}>
                         <Row>

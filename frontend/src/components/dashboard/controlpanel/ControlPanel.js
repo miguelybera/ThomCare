@@ -3,7 +3,7 @@ import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContai
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Button, Row, Col, Card } from 'react-bootstrap'
+import { Container, Button, Row, Col, Card, OverlayTrigger, Tooltip as Tool } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getRequests, getStats, clearErrors } from '../../../actions/requestActions'
 import { INSIDE_DASHBOARD_TRUE } from '../../../constants/dashboardConstants'
@@ -27,7 +27,7 @@ const ControlPanel = ({ history }) => {
 
     if (user.role === 'CICS Office') {
         link = '/admin/all/requests'
-        reqType = 'All'
+        reqType = 'Me'
         viewType = '5'
     } else if (user.role === 'Student') {
         link = '/me/requests'
@@ -112,11 +112,19 @@ const ControlPanel = ({ history }) => {
                         </p>
                     </Fragment>,
                     actions: <Fragment>
-                        <Link to={`/view/request/${reqLink}`}>
-                            <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
-                                <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
-                            </Button>
-                        </Link>
+                        <OverlayTrigger
+                            placement='bottom-start'
+                            overlay={
+                                <Tool id="Tool-disabled">
+                                    View
+                                </Tool>
+                            }>
+                            <Link to={`/view/request/${reqLink}`}>
+                                <Button variant="secondary" className="mr-5" style={{ margin: '5px' }}>
+                                    <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                                </Button>
+                            </Link>
+                        </OverlayTrigger>
                     </Fragment>
                 })
             } else {
@@ -174,16 +182,22 @@ const ControlPanel = ({ history }) => {
                                 {user.role === 'Student' ? (
                                     <Fragment>
                                         <center>
-                                            <Col sm><ReportCard requestType={'Requests'} length={requests && requests.length} icon={'edit'} color={'red'} /></Col>
+                                            <Col sm><ReportCard requestType={'My Requests'} length={requests && requests.length} icon={'edit'} color={'red'} /></Col>
                                         </center>
                                     </Fragment>
                                 ) : (
                                     <Fragment>
-                                        <Col sm><ReportCard requestType={'Requests'} length={requests && requests.length} icon={'edit'} color={'red'} /></Col>
-                                        <Col sm><ReportCard requestType={'Pending'} length={pending && pending.length} icon={'paperclip'} color={'blue'} /></Col>
-                                        <Col sm><ReportCard requestType={'Processing'} length={processing && processing.length} icon={'spinner'} color={'yellow'} /></Col>
-                                        <Col sm><ReportCard requestType={'Denied'} length={denied && denied.length} icon={'times-circle'} color={'blue'} /></Col>
-                                        <Col sm><ReportCard requestType={'Approved'} length={approved && approved.length} icon={'check-circle'} color={'red'} /></Col>
+                                        <Row>
+                                            <center>
+                                                <Col sm><ReportCard requestType={'Total Requests'} length={requests && requests.length} icon={'edit'} color={'red'} /></Col>
+                                            </center>
+                                        </Row>
+                                        <Row>
+                                            <Col sm><ReportCard requestType={'Pending'} length={pending && pending.length} icon={'paperclip'} color={'blue'} /></Col>
+                                            <Col sm><ReportCard requestType={'Processing'} length={processing && processing.length} icon={'spinner'} color={'yellow'} /></Col>
+                                            <Col sm><ReportCard requestType={'Denied'} length={denied && denied.length} icon={'times-circle'} color={'blue'} /></Col>
+                                            <Col sm><ReportCard requestType={'Approved'} length={approved && approved.length} icon={'check-circle'} color={'red'} /></Col>
+                                        </Row>
                                     </Fragment>
                                 )}
                             </Row>
@@ -192,7 +206,7 @@ const ControlPanel = ({ history }) => {
                                     <Row style={{ display: 'flex', justifyContent: 'center', margin: '20px 0' }}>
                                         <Col xs={12} md={6} style={{ marginTop: '5px' }}>
                                             <Card>
-                                                <Card.Header>Daily requests</Card.Header>
+                                                <Card.Header><b>My daily requests</b></Card.Header>
                                                 <Card.Body>
                                                     <ResponsiveContainer width={'99%'} height={300}>
                                                         <LineChart width={600} height={300} data={setDailyData()} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
@@ -208,7 +222,7 @@ const ControlPanel = ({ history }) => {
                                         </Col>
                                         <Col xs={12} md={6} style={{ marginTop: '5px' }}>
                                             <Card>
-                                                <Card.Header>Weekly requests</Card.Header>
+                                                <Card.Header><b>My weekly requests</b></Card.Header>
                                                 <Card.Body>
                                                     <ResponsiveContainer width={'99%'} height={300}>
                                                         <LineChart width={600} height={300} data={setWeeklyData()} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
@@ -231,13 +245,13 @@ const ControlPanel = ({ history }) => {
                                         <Card>
                                             <div style={{ display: 'flex', marginBottom: '20px' }}>
                                                 <div style={{ marginRight: 'auto', marginTop: '10px' }}>
-                                                    <Card.Title style={{ paddingTop: '10px' }}>Recent submissions</Card.Title>
+                                                    <Card.Title style={{ paddingTop: '10px' }}><b>Recent submissions</b></Card.Title>
                                                 </div>
                                                 <div style={{ marginLeft: 'auto', marginTop: '10px' }}>
                                                     <Link to={link}>
-                                                        <Button>
+                                                        <Button variant='outline-secondary'>
                                                             View All
-                                                            </Button>
+                                                        </Button>
                                                     </Link>
                                                 </div>
                                             </div>

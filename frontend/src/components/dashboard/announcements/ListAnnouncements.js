@@ -103,7 +103,7 @@ const ListAnnouncements = ({ history }) => {
                             </div>
                             <div style={{ marginLeft: '2px', marginTop: '30px', marginRight: '2px' }}>
                                 <Link to='/admin/new/announcement' style={{ textDecoration: 'none', color: 'white' }}>
-                                    <Button variant="primary">
+                                    <Button variant="outline-secondary">
                                         Create announcement
                                     </Button>
                                 </Link>

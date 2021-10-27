@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Modal, Button } from 'react-bootstrap'
+import { Container, Modal, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getAnnouncementType, deleteAnnouncementType, clearErrors } from './../../../actions/announcementActions'
 import { DELETE_ANNOUNCEMENT_TYPE_RESET } from './../../../constants/announcementConstants'
@@ -84,15 +84,22 @@ const ListAnnouncementType = ({ history }) => {
                 number: ++x,
                 announcementCategory: announcement.announcementCategory,
                 actions: <Fragment>
-                    <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
-                        handleShow()
-                        setDeleteAnnouncementId(announcement._id)
-                    }}>
-                        <i class="fa fa-trash" aria-hidden="true" />
-                    </Button>
+                    <OverlayTrigger
+                        placement='bottom-start'
+                        overlay={
+                            <Tooltip id="tooltip-disabled">
+                                Delete
+                            </Tooltip>
+                        }>
+                        <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
+                            handleShow()
+                            setDeleteAnnouncementId(announcement._id)
+                        }}>
+                            <i class="fa fa-trash" aria-hidden="true" />
+                        </Button>
+                    </OverlayTrigger>
                 </Fragment>
             })
-
         })
 
         return data
@@ -135,7 +142,7 @@ const ListAnnouncementType = ({ history }) => {
                                     data={setAnnouncementType()}
                                     searchTop
                                     searchBottom={false}
-                                    
+
                                     scrollX
                                     entriesOptions={[10, 20, 30, 40, 50]}
                                     entries={10}

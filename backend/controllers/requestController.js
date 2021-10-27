@@ -359,7 +359,8 @@ exports.getAllStats = catchAsyncErrors(async (req, res, next) => {
             createdAt: {
                 "$gte": dailyDates[i + 1].toString(),
                 "$lt": dailyDates[i].toString()
-            }
+            },
+            managedBy: req.user.id 
         })
 
         dailyStats.push(x.length)
@@ -377,7 +378,8 @@ exports.getAllStats = catchAsyncErrors(async (req, res, next) => {
             createdAt: {
                 "$gte": weeklyDates[i + 1].toString(),
                 "$lt": weeklyDates[i].toString()
-            }
+            },
+            managedBy: req.user.id 
         })
 
         weeklyStats.push(x.length)

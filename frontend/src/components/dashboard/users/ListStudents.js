@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Modal, Button } from 'react-bootstrap'
+import { Container, Modal, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getStudents, deleteUser, clearErrors } from '../../../actions/userActions'
 import { DELETE_USER_RESET } from '../../../constants/userConstants'
@@ -100,17 +100,33 @@ const ListStudents = ({ history }) => {
                 email: user.email,
                 studentNumber: user.studentNumber,
                 actions: <Fragment>
-                    <Link to={`/admin/user/${user._id}`}>
-                        <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
-                            <i class="fa fa-edit" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                    <OverlayTrigger
+                        placement='bottom-start'
+                        overlay={
+                            <Tooltip id="tooltip-disabled">
+                                <i class="fas fa-user-edit    "></i>
+                            </Tooltip>
+                        }>
+                        <Link to={`/admin/user/${user._id}`}>
+                            <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
+                                <i class="fa fa-edit" aria-hidden="true" style={{ textDecoration: 'none' }} />
+                            </Button>
+                        </Link>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                        placement='bottom-start'
+                        overlay={
+                            <Tooltip id="tooltip-disabled">
+                                Delete
+                            </Tooltip>
+                        }>
+                        <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
+                            handleShow()
+                            setDeleteUserId(user._id)
+                        }}>
+                            <i class="fa fa-trash" aria-hidden="true" />
                         </Button>
-                    </Link>
-                    <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
-                        handleShow()
-                        setDeleteUserId(user._id)
-                    }}>
-                        <i class="fa fa-trash" aria-hidden="true" />
-                    </Button>
+                    </OverlayTrigger>
                 </Fragment >
             })
         })

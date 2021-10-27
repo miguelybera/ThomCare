@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Button, ButtonGroup, ButtonToolbar, Row, Col, Form } from 'react-bootstrap'
+import { Container, Button, ButtonGroup, ButtonToolbar, Row, Col, Form, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getRequests, clearErrors } from '../../../actions/requestActions'
 import { ASSIGN_REQUEST_RESET } from '../../../constants/requestConstants'
@@ -160,14 +160,21 @@ const ListCICSRequests = ({ history }) => {
                     </p>
                 </Fragment>,
                 actions: <Fragment>
-                    <Link to={`/view/request/${viewType}`}>
-                        <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
-                            <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
-                        </Button>
-                    </Link>
+                    <OverlayTrigger
+                        placement='bottom-start'
+                        overlay={
+                            <Tooltip id="tooltip-disabled">
+                                View
+                            </Tooltip>
+                        }>
+                        <Link to={`/view/request/${viewType}`}>
+                            <Button variant="secondary" className="mr-5" style={{ margin: '5px' }}>
+                                <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none' }} />
+                            </Button>
+                        </Link>
+                    </OverlayTrigger>
                 </Fragment>
             })
-
         })
 
         return data

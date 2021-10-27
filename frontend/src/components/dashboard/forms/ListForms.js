@@ -1,7 +1,7 @@
 import React, { Fragment, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Button, Container } from 'react-bootstrap'
+import { Button, Container, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { Markup } from 'interweave'
 import { getForms, clearErrors } from './../../../actions/formActions'
@@ -58,11 +58,19 @@ const ListForms = ({ history }) => {
                 title: form.title,
                 description: <Markup content={form.description} />,
                 actions: <Fragment>
-                    <a href={form.attachments && form.attachments[0].path} target="_blank" rel="noreferrer">
-                        <Button style={{ margin: '5px' }} variant="outline-secondary">
-                            <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'black' }} />
-                        </Button>
-                    </a>
+                    <OverlayTrigger
+                        placement='bottom-start'
+                        overlay={
+                            <Tooltip id="tooltip-disabled">
+                                Download
+                            </Tooltip>
+                        }>
+                        <a href={form.attachments && form.attachments[0].path} target="_blank" rel="noreferrer">
+                            <Button style={{ margin: '5px' }} variant="outline-success">
+                                <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none' }} />
+                            </Button>
+                        </a>
+                    </OverlayTrigger>
                 </Fragment>
             })
         })

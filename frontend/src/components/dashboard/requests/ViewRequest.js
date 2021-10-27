@@ -201,8 +201,8 @@ const ViewRequest = ({ history, match }) => {
                         {remark.returningFiles && remark.returningFiles.map(file => (
                             <ListGroupItem>
                                 <a href={file.path} target="_blank" rel="noreferrer">
-                                    <button className="btn btn-primary py-1 px-2 ml-2">
-                                        <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                                    <button className="btn btn-outline-success py-1 px-2 ml-2">
+                                        <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none' }} />
                                     </button>
                                 </a> {file.originalname} <font size="1rem">{Number(file.size / 1000000).toFixed(2)} MB</font>
                             </ListGroupItem>
@@ -243,8 +243,8 @@ const ViewRequest = ({ history, match }) => {
                 fileSize: Number(file.size / 1000000).toFixed(2) + ' MB',
                 action: <Fragment>
                     <a href={file.path} target="_blank" rel="noreferrer">
-                        <button className="btn btn-primary py-1 px-2 ml-2">
-                            <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                        <button className="btn btn-outline-success py-1 px-2 ml-2">
+                            <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none' }} />
                         </button>
                     </a>
                 </Fragment>
@@ -392,8 +392,8 @@ const ViewRequest = ({ history, match }) => {
                                             Delete
                                 </Button>
                                         <Button
-                                            variant="secondary"
-                                            style={{ width: '10rem', margin: '10px' }}
+                                            variant="outline-warning"
+                                            style={{ width: '10rem', margin: '10px', color: 'black' }}
                                             onClick={() => {
                                                 unassignRequestHandler(id)
                                             }}>
@@ -433,7 +433,7 @@ const ViewRequest = ({ history, match }) => {
                                 ) : (
                                     Number(viewType) === 3 ? (
                                         <Button
-                                            variant="warning"
+                                            variant="outline-secondary"
                                             style={{ width: '8rem', margin: '10px' }}
                                             onClick={() => {
                                                 assignRequestHandler(id)
@@ -444,7 +444,7 @@ const ViewRequest = ({ history, match }) => {
                                         Number(viewType) === 4 ? (
                                             <Fragment>
                                                 <Button
-                                                    variant="warning"
+                                                    variant="outline-warning"
                                                     style={{ width: '5rem', margin: '10px' }}
                                                     onClick={() => {
                                                         updateRequestHandler(id, false)

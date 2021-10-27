@@ -428,7 +428,7 @@ function Form6B({history}) {
                                         type='button'
                                         style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
                                         disabled={loading ? true : false}
-                                        variant='outline-secondary'
+                                        variant='outline-danger'
                                         onClick={handleShow}>
                                         Discard
                                     </Button>

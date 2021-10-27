@@ -157,7 +157,7 @@ const FormsList = () => {
                                         <i class="fa fa-edit" aria-hidden="true"></i>
                                     </Button>
                                 </Link>
-                                <Button variant="warning" href="https://drive.google.com/file/d/11UDJbETgsYGSlfwU6MH-fqQsaUFH5lMd/view?usp=sharing" target="_blank" rel="noreferrer" style={{ margin: '5px' }}>
+                                <Button variant="secondary" href="https://drive.google.com/file/d/11UDJbETgsYGSlfwU6MH-fqQsaUFH5lMd/view?usp=sharing" target="_blank" rel="noreferrer" style={{ margin: '5px' }}>
                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                 </Button>
                             </td>
@@ -174,7 +174,7 @@ const FormsList = () => {
                                         <i class="fa fa-edit" aria-hidden="true"></i>
                                     </Button>
                                 </Link>
-                                <Button variant="warning" href="https://drive.google.com/file/d/1JFb7kCERjKkJZXJbkmdACewAobS7i_UF/view?usp=sharing" target="_blank" rel="noreferrer" style={{ margin: '5px' }}>
+                                <Button variant="secondary" href="https://drive.google.com/file/d/1JFb7kCERjKkJZXJbkmdACewAobS7i_UF/view?usp=sharing" target="_blank" rel="noreferrer" style={{ margin: '5px' }}>
                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                 </Button></td>
                         </tr>
@@ -190,7 +190,7 @@ const FormsList = () => {
                                         <i class="fa fa-edit" aria-hidden="true"></i>
                                     </Button>
                                 </Link>
-                                <Button variant="warning" href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" target="_blank" rel="noreferrer" style={{ margin: '5px' }}>
+                                <Button variant="secondary" href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" target="_blank" rel="noreferrer" style={{ margin: '5px' }}>
                                     <i class="fa fa-eye" aria-hidden="true"></i>
                                 </Button></td>
                         </tr>
@@ -200,7 +200,7 @@ const FormsList = () => {
                             <td></td>
                             <td>
                                 <Link to='/download/forms/list'>
-                                    <Button variant="warning" style={{ margin: '5px' }}>
+                                    <Button variant="secondary" style={{ margin: '5px' }}>
                                         <i class="fa fa-eye" aria-hidden="true"></i>
                                     </Button>
                                 </Link>

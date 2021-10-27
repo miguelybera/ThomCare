@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Modal, Button, Row, Col, Form } from 'react-bootstrap'
+import { Container, Modal, Button, Row, Col, Form, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getRequests, updateRequest, deleteRequest, clearErrors } from '../../../actions/requestActions'
 import { createAudit } from '../../../actions/auditActions'
@@ -224,20 +224,44 @@ const ListAllRequests = ({ history }) => {
                     </p>
                 </Fragment>,
                 actions: <Fragment>
-                    <Link to={`/view/request/${viewType}`}>
-                        <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
-                            <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                    <OverlayTrigger
+                        placement='bottom-start'
+                        overlay={
+                            <Tooltip id="tooltip-disabled">
+                                View
+                            </Tooltip>
+                        }>
+                        <Link to={`/view/request/${viewType}`}>
+                            <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
+                                <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none' }} />
+                            </Button>
+                        </Link>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                        placement='bottom-start'
+                        overlay={
+                            <Tooltip id="tooltip-disabled">
+                                Restore
+                            </Tooltip>
+                        }>
+                        <Button variant="outline-warning" className="mr-5" style={{ margin: '5px', color: 'black' }} onClick={() => { updateRequestHandler(request._id) }}>
+                            <i class="fa fa-undo" aria-hidden="true" />
                         </Button>
-                    </Link>
-                    <Button variant="warning" className="mr-5" style={{ margin: '5px' }} onClick={() => { updateRequestHandler(request._id) }}>
-                        <i class="fa fa-undo" aria-hidden="true" />
-                    </Button>
-                    <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
-                        handleShow()
-                        setRequestId(request._id)
-                    }}>
-                        <i class="fa fa-trash" aria-hidden="true" />
-                    </Button>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                        placement='bottom-start'
+                        overlay={
+                            <Tooltip id="tooltip-disabled">
+                                Delete
+                            </Tooltip>
+                        }>
+                        <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
+                            handleShow()
+                            setRequestId(request._id)
+                        }}>
+                            <i class="fa fa-trash" aria-hidden="true" />
+                        </Button>
+                    </OverlayTrigger>
                 </Fragment>
             })
         })

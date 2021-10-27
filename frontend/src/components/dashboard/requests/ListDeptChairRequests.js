@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Button, ButtonToolbar, ButtonGroup, Row, Col, Form } from 'react-bootstrap'
+import { Container, Button, ButtonToolbar, ButtonGroup, Row, Col, Form, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getRequests, updateRequest, clearErrors } from '../../../actions/requestActions'
 import { UPDATE_REQUEST_RESET } from '../../../constants/requestConstants'
@@ -168,21 +168,45 @@ const ListDeptChairRequests = ({ history }) => {
                         </p>
                     </Fragment>,
                     actions: <Fragment>
-                        <Link to={`/view/request/${viewType}`}>
-                            <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
-                                <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                        <OverlayTrigger
+                            placement='bottom-start'
+                            overlay={
+                                <Tooltip id="tooltip-disabled">
+                                    View
+                                </Tooltip>
+                            }>
+                            <Link to={`/view/request/${viewType}`}>
+                                <Button variant="secondary" className="mr-5" style={{ margin: '5px' }}>
+                                    <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none' }} />
+                                </Button>
+                            </Link>
+                        </OverlayTrigger>
+                        <OverlayTrigger
+                            placement='bottom-start'
+                            overlay={
+                                <Tooltip id="tooltip-disabled">
+                                    Edit
+                                </Tooltip>
+                            }>
+                            <Link to={`/admin/request/${request._id}`}>
+                                <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
+                                    <i class="fa fa-edit" aria-hidden="true" style={{ textDecoration: 'none' }} />
+                                </Button>
+                            </Link>
+                        </OverlayTrigger>
+                        <OverlayTrigger
+                            placement='bottom-start'
+                            overlay={
+                                <Tooltip id="tooltip-disabled">
+                                    Delete
+                                </Tooltip>
+                            }>
+                            <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
+                                updateRequestHandler(request._id)
+                            }}>
+                                <i class="fa fa-trash" aria-hidden="true" />
                             </Button>
-                        </Link>
-                        <Link to={`/admin/request/${request._id}`}>
-                            <Button variant="warning" className="mr-5" style={{ margin: '5px' }}>
-                                <i class="fa fa-edit" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
-                            </Button>
-                        </Link>
-                        <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
-                            updateRequestHandler(request._id)
-                        }}>
-                            <i class="fa fa-trash" aria-hidden="true" />
-                        </Button>
+                        </OverlayTrigger>
                     </Fragment>
                 })
             }
@@ -194,7 +218,7 @@ const ListDeptChairRequests = ({ history }) => {
     return (
         <Fragment>
             <MetaData title={'My Requests'} />
-            <Sidebar />updat
+            <Sidebar />
             <div className="row">
                 <div className="">
                     <Container fluid style={{ padding: "50px 0px" }}>

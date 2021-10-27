@@ -173,8 +173,8 @@ const UpdateRequest = ({ history, match }) => {
                         {remark.returningFiles && remark.returningFiles.map(file => (
                             <ListGroupItem>
                                 <a href={file.path} target="_blank" rel="noreferrer">
-                                    <button className="btn btn-primary py-1 px-2 ml-2">
-                                        <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                                    <button className="btn btn-outline-success py-1 px-2 ml-2">
+                                        <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none' }} />
                                     </button>
                                 </a> {file.originalname} <font size="1rem">{Number(file.size / 1000000).toFixed(2)} MB</font>
                             </ListGroupItem>
@@ -215,8 +215,8 @@ const UpdateRequest = ({ history, match }) => {
                 fileSize: Number(file.size / 1000000).toFixed(2) + ' MB',
                 action: <Fragment>
                     <a href={file.path} target="_blank" rel="noreferrer">
-                        <button className="btn btn-primary py-1 px-2 ml-2">
-                            <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                        <button className="btn btn-outline-success py-1 px-2 ml-2">
+                            <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none' }} />
                         </button>
                     </a>
                 </Fragment>
@@ -404,7 +404,7 @@ const UpdateRequest = ({ history, match }) => {
                                         type='button'
                                         style={{ margin: '10px 5px', borderRadius: '50px', width: '10rem' }}
                                         disabled={loading ? true : false}
-                                        variant='outline-secondary'
+                                        variant='outline-danger'
                                         onClick={handleShow}>
                                         Discard
                                     </Button>

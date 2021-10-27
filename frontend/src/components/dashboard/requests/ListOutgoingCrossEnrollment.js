@@ -2,7 +2,7 @@ import React, { Fragment, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Button, Row, Col } from 'react-bootstrap'
+import { Container, Button, Row, Col, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { getCrossEnrol, updateRequest, clearErrors } from '../../../actions/requestActions'
 import { UPDATE_REQUEST_RESET } from '../../../constants/requestConstants'
@@ -96,24 +96,47 @@ const ListOutgoingCrossEnrollment = ({ history }) => {
                 name: request.requestorInfo.firstName + ' ' + request.requestorInfo.lastName,
                 requestStatus: upperCase(request.requestStatus),
                 actions: <Fragment>
-                    <Link to={`/view/request/${viewType}`}>
-                        <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
-                            <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                    <OverlayTrigger
+                        placement='bottom-start'
+                        overlay={
+                            <Tooltip id="tooltip-disabled">
+                                View
+                        </Tooltip>
+                        }>
+                        <Link to={`/view/request/${viewType}`}>
+                            <Button variant="secondary" className="mr-5" style={{ margin: '5px' }}>
+                                <i class="fa fa-eye" aria-hidden="true" style={{ textDecoration: 'none' }} />
+                            </Button>
+                        </Link>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                        placement='bottom-start'
+                        overlay={
+                            <Tooltip id="tooltip-disabled">
+                                Edit
+                        </Tooltip>
+                        }>
+                        <Link to={`/admin/request/${request._id}`}>
+                            <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
+                                <i class="fa fa-edit" aria-hidden="true" style={{ textDecoration: 'none' }} />
+                            </Button>
+                        </Link>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                        placement='bottom-start'
+                        overlay={
+                            <Tooltip id="tooltip-disabled">
+                                Delete
+                        </Tooltip>
+                        }>
+                        <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
+                            updateRequestHandler(request._id)
+                        }}>
+                            <i class="fa fa-trash" aria-hidden="true" />
                         </Button>
-                    </Link>
-                    <Link to={`/admin/request/${request._id}`}>
-                        <Button variant="warning" className="mr-5" style={{ margin: '5px' }}>
-                            <i class="fa fa-edit" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
-                        </Button>
-                    </Link>
-                    <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
-                        updateRequestHandler(request._id)
-                    }}>
-                        <i class="fa fa-trash" aria-hidden="true" />
-                    </Button>
+                    </OverlayTrigger>
                 </Fragment>
             })
-
         })
 
         return data

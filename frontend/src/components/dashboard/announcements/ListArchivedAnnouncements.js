@@ -2,7 +2,7 @@ import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAlert } from 'react-alert'
 import { useDispatch, useSelector } from 'react-redux'
-import { Container, Modal, Button } from 'react-bootstrap'
+import { Container, Modal, Button, OverlayTrigger, Tooltip } from 'react-bootstrap'
 import { MDBDataTableV5 } from 'mdbreact'
 import { Markup } from 'interweave'
 import { getArchivedAnnouncements, deleteAnnouncement, clearErrors } from '../../../actions/announcementActions'
@@ -120,20 +120,35 @@ const ListArchivedAnnouncements = ({ history }) => {
                     </span>
                 </Fragment>,
                 actions: <Fragment>
-                    <Link to={`/admin/announcement/${announcement._id}`}>
-                        <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
-                            <i class="fa fa-edit" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                    <OverlayTrigger
+                        placement='bottom-start'
+                        overlay={
+                            <Tooltip id="tooltip-disabled">
+                                Edit
+                            </Tooltip>
+                        }>
+                        <Link to={`/admin/announcement/${announcement._id}`}>
+                            <Button variant="primary" className="mr-5" style={{ margin: '5px' }}>
+                                <i class="fa fa-edit" aria-hidden="true" style={{ textDecoration: 'none' }} />
+                            </Button>
+                        </Link>
+                    </OverlayTrigger>
+                    <OverlayTrigger
+                        placement='bottom-start'
+                        overlay={
+                            <Tooltip id="tooltip-disabled">
+                                Delete
+                            </Tooltip>
+                        }>
+                        <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
+                            handleShow()
+                            setDeleteAnnouncementId(announcement._id)
+                        }}>
+                            <i class="fa fa-trash" aria-hidden="true" />
                         </Button>
-                    </Link>
-                    <Button variant="danger" className="mr-5" style={{ margin: '5px' }} onClick={() => {
-                        handleShow()
-                        setDeleteAnnouncementId(announcement._id)
-                    }}>
-                        <i class="fa fa-trash" aria-hidden="true" />
-                    </Button>
+                    </OverlayTrigger>
                 </Fragment>
             })
-
         })
 
         return data
@@ -176,7 +191,7 @@ const ListArchivedAnnouncements = ({ history }) => {
                                     data={setAnnouncements()}
                                     searchTop
                                     searchBottom={false}
-                                    
+
                                     scrollX
                                     entriesOptions={[10, 20, 30, 40, 50]}
                                     entries={10}
