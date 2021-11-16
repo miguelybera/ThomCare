@@ -109,7 +109,7 @@ const AnnouncementDetails = ({ history, match }) => {
                 action: <Fragment>
                     <a href={file.path} target="_blank" rel="noreferrer">
                         <button className="btn btn-outline-success py-1 px-2 ml-2">
-                            <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none', color: 'white' }} />
+                            <i class="fa fa-download" aria-hidden="true" style={{ textDecoration: 'none' }} />
                         </button>
                     </a>
                 </Fragment>

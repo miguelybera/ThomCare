@@ -1,7 +1,8 @@
 import React, { Fragment, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
-import { Table, Container, Button, Modal } from 'react-bootstrap'
+import { Container, Button, Modal } from 'react-bootstrap'
+import { MDBDataTableV5 } from 'mdbreact'
 import { Markup } from 'interweave'
 import { INSIDE_DASHBOARD_FALSE } from '../../../../constants/dashboardConstants'
 import MetaData from './../../../layout/MetaData'
@@ -126,6 +127,93 @@ const FormsList = () => {
         )
     }
 
+    const setForms = () => {
+        const data = {
+            columns: [
+                {
+                    label: 'Document Code',
+                    field: 'code',
+                    width: 200
+                },
+                {
+                    label: 'Document Name',
+                    field: 'name',
+                    width: 350
+                },
+                {
+                    label: 'Procedure',
+                    field: 'procedure',
+                    width: 300
+                },
+                {
+                    label: 'Actions',
+                    field: 'actions',
+                    width: 150
+                }
+            ],
+            rows: [
+                {
+                    code: 'Form 6A',
+                    name: 'Adding/Dropping of course / Cross - Enrollment (within CICS)',
+                    procedure: <ModalInstructions content={form6aInstructions} />,
+                    actions: <Fragment>
+                        <Link to='/forms/form-6a'>
+                            <Button variant="primary" style={{ margin: '5px' }}>
+                                <i class="fa fa-edit" aria-hidden="true"></i>
+                            </Button>
+                        </Link>
+                        <Button variant="secondary" href="https://drive.google.com/file/d/11UDJbETgsYGSlfwU6MH-fqQsaUFH5lMd/view?usp=sharing" target="_blank" rel="noreferrer" style={{ margin: '5px' }}>
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        </Button>
+                    </Fragment>
+                },
+                {
+                    code: 'Form 6B',
+                    name: 'Cross- Enrollment with other academic unit/s',
+                    procedure: <ModalInstructions content={form6bInstructions} />,
+                    actions: <Fragment>
+                        <Link to='/forms/form-6b'>
+                            <Button variant="primary" style={{ margin: '5px' }}>
+                                <i class="fa fa-edit" aria-hidden="true"></i>
+                            </Button>
+                        </Link>
+                        <Button variant="secondary" href="https://drive.google.com/file/d/1JFb7kCERjKkJZXJbkmdACewAobS7i_UF/view?usp=sharing" target="_blank" rel="noreferrer" style={{ margin: '5px' }}>
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        </Button>
+                    </Fragment>
+                },
+                {
+                    code: 'Overload Form',
+                    name: 'Request for Overload',
+                    procedure: <ModalInstructions content={overloadInstructions} />,
+                    actions: <Fragment>
+                        <Link to='/forms/overload-form'>
+                            <Button variant="primary" style={{ margin: '5px' }}>
+                                <i class="fa fa-edit" aria-hidden="true"></i>
+                            </Button>
+                        </Link>
+                        <Button variant="secondary" href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" target="_blank" rel="noreferrer" style={{ margin: '5px' }}>
+                            <i class="fa fa-eye" aria-hidden="true"></i>
+                        </Button>
+                    </Fragment>
+                },
+                {
+                    code: 'Others',
+                    name: 'Others',
+                    procedure: '-',
+                    actions: <Fragment>
+                        <Link to='/download/forms/list'>
+                            <Button variant="secondary" style={{ margin: '5px' }}>
+                                <i class="fa fa-eye" aria-hidden="true"></i>
+                            </Button>
+                        </Link>
+                    </Fragment>
+                }
+            ]
+        }
+        return data
+    }
+
     return (
         <Fragment>
             <MetaData title={'Forms'} />
@@ -134,82 +222,17 @@ const FormsList = () => {
                     <h3>FORMS</h3>
                 </div>
             </Container>
-            <Container fluid style={{ marginTop: '50px', padding: "50px 20px", fontFamily: 'MuktaMalar' }}>
-                <Table bordered hover size="sm" style={{ justifyContent: 'center' }}>
-                    <thead>
-                        <tr style={{ textAlign: 'center' }}>
-                            <th>Document Code</th>
-                            <th>Document Name</th>
-                            <th>Procedure</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody style={{ textAlign: 'center' }}>
-                        <tr>
-                            <td>Form 6A</td>
-                            <td>Adding/Dropping of course / Cross - Enrollment (within CICS) </td>
-                            <td>
-                                <ModalInstructions content={form6aInstructions} />
-                            </td>
-                            <td>
-                                <Link to='/forms/form-6a'>
-                                    <Button variant="primary" style={{ margin: '5px' }}>
-                                        <i class="fa fa-edit" aria-hidden="true"></i>
-                                    </Button>
-                                </Link>
-                                <Button variant="secondary" href="https://drive.google.com/file/d/11UDJbETgsYGSlfwU6MH-fqQsaUFH5lMd/view?usp=sharing" target="_blank" rel="noreferrer" style={{ margin: '5px' }}>
-                                    <i class="fa fa-eye" aria-hidden="true"></i>
-                                </Button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>Form 6B</td>
-                            <td>Cross- Enrollment with other academic unit/s</td>
-                            <td>
-                                <ModalInstructions content={form6bInstructions} />
-                            </td>
-                            <td>
-                                <Link to='/forms/form-6b'>
-                                    <Button variant="primary" style={{ margin: '5px' }}>
-                                        <i class="fa fa-edit" aria-hidden="true"></i>
-                                    </Button>
-                                </Link>
-                                <Button variant="secondary" href="https://drive.google.com/file/d/1JFb7kCERjKkJZXJbkmdACewAobS7i_UF/view?usp=sharing" target="_blank" rel="noreferrer" style={{ margin: '5px' }}>
-                                    <i class="fa fa-eye" aria-hidden="true"></i>
-                                </Button></td>
-                        </tr>
-                        <tr>
-                            <td>Overload Form</td>
-                            <td>Request for Overload</td>
-                            <td>
-                                <ModalInstructions content={overloadInstructions} />
-                            </td>
-                            <td>
-                                <Link to='/forms/overload-form'>
-                                    <Button variant="primary" style={{ margin: '5px' }}>
-                                        <i class="fa fa-edit" aria-hidden="true"></i>
-                                    </Button>
-                                </Link>
-                                <Button variant="secondary" href="https://drive.google.com/file/d/1T5FATdMcVEhhTsfrqkEOKudhWF7rkvE_/view?usp=sharing" target="_blank" rel="noreferrer" style={{ margin: '5px' }}>
-                                    <i class="fa fa-eye" aria-hidden="true"></i>
-                                </Button></td>
-                        </tr>
-                        <tr>
-                            <td>-</td>
-                            <td>Others (Not listed)</td>
-                            <td></td>
-                            <td>
-                                <Link to='/download/forms/list'>
-                                    <Button variant="secondary" style={{ margin: '5px' }}>
-                                        <i class="fa fa-eye" aria-hidden="true"></i>
-                                    </Button>
-                                </Link>
-                            </td>
-                        </tr>
-                    </tbody>
-                </Table>
-            </Container>
-        </Fragment>
+            <Container fluid style={{ marginTop: '50px', padding: "50px 20px", fontFamily: 'MuktaMalar', textAlign: 'center' }}>
+                <MDBDataTableV5
+                    data={setForms()}
+                    searchTop
+                    scrollX
+                    entriesOptions={[5, 10, 15]}
+                    entries={10}
+                    style={{ backgroundColor: 'white' }}
+                />
+            </Container >
+        </Fragment >
     )
 }
 

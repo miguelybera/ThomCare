@@ -6,6 +6,7 @@ import { Nav, NavDropdown, Navbar, Container } from 'react-bootstrap'
 import styled from 'styled-components'
 import { logout } from '../../actions/userActions'
 import { SUBMIT_REQUEST_RESET } from './../../constants/requestConstants'
+import { useMediaQuery } from './media';
 import '../../App.css'
 
 const Styles = styled.div`
@@ -46,14 +47,17 @@ const Header = () => {
         alert.success('Logged out successfully.')
     }
 
+    const isMobile = useMediaQuery('(max-width: 445px)');
+    const isTablet = useMediaQuery('(max-width: 1200px)');
+
     return (
         <Fragment>
             <Styles>
                 <Navbar style={{ backgroundColor: 'white', borderBottom: "7px solid #9c0b0b" }} expand="lg">
-                    <Container >
-                        <img src="/images/CICS_SEAL.png" className="mr-2" alt="CICS Seal" style={{ marginRight: '5px', width: '50px', height: '60px' }} />
+                    <Container>
+                        <img src="/images/CICS_SEAL.png" className={isMobile ? "d-none" : "mr-2"} alt="CICS Seal" style={{ marginRight: '5px', width: '50px', height: '60px' }} />
                         <Navbar.Brand style={{ fontFamily: "AveriaBold", color: "#9c0b0b", paddingBottom: "0px", paddingLeft: "10px" }}>
-                            <p style={{ fontFamily: "MuktaMalar", fontWeight: "bold", fontSize: "70%", paddingTop: "5px", marginBottom: "0px" }}>
+                            <p className={isTablet ? "d-none" : null} style={{ fontFamily: "MuktaMalar", fontWeight: "bold", fontSize: "70%", paddingTop: "5px", marginBottom: "0px" }}>
                                 College of Information and Computing Sciences
                             </p>
                             <h1 style={{ fontSize: "150%", marginTop: "0px", paddingTop: "0px", borderTop: "10px" }}>
