@@ -173,24 +173,34 @@ const OVERLOADPDF = ({ studentInfo, submitted, setSubmitted }) => {
                         RECOMMENDING APPROVAL:
                     </div>
 
-                    <div className="deanrow">
-                        <div>____________________________________________________</div>
+                    <div className="sigrow">
                         <div></div>
-                        <div>Approved<input type="checkbox" disabled="true" style={{ marginLeft: "10px", height: "15px", width: "15px" }}></input></div>
-                        <div>Disapproved<input type="checkbox" disabled="true" style={{ marginLeft: "10px", height: "15px", width: "15px" }}></input></div>
+                        <div></div>
+                        <div>Student Signature:____________________________</div>
+                    </div>
+
+                    <div className="deanrow">
+                        <div style={{ textAlign: 'center' }}>________________________________________________________</div>
+                        <div></div>
+                        <div>Approved:<input type="checkbox" disabled="true" style={{ marginLeft: "10px", height: "15px", width: "15px" }}></input></div>
+                        <div>Disapproved:<input type="checkbox" disabled="true" style={{ marginLeft: "10px", height: "15px", width: "15px" }}></input></div>
                     </div>
 
                     <div className="deanrow">
                         <div style={{ textAlign: 'center' }}>Dean</div>
                         <div></div>
-                        <div>Total Units</div>
+                        <div>Total Units:</div>
                         <div></div>
                     </div>
 
                     <div className="daterow">
-                        <div>Date:</div>
+                        <div>Date:_____________________________________________</div>
+                        <div>_______________________________________________</div>
+                    </div>
+                    
+                    <div className="registrarRow">
+                        <div></div>
                         <div>Registrar</div>
-
                     </div>
                     <div className="ustrow">
                         <div></div>
