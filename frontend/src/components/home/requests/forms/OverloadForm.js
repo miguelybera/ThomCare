@@ -491,12 +491,12 @@ function OverloadForm({ history }) {
                                                 </Col>
                                                 <Col xs={6} sm={6} md={6} lg={3} style={addDropStyle}>
                                                     <FloatingLabel label="Start Time (ex: 7:00 AM)">
-                                                        <Form.Control type="text" placeholder="Start Time (ex: 7:00 AM)" name="startTime" id={startTime} data-id={idx} value={val.startTime} onChange={e => onChange(1, idx, e)} required />
+                                                        <Form.Control type="time" placeholder="Start Time (ex: 7:00 AM)" name="startTime" id={startTime} data-id={idx} value={val.startTime} onChange={e => onChange(1, idx, e)} required />
                                                     </FloatingLabel>
                                                 </Col>
                                                 <Col xs={6} sm={6} md={6} lg={3} style={addDropStyle}>
                                                     <FloatingLabel label="End Time (ex: 7:00 AM)">
-                                                        <Form.Control type="text" placeholder="End Time (7:00 AM)" name="endTime" id={endTime} data-id={idx} value={val.endTime} onChange={e => onChange(1, idx, e)} required />
+                                                        <Form.Control type="time" placeholder="End Time (7:00 AM)" name="endTime" id={endTime} data-id={idx} value={val.endTime} onChange={e => onChange(1, idx, e)} required />
                                                     </FloatingLabel>
                                                 </Col>
                                             </Row>

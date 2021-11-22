@@ -17,6 +17,7 @@ const UpdateRequest = ({ history, match }) => {
 
     const { loading: requestLoading, error, request } = useSelector(state => state.requestDetails)
     const { loading, error: updateError, isUpdated } = useSelector(state => state.request)
+    const { user } = useSelector(state => state.auth)
 
     const [requestorInfo, setRequestorInfo] = useState({})
     const [notes, setNotes] = useState('')
@@ -29,19 +30,13 @@ const UpdateRequest = ({ history, match }) => {
     const [remarks, setRemarks] = useState([])
     const [remarksMessage, setRemarksMessage] = useState([])
     const [show, setShow] = useState(false)
+    const [crossEnrolStatus, setCrossEnrolStatus] = useState([])
 
     const normalStatus = ['Pending', 'Processing', 'Denied', 'Approved']
-    const crossEnrolStatus = [
-        'Processing',
-        'Pending for CS Approval',
-        'Pending for IS Approval',
-        'Pending for IT Approval',
-        'Approved by CS',
-        'Approved by IS',
-        'Approved by IT',
-        'Denied by CS',
-        'Denied by IS',
-        'Denied by IT']
+
+    const reqStatusIT = ['Processing', 'Pending for IS Approval', 'Pending for CS Approval', 'Approved by IT', 'Denied by IT'];
+    const reqStatusIS = ['Processing', 'Pending for IT Approval', 'Pending for CS Approval', 'Approved by IS', 'Denied by IS'];
+    const reqStatusCS = ['Processing', 'Pending for IT Approval', 'Pending for IS Approval', 'Approved by CS', 'Denied by CS'];
 
     const requestId = match.params.id
 
@@ -55,6 +50,25 @@ const UpdateRequest = ({ history, match }) => {
         window.history.back()
         handleClose()
     }
+
+    useEffect(() => {
+        setCrossEnrolStatus([])
+
+        switch (user.role) {
+            case 'IT Dept Chair':
+                setCrossEnrolStatus(reqStatusIT)
+                break
+            case 'IS Dept Chair':
+                setCrossEnrolStatus(reqStatusIS)
+                break
+            case 'CS Dept Chair':
+                setCrossEnrolStatus(reqStatusCS)
+                break
+            default:
+                break
+        }
+
+    }, [user, request, requestId])
 
     useEffect(() => {
         if (request && request._id !== requestId) {
