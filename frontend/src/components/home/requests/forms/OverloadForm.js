@@ -40,6 +40,7 @@ function OverloadForm({ history }) {
     const [unitsRequired, setUnitsRequired] = useState()
     const [specialAttend, setSpecialAttend] = useState()
     const [show, setShow] = useState(false)
+    const [otherTerm, setOtherTerm] = useState()
 
     const [overload, setOverload] = useState([{
         status: '',
@@ -57,6 +58,8 @@ function OverloadForm({ history }) {
         lecUnits: '',
         labUnits: ''
     }])
+
+    const terms = ["1st Term", "2nd Term", "Summer Term", "Not stated (Others)"]
 
     const title = 'Overload Form'
 
@@ -179,7 +182,7 @@ function OverloadForm({ history }) {
             specialTerm,
             tentative,
             curriculum,
-            term,
+            term: term !== 'Not stated (Others)' ? term : otherTerm,
             fullTime: fullTime ? 'Yes' : 'No',
             workingStudent: workingStudent ? 'Yes' : 'No',
             bar: bar ? 'Yes' : 'No',
@@ -325,25 +328,33 @@ function OverloadForm({ history }) {
                                     </Form.Group>
                                     <Form.Group as={Col} lg={3}>
                                         <Form.Label>Term</Form.Label>
-                                        <Form.Control type='text' placeholder="1st Term/2nd Term/Summer Term" value={term} onChange={e => setTerm(e.target.value)} required />
+                                        <Form.Select aria-label="Default select example" name="term" id={term} value={term} onChange={e => setTerm(e.target.value)} required>
+                                            <option value=''>Term</option>
+                                            {terms && terms.map(term => (
+                                                <option value={term}>{term}</option>
+                                            ))}
+                                        </Form.Select>
                                     </Form.Group>
-
+                                    <Form.Group as={Col} lg={3}>
+                                        <Form.Label className={term === 'Not stated (Others)' ? "" : "d-none"}>Other Term</Form.Label>
+                                        <Form.Control type='text' placeholder="Other term" value={otherTerm} onChange={e => setOtherTerm(e.target.value)} className={term === 'Not stated (Others)' ? "" : "d-none"} required={term === 'Not stated (Others)' ? true : false} />
+                                    </Form.Group>
                                 </Row>
                                 <Row style={{ paddingBottom: '20px' }}>
                                     <Form.Group as={Col} xs={12} md={3}>
-                                        <Form.Check type="checkbox" label="Full Time" onChange={e => setFullTime(!fullTime)} />
+                                        <Form.Check type="checkbox" label="Full Time" defaultChecked={fullTime} value={fullTime} onChange={e => setFullTime(!fullTime)} />
                                     </Form.Group>
 
                                     <Form.Group as={Col} xs={12} md={3}>
-                                        <Form.Check type="checkbox" label="Working Student" onChange={e => setWorkingStudent(!workingStudent)} />
+                                        <Form.Check type="checkbox" label="Working Student" defaultChecked={workingStudent} value={workingStudent} onChange={e => setWorkingStudent(!workingStudent)} />
                                     </Form.Group>
 
                                     <Form.Group as={Col} xs={12} md={3}>
-                                        <Form.Check type="checkbox" label="Does the program require Bar or Board Examination?" onChange={e => setBar(!bar)} />
+                                        <Form.Check type="checkbox" label="Does the program require Bar or Board Examination?" defaultChecked={bar} value={bar} onChange={e => setBar(!bar)} />
                                     </Form.Group>
 
                                     <Form.Group as={Col} xs={12} md={3}>
-                                        <Form.Check type="checkbox" label="Is there a violation of courses prerequisites?" onChange={e => setViolations(!violations)} />
+                                        <Form.Check type="checkbox" label="Is there a violation of courses prerequisites?" defaultChecked={violations} value={violations} onChange={e => setViolations(!violations)} />
                                     </Form.Group>
                                 </Row>
                                 <Row>
@@ -464,7 +475,7 @@ function OverloadForm({ history }) {
                                                         <Form.Control type="number" placeholder="Lab Units" name="labUnits" id={labUnits} data-id={idx} value={val.labUnits} onChange={e => onChange(1, idx, e)} readOnly />
                                                     </FloatingLabel>
                                                 </Col>
-                                                <Col xs={12} sm={6} md={6}  lg={2} style={addDropStyle}>
+                                                <Col xs={12} sm={6} md={6} lg={2} style={addDropStyle}>
                                                     <FloatingLabel label="Days">
                                                         <Form.Select aria-label="Default select example" placeholder='M' name="days" id={days} data-id={idx} value={val.days} onChange={e => onChange(1, idx, e)} required >
                                                             <option value=''>Days</option>
@@ -480,12 +491,12 @@ function OverloadForm({ history }) {
                                                 </Col>
                                                 <Col xs={6} sm={6} md={6} lg={3} style={addDropStyle}>
                                                     <FloatingLabel label="Start Time (ex: 7:00 AM)">
-                                                        <Form.Control type="text" placeholder="Start Time (ex: 7:00 AM)" name="startTime" id={startTime} data-id={idx} value={val.startTime} onChange={e => onChange(idx, e)} required />
+                                                        <Form.Control type="text" placeholder="Start Time (ex: 7:00 AM)" name="startTime" id={startTime} data-id={idx} value={val.startTime} onChange={e => onChange(1, idx, e)} required />
                                                     </FloatingLabel>
                                                 </Col>
                                                 <Col xs={6} sm={6} md={6} lg={3} style={addDropStyle}>
                                                     <FloatingLabel label="End Time (ex: 7:00 AM)">
-                                                        <Form.Control type="text" placeholder="End Time (7:00 AM)" name="endTime" id={endTime} data-id={idx} value={val.endTime} onChange={e => onChange(idx, e)} required />
+                                                        <Form.Control type="text" placeholder="End Time (7:00 AM)" name="endTime" id={endTime} data-id={idx} value={val.endTime} onChange={e => onChange(1, idx, e)} required />
                                                     </FloatingLabel>
                                                 </Col>
                                             </Row>

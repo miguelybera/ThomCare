@@ -27,6 +27,7 @@ function Form6B({ history }) {
     const [studentInfo, setStudentInfo] = useState({})
     const [middleInitial, setMiddleInitial] = useState('')
     const [show, setShow] = useState(false)
+    const [otherTerm, setOtherTerm] = useState()
 
     const [inputFields, setInputFields] = useState([{
         status: '',
@@ -39,6 +40,7 @@ function Form6B({ history }) {
         room: '',
         section: ''
     }])
+    const terms = ["1st Term", "2nd Term", "Summer Term", "Not stated (Others)"]
 
     const title = 'Form 6B - Cross-Enrollment Form'
 
@@ -167,7 +169,7 @@ function Form6B({ history }) {
             toDrop,
             newCrossTotalUnits,
             newDropTotalUnits,
-            term,
+            term: term !== 'Not stated (Others)' ? term : otherTerm,
             year1,
             year2
         })
@@ -224,25 +226,7 @@ function Form6B({ history }) {
                                         <Form.Control type="text" value={user && user.lastName} readOnly />
                                     </Form.Group>
                                 </Row>
-                                <Row className="mb-3">
-                                    <Form.Group as={Col} xs={12} sm={6} md={6} lg={4}>
-                                        <Form.Label>Student Number</Form.Label>
-                                        <Form.Control value={user && user.studentNumber} readOnly />
-                                    </Form.Group>
-                                    <Form.Group as={Col} xs={12} sm={6} md={6} lg={4}>
-                                        <Form.Label>Course/Program</Form.Label>
-                                        <Form.Control type="text" value={user && user.course} readOnly />
-                                    </Form.Group>
-                                    <Form.Group as={Col} xs={12} sm={12} md={12} lg={4}>
-                                        <Form.Label>Email address</Form.Label>
-                                        <Form.Control type='email' value={user && user.email} readOnly />
-                                    </Form.Group>
-                                </Row>
                                 <Row className="mb-3" style={{ paddingBottom: '30px' }}>
-                                    <Form.Group as={Col} xs={12} sm={12} md={4}>
-                                        <Form.Label>Term</Form.Label>
-                                        <Form.Control type="text" placeholder="1st" value={term} onChange={e => setTerm(e.target.value)} required />
-                                    </Form.Group>
                                     <Col xs={12} sm={12} md={4}>
                                         <Form.Label>Academic Year </Form.Label>
                                         <InputGroup className="mb-3">
@@ -252,6 +236,19 @@ function Form6B({ history }) {
                                             <Form.Control type="text" placeholder="xx" pattern="[0-9]{2}" value={year2} onChange={e => setYear2(e.target.value)} required />
                                         </InputGroup>
                                     </Col>
+                                    <Form.Group as={Col} xs={12} sm={12} md={4}>
+                                        <Form.Label>Term</Form.Label>
+                                        <Form.Select aria-label="Default select example" name="term" id={term} value={term} onChange={e => setTerm(e.target.value)} required>
+                                            <option value=''>Term</option>
+                                            {terms && terms.map(term => (
+                                                <option value={term}>{term}</option>
+                                            ))}
+                                        </Form.Select>
+                                    </Form.Group>
+                                    <Form.Group as={Col} xs={12} sm={12} md={4}>
+                                        <Form.Label className={term === 'Not stated (Others)' ? "" : "d-none"}>Other Term</Form.Label>
+                                        <Form.Control type='text' placeholder="Other term" value={otherTerm} onChange={e => setOtherTerm(e.target.value)} className={term === 'Not stated (Others)' ? "" : "d-none"} required={term === 'Not stated (Others)' ? true : false} />
+                                    </Form.Group>
                                 </Row>
                                 <Card.Title
                                     style={{

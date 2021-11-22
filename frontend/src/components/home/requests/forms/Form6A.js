@@ -26,8 +26,8 @@ function Form6A({ history }) {
     const [submitted, setSubmitted] = useState(false)
     const [middleInitial, setMiddleInitial] = useState('')
     const [studentInfo, setStudentInfo] = useState({})
-
     const [show, setShow] = useState(false)
+    const [otherTerm, setOtherTerm] = useState()
 
     const [inputFields, setInputFields] = useState([{
         status: '',
@@ -41,6 +41,8 @@ function Form6A({ history }) {
         room: '',
         section: ''
     }])
+
+    const terms = ["1st Term", "2nd Term", "Summer Term", "Not stated (Others)"]
 
     const title = 'Form 6A - Add/Drop Course Form'
 
@@ -170,7 +172,7 @@ function Form6A({ history }) {
             toDrop,
             newAddTotalUnits,
             newDropTotalUnits,
-            term,
+            term: term !== 'Not stated (Others)' ? term : otherTerm,
             year1,
             year2
         })
@@ -242,10 +244,6 @@ function Form6A({ history }) {
                                     </Form.Group>
                                 </Row>
                                 <Row className="mb-3" style={{ paddingBottom: '30px' }}>
-                                    <Form.Group as={Col} xs={12} sm={12} md={4}>
-                                        <Form.Label>Term</Form.Label>
-                                        <Form.Control type="text" placeholder="1st" value={term} onChange={e => setTerm(e.target.value)} required />
-                                    </Form.Group>
                                     <Col xs={12} sm={12} md={4}>
                                         <Form.Label>Academic Year </Form.Label>
                                         <InputGroup className="mb-3">
@@ -255,6 +253,19 @@ function Form6A({ history }) {
                                             <Form.Control type="text" placeholder="xx" pattern="[0-9]{2}" value={year2} onChange={e => setYear2(e.target.value)} required />
                                         </InputGroup>
                                     </Col>
+                                    <Form.Group as={Col} xs={12} sm={12} md={4}>
+                                        <Form.Label>Term</Form.Label>
+                                        <Form.Select aria-label="Default select example" name="term" id={term} value={term} onChange={e => setTerm(e.target.value)} required>
+                                            <option value=''>Term</option>
+                                            {terms && terms.map(term => (
+                                                <option value={term}>{term}</option>
+                                            ))}
+                                        </Form.Select>
+                                    </Form.Group>
+                                    <Form.Group as={Col} xs={12} sm={12} md={4}>
+                                        <Form.Label className={term === 'Not stated (Others)' ? "" : "d-none"}>Other Term</Form.Label>
+                                        <Form.Control type='text' placeholder="Other term" value={otherTerm} onChange={e => setOtherTerm(e.target.value)} className={term === 'Not stated (Others)' ? "" : "d-none"} required={term === 'Not stated (Others)' ? true : false} />
+                                    </Form.Group>
                                 </Row>
                                 <Card.Title
                                     style={{
