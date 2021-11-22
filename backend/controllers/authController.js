@@ -17,7 +17,7 @@ exports.registerAdmin = catchAsyncErrors(async (req, res, next) => {
     const course = 'N/A'
 
     if (password !== confirmPassword) { return next(new ErrorHandler('Password does not match')) }
-    if ((email.substr(-10) !== "ust.edu.ph")||(email.substr(-18) !== "ust-ics.mygbiz.com")) { return next(new ErrorHandler('UST GSuite accounts are only allowed')) } // will change to ust.edu.ph only after development
+    if ((email.substr(-10) !== "ust.edu.ph")&&(email.substr(-18) !== "ust-ics.mygbiz.com")) { return next(new ErrorHandler('UST GSuite accounts are only allowed')) } // will change to ust.edu.ph only after development
 
     const checkUser = await User.findOne({ email })
     if (checkUser) { return next(new ErrorHandler('Email account already exists', 404)) }
