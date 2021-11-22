@@ -95,6 +95,13 @@
     margin-bottom: 20px;
 }
 
+.sigrow {
+    display: grid;
+    grid-template-columns: 40% 20% 40%;
+    margin-left: 70px;
+    margin-bottom: 20px; 
+}
+
 .deanrow {
     display: grid;
     grid-template-columns: 40% 20% 20% 20%;
@@ -115,7 +122,13 @@
 }
 .daterow {
     display: grid;
-    grid-template-columns: 60% 40%;
+    grid-template-columns: 59% 41%;
+    margin-left: 70px;
+    margin-bottom: 20px; 
+}
+.registrarRow {
+    display: grid;
+    grid-template-columns: 70% 30%;
     margin-left: 70px;
     margin-bottom: 20px; 
 }
