@@ -159,12 +159,12 @@ const RegisterAdmin = ({ history }) => {
                                     <Form.Group as={Row} className="mb-3">
                                         <Form.Label column sm={3}>
                                             Email address
-                                                </Form.Label>
+                                        </Form.Label>
                                         <Col sm={9}>
                                             <Form.Control
                                                 type="email"
                                                 placeholder="juan.delacruz.iics@ust.edu.ph"
-                                                pattern="[a-z.]{1,}@ust\.edu\.ph"
+                                                pattern="[0-9]{10}|[a-z]{1,}\.[a-z.]{1,}@ust\.edu\.ph|ust\-ics\.mygbiz\.com"
                                                 value={email}
                                                 name="email"
                                                 onChange={e => setEmail(e.target.value)}
