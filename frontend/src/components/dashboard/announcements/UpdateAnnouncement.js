@@ -22,7 +22,9 @@ const UpdateAnnouncement = ({ history, match }) => {
     const { loading, error: updateError, isUpdated } = useSelector(state => state.announcement)
     const { loading: announcementTypeLoading, announcementTypes, error: announcementTypeError } = useSelector(state => state.announcementType)
 
-    const changeDateFormat = (date) => dateformat(date, "yyyy-mm-dd")
+    const changeTimeFormat = (date) => dateformat(date, "isoTime")
+    const changeDateFormat = (date) => dateformat(date, "isoDate")
+    const changeDateCompleteFormat = (date) => dateformat(date, "isoDateTime")
 
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
@@ -75,7 +77,7 @@ const UpdateAnnouncement = ({ history, match }) => {
             setCourse(announcement.course)
             setTrack(announcement.track)
             setAnnouncementType(announcement.announcementType)
-            setArchiveDate(changeDateFormat(announcement.archiveDate))
+            setArchiveDate(changeDateCompleteFormat(announcement.archiveDate))
             setSetExpiry(announcement.setExpiry)
             setOldAttachments(announcement.fileAttachments)
         } else {
@@ -158,7 +160,7 @@ const UpdateAnnouncement = ({ history, match }) => {
         }
 
         formData.set('setExpiry', setExpiry)
-        formData.set('archiveDate', changeDateFormat(archiveDate))
+        formData.set('archiveDate', changeDateCompleteFormat(archiveDate))
 
         fileAttachments.forEach(file => {
             formData.append('fileAttachments', file)
@@ -369,9 +371,9 @@ const UpdateAnnouncement = ({ history, match }) => {
                                                         }}
                                                     />
                                                     <Form.Control
-                                                        type="date"
+                                                        type="datetime-local"
                                                         name="archiveDate"
-                                                        value={archiveDate}
+                                                        value={setExpiry ? changeDateFormat(archiveDate) + "T" + changeTimeFormat(archiveDate) : ''}
                                                         onChange={e => setArchiveDate(e.target.value)}
                                                         disabled={setExpiry ? false : true}
                                                     />

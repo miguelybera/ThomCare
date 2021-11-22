@@ -20,7 +20,7 @@ const CreateAnnouncement = ({ history }) => {
     const { loading, error, success } = useSelector(state => state.newAnnouncement)
     const { loading: announcementTypeLoading, announcementTypes, error: announcementTypeError } = useSelector(state => state.announcementType)
 
-    const changeDateFormat = (date) => dateformat(date, "yyyy-mm-dd")
+    const changeDateFormat = (date) => dateformat(date, "isoDateTime")
 
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
@@ -296,7 +296,7 @@ const CreateAnnouncement = ({ history }) => {
                                                 onChange={e => setSetExpiry(!setExpiry)}
                                             />
                                             <Form.Control
-                                                type="date"
+                                                type="datetime-local"
                                                 name="archiveDate"
                                                 value={archiveDate}
                                                 onChange={e => setArchiveDate(e.target.value)}
