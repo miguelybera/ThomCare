@@ -11,13 +11,13 @@ const resetPassword = require('../config/templates/resetPassword')
 
 // Register a user => /api/v1/admin/register
 exports.registerAdmin = catchAsyncErrors(async (req, res, next) => {
-    const { firstName, middleName, lastName, email, password, role } = req.body
+    const { firstName, middleName, lastName, email, password, confirmPassword, role } = req.body
 
     const studentNumber = '0000000000'
     const course = 'N/A'
 
-    if (req.body.password !== req.body.confirmPassword) { return next(new ErrorHandler('Password does not match')) }
-    if ((req.body.email.substr(-10) !== "ust.edu.ph")||(req.body.email.substr(-18) !== "ust-ics.mygbiz.com")) { return next(new ErrorHandler('UST GSuite accounts are only allowed')) } // will change to ust.edu.ph only after development
+    if (password !== confirmPassword) { return next(new ErrorHandler('Password does not match')) }
+    if ((email.substr(-10) !== "ust.edu.ph")||(email.substr(-18) !== "ust-ics.mygbiz.com")) { return next(new ErrorHandler('UST GSuite accounts are only allowed')) } // will change to ust.edu.ph only after development
 
     const checkUser = await User.findOne({ email })
     if (checkUser) { return next(new ErrorHandler('Email account already exists', 404)) }
@@ -149,7 +149,7 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
 
 // Register a student => /api/v1/registerStudent
 exports.registerStudent = catchAsyncErrors(async (req, res, next) => {
-    const { firstName, middleName, lastName, studentNumber, course, email, password } = req.body
+    const { firstName, middleName, lastName, studentNumber, course, email, password, confirmPassword } = req.body
     //for postman
     if ((firstName == null) || (firstName == '')) { return next(new ErrorHandler('Please enter first name')) }
     if ((lastName == null) || (lastName == '')) { return next(new ErrorHandler('Please enter last name')) }
@@ -158,14 +158,14 @@ exports.registerStudent = catchAsyncErrors(async (req, res, next) => {
     if ((course !== 'Computer Science') && (course !== 'Information Technology') && (course !== 'Information Systems')) { return next(new ErrorHandler('Please enter the correct course')) }
     if ((email == null) || (email == '')) { return next(new ErrorHandler('Please enter email')) }
     if ((password == null) || (password == '')) { return next(new ErrorHandler('Please enter password')) }
-    if (!(req.body.email.substr(-15) == "iics@ust.edu.ph" || req.body.email.substr(-15) == "cics@ust.edu.ph" || req.body.email.substr(-18) == "ust-ics.mygbiz.com" || req.body.email.substr(-10) == "ust.edu.ph")) { return next(new ErrorHandler('UST GSuite accounts are only allowed')) }
+    if (!(email.substr(-15) == "iics@ust.edu.ph" || email.substr(-15) == "cics@ust.edu.ph" || email.substr(-18) == "ust-ics.mygbiz.com" || email.substr(-10) == "ust.edu.ph")) { return next(new ErrorHandler('UST GSuite accounts are only allowed')) }
 
 
     const user = await User.findOne({ email })
 
     if (user) { return next(new ErrorHandler('Email account already exists', 404)) }
 
-    if (req.body.password !== req.body.confirmPassword) { return next(new ErrorHandler('Password does not match')) }
+    if (password !== confirmPassword) { return next(new ErrorHandler('Password does not match')) }
 
     const registerToken = jwt.sign({ firstName, middleName, lastName, studentNumber, course, email, password }, process.env.ACCOUNT_TOKEN, { expiresIn: process.env.REGISTER_EXPIRES })
 
