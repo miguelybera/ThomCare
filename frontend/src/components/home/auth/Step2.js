@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react'
 import { useAlert } from 'react-alert'
 import { useDispatch } from 'react-redux'
-import { Form, Button, Card, Container, Row, Col, InputGroup } from 'react-bootstrap'
+import { Form, Button, Card, Container, Row, Col, InputGroup, FormControl } from 'react-bootstrap'
 import { INSIDE_DASHBOARD_FALSE } from '../../../constants/dashboardConstants'
 import MetaData from '../../layout/MetaData'
 import ConfirmRegister from './ConfirmRegister'
@@ -12,6 +12,8 @@ const Step2 = ({ studentInfo, currentStep, setCurrentStep }) => {
 
     const [showPassword, setShowPassword] = useState('false')
     const [showConfirm, setShowConfirm] = useState('false')
+    const [emailDomain, setEmailDomain] = useState('@ust.edu.ph')
+    const [emailUserName, setEmailUsername] = useState()
 
     const [user, setUser] = useState({
         firstName: studentInfo.firstName,
@@ -52,6 +54,11 @@ const Step2 = ({ studentInfo, currentStep, setCurrentStep }) => {
         } else {
             setCurrentStep(currentStep + 1)
         }
+
+        setUser({
+            ...user,
+            email: emailUserName + emailDomain
+        })
     }
 
     const reduceStep = () => {
@@ -82,17 +89,48 @@ const Step2 = ({ studentInfo, currentStep, setCurrentStep }) => {
                                 <Form method="post" onSubmit={addStep}>
                                     <Row>
                                         <Form.Group className="mb-3" as={Col}>
-                                            <Form.Label>Email address</Form.Label>
-                                            <Form.Control
-                                                type='email'
-                                                placeholder="juan.delacruz.iics@ust.edu.ph"
-                                                pattern="[a-z]{1,}\.[a-z]{1,}\.(iics|cics)@ust\.edu\.ph"
-                                                name="email"
-                                                value={email}
-                                                onChange={onChange}
+                                            <Form.Label>What is your email address?</Form.Label>
+                                            <div key={`inline-radio`} className="mb-3">
+                                                <Form.Check
+                                                    inline
+                                                    label="ust.edu.ph"
+                                                    defaultChecked={emailDomain === '@ust.edu.ph' ? true : false}
+                                                    name="group1"
+                                                    type="radio"
+                                                    id={`inline-radio-1`}
+                                                    onChange={e => {
+                                                        setEmailDomain('@ust.edu.ph')
+                                                        setEmailUsername('')
+                                                    }}
+                                                />
+                                                <Form.Check
+                                                    inline
+                                                    label="ust-ics.mygbiz.com"
+                                                    defaultChecked={emailDomain === '@ust-ics.mygbiz.com' ? true : false}
+                                                    name="group1"
+                                                    type="radio"
+                                                    id={`inline-radio-2`}
+                                                    onChange={e => {
+                                                        setEmailDomain('@ust-ics.mygbiz.com')
+                                                        setEmailUsername('')
+                                                    }}
+                                                />
+                                            </div>
+                                        </Form.Group>
+                                    </Row>
+                                    <Row>
+                                        <Form.Label>Email address</Form.Label>
+                                        <InputGroup className="mb-3">
+                                            <FormControl
+                                                placeholder="juan.delacruz.iics"
+                                                pattern={emailDomain === '@ust.edu.ph' ? '[0-9]{10}|[a-z]{1,}\.[a-z]{1,}\.(iics|cics)' : '[0-9]{10}'}
+                                                name="emailUserName"
+                                                value={emailUserName}
+                                                onChange={e => setEmailUsername(e.target.value)}
                                                 required
                                             />
-                                        </Form.Group>
+                                            <InputGroup.Text id="basic-addon2">{emailDomain}</InputGroup.Text>
+                                        </InputGroup>
                                     </Row>
                                     <Row className="mb-3">
                                         <Form.Group as={Col} md={6} style={{ marginTop: '5px' }}>
