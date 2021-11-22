@@ -34,9 +34,9 @@ const UpdateRequest = ({ history, match }) => {
 
     const normalStatus = ['Pending', 'Processing', 'Denied', 'Approved']
 
-    const reqStatusIT = ['Processing', 'Pending for IS Approval', 'Pending for CS Approval', 'Approved by IT', 'Denied by IT'];
-    const reqStatusIS = ['Processing', 'Pending for IT Approval', 'Pending for CS Approval', 'Approved by IS', 'Denied by IS'];
-    const reqStatusCS = ['Processing', 'Pending for IT Approval', 'Pending for IS Approval', 'Approved by CS', 'Denied by CS'];
+    const reqStatusIT = ['Pending for IS Approval', 'Pending for CS Approval', 'Approved by IT', 'Denied by IT'];
+    const reqStatusIS = ['Pending for IT Approval', 'Pending for CS Approval', 'Approved by IS', 'Denied by IS'];
+    const reqStatusCS = ['Pending for IT Approval', 'Pending for IS Approval', 'Approved by CS', 'Denied by CS'];
 
     const requestId = match.params.id
 
